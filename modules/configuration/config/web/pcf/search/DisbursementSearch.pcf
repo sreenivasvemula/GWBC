@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+<PCF
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:noNamespaceSchemaLocation="../../../../../pcf.xsd">
+  <Page
+    canVisit="perm.System.viewsearch and perm.System.disbsearch"
+    id="DisbursementSearch"
+    title="displaykey.Web.Search.Disbursements.Title">
+    <Variable
+      initialValue="web.disbursement.DisbursementUtil.getInitialDisbursementSubtypeHolder()"
+      name="disbursementSubtypeHolder"
+      type="gw.bc.disbursement.typekey.Disbursement[]"/>
+    <ScreenRef
+      def="DisbursementSearchScreen(disbursementSubtypeHolder)"
+      mode="disbursementSubtypeHolder[0]"/>
+  </Page>
+</PCF>

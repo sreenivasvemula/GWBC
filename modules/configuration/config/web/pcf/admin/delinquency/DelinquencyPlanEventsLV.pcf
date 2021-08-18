@@ -1,0 +1,68 @@
+<?xml version="1.0"?>
+<PCF
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:noNamespaceSchemaLocation="../../../../../../pcf.xsd">
+  <ListViewPanel
+    id="DelinquencyPlanEventsLV">
+    <ExposeIterator
+      flags="checkedEvents"
+      valueType="entity.DelinquencyPlanEvent"
+      widget="DelinquencyPlanEventsLV"/>
+    <Require
+      name="dlnqPlanReason"
+      type="DelinquencyPlanReason"/>
+    <Variable
+      initialValue="not dlnqPlanReason.DelinquencyPlan.InUse"
+      name="planNotInUse"/>
+    <RowIterator
+      checkBoxVisible="true"
+      editable="true"
+      elementName="planEvent"
+      hideCheckBoxesIfReadOnly="true"
+      pickLocation="DelinquencyPlanEventPopup.push( dlnqPlanReason )"
+      toAdd="planEvent.DelinquencyPlanReason.addToPlanEvents( planEvent )"
+      toRemove="dlnqPlanReason.removeFromPlanEvents(planEvent)"
+      value="dlnqPlanReason.getOrderedEvents() as DelinquencyPlanEvent[]">
+      <ToolbarFlag
+        name="checkedEvents"/>
+      <Row>
+        <TypeKeyCell
+          editable="true"
+          id="EventName"
+          label="displaykey.Web.DelinquencyPlanEventsLV.EventName"
+          validationExpression="web.delinquency.DelinquencyPlanUtil.validateDelinquencyPlanEventUnique( planEvent )"
+          value="planEvent.EventName"/>
+        <RangeCell
+          editable="true"
+          id="TriggerBasis"
+          label="displaykey.Web.DelinquencyPlanEventsLV.TriggerBasis"
+          value="planEvent.TriggerBasis"
+          valueRange="DelinquencyTriggerBasis.getTypeKeys(false)"/>
+        <Cell
+          editable="true"
+          id="OffsetDays"
+          label="displaykey.Web.DelinquencyPlanEventsLV.OffsetDays"
+          value="planEvent.OffsetDays"/>
+        <Cell
+          editable="true"
+          id="RelativeOrder"
+          label="displaykey.Web.DelinquencyPlanEventsLV.RelativeOrder"
+          value="planEvent.RelativeOrder"/>
+        <Cell
+          editable="true"
+          id="Automatic"
+          label="displaykey.Web.DelinquencyPlanEventsLV.Automatic"
+          value="planEvent.Automatic"/>
+      </Row>
+    </RowIterator>
+    <Code><![CDATA[
+/**
+       */
+      function newDelinquencyPlanEvent() : DelinquencyPlanEvent {
+        var newDelinquencyPlanEvent = new DelinquencyPlanEvent()
+        newDelinquencyPlanEvent.DelinquencyPlanReason = dlnqPlanReason
+        return newDelinquencyPlanEvent
+      }
+    ]]></Code>
+  </ListViewPanel>
+</PCF>

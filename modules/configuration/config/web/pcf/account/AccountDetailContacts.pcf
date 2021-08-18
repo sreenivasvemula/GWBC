@@ -1,0 +1,84 @@
+<?xml version="1.0"?>
+<PCF
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:noNamespaceSchemaLocation="../../../../../pcf.xsd">
+  <Page
+    beforeCommit="gw.api.web.account.AccountUtil.validateAccountContacts(account)"
+    canEdit="perm.AccountContact.edit"
+    canVisit="perm.System.accttabview and perm.System.acctcontview"
+    id="AccountDetailContacts"
+    showUpLink="true"
+    title="displaykey.Web.AccountDetailContacts.Title">
+    <LocationEntryPoint
+      signature="AccountDetailContacts(account : Account)"/>
+    <Variable
+      name="account"
+      type="Account"/>
+    <Screen
+      id="AccountDetailContactsScreen">
+      <Toolbar>
+        <EditButtons/>
+        <ToolbarButton
+          hideIfReadOnly="true"
+          id="addNewContact"
+          label="displaykey.Button.Add">
+          <MenuItem
+            action="NewAccountContactPopup.push(account, Company)"
+            id="addNewCompany"
+            label="displaykey.Web.PolicyDetailContacts.AddNewCompany"/>
+          <MenuItem
+            action="NewAccountContactPopup.push(account, Person)"
+            id="addNewPerson"
+            label="displaykey.Web.PolicyDetailContacts.AddNewPerson"/>
+        </ToolbarButton>
+        <IteratorButtons
+          addVisible="false"
+          iterator="AccountDetailContactsLV"/>
+        <PickerToolbarButton
+          action="ContactSearchPopup.push(false)"
+          available="true"
+          hideIfReadOnly="true"
+          id="addExistingContact"
+          label="displaykey.Web.AccountDetailContacts.AddExistingContact"
+          onPick="gw.contact.ContactConnection.connectContactToAccount(PickedValue, account)"/>
+      </Toolbar>
+      <ListDetailPanel
+        id="DetailPanel"
+        selectionName="contact"
+        selectionType="AccountContact">
+        <ListViewPanel
+          id="AccountDetailContactsLV">
+          <RowIterator
+            editable="true"
+            elementName="accountContact"
+            hideCheckBoxesIfReadOnly="true"
+            id="accountContactIterator"
+            toRemove="account.removeFromContacts(accountContact)"
+            value="account.Contacts">
+            <Row>
+              <Cell
+                id="ContactName"
+                label="displaykey.Web.AccountDetailContacts.Name"
+                sortOrder="1"
+                value="accountContact"/>
+              <Cell
+                id="ContactAddress"
+                label="displaykey.Web.AccountDetailContacts.Address"
+                value="accountContact.Contact.PrimaryAddress"/>
+              <Cell
+                id="ContactRoles"
+                label="displaykey.Web.AccountDetailContacts.Roles"
+                value="gw.api.web.account.AccountUtil.getRolesForDisplay(accountContact)"/>
+              <Cell
+                id="ContactPrimaryPayer"
+                label="displaykey.Web.AccountDetailContacts.PrimaryPayer"
+                value="accountContact.PrimaryPayer"/>
+            </Row>
+          </RowIterator>
+        </ListViewPanel>
+        <PanelRef
+          def="AccountContactCV(contact)"/>
+      </ListDetailPanel>
+    </Screen>
+  </Page>
+</PCF>

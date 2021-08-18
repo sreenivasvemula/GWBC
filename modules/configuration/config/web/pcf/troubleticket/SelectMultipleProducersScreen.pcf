@@ -1,0 +1,47 @@
+<?xml version="1.0"?>
+<PCF
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:noNamespaceSchemaLocation="../../../../../pcf.xsd">
+  <Screen
+    id="SelectMultipleProducersScreen">
+    <Variable
+      initialValue="true"
+      name="isWizard"
+      type="Boolean"/>
+    <Variable
+      initialValue="false"
+      name="showHyperlinks"
+      type="Boolean"/>
+    <Variable
+      initialValue="true"
+      name="showCheckboxes"
+      type="Boolean"/>
+    <!-- Regarding SearchMethods.validateAndSearch: The 2nd parameter controls whether to clear the bundle before
+         querying. The 3rd parameter controls the search mode of all associated contact fields. -->
+    <SearchPanel
+      criteriaName="searchCriteria"
+      resultsName="producerSearchViews"
+      search="gw.search.SearchMethods.validateAndSearch(searchCriteria, StringCriterionMode.TC_STARTSWITH)"
+      searchCriteria="new gw.search.ProducerSearchCriteria()"
+      searchResultsType="ProducerSearchViewQuery">
+      <PanelRef
+        def="ProducerSearchDV(searchCriteria)">
+        <Toolbar>
+          <CheckedValuesToolbarButton
+            id="addbutton"
+            iterator="ProducerSearchResultsLV.ProducerSearchResultsLV"
+            label="displaykey.Web.SelectMultipleProducersScreen.Add"
+            pickValue="gw.api.web.search.SearchPopupUtil.getProducerArray(CheckedValues)"/>
+          <ToolbarButton
+            action="CurrentLocation.cancel()"
+            id="CancelButton"
+            label="displaykey.Button.Cancel"/>
+        </Toolbar>
+      </PanelRef>
+      <PanelRef
+        def="ProducerSearchResultsLV(producerSearchViews, null, isWizard, showHyperlinks, showCheckboxes)">
+        <Toolbar/>
+      </PanelRef>
+    </SearchPanel>
+  </Screen>
+</PCF>

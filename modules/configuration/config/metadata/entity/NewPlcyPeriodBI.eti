@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?><subtype xmlns="http://guidewire.com/datamodel" abstract="true" desc="Abstract base type for policy related billing instructions which create new Policy Period" entity="NewPlcyPeriodBI" final="false" subpackage="accounting.billinginstruction" supertype="PlcyBillingInstruction">
+  <array arrayentity="ProducerCodeRoleEntry" desc="The new policy period's producer codes" exportable="false" name="ProducerCodes"/>
+  <foreignkey columnName="PriorPolicyPeriodID" desc="The previous policy period" exportasid="true" fkentity="PolicyPeriod" name="PriorPolicyPeriod" nullok="true" setterScriptability="hidden"/>
+  <column name="OfferNumber" nullok="true" type="shorttext"/>
+  <foreignkey
+        name="PolicyPaymentPlan"
+        desc="The base payment plan to use for the new Policy Period. Any appropriate modifiers will be added and attached to new payment plan in the PlcyBillingInstruction."
+        columnName="PolicyPaymentPlanID"
+        exportasid="true"
+        fkentity="PaymentPlan"
+        nullok="true"/>
+  <foreignkey
+        name="NewPolicyPeriod"
+        desc="The policy period created by this BI"
+        columnName="NewPolicyPeriodID"
+        fkentity="PolicyPeriod"
+        nullok="false"
+        setterScriptability="hidden"/>
+  <dbcheckbuilder className="com.guidewire.bc.system.database.dbchecks.accounting.billinginstruction.NewPlcyPeriodBIDBCheckBuilder"/>
+</subtype>

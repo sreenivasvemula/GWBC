@@ -1,0 +1,25 @@
+<?xml version="1.0"?>
+<PCF
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:noNamespaceSchemaLocation="../../../../../pcf.xsd">
+  <Page
+    beforeCommit="paymentView.execute( CurrentLocation )"
+    canEdit="true"
+    canVisit="perm.DirectBillMoneyRcvd.pmntmanproc"
+    id="NewDirectBillCreditDistribution"
+    parent="AccountGroup(account)"
+    startInEditMode="true"
+    title="displaykey.Web.NewDirectBillCreditDistribution.Title">
+    <LocationEntryPoint
+      signature="NewDirectBillCreditDistribution(account : Account)"/>
+    <Variable
+      name="account"
+      type="Account"/>
+    <Variable
+      initialValue="gw.api.web.payment.DirectBillPaymentView.createView(account,true)"
+      name="paymentView"
+      type="gw.api.web.payment.DirectBillPaymentView"/>
+    <ScreenRef
+      def="EditDBPaymentScreen(paymentView)"/>
+  </Page>
+</PCF>

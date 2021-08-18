@@ -1,0 +1,53 @@
+<?xml version="1.0"?>
+<PCF
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:noNamespaceSchemaLocation="../../../../../../pcf.xsd">
+  <DetailViewPanel
+    id="UserAuthorityLimitsDV">
+    <Require
+      name="user"
+      type="User"/>
+    <Variable
+      initialValue="gw.api.web.admin.UserAuthorityLimitUtil.getOrCreateCustomProfile(user)"
+      name="customProfile"/>
+    <InputColumn>
+      <RangeInput
+        align="left"
+        boldLabel="true"
+        editable="true"
+        id="AuthorityLimitsProfile"
+        label="displaykey.Web.Admin.UserAuthorityLimits.AuthorityLimitProfile"
+        sortValueRange="false"
+        value="user.ModifiedAuthorityProfile"
+        valueRange="getValueRange()">
+        <PostOnChange/>
+      </RangeInput>
+      <Input
+        align="left"
+        boldLabel="true"
+        id="Description"
+        label="displaykey.Web.Admin.UserAuthorityLimits.AuthorityLimitProfile.Description"
+        value="user.AuthorityProfile.Description"/>
+      <ListViewInput
+        boldLabel="true"
+        def="EditableAuthorityLimitsLV(user)"
+        editable="user.AuthorityProfile != null and user.AuthorityProfile.Custom"
+        id="AuthorityLimits"
+        label="displaykey.Web.Admin.UserAuthorityLimits.AuthorityLimitProfile.AuthorityLimits"
+        validationExpression="user.AuthorityProfile != null and !user.AuthorityProfile.resolveAuthorityLimits() ? displaykey.Java.Error.AuthorityLimit : null">
+        <Toolbar>
+          <IteratorButtons
+            iterator="AuthorityLimits.EditableAuthorityLimitsLV"/>
+        </Toolbar>
+      </ListViewInput>
+    </InputColumn>
+    <Code><![CDATA[uses gw.api.database.Query
+uses gw.api.web.admin.UserAuthorityLimitUtil
+
+function getValueRange(): List <AuthorityLimitProfile> {
+  var profiles = UserAuthorityLimitUtil.getNonCustomProfiles()
+  profiles.add(0, customProfile)
+  return profiles
+}]]></Code>
+  </DetailViewPanel>
+</PCF>

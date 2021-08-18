@@ -1,0 +1,183 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xml:lang="en" lang="en" xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+    <meta http-equiv="Content-Style-Type" content="text/css" />
+    <!-- MOTW-DISABLED saved from url=(0014)about:internet -->
+    <title>Migrating to 64-bit IDs During Upgrade (SQL Server Only)</title>
+    <link rel="StyleSheet" href="css/procedure-config-c.css" type="text/css" media="all" />
+    <link rel="StyleSheet" href="css/webworks.css" type="text/css" media="all" />
+    <link rel="StyleSheet" href="css/css-guidewire-extra.css" type="text/css" media="all" />
+    <script type="text/javascript" language="JavaScript1.2" src="wwhdata/common/context.js"></script>
+    <script type="text/javascript" language="JavaScript1.2" src="wwhdata/common/towwhdir.js"></script>
+    <script type="text/javascript" language="JavaScript1.2" src="wwhdata/common/wwhpagef.js"></script>
+    <script type="text/javascript" language="JavaScript1.2">
+      <!--
+        var  WebWorksRootPath = "";
+      // -->
+    </script>
+    <script type="text/javascript" language="JavaScript1.2">
+      <!--
+        // Set reference to top level help frame
+        //
+        var  WWHFrame = WWHGetWWHFrame("", true);
+      // -->
+    </script>
+    <script type="text/javascript" language="JavaScript1.2" src="scripts/expand.js"></script>
+    <!-- THE FOLLOWING IS A GUIDEWIRE STYLE DEFINITION FOR THE LINK TO THIS FEATURE -->
+    <link rel="StyleSheet" href="css/css-guidewire-extra.css" type="text/css" media="all" />
+    <!-- THE FOLLOWING IS A GUIDEWIRE GSCRIPT FUNCTION FOR THE LINK TO THIS FEATURE -->
+    <script type="text/javascript">
+function guidewire_selectall()
+{
+var text_val=eval("document.linktothisurlform.urlfield");
+text_val.focus();
+text_val.select();
+}
+</script>
+  </head>
+  <body onLoad="WWHUpdate();" onUnload="WWHUnload();" onKeyDown="WWHHandleKeyDown((document.all||document.getElementById||document.layers)?event:null);" onKeyPress="WWHHandleKeyPress((document.all||document.getElementById||document.layers)?event:null);" onKeyUp="WWHHandleKeyUp((document.all||document.getElementById||document.layers)?event:null);">
+    <!-- THE FOLLOWING IS A GUIDEWIRE DIV FOR THE 'LINK TO THIS' FEATURE -->
+    <div id="linkToThisPage" class="popup" style="display: none;">
+      <div class="popupTitle">Link Directly to This Page 
+           <a href="#" onclick="var thePopup = getElementById('linkToThisPage');thePopup.style.display='none';return false;"><img class="popupClosebox" src="wwhelp/wwhimpl/common/images/close.gif" /></a></div>
+      <div style="padding:6px;">
+        <div class="popupText" id="linkToThisPageBookmark">An error has occurred if you see this messsage.</div>
+        <form name="linktothisurlform" method="post" action="" style="width:275px;margin:0px">
+          <input type="text" class="popupURLText" id="linkToThisPageURL" name="urlfield" rows="1" cols="55" onClick="guidewire_selectall();" onFocus="guidewire_selectall();"></input>
+        </form>
+      </div>
+    </div>
+    <br />
+    <div class="WebWorks_Breadcrumbs" style="text-align: left;">
+      <span>BillingCenter Upgrade Guide</span> : 
+    <span class="WebWorks_Breadcrumbs" style="text-align: left;"><a class="WebWorks_Breadcrumb_Link" href="part-basicupgrade_2.html#1929700">Upgrading from 3.0.x</a> : <a class="WebWorks_Breadcrumb_Link" href="procedure-config-c.16.01.html#1929700">Upgrading the BillingCenter 3.0.x Configuration</a> : Migrating to 64-bit IDs During Upgrade (SQL Server Only)</span></div>
+    <hr align="left" />
+    <blockquote>
+      <h3 class="H1_-_Heading_1"><a name="1929700">Migrating to 64-bit IDs During Upgrade (SQL Server Only)</a></h3>
+      <div class="B_-_Body"><a name="1929707">BillingCenter 8.0.4 uses 64-bit </a><span class="cv_-_computer_voice">BIGINT</span> primary key and foreign key identifiers and <span class="cv_-_computer_voice">datetime2</span> date columns. BillingCenter versions prior to 7.0 used 32-bit signed <span class="cv_-_computer_voice">INTEGER</span> primary key and foreign key identifiers, which do not provide as many unique identifiers, and <span class="cv_-_computer_voice">datetime</span> date columns.</div>
+      <div class="B_-_Body"><a name="1929711">Converting all primary key and foreign key identifiers to 64-bit and all date columns to </a><span class="cv_-_computer_voice">datetime2</span> is a time-intensive process. So, BillingCenter 8.0.4 provides the configuration parameter <span class="cv_-_computer_voice">MigrateToLargeIDsAndDatetime2</span> to enable the migration. By default <span class="cv_-_computer_voice">MigrateToLargeIDsAndDatetime2</span> is set to <span class="cv_-_computer_voice">false</span>, so you can complete the database upgrade and then perform the migration later. This process is described in <a href="javascript:WWHClickedPopup('upgrade', 'procedure-db-c.17.26.html#1955153', '');" title="Final Steps After The Database Upgrade is Complete">“Migrating to 64-bit IDs After Upgrade (SQL Server Only)”</a>.</div>
+      <div class="B_-_Body"><a name="1929794">If you instead want to perform the migration during the database upgrade, follow the procedure in this topic.</a></div>
+      <div class="B_-_Body"><a name="1929718">Guidewire recommends that you eventually complete the migration to 64-bit primary key and foreign key identifiers to ensure that there are enough unique identifiers available for BillingCenter.</a></div>
+      <div class="B_-_Body"><a name="1929722">The </a><span class="cv_-_computer_voice">MigrateToLargeIDsAndDatetime2</span> parameter controls the migration of primary key and foreign key identifiers only. The database upgrade automatically converts some other columns defined as the <span class="cv_-_computer_voice">longint</span> data type to <span class="cv_-_computer_voice">BIGINT</span>. The database upgrade performs that conversion regardless of the setting of <span class="cv_-_computer_voice">MigrateToLargeIDsAndDatetime2</span>.</div>
+      <h6 class="HS_-_Head_Sub"><a name="1929723">To migrate primary key and foreign key identifiers and date columns during the upgrade</a></h6>
+      <div class="LS_-_List_Start_outer" style="margin-left: 57pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="LS_-_List_Start_inner" style="width: 15pt; white-space: nowrap">
+                <span class="ri_-_run_in_header">	1.	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="LS_-_List_Start_inner"><a name="1929745">Open Studio for BillingCenter 8.0.4.</a></div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="LI_-_List_Item_outer" style="margin-left: 57pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="LI_-_List_Item_inner" style="width: 15pt; white-space: nowrap">
+                <span class="ri_-_run_in_header">	2.	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="LI_-_List_Item_inner"><a name="1929752">Open </a><span class="ui_-_UI_element">configuration</span> <span class="cv_-_computer_voice">→ </span><span class="ui_-_UI_element">config</span><span class="cv_-_computer_voice"> → </span><span class="ui_-_UI_element">config.xml</span>.</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="LI_-_List_Item_outer" style="margin-left: 57pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="LI_-_List_Item_inner" style="width: 15pt; white-space: nowrap">
+                <span class="ri_-_run_in_header">	3.	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="LI_-_List_Item_inner"><a name="1929753">Change the </a><span class="cv_-_computer_voice">value</span> of the <span class="cv_-_computer_voice">MigrateToLargeIDsAndDatetime2</span> parameter to <span class="cv_-_computer_voice">true</span>.</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="LI_-_List_Item_outer" style="margin-left: 57pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="LI_-_List_Item_inner" style="width: 15pt; white-space: nowrap">
+                <span class="ri_-_run_in_header">	4.	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="LI_-_List_Item_inner"><a name="1929754">Save your changes. </a></div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="LI_-_List_Item_outer" style="margin-left: 57pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="LI_-_List_Item_inner" style="width: 15pt; white-space: nowrap">
+                <span class="ri_-_run_in_header">	5.	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="LI_-_List_Item_inner"><a name="1929761">Open </a><span class="ui_-_UI_element">configuration</span> <span class="cv_-_computer_voice">→ </span><span class="ui_-_UI_element">config</span><span class="cv_-_computer_voice"> → </span><span class="ui_-_UI_element">database-config.xml</span>.</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="LI_-_List_Item_outer" style="margin-left: 57pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="LI_-_List_Item_inner" style="width: 15pt; white-space: nowrap">
+                <span class="ri_-_run_in_header">	6.	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="LI_-_List_Item_inner"><a name="1929762">Add the </a><span class="cv_-_computer_voice">allowUnloggedOperations</span> attribute to the <span class="cv_-_computer_voice">upgrade</span> element. </div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="CS_-_Code_Single_Line"><a name="1929763">&lt;upgrade allowUnloggedOperations="true" ... /&gt;</a></div>
+      <div class="LP_-_List_Para"><a name="1929764">If you do not require full logging, set </a><span class="cv_-_computer_voice">allowUnloggedOperations</span> to <span class="cv_-_computer_voice">true</span> to improve performance of the conversion. Set the SQL Server recovery model to Simple or Bulk logged.</div>
+      <div class="LP_-_List_Para"><a name="1929765">If you do require full logging due to the presence of solutions such as Database Mirroring, continue to use the Full recovery model and set </a><span class="cv_-_computer_voice">allowUnloggedOperations</span> to <span class="cv_-_computer_voice">false</span>.</div>
+      <div class="LP_-_List_Para"><a name="1929769">See </a><a href="javascript:WWHClickedPopup('upgrade', 'procedure-db-c.17.17.html#1994854', '');" title="Configuring the Database Upgrade">“Disabling SQL Server Logging”</a>.</div>
+      <div class="LI_-_List_Item_outer" style="margin-left: 57pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="LI_-_List_Item_inner" style="width: 15pt; white-space: nowrap">
+                <span class="ri_-_run_in_header">	7.	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="LI_-_List_Item_inner"><a name="1929773">Save your changes. BillingCenter will perform the migration to 64-bit </a><span class="cv_-_computer_voice">BIGINT</span> identifiers and <span class="cv_-_computer_voice">datetime2</span> date columns during the upgrade when you start the server.</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <script type="text/javascript" language="JavaScript1.2">
+        <!--
+          // Clear related topics
+          //
+          WWHClearRelatedTopics();
+
+          document.writeln(WWHRelatedTopicsInlineHTML());
+        // -->
+      </script>
+    </blockquote>
+    <script type="text/javascript" language="JavaScript1.2">
+      <!--
+        document.write(WWHRelatedTopicsDivTag() + WWHPopupDivTag() + WWHALinksDivTag());
+      // -->
+    </script>
+  </body>
+</html>

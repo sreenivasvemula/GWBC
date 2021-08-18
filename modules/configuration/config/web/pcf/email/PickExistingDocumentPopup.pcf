@@ -1,0 +1,57 @@
+<?xml version="1.0"?>
+<PCF
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:noNamespaceSchemaLocation="../../../../../pcf.xsd">
+  <Popup
+    autosaveable="false"
+    canVisit="true"
+    countsAsWork="false"
+    id="PickExistingDocumentPopup"
+    returnType="Document"
+    title="displaykey.Web.PickExistingDocuments.Documents">
+    <LocationEntryPoint
+      signature="PickExistingDocumentPopup(docContainer : entity.DocumentContainer)"/>
+    <Variable
+      name="docContainer"
+      type="entity.DocumentContainer"/>
+    <Screen
+      id="DocumentsScreen">
+      <Toolbar>
+        <ToolbarButton
+          action="CurrentLocation.cancel();"
+          id="PickExistingDocumentPopup_CancelButton"
+          label="displaykey.Button.Cancel"/>
+      </Toolbar>
+      <SearchPanel
+        criteriaName="DocumentSearchCriteria"
+        resultsName="DocumentList"
+        search="DocumentSearchCriteria.performSearch(true)"
+        searchCriteria="return createSearchCriteria();"
+        searchOnEnter="true"
+        searchResultsType="DocumentQuery">
+        <PanelRef
+          def="DocumentSearchDV(DocumentSearchCriteria)">
+          <TitleBar
+            title="displaykey.Web.PickExistingDocuments.SearchDocuments"/>
+        </PanelRef>
+        <PanelRef
+          def="PickExistingDocumentsLV(DocumentList)">
+          <Toolbar/>
+        </PanelRef>
+      </SearchPanel>
+    </Screen>
+    <Code><![CDATA[function createSearchCriteria() : DocumentSearchCriteria {
+        var searchCriteria = new DocumentSearchCriteria();
+  if (docContainer typeis Account) {
+    searchCriteria.Account = docContainer
+  }
+  else if(docContainer typeis Policy) {
+    searchCriteria.Policy = docContainer
+  }
+  else if (docContainer typeis Producer){
+      searchCriteria.Producer = docContainer
+    }
+        return searchCriteria;
+}]]></Code>
+  </Popup>
+</PCF>

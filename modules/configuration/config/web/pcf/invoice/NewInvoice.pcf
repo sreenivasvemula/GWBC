@@ -1,0 +1,68 @@
+<?xml version="1.0"?>
+<PCF
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:noNamespaceSchemaLocation="../../../../../pcf.xsd">
+  <Page
+    afterCancel="AccountDetailInvoices.go(account)"
+    afterCommit="AccountDetailInvoices.go(account)"
+    alwaysInEditMode="true"
+    canEdit="true"
+    canVisit="perm.Account.invccreate"
+    id="NewInvoice"
+    parent="AccountDetailInvoices(account)"
+    showUpLink="true"
+    startInEditMode="true"
+    title="displaykey.Web.NewInvoice.Title">
+    <LocationEntryPoint
+      signature="NewInvoice(account : Account, selectedInvoiceStream : InvoiceStream)"/>
+    <Variable
+      initialValue="createInvoice()"
+      name="newInvoice"
+      type="AccountInvoice"/>
+    <Variable
+      name="account"
+      type="Account"/>
+    <Variable
+      initialValue="null"
+      name="selectedInvoiceStream"
+      type="InvoiceStream"/>
+    <Screen>
+      <Toolbar>
+        <EditButtons/>
+      </Toolbar>
+      <DetailViewPanel>
+        <InputColumn>
+          <TextInput
+            id="AccountNumber"
+            label="displaykey.Web.NewInvoice.AccountNumber"
+            value="newInvoice.Account"/>
+          <DateInput
+            editable="true"
+            id="InvoiceDate"
+            label="displaykey.Web.NewInvoice.InvoiceDate"
+            required="true"
+            validationExpression="gw.api.web.invoice.InvoiceUtil.validateInvoiceDate(newInvoice)"
+            value="newInvoice.EventDate"/>
+          <DateInput
+            editable="true"
+            id="DueDate"
+            label="displaykey.Web.NewInvoice.DueDate"
+            required="true"
+            validationExpression="gw.api.web.invoice.InvoiceUtil.validatePaymentDueDate(newInvoice)"
+            value="newInvoice.PaymentDueDate"/>
+          <BooleanRadioInput
+            editable="true"
+            id="IsAdHoc"
+            label="displaykey.Web.NewInvoice.IsAdHoc"
+            required="false"
+            value="newInvoice.AdHoc "/>
+        </InputColumn>
+      </DetailViewPanel>
+    </Screen>
+    <Code><![CDATA[function createInvoice() : AccountInvoice {
+  // todo update this page to be able to create an account in a particular invoice stream
+  return selectedInvoiceStream.createAndAddInvoice(util.DateUtil.currentDate()) as AccountInvoice
+  // return account.createAndAddPlannedInvoice(util.DateUtil.addDays(util.DateUtil.currentDate(), 1))
+}]]></Code>
+  </Page>
+</PCF>

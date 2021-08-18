@@ -1,0 +1,504 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsdl:definitions targetNamespace="http://api.webservices.bc.guidewire.com/" xmlns:apachesoap="http://xml.apache.org/xml-soap" xmlns:impl="http://api.webservices.bc.guidewire.com/" xmlns:intf="http://api.webservices.bc.guidewire.com/" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:tns1="http://enumeration.webservices.bc.guidewire.com/" xmlns:tns2="http://fault.webservices.bc.guidewire.com/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:wsdlsoap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:xsd="http://www.w3.org/2001/XMLSchema"><wsdl:types><schema targetNamespace="http://enumeration.webservices.bc.guidewire.com/" xmlns="http://www.w3.org/2001/XMLSchema"><import namespace="http://fault.webservices.bc.guidewire.com/"/><import namespace="http://schemas.xmlsoap.org/soap/encoding/"/><simpleType name="BatchProcessType"><xsd:annotation><xsd:documentation>Types of batch processes</xsd:documentation></xsd:annotation><restriction base="xsd:string"><xsd:enumeration value="TC_AccountInactivity"><xsd:annotation><xsd:documentation>Checks for accounts that have been inactive for many days and creates notification activities for those accounts.</xsd:documentation></xsd:annotation></xsd:enumeration><xsd:enumeration value="TC_ActivityEsc"><xsd:annotation><xsd:documentation>Activity escalation monitor</xsd:documentation></xsd:annotation></xsd:enumeration><xsd:enumeration value="TC_AdvanceExpiration"><xsd:annotation><xsd:documentation>Checks for commission advances whose &quot;maintain until&quot; dates have passed and expires them. Results in any remaining advance balance becoming owed by the producer.</xsd:documentation></xsd:annotation></xsd:enumeration><xsd:enumeration value="TC_AgencySuspensePayment"><xsd:annotation><xsd:documentation>Process agency cycle payments and promises that match policy periods</xsd:documentation></xsd:annotation></xsd:enumeration><xsd:enumeration value="TC_FundsAllotment"><xsd:annotation><xsd:documentation>Allots funds from fund sources to fund uses for funds tracking.  Allots funds for all accounts that have unallotted or partially unallotted funds.</xsd:documentation></xsd:annotation></xsd:enumeration><xsd:enumeration value="TC_Archive"><xsd:annotation><xsd:documentation>Identify archiving work and create work items.</xsd:documentation></xsd:annotation></xsd:enumeration><xsd:enumeration value="TC_AutomaticDisbursement"><xsd:annotation><xsd:documentation>Checks for accounts whose unapplied funds' amount less the (amount under contract + amount slated for disbursement) is greater than billing-plan defined &quot;Disbursement Over&quot; amount and creates a disbursement for such accounts.</xsd:documentation></xsd:annotation></xsd:enumeration><xsd:enumeration value="TC_ChargeProRataTx"><xsd:annotation><xsd:documentation>Moves part of the total charge amount from the pro-rata charge's unearned T-Account (liability) to its revenue T-Account (income).</xsd:documentation></xsd:annotation></xsd:enumeration><xsd:enumeration value="TC_CollEffective"><xsd:annotation><xsd:documentation>Checks for Pending Collateral Requirements whose effective dates have passed</xsd:documentation></xsd:annotation></xsd:enumeration><xsd:enumeration value="TC_CollExpiration"><xsd:annotation><xsd:documentation>Checks for Active Collateral Requirements whose expiration dates have passed</xsd:documentation></xsd:annotation></xsd:enumeration><xsd:enumeration value="TC_CmsnPayable"><xsd:annotation><xsd:documentation>Checks for commissions that need to be made payable.</xsd:documentation></xsd:annotation></xsd:enumeration><xsd:enumeration value="TC_CommissionPmt"><xsd:annotation><xsd:documentation>Checks for manual commission payments that have been scheduled to occur on a future date. Any commission payment whose scheduled date has passed is executed by this process.</xsd:documentation></xsd:annotation></xsd:enumeration><xsd:enumeration value="TC_ContactAutoSync"><xsd:annotation><xsd:documentation>Automatically synchronize the local contact that are out of syn and marked 'allow' auto-sync.</xsd:documentation></xsd:annotation></xsd:enumeration><xsd:enumeration value="TC_DataDistribution"><xsd:annotation><xsd:documentation>Data distribution for the database</xsd:documentation></xsd:annotation></xsd:enumeration><xsd:enumeration value="TC_DBConsistencyCheck"><xsd:annotation><xsd:documentation>Database consistency checks</xsd:documentation></xsd:annotation></xsd:enumeration><xsd:enumeration value="TC_DBStats"><xsd:annotation><xsd:documentation>Database statistics</xsd:documentation></xsd:annotation></xsd:enumeration><xsd:enumeration value="TC_DeferredUpgradeTasks"><xsd:annotation><xsd:documentation>Execute database upgrade tasks that were deferred</xsd:documentation></xsd:annotation></xsd:enumeration><xsd:enumeration value="TC_Disbursement"><xsd:annotation><xsd:documentation>Checks for disbursements whose due dates have passed and are approved and pays that amount to the account.</xsd:documentation></xsd:annotation></xsd:enumeration><xsd:enumeration value="TC_FullPayDiscount"><xsd:annotation><xsd:documentation>Evaluates whether a policy is eligible for a full pay discount</xsd:documentation></xsd:annotation></xsd:enumeration><xsd:enumeration value="TC_Geocode"><xsd:annotation><xsd:documentation>Geocoding Addresses queue writer.</xsd:documentation></xsd:annotation></xsd:enumeration><xsd:enumeration value="TC_GroupException"><xsd:annotation><xsd:documentation>Group exception Monitor</xsd:documentation></xsd:annotation></xsd:enumeration><xsd:enumeration value="TC_Invoice"><xsd:annotation><xsd:documentation>Changes the status of planned invoices whose billing date has passed to &quot;billed&quot;. As a consequence of this change, the invoices are sent to the account.</xsd:documentation></xsd:annotation></xsd:enumeration><xsd:enumeration value="TC_InvoiceDue"><xsd:annotation><xsd:documentation>Changes the status of billed invoices whose due date has passed to &quot;due&quot;. Delinquency will be triggered for any policies with past due amounts.</xsd:documentation></xsd:annotation></xsd:enumeration><xsd:enumeration value="TC_LegacyAgencyBill"><xsd:annotation><xsd:documentation>Starts workflow on staging table imported active agency bill cycle</xsd:documentation></xsd:annotation></xsd:enumeration><xsd:enumeration value="TC_LegacyCollateral"><xsd:annotation><xsd:documentation>Runs allocate on Collateral with requirements and resources of the same type</xsd:documentation></xsd:annotation></xsd:enumeration><xsd:enumeration value="TC_LegacyDelinquency"><xsd:annotation><xsd:documentation>Starts workflow on staging table imported active delinquency processes</xsd:documentation></xsd:annotation></xsd:enumeration><xsd:enumeration value="TC_LegacyLetterOfCredit"><xsd:annotation><xsd:documentation>Runs allocate on Collateral with LOCs but no cash</xsd:documentation></xsd:annotation></xsd:enumeration><xsd:enumeration value="TC_LetterOfCredit"><xsd:annotation><xsd:documentation>Changes the status of Current LOCs to Expired when their expiration date has passed</xsd:documentation></xsd:annotation></xsd:enumeration><xsd:enumeration value="TC_MSDMVReport"><xsd:annotation><xsd:documentation>Microsoft database DMV performance report generation</xsd:documentation></xsd:annotation></xsd:enumeration><xsd:enumeration value="TC_NewPayment"><xsd:annotation><xsd:documentation>Distributes a payment, moving funds from the account's unapplied T-Account to the account's policies.</xsd:documentation></xsd:annotation></xsd:enumeration><xsd:enumeration value="TC_OraAWRReport"><xsd:annotation><xsd:documentation>Oracle database AWR performance report generation</xsd:documentation></xsd:annotation></xsd:enumeration><xsd:enumeration value="TC_PaymentRequest"><xsd:annotation><xsd:documentation>Checks for need to change payment request status</xsd:documentation></xsd:annotation></xsd:enumeration><xsd:enumeration value="TC_PhoneNumberNormalizer"><xsd:annotation><xsd:documentation>Performs a normalization of phone numbers contact</xsd:documentation></xsd:annotation></xsd:enumeration><xsd:enumeration value="TC_PolicyClosure"><xsd:annotation><xsd:documentation>Checks for policies that are not locked and that have been fully paid. Any such policy is closed by this process.</xsd:documentation></xsd:annotation></xsd:enumeration><xsd:enumeration value="TC_PopulateSearchColumns"><xsd:annotation><xsd:documentation>Populate searchColumn columns from their original sources.</xsd:documentation></xsd:annotation></xsd:enumeration><xsd:enumeration value="TC_PremiumReportReportDue"><xsd:annotation><xsd:documentation>Checks to see if any premium reports are past due, kicks off delinquency if they are.</xsd:documentation></xsd:annotation></xsd:enumeration><xsd:enumeration value="TC_ProcessCompletionMonitor"><xsd:annotation><xsd:documentation>Invoke plugin on completion of monitored worker queue</xsd:documentation></xsd:annotation></xsd:enumeration><xsd:enumeration value="TC_ProcessHistoryPurge"><xsd:annotation><xsd:documentation>Purge batch process history data</xsd:documentation></xsd:annotation></xsd:enumeration><xsd:enumeration value="TC_ProducerPayment"><xsd:annotation><xsd:documentation>Pays producers whose next scheduled auto-payment date has passed. Payment includes the amount currently payable to the producer, plus any manual commission payments that have been scheduled to occur with next payment.</xsd:documentation></xsd:annotation></xsd:enumeration><xsd:enumeration value="TC_PurgeClusterMembers"><xsd:annotation><xsd:documentation>Purge old ClusterMember entities</xsd:documentation></xsd:annotation></xsd:enumeration><xsd:enumeration value="TC_PurgeFailedWorkItems"><xsd:annotation><xsd:documentation>Purge failed work items from all queues.</xsd:documentation></xsd:annotation></xsd:enumeration><xsd:enumeration value="TC_PurgeTransactionIds"><xsd:annotation><xsd:documentation>Purge external transaction id that no longer need to be tracked, by age.</xsd:documentation></xsd:annotation></xsd:enumeration><xsd:enumeration value="TC_PurgeProfilerData"><xsd:annotation><xsd:documentation>Purge profiler data at regular intervals</xsd:documentation></xsd:annotation></xsd:enumeration><xsd:enumeration value="TC_PurgeWorkflows"><xsd:annotation><xsd:documentation>Purge completed workflows after resetting any referenced workflows, this executes gw.processes.PurgeWorkflow.gs</xsd:documentation></xsd:annotation></xsd:enumeration><xsd:enumeration value="TC_PurgeWorkflowLogs"><xsd:annotation><xsd:documentation>Purge completed workflows logs, this executes gw.processes.PurgeWorkflowLogs.gs</xsd:documentation></xsd:annotation></xsd:enumeration><xsd:enumeration value="TC_ReleaseChargeHolds"><xsd:annotation><xsd:documentation>Checks for charge holds whose released dates have passed and release them.</xsd:documentation></xsd:annotation></xsd:enumeration><xsd:enumeration value="TC_ReleaseTtktHoldTypes"><xsd:annotation><xsd:documentation>Checks for hold types on trouble tickets whose released dates have passed and removes those hold types from their holds.</xsd:documentation></xsd:annotation></xsd:enumeration><xsd:enumeration value="TC_STDeleteExcluded"><xsd:annotation><xsd:documentation>Asynchronous deletion of excluded rows from staging tables</xsd:documentation></xsd:annotation></xsd:enumeration><xsd:enumeration value="TC_STEncrypt"><xsd:annotation><xsd:documentation>Asynchronous encryption of staging table data</xsd:documentation></xsd:annotation></xsd:enumeration><xsd:enumeration value="TC_STIntegrityCheck"><xsd:annotation><xsd:documentation>Asynchronous integrity check of staging tables</xsd:documentation></xsd:annotation></xsd:enumeration><xsd:enumeration value="TC_STLoad"><xsd:annotation><xsd:documentation>Asynchronous integrity check and load of staging tables</xsd:documentation></xsd:annotation></xsd:enumeration><xsd:enumeration value="TC_STPopExcluded"><xsd:annotation><xsd:documentation>Asynchronous population of the exclusion tables</xsd:documentation></xsd:annotation></xsd:enumeration><xsd:enumeration value="TC_STStatistics"><xsd:annotation><xsd:documentation>Asynchronous update of staging table statistics</xsd:documentation></xsd:annotation></xsd:enumeration><xsd:enumeration value="TC_StatementBilled"><xsd:annotation><xsd:documentation>Changes the status of &quot;Planned&quot; Agency Bill Statements whose Bill Date has passed to &quot;Billed&quot;.</xsd:documentation></xsd:annotation></xsd:enumeration><xsd:enumeration value="TC_StatementDue"><xsd:annotation><xsd:documentation>Changes the status of &quot;Billed&quot; Agency Bill Statements whose Due Date has passed to &quot;Due&quot;.</xsd:documentation></xsd:annotation></xsd:enumeration><xsd:enumeration value="TC_SuspensePayment"><xsd:annotation><xsd:documentation>Process the suspense payments who match accounts</xsd:documentation></xsd:annotation></xsd:enumeration><xsd:enumeration value="TC_TroubleTicketEsc"><xsd:annotation><xsd:documentation>Trouble Ticket escalation monitor</xsd:documentation></xsd:annotation></xsd:enumeration><xsd:enumeration value="TC_UpgradeBillingInstructionPaymentPlan"><xsd:annotation><xsd:documentation>Initializes policy billing instructions' payment plans after upgrade</xsd:documentation></xsd:annotation></xsd:enumeration><xsd:enumeration value="TC_UserException"><xsd:annotation><xsd:documentation>User exception Monitor</xsd:documentation></xsd:annotation></xsd:enumeration><xsd:enumeration value="TC_Workflow"><xsd:annotation><xsd:documentation>Workflows work queue writer.</xsd:documentation></xsd:annotation></xsd:enumeration><xsd:enumeration value="TC_WorkItemSetPurge"><xsd:annotation><xsd:documentation>Purge WorkItemSet data</xsd:documentation></xsd:annotation></xsd:enumeration><xsd:enumeration value="TC_WorkQueueInstrumentationPurge"><xsd:annotation><xsd:documentation>Purge instrumentation data for work queues</xsd:documentation></xsd:annotation></xsd:enumeration><xsd:enumeration value="TC_WriteoffStaging"><xsd:annotation><xsd:documentation>Distributes any undistributed imported writeoffs, to be used after staging table loading.</xsd:documentation></xsd:annotation></xsd:enumeration><xsd:enumeration value="TC_BulkPurge"><xsd:annotation><xsd:documentation>Purge records through table updates</xsd:documentation></xsd:annotation></xsd:enumeration><xsd:enumeration value="TC_StatReport"><xsd:annotation><xsd:documentation>Stat Report work queue writer</xsd:documentation></xsd:annotation></xsd:enumeration></restriction></simpleType></schema><schema targetNamespace="http://fault.webservices.bc.guidewire.com/" xmlns="http://www.w3.org/2001/XMLSchema"><import namespace="http://enumeration.webservices.bc.guidewire.com/"/><import namespace="http://schemas.xmlsoap.org/soap/encoding/"/><complexType name="SOAPException"><xsd:annotation><xsd:documentation>A generic SOAP exception.</xsd:documentation></xsd:annotation><sequence><element name="Message" nillable="true" type="soapenc:string"><xsd:annotation><xsd:documentation>The message associated with this exception</xsd:documentation></xsd:annotation></element><element name="OtherMessages" nillable="true" type="soapenc:string"><xsd:annotation><xsd:documentation>Other messages attached to this exception.  This message may contain information
+related to other exceptions that occurred during a SOAP call, but not directly
+associated with this particular exception.</xsd:documentation></xsd:annotation></element></sequence></complexType><complexType name="SOAPSenderException"><xsd:annotation><xsd:documentation>SOAPSenderException is the base class for all exceptions that resulted from
+a sender error. This usually means that required data was not properly encoded
+or was absent. Senders should not send the message again unless some steps have
+been taken to make the encoded data valid.</xsd:documentation></xsd:annotation><complexContent><extension base="tns2:SOAPException"><sequence/></extension></complexContent></complexType><complexType name="DataConversionException"><xsd:annotation><xsd:documentation>Thrown by many APIs when they encounter a problem translating a SOAP data object into
+an internal system object.</xsd:documentation></xsd:annotation><complexContent><extension base="tns2:SOAPSenderException"><sequence/></extension></complexContent></complexType><complexType name="BadIdentifierException"><xsd:annotation><xsd:documentation>Thrown when an internal public ID doesn't map to a real bean (problem could be that type was incorrect).</xsd:documentation></xsd:annotation><complexContent><extension base="tns2:DataConversionException"><sequence/></extension></complexContent></complexType><complexType name="PermissionException"><xsd:annotation><xsd:documentation>Thrown when the authenticated SOAP user does not have permission to
+perform the requested operation</xsd:documentation></xsd:annotation><complexContent><extension base="tns2:SOAPSenderException"><sequence/></extension></complexContent></complexType><complexType name="SOAPServerException"><xsd:annotation><xsd:documentation>SOAPServerException is the base class for all exceptions that resulted from
+a server error. This is something of a catch-all exception type insofar as
+some things which might in fact be considered SOAPSenderExceptions are reported
+as SOAPServerExceptions. Perhaps a rule failed or something else. Generally it
+indicates a problem in the server that is likely retryable at some future time.
+The database being down, an unavailable plugin, etc would fall into this catagory.</xsd:documentation></xsd:annotation><complexContent><extension base="tns2:SOAPException"><sequence/></extension></complexContent></complexType><complexType name="ServerStateException"><xsd:annotation><xsd:documentation>ServerStateException is thrown when a request is made at a time the
+server is in a state that disallows the request. An example is if
+an attempt is made to add a claim and the server is in maintenance
+mode.</xsd:documentation></xsd:annotation><complexContent><extension base="tns2:SOAPServerException"><sequence/></extension></complexContent></complexType><complexType name="SOAPRetryableException"><xsd:annotation><xsd:documentation>SOAPRetryableException is the class for all exceptions that are retryable
+immediately.  The primary example of this is ConcurrentDataChangeException.</xsd:documentation></xsd:annotation><complexContent><extension base="tns2:SOAPException"><sequence/></extension></complexContent></complexType><complexType name="LoginException"><xsd:annotation><xsd:documentation>Class of exceptions thrown when a user tries to log in and an authentication failure occurs.</xsd:documentation></xsd:annotation><complexContent><extension base="tns2:PermissionException"><sequence/></extension></complexContent></complexType><complexType name="EntityStateException"><xsd:annotation><xsd:documentation>Thrown when an attempt is made to manipulate an object that is in a state
+that prevents the operation from being performed. An example is trying to
+modify a Claim that is marked as closed.</xsd:documentation></xsd:annotation><complexContent><extension base="tns2:SOAPSenderException"><sequence/></extension></complexContent></complexType><complexType name="DuplicateKeyException"><xsd:annotation><xsd:documentation>Throws if a duplicate data exception is detected in the database.  I.e. a unique index violation.</xsd:documentation></xsd:annotation><complexContent><extension base="tns2:DataConversionException"><sequence/></extension></complexContent></complexType><complexType name="FieldConversionException"><xsd:annotation><xsd:documentation>Thrown when a data type cannot be converted into the native data type.</xsd:documentation></xsd:annotation><complexContent><extension base="tns2:DataConversionException"><sequence/></extension></complexContent></complexType><complexType name="FieldFormatException"><xsd:annotation><xsd:documentation>Thrown when the input type does not match the format specified in the metadata.  I.e. a string is too long.</xsd:documentation></xsd:annotation><complexContent><extension base="tns2:DataConversionException"><sequence/></extension></complexContent></complexType><complexType name="RequiredFieldException"><xsd:annotation><xsd:documentation>Thrown when required data is missing from a bean.</xsd:documentation></xsd:annotation><complexContent><extension base="tns2:DataConversionException"><sequence/></extension></complexContent></complexType><complexType name="UnknownTypeKeyException"><xsd:annotation><xsd:documentation>Thrown when a typekey value isn't available on the server.  This exception can only
+happen if the SOAP WSDL that is being used on the remote side is invalid.</xsd:documentation></xsd:annotation><complexContent><extension base="tns2:DataConversionException"><sequence/></extension></complexContent></complexType><complexType name="BatchProcessException"><xsd:annotation><xsd:documentation>SOAP Exception specific to batch process operations</xsd:documentation></xsd:annotation><complexContent><extension base="tns2:SOAPServerException"><sequence/></extension></complexContent></complexType><complexType name="AlreadyExecutedException"><complexContent><extension base="tns2:SOAPSenderException"><sequence/></extension></complexContent></complexType></schema></wsdl:types>
+  <wsdl:message name="setEnableProfilerForBatchProcessRequest">
+    <wsdl:part name="enable" type="xsd:boolean">
+<wsdl:documentation>whether to enable or disable</wsdl:documentation>
+    </wsdl:part>
+    <wsdl:part name="type" type="tns1:BatchProcessType">
+<wsdl:documentation>batch process type</wsdl:documentation>
+    </wsdl:part>
+    <wsdl:part name="hiResTime" type="xsd:boolean">
+<wsdl:documentation>whether to use hi-resolution clock for timing (Windows only)</wsdl:documentation>
+    </wsdl:part>
+    <wsdl:part name="enableStackTracing" type="xsd:boolean">
+<wsdl:documentation>to allow stack tracing (expensive) or not. This is ignored if enable is false</wsdl:documentation>
+    </wsdl:part>
+    <wsdl:part name="enableQueryOptimizerTracing" type="xsd:boolean">
+<wsdl:documentation>whether to allow query optimizer tracing (expensive) or not. This is ignored if enable is false.</wsdl:documentation>
+    </wsdl:part>
+    <wsdl:part name="enableExtendedQueryTracing" type="xsd:boolean">
+<wsdl:documentation>whether to allow extended query tracing (expensive) or not. This is ignored if enable is false.</wsdl:documentation>
+    </wsdl:part>
+    <wsdl:part name="dbmsCounterThresholdMs" type="xsd:int">
+<wsdl:documentation>The threshold for how long a database operation can take before generating a report using dbms
+counters for the interval (start of profiling session, end of profiling session). Use 0 to disable.</wsdl:documentation>
+    </wsdl:part>
+    <wsdl:part name="diffDbmsCounters" type="xsd:boolean">
+<wsdl:documentation>Whether diffing DBMS counters is enabled. Only meaningful if ProfilerEnabled and DbmsCounterThresholdMs are true.</wsdl:documentation>
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="setEnableProfilerForWorkQueueResponse">
+  </wsdl:message>
+  <wsdl:message name="PermissionException">
+    <wsdl:part name="fault" type="tns2:PermissionException">
+<wsdl:documentation>Thrown when the authenticated SOAP user does not have permission to perform the requested operation</wsdl:documentation>
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="setEnableProfilerForSubsequentWebSessionsResponse">
+  </wsdl:message>
+  <wsdl:message name="setEnableProfilerForBatchProcessResponse">
+  </wsdl:message>
+  <wsdl:message name="BadIdentifierException">
+    <wsdl:part name="fault" type="tns2:BadIdentifierException">
+<wsdl:documentation>Thrown when an internal public ID doesn't map to a real bean (problem could be that type was incorrect)</wsdl:documentation>
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="setEnableProfilerForWorkQueueRequest">
+    <wsdl:part name="enable" type="xsd:boolean">
+<wsdl:documentation>whether to enable or disable</wsdl:documentation>
+    </wsdl:part>
+    <wsdl:part name="type" type="tns1:BatchProcessType">
+<wsdl:documentation>batch process type</wsdl:documentation>
+    </wsdl:part>
+    <wsdl:part name="hiResTime" type="xsd:boolean">
+<wsdl:documentation>whether to use hi-resolution clock for timing (Windows only)</wsdl:documentation>
+    </wsdl:part>
+    <wsdl:part name="enableStackTracing" type="xsd:boolean">
+<wsdl:documentation>whether to allow stack tracing (expensive) or not. This is ignored if enable is false</wsdl:documentation>
+    </wsdl:part>
+    <wsdl:part name="enableQueryOptimizerTracing" type="xsd:boolean">
+<wsdl:documentation>whether to allow query optimizer tracing (expensive) or not. This is ignored if enable is false.</wsdl:documentation>
+    </wsdl:part>
+    <wsdl:part name="enableExtendedQueryTracing" type="xsd:boolean">
+<wsdl:documentation>whether to allow extended query tracing (expensive) or not. This is ignored if enable is false.</wsdl:documentation>
+    </wsdl:part>
+    <wsdl:part name="dbmsCounterThresholdMs" type="xsd:int">
+<wsdl:documentation>The threshold for how long a database operation can take before generating a report using dbms
+counters for the interval (start of profiling session, end of profiling session). Use 0 to disable.</wsdl:documentation>
+    </wsdl:part>
+    <wsdl:part name="diffDbmsCounters" type="xsd:boolean">
+<wsdl:documentation>Whether diffing DBMS counters is enabled. Only meaningful if ProfilerEnabled and DbmsCounterThresholdMs are true.</wsdl:documentation>
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="setEnableProfilerForStartablePluginResponse">
+  </wsdl:message>
+  <wsdl:message name="setEnableProfilerForBatchProcessAndWorkQueueResponse">
+  </wsdl:message>
+  <wsdl:message name="ServerStateException">
+    <wsdl:part name="fault" type="tns2:ServerStateException">
+<wsdl:documentation>Thrown when a request is made at a time the server is in a state that disallows the request.</wsdl:documentation>
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="setEnableProfilerForMessageDestinationRequest">
+    <wsdl:part name="enable" type="xsd:boolean">
+<wsdl:documentation>whether to enable or disable</wsdl:documentation>
+    </wsdl:part>
+    <wsdl:part name="destinationID" type="xsd:int">
+<wsdl:documentation/>
+    </wsdl:part>
+    <wsdl:part name="hiResTime" type="xsd:boolean">
+<wsdl:documentation>whether to use hi-resolution clock for timing (Windows only)</wsdl:documentation>
+    </wsdl:part>
+    <wsdl:part name="enableStackTracing" type="xsd:boolean">
+<wsdl:documentation>whether to allow stack tracing (expensive) or not. This is ignored if enable is false</wsdl:documentation>
+    </wsdl:part>
+    <wsdl:part name="enableQueryOptimizerTracing" type="xsd:boolean">
+<wsdl:documentation>whether to allow query optimizer tracing (expensive) or not. This is ignored if enable is false.</wsdl:documentation>
+    </wsdl:part>
+    <wsdl:part name="enableExtendedQueryTracing" type="xsd:boolean">
+<wsdl:documentation>whether to allow extended query tracing (expensive) or not. This is ignored if enable is false.</wsdl:documentation>
+    </wsdl:part>
+    <wsdl:part name="dbmsCounterThresholdMs" type="xsd:int">
+<wsdl:documentation>The threshold for how long a database operation can take before generating a report using dbms
+counters for the interval (start of profiling session, end of profiling session). Use 0 to disable.</wsdl:documentation>
+    </wsdl:part>
+    <wsdl:part name="diffDbmsCounters" type="xsd:boolean">
+<wsdl:documentation>Whether diffing DBMS counters is enabled. Only meaningful if ProfilerEnabled and DbmsCounterThresholdMs are true.</wsdl:documentation>
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="setEnableProfilerForStartablePluginRequest">
+    <wsdl:part name="enable" type="xsd:boolean">
+<wsdl:documentation>whether to enable or disable</wsdl:documentation>
+    </wsdl:part>
+    <wsdl:part name="pluginName" type="soapenc:string">
+<wsdl:documentation/>
+    </wsdl:part>
+    <wsdl:part name="hiResTime" type="xsd:boolean">
+<wsdl:documentation>whether to use hi-resolution clock for timing (Windows only)</wsdl:documentation>
+    </wsdl:part>
+    <wsdl:part name="enableStackTracing" type="xsd:boolean">
+<wsdl:documentation>whether to allow stack tracing (expensive) or not. This is ignored if enable is false</wsdl:documentation>
+    </wsdl:part>
+    <wsdl:part name="enableQueryOptimizerTracing" type="xsd:boolean">
+<wsdl:documentation>whether to allow query optimizer tracing (expensive) or not. This is ignored if enable is false.</wsdl:documentation>
+    </wsdl:part>
+    <wsdl:part name="enableExtendedQueryTracing" type="xsd:boolean">
+<wsdl:documentation>whether to allow extended query tracing (expensive) or not. This is ignored if enable is false.</wsdl:documentation>
+    </wsdl:part>
+    <wsdl:part name="dbmsCounterThresholdMs" type="xsd:int">
+<wsdl:documentation>The threshold for how long a database operation can take before generating a report using dbms
+counters for the interval (start of profiling session, end of profiling session). Use 0 to disable.</wsdl:documentation>
+    </wsdl:part>
+    <wsdl:part name="diffDbmsCounters" type="xsd:boolean">
+<wsdl:documentation>Whether diffing DBMS counters is enabled. Only meaningful if ProfilerEnabled and DbmsCounterThresholdMs are true.</wsdl:documentation>
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="setEnableProfilerForWebServiceResponse">
+  </wsdl:message>
+  <wsdl:message name="setEnableProfilerForMessageDestinationResponse">
+  </wsdl:message>
+  <wsdl:message name="setEnableProfilerForSubsequentWebSessionsRequest">
+    <wsdl:part name="name" type="soapenc:string">
+<wsdl:documentation>name for the profiler session. optional; use null for the default name.</wsdl:documentation>
+    </wsdl:part>
+    <wsdl:part name="enable" type="xsd:boolean">
+<wsdl:documentation>whether to enable or disable</wsdl:documentation>
+    </wsdl:part>
+    <wsdl:part name="hiResTime" type="xsd:boolean">
+<wsdl:documentation>whether to use hi-resolution clock for timing (Windows only)</wsdl:documentation>
+    </wsdl:part>
+    <wsdl:part name="enableStackTracing" type="xsd:boolean">
+<wsdl:documentation>whether to allow stack tracing (expensive) or not. This is ignored if enable is false</wsdl:documentation>
+    </wsdl:part>
+    <wsdl:part name="enableQueryOptimizerTracing" type="xsd:boolean">
+<wsdl:documentation>whether to allow query optimizer tracing (expensive) or not. This is ignored if enable is false.</wsdl:documentation>
+    </wsdl:part>
+    <wsdl:part name="enableExtendedQueryTracing" type="xsd:boolean">
+<wsdl:documentation>whether to allow extended query tracing (expensive) or not. This is ignored if enable is false.</wsdl:documentation>
+    </wsdl:part>
+    <wsdl:part name="dbmsCounterThresholdMs" type="xsd:int">
+<wsdl:documentation>The threshold for how long a database operation can take before generating a report using dbms
+counters for the interval (start of profiling session, end of profiling session). Use 0 to disable.</wsdl:documentation>
+    </wsdl:part>
+    <wsdl:part name="diffDbmsCounters" type="xsd:boolean">
+<wsdl:documentation>Whether diffing DBMS counters is enabled. Only meaningful if ProfilerEnabled and DbmsCounterThresholdMs are true.</wsdl:documentation>
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="setEnableProfilerForWebServiceRequest">
+    <wsdl:part name="enable" type="xsd:boolean">
+<wsdl:documentation>whether to enable or disable</wsdl:documentation>
+    </wsdl:part>
+    <wsdl:part name="serviceName" type="soapenc:string">
+<wsdl:documentation/>
+    </wsdl:part>
+    <wsdl:part name="operationName" type="soapenc:string">
+<wsdl:documentation/>
+    </wsdl:part>
+    <wsdl:part name="hiResTime" type="xsd:boolean">
+<wsdl:documentation>whether to use hi-resolution clock for timing (Windows only)</wsdl:documentation>
+    </wsdl:part>
+    <wsdl:part name="enableStackTracing" type="xsd:boolean">
+<wsdl:documentation>whether to allow stack tracing (expensive) or not. This is ignored if enable is false</wsdl:documentation>
+    </wsdl:part>
+    <wsdl:part name="enableQueryOptimizerTracing" type="xsd:boolean">
+<wsdl:documentation>whether to allow query optimizer tracing (expensive) or not. This is ignored if enable is false.</wsdl:documentation>
+    </wsdl:part>
+    <wsdl:part name="enableExtendedQueryTracing" type="xsd:boolean">
+<wsdl:documentation>whether to allow extended query tracing (expensive) or not. This is ignored if enable is false.</wsdl:documentation>
+    </wsdl:part>
+    <wsdl:part name="dbmsCounterThresholdMs" type="xsd:int">
+<wsdl:documentation>The threshold for how long a database operation can take before generating a report using dbms
+counters for the interval (start of profiling session, end of profiling session). Use 0 to disable.</wsdl:documentation>
+    </wsdl:part>
+    <wsdl:part name="diffDbmsCounters" type="xsd:boolean">
+<wsdl:documentation>Whether diffing DBMS counters is enabled. Only meaningful if ProfilerEnabled and DbmsCounterThresholdMs are true.</wsdl:documentation>
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="setEnableProfilerForBatchProcessAndWorkQueueRequest">
+    <wsdl:part name="enable" type="xsd:boolean">
+<wsdl:documentation>whether to enable or disable</wsdl:documentation>
+    </wsdl:part>
+    <wsdl:part name="type" type="tns1:BatchProcessType">
+<wsdl:documentation>batch process type</wsdl:documentation>
+    </wsdl:part>
+    <wsdl:part name="hiResTime" type="xsd:boolean">
+<wsdl:documentation>whether to use hi-resolution clock for timing (Windows only)</wsdl:documentation>
+    </wsdl:part>
+    <wsdl:part name="enableStackTracing" type="xsd:boolean">
+<wsdl:documentation>whether to allow stack tracing (expensive) or not. This is ignored if enable is false</wsdl:documentation>
+    </wsdl:part>
+    <wsdl:part name="enableQueryOptimizerTracing" type="xsd:boolean">
+<wsdl:documentation>whether to allow query optimizer tracing (expensive) or not. This is ignored if enable is false.</wsdl:documentation>
+    </wsdl:part>
+    <wsdl:part name="enableExtendedQueryTracing" type="xsd:boolean">
+<wsdl:documentation>whether to allow extended query tracing (expensive) or not. This is ignored if enable is false.</wsdl:documentation>
+    </wsdl:part>
+    <wsdl:part name="dbmsCounterThresholdMs" type="xsd:int">
+<wsdl:documentation>The threshold for how long a database operation can take before generating a report using dbms
+counters for the interval (start of profiling session, end of profiling session). Use 0 to disable.</wsdl:documentation>
+    </wsdl:part>
+    <wsdl:part name="diffDbmsCounters" type="xsd:boolean">
+<wsdl:documentation>Whether diffing DBMS counters is enabled. Only meaningful if ProfilerEnabled and DbmsCounterThresholdMs are true.</wsdl:documentation>
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:portType name="IProfilerAPI">
+<wsdl:documentation>API to access services offered by the Guidewire Profiler.
+@deprecated Use WS-I webservice gw.wsi.pl.ProfilerAPI instead.
+</wsdl:documentation>
+    <wsdl:operation name="setEnableProfilerForBatchProcess" parameterOrder="enable type hiResTime enableStackTracing enableQueryOptimizerTracing enableExtendedQueryTracing dbmsCounterThresholdMs diffDbmsCounters">
+<wsdl:documentation>Enable or disable the profiler for batch processes of the given type
+&lt;br&gt;@deprecated </wsdl:documentation>
+      <wsdl:input message="impl:setEnableProfilerForBatchProcessRequest" name="setEnableProfilerForBatchProcessRequest">
+    </wsdl:input>
+      <wsdl:output message="impl:setEnableProfilerForBatchProcessResponse" name="setEnableProfilerForBatchProcessResponse">
+    </wsdl:output>
+      <wsdl:fault message="impl:ServerStateException" name="ServerStateException">
+    </wsdl:fault>
+      <wsdl:fault message="impl:PermissionException" name="PermissionException">
+    </wsdl:fault>
+      <wsdl:fault message="impl:BadIdentifierException" name="BadIdentifierException">
+    </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="setEnableProfilerForBatchProcessAndWorkQueue" parameterOrder="enable type hiResTime enableStackTracing enableQueryOptimizerTracing enableExtendedQueryTracing dbmsCounterThresholdMs diffDbmsCounters">
+<wsdl:documentation>Enable or disable the profiler for batch processes of the given type and their associated work queue
+&lt;br&gt;@deprecated </wsdl:documentation>
+      <wsdl:input message="impl:setEnableProfilerForBatchProcessAndWorkQueueRequest" name="setEnableProfilerForBatchProcessAndWorkQueueRequest">
+    </wsdl:input>
+      <wsdl:output message="impl:setEnableProfilerForBatchProcessAndWorkQueueResponse" name="setEnableProfilerForBatchProcessAndWorkQueueResponse">
+    </wsdl:output>
+      <wsdl:fault message="impl:ServerStateException" name="ServerStateException">
+    </wsdl:fault>
+      <wsdl:fault message="impl:PermissionException" name="PermissionException">
+    </wsdl:fault>
+      <wsdl:fault message="impl:BadIdentifierException" name="BadIdentifierException">
+    </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="setEnableProfilerForMessageDestination" parameterOrder="enable destinationID hiResTime enableStackTracing enableQueryOptimizerTracing enableExtendedQueryTracing dbmsCounterThresholdMs diffDbmsCounters">
+<wsdl:documentation>Enable or disable the profiler for the given message destinations
+&lt;br&gt;@deprecated </wsdl:documentation>
+      <wsdl:input message="impl:setEnableProfilerForMessageDestinationRequest" name="setEnableProfilerForMessageDestinationRequest">
+    </wsdl:input>
+      <wsdl:output message="impl:setEnableProfilerForMessageDestinationResponse" name="setEnableProfilerForMessageDestinationResponse">
+    </wsdl:output>
+      <wsdl:fault message="impl:ServerStateException" name="ServerStateException">
+    </wsdl:fault>
+      <wsdl:fault message="impl:PermissionException" name="PermissionException">
+    </wsdl:fault>
+      <wsdl:fault message="impl:BadIdentifierException" name="BadIdentifierException">
+    </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="setEnableProfilerForStartablePlugin" parameterOrder="enable pluginName hiResTime enableStackTracing enableQueryOptimizerTracing enableExtendedQueryTracing dbmsCounterThresholdMs diffDbmsCounters">
+<wsdl:documentation>Enable or disable the profiler for the given StartablePlugin
+&lt;br&gt;@deprecated </wsdl:documentation>
+      <wsdl:input message="impl:setEnableProfilerForStartablePluginRequest" name="setEnableProfilerForStartablePluginRequest">
+    </wsdl:input>
+      <wsdl:output message="impl:setEnableProfilerForStartablePluginResponse" name="setEnableProfilerForStartablePluginResponse">
+    </wsdl:output>
+      <wsdl:fault message="impl:ServerStateException" name="ServerStateException">
+    </wsdl:fault>
+      <wsdl:fault message="impl:PermissionException" name="PermissionException">
+    </wsdl:fault>
+      <wsdl:fault message="impl:BadIdentifierException" name="BadIdentifierException">
+    </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="setEnableProfilerForSubsequentWebSessions" parameterOrder="name enable hiResTime enableStackTracing enableQueryOptimizerTracing enableExtendedQueryTracing dbmsCounterThresholdMs diffDbmsCounters">
+<wsdl:documentation>Enable or disable the profiler for subsequent new web sessions. Not recommended for production systems
+&lt;br&gt;@deprecated </wsdl:documentation>
+      <wsdl:input message="impl:setEnableProfilerForSubsequentWebSessionsRequest" name="setEnableProfilerForSubsequentWebSessionsRequest">
+    </wsdl:input>
+      <wsdl:output message="impl:setEnableProfilerForSubsequentWebSessionsResponse" name="setEnableProfilerForSubsequentWebSessionsResponse">
+    </wsdl:output>
+      <wsdl:fault message="impl:ServerStateException" name="ServerStateException">
+    </wsdl:fault>
+      <wsdl:fault message="impl:PermissionException" name="PermissionException">
+    </wsdl:fault>
+      <wsdl:fault message="impl:BadIdentifierException" name="BadIdentifierException">
+    </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="setEnableProfilerForWebService" parameterOrder="enable serviceName operationName hiResTime enableStackTracing enableQueryOptimizerTracing enableExtendedQueryTracing dbmsCounterThresholdMs diffDbmsCounters">
+<wsdl:documentation>Enable or disable the profiler for the given web service (service name, operation name) pair
+&lt;br&gt;@deprecated </wsdl:documentation>
+      <wsdl:input message="impl:setEnableProfilerForWebServiceRequest" name="setEnableProfilerForWebServiceRequest">
+    </wsdl:input>
+      <wsdl:output message="impl:setEnableProfilerForWebServiceResponse" name="setEnableProfilerForWebServiceResponse">
+    </wsdl:output>
+      <wsdl:fault message="impl:ServerStateException" name="ServerStateException">
+    </wsdl:fault>
+      <wsdl:fault message="impl:PermissionException" name="PermissionException">
+    </wsdl:fault>
+      <wsdl:fault message="impl:BadIdentifierException" name="BadIdentifierException">
+    </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="setEnableProfilerForWorkQueue" parameterOrder="enable type hiResTime enableStackTracing enableQueryOptimizerTracing enableExtendedQueryTracing dbmsCounterThresholdMs diffDbmsCounters">
+<wsdl:documentation>Enable or disable the profiler for work queues associated with the given batch process type
+&lt;br&gt;@deprecated </wsdl:documentation>
+      <wsdl:input message="impl:setEnableProfilerForWorkQueueRequest" name="setEnableProfilerForWorkQueueRequest">
+    </wsdl:input>
+      <wsdl:output message="impl:setEnableProfilerForWorkQueueResponse" name="setEnableProfilerForWorkQueueResponse">
+    </wsdl:output>
+      <wsdl:fault message="impl:ServerStateException" name="ServerStateException">
+    </wsdl:fault>
+      <wsdl:fault message="impl:PermissionException" name="PermissionException">
+    </wsdl:fault>
+      <wsdl:fault message="impl:BadIdentifierException" name="BadIdentifierException">
+    </wsdl:fault>
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="IProfilerAPISoapBinding" type="impl:IProfilerAPI">
+    <wsdlsoap:binding style="rpc" transport="http://schemas.xmlsoap.org/soap/http"/>
+    <wsdl:operation name="setEnableProfilerForBatchProcess">
+      <wsdlsoap:operation soapAction=""/>
+      <wsdl:input name="setEnableProfilerForBatchProcessRequest">
+        <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://api.webservices.bc.guidewire.com/" use="encoded"/>
+      </wsdl:input>
+      <wsdl:output name="setEnableProfilerForBatchProcessResponse">
+        <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://api.webservices.bc.guidewire.com/" use="encoded"/>
+      </wsdl:output>
+      <wsdl:fault name="ServerStateException">
+<wsdl:documentation>Thrown when a request is made at a time the server is in a state that disallows the request.</wsdl:documentation>
+        <wsdlsoap:fault encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" name="ServerStateException" namespace="http://api.webservices.bc.guidewire.com/" use="encoded"/>
+      </wsdl:fault>
+      <wsdl:fault name="PermissionException">
+<wsdl:documentation>Thrown when the authenticated SOAP user does not have permission to perform the requested operation</wsdl:documentation>
+        <wsdlsoap:fault encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" name="PermissionException" namespace="http://api.webservices.bc.guidewire.com/" use="encoded"/>
+      </wsdl:fault>
+      <wsdl:fault name="BadIdentifierException">
+<wsdl:documentation>Thrown when an internal public ID doesn't map to a real bean (problem could be that type was incorrect)</wsdl:documentation>
+        <wsdlsoap:fault encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" name="BadIdentifierException" namespace="http://api.webservices.bc.guidewire.com/" use="encoded"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="setEnableProfilerForBatchProcessAndWorkQueue">
+      <wsdlsoap:operation soapAction=""/>
+      <wsdl:input name="setEnableProfilerForBatchProcessAndWorkQueueRequest">
+        <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://api.webservices.bc.guidewire.com/" use="encoded"/>
+      </wsdl:input>
+      <wsdl:output name="setEnableProfilerForBatchProcessAndWorkQueueResponse">
+        <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://api.webservices.bc.guidewire.com/" use="encoded"/>
+      </wsdl:output>
+      <wsdl:fault name="ServerStateException">
+<wsdl:documentation>Thrown when a request is made at a time the server is in a state that disallows the request.</wsdl:documentation>
+        <wsdlsoap:fault encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" name="ServerStateException" namespace="http://api.webservices.bc.guidewire.com/" use="encoded"/>
+      </wsdl:fault>
+      <wsdl:fault name="PermissionException">
+<wsdl:documentation>Thrown when the authenticated SOAP user does not have permission to perform the requested operation</wsdl:documentation>
+        <wsdlsoap:fault encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" name="PermissionException" namespace="http://api.webservices.bc.guidewire.com/" use="encoded"/>
+      </wsdl:fault>
+      <wsdl:fault name="BadIdentifierException">
+<wsdl:documentation>Thrown when an internal public ID doesn't map to a real bean (problem could be that type was incorrect)</wsdl:documentation>
+        <wsdlsoap:fault encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" name="BadIdentifierException" namespace="http://api.webservices.bc.guidewire.com/" use="encoded"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="setEnableProfilerForMessageDestination">
+      <wsdlsoap:operation soapAction=""/>
+      <wsdl:input name="setEnableProfilerForMessageDestinationRequest">
+        <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://api.webservices.bc.guidewire.com/" use="encoded"/>
+      </wsdl:input>
+      <wsdl:output name="setEnableProfilerForMessageDestinationResponse">
+        <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://api.webservices.bc.guidewire.com/" use="encoded"/>
+      </wsdl:output>
+      <wsdl:fault name="ServerStateException">
+<wsdl:documentation>Thrown when a request is made at a time the server is in a state that disallows the request.</wsdl:documentation>
+        <wsdlsoap:fault encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" name="ServerStateException" namespace="http://api.webservices.bc.guidewire.com/" use="encoded"/>
+      </wsdl:fault>
+      <wsdl:fault name="PermissionException">
+<wsdl:documentation>Thrown when the authenticated SOAP user does not have permission to perform the requested operation</wsdl:documentation>
+        <wsdlsoap:fault encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" name="PermissionException" namespace="http://api.webservices.bc.guidewire.com/" use="encoded"/>
+      </wsdl:fault>
+      <wsdl:fault name="BadIdentifierException">
+<wsdl:documentation>Thrown when an internal public ID doesn't map to a real bean (problem could be that type was incorrect)</wsdl:documentation>
+        <wsdlsoap:fault encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" name="BadIdentifierException" namespace="http://api.webservices.bc.guidewire.com/" use="encoded"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="setEnableProfilerForStartablePlugin">
+      <wsdlsoap:operation soapAction=""/>
+      <wsdl:input name="setEnableProfilerForStartablePluginRequest">
+        <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://api.webservices.bc.guidewire.com/" use="encoded"/>
+      </wsdl:input>
+      <wsdl:output name="setEnableProfilerForStartablePluginResponse">
+        <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://api.webservices.bc.guidewire.com/" use="encoded"/>
+      </wsdl:output>
+      <wsdl:fault name="ServerStateException">
+<wsdl:documentation>Thrown when a request is made at a time the server is in a state that disallows the request.</wsdl:documentation>
+        <wsdlsoap:fault encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" name="ServerStateException" namespace="http://api.webservices.bc.guidewire.com/" use="encoded"/>
+      </wsdl:fault>
+      <wsdl:fault name="PermissionException">
+<wsdl:documentation>Thrown when the authenticated SOAP user does not have permission to perform the requested operation</wsdl:documentation>
+        <wsdlsoap:fault encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" name="PermissionException" namespace="http://api.webservices.bc.guidewire.com/" use="encoded"/>
+      </wsdl:fault>
+      <wsdl:fault name="BadIdentifierException">
+<wsdl:documentation>Thrown when an internal public ID doesn't map to a real bean (problem could be that type was incorrect)</wsdl:documentation>
+        <wsdlsoap:fault encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" name="BadIdentifierException" namespace="http://api.webservices.bc.guidewire.com/" use="encoded"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="setEnableProfilerForSubsequentWebSessions">
+      <wsdlsoap:operation soapAction=""/>
+      <wsdl:input name="setEnableProfilerForSubsequentWebSessionsRequest">
+        <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://api.webservices.bc.guidewire.com/" use="encoded"/>
+      </wsdl:input>
+      <wsdl:output name="setEnableProfilerForSubsequentWebSessionsResponse">
+        <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://api.webservices.bc.guidewire.com/" use="encoded"/>
+      </wsdl:output>
+      <wsdl:fault name="ServerStateException">
+<wsdl:documentation>Thrown when a request is made at a time the server is in a state that disallows the request.</wsdl:documentation>
+        <wsdlsoap:fault encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" name="ServerStateException" namespace="http://api.webservices.bc.guidewire.com/" use="encoded"/>
+      </wsdl:fault>
+      <wsdl:fault name="PermissionException">
+<wsdl:documentation>Thrown when the authenticated SOAP user does not have permission to perform the requested operation</wsdl:documentation>
+        <wsdlsoap:fault encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" name="PermissionException" namespace="http://api.webservices.bc.guidewire.com/" use="encoded"/>
+      </wsdl:fault>
+      <wsdl:fault name="BadIdentifierException">
+<wsdl:documentation>Thrown when an internal public ID doesn't map to a real bean (problem could be that type was incorrect)</wsdl:documentation>
+        <wsdlsoap:fault encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" name="BadIdentifierException" namespace="http://api.webservices.bc.guidewire.com/" use="encoded"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="setEnableProfilerForWebService">
+      <wsdlsoap:operation soapAction=""/>
+      <wsdl:input name="setEnableProfilerForWebServiceRequest">
+        <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://api.webservices.bc.guidewire.com/" use="encoded"/>
+      </wsdl:input>
+      <wsdl:output name="setEnableProfilerForWebServiceResponse">
+        <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://api.webservices.bc.guidewire.com/" use="encoded"/>
+      </wsdl:output>
+      <wsdl:fault name="ServerStateException">
+<wsdl:documentation>Thrown when a request is made at a time the server is in a state that disallows the request.</wsdl:documentation>
+        <wsdlsoap:fault encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" name="ServerStateException" namespace="http://api.webservices.bc.guidewire.com/" use="encoded"/>
+      </wsdl:fault>
+      <wsdl:fault name="PermissionException">
+<wsdl:documentation>Thrown when the authenticated SOAP user does not have permission to perform the requested operation</wsdl:documentation>
+        <wsdlsoap:fault encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" name="PermissionException" namespace="http://api.webservices.bc.guidewire.com/" use="encoded"/>
+      </wsdl:fault>
+      <wsdl:fault name="BadIdentifierException">
+<wsdl:documentation>Thrown when an internal public ID doesn't map to a real bean (problem could be that type was incorrect)</wsdl:documentation>
+        <wsdlsoap:fault encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" name="BadIdentifierException" namespace="http://api.webservices.bc.guidewire.com/" use="encoded"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="setEnableProfilerForWorkQueue">
+      <wsdlsoap:operation soapAction=""/>
+      <wsdl:input name="setEnableProfilerForWorkQueueRequest">
+        <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://api.webservices.bc.guidewire.com/" use="encoded"/>
+      </wsdl:input>
+      <wsdl:output name="setEnableProfilerForWorkQueueResponse">
+        <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://api.webservices.bc.guidewire.com/" use="encoded"/>
+      </wsdl:output>
+      <wsdl:fault name="ServerStateException">
+<wsdl:documentation>Thrown when a request is made at a time the server is in a state that disallows the request.</wsdl:documentation>
+        <wsdlsoap:fault encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" name="ServerStateException" namespace="http://api.webservices.bc.guidewire.com/" use="encoded"/>
+      </wsdl:fault>
+      <wsdl:fault name="PermissionException">
+<wsdl:documentation>Thrown when the authenticated SOAP user does not have permission to perform the requested operation</wsdl:documentation>
+        <wsdlsoap:fault encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" name="PermissionException" namespace="http://api.webservices.bc.guidewire.com/" use="encoded"/>
+      </wsdl:fault>
+      <wsdl:fault name="BadIdentifierException">
+<wsdl:documentation>Thrown when an internal public ID doesn't map to a real bean (problem could be that type was incorrect)</wsdl:documentation>
+        <wsdlsoap:fault encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" name="BadIdentifierException" namespace="http://api.webservices.bc.guidewire.com/" use="encoded"/>
+      </wsdl:fault>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="IProfilerAPIService">
+<wsdl:documentation>API to access services offered by the Guidewire Profiler.
+@deprecated Use WS-I webservice gw.wsi.pl.ProfilerAPI instead.
+</wsdl:documentation>
+    <wsdl:port binding="impl:IProfilerAPISoapBinding" name="IProfilerAPI">
+      <wsdlsoap:address location="http://dontuse.defaultvalue.com/IProfilerAPI"/>
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

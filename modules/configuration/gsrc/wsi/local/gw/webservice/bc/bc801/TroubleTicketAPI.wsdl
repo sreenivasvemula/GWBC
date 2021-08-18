@@ -1,0 +1,913 @@
+<?xml version="1.0"?>
+<!-- Generated WSDL for gw.webservice.bc.bc801.TroubleTicketAPI web service -->
+<wsdl:definitions targetNamespace="http://guidewire.com/bc/ws/gw/webservice/bc/bc801/TroubleTicketAPI" name="TroubleTicketAPI" xmlns:gwsoap="http://guidewire.com/ws/soapheaders" xmlns:gwwsdl="http://guidewire.com/pl/wsdl" xmlns:pogo="http://guidewire.com/bc/ws/gw/webservice/bc/bc801/TroubleTicketDTO" xmlns:pogo2="http://guidewire.com/bc/typekey" xmlns:soap11="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:tns="http://guidewire.com/bc/ws/gw/webservice/bc/bc801/TroubleTicketAPI" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsdl:types>
+    <xs:schema targetNamespace="http://guidewire.com/bc/ws/gw/webservice/bc/bc801/TroubleTicketAPI" elementFormDefault="qualified" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+      <xs:import namespace="http://guidewire.com/ws/soapheaders" schemaLocation="../../../../../../gw/xsd/guidewire/soapheaders.xsd"/>
+      <xs:import namespace="http://guidewire.com/bc/typekey"/>
+      <xs:import namespace="http://guidewire.com/bc/ws/gw/webservice/bc/bc801/TroubleTicketDTO"/>
+      <!-- createDisasterTroubleTicketsOnAccountsAndPoliciesWithPostalCodes(List<String>) -->
+      <xs:element name="createDisasterTroubleTicketsOnAccountsAndPoliciesWithPostalCodes">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="postalCodes" minOccurs="0" gw:viewas="list" xmlns:gw="http://guidewire.com/xsd">
+              <xs:complexType>
+                <xs:sequence>
+                  <xs:element minOccurs="0" maxOccurs="unbounded" name="Entry" type="xs:string" nillable="true"/>
+                </xs:sequence>
+              </xs:complexType>
+            </xs:element>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="createDisasterTroubleTicketsOnAccountsAndPoliciesWithPostalCodesResponse">
+        <xs:complexType/>
+      </xs:element>
+      <xs:element name="WsiAuthenticationException">
+        <xs:complexType/>
+      </xs:element>
+      <!-- createDisasterTroubleTicketsOnPoliciesWithPostalCodes(List<String>) -->
+      <xs:element name="createDisasterTroubleTicketsOnPoliciesWithPostalCodes">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="postalCodes" minOccurs="0" gw:viewas="list" xmlns:gw="http://guidewire.com/xsd">
+              <xs:complexType>
+                <xs:sequence>
+                  <xs:element minOccurs="0" maxOccurs="unbounded" name="Entry" type="xs:string" nillable="true"/>
+                </xs:sequence>
+              </xs:complexType>
+            </xs:element>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="createDisasterTroubleTicketsOnPoliciesWithPostalCodesResponse">
+        <xs:complexType/>
+      </xs:element>
+      <!-- createTroubleTicket(TroubleTicketDTO) : String -->
+      <xs:element name="createTroubleTicket">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="troubleTicketDTO" minOccurs="0" type="pogo:TroubleTicketDTO"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="createTroubleTicketResponse">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="return" type="xs:string" minOccurs="0"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="SOAPServerException">
+        <xs:complexType/>
+      </xs:element>
+      <xs:element name="RequiredFieldException">
+        <xs:complexType/>
+      </xs:element>
+      <!-- putHoldOnAccount(String, HoldType[], TroubleTicketDTO) : String -->
+      <xs:element name="putHoldOnAccount">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="accountPublicID" type="xs:string" minOccurs="0"/>
+            <xs:element name="holdTypes" minOccurs="0" gw:viewas="array" xmlns:gw="http://guidewire.com/xsd">
+              <xs:complexType>
+                <xs:sequence>
+                  <xs:element minOccurs="0" maxOccurs="unbounded" name="Entry" nillable="true" type="pogo2:HoldType"/>
+                </xs:sequence>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="troubleTicketDTO" minOccurs="0" type="pogo:TroubleTicketDTO"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="putHoldOnAccountResponse">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="return" type="xs:string" minOccurs="0"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="SOAPException">
+        <xs:complexType/>
+      </xs:element>
+      <xs:element name="BadIdentifierException">
+        <xs:complexType/>
+      </xs:element>
+      <!-- putHoldOnPolicyPeriod(String, HoldType[], TroubleTicketDTO) : String -->
+      <xs:element name="putHoldOnPolicyPeriod">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="policyPeriodPublicID" type="xs:string" minOccurs="0"/>
+            <xs:element name="holdTypes" minOccurs="0" gw:viewas="array" xmlns:gw="http://guidewire.com/xsd">
+              <xs:complexType>
+                <xs:sequence>
+                  <xs:element minOccurs="0" maxOccurs="unbounded" name="Entry" nillable="true" type="pogo2:HoldType"/>
+                </xs:sequence>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="troubleTicketDTO" minOccurs="0" type="pogo:TroubleTicketDTO"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="putHoldOnPolicyPeriodResponse">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="return" type="xs:string" minOccurs="0"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <!-- putHoldOnPolicy(String, HoldType[], TroubleTicketDTO) : String -->
+      <xs:element name="putHoldOnPolicy">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="policyPublicID" type="xs:string" minOccurs="0"/>
+            <xs:element name="holdTypes" minOccurs="0" gw:viewas="array" xmlns:gw="http://guidewire.com/xsd">
+              <xs:complexType>
+                <xs:sequence>
+                  <xs:element minOccurs="0" maxOccurs="unbounded" name="Entry" nillable="true" type="pogo2:HoldType"/>
+                </xs:sequence>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="troubleTicketDTO" minOccurs="0" type="pogo:TroubleTicketDTO"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="putHoldOnPolicyResponse">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="return" type="xs:string" minOccurs="0"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <!-- putHoldOnProducer(String, HoldType[], TroubleTicketDTO) : String -->
+      <xs:element name="putHoldOnProducer">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="producerPublicID" type="xs:string" minOccurs="0"/>
+            <xs:element name="holdTypes" minOccurs="0" gw:viewas="array" xmlns:gw="http://guidewire.com/xsd">
+              <xs:complexType>
+                <xs:sequence>
+                  <xs:element minOccurs="0" maxOccurs="unbounded" name="Entry" nillable="true" type="pogo2:HoldType"/>
+                </xs:sequence>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="troubleTicketDTO" minOccurs="0" type="pogo:TroubleTicketDTO"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="putHoldOnProducerResponse">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="return" type="xs:string" minOccurs="0"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <!-- releaseHoldOnAccount(String, HoldType[]) -->
+      <xs:element name="releaseHoldOnAccount">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="accountPublicID" type="xs:string" minOccurs="0"/>
+            <xs:element name="holdTypes" minOccurs="0" gw:viewas="array" xmlns:gw="http://guidewire.com/xsd">
+              <xs:complexType>
+                <xs:sequence>
+                  <xs:element minOccurs="0" maxOccurs="unbounded" name="Entry" nillable="true" type="pogo2:HoldType"/>
+                </xs:sequence>
+              </xs:complexType>
+            </xs:element>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="releaseHoldOnAccountResponse">
+        <xs:complexType/>
+      </xs:element>
+      <!-- releaseHoldOnPolicyPeriod(String, HoldType[]) -->
+      <xs:element name="releaseHoldOnPolicyPeriod">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="policyPeriodPublicID" type="xs:string" minOccurs="0"/>
+            <xs:element name="holdTypes" minOccurs="0" gw:viewas="array" xmlns:gw="http://guidewire.com/xsd">
+              <xs:complexType>
+                <xs:sequence>
+                  <xs:element minOccurs="0" maxOccurs="unbounded" name="Entry" nillable="true" type="pogo2:HoldType"/>
+                </xs:sequence>
+              </xs:complexType>
+            </xs:element>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="releaseHoldOnPolicyPeriodResponse">
+        <xs:complexType/>
+      </xs:element>
+      <!-- releaseHoldOnProducer(String, HoldType[]) -->
+      <xs:element name="releaseHoldOnProducer">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="producerPublicID" type="xs:string" minOccurs="0"/>
+            <xs:element name="holdTypes" minOccurs="0" gw:viewas="array" xmlns:gw="http://guidewire.com/xsd">
+              <xs:complexType>
+                <xs:sequence>
+                  <xs:element minOccurs="0" maxOccurs="unbounded" name="Entry" nillable="true" type="pogo2:HoldType"/>
+                </xs:sequence>
+              </xs:complexType>
+            </xs:element>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="releaseHoldOnProducerResponse">
+        <xs:complexType/>
+      </xs:element>
+    </xs:schema>
+    <xs:schema targetNamespace="http://guidewire.com/bc/ws/gw/webservice/bc/bc801/TroubleTicketDTO" elementFormDefault="qualified" xmlns:gw="http://guidewire.com/xsd" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+      <xs:import namespace="http://guidewire.com/bc/typekey"/>
+      <xs:complexType name="TroubleTicketDTO">
+        <xs:sequence>
+          <xs:element name="CloseUserPublicID" type="xs:string" minOccurs="0"/>
+          <xs:element name="DetailedDescription" type="xs:string" minOccurs="0"/>
+          <xs:element name="EscalationDate" type="xs:dateTime" gw:type="java.util.Date" minOccurs="0"/>
+          <xs:element name="HoldPublicID" type="xs:string" minOccurs="0"/>
+          <xs:element name="Priority" minOccurs="0" type="pogo2:Priority"/>
+          <xs:element name="PublicID" type="xs:string" minOccurs="0"/>
+          <xs:element name="TargetDate" type="xs:dateTime" gw:type="java.util.Date" minOccurs="0"/>
+          <xs:element name="TicketType" minOccurs="0" type="pogo2:TroubleTicketType"/>
+          <xs:element name="Title" type="xs:string" minOccurs="0"/>
+          <xs:element name="TroubleTicketNumber" type="xs:string" minOccurs="0"/>
+        </xs:sequence>
+      </xs:complexType>
+    </xs:schema>
+    <xs:schema targetNamespace="http://guidewire.com/bc/typekey" elementFormDefault="qualified" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+      <xs:import namespace="http://guidewire.com/bc/ws/gw/webservice/bc/bc801/TroubleTicketDTO"/>
+      <xs:simpleType name="Priority">
+        <xs:restriction base="xs:string">
+          <xs:enumeration value="urgent"/>
+          <xs:enumeration value="high"/>
+          <xs:enumeration value="normal"/>
+          <xs:enumeration value="low"/>
+        </xs:restriction>
+      </xs:simpleType>
+      <xs:simpleType name="TroubleTicketType">
+        <xs:restriction base="xs:string">
+          <xs:enumeration value="dispute"/>
+          <xs:enumeration value="processingerror"/>
+          <xs:enumeration value="customercomplaint"/>
+          <xs:enumeration value="customerquestion"/>
+          <xs:enumeration value="reporterror"/>
+          <xs:enumeration value="disasterhold"/>
+          <xs:enumeration value="automatic"/>
+        </xs:restriction>
+      </xs:simpleType>
+      <xs:simpleType name="HoldType">
+        <xs:restriction base="xs:string">
+          <xs:enumeration value="Delinquency"/>
+          <xs:enumeration value="InvoiceSending"/>
+          <xs:enumeration value="CommissionPolicyEarn"/>
+          <xs:enumeration value="CommissionPayments"/>
+          <xs:enumeration value="PaymentDistribution"/>
+          <xs:enumeration value="Disbursements"/>
+        </xs:restriction>
+      </xs:simpleType>
+    </xs:schema>
+  </wsdl:types>
+  <wsdl:portType name="TroubleTicketAPIPortType">
+    <wsdl:operation name="createDisasterTroubleTicketsOnAccountsAndPoliciesWithPostalCodes">
+      <wsdl:input name="createDisasterTroubleTicketsOnAccountsAndPoliciesWithPostalCodes" message="tns:createDisasterTroubleTicketsOnAccountsAndPoliciesWithPostalCodes"/>
+      <wsdl:output name="createDisasterTroubleTicketsOnAccountsAndPoliciesWithPostalCodesResponse" message="tns:createDisasterTroubleTicketsOnAccountsAndPoliciesWithPostalCodesResponse"/>
+      <wsdl:fault name="WsiAuthenticationException" message="tns:WsiAuthenticationException"/>
+    </wsdl:operation>
+    <wsdl:operation name="createDisasterTroubleTicketsOnPoliciesWithPostalCodes">
+      <wsdl:input name="createDisasterTroubleTicketsOnPoliciesWithPostalCodes" message="tns:createDisasterTroubleTicketsOnPoliciesWithPostalCodes"/>
+      <wsdl:output name="createDisasterTroubleTicketsOnPoliciesWithPostalCodesResponse" message="tns:createDisasterTroubleTicketsOnPoliciesWithPostalCodesResponse"/>
+      <wsdl:fault name="WsiAuthenticationException" message="tns:WsiAuthenticationException"/>
+    </wsdl:operation>
+    <wsdl:operation name="createTroubleTicket">
+      <wsdl:input name="createTroubleTicket" message="tns:createTroubleTicket"/>
+      <wsdl:output name="createTroubleTicketResponse" message="tns:createTroubleTicketResponse"/>
+      <!-- If communication error or any other SOAP problem occurs. -->
+      <wsdl:fault name="SOAPServerException" message="tns:SOAPServerException"/>
+      <!-- [If troubleTicketDTO is null., If the 'Title' field troubleTicketDTO is missing., If the 'DetailedDescription' field troubleTicketDTO is missing.] -->
+      <wsdl:fault name="RequiredFieldException" message="tns:RequiredFieldException"/>
+      <wsdl:fault name="WsiAuthenticationException" message="tns:WsiAuthenticationException"/>
+    </wsdl:operation>
+    <wsdl:operation name="putHoldOnAccount">
+      <wsdl:input name="putHoldOnAccount" message="tns:putHoldOnAccount"/>
+      <wsdl:output name="putHoldOnAccountResponse" message="tns:putHoldOnAccountResponse"/>
+      <!-- If communication error or any other SOAP problem occurs. -->
+      <wsdl:fault name="SOAPServerException" message="tns:SOAPServerException"/>
+      <!-- [If accountPublicID is null., If holdTypes is null., If troubleTicketDTO is null., If the 'Title' field troubleTicketDTO is missing., If the 'DetailedDescription' field troubleTicketDTO is missing.] -->
+      <wsdl:fault name="RequiredFieldException" message="tns:RequiredFieldException"/>
+      <!-- If holdTypes is an empty array. -->
+      <wsdl:fault name="SOAPException" message="tns:SOAPException"/>
+      <!-- If there is no Account with PublicID matching accountID. -->
+      <wsdl:fault name="BadIdentifierException" message="tns:BadIdentifierException"/>
+      <wsdl:fault name="WsiAuthenticationException" message="tns:WsiAuthenticationException"/>
+    </wsdl:operation>
+    <wsdl:operation name="putHoldOnPolicyPeriod">
+      <wsdl:input name="putHoldOnPolicyPeriod" message="tns:putHoldOnPolicyPeriod"/>
+      <wsdl:output name="putHoldOnPolicyPeriodResponse" message="tns:putHoldOnPolicyPeriodResponse"/>
+      <!-- If communication error or any other SOAP problem occurs. -->
+      <wsdl:fault name="SOAPServerException" message="tns:SOAPServerException"/>
+      <!-- [If policyPeriodPublicID is null., If holdTypes is null., If troubleTicketDTO is null., If the 'Title' field troubleTicketDTO is missing., If the 'DetailedDescription' field troubleTicketDTO is missing.] -->
+      <wsdl:fault name="RequiredFieldException" message="tns:RequiredFieldException"/>
+      <!-- If holdTypes is an empty array. -->
+      <wsdl:fault name="SOAPException" message="tns:SOAPException"/>
+      <!-- If there is no PolicyPeriod with PublicID matching policyPeriodID. -->
+      <wsdl:fault name="BadIdentifierException" message="tns:BadIdentifierException"/>
+      <wsdl:fault name="WsiAuthenticationException" message="tns:WsiAuthenticationException"/>
+    </wsdl:operation>
+    <wsdl:operation name="putHoldOnPolicy">
+      <wsdl:input name="putHoldOnPolicy" message="tns:putHoldOnPolicy"/>
+      <wsdl:output name="putHoldOnPolicyResponse" message="tns:putHoldOnPolicyResponse"/>
+      <!-- If communication error or any other SOAP problem occurs. -->
+      <wsdl:fault name="SOAPServerException" message="tns:SOAPServerException"/>
+      <!-- [If policyPublicID is null., If holdTypes is null., If troubleTicketDTO is null., If the 'Title' field troubleTicketDTO is missing., If the 'DetailedDescription' field troubleTicketDTO is missing.] -->
+      <wsdl:fault name="RequiredFieldException" message="tns:RequiredFieldException"/>
+      <!-- If holdTypes is an empty array. -->
+      <wsdl:fault name="SOAPException" message="tns:SOAPException"/>
+      <!-- If there is no Policy with PublicID matching policyPublicID. -->
+      <wsdl:fault name="BadIdentifierException" message="tns:BadIdentifierException"/>
+      <wsdl:fault name="WsiAuthenticationException" message="tns:WsiAuthenticationException"/>
+    </wsdl:operation>
+    <wsdl:operation name="putHoldOnProducer">
+      <wsdl:input name="putHoldOnProducer" message="tns:putHoldOnProducer"/>
+      <wsdl:output name="putHoldOnProducerResponse" message="tns:putHoldOnProducerResponse"/>
+      <!-- If communication error or any other SOAP problem occurs. -->
+      <wsdl:fault name="SOAPServerException" message="tns:SOAPServerException"/>
+      <!-- [If producerPublicID is null., If holdTypes is null., If troubleTicketDTO is null., If the 'Title' field troubleTicketDTO is missing., If the 'DetailedDescription' field troubleTicketDTO is missing.] -->
+      <wsdl:fault name="RequiredFieldException" message="tns:RequiredFieldException"/>
+      <!-- If holdTypes is an empty array. -->
+      <wsdl:fault name="SOAPException" message="tns:SOAPException"/>
+      <!-- If there is no Producer with PublicID matching producerID. -->
+      <wsdl:fault name="BadIdentifierException" message="tns:BadIdentifierException"/>
+      <wsdl:fault name="WsiAuthenticationException" message="tns:WsiAuthenticationException"/>
+    </wsdl:operation>
+    <wsdl:operation name="releaseHoldOnAccount">
+      <wsdl:input name="releaseHoldOnAccount" message="tns:releaseHoldOnAccount"/>
+      <wsdl:output name="releaseHoldOnAccountResponse" message="tns:releaseHoldOnAccountResponse"/>
+      <!-- If communication error or any other SOAP problem occurs. -->
+      <wsdl:fault name="SOAPServerException" message="tns:SOAPServerException"/>
+      <!-- [If accountPublicID is null., If holdTypes is null.] -->
+      <wsdl:fault name="RequiredFieldException" message="tns:RequiredFieldException"/>
+      <!-- If there is no Account with PublicID matching accountID. -->
+      <wsdl:fault name="BadIdentifierException" message="tns:BadIdentifierException"/>
+      <wsdl:fault name="WsiAuthenticationException" message="tns:WsiAuthenticationException"/>
+    </wsdl:operation>
+    <wsdl:operation name="releaseHoldOnPolicyPeriod">
+      <wsdl:input name="releaseHoldOnPolicyPeriod" message="tns:releaseHoldOnPolicyPeriod"/>
+      <wsdl:output name="releaseHoldOnPolicyPeriodResponse" message="tns:releaseHoldOnPolicyPeriodResponse"/>
+      <!-- If communication error or any other SOAP problem occurs. -->
+      <wsdl:fault name="SOAPServerException" message="tns:SOAPServerException"/>
+      <!-- [If policyPeriodPublicID is null., If holdTypes is null.] -->
+      <wsdl:fault name="RequiredFieldException" message="tns:RequiredFieldException"/>
+      <!-- If there is no PolicyPeriod with PublicID matching policyPeriodID. -->
+      <wsdl:fault name="BadIdentifierException" message="tns:BadIdentifierException"/>
+      <wsdl:fault name="WsiAuthenticationException" message="tns:WsiAuthenticationException"/>
+    </wsdl:operation>
+    <wsdl:operation name="releaseHoldOnProducer">
+      <wsdl:input name="releaseHoldOnProducer" message="tns:releaseHoldOnProducer"/>
+      <wsdl:output name="releaseHoldOnProducerResponse" message="tns:releaseHoldOnProducerResponse"/>
+      <!-- If communication error or any other SOAP problem occurs. -->
+      <wsdl:fault name="SOAPServerException" message="tns:SOAPServerException"/>
+      <!-- [If producerPublicID is null., If holdTypes is null.] -->
+      <wsdl:fault name="RequiredFieldException" message="tns:RequiredFieldException"/>
+      <!-- If there is no Producer with PublicID matching producerID. -->
+      <wsdl:fault name="BadIdentifierException" message="tns:BadIdentifierException"/>
+      <wsdl:fault name="WsiAuthenticationException" message="tns:WsiAuthenticationException"/>
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="TroubleTicketAPISoap12Binding" type="tns:TroubleTicketAPIPortType">
+    <soap12:binding transport="http://schemas.xmlsoap.org/soap/http" style="document"/>
+    <wsdl:operation name="createDisasterTroubleTicketsOnAccountsAndPoliciesWithPostalCodes">
+      <soap12:operation soapActionRequired="false" style="document"/>
+      <wsdl:input name="createDisasterTroubleTicketsOnAccountsAndPoliciesWithPostalCodes">
+        <soap12:body use="literal"/>
+        <soap12:header message="tns:gw-authentication" part="gw-authentication" use="literal"/>
+        <soap12:header message="tns:gw-locale" part="gw-locale" use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="createDisasterTroubleTicketsOnAccountsAndPoliciesWithPostalCodesResponse">
+        <soap12:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="WsiAuthenticationException">
+        <soap12:fault name="WsiAuthenticationException" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="createDisasterTroubleTicketsOnPoliciesWithPostalCodes">
+      <soap12:operation soapActionRequired="false" style="document"/>
+      <wsdl:input name="createDisasterTroubleTicketsOnPoliciesWithPostalCodes">
+        <soap12:body use="literal"/>
+        <soap12:header message="tns:gw-authentication" part="gw-authentication" use="literal"/>
+        <soap12:header message="tns:gw-locale" part="gw-locale" use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="createDisasterTroubleTicketsOnPoliciesWithPostalCodesResponse">
+        <soap12:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="WsiAuthenticationException">
+        <soap12:fault name="WsiAuthenticationException" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="createTroubleTicket">
+      <soap12:operation soapActionRequired="false" style="document"/>
+      <wsdl:input name="createTroubleTicket">
+        <soap12:body use="literal"/>
+        <soap12:header message="tns:gw-authentication" part="gw-authentication" use="literal"/>
+        <soap12:header message="tns:gw-locale" part="gw-locale" use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="createTroubleTicketResponse">
+        <soap12:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="SOAPServerException">
+        <soap12:fault name="SOAPServerException" use="literal"/>
+      </wsdl:fault>
+      <wsdl:fault name="RequiredFieldException">
+        <soap12:fault name="RequiredFieldException" use="literal"/>
+      </wsdl:fault>
+      <wsdl:fault name="WsiAuthenticationException">
+        <soap12:fault name="WsiAuthenticationException" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="putHoldOnAccount">
+      <soap12:operation soapActionRequired="false" style="document"/>
+      <wsdl:input name="putHoldOnAccount">
+        <soap12:body use="literal"/>
+        <soap12:header message="tns:gw-authentication" part="gw-authentication" use="literal"/>
+        <soap12:header message="tns:gw-locale" part="gw-locale" use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="putHoldOnAccountResponse">
+        <soap12:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="SOAPServerException">
+        <soap12:fault name="SOAPServerException" use="literal"/>
+      </wsdl:fault>
+      <wsdl:fault name="RequiredFieldException">
+        <soap12:fault name="RequiredFieldException" use="literal"/>
+      </wsdl:fault>
+      <wsdl:fault name="SOAPException">
+        <soap12:fault name="SOAPException" use="literal"/>
+      </wsdl:fault>
+      <wsdl:fault name="BadIdentifierException">
+        <soap12:fault name="BadIdentifierException" use="literal"/>
+      </wsdl:fault>
+      <wsdl:fault name="WsiAuthenticationException">
+        <soap12:fault name="WsiAuthenticationException" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="putHoldOnPolicyPeriod">
+      <soap12:operation soapActionRequired="false" style="document"/>
+      <wsdl:input name="putHoldOnPolicyPeriod">
+        <soap12:body use="literal"/>
+        <soap12:header message="tns:gw-authentication" part="gw-authentication" use="literal"/>
+        <soap12:header message="tns:gw-locale" part="gw-locale" use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="putHoldOnPolicyPeriodResponse">
+        <soap12:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="SOAPServerException">
+        <soap12:fault name="SOAPServerException" use="literal"/>
+      </wsdl:fault>
+      <wsdl:fault name="RequiredFieldException">
+        <soap12:fault name="RequiredFieldException" use="literal"/>
+      </wsdl:fault>
+      <wsdl:fault name="SOAPException">
+        <soap12:fault name="SOAPException" use="literal"/>
+      </wsdl:fault>
+      <wsdl:fault name="BadIdentifierException">
+        <soap12:fault name="BadIdentifierException" use="literal"/>
+      </wsdl:fault>
+      <wsdl:fault name="WsiAuthenticationException">
+        <soap12:fault name="WsiAuthenticationException" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="putHoldOnPolicy">
+      <soap12:operation soapActionRequired="false" style="document"/>
+      <wsdl:input name="putHoldOnPolicy">
+        <soap12:body use="literal"/>
+        <soap12:header message="tns:gw-authentication" part="gw-authentication" use="literal"/>
+        <soap12:header message="tns:gw-locale" part="gw-locale" use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="putHoldOnPolicyResponse">
+        <soap12:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="SOAPServerException">
+        <soap12:fault name="SOAPServerException" use="literal"/>
+      </wsdl:fault>
+      <wsdl:fault name="RequiredFieldException">
+        <soap12:fault name="RequiredFieldException" use="literal"/>
+      </wsdl:fault>
+      <wsdl:fault name="SOAPException">
+        <soap12:fault name="SOAPException" use="literal"/>
+      </wsdl:fault>
+      <wsdl:fault name="BadIdentifierException">
+        <soap12:fault name="BadIdentifierException" use="literal"/>
+      </wsdl:fault>
+      <wsdl:fault name="WsiAuthenticationException">
+        <soap12:fault name="WsiAuthenticationException" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="putHoldOnProducer">
+      <soap12:operation soapActionRequired="false" style="document"/>
+      <wsdl:input name="putHoldOnProducer">
+        <soap12:body use="literal"/>
+        <soap12:header message="tns:gw-authentication" part="gw-authentication" use="literal"/>
+        <soap12:header message="tns:gw-locale" part="gw-locale" use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="putHoldOnProducerResponse">
+        <soap12:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="SOAPServerException">
+        <soap12:fault name="SOAPServerException" use="literal"/>
+      </wsdl:fault>
+      <wsdl:fault name="RequiredFieldException">
+        <soap12:fault name="RequiredFieldException" use="literal"/>
+      </wsdl:fault>
+      <wsdl:fault name="SOAPException">
+        <soap12:fault name="SOAPException" use="literal"/>
+      </wsdl:fault>
+      <wsdl:fault name="BadIdentifierException">
+        <soap12:fault name="BadIdentifierException" use="literal"/>
+      </wsdl:fault>
+      <wsdl:fault name="WsiAuthenticationException">
+        <soap12:fault name="WsiAuthenticationException" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="releaseHoldOnAccount">
+      <soap12:operation soapActionRequired="false" style="document"/>
+      <wsdl:input name="releaseHoldOnAccount">
+        <soap12:body use="literal"/>
+        <soap12:header message="tns:gw-authentication" part="gw-authentication" use="literal"/>
+        <soap12:header message="tns:gw-locale" part="gw-locale" use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="releaseHoldOnAccountResponse">
+        <soap12:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="SOAPServerException">
+        <soap12:fault name="SOAPServerException" use="literal"/>
+      </wsdl:fault>
+      <wsdl:fault name="RequiredFieldException">
+        <soap12:fault name="RequiredFieldException" use="literal"/>
+      </wsdl:fault>
+      <wsdl:fault name="BadIdentifierException">
+        <soap12:fault name="BadIdentifierException" use="literal"/>
+      </wsdl:fault>
+      <wsdl:fault name="WsiAuthenticationException">
+        <soap12:fault name="WsiAuthenticationException" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="releaseHoldOnPolicyPeriod">
+      <soap12:operation soapActionRequired="false" style="document"/>
+      <wsdl:input name="releaseHoldOnPolicyPeriod">
+        <soap12:body use="literal"/>
+        <soap12:header message="tns:gw-authentication" part="gw-authentication" use="literal"/>
+        <soap12:header message="tns:gw-locale" part="gw-locale" use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="releaseHoldOnPolicyPeriodResponse">
+        <soap12:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="SOAPServerException">
+        <soap12:fault name="SOAPServerException" use="literal"/>
+      </wsdl:fault>
+      <wsdl:fault name="RequiredFieldException">
+        <soap12:fault name="RequiredFieldException" use="literal"/>
+      </wsdl:fault>
+      <wsdl:fault name="BadIdentifierException">
+        <soap12:fault name="BadIdentifierException" use="literal"/>
+      </wsdl:fault>
+      <wsdl:fault name="WsiAuthenticationException">
+        <soap12:fault name="WsiAuthenticationException" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="releaseHoldOnProducer">
+      <soap12:operation soapActionRequired="false" style="document"/>
+      <wsdl:input name="releaseHoldOnProducer">
+        <soap12:body use="literal"/>
+        <soap12:header message="tns:gw-authentication" part="gw-authentication" use="literal"/>
+        <soap12:header message="tns:gw-locale" part="gw-locale" use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="releaseHoldOnProducerResponse">
+        <soap12:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="SOAPServerException">
+        <soap12:fault name="SOAPServerException" use="literal"/>
+      </wsdl:fault>
+      <wsdl:fault name="RequiredFieldException">
+        <soap12:fault name="RequiredFieldException" use="literal"/>
+      </wsdl:fault>
+      <wsdl:fault name="BadIdentifierException">
+        <soap12:fault name="BadIdentifierException" use="literal"/>
+      </wsdl:fault>
+      <wsdl:fault name="WsiAuthenticationException">
+        <soap12:fault name="WsiAuthenticationException" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:binding name="TroubleTicketAPISoap11Binding" type="tns:TroubleTicketAPIPortType">
+    <soap11:binding transport="http://schemas.xmlsoap.org/soap/http" style="document"/>
+    <wsdl:operation name="createDisasterTroubleTicketsOnAccountsAndPoliciesWithPostalCodes">
+      <soap11:operation style="document"/>
+      <wsdl:input name="createDisasterTroubleTicketsOnAccountsAndPoliciesWithPostalCodes">
+        <soap11:body use="literal"/>
+        <soap11:header message="tns:gw-authentication" part="gw-authentication" use="literal"/>
+        <soap11:header message="tns:gw-locale" part="gw-locale" use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="createDisasterTroubleTicketsOnAccountsAndPoliciesWithPostalCodesResponse">
+        <soap11:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="WsiAuthenticationException">
+        <soap11:fault name="WsiAuthenticationException" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="createDisasterTroubleTicketsOnPoliciesWithPostalCodes">
+      <soap11:operation style="document"/>
+      <wsdl:input name="createDisasterTroubleTicketsOnPoliciesWithPostalCodes">
+        <soap11:body use="literal"/>
+        <soap11:header message="tns:gw-authentication" part="gw-authentication" use="literal"/>
+        <soap11:header message="tns:gw-locale" part="gw-locale" use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="createDisasterTroubleTicketsOnPoliciesWithPostalCodesResponse">
+        <soap11:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="WsiAuthenticationException">
+        <soap11:fault name="WsiAuthenticationException" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="createTroubleTicket">
+      <soap11:operation style="document"/>
+      <wsdl:input name="createTroubleTicket">
+        <soap11:body use="literal"/>
+        <soap11:header message="tns:gw-authentication" part="gw-authentication" use="literal"/>
+        <soap11:header message="tns:gw-locale" part="gw-locale" use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="createTroubleTicketResponse">
+        <soap11:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="SOAPServerException">
+        <soap11:fault name="SOAPServerException" use="literal"/>
+      </wsdl:fault>
+      <wsdl:fault name="RequiredFieldException">
+        <soap11:fault name="RequiredFieldException" use="literal"/>
+      </wsdl:fault>
+      <wsdl:fault name="WsiAuthenticationException">
+        <soap11:fault name="WsiAuthenticationException" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="putHoldOnAccount">
+      <soap11:operation style="document"/>
+      <wsdl:input name="putHoldOnAccount">
+        <soap11:body use="literal"/>
+        <soap11:header message="tns:gw-authentication" part="gw-authentication" use="literal"/>
+        <soap11:header message="tns:gw-locale" part="gw-locale" use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="putHoldOnAccountResponse">
+        <soap11:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="SOAPServerException">
+        <soap11:fault name="SOAPServerException" use="literal"/>
+      </wsdl:fault>
+      <wsdl:fault name="RequiredFieldException">
+        <soap11:fault name="RequiredFieldException" use="literal"/>
+      </wsdl:fault>
+      <wsdl:fault name="SOAPException">
+        <soap11:fault name="SOAPException" use="literal"/>
+      </wsdl:fault>
+      <wsdl:fault name="BadIdentifierException">
+        <soap11:fault name="BadIdentifierException" use="literal"/>
+      </wsdl:fault>
+      <wsdl:fault name="WsiAuthenticationException">
+        <soap11:fault name="WsiAuthenticationException" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="putHoldOnPolicyPeriod">
+      <soap11:operation style="document"/>
+      <wsdl:input name="putHoldOnPolicyPeriod">
+        <soap11:body use="literal"/>
+        <soap11:header message="tns:gw-authentication" part="gw-authentication" use="literal"/>
+        <soap11:header message="tns:gw-locale" part="gw-locale" use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="putHoldOnPolicyPeriodResponse">
+        <soap11:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="SOAPServerException">
+        <soap11:fault name="SOAPServerException" use="literal"/>
+      </wsdl:fault>
+      <wsdl:fault name="RequiredFieldException">
+        <soap11:fault name="RequiredFieldException" use="literal"/>
+      </wsdl:fault>
+      <wsdl:fault name="SOAPException">
+        <soap11:fault name="SOAPException" use="literal"/>
+      </wsdl:fault>
+      <wsdl:fault name="BadIdentifierException">
+        <soap11:fault name="BadIdentifierException" use="literal"/>
+      </wsdl:fault>
+      <wsdl:fault name="WsiAuthenticationException">
+        <soap11:fault name="WsiAuthenticationException" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="putHoldOnPolicy">
+      <soap11:operation style="document"/>
+      <wsdl:input name="putHoldOnPolicy">
+        <soap11:body use="literal"/>
+        <soap11:header message="tns:gw-authentication" part="gw-authentication" use="literal"/>
+        <soap11:header message="tns:gw-locale" part="gw-locale" use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="putHoldOnPolicyResponse">
+        <soap11:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="SOAPServerException">
+        <soap11:fault name="SOAPServerException" use="literal"/>
+      </wsdl:fault>
+      <wsdl:fault name="RequiredFieldException">
+        <soap11:fault name="RequiredFieldException" use="literal"/>
+      </wsdl:fault>
+      <wsdl:fault name="SOAPException">
+        <soap11:fault name="SOAPException" use="literal"/>
+      </wsdl:fault>
+      <wsdl:fault name="BadIdentifierException">
+        <soap11:fault name="BadIdentifierException" use="literal"/>
+      </wsdl:fault>
+      <wsdl:fault name="WsiAuthenticationException">
+        <soap11:fault name="WsiAuthenticationException" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="putHoldOnProducer">
+      <soap11:operation style="document"/>
+      <wsdl:input name="putHoldOnProducer">
+        <soap11:body use="literal"/>
+        <soap11:header message="tns:gw-authentication" part="gw-authentication" use="literal"/>
+        <soap11:header message="tns:gw-locale" part="gw-locale" use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="putHoldOnProducerResponse">
+        <soap11:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="SOAPServerException">
+        <soap11:fault name="SOAPServerException" use="literal"/>
+      </wsdl:fault>
+      <wsdl:fault name="RequiredFieldException">
+        <soap11:fault name="RequiredFieldException" use="literal"/>
+      </wsdl:fault>
+      <wsdl:fault name="SOAPException">
+        <soap11:fault name="SOAPException" use="literal"/>
+      </wsdl:fault>
+      <wsdl:fault name="BadIdentifierException">
+        <soap11:fault name="BadIdentifierException" use="literal"/>
+      </wsdl:fault>
+      <wsdl:fault name="WsiAuthenticationException">
+        <soap11:fault name="WsiAuthenticationException" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="releaseHoldOnAccount">
+      <soap11:operation style="document"/>
+      <wsdl:input name="releaseHoldOnAccount">
+        <soap11:body use="literal"/>
+        <soap11:header message="tns:gw-authentication" part="gw-authentication" use="literal"/>
+        <soap11:header message="tns:gw-locale" part="gw-locale" use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="releaseHoldOnAccountResponse">
+        <soap11:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="SOAPServerException">
+        <soap11:fault name="SOAPServerException" use="literal"/>
+      </wsdl:fault>
+      <wsdl:fault name="RequiredFieldException">
+        <soap11:fault name="RequiredFieldException" use="literal"/>
+      </wsdl:fault>
+      <wsdl:fault name="BadIdentifierException">
+        <soap11:fault name="BadIdentifierException" use="literal"/>
+      </wsdl:fault>
+      <wsdl:fault name="WsiAuthenticationException">
+        <soap11:fault name="WsiAuthenticationException" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="releaseHoldOnPolicyPeriod">
+      <soap11:operation style="document"/>
+      <wsdl:input name="releaseHoldOnPolicyPeriod">
+        <soap11:body use="literal"/>
+        <soap11:header message="tns:gw-authentication" part="gw-authentication" use="literal"/>
+        <soap11:header message="tns:gw-locale" part="gw-locale" use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="releaseHoldOnPolicyPeriodResponse">
+        <soap11:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="SOAPServerException">
+        <soap11:fault name="SOAPServerException" use="literal"/>
+      </wsdl:fault>
+      <wsdl:fault name="RequiredFieldException">
+        <soap11:fault name="RequiredFieldException" use="literal"/>
+      </wsdl:fault>
+      <wsdl:fault name="BadIdentifierException">
+        <soap11:fault name="BadIdentifierException" use="literal"/>
+      </wsdl:fault>
+      <wsdl:fault name="WsiAuthenticationException">
+        <soap11:fault name="WsiAuthenticationException" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="releaseHoldOnProducer">
+      <soap11:operation style="document"/>
+      <wsdl:input name="releaseHoldOnProducer">
+        <soap11:body use="literal"/>
+        <soap11:header message="tns:gw-authentication" part="gw-authentication" use="literal"/>
+        <soap11:header message="tns:gw-locale" part="gw-locale" use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="releaseHoldOnProducerResponse">
+        <soap11:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="SOAPServerException">
+        <soap11:fault name="SOAPServerException" use="literal"/>
+      </wsdl:fault>
+      <wsdl:fault name="RequiredFieldException">
+        <soap11:fault name="RequiredFieldException" use="literal"/>
+      </wsdl:fault>
+      <wsdl:fault name="BadIdentifierException">
+        <soap11:fault name="BadIdentifierException" use="literal"/>
+      </wsdl:fault>
+      <wsdl:fault name="WsiAuthenticationException">
+        <soap11:fault name="WsiAuthenticationException" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="TroubleTicketAPI">
+    <wsdl:port name="TroubleTicketAPISoap12Port" binding="tns:TroubleTicketAPISoap12Binding">
+      <soap12:address location="local:///gw/webservice/bc/bc801/TroubleTicketAPI"/>
+    </wsdl:port>
+    <wsdl:port name="TroubleTicketAPISoap11Port" binding="tns:TroubleTicketAPISoap11Binding">
+      <soap11:address location="local:///gw/webservice/bc/bc801/TroubleTicketAPI/soap11"/>
+    </wsdl:port>
+  </wsdl:service>
+  <wsdl:message name="createDisasterTroubleTicketsOnAccountsAndPoliciesWithPostalCodes">
+    <wsdl:part name="parameters" element="tns:createDisasterTroubleTicketsOnAccountsAndPoliciesWithPostalCodes"/>
+  </wsdl:message>
+  <wsdl:message name="createDisasterTroubleTicketsOnAccountsAndPoliciesWithPostalCodesResponse">
+    <wsdl:part name="parameters" element="tns:createDisasterTroubleTicketsOnAccountsAndPoliciesWithPostalCodesResponse"/>
+  </wsdl:message>
+  <wsdl:message name="WsiAuthenticationException">
+    <wsdl:part name="WsiAuthenticationException" element="tns:WsiAuthenticationException"/>
+  </wsdl:message>
+  <wsdl:message name="createDisasterTroubleTicketsOnPoliciesWithPostalCodes">
+    <wsdl:part name="parameters" element="tns:createDisasterTroubleTicketsOnPoliciesWithPostalCodes"/>
+  </wsdl:message>
+  <wsdl:message name="createDisasterTroubleTicketsOnPoliciesWithPostalCodesResponse">
+    <wsdl:part name="parameters" element="tns:createDisasterTroubleTicketsOnPoliciesWithPostalCodesResponse"/>
+  </wsdl:message>
+  <wsdl:message name="createTroubleTicket">
+    <wsdl:part name="parameters" element="tns:createTroubleTicket"/>
+  </wsdl:message>
+  <wsdl:message name="createTroubleTicketResponse">
+    <wsdl:part name="parameters" element="tns:createTroubleTicketResponse"/>
+  </wsdl:message>
+  <wsdl:message name="SOAPServerException">
+    <wsdl:part name="SOAPServerException" element="tns:SOAPServerException"/>
+  </wsdl:message>
+  <wsdl:message name="RequiredFieldException">
+    <wsdl:part name="RequiredFieldException" element="tns:RequiredFieldException"/>
+  </wsdl:message>
+  <wsdl:message name="putHoldOnAccount">
+    <wsdl:part name="parameters" element="tns:putHoldOnAccount"/>
+  </wsdl:message>
+  <wsdl:message name="putHoldOnAccountResponse">
+    <wsdl:part name="parameters" element="tns:putHoldOnAccountResponse"/>
+  </wsdl:message>
+  <wsdl:message name="SOAPException">
+    <wsdl:part name="SOAPException" element="tns:SOAPException"/>
+  </wsdl:message>
+  <wsdl:message name="BadIdentifierException">
+    <wsdl:part name="BadIdentifierException" element="tns:BadIdentifierException"/>
+  </wsdl:message>
+  <wsdl:message name="putHoldOnPolicyPeriod">
+    <wsdl:part name="parameters" element="tns:putHoldOnPolicyPeriod"/>
+  </wsdl:message>
+  <wsdl:message name="putHoldOnPolicyPeriodResponse">
+    <wsdl:part name="parameters" element="tns:putHoldOnPolicyPeriodResponse"/>
+  </wsdl:message>
+  <wsdl:message name="putHoldOnPolicy">
+    <wsdl:part name="parameters" element="tns:putHoldOnPolicy"/>
+  </wsdl:message>
+  <wsdl:message name="putHoldOnPolicyResponse">
+    <wsdl:part name="parameters" element="tns:putHoldOnPolicyResponse"/>
+  </wsdl:message>
+  <wsdl:message name="putHoldOnProducer">
+    <wsdl:part name="parameters" element="tns:putHoldOnProducer"/>
+  </wsdl:message>
+  <wsdl:message name="putHoldOnProducerResponse">
+    <wsdl:part name="parameters" element="tns:putHoldOnProducerResponse"/>
+  </wsdl:message>
+  <wsdl:message name="releaseHoldOnAccount">
+    <wsdl:part name="parameters" element="tns:releaseHoldOnAccount"/>
+  </wsdl:message>
+  <wsdl:message name="releaseHoldOnAccountResponse">
+    <wsdl:part name="parameters" element="tns:releaseHoldOnAccountResponse"/>
+  </wsdl:message>
+  <wsdl:message name="releaseHoldOnPolicyPeriod">
+    <wsdl:part name="parameters" element="tns:releaseHoldOnPolicyPeriod"/>
+  </wsdl:message>
+  <wsdl:message name="releaseHoldOnPolicyPeriodResponse">
+    <wsdl:part name="parameters" element="tns:releaseHoldOnPolicyPeriodResponse"/>
+  </wsdl:message>
+  <wsdl:message name="releaseHoldOnProducer">
+    <wsdl:part name="parameters" element="tns:releaseHoldOnProducer"/>
+  </wsdl:message>
+  <wsdl:message name="releaseHoldOnProducerResponse">
+    <wsdl:part name="parameters" element="tns:releaseHoldOnProducerResponse"/>
+  </wsdl:message>
+  <wsdl:message name="gw-authentication">
+    <wsdl:part name="gw-authentication" element="gwsoap:authentication"/>
+  </wsdl:message>
+  <wsdl:message name="gw-locale">
+    <wsdl:part name="gw-locale" element="gwsoap:locale"/>
+  </wsdl:message>
+</wsdl:definitions>

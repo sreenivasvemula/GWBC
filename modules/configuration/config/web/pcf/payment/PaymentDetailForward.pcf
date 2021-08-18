@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<PCF
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:noNamespaceSchemaLocation="../../../../../pcf.xsd">
+  <Forward
+    id="PaymentDetailForward">
+    <LocationEntryPoint
+      signature="PaymentDetailForward(paymentReceipt : PaymentReceipt)"/>
+    <Variable
+      name="paymentReceipt"
+      type="PaymentReceipt"/>
+    <ForwardCondition
+      action="OutgoingPaymentDetailPopup.push(paymentReceipt as OutgoingPayment)"
+      condition="paymentReceipt typeis OutgoingPayment"/>
+    <ForwardCondition
+      action="PaymentDetailsPopup.push(paymentReceipt)"/>
+  </Forward>
+</PCF>

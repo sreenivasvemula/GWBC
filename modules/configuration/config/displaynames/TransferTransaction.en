@@ -1,0 +1,79 @@
+<?xml version="1.0"?>
+<Entity
+  name="TransferTransaction">
+  <Columns>
+    <Column
+      beanPath="Transaction.Subtype"
+      name="Subtype"/>
+    <Column
+      beanPath="Transaction.ReversedTransaction.TransactionNumber"
+      name="ReversedTransactionNumber"/>
+    <Column
+      beanPath="TransferTransaction.Reason"
+      name="Reason"/>
+    <DisplayNameColumn
+      beanPath="TransferTransaction.TransferTxContext.SourceUnappliedTAccount.Owner"
+      displayName="false"
+      name="Source"/>
+    <DisplayNameColumn
+      beanPath="TransferTransaction.TransferTxContext.TargetUnappliedTAccount.Owner"
+      displayName="false"
+      name="Destination"/>
+    <Column
+      beanPath="TransferTransaction.Reversed"
+      name="Reversed"/>
+  </Columns>
+  <DisplayName><![CDATA[
+gw.api.domain.accounting.ReversibleUtil.formatReversibleDisplayName(gw.api.util.TypeKeyUtil.toDisplayName(Subtype), ReversedTransactionNumber)]]></DisplayName>
+  <DisplayName
+    type="Short"><![CDATA[if (Source typeis Account and Source == Destination) {
+  return gw.api.domain.accounting.ReversibleUtil.formatReversibleDisplayName(displaykey.DisplayName.TransferTransaction.ShortWithinAccount, ReversedTransactionNumber)
+} else {
+  var sourceTypeName = Source typeis Account ? displaykey.DisplayName.TransferTransaction.Account : displaykey.DisplayName.TransferTransaction.Producer
+  var destinationTypeName = Destination typeis Account ? displaykey.DisplayName.TransferTransaction.Account : displaykey.DisplayName.TransferTransaction.Producer
+  
+  return gw.api.domain.accounting.ReversibleUtil.formatReversibleDisplayName(displaykey.DisplayName.TransferTransaction.Short(sourceTypeName, destinationTypeName), ReversedTransactionNumber)
+}
+]]></DisplayName>
+  <DisplayName
+    type="Long"><![CDATA[var reasonStr = (Reason == null) ? "" : " [" + Reason.DisplayName + "]";
+if (Source typeis Account and Source == Destination) {
+  return gw.api.domain.accounting.ReversibleUtil.formatReversibleDisplayName(displaykey.DisplayName.TransferTransaction.LongWithinAccount(Source.DisplayName, reasonStr), ReversedTransactionNumber);
+} else {
+  var sourceTypeName = Source typeis Account ? displaykey.DisplayName.TransferTransaction.Account.ForLongDisplayName : displaykey.DisplayName.TransferTransaction.Producer.ForLongDisplayName
+  var destinationTypeName = Destination typeis Account ? displaykey.DisplayName.TransferTransaction.Account.ForLongDisplayName : displaykey.DisplayName.TransferTransaction.Producer.ForLongDisplayName
+  return gw.api.domain.accounting.ReversibleUtil.formatReversibleDisplayName(displaykey.DisplayName.TransferTransaction.Long(sourceTypeName, Source.DisplayName, destinationTypeName, Destination.DisplayName, reasonStr), ReversedTransactionNumber);
+}]]></DisplayName>
+  <DisplayName
+    type="FundsSource"><![CDATA[var sourceTypeName = Source typeis Account ? displaykey.DisplayName.TransferTransaction.Account : displaykey.DisplayName.TransferTransaction.Producer
+displaykey.DisplayName.TransferTransaction.FundsSource(sourceTypeName, Source.DisplayName)
+if(!Reversed){
+  return displaykey.DisplayName.TransferTransaction.FundsSource(sourceTypeName, Source.DisplayName)
+} else {
+  return displaykey.DisplayName.TransferTransaction.FundsSource.Reversed(sourceTypeName, Source.DisplayName)
+}]]></DisplayName>
+  <DisplayName
+    type="FundsSourceReversal"><![CDATA[var sourceTypeName = Source typeis Account ? displaykey.DisplayName.TransferTransaction.Account : displaykey.DisplayName.TransferTransaction.Producer
+return displaykey.DisplayName.TransferTransaction.FundsSourceReversal(sourceTypeName, Source.DisplayName)]]></DisplayName>
+  <DisplayName
+    type="FundsUse"><![CDATA[var destinationTypeName = Destination typeis Account ? displaykey.DisplayName.TransferTransaction.Account : displaykey.DisplayName.TransferTransaction.Producer
+
+if(!Reversed){
+  return displaykey.DisplayName.TransferTransaction.FundsUse(destinationTypeName, Destination.DisplayName)
+} else {
+  return displaykey.DisplayName.TransferTransaction.FundsUse.Reversed(destinationTypeName, Destination.DisplayName)
+}
+]]></DisplayName>
+  <DisplayName
+    type="FundsUseReversal"><![CDATA[var destinationTypeName = Destination typeis Account ? displaykey.DisplayName.TransferTransaction.Account : displaykey.DisplayName.TransferTransaction.Producer
+
+return displaykey.DisplayName.TransferTransaction.FundsUseReversal(destinationTypeName, Destination.DisplayName)]]></DisplayName>
+  <DisplayName
+    type="FundsSourcePredatesFundsTracking"><![CDATA[var sourceTypeName = Source typeis Account ? displaykey.DisplayName.TransferTransaction.Account : displaykey.DisplayName.TransferTransaction.Producer
+
+return displaykey.DisplayName.TransferTransaction.FundsSource.PredatesFundsTracking(sourceTypeName, Source.DisplayName)]]></DisplayName>
+  <DisplayName
+    type="FundsUsePredatesFundsTracking"><![CDATA[var destinationTypeName = Destination typeis Account ? displaykey.DisplayName.TransferTransaction.Account : displaykey.DisplayName.TransferTransaction.Producer
+
+return displaykey.DisplayName.TransferTransaction.FundsUse.PredatesFundsTracking(destinationTypeName, Destination.DisplayName)]]></DisplayName>
+</Entity>

@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xml:lang="en" lang="en" xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+    <meta http-equiv="Content-Style-Type" content="text/css" />
+    <!-- MOTW-DISABLED saved from url=(0014)about:internet -->
+    <title>Final Audit APIs in BillingAPI</title>
+    <link rel="StyleSheet" href="css/bc-webservices.css" type="text/css" media="all" />
+    <link rel="StyleSheet" href="css/webworks.css" type="text/css" media="all" />
+    <link rel="StyleSheet" href="css/css-guidewire-extra.css" type="text/css" media="all" />
+    <script type="text/javascript" language="JavaScript1.2" src="wwhdata/common/context.js"></script>
+    <script type="text/javascript" language="JavaScript1.2" src="wwhdata/common/towwhdir.js"></script>
+    <script type="text/javascript" language="JavaScript1.2" src="wwhdata/common/wwhpagef.js"></script>
+    <script type="text/javascript" language="JavaScript1.2">
+      <!--
+        var  WebWorksRootPath = "";
+      // -->
+    </script>
+    <script type="text/javascript" language="JavaScript1.2">
+      <!--
+        // Set reference to top level help frame
+        //
+        var  WWHFrame = WWHGetWWHFrame("", true);
+      // -->
+    </script>
+    <script type="text/javascript" language="JavaScript1.2" src="scripts/expand.js"></script>
+    <!-- THE FOLLOWING IS A GUIDEWIRE STYLE DEFINITION FOR THE LINK TO THIS FEATURE -->
+    <link rel="StyleSheet" href="css/css-guidewire-extra.css" type="text/css" media="all" />
+    <!-- THE FOLLOWING IS A GUIDEWIRE GSCRIPT FUNCTION FOR THE LINK TO THIS FEATURE -->
+    <script type="text/javascript">
+function guidewire_selectall()
+{
+var text_val=eval("document.linktothisurlform.urlfield");
+text_val.focus();
+text_val.select();
+}
+</script>
+  </head>
+  <body onLoad="WWHUpdate();" onUnload="WWHUnload();" onKeyDown="WWHHandleKeyDown((document.all||document.getElementById||document.layers)?event:null);" onKeyPress="WWHHandleKeyPress((document.all||document.getElementById||document.layers)?event:null);" onKeyUp="WWHHandleKeyUp((document.all||document.getElementById||document.layers)?event:null);">
+    <!-- THE FOLLOWING IS A GUIDEWIRE DIV FOR THE 'LINK TO THIS' FEATURE -->
+    <div id="linkToThisPage" class="popup" style="display: none;">
+      <div class="popupTitle">Link Directly to This Page 
+           <a href="#" onclick="var thePopup = getElementById('linkToThisPage');thePopup.style.display='none';return false;"><img class="popupClosebox" src="wwhelp/wwhimpl/common/images/close.gif" /></a></div>
+      <div style="padding:6px;">
+        <div class="popupText" id="linkToThisPageBookmark">An error has occurred if you see this messsage.</div>
+        <form name="linktothisurlform" method="post" action="" style="width:275px;margin:0px">
+          <input type="text" class="popupURLText" id="linkToThisPageURL" name="urlfield" rows="1" cols="55" onClick="guidewire_selectall();" onFocus="guidewire_selectall();"></input>
+        </form>
+      </div>
+    </div>
+    <br />
+    <div class="WebWorks_Breadcrumbs" style="text-align: left;">
+      <span>BillingCenter Integration Guide</span> : 
+    <span class="WebWorks_Breadcrumbs" style="text-align: left;"><a class="WebWorks_Breadcrumb_Link" href="p-webservices.html#3575824">Web Services</a> : <a class="WebWorks_Breadcrumb_Link" href="bc-webservices.09.01.html#3575824">Billing Web Services</a> : <a class="WebWorks_Breadcrumb_Link" href="bc-webservices.09.03.html#3575824">Policy Administration System Core Web Service APIs (BillingAPI)</a> : Final Audit APIs in BillingAPI</span></div>
+    <hr align="left" />
+    <blockquote>
+      <h4 class="H2B_-_Heading_2_Break"><a name="3575824">Final Audit APIs in </a><span class="cvh_-_computer_voice_in_heading">BillingAPI</span></h4>
+      <div class="B_-_Body"><a name="3721417">The </a><span class="cv_-_computer_voice">BillingAPI</span> web service provides several methods to support final audits. The methods use data transfer objects (DTOs) to represent entity type data. For important information about DTOs, see <a href="javascript:WWHClickedPopup('integration', 'bc-webservices.09.02.html#3735341', '');" title="Billing Web Services Overview">“BillingCenter Data Transfer Objects (DTOs)”</a>.</div>
+      <div class="H3_-_Heading_3_outer" style="margin-left: 36pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <h5 class="H3_-_Heading_3_inner" style="width: 18pt; white-space: nowrap"></h5>
+            </td>
+            <td width="100%">
+              <h5 class="H3_-_Heading_3_inner"><a name="3721437">Notification of a Final Audit</a></h5>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="B_-_Body"><a name="3716061">When an external system schedules a final audit, the best practice recommends notifying BillingCenter of the audit by calling the </a><span class="cv_-_computer_voice">BillingAPI</span> web service method <span class="cv_-_computer_voice">scheduleFinalAudit</span>. The method prevents the policy period from being closed until the audit has completed. If the policy period was already closed, it is reopened. The closure status of the policy period is set to <span class="cv_-_computer_voice">OpenLocked</span>.</div>
+      <div class="N_-_Note">
+        <span class="n_-_note">Note: </span><a name="3738274">This method uses XML DTOs with declarations in the XSD file </a><span class="cv_-_computer_voice">entity.xsd</span>.</div>
+      <div class="B_-_Body"><a name="3576320">Its main argument is a </a><span class="cv_-_computer_voice">PCPolicyPeriodInfo</span> DTO. <span class="cv_-_computer_voice">PCPolicyPeriodInfo</span> is a non-entity mirror of the root <span class="cv_-_computer_voice">BillingInstruction</span> class with additional properties to identify the relevant policy period. The important properties are <span class="cv_-_computer_voice">periodID</span> and <span class="cv_-_computer_voice">PolicyNumber</span>. For more information, see <a href="javascript:WWHClickedPopup('integration', 'bc-webservices.09.04.html#3707231', '');" title="Overview of the BillingAPI Web Service">“Identifying Policy Periods in BillingAPI”</a>.</div>
+      <div class="B_-_Body"><a name="3576521">The method takes an additional transaction ID argument. See </a><a href="javascript:WWHClickedPopup('integration', 'bc-webservices.09.04.html#3564633', '');" title="Overview of the BillingAPI Web Service">“Policy System Transaction IDs in BillingAPI”</a>.</div>
+      <div class="B_-_Body"><a name="3832976">The method returns the policy period’s public ID.</a></div>
+      <div class="H3_-_Heading_3_outer" style="margin-left: 36pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <h5 class="H3_-_Heading_3_inner" style="width: 18pt; white-space: nowrap"></h5>
+            </td>
+            <td width="100%">
+              <h5 class="H3_-_Heading_3_inner"><a name="3721463">Issue a Final Audit Billing Instruction</a></h5>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="B_-_Body"><a name="3721464">An external system can instruct BillingCenter to issue an </a><span class="cv_-_computer_voice">Audit</span> billing instruction of subtype <span class="cv_-_computer_voice">FinalAudit</span> by calling the <span class="cv_-_computer_voice">BillingAPI</span> web service method <span class="cv_-_computer_voice">issueFinalAudit</span>.</div>
+      <div class="N_-_Note">
+        <span class="n_-_note">Note: </span><a name="3738286">This method uses XML DTOs with declarations in the XSD file </a><span class="cv_-_computer_voice">entity.xsd</span>.</div>
+      <div class="B_-_Body"><a name="3721469">The main argument is a </a><span class="cv_-_computer_voice">FinalAuditInfo</span> DTO. <span class="cv_-_computer_voice">FinalAuditInfo</span> is a DTO that represents the billing instruction entity <span class="cv_-_computer_voice">FinalAudit</span>. For the list of all properties, see:</div>
+      <div class="BI_-_Bullet_Item_outer" style="margin-left: 57pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="BI_-_Bullet_Item_inner" style="width: 15pt; white-space: nowrap">
+                <span class="bu_-_bullet">•	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="BI_-_Bullet_Item_inner"><a name="3721470">The </a><span class="cv_-_computer_voice">entity.xsd</span> file definitions of <span class="cv_-_computer_voice">FinalAuditInfo</span>, <span class="cv_-_computer_voice">BillingInstructionInfo</span>, and <span class="cv_-_computer_voice">PCPolicyPeriodInfo</span>.</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="BI_-_Bullet_Item_outer" style="margin-left: 57pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="BI_-_Bullet_Item_inner" style="width: 15pt; white-space: nowrap">
+                <span class="bu_-_bullet">•	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="BI_-_Bullet_Item_inner"><a name="3721471">The </a><span class="e_-_emphasis">Data Dictionary</span> for the <span class="cv_-_computer_voice">FinalAudit</span> entity.</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="B_-_Body"><a name="3721476">The method takes an additional transaction ID argument. See </a><a href="javascript:WWHClickedPopup('integration', 'bc-webservices.09.04.html#3564633', '');" title="Overview of the BillingAPI Web Service">“Policy System Transaction IDs in BillingAPI”</a>.</div>
+      <div class="B_-_Body"><a name="3833145">The method returns the public ID of the issued </a><span class="cv_-_computer_voice">Audit</span> billing instruction.</div>
+      <div class="H3_-_Heading_3_outer" style="margin-left: 36pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <h5 class="H3_-_Heading_3_inner" style="width: 18pt; white-space: nowrap"></h5>
+            </td>
+            <td width="100%">
+              <h5 class="H3_-_Heading_3_inner"><a name="3576229">Waive a Final Audit</a></h5>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="B_-_Body"><a name="3754292">When an external system determines that a final audit is not going to occur, the best practice recommends notifying BillingCenter by calling the </a><span class="cv_-_computer_voice">BillingAPI</span> web service method <span class="cv_-_computer_voice">waiveFinalAudit</span>. The method enables the policy period to be closed by changing its closure status from <span class="cv_-_computer_voice">OpenLocked</span> to <span class="cv_-_computer_voice">Open</span>. Also, any holds on charges associated with the final audit are released.</div>
+      <div class="N_-_Note">
+        <span class="n_-_note">Note: </span><a name="3754302">This method uses XML DTOs with declarations in the XSD file </a><span class="cv_-_computer_voice">entity.xsd</span>.</div>
+      <div class="B_-_Body"><a name="3834068">Its main argument is a </a><span class="cv_-_computer_voice">PCPolicyPeriodInfo</span> DTO. <span class="cv_-_computer_voice">PCPolicyPeriodInfo</span> is a non-entity mirror of the root <span class="cv_-_computer_voice">BillingInstruction</span> class with additional properties to identify the relevant policy period. The important properties are <span class="cv_-_computer_voice">periodID</span> and <span class="cv_-_computer_voice">PolicyNumber</span>. For more information, see <a href="javascript:WWHClickedPopup('integration', 'bc-webservices.09.04.html#3707231', '');" title="Overview of the BillingAPI Web Service">“Identifying Policy Periods in BillingAPI”</a>.</div>
+      <div class="B_-_Body"><a name="3577415">The method takes an additional transaction ID argument. See </a><a href="javascript:WWHClickedPopup('integration', 'bc-webservices.09.04.html#3564633', '');" title="Overview of the BillingAPI Web Service">“Policy System Transaction IDs in BillingAPI”</a>.</div>
+      <div class="B_-_Body"><a name="3833169">The method returns the policy period’s public ID.</a></div>
+      <script type="text/javascript" language="JavaScript1.2">
+        <!--
+          // Clear related topics
+          //
+          WWHClearRelatedTopics();
+
+          document.writeln(WWHRelatedTopicsInlineHTML());
+        // -->
+      </script>
+    </blockquote>
+    <script type="text/javascript" language="JavaScript1.2">
+      <!--
+        document.write(WWHRelatedTopicsDivTag() + WWHPopupDivTag() + WWHALinksDivTag());
+      // -->
+    </script>
+  </body>
+</html>

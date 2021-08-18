@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PCF
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:noNamespaceSchemaLocation="../../../../../pcf.xsd">
+  <Page
+    canVisit="perm.System.accttabview and perm.System.acctttktview"
+    id="AccountDetailTroubleTickets"
+    showUpLink="true"
+    title="displaykey.Web.AccountDetailTroubleTickets.Title">
+    <LocationEntryPoint
+      signature="AccountDetailTroubleTickets(account : Account)"/>
+    <Variable
+      name="account"
+      type="Account"/>
+    <Screen
+      id="AccountDetailTroubleTicketsScreen">
+      <Toolbar>
+        <ToolbarDivider/>
+        <ToolbarButton
+          action="CreateTroubleTicketWizard.push(account)"
+          id="NewTroubleTicket"
+          label="displaykey.Web.AccountDetailTroubleTickets.NewButton"
+          visible="perm.TroubleTicket.create"/>
+      </Toolbar>
+      <PanelRef
+        def="TroubleTicketsLV(account.TroubleTickets)"/>
+    </Screen>
+  </Page>
+</PCF>

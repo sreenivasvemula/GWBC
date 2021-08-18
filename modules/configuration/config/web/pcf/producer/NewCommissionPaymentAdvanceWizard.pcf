@@ -1,0 +1,37 @@
+<?xml version="1.0"?>
+<PCF
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:noNamespaceSchemaLocation="../../../../../pcf.xsd">
+  <Wizard
+    beforeCommit="gw.api.web.producer.ProducerUtil.schedule(advancePayment)"
+    canEdit="true"
+    cancelWarning="displaykey.Web.NewCommissionPaymentAdvanceWizard.CancelConfirmation"
+    id="NewCommissionPaymentAdvanceWizard">
+    <LocationEntryPoint
+      signature="NewCommissionPaymentAdvanceWizard(producer : Producer)"/>
+    <Variable
+      name="producer"
+      type="Producer"/>
+    <Variable
+      initialValue="newAdvancePayment()"
+      name="advancePayment"/>
+    <WizardStep
+      id="DetailsStep"
+      label="displaykey.Web.NewCommissionPaymentAdvanceWizard.Details.Label"
+      onExit="advancePayment.initiateApprovalActivityIfUserLacksAuthority()"
+      screen="NewCommissionPaymentAdvanceDetailsScreen(advancePayment)"
+      title="displaykey.Web.NewCommissionPaymentAdvanceWizard.Details.Title"/>
+    <WizardStep
+      allowFinish="true"
+      id="ConfirmationStep"
+      label="displaykey.Web.NewCommissionPaymentAdvanceWizard.Confirmation.Label"
+      screen="NewCommissionPaymentAdvanceConfirmationScreen(advancePayment)"
+      title="displaykey.Web.NewCommissionPaymentAdvanceWizard.Confirmation.Title"/>
+    <Code><![CDATA[function newAdvancePayment() : AdvanceCmsnPayment {
+        var acp = new AdvanceCmsnPayment(producer.Currency)
+        acp.Producer = producer;
+        acp.PaymentTime = "immediately";
+        return acp;
+      }]]></Code>
+  </Wizard>
+</PCF>

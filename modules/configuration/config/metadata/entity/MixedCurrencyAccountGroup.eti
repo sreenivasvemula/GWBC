@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<entity xmlns="http://guidewire.com/datamodel"
+      desc="Groups a set of mixed currency BillingCenter splinter accounts that correspond to one mixed currency PolicyCenter account. The group can contain at most one splinter account per currency."
+      entity="MixedCurrencyAccountGroup"
+      extendable="true"
+      subpackage="account"
+      table="accountgroup"
+      type="retireable"
+      exportable="false">
+    <implementsEntity
+      name="NotInCurrencySilo"/>
+    <foreignkey
+      name="MainAccount"
+      desc="The central (initial) account for the group. (This is the PolicyCenter account.)"
+      columnName="MainAccountID"
+      exportasid="true"
+      fkentity="Account"
+      nullok="false"
+      setterScriptability="hidden"/>
+</entity>

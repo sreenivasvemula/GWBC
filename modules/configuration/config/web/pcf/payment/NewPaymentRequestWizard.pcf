@@ -1,0 +1,64 @@
+<?xml version="1.0"?>
+<PCF
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:noNamespaceSchemaLocation="../../../../../pcf.xsd">
+  <Wizard
+    afterCancel="DesktopGroup.go()"
+    afterFinish="DesktopGroup.go()"
+    beforeCommit="finalDataSet()"
+    id="NewPaymentRequestWizard">
+    <LocationEntryPoint
+      signature="NewPaymentRequestWizard()"/>
+    <Variable
+      name="request"
+      type="PaymentRequest"/>
+    <Variable
+      initialValue="new web.accounting.TAccountOwnerReference()"
+      name="tAccountOwnerReference"
+      type="web.accounting.TAccountOwnerReference"/>
+    <WizardStep
+      allowFinish="false"
+      allowNext="tAccountOwnerReference.TAccountOwner != null"
+      id="newPaymentRequestAccount"
+      label="displaykey.Web.NewPaymentRequestWizard.AccountSearch.Label"
+      onExit="setUpPaymentRequest()"
+      screen="NewPaymentRequestAccountSearchScreen(tAccountOwnerReference)"
+      title="displaykey.Web.NewPaymentRequestWizard.AccountSearch.Title"/>
+    <WizardStep
+      allowFinish="false"
+      id="newPaymentRequest"
+      label="displaykey.Web.NewPaymentRequestWizard.NewPaymentRequest.Label"
+      screen="NewPaymentRequestScreen(request)"
+      title="displaykey.Web.NewPaymentRequestWizard.NewPaymentRequest.Title"/>
+    <WizardStep
+      allowFinish="request.Account != null"
+      id="newPaymentRequestConfirmation"
+      label="displaykey.Web.NewPaymentRequestWizard.Confirmation.Label"
+      screen="NewPaymentRequestConfirmationScreen(request)"
+      title="displaykey.Web.NewPaymentRequestWizard.Confirmation.Title"/>
+    <Code><![CDATA[function finalDataSet() {
+  request.StatusDate = request.ChangeDeadlineDate
+}
+
+function setUpPaymentRequest() {
+  if (request == null) {
+    request = createRequestWithAccountCurrency()
+  }
+  else if (request.Currency != tAccountOwnerReference.TAccountOwner.Currency)
+  {
+    request.remove()
+    request = createRequestWithAccountCurrency()
+  }
+
+  request.Account = (tAccountOwnerReference.TAccountOwner as Account)
+  request.DraftDate = util.DateUtil.addDays(request.RequestDate, request.Account.BillingPlan.DraftInterval)
+}
+
+function createRequestWithAccountCurrency() : PaymentRequest {
+  var paymentRequest = new PaymentRequest(tAccountOwnerReference.TAccountOwner.Currency, CurrentLocation)
+  paymentRequest.RequestDate = util.DateUtil.currentDate();
+  paymentRequest.Status = "requested";
+  return paymentRequest
+}]]></Code>
+  </Wizard>
+</PCF>

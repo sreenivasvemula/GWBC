@@ -1,0 +1,34 @@
+<?xml version="1.0"?>
+<!-- ====================================================================  AgencyMoneyReceivedSearchView  ==================================================================== -->
+<viewEntity
+  xmlns="http://guidewire.com/datamodel"
+  entity="AgencyMoneyReceivedSearchView"
+  desc="Supports the efficient creation of AgencyMoneyReceived lists in BillingCenter's views."
+  exportable="false"
+  subpackage="search.view"
+  primaryEntity="AgencyBillMoneyRcvd">
+  <viewEntityLink
+    name="AgencyBillMoneyRcvd"
+    path="ID"/>
+  <viewEntityColumn
+    name="ProducerName"
+    path="Producer.Name"/>
+  <viewEntityColumn
+    name="ReceivedDate"
+    path="ReceivedDate"/>
+  <viewEntityColumn
+    name="Amount"
+    path="Amount_amt"/>
+  <viewEntityTypekey
+    name="PaymentMethod"
+    path="PaymentInstrument.PaymentMethod"/>
+  <viewEntityColumn
+    name="Token"
+    path="PaymentInstrument.Token"/>
+  <viewEntityColumn
+    name="RefNumber"
+    path="RefNumber"/>
+  <viewEntityTypekey
+    name="Currency"
+    path="Producer.Currency"/>
+</viewEntity>

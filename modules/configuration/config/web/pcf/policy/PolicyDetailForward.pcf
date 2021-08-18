@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PCF
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:noNamespaceSchemaLocation="../../../../../pcf.xsd">
+  <!-- Note: This is called in BCConstructors.java -->
+  <Forward
+    canVisit="perm.System.plcytabview and perm.System.plcysummview and policyPeriod.ViewableByCurrentUser"
+    id="PolicyDetailForward">
+    <LocationEntryPoint
+      signature="PolicyDetailForward(policyPeriod : PolicyPeriod)"/>
+    <Variable
+      name="policyPeriod"
+      type="PolicyPeriod"/>
+    <ForwardCondition
+      action="PolicyDetailSummary.go(policyPeriod)"/>
+  </Forward>
+</PCF>

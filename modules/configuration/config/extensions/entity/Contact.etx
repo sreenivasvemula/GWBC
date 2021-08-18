@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?><extension xmlns="http://guidewire.com/datamodel" entityName="Contact">
+  <column-override name="EmailAddress1">
+    <columnParam name="validator" value="Email"/>
+  </column-override>
+  <column-override name="EmailAddress2">
+    <columnParam name="validator" value="Email"/>
+  </column-override>
+  <column desc="Represents the ID of the associated object in external system. Null if the object is not linked to an external system." name="ExternalID" nullok="true" type="varchar">
+    <columnParam name="size" value="60"/>
+  </column>
+  <index desc="Index ExternalID for performance" name="ExternalIDIndex" trackUsage="true" unique="true">
+    <indexcol keyposition="1" name="ExternalID"/>
+    <indexcol keyposition="2" name="Retired"/>
+    <indexcol keyposition="3" name="ID"/>
+  </index>
+</extension>

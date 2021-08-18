@@ -1,0 +1,39 @@
+<?xml version="1.0"?>
+<PCF
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:noNamespaceSchemaLocation="../../../../../platform/config/web/schema/pcf.xsd">
+  <Page
+    countsAsWork="false"
+    id="BCSampleData"
+    title="displaykey.Web.InternalTools.SampleData">
+    <Variable
+      initialValue="&quot;&quot;"
+      name="result"/>
+    <Screen
+      id="SampleDataScreen">
+      <Verbatim
+        label="result"/>
+      <ListViewPanel
+        id="ImportSampleDataLV">
+        <Row>
+          <LinkCell
+            id="ImportSampleData"
+            label="displaykey.Web.InternalTools.SampleData.ImportSampleData">
+            <Link
+              action="loadSampleDataSet()"
+              id="ImportSampleDataAction"
+              label="displaykey.Web.InternalTools.SampleData.ImportSampleData"
+              styleClass="miniButton"/>
+          </LinkCell>
+        </Row>
+      </ListViewPanel>
+      <PanelRef
+        def="UnsupportedToolsDisclaimerDV()"/>
+    </Screen>
+    <Code><![CDATA[function loadSampleDataSet() {
+  result = ""
+  gw.api.util.SampleDataGenerator.generateDefaultSampleData()
+  result = displaykey.Web.InternalTools.SampleData.SampleDataImported
+}]]></Code>
+  </Page>
+</PCF>

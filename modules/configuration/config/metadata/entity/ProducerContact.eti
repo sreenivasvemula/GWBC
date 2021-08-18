@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?><entity xmlns="http://guidewire.com/datamodel" desc="Join entity between a Contact AND a producer" displayName="Producer Contact" entity="ProducerContact" subpackage="producer" table="producercontact" type="retireable">
+  <implementsEntity name="NotInCurrencySilo"/>
+  <foreignkey columnName="ProducerID" desc="The related producer" fkentity="Producer" importableagainstexistingobject="false" name="Producer" nullok="false"/>
+  <foreignkey columnName="PrimaryProducerID" desc="The producer for which this is the primary contact (other end of onetoone)" fkentity="Producer" importableagainstexistingobject="false" name="PrimaryProducer" nullok="true"/>
+  <foreignkey columnName="ContactID" desc="The related contact" fkentity="Contact" importableagainstexistingobject="false" name="Contact" nullok="false"/>
+  <array arrayentity="ProducerContactRole" desc="The roles for this producer contact" name="Roles" owner="true"/>
+  <array arrayentity="ProdCorrespondenceEntry" desc="Types of correspondence that this ProducerContact should receive" exportable="false" name="CorrespondenceTypes" owner="true">
+    <link-association>
+      <typelist-map field="ProdCorrespondenceType"/>
+    </link-association>
+  </array>
+</entity>

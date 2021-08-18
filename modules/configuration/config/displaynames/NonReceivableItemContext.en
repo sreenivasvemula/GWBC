@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Entity name="NonReceivableItemContext">
+  <Columns>
+      <Column beanPath="NonReceivableItemContext.SubType" name="SubType" />
+      <DisplayNameColumn beanPath="ProdSuspenseContext.ProducerWithSuspense" name="Producer"/>
+      <DisplayNameColumn beanPath="AcctSuspenseContext.AccountWithSuspense" name="Account"/>
+      <DisplayNameColumn beanPath="CollateralPaidContext.Collateral" name="Collateral"/>
+  </Columns>
+  <DisplayName>
+     var retString = ""
+     if(ProdSuspenseContext.isAssignableFrom(Type.forName("entity." + SubType))){
+        return Producer
+     } else if(AcctSuspenseContext.isAssignableFrom(Type.forName("entity." + SubType))){
+        return Account
+     }else if(CollateralPaidContext.isAssignableFrom(Type.forName("entity." + SubType))){
+        return Collateral
+     }
+     return retString
+  </DisplayName>
+</Entity>

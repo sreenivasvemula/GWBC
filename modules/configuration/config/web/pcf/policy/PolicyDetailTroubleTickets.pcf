@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PCF
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:noNamespaceSchemaLocation="../../../../../pcf.xsd">
+  <Page
+    canVisit="perm.System.plcytabview and perm.System.plcyttktview"
+    id="PolicyDetailTroubleTickets"
+    showUpLink="true"
+    title="displaykey.Web.PolicyDetailTroubleTickets.Title">
+    <LocationEntryPoint
+      signature="PolicyDetailTroubleTickets(plcyPeriod : PolicyPeriod, relatedToPolicy : Boolean, relatedToPolicyPeriod : Boolean)"/>
+    <Variable
+      name="plcyPeriod"
+      type="PolicyPeriod"/>
+    <Variable
+      initialValue="getAllTroubleTicket()"
+      name="troubleTickets"
+      recalculateOnRefresh="true"/>
+    <Variable
+      name="relatedToPolicy"
+      type="Boolean"/>
+    <Variable
+      name="relatedToPolicyPeriod"
+      type="Boolean"/>
+    <Screen
+      id="PolicyDetailTroubleTicketsScreen">
+      <Toolbar>
+        <ToolbarDivider/>
+        <ToolbarButton
+          action="CreateTroubleTicketWizard.push(plcyPeriod)"
+          id="NewTroubleTicket"
+          label="displaykey.Web.PolicyDetailTroubleTickets.NewButton"
+          visible="perm.TroubleTicket.create"/>
+        <ToolbarDivider/>
+        <ToolbarButton
+          action="relatedToPolicy = true; relatedToPolicyPeriod = false;"
+          id="RelatedToPolicyOnly"
+          label="displaykey.Web.PolicyDetailTroubleTickets.RelatedToPolicyOnly"/>
+        <ToolbarButton
+          action="relatedToPolicy = false; relatedToPolicyPeriod = true;"
+          id="RelatedToPeriodOnly"
+          label="displaykey.Web.PolicyDetailTroubleTickets.RelatedToPeriodOnly"/>
+        <ToolbarButton
+          action="relatedToPolicy = true; relatedToPolicyPeriod = true;"
+          id="All"
+          label="displaykey.Web.PolicyDetailTroubleTickets.All"/>
+      </Toolbar>
+      <PanelRef
+        def="TroubleTicketsLV(troubleTickets as entity.TroubleTicket[])"/>
+    </Screen>
+    <Code>
+function getAllTroubleTicket() : List&lt;TroubleTicket&gt; {
+  var results = new java.util.ArrayList&lt;TroubleTicket&gt;();
+  if(relatedToPolicy) {
+    results.addAll(plcyPeriod.Policy.TroubleTickets as java.util.Collection&lt;TroubleTicket&gt;);
+    if(relatedToPolicyPeriod) {
+      for (tt in plcyPeriod.TroubleTickets) {
+        if(not results.contains(tt)) {
+          results.add(tt);
+        }
+      }
+    }
+  }
+  else if (relatedToPolicyPeriod) {
+    results.addAll(plcyPeriod.TroubleTickets as java.util.Collection&lt;TroubleTicket&gt;)
+  }
+  else {
+    throw "Must specified trouble ticket related to policy or policy period";
+  }
+  
+  return results
+}
+    </Code>
+  </Page>
+</PCF>

@@ -1,0 +1,49 @@
+<?xml version="1.0"?>
+<PCF
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:noNamespaceSchemaLocation="../../../../../pcf.xsd">
+  <Screen
+    id="ActivityDetailScreen">
+    <Require
+      name="activity"
+      type="Activity"/>
+    <Require
+      name="assigneeHolder"
+      type="assignment.Assignee[]"/>
+    <Toolbar>
+      <ToolbarButtonSetRef
+        mode="getMode()"
+        toolbarButtonSet="ActivityDetailToolbarButtonSet(activity, assigneeHolder)"/>
+      <!--
+	  <ToolbarButton
+        action="NewDocumentFromTemplateWorksheet.goInWorkspace(activity.DocumentContainer, activity.DocumentTemplate) "
+        id="ActivityDetailToolbarButtons_DocumentButton"
+        label="displaykey.Web.ActivityDetail.Button.CreateDocument"
+        visible="(Activity.DocumentContainer != null) and Activity.canEdit() and perm.System.doccreate"/>
+		-->
+      <ToolbarButton
+        action="SampleEmailWorksheet.goInWorkspace( activity, activity.DocumentContainer, activity.EmailTemplate)"
+        id="ActivityDetailToolbarButtons_CreateEmail"
+        label="displaykey.Web.ActivityDetail.Button.CreateEmail"/>
+    </Toolbar>
+    <Verbatim
+      label="displaykey.Web.ActivityDetail.ActivityCanceled"
+      visible="activity.Status == &quot;canceled&quot;"/>
+    <PanelRef
+      def="ActivityDetailDV(activity, assigneeHolder)"
+      mode="activity.Subtype"/>
+    <Code><![CDATA[function getMode(): String {
+  if (activity typeis DisbApprActivity) {
+    return "disbursementapproval"
+  }
+  return activity.ActivityPattern.Code
+}
+
+function createSearchCriteria(): NoteTemplateSearchCriteria {
+  var rtn = new NoteTemplateSearchCriteria()
+  // rtn.Language = Account.AccountHolder.Language
+  rtn.AvailableSymbols = "policyperiod,policy,account"
+  return rtn
+}]]></Code>
+  </Screen>
+</PCF>

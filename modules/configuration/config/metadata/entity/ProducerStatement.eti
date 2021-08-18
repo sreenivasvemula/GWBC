@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?><entity xmlns="http://guidewire.com/datamodel" entity="ProducerStatement" exportable="false" platform="false" setterScriptability="hidden" subpackage="producer" table="producerstatement" type="retireable">
+  <implementsEntity name="Validatable"/>
+  <implementsEntity name="InCurrencySilo"/>
+  <foreignkey columnName="ProducerID" fkentity="Producer" name="Producer" nullok="true"/>
+  <monetaryamount amountColumnName="PreviousBalance"
+    desc="The balance on the previous statement." name="PreviousBalance" nullok="false" scaleToCurrency="true" setterScriptability="doesNotExist"/>
+  <column name="StatementDate" nullok="false" setterScriptability="doesNotExist" type="datetime"/>
+  <column desc="The number for this statement" name="StatementNumber" nullok="false" setterScriptability="doesNotExist" type="shorttext"/>
+  <typekey default="production" desc="Type of this producer statement. Should be Production, if not used for Upgrade." name="Type" nullok="false" setterScriptability="hidden" typelist="ProducerStatementType"/>
+  <events/>
+</entity>

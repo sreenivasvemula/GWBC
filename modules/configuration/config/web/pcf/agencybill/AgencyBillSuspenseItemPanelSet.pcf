@@ -1,0 +1,112 @@
+<?xml version="1.0"?>
+<PCF
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:noNamespaceSchemaLocation="../../../../../pcf.xsd">
+  <PanelSet
+    id="AgencyBillSuspenseItemPanelSet">
+    <Require
+      name="suspenseItems"
+      type="BaseSuspDistItem[]"/>
+    <Require
+      name="suspenseType"
+      type="gw.agencybill.AgencyBillSuspenseType"/>
+    <PanelRef
+      id="SuspenseItemsPanel">
+      <Toolbar
+        id="ReleaseToolbar">
+        <CheckedValuesToolbarButton
+          allCheckedRowsAction="gw.agencybill.AgencyBillSuspenseItemsHelper.release(CheckedValues)"
+          available="perm.System.prodsuspitemsedit"
+          id="ReleaseItems"
+          iterator="AgencyBillSuspenseItemsIterator"
+          label="displaykey.Web.AgencyBillSuspenseItems.Toolbar.Release"/>
+        <ToolbarDivider/>
+        <ToolbarFilter
+          iterator="AgencyBillSuspenseItemsIterator"
+          label="displaykey.Web.AgencyBillSuspenseItems.AgencyBillSuspenseItemsLV.StatusFilter"
+          name="StatusFilter">
+          <ToolbarFilterOption
+            filter="new gw.api.web.producer.agencybill.AgencyBillSuspenseItemsFilters.All()"/>
+          <ToolbarFilterOption
+            filter="new gw.api.web.producer.agencybill.AgencyBillSuspenseItemsFilters.Executed()"
+            selectOnEnter="true"/>
+          <ToolbarFilterOption
+            filter="new gw.api.web.producer.agencybill.AgencyBillSuspenseItemsFilters.Released()"
+            visible="suspenseType == Payment"/>
+          <ToolbarFilterOption
+            filter="new gw.api.web.producer.agencybill.AgencyBillSuspenseItemsFilters.Reversed()"/>
+          <ToolbarFilterOption
+            filter="new gw.api.web.producer.agencybill.AgencyBillSuspenseItemsFilters.Saved()"/>
+          <ToolbarFilterOption
+            filter="new gw.api.web.producer.agencybill.AgencyBillSuspenseItemsFilters.Applied()"
+            visible="suspenseType == Promise"/>
+        </ToolbarFilter>
+      </Toolbar>
+      <ListViewPanel
+        editable="true"
+        id="SuspenseItemsLV">
+        <RowIterator
+          checkBoxVisible="suspenseItem.CanRelease"
+          editable="false"
+          elementName="suspenseItem"
+          hasCheckBoxes="true"
+          id="AgencyBillSuspenseItemsIterator"
+          type="BaseSuspDistItem"
+          value="suspenseItems">
+          <Row
+            editable="false">
+            <LinkCell
+              label="displaykey.Web.AgencyBillSuspenseItems.Edit">
+              <Link
+                action="suspenseItem.goToSuspenseItemPopup()"
+                available="suspenseItem.HasContainingDistribution and !suspenseItem.BaseDist.Reversed and (suspenseType == Payment or !(suspenseItem.BaseDist as AgencyCyclePromise).Applied)"
+                icon="&quot;editchange_16.png&quot;"
+                id="GoToContainingPayment"
+                styleClass="none"
+                tooltip="displaykey.Web.AgencyBillSuspenseItems.Tooltip"/>
+            </LinkCell>
+            <DateCell
+              id="ReceivedDate"
+              label="displaykey.Web.AgencyBillSuspenseItems.AgencyBillSuspenseItemsLV.ReceivedDate"
+              value="suspenseItem.BaseDist.BaseMoneyReceived.ReceivedDate"/>
+            <Cell
+              id="Status"
+              label="displaykey.Web.AgencyBillSuspenseItems.AgencyBillSuspenseItemsLV.Status"
+              value="suspenseItem.Status"/>
+            <DateCell
+              id="ExecutionDate"
+              label="displaykey.Web.AgencyBillSuspenseItems.AgencyBillSuspenseItemsLV.ExecutionDate"
+              value="suspenseItem.ExecutedDate"/>
+            <Cell
+              id="PolicyNumber"
+              label="displaykey.Web.AgencyBillSuspenseItems.AgencyBillSuspenseItemsLV.PolicyNumber"
+              value="suspenseItem.PolicyNumber"/>
+            <MonetaryAmountCell
+              currency="suspenseItem.Currency"
+              formatType="currency"
+              id="GrossAmount"
+              label="displaykey.Web.AgencyBillSuspenseItems.AgencyBillSuspenseItemsLV.GrossAmount"
+              required="false"
+              value="suspenseItem.GrossAmountToApply"/>
+            <MonetaryAmountCell
+              currency="suspenseItem.Currency"
+              formatType="currency"
+              id="CommissionAmount"
+              label="displaykey.Web.AgencyBillSuspenseItems.AgencyBillSuspenseItemsLV.CommissionAmount"
+              value="suspenseItem.CommissionAmountToApply"/>
+            <MonetaryAmountCell
+              currency="suspenseItem.Currency"
+              formatType="currency"
+              id="NetAmount"
+              label="displaykey.Web.AgencyBillSuspenseItems.AgencyBillSuspenseItemsLV.NetAmount"
+              value="suspenseItem.NetAmountToApply"/>
+            <Cell
+              id="Comments"
+              label="displaykey.Web.AgencyBillSuspenseItems.AgencyBillSuspenseItemsLV.Comments"
+              value="suspenseItem.PaymentComments"/>
+          </Row>
+        </RowIterator>
+      </ListViewPanel>
+    </PanelRef>
+  </PanelSet>
+</PCF>

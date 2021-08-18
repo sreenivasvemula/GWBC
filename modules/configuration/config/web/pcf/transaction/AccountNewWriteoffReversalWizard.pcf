@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PCF
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:noNamespaceSchemaLocation="../../../../../pcf.xsd">
+  <!-- Wizard flow that should guide the user through the process of reversing a transaction -->
+  <Wizard
+    beforeCommit="reversal.reverse()"
+    canVisit="perm.Transaction.revtxn"
+    cancelWarning="displaykey.Web.NewWriteoffReversalWizard.CancelConfirmation"
+    countsAsWork="false"
+    id="AccountNewWriteoffReversalWizard">
+    <LocationEntryPoint
+      signature="AccountNewWriteoffReversalWizard(account : Account)"/>
+    <Variable
+      name="account"
+      type="Account"/>
+    <Variable
+      initialValue="new WriteoffReversal()"
+      name="reversal"
+      type="WriteoffReversal"/>
+    <!-- Specify the steps of the New Reversal Wizard -->
+    <WizardStep
+      allowNext="reversal.Writeoff != null"
+      id="Step1"
+      label="displaykey.Web.NewWriteoffReversalWizard.WriteoffSearch.Label"
+      screen="NewWriteoffReversalAccountWriteoffsScreen(reversal, account)"
+      title="displaykey.Web.NewWriteoffReversalWizard.WriteoffSearch.Title"/>
+    <WizardStep
+      id="Step2"
+      label="displaykey.Web.NewWriteoffReversalWizard.Confirmation.Label"
+      screen="NewWriteoffReversalConfirmationScreen(reversal)"
+      title="displaykey.Web.NewWriteoffReversalWizard.Confirmation.Title"/>
+  </Wizard>
+</PCF>

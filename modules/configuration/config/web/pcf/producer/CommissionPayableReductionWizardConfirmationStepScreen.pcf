@@ -1,0 +1,82 @@
+<?xml version="1.0"?>
+<PCF
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:noNamespaceSchemaLocation="../../../../../pcf.xsd">
+  <Screen
+    id="CommissionPayableReductionWizardConfirmationStepScreen">
+    <Require
+      name="chargeCommissions"
+      type="ChargeCommission[]"/>
+    <Require
+      name="currency"
+      type="Currency"/>
+    <Require
+      name="showApprovalRequiredAlertBar"
+      type="Boolean"/>
+    <Toolbar>
+      <ToolbarButton
+        action="(CurrentLocation as pcf.api.Wizard).cancel()"
+        id="Cancel"
+        label="displaykey.Button.Cancel"/>
+      <ToolbarButton
+        action="(CurrentLocation as pcf.api.Wizard).finish()"
+        id="Finish"
+        label="displaykey.Button.Finish"/>
+    </Toolbar>
+    <AlertBar
+      id="alertBarForWriteoffsAwaitingApproval"
+      label="displaykey.Web.CommissionPayableReductionWizardConfirmationStepScreen.ApprovalRequiredForWriteoff(getAuthorityLimit().render())"
+      visible="showApprovalRequiredAlertBar"/>
+    <DetailViewPanel
+      id="ReserveWriteoffDV">
+      <InputColumn>
+        <ListViewInput
+          boldLabel="true"
+          label="displaykey.Web.CommissionPayableReductionWizardConfirmationStepScreen.SelectedTargets"
+          labelAbove="true">
+          <Toolbar/>
+          <ListViewPanel
+            id="PolicyCommissionsLV">
+            <RowIterator
+              editable="false"
+              elementName="chargeCommission"
+              value="chargeCommissions">
+              <Row
+                highlighted="chargeCommission.SelectedForWriteoff">
+                <Cell
+                  id="ProducerCode"
+                  label="displaykey.Web.PolicyCommissionsLV.ProducerCode"
+                  sortBy="chargeCommission.PolicyCommission.ProducerCode.Code"
+                  sortOrder="1"
+                  value="chargeCommission.PolicyCommission.ProducerCode.Code"/>
+                <Cell
+                  id="PolicyNumber"
+                  label="displaykey.Web.PolicyCommissionsLV.PolicyNumber"
+                  sortBy="chargeCommission.PolicyCommission.PolicyPeriod.PolicyNumber"
+                  sortOrder="2"
+                  value="chargeCommission.PolicyCommission.PolicyPeriod.PolicyNumber"/>
+                <Cell
+                  id="Charge"
+                  label="displaykey.Web.PolicyCommissionsLV.Charge"
+                  sortBy="chargeCommission.Charge"
+                  sortOrder="3"
+                  value="chargeCommission.Charge"/>
+                <MonetaryAmountCell
+                  available="chargeCommission.SelectedForWriteoff"
+                  currency="currency"
+                  formatType="currency"
+                  id="AmountWrittenOff"
+                  label="displaykey.Web.PolicyCommissionsLV.AmountWrittenOff"
+                  value="chargeCommission.AmountWrittenOff"/>
+              </Row>
+            </RowIterator>
+          </ListViewPanel>
+        </ListViewInput>
+      </InputColumn>
+    </DetailViewPanel>
+    <Code><![CDATA[public function getAuthorityLimit() : gw.pl.currency.MonetaryAmount {
+  return User.util.CurrentUser.AuthorityProfileNonNull.getMaximumAuthorizedAmount(
+   AuthorityLimitType.TC_WRITEOFFCHARGECOMMISSION, currency )
+}]]></Code>
+  </Screen>
+</PCF>

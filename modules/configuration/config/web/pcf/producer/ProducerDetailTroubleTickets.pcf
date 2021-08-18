@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PCF
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:noNamespaceSchemaLocation="../../../../../pcf.xsd">
+  <Page
+    canVisit="perm.System.prodtabview and perm.System.prodttktview"
+    id="ProducerDetailTroubleTickets"
+    showUpLink="true"
+    title="displaykey.Web.ProducerDetailTroubleTickets.Title">
+    <LocationEntryPoint
+      signature="ProducerDetailTroubleTickets(Producer : Producer)"/>
+    <Variable
+      name="Producer"
+      type="Producer"/>
+    <Screen
+      id="ProducerDetailTroubleTicketsScreen">
+      <Toolbar>
+        <ToolbarDivider/>
+        <ToolbarButton
+          action="CreateTroubleTicketWizard.push(Producer)"
+          id="NewTroubleTicket"
+          label="displaykey.Web.ProducerDetailTroubleTickets.NewButton"
+          visible="perm.TroubleTicket.create"/>
+      </Toolbar>
+      <PanelRef
+        def="TroubleTicketsLV(Producer.TroubleTickets)"/>
+    </Screen>
+  </Page>
+</PCF>

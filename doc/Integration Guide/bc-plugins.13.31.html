@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xml:lang="en" lang="en" xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+    <meta http-equiv="Content-Style-Type" content="text/css" />
+    <!-- MOTW-DISABLED saved from url=(0014)about:internet -->
+    <title>Suspense Payment Plugin</title>
+    <link rel="StyleSheet" href="css/bc-plugins.css" type="text/css" media="all" />
+    <link rel="StyleSheet" href="css/webworks.css" type="text/css" media="all" />
+    <link rel="StyleSheet" href="css/css-guidewire-extra.css" type="text/css" media="all" />
+    <script type="text/javascript" language="JavaScript1.2" src="wwhdata/common/context.js"></script>
+    <script type="text/javascript" language="JavaScript1.2" src="wwhdata/common/towwhdir.js"></script>
+    <script type="text/javascript" language="JavaScript1.2" src="wwhdata/common/wwhpagef.js"></script>
+    <script type="text/javascript" language="JavaScript1.2">
+      <!--
+        var  WebWorksRootPath = "";
+      // -->
+    </script>
+    <script type="text/javascript" language="JavaScript1.2">
+      <!--
+        // Set reference to top level help frame
+        //
+        var  WWHFrame = WWHGetWWHFrame("", true);
+      // -->
+    </script>
+    <script type="text/javascript" language="JavaScript1.2" src="scripts/expand.js"></script>
+    <!-- THE FOLLOWING IS A GUIDEWIRE STYLE DEFINITION FOR THE LINK TO THIS FEATURE -->
+    <link rel="StyleSheet" href="css/css-guidewire-extra.css" type="text/css" media="all" />
+    <!-- THE FOLLOWING IS A GUIDEWIRE GSCRIPT FUNCTION FOR THE LINK TO THIS FEATURE -->
+    <script type="text/javascript">
+function guidewire_selectall()
+{
+var text_val=eval("document.linktothisurlform.urlfield");
+text_val.focus();
+text_val.select();
+}
+</script>
+  </head>
+  <body onLoad="WWHUpdate();" onUnload="WWHUnload();" onKeyDown="WWHHandleKeyDown((document.all||document.getElementById||document.layers)?event:null);" onKeyPress="WWHHandleKeyPress((document.all||document.getElementById||document.layers)?event:null);" onKeyUp="WWHHandleKeyUp((document.all||document.getElementById||document.layers)?event:null);">
+    <!-- THE FOLLOWING IS A GUIDEWIRE DIV FOR THE 'LINK TO THIS' FEATURE -->
+    <div id="linkToThisPage" class="popup" style="display: none;">
+      <div class="popupTitle">Link Directly to This Page 
+           <a href="#" onclick="var thePopup = getElementById('linkToThisPage');thePopup.style.display='none';return false;"><img class="popupClosebox" src="wwhelp/wwhimpl/common/images/close.gif" /></a></div>
+      <div style="padding:6px;">
+        <div class="popupText" id="linkToThisPageBookmark">An error has occurred if you see this messsage.</div>
+        <form name="linktothisurlform" method="post" action="" style="width:275px;margin:0px">
+          <input type="text" class="popupURLText" id="linkToThisPageURL" name="urlfield" rows="1" cols="55" onClick="guidewire_selectall();" onFocus="guidewire_selectall();"></input>
+        </form>
+      </div>
+    </div>
+    <br />
+    <div class="WebWorks_Breadcrumbs" style="text-align: left;">
+      <span>BillingCenter Integration Guide</span> : 
+    <span class="WebWorks_Breadcrumbs" style="text-align: left;"><a class="WebWorks_Breadcrumb_Link" href="p-plugins.html#3602978">Plugins</a> : <a class="WebWorks_Breadcrumb_Link" href="bc-plugins.13.01.html#3602978">Billing Plugins</a> : Suspense Payment Plugin</span></div>
+    <hr align="left" />
+    <blockquote>
+      <h3 class="H1_-_Heading_1"><a name="3602978">Suspense Payment Plugin</a></h3>
+      <div class="B_-_Body"><a name="3435368">Payments received by BillingCenter always specify the payer. The payer can be either an account, a producer, or a policy period that is associated with an account or producer.</a></div>
+      <div class="B_-_Body"><a name="3701617">It is possible for BillingCenter to receive payments before it has been informed about the payer. In such cases, the account, producer, or policy period does not yet exist in BillingCenter, but will presumably be created in the near future.</a></div>
+      <div class="B_-_Body"><a name="3702378">When a payment is received and the payer is unknown to BillingCenter, the payment is placed in an </a><span class="cv_-_computer_voice">Unapplied</span> T‑account of type <span class="cv_-_computer_voice">SuspensePayment</span>. Each payment with an unknown payer is placed in its own, separate <span class="cv_-_computer_voice">Unapplied</span> T‑account. For example, if ten payments with unknown payers arrive then ten <span class="cv_-_computer_voice">Unapplied</span> <span class="cv_-_computer_voice">SuspensePayment</span> T‑accounts are created.</div>
+      <div class="B_-_Body"><a name="3702144">Subsequently, the Suspense Payment batch process searches for the payer of each payment stored in these </a><span class="cv_-_computer_voice">Unapplied</span> T‑accounts, checking to see if the account or producer has been created yet. If the payer is found to exist in BillingCenter, the payment is moved from the <span class="cv_-_computer_voice">Unapplied</span> <span class="cv_-_computer_voice">SuspensePayment</span> T‑account to the appropriate <span class="cv_-_computer_voice">Unapplied</span> T‑account of the payer.</div>
+      <div class="B_-_Body"><a name="3672036">All operations performed by the Suspense Payment batch process are implemented in the configurable Suspense Payment plugin. The Suspense Payment plugin implements the </a><span class="cv_-_computer_voice">ISuspensePayment</span> plugin interface. For each <span class="cv_-_computer_voice">Unapplied</span> <span class="cv_-_computer_voice">SuspensePayment</span> T‑account with a status of <span class="cv_-_computer_voice">Open</span>, the batch process calls the plugin interface’s <span class="cv_-_computer_voice">apply</span> method to process the payment and attempt to identify the payer. By implementing the Suspense Payment plugin interface’s <span class="cv_-_computer_voice">apply</span> method, the functionality of the Suspense Payment batch process can be configured to perform alternative or additional operations.</div>
+      <div class="B_-_Body"><a name="3699232">The BillingCenter base configuration includes an implementation of the Suspense Payment plugin interface. To view the plugin source file in Studio, activate the </a><span class="uis_-_UI_element_Studio">Project</span> window, navigate to <span class="uis_-_UI_element_Studio">configuration</span> → <span class="uis_-_UI_element_Studio">config → Plugins</span> → <span class="uis_-_UI_element_Studio">registry</span>, and open <span class="cv_-_computer_voice">SuspensePayment.gw.</span> To configure the Suspense Payment plugin interface, either modify the plugin source file of the base configuration or register your own implementation.</div>
+      <div class="B_-_Body"><a name="3696142">In the plugin source file of the base configuration, the </a><span class="cv_-_computer_voice">SuspensePayment</span> class implements the <span class="cv_-_computer_voice">ISuspensePayment</span> interface and the interface’s <span class="cv_-_computer_voice">apply</span> method. The <span class="cv_-_computer_voice">apply</span> method accepts a single parameter: the suspense payment to process. The method returns no value. The <span class="cv_-_computer_voice">apply</span> method performs the following steps in its attempt to identify the applicable payer.</div>
+      <div class="LS_-_List_Start_outer" style="margin-left: 57pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="LS_-_List_Start_inner" style="width: 15pt; white-space: nowrap">
+                <span class="ri_-_run_in_header">	1.	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="LS_-_List_Start_inner"><a name="3695177">If a renewal offer number is specified for the suspense payment, return without processing the payment. A renewal offer number exists only if BillingCenter is integrated with PolicyCenter. The renewal number is a unique ID that corresponds to a PolicyCenter transaction number. For more information about renewal offers, see </a><a href="javascript:WWHClickedPopup('integration', 'bc-plugins.13.29.html#3435248', '');" title="Policy System Plugin">“Policy System Plugin”</a>.</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="LI_-_List_Item_outer" style="margin-left: 57pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="LI_-_List_Item_inner" style="width: 15pt; white-space: nowrap">
+                <span class="ri_-_run_in_header">	2.	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="LI_-_List_Item_inner"><a name="3695143">If an account number is specified for the suspense payment, a search is performed for a matching account. If the account is found, the payment is moved to the default </a><span class="cv_-_computer_voice">Unapplied</span> T‑account owned by the account.</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="LI_-_List_Item_outer" style="margin-left: 57pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="LI_-_List_Item_inner" style="width: 15pt; white-space: nowrap">
+                <span class="ri_-_run_in_header">	3.	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="LI_-_List_Item_inner"><a name="3695144">If a policy number is specified for the suspense payment, a search is performed for a matching policy period. If one or more policy periods are found, the latest policy period is used. The payment is moved to the </a><span class="cv_-_computer_voice">Unapplied</span> T‑account associated with the policy period. Depending on the account’s billing level, the <span class="cv_-_computer_voice">Unapplied</span> T‑account will be either the account’s default <span class="cv_-_computer_voice">Unapplied</span> or the designated <span class="cv_-_computer_voice">Unapplied</span> associated with the policy. For further information about default and designated <span class="cv_-_computer_voice">Unapplied</span> T‑accounts, see <a href="javascript:WWHClickedPopup('app', 'billing_levels.54.1.html#2010350', '');" title="Billing Levels">“Billing Levels” in the </a><span class="bt_-_book_title"><a href="javascript:WWHClickedPopup('app', 'billing_levels.54.1.html#2010350', '');" title="Billing Levels">Application Guide</a></span>.</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="LI_-_List_Item_outer" style="margin-left: 57pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="LI_-_List_Item_inner" style="width: 15pt; white-space: nowrap">
+                <span class="ri_-_run_in_header">	4.	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="LI_-_List_Item_inner"><a name="3672276">If a producer name is specified for the suspense payment, a search is performed for a matching producer. If multiple producers exist with the specified name, return without processing the payment. If a single matching producer is found, the payment is moved to the default </a><span class="cv_-_computer_voice">Unapplied</span> T‑account owned by the producer.</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <script type="text/javascript" language="JavaScript1.2">
+        <!--
+          // Clear related topics
+          //
+          WWHClearRelatedTopics();
+
+          document.writeln(WWHRelatedTopicsInlineHTML());
+        // -->
+      </script>
+    </blockquote>
+    <script type="text/javascript" language="JavaScript1.2">
+      <!--
+        document.write(WWHRelatedTopicsDivTag() + WWHPopupDivTag() + WWHALinksDivTag());
+      // -->
+    </script>
+  </body>
+</html>

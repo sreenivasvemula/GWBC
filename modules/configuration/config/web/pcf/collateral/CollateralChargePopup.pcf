@@ -1,0 +1,69 @@
+<?xml version="1.0"?>
+<PCF
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:noNamespaceSchemaLocation="../../../../../pcf.xsd">
+  <Popup
+    id="CollateralChargePopup"
+    title="displaykey.Web.CollateralChargePopup.Title">
+    <LocationEntryPoint
+      signature="CollateralChargePopup(chargePatternOwnerPair: com.google.gdata.util.common.base.Pair&lt;ChargePattern, TAccountOwner&gt;, collateralUtil : gw.api.web.account.CollateralUtil)"/>
+    <Variable
+      name="chargePatternOwnerPair"
+      type="com.google.gdata.util.common.base.Pair&lt;ChargePattern, TAccountOwner&gt;"/>
+    <Variable
+      name="collateralUtil"
+      type="web.account.CollateralUtil"/>
+    <Variable
+      initialValue="chargePatternOwnerPair.First"
+      name="chargePattern"/>
+    <Variable
+      initialValue="chargePatternOwnerPair.Second"
+      name="owner"/>
+    <Screen>
+      <DetailViewPanel>
+        <InputColumn>
+          <Input
+            id="chargePatternType"
+            label="displaykey.Web.CollateralChargePopup.ChargePatternName"
+            value="chargePattern.DisplayName"/>
+          <MonetaryAmountInput
+            currency="chargePatternOwnerPair.Second.Currency"
+            formatType="currency"
+            id="remainingAmount"
+            label="displaykey.Web.CollateralChargePopup.RemainingAmount"
+            value="collateralUtil.getRemainingAmount(chargePatternOwnerPair)"/>
+        </InputColumn>
+      </DetailViewPanel>
+      <ListDetailPanel
+        id="CollateralChargesListDetailPanel"
+        selectionName="charge"
+        selectionType="Charge">
+        <PanelRef
+          def="ChargesLV(collateralUtil.getChargesOfChargePatternType(chargePatternOwnerPair) as entity.Charge[], true, 0, false, false, true)">
+          <Toolbar>
+            <CheckedValuesToolbarButton
+              allCheckedRowsAction="ChargeHoldsPopup.push(CheckedValues)"
+              id="editHold"
+              iterator="ChargesLV.ChargesLV"
+              label="displaykey.Web.CollateralChargePopup.EditHold"/>
+          </Toolbar>
+        </PanelRef>
+        <CardViewPanel>
+          <Card
+            id="InvoiceItems"
+            title="displaykey.Web.AccountDetailCharges.InvoiceItems">
+            <PanelRef
+              def="InvoiceItemsLV(charge.AllInvoiceItems, charge, false)">
+              <Toolbar>
+                <ToolbarButton
+                  action="EditInvoiceItemsPopup.push(charge)"
+                  id="EditInvoiceItems"
+                  label="displaykey.Web.AccountDetailCharges.ModifyInvoiceItems"/>
+              </Toolbar>
+            </PanelRef>
+          </Card>
+        </CardViewPanel>
+      </ListDetailPanel>
+    </Screen>
+  </Popup>
+</PCF>

@@ -1,0 +1,151 @@
+<?xml version="1.0"?>
+<PCF
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:noNamespaceSchemaLocation="../../../../../pcf.xsd">
+  <Page
+    canEdit="true"
+    canVisit="perm.System.actview and perm.System.viewdesktop"
+    id="DesktopActivities"
+    title="displaykey.Web.DesktopActivities">
+    <LocationEntryPoint
+      signature="DesktopActivities()"/>
+    <Variable
+      initialValue="Activity.finder.findActivitiesByAssignedUserOrShared(User.util.CurrentUser)"
+      name="activities"
+      recalculateOnRefresh="true"/>
+    <Variable
+      initialValue="new web.activity.DesktopActivityFilterSet()"
+      name="filterSet"
+      type="web.activity.DesktopActivityFilterSet"/>
+    <Variable
+      initialValue="com.guidewire.pl.system.util.DateTimeUtil.getWeekStartDate()"
+      name="weekStart"/>
+    <Variable
+      initialValue="util.DateUtil.currentDate().addMonths( -1 )"
+      name="lastMonth"/>
+    <Screen
+      id="DesktopActivitiesScreen">
+      <TitleBar
+        appendListViewPaging="true"
+        title="displaykey.Web.DesktopActivities"/>
+      <Toolbar>
+        <ToolbarDivider/>
+        <CheckedValuesToolbarButton
+          allCheckedRowsAction="AssignActivitiesPopup.push(new web.activity.ActivityAssignmentPopup(CheckedValues))"
+          flags="all CanAssignActivity"
+          id="DesktopActivities_AssignButton"
+          iterator="DesktopActivitiesLV"
+          label="displaykey.Web.ActivitySearch.Results.Assign"
+          shortcut="A"
+          visible="perm.System.actraown"/>
+        <ToolbarDivider/>
+        <CheckedValuesToolbarButton
+          allCheckedRowsAction="web.activity.ActivityUtil.completeActivities(CheckedValues); CurrentLocation.startEditing(); CurrentLocation.commit()"
+          flags="all CanCompleteActivity"
+          id="DesktopActivities_CompleteButton"
+          iterator="DesktopActivitiesLV"
+          label="displaykey.Web.ActivitySearch.Results.Complete"
+          shortcut="O"
+          visible="perm.System.actapproveany"/>
+        <ToolbarDivider/>
+      </Toolbar>
+      <ListViewPanel
+        id="DesktopActivitiesLV">
+        <RowIterator
+          editable="false"
+          elementName="activity"
+          hasCheckBoxes="true"
+          value="activities">
+          <ToolbarFilter
+            name="DesktopActivitiesFilter">
+            <ToolbarFilterOption
+              filter="new filters.StandardQueryFilter(&quot;AllOpen&quot;, \ qf -&gt; {qf.compare(&quot;Status&quot;, Equals, ActivityStatus.TC_OPEN)})"
+              label="displaykey.Java.ActivityFilterSet.AllOpen"/>
+            <ToolbarFilterOption
+              filter="var localWeekStart = weekStart; return new filters.StandardQueryFilter(&quot;OpenedThisWeek&quot;, \ qf -&gt; {qf.compare(&quot;Status&quot;, Equals, ActivityStatus.TC_OPEN); qf.compare(&quot;CreateTime&quot;, GreaterThanOrEquals, localWeekStart)})"
+              label="displaykey.Java.ActivityFilterSet.OpenedThisWeek"/>
+            <ToolbarFilterOption
+              filter="var localLastMonth = lastMonth; return new filters.StandardQueryFilter(&quot;CompletedInLast30Days&quot;, \ qf -&gt; {qf.compare(&quot;Status&quot;, Equals, ActivityStatus.TC_COMPLETE); qf.compare(&quot;CloseDate&quot;, GreaterThanOrEquals, localLastMonth)})"
+              label="displaykey.Java.ActivityFilterSet.CompletedInLastNDays(30)"/>
+            <ToolbarFilterOption
+              filter="new filters.StandardQueryFilter(&quot;OpenUrgent&quot;, \ qf -&gt; {qf.compare(&quot;Status&quot;, Equals, ActivityStatus.TC_OPEN); qf.compare(&quot;Priority&quot;, Equals, Priority.TC_URGENT)})"
+              label="displaykey.Java.ActivityFilterSet.OpenUrgent"/>
+            <ToolbarFilterOption
+              filter="new filters.StandardQueryFilter(&quot;EscalatedFilter&quot;, \ qf -&gt; {qf.compare(&quot;Escalated&quot;, Equals, Boolean.TRUE)})"
+              label="displaykey.Java.ActivityFilterSet.EscalatedFilter"/>
+          </ToolbarFilter>
+          <ToolbarFilter
+            name="DesktopOwnerFilter">
+            <ToolbarFilterOption
+              filter="new filters.StandardQueryFilter(&quot;All&quot;, \ qf -&gt; {})"
+              label="displaykey.Java.ActivityFilterSet.All"
+              visible="perm.SharedActivity.view"/>
+            <ToolbarFilterOption
+              filter="new filters.StandardQueryFilter(&quot;Owned&quot;, \ qf -&gt; {qf.compare(&quot;AssignedUser&quot;, Equals, User.util.CurrentUser)})"
+              label="displaykey.Java.ActivityFilterSet.Owned"/>
+            <ToolbarFilterOption
+              filter="new filters.StandardQueryFilter(&quot;Shared&quot;, \ qf -&gt; {qf.compare(&quot;Subtype&quot;, Equals, typekey.Activity.TC_SHAREDACTIVITY)})"
+              label="displaykey.Java.ActivityFilterSet.Shared"
+              visible="perm.SharedActivity.view"/>
+          </ToolbarFilter>
+          <ToolbarFilter
+            name="ActivityPattern">
+            <ToolbarFilterOptionGroup
+              filters="new gw.activity.ActivityPatternFilterSet().FilterOptions"/>
+          </ToolbarFilter>
+          <ToolbarFlag
+            name="AlwaysTrue"/>
+          <ToolbarFlag
+            condition="activity.canAssign() and !(activity typeis SharedActivity)"
+            name="CanAssignActivity"/>
+          <ToolbarFlag
+            condition="activity.canComplete()"
+            name="CanCompleteActivity"/>
+          <Row>
+            <Cell
+              enableSort="false"
+              icon="&quot;new.png&quot;"
+              iconLabel="displaykey.Web.DesktopActivitiesLV.UpdatedSinceLastViewedIconLabel"
+              id="UpdatedSinceLastViewed"
+              tooltip="displaykey.Web.DesktopActivitiesLV.UpdatedSinceLastViewedIconLabel"
+              value="activity.UpdatedSinceLastViewed"/>
+            <Cell
+              icon="&quot;escalated.png&quot;"
+              iconLabel="displaykey.Web.DesktopActivitiesLV.EscalatedIconLabel"
+              id="Escalated"
+              tooltip="displaykey.Web.DesktopActivitiesLV.EscalatedIconLabel"
+              value="activity.Escalated"/>
+            <DateCell
+              id="CreateDate"
+              label="displaykey.Web.DesktopActivitiesLV.CreateDate"
+              value="activity.CreateTime"/>
+            <DateCell
+              fontColor="activity.Overdue == true ? &quot;Red&quot; : &quot;&quot;"
+              id="DueDate"
+              label="displaykey.Web.DesktopActivitiesLV.DueDate"
+              sortDirection="descending"
+              value="activity.TargetDate"/>
+            <TypeKeyCell
+              id="Priority"
+              label="displaykey.Web.DesktopActivitiesLV.Priority"
+              value="activity.Priority"/>
+            <TypeKeyCell
+              id="Status"
+              label="displaykey.Web.DesktopActivitiesLV.Status"
+              value="activity.Status"/>
+            <Cell
+              action="gw.activity.ActivityMethods.viewActivityDetails(activity)"
+              id="Subject"
+              label="displaykey.Web.DesktopActivitiesLV.Subject"
+              value="activity.Subject"/>
+            <TextCell
+              action="TroubleTicketDetailsPopup.push(activity.troubleTicket)"
+              id="TroubleTicketNumber"
+              label="displaykey.Web.DesktopActivitiesLV.TroubleTicketNumber"
+              value="activity.TroubleTicket.TroubleTicketNumber"/>
+          </Row>
+        </RowIterator>
+      </ListViewPanel>
+    </Screen>
+  </Page>
+</PCF>

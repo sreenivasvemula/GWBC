@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<subtype
+  xmlns="http://guidewire.com/datamodel"
+  entity="OutgoingDisbPmnt"
+  final="true"
+  subpackage="payment"
+  supertype="OutgoingPayment">
+  <foreignkey
+    name="Disbursement"
+    desc="The disbursement associated with this payment."
+    columnName="DisbursementID"
+    fkentity="Disbursement"
+    importableagainstexistingobject="false"
+    nullok="false"
+    setterScriptability="hidden"/>
+<dbcheckbuilder
+       className="com.guidewire.bc.system.database.dbchecks.payment.OutgoingDisbPmntDBCheckBuilder"/>
+</subtype>

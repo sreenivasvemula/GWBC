@@ -1,0 +1,149 @@
+<?xml version="1.0"?>
+<!-- Generated WSDL for gw.webservice.bc.bc700.TroubleTicketAPI web service -->
+<wsdl:definitions targetNamespace="http://guidewire.com/bc/ws/gw/webservice/bc/bc700/TroubleTicketAPI" name="TroubleTicketAPI" xmlns:gwsoap="http://guidewire.com/ws/soapheaders" xmlns:gwwsdl="http://guidewire.com/pl/wsdl" xmlns:soap11="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:tns="http://guidewire.com/bc/ws/gw/webservice/bc/bc700/TroubleTicketAPI" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsdl:types>
+    <xs:schema targetNamespace="http://guidewire.com/bc/ws/gw/webservice/bc/bc700/TroubleTicketAPI" elementFormDefault="qualified" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+      <xs:import namespace="http://guidewire.com/ws/soapheaders" schemaLocation="../../../../../../gw/xsd/guidewire/soapheaders.xsd"/>
+      <!-- createDisasterTroubleTicketsOnAccountsAndPoliciesWithPostalCodes(List<String>) -->
+      <xs:element name="createDisasterTroubleTicketsOnAccountsAndPoliciesWithPostalCodes">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="postalCodes" minOccurs="0" gw:viewas="list" xmlns:gw="http://guidewire.com/xsd">
+              <xs:complexType>
+                <xs:sequence>
+                  <xs:element minOccurs="0" maxOccurs="unbounded" name="Entry" type="xs:string" nillable="true"/>
+                </xs:sequence>
+              </xs:complexType>
+            </xs:element>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="createDisasterTroubleTicketsOnAccountsAndPoliciesWithPostalCodesResponse">
+        <xs:complexType/>
+      </xs:element>
+      <xs:element name="WsiAuthenticationException">
+        <xs:complexType/>
+      </xs:element>
+      <!-- createDisasterTroubleTicketsOnPoliciesWithPostalCodes(List<String>) -->
+      <xs:element name="createDisasterTroubleTicketsOnPoliciesWithPostalCodes">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="postalCodes" minOccurs="0" gw:viewas="list" xmlns:gw="http://guidewire.com/xsd">
+              <xs:complexType>
+                <xs:sequence>
+                  <xs:element minOccurs="0" maxOccurs="unbounded" name="Entry" type="xs:string" nillable="true"/>
+                </xs:sequence>
+              </xs:complexType>
+            </xs:element>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="createDisasterTroubleTicketsOnPoliciesWithPostalCodesResponse">
+        <xs:complexType/>
+      </xs:element>
+    </xs:schema>
+  </wsdl:types>
+  <wsdl:portType name="TroubleTicketAPIPortType">
+    <wsdl:operation name="createDisasterTroubleTicketsOnAccountsAndPoliciesWithPostalCodes">
+      <wsdl:input name="createDisasterTroubleTicketsOnAccountsAndPoliciesWithPostalCodes" message="tns:createDisasterTroubleTicketsOnAccountsAndPoliciesWithPostalCodes"/>
+      <wsdl:output name="createDisasterTroubleTicketsOnAccountsAndPoliciesWithPostalCodesResponse" message="tns:createDisasterTroubleTicketsOnAccountsAndPoliciesWithPostalCodesResponse"/>
+      <wsdl:fault name="WsiAuthenticationException" message="tns:WsiAuthenticationException"/>
+    </wsdl:operation>
+    <wsdl:operation name="createDisasterTroubleTicketsOnPoliciesWithPostalCodes">
+      <wsdl:input name="createDisasterTroubleTicketsOnPoliciesWithPostalCodes" message="tns:createDisasterTroubleTicketsOnPoliciesWithPostalCodes"/>
+      <wsdl:output name="createDisasterTroubleTicketsOnPoliciesWithPostalCodesResponse" message="tns:createDisasterTroubleTicketsOnPoliciesWithPostalCodesResponse"/>
+      <wsdl:fault name="WsiAuthenticationException" message="tns:WsiAuthenticationException"/>
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="TroubleTicketAPISoap12Binding" type="tns:TroubleTicketAPIPortType">
+    <soap12:binding transport="http://schemas.xmlsoap.org/soap/http" style="document"/>
+    <wsdl:operation name="createDisasterTroubleTicketsOnAccountsAndPoliciesWithPostalCodes">
+      <soap12:operation soapActionRequired="false" style="document"/>
+      <wsdl:input name="createDisasterTroubleTicketsOnAccountsAndPoliciesWithPostalCodes">
+        <soap12:body use="literal"/>
+        <soap12:header message="tns:gw-authentication" part="gw-authentication" use="literal"/>
+        <soap12:header message="tns:gw-locale" part="gw-locale" use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="createDisasterTroubleTicketsOnAccountsAndPoliciesWithPostalCodesResponse">
+        <soap12:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="WsiAuthenticationException">
+        <soap12:fault name="WsiAuthenticationException" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="createDisasterTroubleTicketsOnPoliciesWithPostalCodes">
+      <soap12:operation soapActionRequired="false" style="document"/>
+      <wsdl:input name="createDisasterTroubleTicketsOnPoliciesWithPostalCodes">
+        <soap12:body use="literal"/>
+        <soap12:header message="tns:gw-authentication" part="gw-authentication" use="literal"/>
+        <soap12:header message="tns:gw-locale" part="gw-locale" use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="createDisasterTroubleTicketsOnPoliciesWithPostalCodesResponse">
+        <soap12:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="WsiAuthenticationException">
+        <soap12:fault name="WsiAuthenticationException" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:binding name="TroubleTicketAPISoap11Binding" type="tns:TroubleTicketAPIPortType">
+    <soap11:binding transport="http://schemas.xmlsoap.org/soap/http" style="document"/>
+    <wsdl:operation name="createDisasterTroubleTicketsOnAccountsAndPoliciesWithPostalCodes">
+      <soap11:operation style="document"/>
+      <wsdl:input name="createDisasterTroubleTicketsOnAccountsAndPoliciesWithPostalCodes">
+        <soap11:body use="literal"/>
+        <soap11:header message="tns:gw-authentication" part="gw-authentication" use="literal"/>
+        <soap11:header message="tns:gw-locale" part="gw-locale" use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="createDisasterTroubleTicketsOnAccountsAndPoliciesWithPostalCodesResponse">
+        <soap11:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="WsiAuthenticationException">
+        <soap11:fault name="WsiAuthenticationException" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="createDisasterTroubleTicketsOnPoliciesWithPostalCodes">
+      <soap11:operation style="document"/>
+      <wsdl:input name="createDisasterTroubleTicketsOnPoliciesWithPostalCodes">
+        <soap11:body use="literal"/>
+        <soap11:header message="tns:gw-authentication" part="gw-authentication" use="literal"/>
+        <soap11:header message="tns:gw-locale" part="gw-locale" use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="createDisasterTroubleTicketsOnPoliciesWithPostalCodesResponse">
+        <soap11:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="WsiAuthenticationException">
+        <soap11:fault name="WsiAuthenticationException" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="TroubleTicketAPI">
+    <wsdl:port name="TroubleTicketAPISoap12Port" binding="tns:TroubleTicketAPISoap12Binding">
+      <soap12:address location="local:///gw/webservice/bc/bc700/TroubleTicketAPI"/>
+    </wsdl:port>
+    <wsdl:port name="TroubleTicketAPISoap11Port" binding="tns:TroubleTicketAPISoap11Binding">
+      <soap11:address location="local:///gw/webservice/bc/bc700/TroubleTicketAPI/soap11"/>
+    </wsdl:port>
+  </wsdl:service>
+  <wsdl:message name="createDisasterTroubleTicketsOnAccountsAndPoliciesWithPostalCodes">
+    <wsdl:part name="parameters" element="tns:createDisasterTroubleTicketsOnAccountsAndPoliciesWithPostalCodes"/>
+  </wsdl:message>
+  <wsdl:message name="createDisasterTroubleTicketsOnAccountsAndPoliciesWithPostalCodesResponse">
+    <wsdl:part name="parameters" element="tns:createDisasterTroubleTicketsOnAccountsAndPoliciesWithPostalCodesResponse"/>
+  </wsdl:message>
+  <wsdl:message name="WsiAuthenticationException">
+    <wsdl:part name="WsiAuthenticationException" element="tns:WsiAuthenticationException"/>
+  </wsdl:message>
+  <wsdl:message name="createDisasterTroubleTicketsOnPoliciesWithPostalCodes">
+    <wsdl:part name="parameters" element="tns:createDisasterTroubleTicketsOnPoliciesWithPostalCodes"/>
+  </wsdl:message>
+  <wsdl:message name="createDisasterTroubleTicketsOnPoliciesWithPostalCodesResponse">
+    <wsdl:part name="parameters" element="tns:createDisasterTroubleTicketsOnPoliciesWithPostalCodesResponse"/>
+  </wsdl:message>
+  <wsdl:message name="gw-authentication">
+    <wsdl:part name="gw-authentication" element="gwsoap:authentication"/>
+  </wsdl:message>
+  <wsdl:message name="gw-locale">
+    <wsdl:part name="gw-locale" element="gwsoap:locale"/>
+  </wsdl:message>
+</wsdl:definitions>

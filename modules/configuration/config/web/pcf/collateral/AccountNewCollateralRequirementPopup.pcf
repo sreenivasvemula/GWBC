@@ -1,0 +1,51 @@
+<?xml version="1.0"?>
+<PCF
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:noNamespaceSchemaLocation="../../../../../pcf.xsd">
+  <Popup
+    afterCommit="AccountCollateral.go(collateral.Account)"
+    canEdit="true"
+    id="AccountNewCollateralRequirementPopup"
+    startInEditMode="true"
+    title="displaykey.Web.NewCollateralRequirement.Title">
+    <LocationEntryPoint
+      signature="AccountNewCollateralRequirementPopup(collateral:Collateral)"/>
+    <Variable
+      name="collateral"
+      type="Collateral"/>
+    <Variable
+      initialValue="createNewRequirement()"
+      name="requirement"
+      type="CollateralRequirement"/>
+    <Variable
+      initialValue="new web.account.CollateralUtil()"
+      name="collateralUtil"/>
+    <Screen
+      id="AccountNewCollateralRequirementScreen">
+      <Toolbar>
+        <EditButtons/>
+      </Toolbar>
+      <AlertBar
+        id="effectiveDateAlert"
+        label="displaykey.Web.NewCollateralRequirement.Alert(collateralUtil.getNextInvoiceDate(requirement))"
+        visible="showAlertBar()"/>
+      <PanelRef
+        def="CollateralRequirementDV(requirement, true)"/>
+    </Screen>
+    <Code><![CDATA[function createNewRequirement() : CollateralRequirement{
+          var collReq = new CollateralRequirement(collateral.Currency)
+          collateral.addToRequirements(collReq);
+          collReq.CreateCharge = collateral.isChargeAllocated();
+          return collReq;
+        }
+        
+        function showAlertBar() : boolean{
+          if(requirement.RequirementType == "Cash"
+                && util.DateUtil.compareIgnoreTime(collateralUtil.getNextInvoiceDate(requirement), requirement.EffectiveDate) > 0  
+                && requirement.CreateCharge
+                && requirement.isNewChargeCreatedIfRequired())
+              return true;
+          return false;
+        }]]></Code>
+  </Popup>
+</PCF>

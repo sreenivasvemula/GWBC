@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PCF
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:noNamespaceSchemaLocation="../../../../../pcf.xsd">
+  <Popup
+    canEdit="perm.Document.edit(documentParam)"
+    canVisit="perm.Document.view(documentParam)"
+    id="DocumentDetailsPopup"
+    startInEditMode="web.document.DocumentsHelper.isDocumentEditable(documentParam)"
+    title="displaykey.Web.DocumentDetails.Title">
+    <LocationEntryPoint
+      signature="DocumentDetailsPopup(documentParam : Document)"/>
+    <Variable
+      name="documentParam"
+      type="Document"/>
+    <Variable
+      initialValue="new gw.document.DocumentDetailsInfo(documentParam)"
+      name="DocumentDetailsInfo"
+      type="gw.document.DocumentDetailsInfo"/>
+    <Screen
+      id="DocumentDetailsScreen">
+      <Toolbar>
+        <EditButtons/>
+      </Toolbar>
+      <PanelRef
+        def="DocumentDetailsDV(DocumentDetailsInfo.Document, DocumentDetailsInfo)"
+        editable="true"
+        mode="DocumentDetailsInfo.Document.Type"/>
+    </Screen>
+  </Popup>
+</PCF>

@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?><internalExtension xmlns="http://guidewire.com/datamodel" entityName="History">
+  <implementsEntity name="NotInCurrencySilo"/>
+  <description>Records history events for billing center entities.</description>
+  <column desc="Date of the history event." name="EventDate" nullok="false" type="datetime"/>
+  <column desc="Reference number." name="RefNumber" nullok="true" type="shorttext"/>
+  <column default="false" desc="Denotes whether this history event counts as activity on the HistoryEventContainer." name="CountsAsActivity" nullok="true" type="bit"/>
+  <foreignkey columnName="TransactionID" desc="The related transaction." fkentity="Transaction" name="Transaction" nullok="true"/>
+  <foreignkey columnName="WriteoffID" desc="The related writeoff." fkentity="Writeoff" ignoreforevents="true" name="Writeoff" nullok="true"/>
+  <typekey desc="The type of history event." name="EventType" nullok="false" typelist="HistoryEventType"/>
+  <checkconstraint predicate="TransactionID is null or WriteoffID is null"/>
+</internalExtension>

@@ -1,0 +1,84 @@
+<?xml version="1.0"?>
+<PCF
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:noNamespaceSchemaLocation="../../../../../pcf.xsd">
+  <Page
+    canEdit="perm.PolicyPeriodContact.edit"
+    canVisit="perm.System.plcytabview and perm.System.plcycontview"
+    id="PolicyDetailContacts"
+    showUpLink="true"
+    title="displaykey.Web.PolicyDetailContacts.Title">
+    <LocationEntryPoint
+      signature="PolicyDetailContacts(plcyPeriod : PolicyPeriod)"/>
+    <Variable
+      name="plcyPeriod"
+      type="PolicyPeriod"/>
+    <Screen
+      id="PolicyDetailContactsScreen">
+      <Toolbar>
+        <EditButtons/>
+        <ToolbarButton
+          hideIfReadOnly="true"
+          id="addNewContact"
+          label="displaykey.Button.Add">
+          <MenuItem
+            action="NewPolicyContactPopup.push(plcyPeriod, Company)"
+            id="addNewCompany"
+            label="displaykey.Web.PolicyDetailContacts.AddNewCompany"/>
+          <MenuItem
+            action="NewPolicyContactPopup.push(plcyPeriod, Person)"
+            id="addNewPerson"
+            label="displaykey.Web.PolicyDetailContacts.AddNewPerson"/>
+        </ToolbarButton>
+        <IteratorButtons
+          addVisible="false"
+          iterator="PolicyDetailContactsLV"/>
+        <PickerToolbarButton
+          action="ContactSearchPopup.push(false)"
+          available="true"
+          hideIfReadOnly="true"
+          id="addExistingContact"
+          label="displaykey.Web.PolicyDetailContacts.AddExistingContact"
+          onPick="gw.contact.ContactConnection.connectContactToPolicy(PickedValue, plcyPeriod)"/>
+      </Toolbar>
+      <ListDetailPanel
+        id="DetailPanel"
+        selectionName="contact"
+        selectionType="PolicyPeriodContact">
+        <ListViewPanel
+          id="PolicyDetailContactsLV">
+          <RowIterator
+            editable="true"
+            elementName="policyPeriodContact"
+            id="policyContactIterator"
+            toRemove="plcyPeriod.removeFromContacts(policyPeriodContact)"
+            value="plcyPeriod.Contacts">
+            <Row>
+              <Cell
+                id="ContactName"
+                label="displaykey.Web.PolicyDetailContacts.Name"
+                sortOrder="1"
+                value="policyPeriodContact"/>
+              <Cell
+                id="ContactAddress"
+                label="displaykey.Web.PolicyDetailContacts.Address"
+                value="policyPeriodContact.Contact.PrimaryAddress"/>
+              <Cell
+                id="ContactRoles"
+                label="displaykey.Web.PolicyDetailContacts.Roles"
+                value="gw.api.web.policy.PolicyPeriodUtil.getRolesForDisplay(policyPeriodContact)"/>
+            </Row>
+          </RowIterator>
+        </ListViewPanel>
+        <CardViewPanel>
+          <Card
+            id="ContactDetailCard"
+            title="org.apache.commons.lang.StringUtils.isNotBlank(contact.DisplayName) ? contact.DisplayName : displaykey.Web.PolicyDetailContacts.NewContact">
+            <PanelRef
+              def="PolicyContactDetailDV(contact, false)"/>
+          </Card>
+        </CardViewPanel>
+      </ListDetailPanel>
+    </Screen>
+  </Page>
+</PCF>

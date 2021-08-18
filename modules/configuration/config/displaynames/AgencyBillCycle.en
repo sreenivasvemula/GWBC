@@ -1,0 +1,41 @@
+<?xml version="1.0"?>
+<Entity
+  name="AgencyBillCycle">
+  <Columns>
+    <Column
+      beanPath="AgencyBillCycle.Producer"
+      name="producer"
+      sortOrder="0"/>
+    <Column
+      beanPath="AgencyBillCycle.StatementInvoice.EventDate"
+      name="closeDate"
+      sortOrder="1"/>
+    <Column
+      beanPath="AgencyBillCycle.StatementInvoice.Status"
+      name="status"
+      sortOrder="2"/>
+    <Column
+      beanPath="AgencyBillCycle.New"
+      name="isNew"
+      sortOrder="99"/>
+  </Columns>
+  <DisplayName><![CDATA[
+// AgencyBillCycle for {0} closing {1} ({2}) (New)
+      var maybeNew = (isNew == null) || isNew
+      var closed = (closeDate != null ) && closeDate.after( java.util.Date.CurrentDate )
+      var formattedCloseDate = closeDate?.format("short")
+      if (maybeNew) {
+        if (closed) {
+          return displaykey.DisplayName.AgencyBillCycle.Closed.New(producer, formattedCloseDate, status)
+        } else {
+          return displaykey.DisplayName.AgencyBillCycle.Closed.Existing(producer, formattedCloseDate, status)
+        }
+      } else {
+        if (closed) {
+          return displaykey.DisplayName.AgencyBillCycle.Open.New(producer, formattedCloseDate, status)
+        } else {
+          return displaykey.DisplayName.AgencyBillCycle.Open.Existing(producer, formattedCloseDate, status)
+        }
+      }
+  ]]></DisplayName>
+</Entity>

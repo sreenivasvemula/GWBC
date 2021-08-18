@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?><entity xmlns="http://guidewire.com/datamodel" abstract="true" desc="Base entity used for scheduling a policy period transfer between producer codes." entity="PolicyTransfer" final="false" platform="false" setterScriptability="hidden" subpackage="account" table="policytransfer" type="retireable">
+  <implementsEntity name="InCurrencySilo"/>
+  <column default="false" desc="if the transfer has been executed" getterScriptability="doesNotExist" name="Transferred" nullok="false" setterScriptability="doesNotExist" type="bit"/>
+  <typekey desc="Specifies how commission will be transferred to the new producer code" name="CommissionTransferOption" nullok="false" typelist="CommissionTransferOption"/>
+  <foreignkey columnName="DestinationProducerCodeID" desc="ProducerCode receiving the policy periods" fkentity="ProducerCode" name="DestinationProducerCode" nullok="true"/>
+  <foreignkey columnName="SourceProducerCodeID" desc="The producer code whose policy periods are to be transferred" fkentity="ProducerCode" name="SourceProducerCode" nullok="true"/>
+  <dbcheckbuilder className="com.guidewire.bc.system.database.dbchecks.account.PolicyTransferDBCheckBuilder"/>
+</entity>

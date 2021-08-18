@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PCF
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:noNamespaceSchemaLocation="../../../../../pcf.xsd">
+  <Page
+    canVisit="perm.System.viewdesktop"
+    id="DesktopHeldCharges"
+    title="displaykey.Web.DesktopHeldCharges">
+    <LocationEntryPoint
+      signature="DesktopHeldCharges()"/>
+    <Variable
+      initialValue="gw.api.web.accounting.HeldChargesUtil.findAllHeldCharges()"
+      name="charges"/>
+    <Variable
+      initialValue="false"
+      name="showCheckboxes"/>
+    <Screen
+      id="DesktopHeldChargesScreen">
+      <PanelRef
+        def="ChargesLV(charges as entity.Charge[], false, gw.api.web.accounting.ChargeView.NONE, true, true, false)">
+        <TitleBar
+          appendListViewPaging="true"
+          title="displaykey.Web.DesktopHeldCharges"/>
+        <Toolbar/>
+      </PanelRef>
+    </Screen>
+  </Page>
+</PCF>

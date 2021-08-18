@@ -1,0 +1,242 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xml:lang="en" lang="en" xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+    <meta http-equiv="Content-Style-Type" content="text/css" />
+    <!-- MOTW-DISABLED saved from url=(0014)about:internet -->
+    <title>ChargeInitializer Plugin</title>
+    <link rel="StyleSheet" href="css/bc-plugins.css" type="text/css" media="all" />
+    <link rel="StyleSheet" href="css/webworks.css" type="text/css" media="all" />
+    <link rel="StyleSheet" href="css/css-guidewire-extra.css" type="text/css" media="all" />
+    <script type="text/javascript" language="JavaScript1.2" src="wwhdata/common/context.js"></script>
+    <script type="text/javascript" language="JavaScript1.2" src="wwhdata/common/towwhdir.js"></script>
+    <script type="text/javascript" language="JavaScript1.2" src="wwhdata/common/wwhpagef.js"></script>
+    <script type="text/javascript" language="JavaScript1.2">
+      <!--
+        var  WebWorksRootPath = "";
+      // -->
+    </script>
+    <script type="text/javascript" language="JavaScript1.2">
+      <!--
+        // Set reference to top level help frame
+        //
+        var  WWHFrame = WWHGetWWHFrame("", true);
+      // -->
+    </script>
+    <script type="text/javascript" language="JavaScript1.2" src="scripts/expand.js"></script>
+    <!-- THE FOLLOWING IS A GUIDEWIRE STYLE DEFINITION FOR THE LINK TO THIS FEATURE -->
+    <link rel="StyleSheet" href="css/css-guidewire-extra.css" type="text/css" media="all" />
+    <!-- THE FOLLOWING IS A GUIDEWIRE GSCRIPT FUNCTION FOR THE LINK TO THIS FEATURE -->
+    <script type="text/javascript">
+function guidewire_selectall()
+{
+var text_val=eval("document.linktothisurlform.urlfield");
+text_val.focus();
+text_val.select();
+}
+</script>
+  </head>
+  <body onLoad="WWHUpdate();" onUnload="WWHUnload();" onKeyDown="WWHHandleKeyDown((document.all||document.getElementById||document.layers)?event:null);" onKeyPress="WWHHandleKeyPress((document.all||document.getElementById||document.layers)?event:null);" onKeyUp="WWHHandleKeyUp((document.all||document.getElementById||document.layers)?event:null);">
+    <!-- THE FOLLOWING IS A GUIDEWIRE DIV FOR THE 'LINK TO THIS' FEATURE -->
+    <div id="linkToThisPage" class="popup" style="display: none;">
+      <div class="popupTitle">Link Directly to This Page 
+           <a href="#" onclick="var thePopup = getElementById('linkToThisPage');thePopup.style.display='none';return false;"><img class="popupClosebox" src="wwhelp/wwhimpl/common/images/close.gif" /></a></div>
+      <div style="padding:6px;">
+        <div class="popupText" id="linkToThisPageBookmark">An error has occurred if you see this messsage.</div>
+        <form name="linktothisurlform" method="post" action="" style="width:275px;margin:0px">
+          <input type="text" class="popupURLText" id="linkToThisPageURL" name="urlfield" rows="1" cols="55" onClick="guidewire_selectall();" onFocus="guidewire_selectall();"></input>
+        </form>
+      </div>
+    </div>
+    <br />
+    <div class="WebWorks_Breadcrumbs" style="text-align: left;">
+      <span>BillingCenter Integration Guide</span> : 
+    <span class="WebWorks_Breadcrumbs" style="text-align: left;"><a class="WebWorks_Breadcrumb_Link" href="p-plugins.html#3607041">Plugins</a> : <a class="WebWorks_Breadcrumb_Link" href="bc-plugins.13.01.html#3607041">Billing Plugins</a> : ChargeInitializer Plugin</span></div>
+    <hr align="left" />
+    <blockquote>
+      <h3 class="H1_-_Heading_1"><span class="cvh_-_computer_voice_in_heading"><a name="3607041">ChargeInitializer</a></span> Plugin</h3>
+      <div class="B_-_Body"><a name="3607042">The </a><span class="cv_-_computer_voice">ChargeInitializer</span> plugin configures the final step of the charge invoicing process for new charges. It enables modification of invoice item settings, such as an item’s monetary amount and billing date, and also supports assigning invoice items to particular invoices.</div>
+      <div class="N_-_Note">
+        <span class="n_-_note">Note: </span><a name="3696394">The </a><span class="cv_-_computer_voice">ChargeInitializer</span> plugin configures brand new charges. To modify an executed charge, use the <span class="cv_-_computer_voice">ChargeInstallmentChanger</span> class. For further information, see <a href="javascript:WWHClickedPopup('config', 'charge_invoicing_process.44.4.html#2249465', '');" title="Modifying an Existing Charge">“Modifying an Existing Charge” in the </a><span class="bt_-_book_title"><a href="javascript:WWHClickedPopup('config', 'charge_invoicing_process.44.4.html#2249465', '');" title="Modifying an Existing Charge">Configuration Guide</a></span>.</div>
+      <h4 class="H2_-_Heading_2"><a name="3668461">Using the </a><span class="cvh_-_computer_voice_in_heading">ChargeInitializer</span> Plugin</h4>
+      <div class="B_-_Body"><a name="3668462">When processing a new charge, the creation of invoice items and the placement of the items on invoices is configurable by implementing the </a><span class="cv_-_computer_voice">ChargeInitializer</span> plugin. The default implementation is located in the Gosu class <span class="cv_-_computer_voice">gw.plugin.charge.ChargeInitalizer</span>. The class’s entry point for processing a new charge is the <span class="cv_-_computer_voice">customizeChargeInitializer</span> method.</div>
+      <div class="B_-_Body"><a name="3668463">This section describes the </a><span class="cv_-_computer_voice">customizeChargeIntializer</span> method and provides code samples that demonstrate some common operations used to configure the plugin.</div>
+      <div class="H3_-_Heading_3_outer" style="margin-left: 36pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <h5 class="H3_-_Heading_3_inner" style="width: 18pt; white-space: nowrap"></h5>
+            </td>
+            <td width="100%">
+              <h5 class="H3_-_Heading_3_inner"><a name="3668464">The </a><span class="cvh_-_computer_voice_in_heading">customizeChargeInitializer</span> Method</h5>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="B_-_Body"><a name="3668465">The </a><span class="cv_-_computer_voice">customizeChargeInitializer </span>method of the <span class="cv_-_computer_voice">ChargeInitializer</span> plugin is called once for each planned charge in a billing instruction. It is the only method you must implement to customize charges and invoice items before their associated billing instruction is executed.</div>
+      <div class="B_-_Body"><a name="3668466">The method accepts a single parameter of the type </a><span class="cv_-_computer_voice">gw.api.domain.charge.ChargeInitializer</span>. The parameter contains a <span class="cv_-_computer_voice">List</span> of planned invoice items in the form of <span class="cv_-_computer_voice">Entry</span> objects. These <span class="cv_-_computer_voice">Entry</span> objects can be modified in the method’s implementation.</div>
+      <div class="N_-_Note">
+        <span class="n_-_note">Note: </span><a name="3668467">Do not confuse the </a><span class="cv_-_computer_voice">gw.</span><span class="s_-_strong" style="color: #000000; font-family: &quot;Lucida Sans Typewriter&quot;; font-size: 8pt; font-style: normal">plugin</span><span class="cv_-_computer_voice">.charge.ChargeInitializer</span> class used to implement the <span class="cv_-_computer_voice">ChargeInitializer</span> plugin with the <span class="cv_-_computer_voice">gw.</span><span class="s_-_strong" style="color: #000000; font-family: &quot;Lucida Sans Typewriter&quot;; font-size: 8pt; font-style: normal">api.domain</span><span class="cv_-_computer_voice">.charge.ChargeInitializer</span> class passed as a parameter to the <span class="cv_-_computer_voice">customizeChargeInitializer </span>method. The following table differentiates the two classes.</div>
+      <table class="withoutHeading" style="text-align: left" border="0" cellpadding="10" cellspacing="0" summary="">
+        <caption></caption>
+        <tr>
+          <td style="border-bottom-color: #c0d1d1; border-bottom-style: solid; border-bottom-width: 0.15pt; border-top-color: #000000; border-top-style: solid; border-top-width: 0.5pt; padding-bottom: 4pt; padding-left: 2pt; padding-right: 8pt; padding-top: 0pt; vertical-align: top">
+            <div class="TT_-_Table_Text"><span class="cvt_-_computer_voice_table"><a name="3668470">gw.</a></span><span class="s_-_strong" style="color: #000000; font-family: Arial; font-size: 8.0pt; font-style: normal">plugin</span><span class="cvt_-_computer_voice_table">.charge.ChargeInitializer</span></div>
+          </td>
+          <td style="border-bottom-color: #c0d1d1; border-bottom-style: solid; border-bottom-width: 0.15pt; border-top-color: #000000; border-top-style: solid; border-top-width: 0.5pt; padding-bottom: 4pt; padding-left: 2pt; padding-right: 8pt; padding-top: 0pt; vertical-align: top">
+            <div class="TT_-_Table_Text"><a name="3668472">Implements the </a><span class="cvt_-_computer_voice_table">ChargeInitializer</span> plugin. This class provides access to an instance of the <span class="cvt_-_computer_voice_table">gw.</span><span class="s_-_strong" style="color: #000000; font-family: &quot;Lucida Sans Typewriter&quot;; font-size: 7pt; font-style: normal">api.domain</span><span class="cvt_-_computer_voice_table">.charge.ChargeInitializer</span> class.</div>
+          </td>
+        </tr>
+        <tr>
+          <td style="border-bottom-color: #000000; border-bottom-style: solid; border-bottom-width: 0.5pt; border-top-color: #c0d1d1; border-top-style: solid; border-top-width: 0.15pt; padding-bottom: 4pt; padding-left: 2pt; padding-right: 8pt; padding-top: 0pt; vertical-align: top">
+            <div class="TT_-_Table_Text"><span class="cvt_-_computer_voice_table"><a name="3668474">gw.</a></span><span class="s_-_strong" style="color: #000000; font-family: Arial; font-size: 8.0pt; font-style: normal">api.domain</span><span class="cvt_-_computer_voice_table">.charge.ChargeInitializer</span></div>
+          </td>
+          <td style="border-bottom-color: #000000; border-bottom-style: solid; border-bottom-width: 0.5pt; border-top-color: #c0d1d1; border-top-style: solid; border-top-width: 0.15pt; padding-bottom: 4pt; padding-left: 2pt; padding-right: 8pt; padding-top: 0pt; vertical-align: top">
+            <div class="TT_-_Table_Text"><a name="3668476">Parameter to the </a><span class="cvt_-_computer_voice_table">customizeChargeInitializer</span> method. An instance of this class contains a <span class="cvt_-_computer_voice_table">List</span> of planned invoice items in the form of <span class="cvt_-_computer_voice_table">Entry</span> objects.</div>
+          </td>
+        </tr>
+      </table>
+      <h6 class="HS_-_Head_Sub"><a name="3668852">Create a New Invoice Item</a></h6>
+      <div class="B_-_Body"><a name="3668482">Use the </a><span class="cv_-_computer_voice">ChargeInitializer.addEntry</span><span style="font-family: &quot;Lucida Sans Typewriter&quot;; font-size: 7.0pt"> </span>method to create a new invoice item <span class="cv_-_computer_voice">Entry</span> object and add the object to the collection of invoice items to create for the charge. When the <span class="cv_-_computer_voice">ChargeInitializer</span> is subsequently executed, each <span class="cv_-_computer_voice">Entry</span> in the collection becomes an invoice item on an invoice in the appropriate invoice stream.</div>
+      <PRE class="CF_-_Code_First_Line"><a name="3668483">// Objective: If the down payment is 20% or more and the payment plan is on a monthly invoice stream,</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="3668484">// bill half the down payment on the first invoice and half on a later invoice.</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="3668485">var isDirectBillIssuance = !initializer.AgencyBill and initializer.BillingInstruction typeis Issuance</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="3668486">var paymentPlan = initializer.PolicyPeriod.PaymentPlan</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="3668487">if ( paymentPlan.DownPaymentPercent &gt; 20 and paymentPlan.Periodicity == TC_MONTHLY ) {</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="3668488">  // Find down payment entry and amount</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="3668489">  var firstDownPaymentItem =</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="3668490">      initializer.Entries.firstWhere( \ entry -&gt; entry.InvoiceItemType == InvoiceItemType.TC_DEPOSIT )</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="3668491">  var totalDownPaymentAmount = firstDownPaymentItem.Amount</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="3668492">&nbsp;</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="3668493">  // Divide down payment in half</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="3668494">  firstDownPaymentItem.Amount = totalDownPaymentAmount / 2.0</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="3668495">  var secondDownPaymentAmount = totalDownPaymentAmount - firstDownPaymentItem.Amount</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="3668496">&nbsp;</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="3668497">  // Look for the next invoice</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="3668498">  var nextInvoiceEntry =</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="3668499">      initializer.Entries.firstWhere( \ entry -&gt; entry.Invoice != firstDownPaymentItem.Invoice )</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="3668500">&nbsp;</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="3668501">  // Add second down payment item entry for other half of down payment</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="3668502">  var secondHalfDownPaymentEntry =</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="3668503">      initializer.addEntry(secondDownPaymentAmount,</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="3668504">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;InvoiceItemType.TC_DEPOSIT,</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="3668505">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;firstDownPaymentItem.EventDate)</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="3668506">&nbsp;</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="3668507">  // Move the second half of the down payment to the second invoice</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="3668508">  secondHalfDownPaymentEntry.setInvoice(nextInvoiceEntry.Invoice)</a></PRE>
+      <PRE class="CL_-_Code_Last_Line"><a name="3668509">}</a></PRE>
+      <h6 class="HS_-_Head_Sub"><a name="3668844">Bill an Item Immediately</a></h6>
+      <div class="B_-_Body"><a name="3668511">Use the </a><span class="cv_-_computer_voice">ChargeInitializer.Entry.billToday</span> method to bill an <span class="cv_-_computer_voice">Entry</span> immediately. When BillingCenter creates invoice items for the <span class="cv_-_computer_voice">ChargeInitializer</span>, the entry will be placed on the invoice with today’s date.</div>
+      <PRE class="CF_-_Code_First_Line"><a name="3668512">// Bill back dated direct bill down payments immediately (today)</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="3668513">var isBackDatedPolicy = DateUtil.compareIgnoreTime(initializer.BillingInstruction.EffectiveDate,</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="3668514">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;DateUtil.currentDate()) &lt; 0</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="3668515">&nbsp;</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="3668516">var isDirectBillIssuance = !initializer.AgencyBill and initializer.BillingInstruction typeis Issuance</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="3668517">if (isBackDatedPolicy and isDirectBillIssuance) {</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="3668518">  for (entry in initializer.Entries) {</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="3668519">    var isDeposit = entry.InvoiceItemType == InvoiceItemType.TC_DEPOSIT</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="3668520">    if (isDeposit ) {</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="3668521">      entry.billToday()</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="3668522">    }</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="3668523">  }</a></PRE>
+      <PRE class="CL_-_Code_Last_Line"><a name="3668524">}</a></PRE>
+      <h6 class="HS_-_Head_Sub"><a name="3668525">Place an Item on an Invoice</a></h6>
+      <div class="B_-_Body"><a name="3668526">To place an </a><span class="cv_-_computer_voice">Entry</span> on an invoice, use the <span class="cv_-_computer_voice">ChargeInitializer.Entry.setInvoice</span> method.</div>
+      <div class="B_-_Body"><a name="3697924">The following code sample looks for </a><span class="cv_-_computer_voice">Entry</span> objects that are one‑time charges. Whenever one is found and its event date is in the future, the code creates a new invoice and places the <span class="cv_-_computer_voice">Entry</span> on it.</div>
+      <PRE class="CF_-_Code_First_Line"><a name="3668527">/*** Place an invoice item on an invoice ***/</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="3668528">var today = DateUtil.currentDate()</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="3698167">&nbsp;</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="3698169">/* Iterate through all Entry objects */</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="3668529">for (entry in initializer.Entries) {</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="3698230">&nbsp;&nbsp;/* Is this Entry a one-time charge? Is its event date in the future? */</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="3698231">  var isOneTime = (entry.InvoiceItemType == InvoiceItemType.TC_ONETIME)</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="3698232">  if (isOneTime and entry.EventDate.after(today)) {</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="3698320">&nbsp;&nbsp;&nbsp;&nbsp;/* Yes, create a new invoice to hold the Entry */</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="3668532">    var newInvoice = initializer.InvoiceStream.createAndAddInvoice(entry.EventDate)</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="3698378">&nbsp;</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="3698389">&nbsp;&nbsp;&nbsp;&nbsp;/* Place the Entry on the new invoice */</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="3668533">    entry.setInvoice(newInvoice)</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="3668534">  }</a></PRE>
+      <PRE class="CL_-_Code_Last_Line"><a name="3668535">}</a></PRE>
+      <div class="H3_-_Heading_3_outer" style="margin-left: 36pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <h5 class="H3_-_Heading_3_inner" style="width: 18pt; white-space: nowrap"></h5>
+            </td>
+            <td width="100%">
+              <h5 class="H3_-_Heading_3_inner"><a name="3696329">Customize a Charge Based on the Billing Instruction Type</a></h5>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="B_-_Body"><a name="3696330">To customize charge invoicing based on the type of billing instruction received, perform the steps depicted in the following code sample.</a></div>
+      <PRE class="CF_-_Code_First_Line"><a name="3696331">/* Type of billing instruction that you want to perform custom invoicing on.</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="3696332">&nbsp;*&nbsp;Sample code uses type PolicyChange, but other types can also be used.</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="3696333">&nbsp;*/</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="3696334">PolicyChange&nbsp;&nbsp;&nbsp;billingInstruction&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;// Pre-initialized to appropriate value</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="3696335">&nbsp;</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="3696336">/* Prepare for customizing the items.</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="3696337">&nbsp;*&nbsp;&nbsp;&nbsp;1. Slices the charge into Entry objects. Entry objects are subsequently converted to invoice</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="3696338">&nbsp;*&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;items when the billing instruction is executed. These Entry objects can be added to,</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="3696339">&nbsp;*&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;modified, or removed.</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="3696340">&nbsp;*&nbsp;&nbsp;&nbsp;2. Calls the Charge Initializer plugin’s customizeChargeInitializer() method.</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="3696341">&nbsp;*/</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="3696342">billingInstruction.prepareForManualModification()</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="3696343">&nbsp;</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="3696344">/* Retrieve the charge initializer */</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="3696345">ChargeInitializer initializer = billingInstruction.getChargeInitializers().get( 0 )</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="3696346">&nbsp;</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="3696347">/* Retrieve all the initializer’s Entry objects */</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="3696348">List&lt;? extends ChargeInitializer.Entry&gt;entries = initializer.getEntries()</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="3696349">&nbsp;</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="3696350">/* Add a new Entry to the initializer */</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="3696351">Entry newEntry = initializer.addEntry( amount, invoiceItemType, eventDate )</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="3696352">&nbsp;</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="3696353">/* Getter and setter functions exist for the amount, invoiceItemType, invoice, eventDate, and</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="3696354">&nbsp;* any custom configuration fields. Other functions specify whether the invoiceItem will be placed</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="3696355">&nbsp;* on an invoice with today’s date.</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="3696356">&nbsp;*/</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="3696357">/* Modify an existing Entry */</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="3696358">entries[ 0 ].setAmount( $100 )</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="3696359">&nbsp;</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="3696360">/* Remove an Entry */</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="3696361">entries[ 1 ].remove()</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="3696362">&nbsp;</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="3777620">/* Properties on the future Charge object can be set on and retrieved from the ChargeInitializer</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="3777722">&nbsp;* object. The property values will be carried over to the Charge when the Billing Instruction is</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="3777823">&nbsp;* executed.</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="3778229">&nbsp;*/</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="3777862">initializer.setExtensionProperty( Charge#ChargeGroup, “One-time” )</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="3777952">String chargeGroup = initializer.getExtensionProperty( Charge#ChargeGroup )</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="3777622">&nbsp;</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="3777588">/* Properties on the future InvoiceItem object can be set on and retrieved from the Entry object.</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="3777589">&nbsp;* The property values will be carried over to the InvoiceItem when the Entry is converted.</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="3777590">&nbsp;*/</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="3696364">entries[ 0 ].setExtensionProperty( InvoiceItem#Comment, “Special fee” )</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="3696366">String invoiceItemComment = entries[ 0 ].getExtensionProperty( InvoiceItem#Comment )</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="3696367">&nbsp;</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="3696368">/* When customization is finished, the billing instruction is executed. This converts the Entry</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="3777608">&nbsp;* objects to InvoiceItem objects. InvoiceItem properties set on the Entry object (such as the</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="3696369">&nbsp;* Comment property set above) are carried over to the InvoiceItem. Also, the ChargeGroup property</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="3778042">&nbsp;* set on the ChargeInitializer.Charge object above is carried over to the created Charge.</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="3696370">&nbsp;*/</a></PRE>
+      <PRE class="CL_-_Code_Last_Line"><a name="3696371">billingInstruction.executeCustomizedCharges()</a></PRE>
+      <script type="text/javascript" language="JavaScript1.2">
+        <!--
+          // Clear related topics
+          //
+          WWHClearRelatedTopics();
+
+          document.writeln(WWHRelatedTopicsInlineHTML());
+        // -->
+      </script>
+    </blockquote>
+    <script type="text/javascript" language="JavaScript1.2">
+      <!--
+        document.write(WWHRelatedTopicsDivTag() + WWHPopupDivTag() + WWHALinksDivTag());
+      // -->
+    </script>
+  </body>
+</html>

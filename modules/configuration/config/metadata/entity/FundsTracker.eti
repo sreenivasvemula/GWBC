@@ -1,0 +1,95 @@
+<?xml version="1.0"?>
+<entity
+  xmlns="http://guidewire.com/datamodel"
+  abstract="true"
+  desc="A FundsTracker tracks allotments of funds from a FundsSource or allotments of funds to a FundsUse."
+  entity="FundsTracker"
+  final="false"
+  loadable="false"
+  setterScriptability="hidden"
+  subpackage="fundstracking"
+  table="fundstracker"
+  type="editable">
+  <implementsEntity
+    name="InCurrencySilo"/>
+  <column
+    desc="The ID of the FundsSource or FundsUse that is tracked."
+    getterScriptability="hidden"
+    name="TrackableID"
+    nullok="false"
+    setterScriptability="hidden"
+    type="softentityreference"/>
+  <monetaryamount
+    amountColumnName="TotalAmount"
+    amountRange="nonnegative"
+    desc="The total amount of the tracker's FundsSource or FundsUse."
+    name="TotalAmount"
+    nullok="false"
+    scaleToCurrency="true"
+    setterScriptability="hidden"/>
+  <monetaryamount
+    amountColumnName="AmountAllottedDenorm"
+    amountRange="nonnegative"
+    desc="The total amount allotted for the tracker's FundsSource or FundsUse."
+    name="AmountAllottedDenorm"
+    nullok="false"
+    scaleToCurrency="true"
+    setterScriptability="doesNotExist"
+    soapnullok="true">
+    <tag
+      name="DefaultValueZero"/>
+  </monetaryamount>
+  <column
+    desc="The event date of the tracker's FundsSource or FundsUse."
+    name="EventDate"
+    nullok="false"
+    setterScriptability="hidden"
+    type="datetime"/>
+  <column
+    default="false"
+    desc="True if the EventDate of the tracker's FundsSource or FundsUse is before funds tracking was enabled."
+    name="TrackablePredatesFundsTracking"
+    nullok="false"
+    setterScriptability="hidden"
+    type="bit"/>
+  <foreignkey
+    columnName="UnappliedFundID"
+    desc="The tracker's FundsSource or FundsUse is a source or a use of this UnappliedFund."
+    fkentity="UnappliedFund"
+    name="UnappliedFund"
+    nullok="false"
+    setterScriptability="hidden"/>
+  <column
+    createhistogram="true"
+    default="false"
+    desc="Denormalized field, true if and only if TotalAmount is equal to AmountAllottedDenorm"
+    name="FullyAllotted"
+    nullok="false"
+    setterScriptability="hidden"
+    type="bit"/>
+  <index
+    desc="Used by FundsSources.getFundsSourceTrackerInDatabase and FundsUses.getFundsUseTrackerInDatabase"
+    name="trackableid">
+    <indexcol
+      keyposition="1"
+      name="TrackableID"/>
+  </index>
+  <index
+    desc="Used by AccountImpl.getFundsTrackerQuery"
+    name="subtypefullyallotd">
+    <indexcol
+      keyposition="1"
+      name="Subtype"/>
+    <indexcol
+      keyposition="2"
+      name="FullyAllotted"/>
+  </index>
+  <dbcheckbuilder
+    className="com.guidewire.bc.system.database.dbchecks.fundstracking.FundsAllotmentDBCheckBuilder"/>
+  <dbcheckbuilder
+    className="com.guidewire.bc.system.database.dbchecks.fundstracking.TrackableExistsDBCheckBuilder"/>
+  <dbcheckbuilder
+    className="com.guidewire.bc.system.database.dbchecks.fundstracking.UnappliedFundsTrackerDBCheckBuilder"/>
+  <dbcheckbuilder
+    className="com.guidewire.bc.system.database.dbchecks.fundstracking.BalanceForwardFundsTrackerDBCheckBuilder"/>
+</entity>

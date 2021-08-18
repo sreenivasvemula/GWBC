@@ -1,0 +1,25 @@
+<?xml version="1.0"?>
+<PCF
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:noNamespaceSchemaLocation="../../../../../../pcf.xsd">
+  <Page
+    afterCancel="ReturnPremiumPlanDetail.go(returnPremiumPlan)"
+    afterCommit="ReturnPremiumPlanDetail.go(clonedReturnPremiumPlan)"
+    canEdit="true"
+    id="CloneReturnPremiumPlan"
+    parent="ReturnPremiumPlans()"
+    showUpLink="true"
+    startInEditMode="true"
+    title="displaykey.Web.CloneReturnPremiumPlan.Title(returnPremiumPlan)">
+    <LocationEntryPoint
+      signature="CloneReturnPremiumPlan(returnPremiumPlan : ReturnPremiumPlan)"/>
+    <Variable
+      name="returnPremiumPlan"
+      type="ReturnPremiumPlan"/>
+    <Variable
+      initialValue="returnPremiumPlan.makeClone() as ReturnPremiumPlan"
+      name="clonedReturnPremiumPlan"/>
+    <ScreenRef
+      def="ReturnPremiumPlanDetailScreen(clonedReturnPremiumPlan)"/>
+  </Page>
+</PCF>

@@ -1,0 +1,33 @@
+<?xml version="1.0"?>
+<entity
+  xmlns="http://guidewire.com/datamodel"
+  entity="DelinqProcessDelayedTrigger"
+  type="versionable"
+  desc="Join table between a delinquency process and the delinquent policies on which it is running."
+  exportable="false"
+  extendable="false"
+  final="true"
+  subpackage="delinquency"
+  loadable="false"
+  platform="false"
+  table="delinqprocdelayedtrigger">
+  <implementsEntity
+    name="NotInCurrencySilo"/>
+  <foreignkey
+    name="DelinquencyProcess"
+    columnName="DelinquencyProcessID"
+    fkentity="DelinquencyProcess"
+    nullok="false"
+    setterScriptability="doesNotExist"/>
+  <column
+    name="DelayedTriggerDate"
+    type="datetime"
+    desc="The date on which the delayed trigger was added"
+    nullok="false"
+    setterScriptability="doesNotExist"/>
+  <typekey
+    name="DelayedTrigger"
+    typelist="WorkflowTriggerKey"
+    desc="A trigger invoked while the containing delinquency process is held"
+    nullok="false"/>
+</entity>

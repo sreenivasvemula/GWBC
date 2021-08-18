@@ -1,0 +1,43 @@
+<?xml version="1.0"?>
+<Entity
+  name="MultiTAccount">
+  <Columns>
+    <DisplayNameColumn
+      beanPath="MultiTAccount.TAccountPattern"
+      displayName="true"
+      name="TAccountPattern"/>
+    <DisplayNameColumn
+      beanPath="MultiTAccount.Description"
+      displayName="false"
+      name="Description"/>
+    <Column
+      beanPath="MultiTAccount.UniqueForPatternOwnerAndDescription"
+      name="IsUnique"/>
+    <Column
+      beanPath="MultiTAccount.CreationOrder"
+      name="CreationOrder"/>
+  </Columns>
+  <DisplayName><![CDATA[var displayName = TAccountPattern
+
+if (Description != null) {
+  displayName += " (" + Description + ")"
+}
+
+if (!IsUnique) {
+  displayName += "-" + CreationOrder
+}
+
+return displayName]]></DisplayName>
+  <DisplayName
+    type="Short"><![CDATA[var displayName = ""
+
+if (Description != null) {
+  displayName += Description
+}
+
+if (!IsUnique) {
+  displayName += "-" + CreationOrder
+}
+
+return displayName]]></DisplayName>
+</Entity>

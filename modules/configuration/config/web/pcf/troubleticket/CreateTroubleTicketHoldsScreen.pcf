@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PCF
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:noNamespaceSchemaLocation="../../../../../pcf.xsd">
+  <!-- This screen is one of the steps in the Create Trouble Ticket wizard.  It is where the user will select
+       any holds (delinquency, late fees, commission payments...) that should be generated as a result of creation
+        of this new trouble ticket -->
+  <Screen
+    id="CreateTroubleTicketHoldsScreen">
+    <Require
+      name="TroubleTicket"
+      type="TroubleTicket"/>
+    <Require
+      name="AssigneeHolder"
+      type="assignment.Assignee[]"/>
+    <Require
+      name="CreateTroubleTicketHelper"
+      type="CreateTroubleTicketHelper"/>
+    <Toolbar>
+      <WizardButtons/>
+    </Toolbar>
+    <!-- Show the items the hold applies to (Late Fees, Payment Distribution) along with checkboxes to select them.
+           But do NOT show the entities (accounts/policies/producers) related to this Hold (pass false so we don't show those).
+           If the user really wants to see the related entities, they can go to the Related Entities step of the trouble ticket wizard. -->
+    <PanelRef
+      def="HoldDV(TroubleTicket.Hold, false)"/>
+  </Screen>
+</PCF>

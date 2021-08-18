@@ -1,0 +1,108 @@
+<?xml version="1.0"?>
+<PCF
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:noNamespaceSchemaLocation="../../../../../pcf.xsd">
+  <InputSet
+    id="DisbursementSearchCriteriaInputSet">
+    <Require
+      name="searchCriteria"
+      type="DisbSearchCriteria"/>
+    <Require
+      name="disbursementSubtypeHolder"
+      type="gw.bc.disbursement.typekey.Disbursement[]"/>
+    <Label
+      id="SearchCriteria"
+      label="displaykey.Web.DisbursementSearchDV.SearchCriteria"/>
+    <TypeKeyInput
+      editable="true"
+      filter="return gw.api.web.disbursement.DisbursementUtil.isDisbursementSubtypeAbstract(VALUE);"
+      id="disbursementSubtype"
+      label="displaykey.Web.DisbursementSearchDV.DisbursementSubtype"
+      required="true"
+      value="disbursementSubtypeHolder[0]">
+      <PostOnChange/>
+    </TypeKeyInput>
+    <TypeKeyInput
+      editable="true"
+      id="StatusCriterion"
+      label="displaykey.Web.DisbursementSearchDV.Status"
+      value="searchCriteria.Status">
+      <PostOnChange
+        target="DATA_ONLY"/>
+    </TypeKeyInput>
+    <Input
+      available="searchCriteria.Status == &quot;Sent&quot;"
+      editable="true"
+      id="EarliestIssueDateCriterion"
+      label="displaykey.Web.DisbursementSearchDV.EarliestIssueDate"
+      value="searchCriteria.EarliestIssueDate"/>
+    <Input
+      available="searchCriteria.Status == &quot;Sent&quot;"
+      editable="true"
+      id="LatestIssueDateCriterion"
+      label="displaykey.Web.DisbursementSearchDV.LatestIssueDate"
+      value="searchCriteria.LatestIssueDate"/>
+    <RangeInput
+      editable="true"
+      id="MethodCriterion"
+      label="displaykey.Web.DisbursementSearchDV.Method"
+      value="searchCriteria.Method"
+      valueRange="getPaymentMethodRange()"/>
+    <Input
+      editable="true"
+      id="TokenCriterion"
+      label="displaykey.Web.DisbursementSearchDV.PaymentInstrumentToken"
+      value="searchCriteria.Token"/>
+    <Input
+      editable="true"
+      id="CheckNumberCriterion"
+      label="displaykey.Web.DisbursementSearchDV.CheckNumber"
+      value="searchCriteria.CheckNumber"/>
+    <TypeKeyInput
+      editable="true"
+      id="CurrencyCriterion"
+      label="displaykey.Web.ProducerSearchDV.Currency"
+      value="searchCriteria.Currency"
+      visible="gw.api.util.CurrencyUtil.isMultiCurrencyMode()">
+      <PostOnChange
+        onChange="blankMinimumAndMaximumFields()"/>
+    </TypeKeyInput>
+    <MonetaryAmountInput
+      available="(searchCriteria.Currency != null or gw.api.util.CurrencyUtil.isSingleCurrencyMode())"
+      currency="gw.search.SearchHelper.getDefaultCurrencyIfNull(searchCriteria.Currency)"
+      editable="true"
+      id="MinAmountCriterion"
+      label="displaykey.Web.DisbursementSearchDV.MinAmount"
+      value="searchCriteria.MinAmount"/>
+    <MonetaryAmountInput
+      available="(searchCriteria.Currency != null or gw.api.util.CurrencyUtil.isSingleCurrencyMode())"
+      currency="gw.search.SearchHelper.getDefaultCurrencyIfNull(searchCriteria.Currency)"
+      editable="true"
+      id="MaxAmountCriterion"
+      label="displaykey.Web.DisbursementSearchDV.MaxAmount"
+      value="searchCriteria.MaxAmount"/>
+    <Input
+      editable="true"
+      id="PayeeCriterion"
+      label="displaykey.Web.DisbursementSearchDV.Payee"
+      value="searchCriteria.Payee"/>
+    <TypeKeyInput
+      editable="true"
+      id="ReasonCriterion"
+      label="displaykey.Web.DisbursementSearchDV.Reason"
+      value="searchCriteria.Reason"/>
+    <Code><![CDATA[function getPaymentMethodRange() : List<PaymentMethod> {
+        var paymentMethodRange = new java.util.ArrayList<PaymentMethod>();
+        paymentMethodRange.add( PaymentMethod.TC_ACH );
+        paymentMethodRange.add( PaymentMethod.TC_CHECK );
+        paymentMethodRange.add( PaymentMethod.TC_CREDITCARD );
+        paymentMethodRange.add( PaymentMethod.TC_WIRE );
+        return paymentMethodRange;
+      }
+
+function blankMinimumAndMaximumFields() {
+  searchCriteria.MinAmount = null
+  searchCriteria.MaxAmount = null
+      }]]></Code>
+  </InputSet>
+</PCF>

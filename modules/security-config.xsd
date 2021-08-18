@@ -1,0 +1,994 @@
+<?xml version="1.0"?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified">
+  
+  <xsd:element name="ContactCreatePermission">
+    <xsd:complexType>
+      <xsd:choice minOccurs="0" maxOccurs="unbounded"/>
+      <xsd:attribute name="permission" type="SystemPerm" use="required"/>
+    </xsd:complexType>
+  </xsd:element>
+  
+  <xsd:element name="ContactDeletePermission">
+    <xsd:complexType>
+      <xsd:choice minOccurs="0" maxOccurs="unbounded"/>
+      <xsd:attribute name="permission" type="SystemPerm" use="required"/>
+    </xsd:complexType>
+  </xsd:element>
+  
+  <xsd:element name="ContactEditPermission">
+    <xsd:complexType>
+      <xsd:choice minOccurs="0" maxOccurs="unbounded"/>
+      <xsd:attribute name="permission" type="SystemPerm" use="required"/>
+    </xsd:complexType>
+  </xsd:element>
+  
+  <xsd:simpleType name="ContactEntity">
+    <xsd:restriction base="xsd:string">
+      <xsd:enumeration value="Company"/>
+      <xsd:enumeration value="CompanyVendor"/>
+      <xsd:enumeration value="Contact"/>
+      <xsd:enumeration value="LegalVenue"/>
+      <xsd:enumeration value="Person"/>
+      <xsd:enumeration value="PersonVendor"/>
+      <xsd:enumeration value="Place"/>
+      <xsd:enumeration value="UserContact"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+  
+  <!-- Contact-related permissions -->
+  <xsd:element name="ContactPermissions">
+    <xsd:complexType>
+      <xsd:choice minOccurs="0" maxOccurs="unbounded">
+        <xsd:element ref="ContactSubtypeAccessProfile" minOccurs="0" maxOccurs="unbounded"/>
+        <xsd:element ref="ContactTagAccessProfile" minOccurs="0" maxOccurs="unbounded"/>
+      </xsd:choice>
+    </xsd:complexType>
+  </xsd:element>
+  
+  <xsd:element name="ContactSubtypeAccessProfile">
+    <xsd:complexType>
+      <xsd:choice minOccurs="0" maxOccurs="unbounded">
+        <xsd:element ref="ContactCreatePermission" minOccurs="0" maxOccurs="unbounded"/>
+        <xsd:element ref="ContactDeletePermission" minOccurs="0" maxOccurs="unbounded"/>
+        <xsd:element ref="ContactEditPermission" minOccurs="0" maxOccurs="unbounded"/>
+        <xsd:element ref="ContactViewPermission" minOccurs="0" maxOccurs="unbounded"/>
+      </xsd:choice>
+      <xsd:attribute name="entity" type="ContactEntity" use="required"/>
+    </xsd:complexType>
+  </xsd:element>
+  
+  <xsd:simpleType name="ContactTag">
+    <xsd:restriction base="xsd:string">
+      <xsd:enumeration value="Claim Party"/>
+      <!-- Client -->
+      <xsd:enumeration value="Client"/>
+      <!-- Vendor -->
+      <xsd:enumeration value="Vendor"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+  
+  <xsd:element name="ContactTagAccessProfile">
+    <xsd:complexType>
+      <xsd:choice minOccurs="0" maxOccurs="unbounded">
+        <xsd:element ref="ContactCreatePermission" minOccurs="0" maxOccurs="unbounded"/>
+        <xsd:element ref="ContactDeletePermission" minOccurs="0" maxOccurs="unbounded"/>
+        <xsd:element ref="ContactEditPermission" minOccurs="0" maxOccurs="unbounded"/>
+        <xsd:element ref="ContactViewPermission" minOccurs="0" maxOccurs="unbounded"/>
+      </xsd:choice>
+      <xsd:attribute name="tag" type="ContactTag" use="required"/>
+    </xsd:complexType>
+  </xsd:element>
+  
+  <xsd:element name="ContactViewPermission">
+    <xsd:complexType>
+      <xsd:choice minOccurs="0" maxOccurs="unbounded"/>
+      <xsd:attribute name="permission" type="SystemPerm" use="required"/>
+    </xsd:complexType>
+  </xsd:element>
+  
+  <xsd:element name="DocumentAccessProfile">
+    <xsd:complexType>
+      <xsd:choice minOccurs="0" maxOccurs="unbounded">
+        <xsd:element ref="DocumentCreatePermission" minOccurs="0" maxOccurs="1"/>
+        <xsd:element ref="DocumentDeletePermission" minOccurs="0" maxOccurs="1"/>
+        <xsd:element ref="DocumentEditPermission" minOccurs="0" maxOccurs="1"/>
+        <xsd:element ref="DocumentViewPermission" minOccurs="0" maxOccurs="1"/>
+      </xsd:choice>
+      <xsd:attribute name="securitylevel" type="DocumentSecurityLevel" use="required"/>
+    </xsd:complexType>
+  </xsd:element>
+  
+  <xsd:element name="DocumentCreatePermission">
+    <xsd:complexType>
+      <xsd:choice minOccurs="0" maxOccurs="unbounded"/>
+      <xsd:attribute name="permission" type="SystemPerm" use="required"/>
+    </xsd:complexType>
+  </xsd:element>
+  
+  <xsd:element name="DocumentDeletePermission">
+    <xsd:complexType>
+      <xsd:choice minOccurs="0" maxOccurs="unbounded"/>
+      <xsd:attribute name="permission" type="SystemPerm" use="required"/>
+    </xsd:complexType>
+  </xsd:element>
+  
+  <xsd:element name="DocumentEditPermission">
+    <xsd:complexType>
+      <xsd:choice minOccurs="0" maxOccurs="unbounded"/>
+      <xsd:attribute name="permission" type="SystemPerm" use="required"/>
+    </xsd:complexType>
+  </xsd:element>
+  
+  <!-- Encapsulates the permission mappings for a given DocumentSecurityType value -->
+  <xsd:element name="DocumentPermissions">
+    <xsd:complexType>
+      <xsd:choice minOccurs="0" maxOccurs="unbounded">
+        <xsd:element ref="DocumentAccessProfile" minOccurs="0" maxOccurs="unbounded"/>
+      </xsd:choice>
+    </xsd:complexType>
+  </xsd:element>
+  
+  <xsd:simpleType name="DocumentSecurityLevel">
+    <xsd:restriction base="xsd:string">
+      <!-- Document accessible only by users with confidential note permissions -->
+      <xsd:enumeration value="confidential"/>
+      <!-- Document accessible only by users with internal note permissions -->
+      <xsd:enumeration value="internalonly"/>
+      <!-- Document accessible by any user in the system -->
+      <xsd:enumeration value="unrestricted"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+  
+  <xsd:element name="DocumentViewPermission">
+    <xsd:complexType>
+      <xsd:choice minOccurs="0" maxOccurs="unbounded"/>
+      <xsd:attribute name="permission" type="SystemPerm" use="required"/>
+    </xsd:complexType>
+  </xsd:element>
+  
+  <xsd:simpleType name="Entity">
+    <xsd:restriction base="xsd:string">
+      <xsd:enumeration value="Account"/>
+      <xsd:enumeration value="AccountContact"/>
+      <xsd:enumeration value="Activity"/>
+      <xsd:enumeration value="ActivityPattern"/>
+      <xsd:enumeration value="Attribute"/>
+      <xsd:enumeration value="AttributeUser"/>
+      <xsd:enumeration value="BusinessWeek"/>
+      <xsd:enumeration value="Contact"/>
+      <xsd:enumeration value="Credential"/>
+      <xsd:enumeration value="DirectBillMoneyRcvd"/>
+      <xsd:enumeration value="Document"/>
+      <xsd:enumeration value="Group"/>
+      <xsd:enumeration value="GroupRegion"/>
+      <xsd:enumeration value="GroupUser"/>
+      <xsd:enumeration value="Holiday"/>
+      <xsd:enumeration value="Note"/>
+      <xsd:enumeration value="PolicyPeriod"/>
+      <xsd:enumeration value="PolicyPeriodContact"/>
+      <xsd:enumeration value="Producer"/>
+      <xsd:enumeration value="ProducerContact"/>
+      <xsd:enumeration value="Region"/>
+      <xsd:enumeration value="Role"/>
+      <xsd:enumeration value="RolePrivilege"/>
+      <xsd:enumeration value="ScriptParameter"/>
+      <xsd:enumeration value="SecurityZone"/>
+      <xsd:enumeration value="SharedActivity"/>
+      <xsd:enumeration value="SuspensePayment"/>
+      <xsd:enumeration value="Transaction"/>
+      <xsd:enumeration value="TroubleTicket"/>
+      <xsd:enumeration value="User"/>
+      <xsd:enumeration value="UserRole"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+  
+  <!-- Encapsulates the permission mappings for a given NoteSecurityType value -->
+  <xsd:element name="NoteAccessProfile">
+    <xsd:complexType>
+      <xsd:choice minOccurs="0" maxOccurs="unbounded">
+        <xsd:element ref="NoteCreatePermission" minOccurs="0" maxOccurs="1"/>
+        <xsd:element ref="NoteDeletePermission" minOccurs="0" maxOccurs="1"/>
+        <xsd:element ref="NoteEditBodyPermission" minOccurs="0" maxOccurs="1"/>
+        <xsd:element ref="NoteEditPermission" minOccurs="0" maxOccurs="1"/>
+        <xsd:element ref="NoteViewPermission" minOccurs="0" maxOccurs="1"/>
+      </xsd:choice>
+      <xsd:attribute name="securitylevel" type="xsd:NMTOKEN" use="required"/>
+    </xsd:complexType>
+  </xsd:element>
+  
+  <xsd:element name="NoteCreatePermission">
+    <xsd:complexType>
+      <xsd:choice minOccurs="0" maxOccurs="unbounded"/>
+      <xsd:attribute name="permission" type="SystemPerm" use="required"/>
+    </xsd:complexType>
+  </xsd:element>
+  
+  <xsd:element name="NoteDeletePermission">
+    <xsd:complexType>
+      <xsd:choice minOccurs="0" maxOccurs="unbounded"/>
+      <xsd:attribute name="permission" type="SystemPerm" use="required"/>
+    </xsd:complexType>
+  </xsd:element>
+  
+  <xsd:element name="NoteEditBodyPermission">
+    <xsd:complexType>
+      <xsd:choice minOccurs="0" maxOccurs="unbounded"/>
+      <xsd:attribute name="permission" type="SystemPerm" use="required"/>
+    </xsd:complexType>
+  </xsd:element>
+  
+  <xsd:element name="NoteEditPermission">
+    <xsd:complexType>
+      <xsd:choice minOccurs="0" maxOccurs="unbounded"/>
+      <xsd:attribute name="permission" type="SystemPerm" use="required"/>
+    </xsd:complexType>
+  </xsd:element>
+  
+  <!-- Note-related permissions, allowing a mapping between actions such as view, edit, etc.
+       and a required system permission based on the Note's SecurityType property -->
+  <xsd:element name="NotePermissions">
+    <xsd:complexType>
+      <xsd:choice minOccurs="0" maxOccurs="unbounded">
+        <xsd:element ref="NoteAccessProfile" minOccurs="0" maxOccurs="unbounded"/>
+      </xsd:choice>
+    </xsd:complexType>
+  </xsd:element>
+  
+  <xsd:simpleType name="NoteSecurityLevel">
+    <xsd:restriction base="xsd:string">
+      <!-- Note accessible only by users with confidential note permissions -->
+      <xsd:enumeration value="confidential"/>
+      <!-- Note accessible only by users with internal note permissions -->
+      <xsd:enumeration value="internalonly"/>
+      <!-- Note accessible by any user in the system -->
+      <xsd:enumeration value="unrestricted"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+  
+  <xsd:element name="NoteViewPermission">
+    <xsd:complexType>
+      <xsd:choice minOccurs="0" maxOccurs="unbounded"/>
+      <xsd:attribute name="permission" type="SystemPerm" use="required"/>
+    </xsd:complexType>
+  </xsd:element>
+  
+  <xsd:element name="SecurityConfig">
+    <xsd:complexType>
+      <xsd:choice minOccurs="0" maxOccurs="unbounded">
+        <xsd:element ref="ContactPermissions" minOccurs="0" maxOccurs="unbounded"/>
+        <xsd:element ref="DocumentPermissions" minOccurs="0" maxOccurs="unbounded"/>
+        <xsd:element ref="NotePermissions" minOccurs="0" maxOccurs="unbounded"/>
+        <xsd:element ref="StaticHandler" minOccurs="0" maxOccurs="unbounded"/>
+        <xsd:element ref="WrapHandler" minOccurs="0" maxOccurs="unbounded"/>
+      </xsd:choice>
+      <xsd:attribute name="handlerClass" type="xsd:string"/>
+      <xsd:attribute name="permissionClass" type="xsd:string"/>
+    </xsd:complexType>
+  </xsd:element>
+  
+  <!-- This will create a static handler for the given permission -->
+  <xsd:element name="StaticHandler">
+    <xsd:complexType>
+      <xsd:choice minOccurs="0" maxOccurs="unbounded">
+        <xsd:element ref="SystemPermType" minOccurs="0" maxOccurs="unbounded"/>
+      </xsd:choice>
+      <xsd:attribute name="desc" type="xsd:string"/>
+      <!-- The entity for the permission key and permision check -->
+      <xsd:attribute name="entity" type="Entity" use="required"/>
+      <xsd:attribute name="noPermissionDisplayKey" type="xsd:string"/>
+      <!-- The permission key -->
+      <xsd:attribute name="permKey" type="xsd:NMTOKEN" use="required"/>
+    </xsd:complexType>
+  </xsd:element>
+  
+  <xsd:simpleType name="SystemPerm">
+    <xsd:restriction base="xsd:string">
+      <!-- Permission to create a new contact in the address book (Retired) -->
+      <xsd:enumeration value="abcreate"/>
+      <!-- Permission to add a preferred vendor to the address book (Retired) -->
+      <xsd:enumeration value="abcreatepref"/>
+      <!-- Permission to delete an existing contact in the address book -->
+      <xsd:enumeration value="abdelete"/>
+      <!-- Permission to delete an existing preferred vendor address book entry -->
+      <xsd:enumeration value="abdeletepref"/>
+      <!-- Permission to edit an existing contact in the address book (Retired) -->
+      <xsd:enumeration value="abedit"/>
+      <!-- Permission to modify an existing preferred vendor address book entry (Retired) -->
+      <xsd:enumeration value="abeditpref"/>
+      <!-- Permission to view and search contact entries in the address book (Retired) -->
+      <xsd:enumeration value="abview"/>
+      <!-- Permission to search contact entries in the address book -->
+      <xsd:enumeration value="abviewsearch"/>
+      <!-- Permission to bill all contracted amounts for a customer account (Retired) -->
+      <xsd:enumeration value="acctbillall"/>
+      <!-- Permission to change a customer's existing billing plan (Retired) -->
+      <xsd:enumeration value="acctbillplanedit"/>
+      <!-- Permission to view Accounts | Charges screen -->
+      <xsd:enumeration value="acctchargesview"/>
+      <!-- Permission to close an account -->
+      <xsd:enumeration value="acctclose"/>
+      <!-- Permission to add a new contact to an account -->
+      <xsd:enumeration value="acctcntcreate"/>
+      <!-- Permission to remove a contact from an account -->
+      <xsd:enumeration value="acctcntdelete"/>
+      <!-- Permission to edit information on an account contact -->
+      <xsd:enumeration value="acctcntedit"/>
+      <!-- Permission to view Accounts | Collateral screen -->
+      <xsd:enumeration value="acctcollview"/>
+      <!-- Permission to view Accounts | Contacts screen -->
+      <xsd:enumeration value="acctcontview"/>
+      <!-- Permission to create an account -->
+      <xsd:enumeration value="acctcreate"/>
+      <!-- Permission to view Accounts | Delinquencies screen -->
+      <xsd:enumeration value="acctdelview"/>
+      <!-- Permission to edit an existing account's details -->
+      <xsd:enumeration value="acctdetedit"/>
+      <!-- Permission to view Accounts | Disbursements screen -->
+      <xsd:enumeration value="acctdisbview"/>
+      <!-- Permission to view Accounts | Documents screen -->
+      <xsd:enumeration value="acctdocview"/>
+      <!-- Permission to view Accounts | Evaluation screen -->
+      <xsd:enumeration value="acctevalview"/>
+      <!-- Permission to view Accounts | History screen -->
+      <xsd:enumeration value="accthistview"/>
+      <!-- Permission to view an account regardless of the security zone it is in -->
+      <xsd:enumeration value="acctignoresecurityzone"/>
+      <!-- Permission to view Accounts | Invoices screen -->
+      <xsd:enumeration value="acctinvcview"/>
+      <!-- Permission to view Accounts | Journal screen -->
+      <xsd:enumeration value="acctjournalview"/>
+      <!-- Permission to view Accounts | Ledger screen -->
+      <xsd:enumeration value="acctledgerview"/>
+      <!-- Permission to view Accounts | Notes screen -->
+      <xsd:enumeration value="acctnoteview"/>
+      <!-- Permission to transfer a policy to a different account -->
+      <xsd:enumeration value="acctplcytx"/>
+      <!-- Permission to view Accounts | Policies screen -->
+      <xsd:enumeration value="acctplcyview"/>
+      <!-- Permission to view Accounts | Payments screen -->
+      <xsd:enumeration value="acctpmntview"/>
+      <!-- Permission to search for accounts -->
+      <xsd:enumeration value="acctsearch"/>
+      <!-- Permission to view Accounts | Summary screen -->
+      <xsd:enumeration value="acctsummview"/>
+      <!-- Permission to view the Accounts tab -->
+      <xsd:enumeration value="accttabview"/>
+      <!-- Permission to view Accounts | Trouble Tickets screen -->
+      <xsd:enumeration value="acctttktview"/>
+      <!-- Permission to view Accounts | Transactions screen -->
+      <xsd:enumeration value="accttxnview"/>
+      <!-- Permission to write off an amount for an account -->
+      <xsd:enumeration value="acctwo"/>
+      <!-- Permission to approve any approval activity even if the activity is assigned to someone
+           else; the approver is still subject to authority limit restrictions -->
+      <xsd:enumeration value="actapproveany"/>
+      <!-- Permission to create new activities -->
+      <xsd:enumeration value="actcreate"/>
+      <!-- Permission to modify (edit/skip/close) activities owned by other users -->
+      <xsd:enumeration value="acteditunowned"/>
+      <!-- Permission to set whether an activity is mandatory (Retired) -->
+      <xsd:enumeration value="actmakemand"/>
+      <!-- Permission to own an activity and to see the Desktop Activities page -->
+      <xsd:enumeration value="actown"/>
+      <!-- Permission to create new activity patterns -->
+      <xsd:enumeration value="actpatcreate"/>
+      <!-- Permission to delete activity patterns -->
+      <xsd:enumeration value="actpatdelete"/>
+      <!-- Permission to edit activity patterns -->
+      <xsd:enumeration value="actpatedit"/>
+      <!-- Permission to view the list of activity patterns or activity pattern details -->
+      <xsd:enumeration value="actpatview"/>
+      <!-- Permission to assign an activity from a queue (Retired) -->
+      <xsd:enumeration value="actqueueassign"/>
+      <!-- Permission to get the next activity off of a queue (Retired) -->
+      <xsd:enumeration value="actqueuenext"/>
+      <!-- Permission to pick an activity from a queue (Retired) -->
+      <xsd:enumeration value="actqueuepick"/>
+      <!-- Permission to reassign your own activities -->
+      <xsd:enumeration value="actraown"/>
+      <!-- Permission to reassign activities owned by other users -->
+      <xsd:enumeration value="actraunown"/>
+      <!-- Permission to review and approve manually-approved assignables -->
+      <xsd:enumeration value="actreviewassign"/>
+      <!-- Permission to search for activities -->
+      <xsd:enumeration value="actsearch"/>
+      <!-- Permission to view activities -->
+      <xsd:enumeration value="actview"/>
+      <!-- Permission to view all activity queues, even those in other security zones (Retired) -->
+      <xsd:enumeration value="actviewallqueues"/>
+      <!-- Permission to create or reverse adhoc credit -->
+      <xsd:enumeration value="adhoccredit"/>
+      <!-- Governs use of command-line tools as well as user attribute administration (Retired) -->
+      <xsd:enumeration value="admincmdline"/>
+      <!-- Permission to execute the data change. -->
+      <xsd:enumeration value="admindatachangeexec"/>
+      <!-- Permission to view the data change page. -->
+      <xsd:enumeration value="admindatachangeview"/>
+      <!-- Permission to view the Admin tab -->
+      <xsd:enumeration value="admintabview"/>
+      <!-- Permission to create a new agency bill plan -->
+      <xsd:enumeration value="agencybillplancreate"/>
+      <!-- Permission to change an existing agency bill plan -->
+      <xsd:enumeration value="agencybillplanedit"/>
+      <!-- Permission to view agency bill plans -->
+      <xsd:enumeration value="agencybillplanview"/>
+      <!-- Permission to search for agency money receipts -->
+      <xsd:enumeration value="agencymoneyrecdsearch"/>
+      <!-- Permission to write off an amount for an agency bill producer -->
+      <xsd:enumeration value="agencywo"/>
+      <!-- Permission create, edit, or delete authority limit profiles -->
+      <xsd:enumeration value="alpmanage"/>
+      <!-- Permission to view authority limit profiles (Retired) -->
+      <xsd:enumeration value="alpview"/>
+      <!-- Permission to create a new contact regardless of which tag(s) it has -->
+      <xsd:enumeration value="anytagcreate"/>
+      <!-- Permission to delete a contact regardless of which tag(s) it has -->
+      <xsd:enumeration value="anytagdelete"/>
+      <!-- Permission to edit the details of a contact regardless of which tag(s) it has -->
+      <xsd:enumeration value="anytagedit"/>
+      <!-- Permission to view the details of a contact regardless of which tag(s) it has -->
+      <xsd:enumeration value="anytagview"/>
+      <!-- Permission to archive objects -->
+      <xsd:enumeration value="archive"/>
+      <!-- Permission to create, edit, or delete user attributes (Retired) -->
+      <xsd:enumeration value="attrmanage"/>
+      <!-- Permission to view the list of user attributes or attribute details (Retired) -->
+      <xsd:enumeration value="attrview"/>
+      <!-- Permission to create a new billing plan -->
+      <xsd:enumeration value="billplancreate"/>
+      <!-- Permission to change an existing billing plan -->
+      <xsd:enumeration value="billplanedit"/>
+      <!-- Permission to view billing plans -->
+      <xsd:enumeration value="billplanview"/>
+      <!-- Permission to create, edit, or delete business week -->
+      <xsd:enumeration value="buswkmanage"/>
+      <!-- Permission to view the list of business week -->
+      <xsd:enumeration value="buswkview"/>
+      <!-- Permission to transfer cash from a producer (Retired) -->
+      <xsd:enumeration value="cashfromprodtx"/>
+      <!-- Permission to transfer cash to a producer (Retired) -->
+      <xsd:enumeration value="cashtoprodtx"/>
+      <!-- Permission to transfer cash -->
+      <xsd:enumeration value="cashtx"/>
+      <!-- Permission to transfer cash to an account or policyperiod that is not related to the
+           source account or policyperiod (Retired) -->
+      <xsd:enumeration value="cashunreltx"/>
+      <!-- Permission to change contact subtype -->
+      <xsd:enumeration value="changecontactsubtype"/>
+      <!-- Permission to place a hold on a charge -->
+      <xsd:enumeration value="chargeholdcreate"/>
+      <!-- Permission to release a hold on a charge -->
+      <xsd:enumeration value="chargeholdrelease"/>
+      <!-- Permission to create a new charge pattern -->
+      <xsd:enumeration value="chargepatterncreate"/>
+      <!-- Permission to edit an existing charge pattern -->
+      <xsd:enumeration value="chargepatternedit"/>
+      <!-- Permission to view charge patterns -->
+      <xsd:enumeration value="chargepatternview"/>
+      <!-- Permission to override commission rates at the charge level -->
+      <xsd:enumeration value="chrgcmsnrateoverride"/>
+      <!-- Permission to create a new collection agency -->
+      <xsd:enumeration value="colagencycreate"/>
+      <!-- Permission to remove an existing collection agency -->
+      <xsd:enumeration value="colagencydelete"/>
+      <!-- Permission to change an existing collection agency -->
+      <xsd:enumeration value="colagencyedit"/>
+      <!-- Permission to view collection agencies -->
+      <xsd:enumeration value="colagencyview"/>
+      <!-- Permission to disburse collateral requirement -->
+      <xsd:enumeration value="collateraldisburse"/>
+      <!-- Permission to drawdown collateral requirement -->
+      <xsd:enumeration value="collateraldrawdown"/>
+      <!-- Permission to edit a collateral requirement -->
+      <xsd:enumeration value="collateralreqedit"/>
+      <!-- Permission to override the commission rate (an arbitrary percentage) for a producer
+           on a single policyperiod for a given role -->
+      <xsd:enumeration value="commpercoride"/>
+      <!-- Permission to change the commission plan assigned to a producer's producer codes -->
+      <xsd:enumeration value="commplanassnedit"/>
+      <!-- Permission to create a new commission plan -->
+      <xsd:enumeration value="commplancreate"/>
+      <!-- Permission to change an existing commission plan -->
+      <xsd:enumeration value="commplanedit"/>
+      <!-- Permission to override the commission plan for a producer on a single policyperiod
+           for a given role -->
+      <xsd:enumeration value="commplanoride"/>
+      <!-- Permission to view commission plans -->
+      <xsd:enumeration value="commplanview"/>
+      <!-- Permission to create confidential documents -->
+      <xsd:enumeration value="confdoccreate"/>
+      <!-- Permission to delete confidential documents -->
+      <xsd:enumeration value="confdocdelete"/>
+      <!-- Permission to edit confidential documents -->
+      <xsd:enumeration value="confdocedit"/>
+      <!-- Permission to view confidential documents -->
+      <xsd:enumeration value="confdocview"/>
+      <!-- Permission to create confidential notes -->
+      <xsd:enumeration value="confnotecreate"/>
+      <!-- Permission to delete confidential notes -->
+      <xsd:enumeration value="confnotedelete"/>
+      <!-- Permission to edit confidential notes -->
+      <xsd:enumeration value="confnoteedit"/>
+      <!-- Permission to view confidential notes -->
+      <xsd:enumeration value="confnoteview"/>
+      <!-- Permission to create a new local contact (Retired) -->
+      <xsd:enumeration value="ctccreate"/>
+      <!-- Permission to edit an existing local contact (Retired) -->
+      <xsd:enumeration value="ctcedit"/>
+      <!-- Permission to view and search local contact entries (Retired) -->
+      <xsd:enumeration value="ctcview"/>
+      <!-- Permission to access debug tools, even when they are disabled by a configuration parameter
+           (Retired) -->
+      <xsd:enumeration value="debugtools"/>
+      <!-- Permission to create a new delinquency plan -->
+      <xsd:enumeration value="delplancreate"/>
+      <!-- Permission to change a customers's existing delinquency plan (Retired) -->
+      <xsd:enumeration value="delplancustedit"/>
+      <!-- Permission to change an existing delinquency plan -->
+      <xsd:enumeration value="delplanedit"/>
+      <!-- Permission to view delinquency plans -->
+      <xsd:enumeration value="delplanview"/>
+      <!-- Permission to search for delinquencies -->
+      <xsd:enumeration value="delsearch"/>
+      <!-- Permission to create a disbursement of an amount over the amount under contract -->
+      <xsd:enumeration value="disbauccreate"/>
+      <!-- Permission to create a disbursement -->
+      <xsd:enumeration value="disbcreate"/>
+      <!-- Permission to change disbursement payee -->
+      <xsd:enumeration value="disbpayeeedit"/>
+      <!-- Permission to search for disbursements -->
+      <xsd:enumeration value="disbsearch"/>
+      <!-- Permission to add documents -->
+      <xsd:enumeration value="doccreate"/>
+      <!-- Permission to remove documents -->
+      <xsd:enumeration value="docdelete"/>
+      <!-- Permission to edit documents -->
+      <xsd:enumeration value="docedit"/>
+      <!-- Permission to edit or delete all documents, regardless of the permissions set on the
+           individual documents -->
+      <xsd:enumeration value="docmodifyall"/>
+      <!-- Permission to view documents -->
+      <xsd:enumeration value="docview"/>
+      <!-- Permission to view all documents, regardless of the permissions set on the individual
+           documents -->
+      <xsd:enumeration value="docviewall"/>
+      <!-- Permission to view the event messages page -->
+      <xsd:enumeration value="eventmessageview"/>
+      <!-- Permission to execute a general transaction -->
+      <xsd:enumeration value="gentxn"/>
+      <!-- Permission to view the list of global options (Retired) -->
+      <xsd:enumeration value="globalopview"/>
+      <!-- Permission to edit the list of global options (Retired) -->
+      <xsd:enumeration value="glocalopedit"/>
+      <!-- Permission to create groups -->
+      <xsd:enumeration value="groupcreate"/>
+      <!-- Permission to delete groups -->
+      <xsd:enumeration value="groupdelete"/>
+      <!-- Permission to edit groups -->
+      <xsd:enumeration value="groupedit"/>
+      <!-- Permission to see the user/group tree on the Administration tab (Retired) -->
+      <xsd:enumeration value="grouptreeview"/>
+      <!-- Permission to view details of a group (Retired) -->
+      <xsd:enumeration value="groupview"/>
+      <!-- Permission to search for accounts that were created by the user's groups; this permission
+           is unecessary for users with the acctsearch permission -->
+      <xsd:enumeration value="grpacctsearch"/>
+      <!-- Permission to create, edit, and delete holidays -->
+      <xsd:enumeration value="holidaymanage"/>
+      <!-- Permission to view a list of holidays or holiday details -->
+      <xsd:enumeration value="holidayview"/>
+      <!-- Permission to create internal documents -->
+      <xsd:enumeration value="intdoccreate"/>
+      <!-- Permission to delete internal documents -->
+      <xsd:enumeration value="intdocdelete"/>
+      <!-- Permission to edit internal documents -->
+      <xsd:enumeration value="intdocedit"/>
+      <!-- Permission to view internal documents -->
+      <xsd:enumeration value="intdocview"/>
+      <!-- Permission to administer integration events -->
+      <xsd:enumeration value="integadmin"/>
+      <!-- Permission to access all Internal Tools -->
+      <xsd:enumeration value="internaltools"/>
+      <!-- Permission to create internal notes -->
+      <xsd:enumeration value="intnotecreate"/>
+      <!-- Permission to delete internal notes -->
+      <xsd:enumeration value="intnotedelete"/>
+      <!-- Permission to edit internal notes -->
+      <xsd:enumeration value="intnoteedit"/>
+      <!-- Permission to view internal notes -->
+      <xsd:enumeration value="intnoteview"/>
+      <!-- Permission to create an invoice -->
+      <xsd:enumeration value="invccreate"/>
+      <!-- Permission to change invoice dates -->
+      <xsd:enumeration value="invcdateedit"/>
+      <!-- Permission to view messages stored for invoices (Retired) -->
+      <xsd:enumeration value="invcmssgview"/>
+      <!-- Permission to remove an invoice -->
+      <xsd:enumeration value="invcremove"/>
+      <!-- Permission to resend an invoice to an insured / account contact -->
+      <xsd:enumeration value="invcresend"/>
+      <!-- Permission to search for invoices -->
+      <xsd:enumeration value="invcsearch"/>
+      <!-- Permission to change invoice stream defaults -->
+      <xsd:enumeration value="invcstrmedit"/>
+      <!-- Permission to change messages stored for invoices (Retired) -->
+      <xsd:enumeration value="invmssgedit"/>
+      <!-- Permission to print listviews (Retired) -->
+      <xsd:enumeration value="lvprint"/>
+      <!-- Permission to modify the load factors on all users and groups (Retired) -->
+      <xsd:enumeration value="manageldfctrs"/>
+      <!-- Permission to view Desktop | My Agency Items screen -->
+      <xsd:enumeration value="myagencyitemsview"/>
+      <!-- Permission to view Desktop | My Delinquencies screen -->
+      <xsd:enumeration value="mydelinquenciesview"/>
+      <!-- Permission to view Desktop | My Disbursements screen -->
+      <xsd:enumeration value="mydisbview"/>
+      <!-- Permission to view Desktop | My Trouble Tickets screen -->
+      <xsd:enumeration value="myttktview"/>
+      <!-- Permission to add notes -->
+      <xsd:enumeration value="notecreate"/>
+      <!-- Permission to remove notes -->
+      <xsd:enumeration value="notedelete"/>
+      <!-- Permission to edit the notes -->
+      <xsd:enumeration value="noteedit"/>
+      <!-- Permission to edit the body of notes -->
+      <xsd:enumeration value="noteeditbody"/>
+      <!-- Permission to view notes -->
+      <xsd:enumeration value="noteview"/>
+      <!-- Permission to create an organization. -->
+      <xsd:enumeration value="orgcreate"/>
+      <!-- Permission to delete an organization. -->
+      <xsd:enumeration value="orgdelete"/>
+      <!-- Permission to edit an organization's basic info. -->
+      <xsd:enumeration value="orgeditbasic"/>
+      <!-- Permission to search for organizations. -->
+      <xsd:enumeration value="orgsearch"/>
+      <!-- Permission to view an organization's basic info. -->
+      <xsd:enumeration value="orgviewbasic"/>
+      <!-- Permission to search for outgoing payments -->
+      <xsd:enumeration value="outpmntsearch"/>
+      <!-- Permission to create a new payment allocation plan -->
+      <xsd:enumeration value="payallocplancreate"/>
+      <!-- Permission to change an existing payment allocation plan -->
+      <xsd:enumeration value="payallocplanedit"/>
+      <!-- Permission to view payment allocation plans -->
+      <xsd:enumeration value="payallocplanview"/>
+      <!-- Permission to make changes to an existing policyperiod -->
+      <xsd:enumeration value="plcychange"/>
+      <!-- Permission to view Policies | Charges screen -->
+      <xsd:enumeration value="plcychargesview"/>
+      <!-- Permission to add a new contact to a policyperiod -->
+      <xsd:enumeration value="plcycntcreate"/>
+      <!-- Permission to remove a contact from a policyperiod -->
+      <xsd:enumeration value="plcycntdelete"/>
+      <!-- Permission to edit information on an existing policyperiod contact -->
+      <xsd:enumeration value="plcycntedit"/>
+      <!-- Permission to view Policies | Commissions screen -->
+      <xsd:enumeration value="plcycommview"/>
+      <!-- Permission to view Policies | Contacts screen -->
+      <xsd:enumeration value="plcycontview"/>
+      <!-- Permission to create a new policyperiod -->
+      <xsd:enumeration value="plcycreate"/>
+      <!-- Permission to view Policies | Delinquencies screen -->
+      <xsd:enumeration value="plcydelview"/>
+      <!-- Permission to view Policies | Documents screen -->
+      <xsd:enumeration value="plcydocview"/>
+      <!-- Permission to view Policies | History screen -->
+      <xsd:enumeration value="plcyhistview"/>
+      <!-- Permission to view a PolicyPeriod regardless of the security zone it is in -->
+      <xsd:enumeration value="plcyignoresecurityzone"/>
+      <!-- Permission to view Policies | Journal screen -->
+      <xsd:enumeration value="plcyjournalview"/>
+      <!-- Permission to view Policies | Ledger screen -->
+      <xsd:enumeration value="plcyledgerview"/>
+      <!-- Permission to view Policies | Notes screen -->
+      <xsd:enumeration value="plcynoteview"/>
+      <!-- Permission to view Policies | Payments screen -->
+      <xsd:enumeration value="plcypmntview"/>
+      <!-- Permission to transfer a policyperiod to a different producer for a given role -->
+      <xsd:enumeration value="plcyprodtx"/>
+      <!-- Permission to renew a policy -->
+      <xsd:enumeration value="plcyrenew"/>
+      <!-- Permission to search for policies -->
+      <xsd:enumeration value="plcysearch"/>
+      <!-- Permission to view Policies | Summary screen -->
+      <xsd:enumeration value="plcysummview"/>
+      <!-- Permission to view the Policies tab -->
+      <xsd:enumeration value="plcytabview"/>
+      <!-- Permission to view Policies | Trouble Tickets screen -->
+      <xsd:enumeration value="plcyttktview"/>
+      <!-- Permission to view Policies | Transactions screen -->
+      <xsd:enumeration value="plcytxnview"/>
+      <!-- Permission to write off an amount for a policyperiod -->
+      <xsd:enumeration value="plcywo"/>
+      <!-- Permission to change the details for a payment (i.e. payer name, invoice #) (Retired) -->
+      <xsd:enumeration value="pmntdetpayedit"/>
+      <!-- Permission to change the distribution of a payment to policies -->
+      <xsd:enumeration value="pmntdistedit"/>
+      <!-- Permission to process a payment manually (multiple payment view) -->
+      <xsd:enumeration value="pmntmanmultproc"/>
+      <!-- Permission to process a payment manually (single payment) -->
+      <xsd:enumeration value="pmntmanproc"/>
+      <!-- Permission to change an account's payment method -->
+      <xsd:enumeration value="pmntmethodedit"/>
+      <!-- Permission to add multiple agency bill payments -->
+      <xsd:enumeration value="pmntmultiagency"/>
+      <!-- Permission to create a new payment plan -->
+      <xsd:enumeration value="pmntplancreate"/>
+      <!-- Permission to change an existing payment plan -->
+      <xsd:enumeration value="pmntplanedit"/>
+      <!-- Permission to view payment plans -->
+      <xsd:enumeration value="pmntplanview"/>
+      <!-- Permission to search for payment requests -->
+      <xsd:enumeration value="pmntreqsearch"/>
+      <!-- Permission to reverse a payment -->
+      <xsd:enumeration value="pmntreverse"/>
+      <!-- Permission to edit an account's payment schedule -->
+      <xsd:enumeration value="pmntscheedit"/>
+      <!-- Permission to edit the payment schedule for a policyperiod -->
+      <xsd:enumeration value="pmntscheplcyedit"/>
+      <!-- Permission to search for payments -->
+      <xsd:enumeration value="pmntsearch"/>
+      <!-- Permission to view Producers | Agency Bill Cycles screen -->
+      <xsd:enumeration value="prodabcyclesview"/>
+      <!-- Permission to view Producers | Agency Bill Exceptions screen -->
+      <xsd:enumeration value="prodabexceptionsview"/>
+      <!-- Permission to view Producers | Agency Bill Open Items screen -->
+      <xsd:enumeration value="prodabopenitemsview"/>
+      <!-- Permission to resend a statement to a producer (Agency Bill) -->
+      <xsd:enumeration value="prodabstmtresend"/>
+      <!-- Permission to view Producers | Statements (Agency Bill) screen (Retired) -->
+      <xsd:enumeration value="prodabstmtview"/>
+      <!-- Permission to a view Producers | Transactions (Agency Bill) screen (Retired) -->
+      <xsd:enumeration value="prodabtxnview"/>
+      <!-- Permission to add a new contact to a producer -->
+      <xsd:enumeration value="prodcntcreate"/>
+      <!-- Permission to remove a contact from a producer -->
+      <xsd:enumeration value="prodcntdelete"/>
+      <!-- Permission to edit information on an existing producer contact -->
+      <xsd:enumeration value="prodcntedit"/>
+      <!-- Permission to view Producers | Contacts screen -->
+      <xsd:enumeration value="prodcontview"/>
+      <!-- Permission to create a new producer -->
+      <xsd:enumeration value="prodcreate"/>
+      <!-- Permission to resend a statement to a producer (Direct Bill) -->
+      <xsd:enumeration value="proddbstmtresend"/>
+      <!-- Permission to view Producers | Statements (Direct Bill) screen -->
+      <xsd:enumeration value="proddbstmtview"/>
+      <!-- Permission to a view Producers | Transactions (Direct Bill) screen -->
+      <xsd:enumeration value="proddbtxnview"/>
+      <!-- Permission to change details for a producer -->
+      <xsd:enumeration value="proddetedit"/>
+      <!-- Permission to view Producers | Documents screen -->
+      <xsd:enumeration value="proddocview"/>
+      <!-- Permission to view Producers | History screen -->
+      <xsd:enumeration value="prodhistview"/>
+      <!-- Permission to view a Producer regardless of the security zone it is in -->
+      <xsd:enumeration value="prodignoresecurityzone"/>
+      <!-- Permission to view Producers | Journal screen -->
+      <xsd:enumeration value="prodjournalview"/>
+      <!-- Permission to view Producers | Ledger screen -->
+      <xsd:enumeration value="prodledgerview"/>
+      <!-- Permission to view Producers | Notes screen -->
+      <xsd:enumeration value="prodnoteview"/>
+      <!-- Permission to view Producers | Policies screen -->
+      <xsd:enumeration value="prodplcyview"/>
+      <!-- Permission to give a producer an advance -->
+      <xsd:enumeration value="prodpmntadvman"/>
+      <!-- Permission to give a producer a bonus -->
+      <xsd:enumeration value="prodpmntbonusman"/>
+      <!-- Permission to edit Producers | Payments screen -->
+      <xsd:enumeration value="prodpmntedit"/>
+      <!-- Permission to process a payment from a producer manually (Retired) -->
+      <xsd:enumeration value="prodpmntprocman"/>
+      <!-- Permission to make a payment to a producer (of standard type) that exceeds the amount
+           currently payable (Retired) -->
+      <xsd:enumeration value="prodpmntstndexman"/>
+      <!-- Permission to make a payment to a producer (standard type) -->
+      <xsd:enumeration value="prodpmntstndman"/>
+      <!-- Permission to view Producers | Payments screen -->
+      <xsd:enumeration value="prodpmntview"/>
+      <!-- Permission to edit Producers | Promises screen -->
+      <xsd:enumeration value="prodpromedit"/>
+      <!-- Permission to view Producers | Promises screen -->
+      <xsd:enumeration value="prodpromview"/>
+      <!-- Permission to reverse a producer cash to payable transfer -->
+      <xsd:enumeration value="prodrevcashtopayablexfer"/>
+      <!-- Permission to reverse a producer commissions payable transfer -->
+      <xsd:enumeration value="prodrevpayablexfer"/>
+      <!-- Permission to search for producers -->
+      <xsd:enumeration value="prodsearch"/>
+      <!-- Permission to view Producers | Summary screen -->
+      <xsd:enumeration value="prodsummview"/>
+      <!-- Permission to make edits on the Producers | Suspense Items screen -->
+      <xsd:enumeration value="prodsuspitemsedit"/>
+      <!-- Permission to view Producers | Suspense Items screen -->
+      <xsd:enumeration value="prodsuspitemsview"/>
+      <!-- Permission to view the Producers Tab -->
+      <xsd:enumeration value="prodtabview"/>
+      <!-- Permission to change the tier to which a producer is assigned -->
+      <xsd:enumeration value="prodtieredit"/>
+      <!-- Permission to view Producers | Trouble Tickets screen -->
+      <xsd:enumeration value="prodttktview"/>
+      <!-- Permission to write off an amount for a producer (Retired) -->
+      <xsd:enumeration value="prodwo"/>
+      <!-- Permission to make edits on the Producers | Write-Offs screen -->
+      <xsd:enumeration value="prodwriteoffsedit"/>
+      <!-- Permission to view Producers | Write-Offs screen -->
+      <xsd:enumeration value="prodwriteoffsview"/>
+      <!-- Permission to purge objects from the database (Retired) -->
+      <xsd:enumeration value="purge"/>
+      <!-- Permission to create, edit, and delete regions (Retired) -->
+      <xsd:enumeration value="regionmanage"/>
+      <!-- Permission to view the list of regions and region details (Retired) -->
+      <xsd:enumeration value="regionview"/>
+      <!-- Permission to view the Report tab, if the add-on reporting module is installed -->
+      <xsd:enumeration value="reporting_view"/>
+      <!-- Permission to resync message -->
+      <xsd:enumeration value="resyncmessage"/>
+      <!-- Permission to create a new return premium plan -->
+      <xsd:enumeration value="retpremplancreate"/>
+      <!-- Permission to change an existing return premium plan -->
+      <xsd:enumeration value="retpremplanedit"/>
+      <!-- Permission to view return premium plans -->
+      <xsd:enumeration value="retpremplanview"/>
+      <!-- Permission to try to resend the failed message -->
+      <xsd:enumeration value="retrymessage"/>
+      <!-- Permission to reverse a transaction -->
+      <xsd:enumeration value="revtxn"/>
+      <!-- Permission to create, edit, or delete roles -->
+      <xsd:enumeration value="rolemanage"/>
+      <!-- Permission to view the list of roles and role details -->
+      <xsd:enumeration value="roleview"/>
+      <!-- Permission to run Guidewire Studio or import rules -->
+      <xsd:enumeration value="ruleadmin"/>
+      <!-- Permission to create, edit, or delete script parameters -->
+      <xsd:enumeration value="scrprmmanage"/>
+      <!-- Permission to view the list of script parameters or details of an individual script
+           parameter -->
+      <xsd:enumeration value="scrprmview"/>
+      <!-- Permission to create, edit, and delete security zones -->
+      <xsd:enumeration value="seczonemanage"/>
+      <!-- Permission to create a new shared activity -->
+      <xsd:enumeration value="sharedactcreate"/>
+      <!-- Permission to edit an existing shared activity -->
+      <xsd:enumeration value="sharedactedit"/>
+      <!-- Permission to view a shared activity -->
+      <xsd:enumeration value="sharedactview"/>
+      <!-- Permission to skip the failed message -->
+      <xsd:enumeration value="skipmessage"/>
+      <!-- Permission to use the SOAP APIs -->
+      <xsd:enumeration value="soapadmin"/>
+      <!-- Permission to execute a subrogation transaction -->
+      <xsd:enumeration value="subrtxn"/>
+      <!-- Permission to edit an existing suspense payment -->
+      <xsd:enumeration value="susppmntedit"/>
+      <!-- Permission to process a suspense payment -->
+      <xsd:enumeration value="susppmntproc"/>
+      <!-- Permission to view a suspense payment -->
+      <xsd:enumeration value="susppmntview"/>
+      <!-- Permission to edit the BatchProcess Internal Tools page -->
+      <xsd:enumeration value="toolsBatchProcessedit"/>
+      <!-- Permission to access the BatchProcess Internal Tools page -->
+      <xsd:enumeration value="toolsBatchProcessview"/>
+      <!-- Permission to view the CacheInfo Internal Tools page -->
+      <xsd:enumeration value="toolsCacheinfoview"/>
+      <!-- Permission to edit the Cluster Internal Tools page -->
+      <xsd:enumeration value="toolsClusteredit"/>
+      <!-- Permission to access the Cluster Internal Tools page -->
+      <xsd:enumeration value="toolsClusterview"/>
+      <!-- Permission to access the Info Internal Tools page -->
+      <xsd:enumeration value="toolsInfoview"/>
+      <!-- Permission to edit the ManagementBeans presented on Internal Tools page -->
+      <xsd:enumeration value="toolsJMXBeansEdit"/>
+      <!-- Permission to access the ManagementBeans Internal Tools page -->
+      <xsd:enumeration value="toolsJMXBeansview"/>
+      <!-- Permission to edit the JProfiler Internal Tools page -->
+      <xsd:enumeration value="toolsJProfileredit"/>
+      <!-- Permission to edit the Log Internal Tools page -->
+      <xsd:enumeration value="toolsLogedit"/>
+      <!-- Permission to access the Log Internal Tools page -->
+      <xsd:enumeration value="toolsLogview"/>
+      <!-- Permission to edit the StartablePlugin Internal Tools page -->
+      <xsd:enumeration value="toolsPluginedit"/>
+      <!-- Permission to access the StartablePlugin Internal Tools page -->
+      <xsd:enumeration value="toolsPluginview"/>
+      <!-- Permission to edit the Profiler Internal Tools page -->
+      <xsd:enumeration value="toolsProfileredit"/>
+      <!-- Permission to access the Profiler Internal Tools page -->
+      <xsd:enumeration value="toolsProfilerview"/>
+      <!-- Permission to edit the WorkQueue Internal Tools page -->
+      <xsd:enumeration value="toolsWorkQueueedit"/>
+      <!-- Permission to access the WorkQueue Internal Tools page -->
+      <xsd:enumeration value="toolsWorkQueueview"/>
+      <!-- Permission to Execute a transfer reversal -->
+      <xsd:enumeration value="transferreversal"/>
+      <!-- Permission to re-assign others' trouble tickets -->
+      <xsd:enumeration value="ttktassignany"/>
+      <!-- Permission to re-assign one's own trouble tickets -->
+      <xsd:enumeration value="ttktassignown"/>
+      <!-- Permission to create a new trouble ticket -->
+      <xsd:enumeration value="ttktcreate"/>
+      <!-- Permission to own a trouble ticket -->
+      <xsd:enumeration value="ttktown"/>
+      <!-- Permission to search for trouble tickets -->
+      <xsd:enumeration value="ttktsearch"/>
+      <!-- Permission to search for transactions -->
+      <xsd:enumeration value="txnsearch"/>
+      <!-- Restore ability for a user to log in (Retired) -->
+      <xsd:enumeration value="useractivate"/>
+      <!-- Permission to see the user/group administration screens. Also governs use of command-line
+           tools and user attribute admin. -->
+      <xsd:enumeration value="useradmin"/>
+      <!-- Permission to create a new user -->
+      <xsd:enumeration value="usercreate"/>
+      <!-- Remove ability for a user to log in (Retired) -->
+      <xsd:enumeration value="userdeactivate"/>
+      <!-- Permission to delete a user (Note: if a user has had any activity it's recommended
+           to make them non-active rather than delete) -->
+      <xsd:enumeration value="userdelete"/>
+      <!-- Permission to edit an existing user, except for roles, authority limits, or attributes -->
+      <xsd:enumeration value="useredit"/>
+      <!-- Permission to edit attributes for a user (Retired) -->
+      <xsd:enumeration value="usereditattrs"/>
+      <!-- Permission to edit language -->
+      <xsd:enumeration value="usereditlang"/>
+      <!-- Permission to grant or change an authority limit for a user -->
+      <xsd:enumeration value="usergrantauth"/>
+      <!-- Permission to grant or revoke roles -->
+      <xsd:enumeration value="usergrantroles"/>
+      <!-- Permission to search for users -->
+      <xsd:enumeration value="usersearch"/>
+      <!-- Permission to view details of a user -->
+      <xsd:enumeration value="userview"/>
+      <!-- Permission to see users in all visible groups -->
+      <xsd:enumeration value="userviewall"/>
+      <!-- Permission to view activity calendar of other users (Retired) -->
+      <xsd:enumeration value="viewactcal"/>
+      <!-- Permission to view the desktop -->
+      <xsd:enumeration value="viewdesktop"/>
+      <!-- Permission to view the Search tab -->
+      <xsd:enumeration value="viewsearch"/>
+      <!-- Permission to view the Team tab (Retired) -->
+      <xsd:enumeration value="viewteam"/>
+      <!-- Permission to view global workload statistics of other users (Retired) -->
+      <xsd:enumeration value="viewworkload"/>
+      <!-- Permission to view the ManageWorkflow page -->
+      <xsd:enumeration value="workflowmanage"/>
+      <!-- Permission to view the Workflow page -->
+      <xsd:enumeration value="workflowview"/>
+      <!-- Permission to add a data change gosu program. -->
+      <xsd:enumeration value="wsdatachangeedit"/>
+      <!-- Permission to create, edit, or delete admin zones -->
+      <xsd:enumeration value="zonemanage"/>
+      <!-- Permission to view the list of admin zones -->
+      <xsd:enumeration value="zoneview"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+  
+  <xsd:element name="SystemPermType">
+    <xsd:complexType>
+      <xsd:choice minOccurs="0" maxOccurs="unbounded"/>
+      <!-- see SystemPermissionType.xml -->
+      <xsd:attribute name="code" type="SystemPerm" use="required"/>
+    </xsd:complexType>
+  </xsd:element>
+  
+  <!-- This will create a wrap handler that first checked the wrapPermKey but also requires
+       one of the given permissions to be true as well. -->
+  <xsd:element name="WrapHandler">
+    <xsd:complexType>
+      <xsd:choice minOccurs="0" maxOccurs="unbounded">
+        <xsd:element ref="SystemPermType" minOccurs="0" maxOccurs="unbounded"/>
+      </xsd:choice>
+      <xsd:attribute name="desc" type="xsd:string"/>
+      <!-- The entity for the permission key and permision check -->
+      <xsd:attribute name="entity" type="Entity" use="required"/>
+      <xsd:attribute name="noPermissionDisplayKey" type="xsd:string"/>
+      <!-- The permission key -->
+      <xsd:attribute name="permKey" type="xsd:NMTOKEN" use="required"/>
+      <!-- The permission key to wrap and for this permission key and additional permision check -->
+      <xsd:attribute name="wrapPermKey" type="xsd:NMTOKEN" use="required"/>
+    </xsd:complexType>
+  </xsd:element>
+</xsd:schema>

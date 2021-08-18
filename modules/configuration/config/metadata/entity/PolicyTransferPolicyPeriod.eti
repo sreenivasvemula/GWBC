@@ -1,0 +1,38 @@
+<?xml version="1.0"?>
+<entity
+  xmlns="http://guidewire.com/datamodel"
+  entity="PolicyTransferPolicyPeriod"
+  type="versionable"
+  desc="An entry in the set of policy periods to transfer."
+  subpackage="account"
+  platform="false"
+  table="poltransferpolicyperiod"
+  setterScriptability="hidden">
+  <implementsEntity
+    name="InCurrencySilo" />
+  <foreignkey
+    name="PolicyPeriod"
+    columnName="PolicyPeriodID"
+    fkentity="PolicyPeriod"
+    getterScriptability="doesNotExist"
+    nullok="false"
+    setterScriptability="doesNotExist"/>
+  <foreignkey
+    name="PolicyTransfer"
+    columnName="PolicyTransferID"
+    fkentity="PolTransferByProdCode"
+    getterScriptability="doesNotExist"
+    nullok="false"
+    setterScriptability="doesNotExist"/>
+  <index
+    desc="Legacy"
+    name="transferpolicycode"
+    unique="true">
+    <indexcol
+      name="PolicyTransferID"
+      keyposition="1"/>
+    <indexcol
+      name="PolicyPeriodID"
+      keyposition="2"/>
+  </index>
+</entity>

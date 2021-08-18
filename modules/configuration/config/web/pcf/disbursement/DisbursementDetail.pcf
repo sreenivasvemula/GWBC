@@ -1,0 +1,67 @@
+<?xml version="1.0"?>
+<PCF
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:noNamespaceSchemaLocation="../../../../../pcf.xsd">
+  <!-- Todo: Add document and note capability -->
+  <Page
+    afterReturnFromPopup="if (popupCommitted) CurrentLocation.commit()"
+    canEdit="true"
+    id="DisbursementDetail"
+    parent="DesktopDisbursements()"
+    startInEditMode="startInEdit"
+    title="displaykey.Web.DisbursementDetail.Title">
+    <LocationEntryPoint
+      signature="DisbursementDetail(disbursement : Disbursement, startInEdit : Boolean)"/>
+    <Variable
+      name="disbursement"
+      type="Disbursement"/>
+    <Variable
+      name="startInEdit"
+      type="Boolean"/>
+    <Screen
+      id="DisbursementDetailScreen">
+      <Toolbar>
+        <ToolbarButton
+          action="CurrentLocation.commit(); DesktopDisbursements.go()"
+          hideIfReadOnly="true"
+          id="Update"
+          label="displaykey.Web.DisbursementDetail.Update"/>
+        <ToolbarButton
+          action="CurrentLocation.cancel(); DesktopDisbursements.go()"
+          hideIfReadOnly="true"
+          id="Cancel"
+          label="displaykey.Web.DisbursementDetail.Cancel"/>
+        <ToolbarDivider/>
+        <ToolbarButton
+          action="disbursement.getOpenApprovalActivity().approve(); CurrentLocation.commit(); DesktopDisbursements.go();"
+          available="disbursement.canApprove()"
+          hideIfReadOnly="true"
+          id="Approve"
+          label="displaykey.Web.DisbursementDetail.Approve"/>
+        <ToolbarButton
+          action="disbursement.rejectDisbursement(); CurrentLocation.commit(); DesktopDisbursements.go();"
+          available="disbursement.canReject()"
+          confirmMessage="displaykey.Web.DisbursementDetail.RejectConfirm"
+          hideIfReadOnly="true"
+          id="Reject"
+          label="displaykey.Web.DisbursementDetail.Reject"/>
+        <ToolbarButton
+          action="disbursement.rejectDisbursementAndHold(); CurrentLocation.commit(); DesktopDisbursements.go();"
+          available="disbursement.canRejectAndHold()"
+          confirmMessage="displaykey.Web.DisbursementDetail.RejectConfirm"
+          hideIfReadOnly="true"
+          id="RejectWithHold"
+          label="displaykey.Web.DisbursementDetail.RejectWithHold"/>
+        <ToolbarDivider/>
+        <ToolbarButton
+          action="VoidDisbursementPopup.push(disbursement)"
+          available="disbursement.canVoid()"
+          hideIfReadOnly="true"
+          id="Void"
+          label="displaykey.Web.DisbursementDetail.Void"/>
+      </Toolbar>
+      <PanelRef
+        def="DisbursementDetailDV(disbursement)"/>
+    </Screen>
+  </Page>
+</PCF>

@@ -1,0 +1,73 @@
+<?xml version="1.0"?>
+<PCF
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:noNamespaceSchemaLocation="../../../../../../pcf.xsd">
+  <Popup
+    canEdit="true"
+    id="DelinquencyPlanEventPopup"
+    returnType="DelinquencyPlanEvent"
+    startInEditMode="true"
+    title="displaykey.Web.DelinquencyPlan.Title( dlnqPlanReason.DelinquencyPlan )">
+    <LocationEntryPoint
+      signature="DelinquencyPlanEventPopup( dlnqPlanReason : DelinquencyPlanReason )"/>
+    <Variable
+      name="dlnqPlanReason"
+      type="DelinquencyPlanReason"/>
+    <Variable
+      initialValue="newDelinquencyPlanEvent(dlnqPlanReason)"
+      name="delinquencyPlanEvent"
+      type="DelinquencyPlanEvent"/>
+    <Screen>
+      <Toolbar>
+        <EditButtons
+          pickValue="delinquencyPlanEvent"/>
+      </Toolbar>
+      <DetailViewPanel>
+        <InputColumn>
+          <Label
+            label="displaykey.Web.DelinquencyPlanEvent.Basics"/>
+          <TypeKeyInput
+            editable="true"
+            id="Name"
+            label="displaykey.Web.DelinquencyPlanEvent.Name"
+            validationExpression="web.delinquency.DelinquencyPlanUtil.validateDelinquencyPlanEventUnique( delinquencyPlanEvent )"
+            value="delinquencyPlanEvent.EventName"/>
+          <Input
+            id="Description"
+            label="displaykey.Web.DelinquencyPlanEvent.Description"
+            value="delinquencyPlanEvent.EventName.Description"/>
+          <BooleanRadioInput
+            editable="true"
+            id="Automatic"
+            label="displaykey.Web.DelinquencyPlanEvent.Automatic"
+            value="delinquencyPlanEvent.Automatic"/>
+          <Input
+            editable="true"
+            id="OffsetDays"
+            label="displaykey.Web.DelinquencyPlanEvent.OffsetDays"
+            value="delinquencyPlanEvent.OffsetDays"/>
+          <RangeInput
+            editable="true"
+            id="TriggerBasis"
+            label="displaykey.Web.DelinquencyPlanEvent.TriggerBasis"
+            value="delinquencyPlanEvent.TriggerBasis"
+            valueRange="DelinquencyTriggerBasis.getTypeKeys(false)"/>
+          <Input
+            editable="true"
+            id="RelativeOrder"
+            label="displaykey.Web.DelinquencyPlanEvent.RelativeOrder"
+            value="delinquencyPlanEvent.RelativeOrder"/>
+        </InputColumn>
+      </DetailViewPanel>
+    </Screen>
+    <Code><![CDATA[
+/**
+ */
+      function newDelinquencyPlanEvent(planReason : DelinquencyPlanReason) : DelinquencyPlanEvent {
+        var newPlanEvent = new DelinquencyPlanEvent()
+        newPlanEvent.DelinquencyPlanReason = planReason
+        return newPlanEvent
+      }
+    ]]></Code>
+  </Popup>
+</PCF>

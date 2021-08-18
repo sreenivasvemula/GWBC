@@ -1,0 +1,51 @@
+<?xml version="1.0"?>
+<PCF
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:noNamespaceSchemaLocation="../../../../../pcf.xsd">
+  <Popup
+    beforeCommit="moneyReceived.moveToProducer(targetProducer)"
+    canEdit="true"
+    id="MoveAgencyPaymentConfirmationPopup"
+    startInEditMode="true"
+    title="displaykey.Web.MoveAgencyPaymentConfirmationPopup.Title">
+    <LocationEntryPoint
+      signature="MoveAgencyPaymentConfirmationPopup(moneyReceived : AgencyBillMoneyRcvd)"/>
+    <Variable
+      name="moneyReceived"
+      type="AgencyBillMoneyRcvd"/>
+    <Variable
+      name="targetProducer"
+      type="Producer"/>
+    <Variable
+      initialValue="new web.producer.ProducerSearchConverter()"
+      name="producerSearchConverter"
+      type="web.producer.ProducerSearchConverter"/>
+    <Screen>
+      <Toolbar>
+        <EditButtons
+          editVisible="false"
+          id="ConfirmationButtons"
+          updateLabel="displaykey.Button.OK"
+          updateShortcut="O"/>
+      </Toolbar>
+      <DetailViewPanel>
+        <InputColumn>
+          <InputSet>
+            <Input
+              editable="true"
+              id="SelectProducer"
+              inputConversion="producerSearchConverter.getProducer(VALUE)"
+              label="displaykey.Web.AgencyPaymentSelectProducer.SelectProducer"
+              required="true"
+              value="targetProducer">
+              <MenuItem
+                action="ProducerSearchPopup.push()"
+                icon="&quot;search.png&quot;"
+                id="SelectProducerPicker"/>
+            </Input>
+          </InputSet>
+        </InputColumn>
+      </DetailViewPanel>
+    </Screen>
+  </Popup>
+</PCF>

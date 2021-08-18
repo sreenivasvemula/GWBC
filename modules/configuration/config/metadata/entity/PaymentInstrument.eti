@@ -1,0 +1,89 @@
+<?xml version="1.0"?>
+<entity
+        xmlns="http://guidewire.com/datamodel"
+        entity="PaymentInstrument"
+        type="retireable"
+        desc="A PaymentInstrument is a financial instrument that can be or has been used to make a payment.
+    If the PaymentInstrument points at an Account or a Producer, the payment instrument can be used to request more payments.
+    For example, a credit card payment instrument that has enough information to be used to request
+    more payments from the payment system can have an Account set on it.
+    We also request money from the Responsive (PaymentMethod) payment instruments by asking the Payer to send the payment and waiting for
+    them to send the money."
+        subpackage="payment"
+        loadable="true"
+        table="paymentinstrument">
+    <implementsEntity
+            name="Validatable"/>
+  <implementsEntity
+            name="NotInCurrencySilo"/>
+    <typekey
+            name="PaymentMethod"
+            typelist="PaymentMethod"
+            desc="The method of payment used by this instrument (credit card, EFT, etc)"
+            nullok="false"/>
+    <foreignkey
+            name="Account"
+            desc="The Account which has this instrument as one of its available instruments for initiating payments.
+            A PaymentInstrument may only belong to one Account or Producer (or neither), so if this field is set,
+            Producer must be null."
+            columnName="AccountID"
+            exportasid="true"
+            fkentity="Account"
+            nullok="true"/>
+    <foreignkey
+            name="Producer"
+            desc="The Producer which has this instrument as one of its available instruments for initiating payments.
+            A PaymentInstrument may only belong to one Account or Producer (or neither), so if this field is set,
+            Account must be null."
+            columnName="ProducerID"
+            exportasid="true"
+            fkentity="Producer"
+            nullok="true"/>
+    <column
+            name="Immutable"
+            type="bit"
+            desc="Once set, this flag indicates that the PaymentInstrument can no longer be modified or removed.  It is used for singleton PaymentMethods like Cash."
+            default="false"
+            nullok="false"
+            setterScriptability="doesNotExist"/>
+    <column
+            name="Token"
+            type="shorttext"
+            desc="The identifier of the PaymentInstrument in the external payment system"
+            nullok="true"/>
+    <checkconstraint
+            desc="A PaymentInstrument may be associated with either an Account or a Producer for re-use, but not both."
+            predicate="((AccountID IS NULL) AND (ProducerID IS NULL))
+                    OR ((AccountID IS NOT NULL) AND (ProducerID IS NULL))
+                    OR ((AccountID IS NULL) AND (ProducerID IS NOT NULL))"/>
+    <index
+            desc="Immutable PaymentInstruments per PaymentMethod"
+            name="Immutables"
+            unique="true">
+        <indexcol
+                name="Immutable"
+                keyposition="1"/>
+        <indexcol
+                name="PaymentMethod"
+                keyposition="2"/>
+        <indexcol
+                name="Retired"
+                keyposition="3"/>
+        <indexcol
+                name="ID"
+                keyposition="4"/>
+    </index>
+
+    <index
+        desc="Searches on Token"
+        name="Token">
+            <indexcol
+                name="Token"
+                keyposition="1"/>
+            <indexcol
+                name="Retired"
+                keyposition="2"/>
+        </index>
+
+</entity>
+

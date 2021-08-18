@@ -1,0 +1,92 @@
+<?xml version="1.0"?>
+<entity
+  xmlns="http://guidewire.com/datamodel"
+  cacheable="false"
+  desc="Temporary table used when loading InvoiceItems via the staging tables"
+  entity="TmpStagingInvoiceItemDenorms"
+  extendable="false"
+  loadable="false"
+  table="tmpstginvitemdenorms"
+  temporary="true"
+  type="nonkeyable"
+  validateOnCommit="false">
+  <implementsEntity
+    name="NotInCurrencySilo"/>
+  <column
+    desc="PublicID of InvoiceItem"
+    exportable="false"
+    loadable="false"
+    name="InvoiceItemPublicID"
+    nullok="false"
+    type="publicid"/>
+  <column
+    desc="PublicID of Invoice"
+    exportable="false"
+    loadable="false"
+    name="InvoicePublicID"
+    nullok="false"
+    type="publicid"/>
+  <column
+    desc="Amount of invoice item, copied from staged invoice item"
+    exportable="false"
+    loadable="false"
+    name="Amount"
+    nullok="false"
+    type="money"/>
+  <column
+    desc="Amount paid on invoice item, calculated from dist item GrossAmountToApply"
+    exportable="false"
+    loadable="false"
+    name="PaidAmount"
+    nullok="false"
+    type="money"/>
+  <column
+    desc="Amount written off; difference between Amount and PaidAmount if item is written off, otherwise zero"
+    exportable="false"
+    loadable="false"
+    name="GrossAmountWrittenOff"
+    nullok="false"
+    type="money"/>
+  <column
+    desc="Is the invoice item settled, true if PaidAmount + GrossAmountWrittenOff = Amount"
+    exportable="false"
+    loadable="false"
+    name="GrossSettled"
+    nullok="false"
+    type="bit"/>
+  <column
+    desc="Primary commission, calculated from item commissions"
+    exportable="false"
+    loadable="false"
+    name="PrimaryCommissionAmount"
+    nullok="false"
+    type="money"/>
+  <column
+    desc="Primary commission payable, calculated from item commissions"
+    exportable="false"
+    loadable="false"
+    name="PrimaryCmsnPayableAmount"
+    nullok="false"
+    type="money"/>
+  <column
+    desc="Primary paid commission, calculated from item commissions"
+    exportable="false"
+    loadable="false"
+    name="PrimaryPaidCommission"
+    nullok="false"
+    type="money"/>
+  <column
+    desc="Primary written off commission, calculated from item commissions"
+    exportable="false"
+    loadable="false"
+    name="PrimaryWrittenOffCommission"
+    nullok="false"
+    type="money"/>
+  <column
+    desc="Is there any more commission or principal to pay, calculated from the other amount fields"
+    exportable="false"
+    loadable="false"
+    name="CanBePaidMoreByAgencyBill"
+    nullok="false"
+    type="bit"/>
+</entity>

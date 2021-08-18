@@ -1,0 +1,133 @@
+<?xml version="1.0"?>
+<PCF
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:noNamespaceSchemaLocation="../../../../../pcf.xsd">
+  <Popup
+    canEdit="true"
+    id="StartDelinquencyProcessPopup"
+    startInEditMode="true"
+    title="displaykey.Web.StartDelinquencyProcess.Title">
+    <LocationEntryPoint
+      signature="StartDelinquencyProcessPopup(dlnqTargets : gw.api.domain.delinquency.DelinquencyTarget[] )"/>
+    <Variable
+      name="dlnqTargets"
+      type="gw.api.domain.delinquency.DelinquencyTarget[]"/>
+    <Variable
+      initialValue="DelinquencyReason.TC_PASTDUE"
+      name="reason"
+      type="DelinquencyReason"/>
+    <Variable
+      initialValue="filterReasons()"
+      name="filteredReasons"
+      type="DelinquencyReason[]"/>
+    <Screen
+      id="StartDelinquencyProcessScreen">
+      <Toolbar>
+        <CheckedValuesToolbarButton
+          allCheckedRowsAction="performAction(CheckedValues)"
+          flags="all validTargets"
+          id="Execute"
+          iterator="TargetsLV"
+          label="displaykey.Web.StartDelinquencyProcess.Execute"/>
+        <ToolbarButton
+          action="CurrentLocation.cancel()"
+          id="Cancel"
+          label="displaykey.Web.StartDelinquencyProcess.Cancel"/>
+      </Toolbar>
+      <DetailViewPanel>
+        <InputColumn>
+          <Label
+            label="displaykey.Web.StartDelinquencyProcess.DelinquencyDetails"/>
+          <RangeInput
+            editable="true"
+            id="Reason"
+            label="displaykey.Web.StartDelinquencyProcess.Reason"
+            value="reason"
+            valueRange="filteredReasons">
+            <PostOnChange/>
+          </RangeInput>
+          <Label
+            label="displaykey.Web.StartDelinquencyProcess.TargetsToMakeDelinquent"/>
+          <ListViewInput>
+            <Toolbar/>
+            <ListViewPanel
+              id="TargetsLV">
+              <RowIterator
+                checkBoxVisible="true"
+                editable="false"
+                elementName="target"
+                hasCheckBoxes="true"
+                value="dlnqTargets">
+                <ToolbarFlag
+                  name="chosenTargets"/>
+                <ToolbarFlag
+                  condition="isTargetAvailable(target)"
+                  name="validTargets"/>
+                <Row>
+                  <Cell
+                    action="DelinquencyTargetDetailsForward.go(target)"
+                    footerLabel="displaykey.Web.StartDelinquencyProcess.Total"
+                    id="DelinquencyTarget"
+                    label="displaykey.Web.StartDelinquencyProcess.DelinquencyTarget"
+                    value="target.DisplayName"/>
+                  <DateCell
+                    id="EffDate"
+                    label="displaykey.Web.StartDelinquencyProcess.EffDate"
+                    value="target.EffectiveDate"/>
+                  <DateCell
+                    id="ExpDate"
+                    label="displaykey.Web.StartDelinquencyProcess.ExpDate"
+                    value="target.ExpirationDate"/>
+                  <MonetaryAmountCell
+                    currency="target.DelinquencyPlan.Currency"
+                    footerSumValue="( target typeis PolicyPeriod ? target.DelinquentAmount : 0bd.ofCurrency(target.DelinquencyPlan.Currency) )"
+                    formatType="currency"
+                    id="PastDueAmt"
+                    label="displaykey.Web.StartDelinquencyProcess.PastDueAmt"
+                    value="target.DelinquentAmount"/>
+                </Row>
+              </RowIterator>
+            </ListViewPanel>
+          </ListViewInput>
+        </InputColumn>
+      </DetailViewPanel>
+    </Screen>
+    <Code><![CDATA[/**
+       * Filter available reasons to those on referenced Delinquency Plans.  The filtering is
+       * more difficult due to AgencyBill; we must find all Delinquency Plans, and then only
+       * display the Reasons defined across all of the Plans.
+       * @return an array of DelinquencyReason typekeys, as defined in the DelinquencyPlans.
+       */
+      function filterReasons() : DelinquencyReason[] {
+        var plans = dlnqTargets.map( \ dt -> dt.DelinquencyPlan )
+        var reasonSets = plans.map( \ pl -> pl.DelinquencyPlanReasons.map( \ pr -> pr.DelinquencyReason ).toSet() )
+        return reasonSets.fold( \ set1, set2 -> set1.intersect( set2 ) ).toTypedArray() 
+      }
+
+      /**
+       * Perform the popup action.
+       */
+      function performAction( checkedValues : Object[] ) {
+        web.delinquency.DelinquencyUtil.startDelinquencies(
+            checkedValues as gw.api.domain.delinquency.DelinquencyTarget[],
+            reason );
+        CurrentLocation.commit();
+      }
+       
+       /**
+        * The target is not available if any of the delinquency processes on it have the same
+        * reason as the selected reason. Also NOTTAKEN reason is only appliable to policy periods
+        */
+        function isTargetAvailable(target : gw.api.domain.delinquency.DelinquencyTarget) : boolean {
+         for (delinquencyProcess in target.DelinquencyProcesses index i) {
+           if (delinquencyProcess.Reason == reason ) {
+             return false
+           }
+         }
+         if(reason == DelinquencyReason.TC_NOTTAKEN and target typeis Account){
+           return false
+         }
+         return true
+       }]]></Code>
+  </Popup>
+</PCF>

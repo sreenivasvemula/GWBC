@@ -1,0 +1,28 @@
+<?xml version="1.0"?>
+<!-- ============================================================================================================  Disbursement  ============================================================================================================ -->
+<Entity
+  name="Disbursement">
+  <Columns>
+    <Column
+      beanPath="Disbursement.CreateTime"
+      name="CreateTime"/>
+    <Column
+      beanPath="Disbursement.Amount"
+      name="Amount"/>
+    <Column
+      beanPath="Disbursement.Status"
+      name="Status"/>
+  </Columns>
+  <DisplayName><![CDATA["Disbursement from " + gw.api.util.StringUtil.formatDate(CreateTime, "short") + " of " + Amount?.render()]]></DisplayName>
+  <DisplayName
+    type="FundsUse"><![CDATA[if(Status != DisbursementStatus.TC_VOIDED){
+  return displaykey.DisplayName.Disbursement.FundsUse
+} else {
+  return displaykey.DisplayName.Disbursement.FundsUse.Reversed
+}
+]]></DisplayName>
+  <DisplayName
+    type="FundsUseReversal"><![CDATA[displaykey.DisplayName.Disbursement.FundsUseReversal]]></DisplayName>
+  <DisplayName
+    type="FundsUsePredatesFundsTracking"><![CDATA[displaykey.DisplayName.Disbursement.FundsUse.PredatesFundsTracking]]></DisplayName>
+</Entity>

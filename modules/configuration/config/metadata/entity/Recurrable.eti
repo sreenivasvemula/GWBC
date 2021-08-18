@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?><delegate xmlns="http://guidewire.com/datamodel" name="Recurrable" subpackage="recurrence">
+  <column desc="Defines the final date of this recurrable object's date sequence." name="FinalDate" nullok="true" type="dateonly"/>
+  <column desc="Defines the initial date for this recurrable object's date sequence." name="InitialDate" nullok="false" type="dateonly"/>
+  <!-- this next date need to be settable for special use case of sentry CC-40717 -->
+  <column desc="The next date in this recurrable object's date sequence." name="NextDate" nullok="false" type="dateonly"/>
+  <column default="1" desc="The day of the month to recur" name="DayOfMonth" nullok="false" type="integer"/>
+  <typekey default="monthly" desc="The periodicity of the recurrable object's date sequence -- Weekly, Monthly, Quarterly, etc." name="Periodicity" nullok="false" typelist="Periodicity"/>
+</delegate>

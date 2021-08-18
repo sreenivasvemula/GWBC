@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xml:lang="en" lang="en" xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+    <meta http-equiv="Content-Style-Type" content="text/css" />
+    <!-- MOTW-DISABLED saved from url=(0014)about:internet -->
+    <title>How the Funds Tracking Plugin Allots Funds</title>
+    <link rel="StyleSheet" href="css/bc-plugins.css" type="text/css" media="all" />
+    <link rel="StyleSheet" href="css/webworks.css" type="text/css" media="all" />
+    <link rel="StyleSheet" href="css/css-guidewire-extra.css" type="text/css" media="all" />
+    <script type="text/javascript" language="JavaScript1.2" src="wwhdata/common/context.js"></script>
+    <script type="text/javascript" language="JavaScript1.2" src="wwhdata/common/towwhdir.js"></script>
+    <script type="text/javascript" language="JavaScript1.2" src="wwhdata/common/wwhpagef.js"></script>
+    <script type="text/javascript" language="JavaScript1.2">
+      <!--
+        var  WebWorksRootPath = "";
+      // -->
+    </script>
+    <script type="text/javascript" language="JavaScript1.2">
+      <!--
+        // Set reference to top level help frame
+        //
+        var  WWHFrame = WWHGetWWHFrame("", true);
+      // -->
+    </script>
+    <script type="text/javascript" language="JavaScript1.2" src="scripts/expand.js"></script>
+    <!-- THE FOLLOWING IS A GUIDEWIRE STYLE DEFINITION FOR THE LINK TO THIS FEATURE -->
+    <link rel="StyleSheet" href="css/css-guidewire-extra.css" type="text/css" media="all" />
+    <!-- THE FOLLOWING IS A GUIDEWIRE GSCRIPT FUNCTION FOR THE LINK TO THIS FEATURE -->
+    <script type="text/javascript">
+function guidewire_selectall()
+{
+var text_val=eval("document.linktothisurlform.urlfield");
+text_val.focus();
+text_val.select();
+}
+</script>
+  </head>
+  <body onLoad="WWHUpdate();" onUnload="WWHUnload();" onKeyDown="WWHHandleKeyDown((document.all||document.getElementById||document.layers)?event:null);" onKeyPress="WWHHandleKeyPress((document.all||document.getElementById||document.layers)?event:null);" onKeyUp="WWHHandleKeyUp((document.all||document.getElementById||document.layers)?event:null);">
+    <!-- THE FOLLOWING IS A GUIDEWIRE DIV FOR THE 'LINK TO THIS' FEATURE -->
+    <div id="linkToThisPage" class="popup" style="display: none;">
+      <div class="popupTitle">Link Directly to This Page 
+           <a href="#" onclick="var thePopup = getElementById('linkToThisPage');thePopup.style.display='none';return false;"><img class="popupClosebox" src="wwhelp/wwhimpl/common/images/close.gif" /></a></div>
+      <div style="padding:6px;">
+        <div class="popupText" id="linkToThisPageBookmark">An error has occurred if you see this messsage.</div>
+        <form name="linktothisurlform" method="post" action="" style="width:275px;margin:0px">
+          <input type="text" class="popupURLText" id="linkToThisPageURL" name="urlfield" rows="1" cols="55" onClick="guidewire_selectall();" onFocus="guidewire_selectall();"></input>
+        </form>
+      </div>
+    </div>
+    <br />
+    <div class="WebWorks_Breadcrumbs" style="text-align: left;">
+      <span>BillingCenter Integration Guide</span> : 
+    <span class="WebWorks_Breadcrumbs" style="text-align: left;"><a class="WebWorks_Breadcrumb_Link" href="p-plugins.html#3495122">Plugins</a> : <a class="WebWorks_Breadcrumb_Link" href="bc-plugins.13.01.html#3495122">Billing Plugins</a> : <a class="WebWorks_Breadcrumb_Link" href="bc-plugins.13.32.html#3495122">Funds Tracking Plugin</a> : How the Funds Tracking Plugin Allots Funds</span></div>
+    <hr align="left" />
+    <blockquote>
+      <h4 class="H2B_-_Heading_2_Break"><a name="3495122">How the Funds Tracking Plugin Allots Funds</a></h4>
+      <div class="B_-_Body"><a name="3495126">BillingCenter calls the </a><span class="cv_-_computer_voice">allotAllFunds</span> method on an <span class="cv_-_computer_voice">Account</span> instance whenever BillingCenter determines that the account has funds that need allocation. The <span class="cv_-_computer_voice">allotAllFunds</span> method finds <span class="cv_-_computer_voice">FundsSourceTracker</span> and <span class="cv_-_computer_voice">FundsUseTrackers</span> instances on the account that are only partially or not at all allotted. That is, BillingCenter finds <span class="cv_-_computer_voice">FundsTrackers</span> where <span class="cv_-_computer_voice">AmountAllottedDenorm</span> properties are less than <span class="cv_-_computer_voice">TotalAmount</span> properties.</div>
+      <div class="B_-_Body"><a name="3495129">The </a><span class="cv_-_computer_voice">Account.allotAllFunds</span> method then calls <span class="cv_-_computer_voice">IFundsTracking.allotFunds</span>. BillingCenter passes two parameters: <span class="cv_-_computer_voice">Set&lt;FundsSourceTracker&gt;</span> and <span class="cv_-_computer_voice">Set&lt;FundsUseTracker&gt;</span>. <span class="cv_-_computer_voice">IFundsTracking</span> delegates to the helper class <span class="cv_-_computer_voice">FundsAllotter</span> by calling <span class="cv_-_computer_voice">FundsAlloter.allotFunds</span>, passing the two sets of trackers as parameters. </div>
+      <div class="B_-_Body"><a name="3496707">The </a><span class="cv_-_computer_voice">FundsAlloter.allotFunds</span> method first orders the two sets of trackers in oldest to newest order, based on <span class="cv_-_computer_voice">EventDate</span>. Then, <span class="cv_-_computer_voice">FundsAlloter</span> divides the allotment process into two phases: priority reallotment and allotment. </div>
+      <div class="B_-_Body"><a name="3497593">You can change the order of allotment to be in newest to oldest order. Modify </a><span class="cv_-_computer_voice">FundsAllotter</span> to invoke the <span class="cv_-_computer_voice">orderDescending</span> method on the source and use sets in private functions that loop through them. For example:</div>
+      <PRE class="CM_-_Code_Middle_Line"><a name="3497615">_unallottedSourceTrackers.</a><span class="s_-_strong">orderDescending()</span>.each(\ sourceTracker -&gt;</PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="3497661">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;allotFundsFor(sourceTracker)</a></PRE>
+      <h6 class="HS_-_Head_Sub"><a name="3495134">Phase 1: Priority Reallotment </a></h6>
+      <div class="B_-_Body"><a name="3495135">The first phase of an allotment process is priority reallotment. This allows users to undo previous allotments and reallot those funds elsewhere. In the default configuration, priority reallotment occurs only for source and use trackers associated with reversals. The reversed funds are allotted to the tracker of the reversed entity. </a></div>
+      <div class="B_-_Body"><a name="3495136">For example, a direct bill money received is a funds source. Initially, plugin allots the funds to a </a><span class="cv_-_computer_voice">PaymentItemGroup</span> to pay a policy premium. Later, the money received transaction is reversed. The reversal is a use of funds, which is tracked by a funds use tracker. The plugin removes the original allotments of the matching original source and use trackers and reallots them to their reversals. </div>
+      <h6 class="HS_-_Head_Sub"><a name="3496928">Phase 2: Allotment </a></h6>
+      <div class="B_-_Body"><a name="3496929">The second phase of an allotment process is allotment. When an allotment phase begins, all available funds trackers have updated amounts. The the priority reallotment phase ensures this. </a></div>
+      <div class="B_-_Body"><a name="3496950">During the allotment phase the </a><span class="cv_-_computer_voice">FundsAllotter</span> loops through the set of funds sources, finding any with remaining funds to allot. It then consumes funds from the source by allotting them to uses that do not have full allotments. <span class="cv_-_computer_voice">FundsAllotter</span> continues to match sources and uses until all sources are allotted or there are no more funds uses without full allotments. Any funds sources that are not allotted remain in Account: Unapplied. </div>
+      <div class="B_-_Body"><a name="3496863">BillingCenter protects against over allotment of funds trackers by throwing an exception if code attempts it. </a></div>
+      <div class="H3_-_Heading_3_outer" style="margin-left: 36pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <h5 class="H3_-_Heading_3_inner" style="width: 18pt; white-space: nowrap"></h5>
+            </td>
+            <td width="100%">
+              <h5 class="H3_-_Heading_3_inner"><a name="3495146">Reversing Allotted Funds </a></h5>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="B_-_Body"><a name="3496368">When an allotment of funds is reversed, a new </a><span class="cv_-_computer_voice">FundsSourceTracker</span> tracks the change. Its <span class="cv_-_computer_voice">TrackableSourceType</span> is <span class="cv_-_computer_voice">FundUseReversal</span>. The new source tracker relates to the original <span class="cv_-_computer_voice">FundsUseTracker</span>, the fund use that is reversed. For example, it allots the reversal of a disbursement to the reversed disbursement.</div>
+      <div class="B_-_Body"><a name="3451207">&nbsp;</a></div>
+      <script type="text/javascript" language="JavaScript1.2">
+        <!--
+          // Clear related topics
+          //
+          WWHClearRelatedTopics();
+
+          document.writeln(WWHRelatedTopicsInlineHTML());
+        // -->
+      </script>
+    </blockquote>
+    <script type="text/javascript" language="JavaScript1.2">
+      <!--
+        document.write(WWHRelatedTopicsDivTag() + WWHPopupDivTag() + WWHALinksDivTag());
+      // -->
+    </script>
+  </body>
+</html>

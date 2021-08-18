@@ -1,0 +1,199 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xml:lang="en" lang="en" xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+    <meta http-equiv="Content-Style-Type" content="text/css" />
+    <!-- MOTW-DISABLED saved from url=(0014)about:internet -->
+    <title>Get Invoice Stream Periodicity For an Invoice Stream</title>
+    <link rel="StyleSheet" href="css/bc-plugins.css" type="text/css" media="all" />
+    <link rel="StyleSheet" href="css/webworks.css" type="text/css" media="all" />
+    <link rel="StyleSheet" href="css/css-guidewire-extra.css" type="text/css" media="all" />
+    <script type="text/javascript" language="JavaScript1.2" src="wwhdata/common/context.js"></script>
+    <script type="text/javascript" language="JavaScript1.2" src="wwhdata/common/towwhdir.js"></script>
+    <script type="text/javascript" language="JavaScript1.2" src="wwhdata/common/wwhpagef.js"></script>
+    <script type="text/javascript" language="JavaScript1.2">
+      <!--
+        var  WebWorksRootPath = "";
+      // -->
+    </script>
+    <script type="text/javascript" language="JavaScript1.2">
+      <!--
+        // Set reference to top level help frame
+        //
+        var  WWHFrame = WWHGetWWHFrame("", true);
+      // -->
+    </script>
+    <script type="text/javascript" language="JavaScript1.2" src="scripts/expand.js"></script>
+    <!-- THE FOLLOWING IS A GUIDEWIRE STYLE DEFINITION FOR THE LINK TO THIS FEATURE -->
+    <link rel="StyleSheet" href="css/css-guidewire-extra.css" type="text/css" media="all" />
+    <!-- THE FOLLOWING IS A GUIDEWIRE GSCRIPT FUNCTION FOR THE LINK TO THIS FEATURE -->
+    <script type="text/javascript">
+function guidewire_selectall()
+{
+var text_val=eval("document.linktothisurlform.urlfield");
+text_val.focus();
+text_val.select();
+}
+</script>
+  </head>
+  <body onLoad="WWHUpdate();" onUnload="WWHUnload();" onKeyDown="WWHHandleKeyDown((document.all||document.getElementById||document.layers)?event:null);" onKeyPress="WWHHandleKeyPress((document.all||document.getElementById||document.layers)?event:null);" onKeyUp="WWHHandleKeyUp((document.all||document.getElementById||document.layers)?event:null);">
+    <!-- THE FOLLOWING IS A GUIDEWIRE DIV FOR THE 'LINK TO THIS' FEATURE -->
+    <div id="linkToThisPage" class="popup" style="display: none;">
+      <div class="popupTitle">Link Directly to This Page 
+           <a href="#" onclick="var thePopup = getElementById('linkToThisPage');thePopup.style.display='none';return false;"><img class="popupClosebox" src="wwhelp/wwhimpl/common/images/close.gif" /></a></div>
+      <div style="padding:6px;">
+        <div class="popupText" id="linkToThisPageBookmark">An error has occurred if you see this messsage.</div>
+        <form name="linktothisurlform" method="post" action="" style="width:275px;margin:0px">
+          <input type="text" class="popupURLText" id="linkToThisPageURL" name="urlfield" rows="1" cols="55" onClick="guidewire_selectall();" onFocus="guidewire_selectall();"></input>
+        </form>
+      </div>
+    </div>
+    <br />
+    <div class="WebWorks_Breadcrumbs" style="text-align: left;">
+      <span>BillingCenter Integration Guide</span> : 
+    <span class="WebWorks_Breadcrumbs" style="text-align: left;"><a class="WebWorks_Breadcrumb_Link" href="p-plugins.html#3498314">Plugins</a> : <a class="WebWorks_Breadcrumb_Link" href="bc-plugins.13.01.html#3498314">Billing Plugins</a> : <a class="WebWorks_Breadcrumb_Link" href="bc-plugins.13.15.html#3498314">Invoice Stream Plugin</a> : Get Invoice Stream Periodicity For an Invoice Stream</span></div>
+    <hr align="left" />
+    <blockquote>
+      <h4 class="H2B_-_Heading_2_Break"><a name="3498314">Get Invoice Stream Periodicity For an Invoice Stream</a></h4>
+      <div class="B_-_Body"><a name="3498315">When BillingCenter wants to determine the correct invoice stream to use, it calls the invoice stream plugin. BillingCenter places the invoices and the invoice items on the specified invoice stream. </a></div>
+      <div class="B_-_Body"><a name="3606832">The default implementation of this plugin method just uses the default invoice stream selection based on the periodicity of the payment plan argument to the plugin methods. For example, if the payment plan is monthly, the default invoice stream is the monthly invoice stream.</a></div>
+      <div class="B_-_Body"><a name="3498317">However, you can customize this with additional logic. This supports the following types of extra behavior:</a></div>
+      <div class="BI_-_Bullet_Item_outer" style="margin-left: 57pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="BI_-_Bullet_Item_inner" style="width: 15pt; white-space: nowrap">
+                <span class="bu_-_bullet">•	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="BI_-_Bullet_Item_inner"><a name="3498319">Large commercial accounts with special requirements or exceptions. For example, perhaps some types of loss sensitive receivable must bill on the last Friday of the month. However, all other monthly billings follow regular recurrence rules based on the anchor date.</a></div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="BI_-_Bullet_Item_outer" style="margin-left: 57pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="BI_-_Bullet_Item_inner" style="width: 15pt; white-space: nowrap">
+                <span class="bu_-_bullet">•	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="BI_-_Bullet_Item_inner"><a name="3498320">Payroll deduction billing, which typically require custom logic to synchronize with the payers’ payroll systems.</a></div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="B_-_Body"><a name="3498321">Note that BillingCenter offers two different fundamental ways to partition sequences of invoices. Think carefully for each case which pattern is the most appropriate:</a></div>
+      <div class="BI_-_Bullet_Item_outer" style="margin-left: 57pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="BI_-_Bullet_Item_inner" style="width: 15pt; white-space: nowrap">
+                <span class="bu_-_bullet">•	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="BI_-_Bullet_Item_inner"><span class="ri_-_run_in_header"><a name="3498322">Invoice streams</a></span> – Light-weight approach that makes sense if the payer is the same</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="BI_-_Bullet_Item_outer" style="margin-left: 57pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="BI_-_Bullet_Item_inner" style="width: 15pt; white-space: nowrap">
+                <span class="bu_-_bullet">•	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="BI_-_Bullet_Item_inner"><span class="ri_-_run_in_header"><a name="3498323">Subaccounts</a></span> – Heavy-weight approach for separate payers or if cash must be partitioned</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="B_-_Body"><a name="3498503">BillingCenter calls the </a><span class="cv_-_computer_voice">IInvoiceStream</span> plugin method <span class="cv_-_computer_voice">getInvoiceStreamPeriodicityFor</span> when it needs the periodicity for an invoice stream. Your plugin implementation must implement this method, which has the following method signature:</div>
+      <PRE class="CF_-_Code_First_Line"><a name="3511887">getInvoiceStreamPeriodicityFor(payer : InvoicePayer, paymentPlan : PaymentPlan,</a></PRE>
+      <PRE class="CL_-_Code_Last_Line"><a name="3498504">      defaultInvoiceStreamPeriodicity : Periodicity) : Periodicity</a></PRE>
+      <div class="B_-_Body"><a name="3606826">Your implementation of the method </a><span class="cv_-_computer_voice">getInvoiceStreamPeriodicityFor</span> must return the periodicity of the <span class="cv_-_computer_voice">InvoiceStream</span> to use for the given payer and payment plan. By default, an account has four invoice streams for charges that have:</div>
+      <div class="BI_-_Bullet_Item_outer" style="margin-left: 57pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="BI_-_Bullet_Item_inner" style="width: 15pt; white-space: nowrap">
+                <span class="bu_-_bullet">•	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="BI_-_Bullet_Item_inner"><a name="3606822">A </a><span class="cv_-_computer_voice">weekly</span> payment plan.</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="BI_-_Bullet_Item_outer" style="margin-left: 57pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="BI_-_Bullet_Item_inner" style="width: 15pt; white-space: nowrap">
+                <span class="bu_-_bullet">•	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="BI_-_Bullet_Item_inner"><a name="3606823">An </a><span class="cv_-_computer_voice">everyOtherWeek</span> payment plan.</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="BI_-_Bullet_Item_outer" style="margin-left: 57pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="BI_-_Bullet_Item_inner" style="width: 15pt; white-space: nowrap">
+                <span class="bu_-_bullet">•	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="BI_-_Bullet_Item_inner"><a name="3606818">A </a><span class="cv_-_computer_voice">twicePerMonth</span> payment plan.</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="BI_-_Bullet_Item_outer" style="margin-left: 57pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="BI_-_Bullet_Item_inner" style="width: 15pt; white-space: nowrap">
+                <span class="bu_-_bullet">•	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="BI_-_Bullet_Item_inner"><a name="3606813">A payment plan that is monthly or a multiple of monthly, such as </a><span class="cv_-_computer_voice">quarterly</span>, <span class="cv_-_computer_voice">everyFourMonths</span>, <span class="cv_-_computer_voice">everySixMonths</span>, <span class="cv_-_computer_voice">everyYear</span>, or <span class="cv_-_computer_voice">everyOtherYear</span>.</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="B_-_Body"><a name="3498337">By default, a </a><span class="cv_-_computer_voice">Producer</span> has only one <span class="cv_-_computer_voice">InvoiceStream</span> and its periodicity is monthly. All charges for a producer are placed into the single <span class="cv_-_computer_voice">InvoiceStream</span> for that producer.</div>
+      <div class="B_-_Body"><a name="3498338">If there are any custom </a><span class="cv_-_computer_voice">Periodicity</span> types, then the <span class="cv_-_computer_voice">InvoicePayer</span> has an <span class="cv_-_computer_voice">InvoiceStream</span> for each custom <span class="cv_-_computer_voice">Periodicity</span>.</div>
+      <div class="B_-_Body"><a name="3606803">BillingCenter creates </a><span class="cv_-_computer_voice">InvoiceStream</span> objects only after there is a new charge to invoice in that stream.</div>
+      <div class="B_-_Body"><a name="3606804">Override this method to direct charges which have a given payment plan to an </a><span class="cv_-_computer_voice">InvoiceStream</span> with a different periodicity than the default. For example, if you have a custom periodicity such as <span class="cv_-_computer_voice">everyFiveMonths</span>, by default it gets its own stream. Override this method to invoice in one of the default streams, such as the monthly stream.</div>
+      <script type="text/javascript" language="JavaScript1.2">
+        <!--
+          // Clear related topics
+          //
+          WWHClearRelatedTopics();
+
+          document.writeln(WWHRelatedTopicsInlineHTML());
+        // -->
+      </script>
+    </blockquote>
+    <script type="text/javascript" language="JavaScript1.2">
+      <!--
+        document.write(WWHRelatedTopicsDivTag() + WWHPopupDivTag() + WWHALinksDivTag());
+      // -->
+    </script>
+  </body>
+</html>

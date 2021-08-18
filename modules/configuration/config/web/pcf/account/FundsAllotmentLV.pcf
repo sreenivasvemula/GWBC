@@ -1,0 +1,68 @@
+<?xml version="1.0"?>
+<PCF
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:noNamespaceSchemaLocation="../../../../../pcf.xsd">
+  <ListViewPanel
+    id="FundsAllotmentLV">
+    <Require
+      name="fundsTracker"
+      type="FundsTracker"/>
+    <Variable
+      initialValue="new gw.api.web.fundstracking.FundsAllotmentsView(fundsTracker).FundsAllotmentViewItems"
+      name="fundsAllotmentViewItems"
+      type="gw.api.web.fundstracking.FundsAllotmentViewItem[]"/>
+    <RowIterator
+      editable="false"
+      elementName="fundsAllotmentViewItem"
+      value="fundsAllotmentViewItems">
+      <Row>
+        <Cell
+          action="openAllotmentsFor(fundsAllotmentViewItem.OtherSide)"
+          id="eventDescription"
+          label="displaykey.Web.FundsAllotmentLV.Event"
+          value="fundsAllotmentViewItem.Description"/>
+        <DateCell
+          id="eventDate"
+          label="displaykey.Web.FundsAllotmentLV.EventDate"
+          value="fundsAllotmentViewItem.OtherSide.EventDate"/>
+        <MonetaryAmountCell
+          currency="fundsAllotmentViewItem.AmountAllotted.Currency"
+          formatType="currency"
+          id="amount"
+          label="displaykey.Web.FundsAllotmentLV.Amount"
+          value="fundsAllotmentViewItem.AmountAllotted"/>
+      </Row>
+    </RowIterator>
+    <Row>
+      <Cell
+        id="unallotted"
+        value="displaykey.Web.FundsAllotmentLV.Unallotted"/>
+      <Cell
+        id="blankUnallotted"/>
+      <MonetaryAmountCell
+        currency="fundsTracker.Currency"
+        enableSort="false"
+        formatType="currency"
+        id="unallottedAmount"
+        value="fundsTracker.UnallottedAmount"/>
+    </Row>
+    <Row useTitleStyle="true">
+      <Cell
+        id="total"
+        value="displaykey.Web.FundsAllotmentLV.Total"/>
+      <Cell
+        id="blankTotal"/>
+      <MonetaryAmountCell
+        currency="fundsTracker.Currency"
+        enableSort="false"
+        formatType="currency"
+        id="totalAmount"
+        value="fundsTracker.TotalAmount"/>
+    </Row>
+    <Code><![CDATA[function openAllotmentsFor(theFundsTracker : FundsTracker) : pcf.api.Location {
+  return theFundsTracker typeis FundsUseTracker
+    ? UseOfFundsPopup.push(theFundsTracker)
+    : SourceOfFundsPopup.push(theFundsTracker as FundsSourceTracker)
+}]]></Code>
+  </ListViewPanel>
+</PCF>

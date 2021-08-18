@@ -1,0 +1,52 @@
+<?xml version="1.0"?>
+<Entity
+  name="DelinquencyProcess">
+  <Columns>
+    <Column
+      beanPath="DelinquencyProcess.Account.AccountNumber"
+      name="targetID"
+      sortOrder="0"/>
+    <Column
+      beanPath="DelinquencyProcess.Active"
+      name="active"
+      sortOrder="1"/>
+    <Column
+      beanPath="DelinquencyProcess.StartDate"
+      name="startDate"
+      sortOrder="2"/>
+    <Column
+      beanPath="DelinquencyProcess.CurrentEventDenorm"
+      name="currentEvent"
+      sortOrder="3"/>
+  </Columns>
+  <DisplayName><![CDATA[
+      var formattedStartDate = startDate?.format("short")
+      var formattedTargetDate = currentEvent.TargetDate?.format("short")
+      var formattedCompletionTime = currentEvent.CompletionTime?.format("short")
+      if (!active) {
+        return displaykey.DisplayName.DelinquencyProcess.Inactive(targetID, formattedStartDate)
+      } else if (currentEvent == null) {
+        return displaykey.DisplayName.DelinquencyProcess.NoCurrentEvent(targetID, formattedStartDate)
+      } else if (currentEvent.TargetDate == null) {
+        if (currentEvent.CompletionTime == null) {
+          return displaykey.DisplayName.DelinquencyProcess.WithCurrentEvent.OffsetDays.NotComplete(
+              targetID, formattedStartDate, currentEvent.EventName.DisplayName, currentEvent.TriggerBasis,
+              currentEvent.OffsetDays)
+        } else {
+          return displaykey.DisplayName.DelinquencyProcess.WithCurrentEvent.OffsetDays.Completed(
+              targetID, formattedStartDate, currentEvent.EventName.DisplayName, currentEvent.TriggerBasis,
+              currentEvent.OffsetDays, formattedCompletionTime)
+        }
+      } else {
+        if (currentEvent.CompletionTime == null) {
+          return displaykey.DisplayName.DelinquencyProcess.WithCurrentEvent.TargetDate.NotComplete(
+              targetID, formattedStartDate, currentEvent.EventName.DisplayName,
+              currentEvent.TriggerBasis, formattedTargetDate)
+        } else {
+          return displaykey.DisplayName.DelinquencyProcess.WithCurrentEvent.TargetDate.Completed(
+              targetID, formattedStartDate, currentEvent.EventName.DisplayName, currentEvent.TriggerBasis,
+              formattedTargetDate, formattedCompletionTime)
+        }
+      }
+  ]]></DisplayName>
+</Entity>

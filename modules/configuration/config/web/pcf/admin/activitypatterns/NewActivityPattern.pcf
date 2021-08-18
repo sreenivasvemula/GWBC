@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PCF
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:noNamespaceSchemaLocation="../../../../../../pcf.xsd">
+  <Page
+    afterCancel="ActivityPatterns.go()"
+    afterCommit="ActivityPatterns.go()"
+    canEdit="true"
+    canVisit="perm.ActivityPattern.create"
+    id="NewActivityPattern"
+    parent="ActivityPatterns()"
+    showUpLink="true"
+    startEditing="activityPattern.Category = category; activityPattern.ActivityClass = &quot;task&quot;"
+    startInEditMode="true"
+    title="displaykey.Web.Admin.NewActivityPattern.NewActivityPattern">
+    <LocationEntryPoint
+      signature="NewActivityPattern(category : ActivityCategory)"/>
+    <Variable
+      name="category"
+      type="ActivityCategory"/>
+    <Variable
+      initialValue="new ActivityPattern()"
+      name="activityPattern"
+      type="ActivityPattern"/>
+    <ScreenRef
+      def="ActivityPatternDetailScreen(activityPattern)"/>
+  </Page>
+</PCF>

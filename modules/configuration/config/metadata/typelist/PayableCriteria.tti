@@ -1,0 +1,49 @@
+<?xml version="1.0"?>
+<!-- ====================================================================  PayableCriteria  ==================================================================== -->
+<typelist
+  xmlns="http://guidewire.com/typelists"
+  name="PayableCriteria"
+  desc="Defines how commission becomes payable."
+  final="true"
+  subpackage="commission">
+  <typecode
+    name="On First Payment Rec'd"
+    desc="Commission becomes fully payable when the first payment is received."
+    code="firstpaymentreceived"
+    priority="1"/>
+  <typecode
+    name="On Payment Rec'd"
+    desc="Commission becomes payable in proportion to payment received."
+    code="paymentreceived"
+    priority="2"/>
+  <typecode
+    name="On Binding"
+    desc="Commission becomes fully payable when policy is bound."
+    code="binding"
+    priority="3"/>
+  <typecode
+    name="On Billing"
+    desc="Commission becomes payable in proportion to amount billed."
+    code="billing"
+    priority="4"/>
+  <typecode
+    name="On Invoice Fully Paid"
+    desc="Commission becomes payable in proportion to amount billed on fully paid invoices."
+    code="invoicepaid"
+    priority="5"/>
+  <typecode
+    name="On Effective Date"
+    desc="Commission becomes fully payable on the policy effective date."
+    code="effectivedate"
+    priority="6"/>
+  <typecode
+    name="On Expiration Date"
+    desc="Commission becomes fully payable on the policy expiration date."
+    code="expirationdate"
+    priority="7"/>
+  <typecode
+    name="Custom"
+    desc="Commission becomes payable based on a call to a plugin deciding how much to earn."
+    code="custom"
+    priority="8"/>
+</typelist>

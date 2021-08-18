@@ -1,0 +1,43 @@
+<?xml version="1.0"?>
+<PCF
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:noNamespaceSchemaLocation="../../../../../pcf.xsd">
+  <ListViewPanel
+    id="TAccountOwnersLV">
+    <Require
+      name="primaryTAccountOwner"
+      type="TAccountOwner"/>
+    <Require
+      name="relatedTAccountOwners"
+      type="TAccountOwner[]"/>
+    <RowIterator
+      editable="false"
+      elementName="tAccountOwner"
+      id="TAccountOwners"
+      value="AllTAccountOwners">
+      <Row>
+        <Cell
+          enableSort="false"
+          flex="1"
+          id="TAccountOwner"
+          label="displaykey.Web.TAccountOwners.TAccountOwner"
+          value="tAccountOwner"/>
+        <Cell
+          enableSort="false"
+          id="Type"
+          label="displaykey.Web.TAccountOwners.Type"
+          value="(typeof tAccountOwner).DisplayName"/>
+      </Row>
+    </RowIterator>
+    <Code><![CDATA[
+property get AllTAccountOwners() : TAccountOwner[] {
+        var result = new java.util.ArrayList();
+        result.add(primaryTAccountOwner);
+        for (relatedTAccountOwner in relatedTAccountOwners) {
+          result.add(relatedTAccountOwner);
+        }
+        return result as TAccountOwner[];
+      }
+    ]]></Code>
+  </ListViewPanel>
+</PCF>

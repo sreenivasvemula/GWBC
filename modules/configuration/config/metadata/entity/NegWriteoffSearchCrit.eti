@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?><nonPersistentEntity xmlns="http://guidewire.com/datamodel" desc="Search criteria for negative writeoffs" entity="NegWriteoffSearchCrit" extendable="true" subpackage="search">
+  <implementsEntity name="NotInCurrencySilo"/>
+  <typekey desc="The channel of this negative writeoff" name="Channel" nullok="true" typelist="WriteoffChannel"/>
+  <monetaryamount amountColumnName="MinAmount"
+    amountRange="nonnegative" desc="The minimum amount to search for" name="MinAmount" nullok="true" scaleToCurrency="true"/>
+  <monetaryamount amountColumnName="MaxAmount"
+    amountRange="nonnegative" desc="The maximum amount to search for" name="MaxAmount" nullok="true" scaleToCurrency="true"/>
+  <column desc="Earliest negative writeoff date to search" name="EarliestDate" nullok="true" type="datetime"/>
+  <column desc="Latest negative writeoff date to search" name="LatestDate" nullok="true" type="datetime"/>
+  <typekey
+    name="Currency"
+    typelist="Currency"
+    desc="The currency unit to restrict the search to"
+    nullok="true"/>
+  <foreignkey columnName="AccountID" desc="Related account" fkentity="Account" name="Account" nullok="true"/>
+</nonPersistentEntity>

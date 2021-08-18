@@ -1,0 +1,58 @@
+<?xml version="1.0"?>
+<PCF
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:noNamespaceSchemaLocation="../../../../../pcf.xsd">
+  <Screen
+    id="CreateSuspenseDisbursementDetailScreen">
+    <Require
+      name="disbursementVar"
+      type="SuspenseDisbursement"/>
+    <Variable
+      initialValue="util.DateUtil.currentDate()"
+      name="today"/>
+    <Variable
+      initialValue="perm.Transaction.disbpayeeedit"
+      name="CanEditDisbursementPayee"
+      type="Boolean"/>
+    <Variable
+      initialValue="disbursementVar.SuspensePayment.Transactions"
+      name="transactionsQuery"
+      type="TransactionQuery"/>
+    <Toolbar>
+      <WizardButtons/>
+    </Toolbar>
+    <DetailViewPanel
+      id="DisbursementPage2DV">
+      <InputColumn>
+        <Label
+          label="displaykey.Web.CreateSuspenseDisbursementDetailScreen.Details"/>
+        <Input
+          id="accountNumber"
+          label="displaykey.Web.CreateSuspenseDisbursementDetailScreen.AccountNumber"
+          value="disbursementVar.SuspensePayment.AccountNumber"
+          visible="disbursementVar.SuspensePayment.AccountNumber != null"/>
+        <Input
+          id="policyNumber"
+          label="displaykey.Web.CreateSuspenseDisbursementDetailScreen.PolicyNumber"
+          value="disbursementVar.SuspensePayment.PolicyNumber"
+          visible="disbursementVar.SuspensePayment.PolicyNumber != null"/>
+        <DateInput
+          id="paymentDate"
+          label="displaykey.Web.CreateSuspenseDisbursementDetailScreen.PaymentDate"
+          value="disbursementVar.SuspensePayment.PaymentDate"/>
+      </InputColumn>
+    </DetailViewPanel>
+    <DetailViewPanel>
+      <InputColumn>
+        <ListViewInput
+          def="SuspensePaymentTransactionsLV(disbursementVar.SuspensePayment)"
+          id="suspensePaymentTransactions"
+          label="displaykey.Web.CreateSuspenseDisbursementDetailScreen.TransactionNumber">
+          <Toolbar/>
+        </ListViewInput>
+      </InputColumn>
+    </DetailViewPanel>
+    <PanelRef
+      def="CreateDisbursementDetailDV(disbursementVar, false)"/>
+  </Screen>
+</PCF>

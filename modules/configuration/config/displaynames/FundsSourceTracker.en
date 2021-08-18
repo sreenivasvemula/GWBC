@@ -1,0 +1,31 @@
+<?xml version="1.0"?>
+<Entity
+  name="FundsSourceTracker">
+  <Columns>
+    <Column
+      beanPath="FundsSourceTracker.UnappliedFund"
+      name="UnappliedFund"
+      sortOrder="0"/>
+    <Column
+      beanPath="FundsSourceTracker.TrackableSourceType"
+      name="SourceType"
+      sortOrder="1"/>
+    <Column
+      beanPath="FundsSourceTracker.TotalAmount"
+      name="Amount"
+      sortOrder="2"/>
+    <Column
+      beanPath="FundsSourceTracker.EventDate"
+      name="EventDate"
+      sortOrder="3"/>
+  </Columns>
+  <DisplayName><![CDATA[return displaykey.DisplayName.FundsSource.Short(Amount?.render())
+]]></DisplayName>
+  <DisplayName
+    type="Long"><![CDATA[displaykey.DisplayName.FundsSource.Long(
+  UnappliedFund,
+  SourceType,
+  Amount?.render(),
+  EventDate?.format("short"))
+]]></DisplayName>
+</Entity>

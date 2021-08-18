@@ -1,0 +1,87 @@
+<?xml version="1.0"?>
+<PCF
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:noNamespaceSchemaLocation="../../../../../pcf.xsd">
+  <Page
+    canVisit="perm.System.plcytabview and perm.System.plcyhistview"
+    id="PolicyDetailHistory"
+    showUpLink="true"
+    title="displaykey.Web.PolicyDetailHistory.Title">
+    <LocationEntryPoint
+      signature="PolicyDetailHistory(plcyPeriod : PolicyPeriod)"/>
+    <Variable
+      name="plcyPeriod"
+      type="PolicyPeriod"/>
+    <Variable
+      initialValue="plcyPeriod.PolicyHistories as PolicyHistory[]"
+      name="policyHistories"/>
+    <Screen
+      id="PolicyDetailHistoryScreen">
+      <Toolbar/>
+      <ListViewPanel
+        id="PolicyDetailHistoryLV">
+        <RowIterator
+          editable="false"
+          elementName="policyHistory"
+          pageSize="0"
+          value="policyHistories">
+          <ToolbarFilter
+            label="displaykey.Web.PolicyDetailHistoryLV.Show"
+            name="ActiveFilter">
+            <ToolbarFilterOptionGroup
+              filters="new web.history.PolicyHistoriesFilters().getFilterOptions()"/>
+          </ToolbarFilter>
+          <Row>
+            <DateCell
+              id="Date"
+              label="displaykey.Web.PolicyDetailHistoryLV.Date"
+              sortOrder="1"
+              value="policyHistory.EventDate"/>
+            <Cell
+              action="TransactionDetailPopup.push(policyHistory.Transaction)"
+              id="Transaction"
+              label="displaykey.Web.PolicyDetailHistoryLV.Transaction"
+              value="policyHistory.Transaction.TransactionNumber"/>
+            <Cell
+              action="goToTransferDetail(policyHistory)"
+              available="isTransfer(policyHistory)"
+              id="Description"
+              label="displaykey.Web.PolicyDetailHistoryLV.Description"
+              sortOrder="2"
+              value="policyHistory.Description"/>
+            <MonetaryAmountCell
+              align="left"
+              currency="policyHistory.Amount.Currency"
+              enableSort="false"
+              formatType="currency"
+              id="TransactionAmount"
+              label="displaykey.Web.PolicyDetailHistoryLV.TransactionAmount"
+              value="policyHistory.Amount"/>
+            <Cell
+              action="PolicyDetailSummary.push(policyHistory.PolicyPeriod)"
+              id="PolicyPeriod"
+              label="displaykey.Web.PolicyDetailHistoryLV.PolicyPeriod"
+              value="policyHistory.PolicyPeriod"/>
+            <TextCell
+              action="UserDetailPage.push(policyHistory.User)"
+              id="User"
+              label="displaykey.Web.PolicyDetailHistoryLV.User"
+              value="policyHistory.User"/>
+          </Row>
+        </RowIterator>
+      </ListViewPanel>
+    </Screen>
+    <Code><![CDATA[
+function goToTransferDetail( item : PolicyHistory ) {
+      if ( item.EventType == "policytransferred" )
+      PolicyTransferDetail.go( item );
+      if ( item.EventType == "producertransferred" )
+      ProducerTransferDetail.go( item as ProducerPolicyHistory );
+      }
+
+      function isTransfer( item : PolicyHistory ) : Boolean {
+      return ( item.EventType == "policytransferred" || item.EventType == "producertransferred" )
+      }
+    ]]></Code>
+  </Page>
+</PCF>

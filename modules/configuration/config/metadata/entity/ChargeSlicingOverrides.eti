@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?><entity xmlns="http://guidewire.com/datamodel" desc="Overrides of a PaymentPlan's charge slicing settings.  All fields are nullable, and when a field is         null it means that the ChargeSlicingOverrides does not override that field." entity="ChargeSlicingOverrides" subpackage="invoice" table="chargeslicingoverrides" type="retireable">
+  <implementsEntity name="NotInCurrencySilo"/>
+  <foreignkey columnName="ChargeSlicingModifierID" desc="The modifier for which this provides the overrides." fkentity="ChargeSlicingModifier" name="ChargeSlicingModifier" nullok="false" setterScriptability="hidden"/>
+  <column desc="Override of the payment plan's DownPaymentPercent" name="DownPaymentPercent" nullok="true" type="percentagedec"/>
+  <column desc="Override of the payment plan's MaximumNumberOfInstallments" name="MaximumNumberOfInstallments" nullok="true" type="integer"/>
+  <typekey desc="Override of the payment plan's DownPaymentAfter" name="DownPaymentAfter" nullok="true" typelist="PaymentScheduledAfter"/>
+  <column columnName="DaysFromRefDateToDownPayment" desc="Override of the payment plan's DaysFromReferenceDateToDownPayment" name="DaysFromReferenceDateToDownPayment" nullok="true" type="integer"/>
+  <typekey desc="Override of the payment plan's FirstInstallmentAfter" name="FirstInstallmentAfter" nullok="true" typelist="PaymentScheduledAfter"/>
+  <column columnName="DaysFromRefDateToFirstInstall" desc="Override of the payment plan's DaysFromReferenceDateToFirstInstallment" name="DaysFromReferenceDateToFirstInstallment" nullok="true" type="integer"/>
+  <typekey desc="Override of the payment plan's OneTimeChargeAfter" name="OneTimeChargeAfter" nullok="true" typelist="PaymentScheduledAfter"/>
+  <column columnName="DaysFromRefDateToOneTimeCharge" desc="Override of the payment plan's DaysFromReferenceDateToOneTimeCharge" name="DaysFromReferenceDateToOneTimeCharge" nullok="true" type="integer"/>
+</entity>

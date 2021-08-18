@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<!-- NOTE: If you modify the contents of this file you must increment the version attribute  Incentive subtypes -->
+<subtype xmlns="http://guidewire.com/datamodel"
+        desc="Describes an incentive which gives the producer code a bonus if the commissionable charges on the                  policy exceed a threshold."
+        displayName="Premium Incentive"
+        entity="PremiumIncentive"
+        supertype="PolicyBasedIncentive">
+  <column
+          name="BonusPercentage"
+          desc="Bonus percentage to be applied when the commissionable charge threshold is exceeded."
+          nullok="false"
+          type="percentagedec"/>
+  <monetaryamount
+          name="Threshold"
+          amountColumnName="Threshold"
+          desc="Commissionable charge threshold which must be exceeded in order for this incentive to apply."
+          scaleToCurrency="true"
+          nullok="false"/>
+</subtype>

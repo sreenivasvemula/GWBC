@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PCF
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:noNamespaceSchemaLocation="../../../../../pcf.xsd">
+  <!-- This screen displays information about a trouble ticket in editable mode.  Specifically it displays the
+     Ticket Name, Priority, Detailed Description and similar information.  It is the screen the user comes to
+     if they click Edit Details from the top portion of the main Trouble Ticket Details page -->
+  <Popup
+    canEdit="true"
+    id="TroubleTicketInfoPopup"
+    startInEditMode="true"
+    title="displaykey.Web.TroubleTicketInfoPopup.Title">
+    <LocationEntryPoint
+      signature="TroubleTicketInfoPopup(troubleTicket : TroubleTicket, assigneeHolder : assignment.Assignee[])"/>
+    <Variable
+      name="troubleTicket"
+      type="TroubleTicket"/>
+    <Variable
+      name="assigneeHolder"
+      type="assignment.Assignee[]"/>
+    <Screen
+      id="TroubleTicketInfoScreen">
+      <Toolbar>
+        <!-- We need a special Update button that will assign the trouble ticket to a chosen assignee on commit -->
+        <ToolbarButton
+          action="assigneeHolder[0].assignToThis(troubleTicket); CurrentLocation.commit()"
+          hideIfReadOnly="true"
+          id="TroubleTicketInfoPopup_UpdateButton"
+          label="displaykey.Button.Update"/>
+        <!-- Hide the standard Update button (because we have our own special one) but let the Cancel button display normally -->
+        <EditButtons
+          updateVisible="false"/>
+      </Toolbar>
+      <PanelRef
+        def="TroubleTicketInfoDV(troubleTicket, assigneeHolder)"/>
+    </Screen>
+  </Popup>
+</PCF>

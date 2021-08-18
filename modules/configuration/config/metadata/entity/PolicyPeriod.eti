@@ -1,0 +1,401 @@
+<?xml version="1.0"?>
+<entity
+  xmlns="http://guidewire.com/datamodel"
+  desc="A single policy period"
+  entity="PolicyPeriod"
+  setterScriptability="hidden"
+  subpackage="account"
+  table="policyperiod"
+  type="retireable">
+  <implementsEntity
+    name="Validatable"/>
+  <implementsEntity
+    name="TAccountOwner"/>
+  <implementsEntity
+    name="HoldRelatedEntity"/>
+  <implementsEntity
+    name="HistoryEventContainer"/>
+  <column
+    default="false"
+    desc="Indicates whether this policy period is written as part of a mandatory program for covering the worst risks"
+    name="AssignedRisk"
+    nullok="false"
+    type="bit"/>
+  <column
+    desc="The date this policy period was bound"
+    name="BoundDate"
+    nullok="false"
+    type="datetime"/>
+  <column
+    default="false"
+    desc="Denormalized field. True if at least one charge on this policy period is currently held. Only valid for database queries"
+    name="ChargeHeld"
+    nullok="false"
+    setterScriptability="doesNotExist"
+    type="bit"/>
+  <!-- todo need cons check to ensure that this is non-null iff closure status is closed -->
+  <column
+    desc="The time at which this policy period was closed"
+    name="CloseDate"
+    nullok="true"
+    setterScriptability="hidden"
+    type="datetime"/>
+  <column
+    desc="Doing business as"
+    name="DBA"
+    nullok="true"
+    type="shorttext"/>
+  <monetaryamount
+    amountColumnName="DiscountedPaymentThreshold"
+    desc="Amount after the policy is after a full pay discount"
+    name="DiscountedPaymentThreshold"
+    nullok="true"
+    scaleToCurrency="true"/>
+  <column
+    default="false"
+    desc="Whether the policy is eligible for a full pay discount"
+    name="EligibleForFullPayDiscount"
+    nullok="false"
+    type="bit"/>
+  <column
+    desc="Date until the policy is eligible for a full pay discount"
+    name="FullPayDiscountUntil"
+    nullok="true"
+    type="dateonly"/>
+  <column
+    default="false"
+    desc="Whether the batch process has evaluated the eligible policies"
+    name="FullPayDiscountEvaluated"
+    nullok="false"
+    type="bit"/>
+  <column
+    desc="Whether to hold invoicing during delinquency; by default, same as field on DelinquencyPlan but can be used to override field on DelinquencyPlan. DO NOT GIVE DEFAULT VALUE - THAT IS SET IN BEFORE INSERT"
+    name="HoldInvoicingWhenDelinquent"
+    nullok="false"
+    overwrittenInStagingTable="true"
+    type="bit"/>
+  <column
+    default="true"
+    desc="True if the policy period should participate in Payment Distribution of payments against its parent account"
+    name="PaymentDistributionEnabled"
+    nullok="false"
+    type="bit"/>
+  <column
+    default="false"
+    desc="Set by policy closure batch process when cannot close due to remaining balance and cleared by resolving the remaining balance"
+    name="PendingRemainingBalanceFix"
+    nullok="true"
+    type="bit"/>
+  <column
+    desc="The policy number for this policy period"
+    name="PolicyNumber"
+    nullok="false"
+    supportsLinguisticSearch="true"
+    type="policynumber"/>
+  <column
+    desc="The offer number used to create this PolicyPeriod in the Policy Administration System (PAS)"
+    name="OfferNumber"
+    nullok="true"
+    type="shorttext"/>
+  <column
+    desc="A denormalized field for use by searches that is equal to this PolicyPeriod's DisplayName"
+    name="PolicyNumberLong"
+    nullok="false"
+    setterScriptability="doesNotExist"
+    soapnullok="true"
+    supportsLinguisticSearch="true"
+    type="shorttext"/>
+  <column
+    desc="Date when policy period takes effect"
+    name="PolicyPerEffDate"
+    nullok="false"
+    type="dateonly"/>
+  <column
+    desc="Date when policy period expires"
+    name="PolicyPerExpirDate"
+    nullok="false"
+    type="dateonly"/>
+  <column
+    desc="The legacy policy number for this policy period"
+    name="PriorPolicyNumber"
+    nullok="true"
+    type="policynumber"/>
+  <column
+    default="1"
+    desc="The number indicates the term of the policy period, starts with 1 and then incremented by 1 for every renewal or rewrite"
+    name="TermNumber"
+    nullok="false"
+    type="nonnegativeinteger"/>
+  <column
+    desc="Whether or not the policy period is under audit"
+    name="UnderAudit"
+    nullok="true"
+    type="bit"/>
+  <column
+    desc="The name of the underwriter"
+    name="Underwriter"
+    nullok="true"
+    type="shorttext"/>
+  <column
+    default="false"
+    desc="Whether Western Method accounting is used for earned premium calculations, otherwise Standard Method accounting is used. Value should not change after PolicyPeriod has been created"
+    name="WesternMethod"
+    nullok="false"
+    setterScriptability="doesNotExist"
+    type="bit"/>
+  <!-- Because trouble tickets cannot be loaded, PolicyPeriods can only be loaded with HeldForInvoiceSending=false -->
+  <column
+    default="false"
+    desc="Denormalized flag that tracks whether there exists a trouble ticket on this policy period with a hold with             type InvoiceSending."
+    loadable="false"
+    name="HeldForInvoiceSending"
+    nullok="false"
+    setterScriptability="doesNotExist"
+    type="bit"/>
+  <column
+    desc="The reason a policy was cancelled"
+    name="CancelReason"
+    nullok="true"
+    type="shorttext"/>
+  <column
+    default="true"
+    desc="True if the policyperiod term is confirmed by the PAS (default true)."
+    name="TermConfirmed"
+    nullok="false"
+    type="bit"/>
+  <typekey
+    default="DoNotNotify"
+    desc="The state of confirmation notification.  If the state is NotifyUponSufficientPayment, the policy period will notify     the policy administration system (PAS) when sufficient payment is received to confirm the policy period.     If the state is Notified, the policy period has already notified the PAS that the policy period was confirmed.     If the state is DoNotNotify, the policy period won't notify the PAS regardless of payments."
+    name="ConfirmationNotificationState"
+    nullok="false"
+    typelist="ConfirmationNotificationState"/>
+  <typekey
+    default="DirectBill"
+    desc="How to determine the default payer for this PolicyPeriod"
+    name="BillingMethod"
+    nullok="false"
+    typelist="PolicyPeriodBillingMethod"/>
+  <typekey
+    default="open"
+    desc="Whether or not this policy period is open, pending cancellation, or canceled"
+    name="CancelStatus"
+    nullok="false"
+    typelist="PolicyCancelStatus"/>
+  <typekey
+    desc="The type of a policy cancellation"
+    name="CancellationType"
+    nullok="true"
+    typelist="CancellationType"/>
+  <typekey
+    default="open"
+    desc="Whether or not this policy period is open, closed, or open but locked"
+    name="ClosureStatus"
+    nullok="false"
+    setterScriptability="hidden"
+    typelist="PolicyClosureStatus"/>
+  <typekey
+    desc="The jurisdiction to which this policy period applies"
+    name="RiskJurisdiction"
+    nullok="true"
+    typelist="Jurisdiction"/>
+  <typekey
+    desc="The UW company writing this policy period"
+    name="UWCompany"
+    nullok="true"
+    typelist="UWCompany"/>
+  <foreignkey
+    columnName="PolicyPeriodDelinquencyPlanID"
+    desc="The delinquency plan for this policy period."
+    exportasid="true"
+    fkentity="DelinquencyPlan"
+    name="PolicyPeriodDelinquencyPlan"
+    nullok="true"/>
+  <foreignkey
+    columnName="OverridingInvoiceStreamID"
+    desc="The overriding invoice stream for this policy period.  May be null.  If null an invoice stream which     matches the policy period's periodicity will be automatically selected for the policy period."
+    exportasid="true"
+    fkentity="InvoiceStream"
+    name="OverridingInvoiceStream"
+    nullok="true"
+    setterScriptability="doesNotExist"/>
+  <foreignkey
+    columnName="HiddenTAccountContainerID"
+    exportable="false"
+    fkentity="PolTAcctContainer"
+    getterScriptability="doesNotExist"
+    importableagainstexistingobject="false"
+    name="HiddenTAccountContainer"
+    nullok="false"
+    setterScriptability="doesNotExist"/>
+  <foreignkey
+    columnName="PaymentPlanID"
+    desc="The payment plan in use on this policy period"
+    exportasid="true"
+    fkentity="PaymentPlan"
+    name="PaymentPlan"
+    nullok="false"/>
+  <foreignkey
+    columnName="OverridingPayerAccountID"
+    desc="Account to use as the payer for new charges and items on this PolicyPeriod"
+    fkentity="Account"
+    name="OverridingPayerAccount"
+    nullok="true"
+    setterScriptability="doesNotExist"/>
+  <foreignkey
+    columnName="PolicyID"
+    desc="The policy onto which this policy period is attached"
+    exportable="false"
+    fkentity="Policy"
+    importableagainstexistingobject="false"
+    name="Policy"
+    nullok="false"
+    setterScriptability="hidden"/>
+  <foreignkey
+    columnName="SecurityZoneID"
+    desc="The security zone assigned to this policy period, if any"
+    exportasid="true"
+    fkentity="SecurityZone"
+    name="SecurityZone"
+    nullok="true"/>
+  <foreignkey
+    columnName="ReturnPremiumPlanID"
+    desc="The return premium plan for this policy period"
+    exportable="false"
+    fkentity="ReturnPremiumPlan"
+    name="ReturnPremiumPlan"
+    nullok="false"/>
+  <array
+    arrayentity="PolicyPeriodContact"
+    arrayfield="PolicyPeriod"
+    desc="Contacts on this policy period"
+    name="Contacts"
+    owner="true"/>
+  <array
+    arrayentity="PolicyDlnqProcess"
+    desc="Delinquency processes on this policy"
+    name="PolicyDelinquencyProcesses"
+    setterScriptability="hidden"/>
+  <onetoone
+    desc="The denormalized primary insured"
+    fkentity="PolicyPeriodContact"
+    linkField="PrimaryPolicyPeriod"
+    name="PrimaryInsured"
+    nullok="true"
+    setterScriptability="hidden"/>
+  <array
+    arrayentity="PolicyCommission"
+    arrayfield="PolicyPeriod"
+    desc="The producer codes associated with this policy period"
+    name="PolicyCommissions"
+    owner="true"
+    setterScriptability="hidden"/>
+  <onetoone
+    desc="Denormalization of the primary producer code (producer code with 'primary' role) on the policy period"
+    fkentity="PolicyCommission"
+    linkField="PrimaryPolicyPeriod"
+    name="PrimaryPolicyCommission"
+    nullok="true"
+    setterScriptability="doesNotExist"/>
+  <array
+    arrayentity="TroubleTicketJoinEntity"
+    desc="Join entity that provides relationship with the trouble tickets associated with this policy period"
+    name="TroubleTicketJoinEntities"
+    setterScriptability="hidden"/>
+  <datetimeordering
+    firstcolumnname="PolicyPerEffDate"
+    operator="LE"
+    secondcolumnname="PolicyPerExpirDate"/>
+  <events>
+    <event
+      description="Resync event. Generated only as a result of an application administrator requesting a Resync.                 All pending messages for the policy period are thrown away and this event is then fired.                 Implementers will generally handle this event and send enough of the policy period to bring the                 remote system up to date."
+      name="PolicyPeriodResync"/>
+  </events>
+  <dbcheckbuilder
+    className="com.guidewire.bc.system.database.dbchecks.account.PolicyPeriodDenormDBCheckBuilder"/>
+  <dbcheckbuilder
+    className="com.guidewire.bc.system.database.dbchecks.account.PolicyPeriodPrimaryInsuredDBCheckBuilder"/>
+  <dbcheckbuilder
+    className="com.guidewire.bc.system.database.dbchecks.account.PolicyPeriodFullPayDiscountDBCheckBuilder"/>
+  <dbcheckbuilder
+    className="com.guidewire.bc.system.database.dbchecks.account.PolicyPeriodOverridingPayerAccountDBCheckBuilder"/>
+  <checkconstraint
+    desc="Verify that in the staging tables no PolicyPeriod has a closureStatus of closed.  Closed policies will be automatically closed later by the PolicyClosure batch process."
+    stagingtablepredicate="ClosureStatus&lt;&gt;'closed'"/>
+  <index
+    desc="Legacy"
+    name="taccountcontainer"
+    unique="true">
+    <indexcol
+      keyposition="1"
+      name="HiddenTAccountContainerID"/>
+  </index>
+  <!-- NOTE pdalbora 27-Jul-2006: Intentionally leaving Retired off this index. Each new PolicyPeriod
+      mints a new TAccountContainer. -->
+  <index
+    desc="Legacy"
+    name="ForUniqueness"
+    unique="true">
+    <indexcol
+      keyposition="1"
+      name="PolicyNumber"/>
+    <indexcol
+      keyposition="2"
+      name="TermNumber"/>
+    <indexcol
+      keyposition="3"
+      name="Retired"/>
+  </index>
+  <index
+    desc="Legacy"
+    name="policynumber">
+    <indexcol
+      keyposition="1"
+      name="PolicyNumberDenorm"/>
+    <indexcol
+      keyposition="2"
+      name="Retired"/>
+  </index>
+  <index
+    desc="Legacy"
+    name="policynumberlong">
+    <indexcol
+      keyposition="1"
+      name="PolicyNumberLongDenorm"/>
+    <indexcol
+      keyposition="2"
+      name="Retired"/>
+  </index>
+  <index
+    desc="Legacy"
+    name="closurestatus">
+    <indexcol
+      keyposition="1"
+      name="ClosureStatus"/>
+    <indexcol
+      keyposition="2"
+      name="Retired"/>
+    <indexcol
+      keyposition="3"
+      name="CancelStatus"/>
+  </index>
+  <index
+    desc="Index to help the full pay discount workqueue find policy periods to work on"
+    name="FullPayDiscountIdx">
+    <indexcol
+      keyposition="1"
+      name="EligibleForFullPayDiscount"/>
+    <indexcol
+      keyposition="2"
+      name="FullPayDiscountEvaluated"/>
+    <indexcol
+      keyposition="3"
+      name="FullPayDiscountUntil"/>
+  </index>
+  <index
+    desc="Index for getting a Producer's Writeoffs"
+    name="BillingMethod">
+    <indexcol
+      keyposition="1"
+      name="BillingMethod"/>
+  </index>
+</entity>

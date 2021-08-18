@@ -1,0 +1,81 @@
+<?xml version="1.0"?>
+<PCF
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:noNamespaceSchemaLocation="pcf.xsd">
+  <ListViewPanel
+    id="InvoiceSearchResultsLV">
+    <Require
+      name="invoiceSearchViews"
+      type="InvoiceSearchViewQuery"/>
+    <Require
+      name="showHyperlinks"
+      type="boolean"/>
+    <Require
+      name="isWizard"
+      type="boolean"/>
+    <ExposeIterator
+      valueType="entity.InvoiceSearchView"
+      widget="InvoiceSearchResultsLV"/>
+    <RowIterator
+      canPick="!isWizard"
+      editable="false"
+      elementName="invoiceSearchView"
+      pickValue="gw.api.web.search.SearchPopupUtil.getInvoice(invoiceSearchView)"
+      value="invoiceSearchViews">
+      <!-- IMPORTANT: Do not call invoiceSearchView.Invoice unless as an argument in a go() or push() call.
+              Instead, simply access the field off the viewEntity. To access a field not already on the viewEntity,
+              configure or extend dm_bc_search_view.xml to add the appropriate viewEntityLink/Name/Column/Typekey, etc.
+              Accessing large entities via FK from viewEntities leads to serious performance issues. -->
+      <Row>
+        <LinkCell
+          id="SelectCell"
+          label="displaykey.Web.PolicySearchResultsLV.Select"
+          visible="isWizard">
+          <Link
+            action="(CurrentLocation as pcf.api.Wizard).next()"
+            id="Select"
+            label="displaykey.Web.AccountSearchResultsLV.Select"
+            styleClass="miniButton"/>
+        </LinkCell>
+        <Cell
+          id="EventDate"
+          label="displaykey.Web.InvoiceSearchResultsLV.EventDate"
+          sortOrder="1"
+          value="invoiceSearchView.EventDate"/>
+        <Cell
+          id="PaymentDueDate"
+          label="displaykey.Web.InvoiceSearchResultsLV.PaymentDueDate"
+          value="invoiceSearchView.PaymentDueDate"/>
+        <Cell
+          action="AccountDetailInvoices.go(invoiceSearchView.Account, invoiceSearchView.Invoice)"
+          available="showHyperlinks"
+          id="InvoiceNumber"
+          label="displaykey.Web.InvoiceSearchResultsLV.InvoiceNumber"
+          value="invoiceSearchView.InvoiceNumber"/>
+        <Cell
+          id="AccountNumber"
+          label="displaykey.Web.InvoiceSearchResultsLV.AccountNumber"
+          value="invoiceSearchView.AccountNumber"/>
+        <Cell
+          available="showHyperlinks"
+          id="Status"
+          label="displaykey.Web.InvoiceSearchResultsLV.Status"
+          value="invoiceSearchView.Status"/>
+        <MonetaryAmountCell
+          currency="invoiceSearchView.Currency"
+          enableSort="false"
+          formatType="currency"
+          id="BillAmount"
+          label="displaykey.Web.InvoiceSearchResultsLV.BillAmount"
+          value="invoiceSearchView.Amount.ofCurrency(invoiceSearchView.Currency)"/>
+        <MonetaryAmountCell
+          currency="invoiceSearchView.Currency"
+          enableSort="false"
+          formatType="currency"
+          id="DueAmount"
+          label="displaykey.Web.InvoiceSearchResultsLV.DueAmount"
+          value="invoiceSearchView.AmountDue.ofCurrency(invoiceSearchView.Currency)"/>
+      </Row>
+    </RowIterator>
+  </ListViewPanel>
+</PCF>

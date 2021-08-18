@@ -1,0 +1,31 @@
+<?xml version="1.0"?>
+<PCF
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:noNamespaceSchemaLocation="../../../../../pcf.xsd">
+  <Screen
+    id="PolicySearchScreen">
+    <!-- If showHyperlinks is false, the policy period numbers on this page will be rendered WITHOUT clickable hyperlinks -->
+    <Require
+      name="showHyperlinks"
+      type="Boolean"/>
+    <Require
+      name="isClearBundle"
+      type="boolean"/>
+    <SearchPanel
+      criteriaName="searchCriteria"
+      maxSearchResults="gw.api.system.BCConfigParameters.MaxSearchResults.Value"
+      resultsName="policySearchViews"
+      search="gw.search.SearchMethods.validateAndSearch(searchCriteria, StringCriterionMode.TC_STARTSWITH)"
+      searchCriteria="new gw.search.PolicySearchCriteria()"
+      searchResultsType="PolicySearchViewQuery">
+      <PanelRef
+        def="PolicySearchDV(searchCriteria)">
+        <Toolbar/>
+      </PanelRef>
+      <PanelRef
+        def="PolicySearchResultsLV(policySearchViews, null, false, showHyperlinks, false)">
+        <Toolbar/>
+      </PanelRef>
+    </SearchPanel>
+  </Screen>
+</PCF>

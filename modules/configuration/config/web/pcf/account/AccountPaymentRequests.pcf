@@ -1,0 +1,131 @@
+<?xml version="1.0"?>
+<PCF
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:noNamespaceSchemaLocation="../../../../../pcf.xsd">
+  <Page
+    autosaveable="false"
+    canEdit="true"
+    canVisit="perm.System.accttabview and perm.System.acctpmntview"
+    id="AccountPaymentRequests"
+    showUpLink="true"
+    title="displaykey.Web.AccountPaymentRequests.Title">
+    <LocationEntryPoint
+      signature="AccountPaymentRequests(account : Account)"/>
+    <LocationEntryPoint
+      signature="AccountPaymentRequests(account : Account, initialSelectedMoneyRcvd : DirectBillMoneyRcvd)"/>
+    <Variable
+      name="account"
+      type="Account"/>
+    <Variable
+      name="initialSelectedMoneyRcvd"
+      recalculateOnRefresh="true"
+      type="DirectBillMoneyRcvd"/>
+    <Variable
+      name="selectedPaymentRequest"
+      type="PaymentRequest"/>
+    <Screen
+      id="AccountDetailPaymentsScreen">
+      <PanelRef>
+        <Toolbar>
+          <ToolbarFilter
+            iterator="paymentRequestList"
+            label="displaykey.Web.AccountPaymentRequests.PaymentsReceivedFilter.Label"
+            name="PaymentsReceivedFilter">
+            <ToolbarFilterOption
+              filter="new web.payment.PaymentRequestFilters.SentRange(30)"/>
+            <ToolbarFilterOption
+              filter="new web.payment.PaymentRequestFilters.SentRange(60)"/>
+            <ToolbarFilterOption
+              filter="new web.payment.PaymentRequestFilters.SentRange(90)"/>
+            <ToolbarFilterOption
+              filter="new web.payment.PaymentRequestFilters.All()"/>
+          </ToolbarFilter>
+          <ToolbarFilter
+            iterator="paymentRequestList"
+            name="RequestsFilter">
+            <ToolbarFilterOption
+              filter="new web.payment.PaymentRequestFilters.All()"/>
+            <ToolbarFilterOption
+              filter="new web.payment.PaymentRequestFilters.AllOpen()"/>
+            <ToolbarFilterOption
+              filter="new web.payment.PaymentRequestFilters.Last30Days()"/>
+          </ToolbarFilter>
+          <ToolbarDivider/>
+          <CheckedValuesToolbarButton
+            checkedRowAction="CheckedValue.cancelRequest()"
+            flags="one Row"
+            id="closeRequest"
+            iterator="paymentRequestList"
+            label="displaykey.Web.PaymentDetails.Stop"/>
+          <CheckedValuesToolbarButton
+            checkedRowAction="PaymentRequestDetailPage.push(CheckedValue, true)"
+            flags="one Row"
+            id="editRequest"
+            iterator="paymentRequestList"
+            label="displaykey.Web.PaymentDetails.Edit"/>
+        </Toolbar>
+        <ListViewPanel
+          id="RequestsListLV">
+          <RowIterator
+            checkBoxVisible="checkInStoppableState(paymentRequest)"
+            editable="false"
+            elementName="paymentRequest"
+            hasCheckBoxes="true"
+            id="paymentRequestList"
+            value="account.PaymentRequests as PaymentRequestQuery">
+            <ToolbarFlag
+              name="Row"/>
+            <Row>
+              <TypeKeyCell
+                footerLabel="displaykey.Web.PaymentDetails.Total"
+                id="requestStatus"
+                label="displaykey.Web.PaymentDetails.Status"
+                value="paymentRequest.Status"/>
+              <DateCell
+                id="invoiceDate"
+                label="displaykey.Web.PaymentDetails.InvoiceDate"
+                sortBy="true"
+                sortOrder="1"
+                value="paymentRequest.Invoice.EventDate"/>
+              <DateCell
+                id="requestDate"
+                label="displaykey.Web.PaymentDetails.RequestDate"
+                sortBy="false"
+                value="paymentRequest.RequestDate"/>
+              <DateCell
+                id="changeDeadlineDate"
+                label="displaykey.Web.PaymentDetails.ChangeDeadlineDate"
+                sortBy="false"
+                value="paymentRequest.ChangeDeadlineDate"/>
+              <DateCell
+                id="draftDate"
+                label="displaykey.Web.PaymentDetails.DraftDate"
+                sortBy="false"
+                value="paymentRequest.DraftDate"/>
+              <DateCell
+                enableSort="false"
+                id="dueDate"
+                label="displaykey.Web.PaymentDetails.DueDate"
+                value="paymentRequest.DueDate"/>
+              <Cell
+                action="AccountDetailInvoices.push(paymentRequest.Invoice.Account, paymentRequest.Invoice)"
+                id="invoiceNumber"
+                label="displaykey.Web.PaymentDetails.InvoiceNumber"
+                value="paymentRequest.Invoice.InvoiceNumber"/>
+              <MonetaryAmountCell
+                currency="account.Currency"
+                footerSumValue="paymentRequest.Amount"
+                id="paymentAmount"
+                label="displaykey.Web.PaymentDetails.PaymentAmount"
+                value="paymentRequest.Amount"/>
+            </Row>
+          </RowIterator>
+        </ListViewPanel>
+      </PanelRef>
+    </Screen>
+    <Code><![CDATA[function checkInStoppableState(paymentRequest : PaymentRequest) : boolean {
+      return (paymentRequest.Status == PaymentRequestStatus.TC_CREATED || paymentRequest.Status ==
+      PaymentRequestStatus.TC_REQUESTED);
+}]]></Code>
+  </Page>
+</PCF>

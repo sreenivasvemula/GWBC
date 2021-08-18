@@ -1,0 +1,32 @@
+<?xml version="1.0"?>
+<PCF
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:noNamespaceSchemaLocation="../../../../../pcf.xsd">
+  <Popup
+    canEdit="true"
+    id="AccountAddPaymentPlanPopup"
+    returnType="PaymentPlan"
+    startInEditMode="true"
+    title="displaykey.Web.AccountAddPaymentPlanPopup.Title">
+    <Variable
+      name="paymentPlan"
+      type="PaymentPlan"/>
+    <Screen>
+      <Toolbar>
+        <EditButtons
+          pickValue="paymentPlan"/>
+      </Toolbar>
+      <DetailViewPanel>
+        <InputColumn>
+          <RangeInput
+            editable="true"
+            id="PaymentPlan"
+            label="displaykey.Web.AccountAddPaymentPlanPopup.PaymentPlan"
+            required="true"
+            value="paymentPlan"
+            valueRange="gw.api.web.plan.PaymentPlans.findVisiblePaymentPlans().toList()"/>
+        </InputColumn>
+      </DetailViewPanel>
+    </Screen>
+  </Popup>
+</PCF>

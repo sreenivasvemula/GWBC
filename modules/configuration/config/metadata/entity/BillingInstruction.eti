@@ -1,0 +1,38 @@
+<?xml version="1.0"?>
+<entity
+  xmlns="http://guidewire.com/datamodel"
+  abstract="true"
+  desc="A set of charges"
+  entity="BillingInstruction"
+  final="false"
+  setterScriptability="hidden"
+  subpackage="accounting.billinginstruction"
+  table="billinginstruction"
+  type="editable">
+  <implementsEntity
+    name="Validatable"/>
+  <implementsEntity
+    name="InCurrencySilo"/>
+  <column
+    default="false"
+    desc="Whether or not the billing instruction has been executed"
+    exportable="false"
+    getterScriptability="hidden"
+    name="Executed"
+    nullok="false"
+    setterScriptability="doesNotExist"
+    type="bit"/>
+  <column
+    desc="A description of the billing instruction"
+    name="Description"
+    nullok="true"
+    type="shorttext"/>
+  <array
+    arrayentity="Charge"
+    desc="Contained charges"
+    name="Charges"
+    setterScriptability="hidden"/>
+  <checkconstraint
+    desc="Found BillingInstruction with subtype that cannot be loaded from staging tables.  OffsetChargeBI and OnsetChargeBI cannot be loaded."
+    stagingtablepredicate="Subtype NOT IN ('OffsetChargeBI', 'OnsetChargeBI')"/>
+</entity>

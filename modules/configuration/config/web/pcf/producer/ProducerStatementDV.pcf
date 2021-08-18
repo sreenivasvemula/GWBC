@@ -1,0 +1,34 @@
+<?xml version="1.0"?>
+<PCF
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:noNamespaceSchemaLocation="../../../../../pcf.xsd">
+  <DetailViewPanel
+    editable="false"
+    id="ProducerStatementDV">
+    <Require
+      name="producerStatement"
+      type="ProducerStatement"/>
+    <InputColumn>
+      <Label
+        label="displaykey.Web.ProducerStatementDV.Producer"/>
+      <Input
+        id="Producer"
+        label="displaykey.Web.ProducerDetail.Basics.Name"
+        required="true"
+        value="producerStatement.Producer"/>
+      <Input
+        id="address"
+        label="displaykey.Web.NewProducerDV.PrimaryContact.Address"
+        required="true"
+        value="producerStatement.Producer.PrimaryContact.Contact typeis Person ? new gw.api.address.AddressFormatter().format(producerStatement.Producer.PrimaryContact.Contact.PrimaryAddress, &quot;\n&quot;) : null"/>
+      <Input
+        id="statementNumber"
+        label="displaykey.Web.ProducerStatementDV.StatementNumber"
+        value="producerStatement.getDisplayName()"/>
+      <Input
+        id="producerSupport"
+        label="displaykey.Web.ProducerStatementDV.ProducerSupport"
+        value="producerStatement.Producer.PrimaryContact.Contact typeis Person ? producerStatement.Producer.PrimaryContact.Contact.WorkPhoneValue : null"/>
+    </InputColumn>
+  </DetailViewPanel>
+</PCF>

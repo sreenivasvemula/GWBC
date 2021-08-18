@@ -1,0 +1,33 @@
+<?xml version="1.0"?>
+<!-- ====================================================================  TAccountPattern  ==================================================================== -->
+<entity
+  xmlns="http://guidewire.com/datamodel"
+  entity="TAccountPattern"
+  type="retireable"
+  desc="A pattern for a t-account."
+  admin="true"
+  final="false"
+  subpackage="accounting.config"
+  loadable="false"
+  platform="false"
+        abstract="true"
+  table="TAccountPattern">
+    <implementsEntity
+            name="NotInCurrencySilo"/>
+  <column
+    name="TAccountName"
+    type="shorttext"
+    desc="The unique name of this t-account pattern."
+    nullok="false"
+    setterScriptability="hidden"/>
+  <typekey
+    name="TAccountType"
+    typelist="TAccountType"
+    nullok="false"/>
+  <foreignkey
+    name="TAccountOwnerPattern"
+    desc="The related t-account owner pattern."
+    columnName="TAccountOwnerPatternID"
+    fkentity="TAccountOwnerPattern"
+    nullok="false"/>
+</entity>

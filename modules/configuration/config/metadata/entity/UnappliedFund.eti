@@ -1,0 +1,78 @@
+<?xml version="1.0"?>
+<entity xmlns="http://guidewire.com/datamodel"
+        desc="An default unapplied or designated unapplied and set of associated invoice streams for the purposes of being able separate cash buckets"
+        entity="UnappliedFund"
+        subpackage="accounting"
+        table="unappliedfund"
+        type="editable"
+        setterScriptability="hidden">
+    <implementsEntity
+            name="InCurrencySilo"/>
+    <foreignkey
+            name="TAccount"
+            desc="The default unapplied or designated unapplied t-account that is wrapped by this unappliedfund object.  There should be one and only one unapplied t-account per unappliedfund and vice versa."
+            columnName="TAccountID"
+            fkentity="TAccount"
+            getterScriptability="hidden"
+            setterScriptability="doesNotExist"
+            exportable="false"
+            overwrittenInStagingTable="true"
+            nullok="false"/>
+    <foreignkey
+            name="Account"
+            desc="The account on which this unappliedfund belongs.  This is a denormalization of TAccount.TAccountOwner."
+            columnName="AccountID"
+            fkentity="Account"
+            setterScriptability="doesNotExist"
+            getterScriptability="all"
+            exportasid="true"
+            exportable="false"
+            nullok="false"/>
+    <foreignkey
+            name="DefaultAccount"
+            desc="If not null, the account for which this is the default unappliedfund. Referenced by onetoone"
+            columnName="DefaultAccountID"
+            exportable="false"
+            fkentity="Account"
+            importableagainstexistingobject="false"
+            overwrittenInStagingTable="false"
+            getterScriptability="doesNotExist"
+            setterScriptability="doesNotExist"
+	    nullok="true"/>
+    <foreignkey
+            name="Policy"
+            desc="The optional policy for which this unappliedfund was created using policy level billing/designated unapplied."
+            columnName="PolicyID"
+            fkentity="Policy"
+            getterScriptability="all"
+            setterScriptability="doesNotExist"
+            exportasid="true"
+            exportable="false"
+            nullok="true"/>
+    <foreignkey
+            name="ReportingGroup"
+            desc="The reporting group assigned, if any. Once a reporting group is assigned, it may never be updated."
+            columnName="ReportingGroupID"
+            exportasid="true"
+            fkentity="ReportingGroup"
+	    nullok="true"/>
+    <column
+            name="Description"
+            type="shorttext"
+            setterScriptability="doesNotExist"
+            desc="Denorm of the TAccount description, also used for staging TAccounts."
+            nullok="true"/>
+    <index
+            name="taccountunique"
+            desc="There should be one and only one unappliedfund per unapplied t-account."
+            unique="true">
+        <indexcol
+                name="TAccountID"
+                keyposition="1"/>
+    </index>
+    <checkconstraint
+            desc="The DefaultAccount must point to the Account if it is not null."
+            predicate="(DefaultAccountID IS NOT NULL AND DefaultAccountID = AccountID) OR DefaultAccountID IS NULL"/>
+    <dbcheckbuilder
+            className="com.guidewire.bc.system.database.dbchecks.accounting.UnappliedFundsDBCheckBuilder"/>
+</entity>

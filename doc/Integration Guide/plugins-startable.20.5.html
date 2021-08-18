@@ -1,0 +1,310 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xml:lang="en" lang="en" xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+    <meta http-equiv="Content-Style-Type" content="text/css" />
+    <!-- MOTW-DISABLED saved from url=(0014)about:internet -->
+    <title>Configuring Startable Plugins to Run on All Servers</title>
+    <link rel="StyleSheet" href="css/plugins-startable.css" type="text/css" media="all" />
+    <link rel="StyleSheet" href="css/webworks.css" type="text/css" media="all" />
+    <link rel="StyleSheet" href="css/css-guidewire-extra.css" type="text/css" media="all" />
+    <script type="text/javascript" language="JavaScript1.2" src="wwhdata/common/context.js"></script>
+    <script type="text/javascript" language="JavaScript1.2" src="wwhdata/common/towwhdir.js"></script>
+    <script type="text/javascript" language="JavaScript1.2" src="wwhdata/common/wwhpagef.js"></script>
+    <script type="text/javascript" language="JavaScript1.2">
+      <!--
+        var  WebWorksRootPath = "";
+      // -->
+    </script>
+    <script type="text/javascript" language="JavaScript1.2">
+      <!--
+        // Set reference to top level help frame
+        //
+        var  WWHFrame = WWHGetWWHFrame("", true);
+      // -->
+    </script>
+    <script type="text/javascript" language="JavaScript1.2" src="scripts/expand.js"></script>
+    <!-- THE FOLLOWING IS A GUIDEWIRE STYLE DEFINITION FOR THE LINK TO THIS FEATURE -->
+    <link rel="StyleSheet" href="css/css-guidewire-extra.css" type="text/css" media="all" />
+    <!-- THE FOLLOWING IS A GUIDEWIRE GSCRIPT FUNCTION FOR THE LINK TO THIS FEATURE -->
+    <script type="text/javascript">
+function guidewire_selectall()
+{
+var text_val=eval("document.linktothisurlform.urlfield");
+text_val.focus();
+text_val.select();
+}
+</script>
+  </head>
+  <body onLoad="WWHUpdate();" onUnload="WWHUnload();" onKeyDown="WWHHandleKeyDown((document.all||document.getElementById||document.layers)?event:null);" onKeyPress="WWHHandleKeyPress((document.all||document.getElementById||document.layers)?event:null);" onKeyUp="WWHHandleKeyUp((document.all||document.getElementById||document.layers)?event:null);">
+    <!-- THE FOLLOWING IS A GUIDEWIRE DIV FOR THE 'LINK TO THIS' FEATURE -->
+    <div id="linkToThisPage" class="popup" style="display: none;">
+      <div class="popupTitle">Link Directly to This Page 
+           <a href="#" onclick="var thePopup = getElementById('linkToThisPage');thePopup.style.display='none';return false;"><img class="popupClosebox" src="wwhelp/wwhimpl/common/images/close.gif" /></a></div>
+      <div style="padding:6px;">
+        <div class="popupText" id="linkToThisPageBookmark">An error has occurred if you see this messsage.</div>
+        <form name="linktothisurlform" method="post" action="" style="width:275px;margin:0px">
+          <input type="text" class="popupURLText" id="linkToThisPageURL" name="urlfield" rows="1" cols="55" onClick="guidewire_selectall();" onFocus="guidewire_selectall();"></input>
+        </form>
+      </div>
+    </div>
+    <br />
+    <div class="WebWorks_Breadcrumbs" style="text-align: left;">
+      <span>BillingCenter Integration Guide</span> : 
+    <span class="WebWorks_Breadcrumbs" style="text-align: left;"><a class="WebWorks_Breadcrumb_Link" href="p-plugins.html#2422484">Plugins</a> : <a class="WebWorks_Breadcrumb_Link" href="plugins-startable.20.1.html#2422484">Startable Plugins</a> : Configuring Startable Plugins to Run on All Servers</span></div>
+    <hr align="left" />
+    <blockquote>
+      <h3 class="H1_-_Heading_1"><a name="2422484">Configuring Startable Plugins to Run on All Servers</a></h3>
+      <div class="B_-_Body"><a name="2422485">By default for a cluster, startable plugins run only on the batch server. However, you can configure them to run on all servers in the cluster by declaring the startable plugin is </a><span class="e_-_emphasis">distributed</span>. To declare the plugin is distributed, add the <span class="cv_-_computer_voice">@Distributed</span> annotation to the startable plugin implementation class.</div>
+      <div class="B_-_Body"><a name="2422486">Guidewire strongly recommends that startable plugins very clearly and consistently save the state (started or stopped) across all servers in a cluster. This approach handles edge cases like a server joining the cluster late after other servers have started. To keep the state consistent across all servers, the state must persist in the database. Even though the state information in the database is not automatically persisted, the broadcast to other servers happens automatically.</a></div>
+      <div class="B_-_Body"><a name="2422487">The series of steps is as follows:</a></div>
+      <div class="LS_-_List_Start_outer" style="margin-left: 57pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="LS_-_List_Start_inner" style="width: 15pt; white-space: nowrap">
+                <span class="ri_-_run_in_header">	1.	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="LS_-_List_Start_inner"><a name="2422488">On any server, the server starts. The plugin method reads the second argument to the </a><span class="cv_-_computer_voice">start</span> method. Because the server is starting up, this value is <span class="cv_-_computer_voice">true</span>. The plugin implementation detects this condition and reads the database status of the started or stopped state and sets its own state appropriately.</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="LI_-_List_Item_outer" style="margin-left: 57pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="LI_-_List_Item_inner" style="width: 15pt; white-space: nowrap">
+                <span class="ri_-_run_in_header">	2.	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="LI_-_List_Item_inner"><a name="2422489">Later, the state may changes on a server to start or stop from the user interface or through APIs. The application propagates this information to all servers in the cluster. Each server in the cluster decides whether it is appropriate to respect this request:</a></div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="BI2_-_Bullet_Item_002c_Level_2_outer" style="margin-left: 67pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="BI2_-_Bullet_Item_002c_Level_2_inner" style="width: 15pt; white-space: nowrap">
+                <span class="bu_-_bullet">•	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="BI2_-_Bullet_Item_002c_Level_2_inner"><a name="2422490">If the startable plugin is distributed, the server respects the request and calls the plugin </a><span class="cv_-_computer_voice">start</span> or <span class="cv_-_computer_voice">stop</span> method as appropriate. </div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="BI2_-_Bullet_Item_002c_Level_2_outer" style="margin-left: 67pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="BI2_-_Bullet_Item_002c_Level_2_inner" style="width: 15pt; white-space: nowrap">
+                <span class="bu_-_bullet">•	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="BI2_-_Bullet_Item_002c_Level_2_inner"><a name="2422491">If the startable plugin is not distributed, only the batch server handles the request.</a></div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="LP_-_List_Para"><a name="2422492">However, if the startable plugin is not distributed and the original changed server is the batch server, the behavior is different. The batch server does not bother with the distributed broadcast system because it is the only running version of the startable plugin. Instead, that server immediately calls the plugin </a><span class="cv_-_computer_voice">start</span> or <span class="cv_-_computer_voice">stop</span> method as appropriate.</div>
+      <div class="LI_-_List_Item_outer" style="margin-left: 57pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="LI_-_List_Item_inner" style="width: 15pt; white-space: nowrap">
+                <span class="ri_-_run_in_header">	3.	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="LI_-_List_Item_inner"><a name="2422493">On any server, the server shuts down. The plugin method reads the second argument to the </a><span class="cv_-_computer_voice">stop</span> method. Because the server is shutting down, this value is <span class="cv_-_computer_voice">true</span>. The plugin implementation detects this condition and simply stops its local state but does not set the database status in the database.</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="B_-_Body"><a name="2422494">Implement getting and setting the state information in the database using the plugin callback handler object, which is an instance of </a><span class="cv_-_computer_voice">StartablePluginCallbackHandler</span>. This object is a parameter to the <span class="cv_-_computer_voice">start</span> method of the plugin. Save a copy of this object as a private variable and then call the following methods on the object as needed:</div>
+      <div class="BI_-_Bullet_Item_outer" style="margin-left: 57pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="BI_-_Bullet_Item_inner" style="width: 15pt; white-space: nowrap">
+                <span class="bu_-_bullet">•	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="BI_-_Bullet_Item_inner"><span class="cv_-_computer_voice"><a name="2422495">getState</a></span> – Gets the state information in the database: <span class="cv_-_computer_voice">true</span> for started, <span class="cv_-_computer_voice">false</span> for stopped. If this is the first time in history that this startable plugin has ever run on this server-database cluster combination, its state information is not in the database. This method takes one arguments that represents the default assumption to use the very first time this query is checked. For example, if you expect this startable plugin to always run, pass the value <span class="cv_-_computer_voice">Started</span>. If this startable plugin runs only in rare situations and you expect only an administrator or API to trigger it to start, pass the value <span class="cv_-_computer_voice">Stopped</span>. If the server state has ever been set in the database, <span class="cv_-_computer_voice">getState</span> ignores this argument.</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="BI_-_Bullet_Item_outer" style="margin-left: 57pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="BI_-_Bullet_Item_inner" style="width: 15pt; white-space: nowrap">
+                <span class="bu_-_bullet">•	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="BI_-_Bullet_Item_inner"><span class="cv_-_computer_voice"><a name="2422496">setState</a></span> – Sets the state information in the database for this startable plugin. This method takes one argument, which is true if and only if the startable plugin is running. This request attempts to set this information in the database if it is not yet set to the expected value. If the startable plugin state is already matching the database value for the state according to the <span class="cv_-_computer_voice">getState</span> method, do not call <span class="cv_-_computer_voice">setState</span>. Be careful to catch any exceptions. You must create your own bundle to make this change, see the example for how to use the <span class="cv_-_computer_voice">runWithNewBundle</span> API.</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="BI_-_Bullet_Item_outer" style="margin-left: 57pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="BI_-_Bullet_Item_inner" style="width: 15pt; white-space: nowrap">
+                <span class="bu_-_bullet">•	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="BI_-_Bullet_Item_inner"><span class="cv_-_computer_voice"><a name="2422498">logStart</a></span> – Writes a line in the log about the plugin starting. This method takes one argument, which is line to log, as a <span class="cv_-_computer_voice">String</span>. Include the plugin name and the state, such as <span style="font-family: &quot;Lucida Sans Typewriter&quot;; font-size: 7.0pt">"HelloWorldDistributedStartablePlugin:Started"</span>.</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="BI_-_Bullet_Item_outer" style="margin-left: 57pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="BI_-_Bullet_Item_inner" style="width: 15pt; white-space: nowrap">
+                <span class="bu_-_bullet">•	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="BI_-_Bullet_Item_inner"><span class="cv_-_computer_voice"><a name="2422499">logStop</a></span> – Writes a line in the log about the plugin stopping. This method takes one argument, which is line to log, as a <span class="cv_-_computer_voice">String</span>. Include the plugin name and the state, such as <span style="font-family: &quot;Lucida Sans Typewriter&quot;; font-size: 7.0pt">"HelloWorldDistributedStartablePlugin:Stopped"</span>.</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="B_-_Body"><a name="2422500">The following is an example implementation of the </a><span class="cv_-_computer_voice">start</span> and <span class="cv_-_computer_voice">stop</span> methods that implement a trivial thread and the proper setting of startable plugin state. </div>
+      <PRE class="CF_-_Code_First_Line"><a name="2422501">package gw.api.startableplugin</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2422502">uses gw.api.startable.IStartablePlugin</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2422503">uses gw.api.startable.StartablePluginCallbackHandler</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2422504">uses gw.api.startable.StartablePluginState</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2422505">uses gw.transaction.Transaction</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2422506">uses java.lang.Thread</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2422507">uses gw.api.util.Logger</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2422508">&nbsp;</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2422509">@Distributed</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2422510">class HelloWorldDistributedStartablePlugin implements IStartablePlugin {</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2422511">  var _state : StartablePluginState;</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2422512">  var _startedHowManyTimes  = 0</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2422513">  var _callback : StartablePluginCallbackHandler;</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2422514">  var _thread : Thread</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2422515">&nbsp;</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2422516">  override property get State() : StartablePluginState  {</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2422517">    return _state</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2422518">  }</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2422519">&nbsp;</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2422520">  override function start( handler : StartablePluginCallbackHandler, serverStartup: boolean ) : void  {</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2422521">    _callback = handler</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2422522">    if (serverStartup) {</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2422523">   &nbsp;&nbsp;// if the server is starting up, read the value from the database, and default to stopped</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2422524">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;// if this plugin NEVER saved its state before. You might want to change this to Started instead.</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2422525">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;_state = _callback.getState(Stopped)</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2422526">&nbsp;</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2422527">      if (_state == Started) {</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2422528">        _callback.logStart("HelloWorldDistributedStartablePlugin:Started")</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2422529">      }</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2422530">      else {</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2422531">        _callback.logStart("HelloWorldDistributedStartablePlugin:Stopped")</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2422532">      }</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2422533">    }</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2422534">    else {</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2422535">&nbsp;</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2422536">      _state = Started</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2422537">      if (_callback.State != Started) {</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2422538">        changeState(Started) // call our internal function that sets the database state if necessary</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2422539">      }</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2422540">      _callback.logStart("HelloWorldDistributedStartablePlugin")</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2422541">    }</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2422542">&nbsp;</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2422543">&nbsp;&nbsp;&nbsp;&nbsp;</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2422544">&nbsp;&nbsp;&nbsp;&nbsp;// if the thread already existed for some reason, briefly stop it before starting it again</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2422545">    if (_state == Started) {</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2422546">      if (_thread != null) {</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2422547">        _thread.stop()</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2422548">      }</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2422549">&nbsp;&nbsp;&nbsp;&nbsp;_startedHowManyTimes++</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2422550">&nbsp;</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2422551">&nbsp;&nbsp;&nbsp;&nbsp;// create your thread and start it</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2422552">&nbsp;&nbsp;&nbsp;&nbsp;var t = new Thread() {</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2422553">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; function run() {</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2422554">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;print("hello!")</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2422555">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2422556">&nbsp;&nbsp;&nbsp;&nbsp;}</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2422557">&nbsp;&nbsp;&nbsp;&nbsp;t.Daemon=true</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2422558">&nbsp;</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2422559">    }</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2422560">  }</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2422561">&nbsp;</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2422562">  override function stop( serverStopping : boolean ) : void  {</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2422563">    if (_thread != null) {</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2422564">      _thread.stop()</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2422565">      _thread = null</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2422566">    }</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2422567">    if (_callback != null) {</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2422568">      if (serverStopping) {</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2422569">        if (_state == Started) {</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2422570">          _callback.logStop("HelloWorldDistributedStartablePlugin:Started")</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2422571">        }</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2422572">        else {</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2422573">          _callback.logStop("HelloWorldDistributedStartablePlugin:Stopped")</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2422574">        }</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2422575">        _callback = null</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2422576">      }</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2422577">      else {</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2422578">        if (_callback.State != Stopped) {</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2422579">          changeState(Stopped) // call our internal function that sets the database state if necessary</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2422580">        }</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2422581">        _callback.logStop("HelloWorldDistributedStartablePlugin")</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2422582">      }</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2422583">    }</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2422584">    _state = Stopped</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2422585">  }</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2422586">&nbsp;</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2422587">&nbsp;&nbsp;// our internal function that sets the database state if necessary. if there are exceptions, </a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2422588">&nbsp;&nbsp;// this implementation tries 5 times. You might want a different behavior.</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2422589">  private function changeState(newState : StartablePluginState) {</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2422590">    var tryCount = 0</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2422591">    while (_callback.State != newState &amp;&amp; tryCount &lt; 5) {</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2422592">      try {</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2422593">        Transaction.runWithNewBundle(\ bundle -&gt; { _callback.setState(bundle, newState)},</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2422594">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;User.util.UnrestrictedUser)</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2422595">      }</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2422596">      catch (e : java.lang.Exception) {</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2422597">        tryCount++</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2422598">        _callback.log(this.IntrinsicType.Name + " on attempt " + tryCount +</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2422599">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;" caught " + (typeof e).Name + ": " + e.Message)</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2422600">      }</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2422601">    }</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2422602">  }</a></PRE>
+      <PRE class="CL_-_Code_Last_Line"><a name="2422603">}</a></PRE>
+      <script type="text/javascript" language="JavaScript1.2">
+        <!--
+          // Clear related topics
+          //
+          WWHClearRelatedTopics();
+
+          document.writeln(WWHRelatedTopicsInlineHTML());
+        // -->
+      </script>
+    </blockquote>
+    <script type="text/javascript" language="JavaScript1.2">
+      <!--
+        document.write(WWHRelatedTopicsDivTag() + WWHPopupDivTag() + WWHALinksDivTag());
+      // -->
+    </script>
+  </body>
+</html>

@@ -1,0 +1,46 @@
+<?xml version="1.0"?>
+<PCF
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:noNamespaceSchemaLocation="../../../../../pcf.xsd">
+  <Wizard
+    beforeCommit="policyTransfer.executeTransfer()"
+    cancelWarning="displaykey.Web.TransferProducerPoliciesWizard.CancelConfirmation"
+    countsAsWork="false"
+    desc="r5448 Producer PolicyPeriod Transfer"
+    id="TransferProducerPoliciesWizard">
+    <LocationEntryPoint
+      signature="TransferProducerPoliciesWizard(producer : Producer)"/>
+    <Variable
+      name="producer"
+      type="Producer"/>
+    <!-- Helper object -->
+    <Variable
+      initialValue="newPolicyTransfer()"
+      name="policyTransfer"/>
+    <WizardStep
+      id="SelectProducer"
+      label="displaykey.Web.TransferProducerPoliciesWizard.Producer.Label"
+      screen="TransferPolicyProducerScreen(policyTransfer, producer)"
+      title="displaykey.Web.TransferProducerPoliciesWizard.Producer.Title"/>
+    <WizardStep
+      id="SelectPolicies"
+      label="displaykey.Web.TransferProducerPoliciesWizard.Policies.Label"
+      screen="TransferPolicyPoliciesScreen(policyTransfer)"
+      title="displaykey.Web.TransferProducerPoliciesWizard.Policies.Title"/>
+    <WizardStep
+      id="SelectNew"
+      label="displaykey.Web.TransferProducerPoliciesWizard.New.Label"
+      screen="TransferPolicyNewScreen(policyTransfer)"
+      title="displaykey.Web.TransferProducerPoliciesWizard.New.Title"/>
+    <WizardStep
+      id="Confirmation"
+      label="displaykey.Web.TransferProducerPoliciesWizard.Confirmation.Label"
+      screen="TransferPolicyConfirmationScreen(policyTransfer)"
+      title="displaykey.Web.TransferProducerPoliciesWizard.Confirmation.Title"/>
+    <Code><![CDATA[function newPolicyTransfer() : PolTransferByProdCode {
+      var tpolicy = new PolTransferByProdCode(producer.Currency);
+      tpolicy.CommissionTransferOption = CommissionTransferOption.TC_POINTINTIME;
+      return tpolicy;
+    }]]></Code>
+  </Wizard>
+</PCF>

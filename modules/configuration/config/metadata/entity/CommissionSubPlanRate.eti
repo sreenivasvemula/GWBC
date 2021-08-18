@@ -1,0 +1,46 @@
+<?xml version="1.0"?>
+<entity
+  xmlns="http://guidewire.com/datamodel"
+  entity="CommissionSubPlanRate"
+  type="versionable"
+  desc="Represents an entry in the CommissionSubPlan's Rates table. Each entry maps a policy role to a                 commission rate."
+  admin="true"
+  subpackage="commission"
+  loadable="false"
+  platform="false"
+  table="commissionsubplanrate">
+  <implementsEntity
+    name="NotInCurrencySilo"/>
+  <foreignkey
+    name="CommissionSubPlan"
+    desc="FK to container."
+    columnName="CommissionSubPlanID"
+    fkentity="CommissionSubPlan"
+    getterScriptability="doesNotExist"
+    nullok="false"
+    setterScriptability="doesNotExist"/>
+  <column
+    name="Rate"
+    type="percentagedec"
+    desc="Base commission rate for this policy role."
+    getterScriptability="hidden"
+    nullok="false"
+    setterScriptability="hidden"/>
+  <typekey
+    name="Role"
+    typelist="PolicyRole"
+    desc="The role."
+    nullok="false"
+    setterScriptability="hidden"/>
+  <index
+    desc="Legacy"
+    name="commsubplanrate"
+    unique="true">
+    <indexcol
+      name="CommissionSubPlanID"
+      keyposition="1"/>
+    <indexcol
+      name="Role"
+      keyposition="2"/>
+  </index>
+</entity>

@@ -1,0 +1,13 @@
+package rules.Preupdate
+
+@gw.rules.RuleName("PolicyPeriod Pre-update")
+@gw.rules.RuleSetDescription("This is the PolicyPeriod post-validation/pre-update rule set to permit modification of the policy period and related entities.  Exceptions will cause the bounding database transaction to roll back, effectively vetoing the update.")
+class PolicyPeriodPreupdate extends gw.rules.RuleSetBase {
+  static function invoke(bean : entity.PolicyPeriod) : gw.rules.ExecutionSession {
+    return invoke( new gw.rules.ExecutionSession(), bean )
+  }
+
+  static function invoke(exeSession : gw.rules.ExecutionSession, bean : entity.PolicyPeriod) : gw.rules.ExecutionSession {
+    return _invoke( exeSession, bean, "PolicyPeriod Pre-update", PolicyPeriodPreupdate )
+  }
+}

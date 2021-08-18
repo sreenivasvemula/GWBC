@@ -1,0 +1,130 @@
+<?xml version="1.0"?>
+<PCF
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:noNamespaceSchemaLocation="../../../../../pcf.xsd">
+  <DetailViewPanel
+    id="PaymentSearchDV">
+    <Require
+      name="searchCriteria"
+      type="gw.search.PaymentSearchCriteria"/>
+    <InputColumn>
+      <Label
+        id="SearchCriteria"
+        label="displaykey.Web.PaymentSearchDV.SearchCriteria"/>
+      <PickerInput
+        conversionExpression="PickedValue.DisplayName"
+        editable="true"
+        id="AccountNumberCriterion"
+        label="displaykey.Web.PaymentSearchDV.AccountNumber"
+        pickLocation="AccountSearchPopup.push()"
+        value="searchCriteria.AccountNumber"/>
+      <PickerInput
+        conversionExpression="PickedValue.DisplayName"
+        editable="true"
+        id="PolicyNumberCriterion"
+        label="displaykey.Web.PaymentSearchDV.PolicyNumber"
+        pickLocation="PolicySearchPopup.push()"
+        value="searchCriteria.PolicyNumber"/>
+      <PickerInput
+        conversionExpression="PickedValue.Name"
+        editable="true"
+        id="ProducerNameCriterion"
+        label="gw.api.util.LocaleUtil.CurrentLocaleType == LocaleType.TC_JA_JP ? displaykey.Web.PaymentSearchDV.ProducerNamePhonetic : displaykey.Web.PaymentSearchDV.ProducerName"
+        pickLocation="ProducerSearchPopup.push()"
+        value="searchCriteria.ProducerName"/>
+      <PickerInput
+        conversionExpression="PickedValue.NameKanji"
+        editable="true"
+        id="ProducerNameKanjiCriterion"
+        label="displaykey.Web.PaymentSearchDV.ProducerName"
+        pickLocation="ProducerSearchPopup.push()"
+        value="searchCriteria.ProducerNameKanji"
+        visible="gw.api.util.LocaleUtil.CurrentLocaleType == LocaleType.TC_JA_JP"/>
+      <Input
+        editable="true"
+        id="ProducerCodeCriterion"
+        label="displaykey.Web.PaymentSearchDV.ProducerCode"
+        value="searchCriteria.ProducerCode"/>
+      <TypeKeyInput
+        editable="true"
+        id="CurrencyCriterion"
+        label="displaykey.Web.PaymentSearchDV.Currency"
+        value="searchCriteria.CurrencyType"
+        visible="gw.api.util.CurrencyUtil.isMultiCurrencyMode()">
+        <PostOnChange
+          onChange="blankMinimumAndMaximumFields()"/>
+      </TypeKeyInput>
+      <RangeInput
+        editable="true"
+        id="MethodCriterion"
+        label="displaykey.Web.PaymentSearchDV.Method"
+        value="searchCriteria.Method"
+        valueRange="getPaymentMethodRange()"/>
+      <Input
+        editable="true"
+        id="TokenCriterion"
+        label="displaykey.Web.PaymentSearchDV.Token"
+        value="searchCriteria.Token"/>
+      <Input
+        editable="true"
+        id="CheckNumberCriterion"
+        label="displaykey.Web.PaymentSearchDV.CheckNumber"
+        value="searchCriteria.CheckNumber"/>
+      <DateInput
+        editable="true"
+        id="EarliestDateCriterion"
+        label="displaykey.Web.PaymentSearchDV.EarliestDate"
+        value="searchCriteria.EarliestDate"/>
+      <DateInput
+        editable="true"
+        id="LatestDateCriterion"
+        label="displaykey.Web.PaymentSearchDV.LatestDate"
+        value="searchCriteria.LatestDate"/>
+      <MonetaryAmountInput
+        available="(searchCriteria.CurrencyType != null or gw.api.util.CurrencyUtil.isSingleCurrencyMode())"
+        currency="gw.search.SearchHelper.getDefaultCurrencyIfNull(searchCriteria.CurrencyType)"
+        editable="true"
+        id="MinAmountCriterion"
+        label="displaykey.Web.PaymentSearchDV.MinAmount"
+        value="searchCriteria.MinAmount"/>
+      <MonetaryAmountInput
+        available="(searchCriteria.CurrencyType != null or gw.api.util.CurrencyUtil.isSingleCurrencyMode())"
+        currency="gw.search.SearchHelper.getDefaultCurrencyIfNull(searchCriteria.CurrencyType)"
+        editable="true"
+        id="MaxAmountCriterion"
+        label="displaykey.Web.PaymentSearchDV.MaxAmount"
+        value="searchCriteria.MaxAmount"/>
+      <CheckBoxInput
+        editable="true"
+        id="HasSuspenseItemsCriterion"
+        label="displaykey.Web.PaymentSearchDV.HasActiveSuspenseItems"
+        value="searchCriteria.OwnerOfActiveSuspenseItems"/>
+    </InputColumn>
+    <InputColumn>
+      <InputSetRef
+        def="ContactCriteriaInputSet(searchCriteria.ContactCriteria)"/>
+    </InputColumn>
+    <InputFooterSection>
+      <InputSetRef
+        def="SearchAndResetInputSet()"/>
+    </InputFooterSection>
+    <Code><![CDATA[// The AgencyMoneyReceivedDV page uses the PaymentSearchCriteria class
+// as well, since the functionality is identical. Keep that in mind when
+// modifying this page and the PaymentSearchCriteria class.
+
+function getPaymentMethodRange() : List<PaymentMethod> {
+  var paymentMethodRange = new java.util.ArrayList<PaymentMethod>();
+  paymentMethodRange.add( PaymentMethod.TC_ACH );
+  paymentMethodRange.add( PaymentMethod.TC_CASH );
+  paymentMethodRange.add( PaymentMethod.TC_CHECK );
+  paymentMethodRange.add( PaymentMethod.TC_CREDITCARD );
+  paymentMethodRange.add( PaymentMethod.TC_WIRE );
+  return paymentMethodRange;
+}
+
+function blankMinimumAndMaximumFields() {
+  searchCriteria.MinAmount = null
+  searchCriteria.MaxAmount = null
+}]]></Code>
+  </DetailViewPanel>
+</PCF>

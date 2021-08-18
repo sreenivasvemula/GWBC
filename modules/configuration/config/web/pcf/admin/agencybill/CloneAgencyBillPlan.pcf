@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PCF
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:noNamespaceSchemaLocation="../../../../../../pcf.xsd">
+  <Page
+    afterCancel="AgencyBillPlanDetail.go(agencyBillPlan)"
+    afterCommit="AgencyBillPlanDetail.go(clonedAgencyBillPlan)"
+    autosaveable="true"
+    canEdit="true"
+    countsAsWork="true"
+    id="CloneAgencyBillPlan"
+    parent="AgencyBillPlans()"
+    showUpLink="true"
+    startInEditMode="true"
+    title="displaykey.Web.CloneAgencyBillPlan.Title(agencyBillPlan)"
+    validateOnBundleCommit="true">
+    <LocationEntryPoint
+      signature="CloneAgencyBillPlan(agencyBillPlan : agencyBillPlan)"/>
+    <Variable
+      name="agencyBillPlan"
+      recalculateOnRefresh="false"
+      type="AgencyBillPlan"/>
+    <Variable
+      initialValue="agencyBillPlan.makeClone() as AgencyBillPlan"
+      name="clonedAgencyBillPlan"
+      recalculateOnRefresh="false"/>
+    <ScreenRef
+      def="AgencyBillPlanDetailScreen(clonedAgencyBillPlan)"/>
+  </Page>
+</PCF>

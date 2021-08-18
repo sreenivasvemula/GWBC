@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PCF
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:noNamespaceSchemaLocation="../../../../../pcf.xsd">
+  <Popup
+    canEdit="true"
+    canVisit="perm.ProducerContact.edit"
+    id="ProducerContactDetailPopup"
+    returnType="ProducerContact"
+    startInEditMode="true"
+    title="displaykey.Web.ProducerContactDetail.Title">
+    <LocationEntryPoint
+      signature="ProducerContactDetailPopup(contact : ProducerContact)"/>
+    <Variable
+      name="contact"
+      type="ProducerContact"/>
+    <Screen
+      id="NewProducerContactScreen">
+      <Toolbar>
+        <EditButtons
+          pickValue="contact"/>
+      </Toolbar>
+      <PanelRef
+        def="ProducerContactDetailDV(contact, true)"/>
+    </Screen>
+  </Popup>
+</PCF>

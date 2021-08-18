@@ -1,0 +1,81 @@
+<?xml version="1.0"?>
+<PCF
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:noNamespaceSchemaLocation="../../../../../pcf.xsd">
+  <Wizard
+    afterCancel="DesktopGroup.go()"
+    afterFinish="DesktopGroup.go()"
+    beforeCommit="uiWriteoff.doWriteOff()"
+    canVisit="perm.Transaction.acctwo or perm.Transaction.plcywo"
+    cancelWarning="displaykey.Web.NewWriteoffWizard.CancelConfirmation"
+    id="NewWriteoffWizard">
+    <LocationEntryPoint
+      signature="NewWriteoffWizard()"/>
+    <LocationEntryPoint
+      signature="NewWriteoffWizard(passedInTarget : entity.TAccountOwner)"/>
+    <Variable
+      name="passedInTarget"
+      type="TAccountOwner"/>
+    <Variable
+      initialValue="createTargetOfWriteoffReference()"
+      name="targetOfWriteoff"
+      type="web.accounting.TAccountOwnerReference"/>
+    <Variable
+      name="uiWriteoff"
+      type="gw.api.web.accounting.UIWriteOffCreation"/>
+    <WizardStep
+      allowNext="targetOfWriteoff.TAccountOwner != null"
+      id="TargetStep"
+      label="displaykey.Web.NewWriteoffWizard.Target.Label"
+      onExit="onExitTargetStep()"
+      screen="WizardsStep1AccountPolicySearchScreen(targetOfWriteoff, selectPolicyOrAccount(), false, true)"
+      title="displaykey.Web.NewWriteoffWizard.Target.Title"/>
+    <WizardStep
+      id="DetailsStep"
+      label="displaykey.Web.NewWriteoffWizard.Details.Label"
+      onExit="uiWriteoff.initiateApprovalActivityIfUserLacksAuthority()"
+      screen="NewWriteoffWizardDetailsStepScreen(uiWriteoff)"
+      title="displaykey.Web.NewWriteoffWizard.Details.Title"/>
+    <WizardStep
+      allowFinish="uiWriteoff.WriteOff.Amount != null"
+      id="ConfirmationStep"
+      label="displaykey.Web.NewWriteoffWizard.Confirmation.Label"
+      screen="NewWriteoffWizardConfirmationStepScreen(uiWriteoff)"
+      title="displaykey.Web.NewWriteoffWizard.Confirmation.Title"/>
+    <Code><![CDATA[
+              function selectPolicyOrAccount(): TAccountOwnerType {
+                if (perm.Transaction.acctwo) {
+                  if (perm.Transaction.plcywo) {
+                    return null;
+                    // both are allowed
+                  } else {
+                    return TAccountOwnerType.TC_ACCOUNT;
+                  }
+                }
+                // assuming that at least one of them is allowed
+                return TAccountOwnerType.TC_POLICYPERIOD;
+              }
+
+              function onExitTargetStep() {
+                if (uiWriteoff == null || uiWriteoff.WriteOff.TAccountOwner != targetOfWriteoff.TAccountOwner) {
+                  createNewUIWriteoff()
+                }
+              }
+
+              function createNewUIWriteoff() {
+                if (uiWriteoff != null) {
+                  uiWriteoff.cleanupBeforeDiscard()
+                }
+                var writeOffFactory = new web.accounting.WriteOffFactory(CurrentLocation)
+                var writeOff = writeOffFactory.createChargePatternWriteOff(targetOfWriteoff.TAccountOwner)
+                uiWriteoff = new gw.api.web.accounting.UIWriteOffCreation(writeOff)
+              }
+
+              function createTargetOfWriteoffReference(): web.accounting.TAccountOwnerReference {
+                var target = new web.accounting.TAccountOwnerReference()
+                target.TAccountOwner = passedInTarget
+                return target
+              }
+      ]]></Code>
+  </Wizard>
+</PCF>

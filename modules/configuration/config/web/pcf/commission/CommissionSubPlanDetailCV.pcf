@@ -1,0 +1,433 @@
+<?xml version="1.0"?>
+<PCF
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:noNamespaceSchemaLocation="../../../../../pcf.xsd">
+  <CardViewPanel
+    id="CommissionSubPlanDetailCV">
+    <Require
+      name="commissionSubPlan"
+      type="CommissionSubPlan"/>
+    <Variable
+      initialValue="new web.accounting.ChargePatternHelper()"
+      name="chargePatternHelper"
+      type="web.accounting.ChargePatternHelper"/>
+    <Variable
+      initialValue="not commissionSubPlan.CommissionPlan.InUse"
+      name="subPlanNotInUse"
+      recalculateOnRefresh="true"/>
+    <Card
+      id="GeneralCard"
+      title="displaykey.Web.CommissionSubPlan.General.Title">
+      <DetailViewPanel
+        editable="subPlanNotInUse or commissionSubPlan.New">
+        <InputColumn>
+          <Label
+            id="Basics"
+            label="displaykey.Web.CommissionSubPlan.General.Basics"/>
+          <Input
+            editable="commissionSubPlan typeis CondCmsnSubPlan"
+            id="SubPlanName"
+            label="displaykey.Web.CommissionSubPlan.General.SubPlanName"
+            required="true"
+            value="commissionSubPlan.Name">
+            <PostOnChange/>
+          </Input>
+          <Label
+            id="Rates"
+            label="displaykey.Web.CommissionSubPlan.General.Rates"/>
+          <InputIterator
+            elementName="rateEntry"
+            value="commissionSubPlan.RateEntries">
+            <Input
+              editable="true"
+              id="Rate"
+              label="rateEntry.Role"
+              required="true"
+              value="rateEntry.Rate"/>
+          </InputIterator>
+          <Label
+            id="PayableCriteria"
+            label="displaykey.Web.CommissionSubPlan.General.PayableCriteria"/>
+          <TypeKeyInput
+            editable="true"
+            id="CommissionsPayable"
+            label="displaykey.Web.CommissionSubPlan.General.EarnCommissions"
+            required="true"
+            value="commissionSubPlan.PayableCriteria"/>
+          <CheckBoxInput
+            editable="true"
+            id="SuspendForDelinquency"
+            label="displaykey.Web.CommissionSubPlan.General.SuspendForDelinquency"
+            value="commissionSubPlan.SuspendForDelinquency"/>
+        </InputColumn>
+      </DetailViewPanel>
+      <PanelRef
+        def="LocalizedValuesDV(commissionSubPlan, { &quot;Name&quot;}, { displaykey.Web.CommissionSubPlan.General.SubPlanName })"/>
+    </Card>
+    <Card
+      id="CommissionableItemsCard"
+      title="displaykey.Web.CommissionSubPlan.CommissionableItems.Title">
+      <DetailViewPanel
+        editable="subPlanNotInUse or commissionSubPlan.New">
+        <InputColumn>
+          <ListViewInput>
+            <Toolbar>
+              <IteratorButtons
+                iterator="CommissionableItemsLV"/>
+            </Toolbar>
+            <ListViewPanel
+              id="CommissionableItemsLV">
+              <RowIterator
+                editable="true"
+                elementName="commissionableChargeItem"
+                hideCheckBoxesIfReadOnly="true"
+                toAdd="commissionSubPlan.addToCommissionableChargeItems(commissionableChargeItem)"
+                toRemove="commissionSubPlan.removeFromCommissionableChargeItems(commissionableChargeItem)"
+                value="commissionSubPlan.CommissionableChargeItems">
+                <Row>
+                  <RangeCell
+                    editable="true"
+                    id="Item"
+                    label="displaykey.Web.CommissionSubPlan.CommissionableItems.Item"
+                    required="true"
+                    sortOrder="1"
+                    unique="true"
+                    value="commissionableChargeItem.ChargePattern"
+                    valueRange="chargePatternHelper.getChargePatterns( entity.PolicyPeriod, ChargeCategory.TC_PREMIUM )"/>
+                </Row>
+              </RowIterator>
+            </ListViewPanel>
+          </ListViewInput>
+        </InputColumn>
+      </DetailViewPanel>
+    </Card>
+    <Card
+      id="SpecialChargePatternRatesCard"
+      title="displaykey.Web.CommissionSubPlan.SpecialChargePatternRates.Title">
+      <DetailViewPanel
+        editable="subPlanNotInUse or commissionSubPlan.New">
+        <InputColumn>
+          <ListViewInput>
+            <Toolbar>
+              <IteratorButtons
+                iterator="SpecialChargePatternRatesLV"/>
+            </Toolbar>
+            <ListViewPanel
+              id="SpecialChargePatternRatesLV">
+              <RowIterator
+                editable="true"
+                elementName="specialRate"
+                hasCheckBoxes="true"
+                hideCheckBoxesIfReadOnly="true"
+                toAdd="commissionSubPlan.addToSpecialChargePatternRates(specialRate)"
+                toRemove="commissionSubPlan.removeFromSpecialChargePatternRates(specialRate)"
+                value="commissionSubPlan.SpecialChargePatternRates">
+                <Row>
+                  <RangeCell
+                    editable="true"
+                    id="ChargePattern"
+                    label="displaykey.Web.CommissionSubPlan.SpecialChargePatternRates.ChargePattern"
+                    required="true"
+                    sortOrder="1"
+                    validationExpression="getErrorMessageIfDuplicateSpecialRate(specialRate)"
+                    value="specialRate.ChargePattern"
+                    valueRange="chargePatternHelper.getChargePatterns( entity.PolicyPeriod )"/>
+                  <TypeKeyCell
+                    editable="true"
+                    id="Role"
+                    label="displaykey.Web.CommissionSubPlan.SpecialChargePatternRates.Role"
+                    required="true"
+                    sortOrder="2"
+                    value="specialRate.Role"/>
+                  <Cell
+                    editable="true"
+                    id="Rate"
+                    label="displaykey.Web.CommissionSubPlan.SpecialChargePatternRates.Rate"
+                    required="true"
+                    value="specialRate.Rate"/>
+                </Row>
+              </RowIterator>
+            </ListViewPanel>
+          </ListViewInput>
+        </InputColumn>
+      </DetailViewPanel>
+    </Card>
+    <Card
+      id="IncentivesCard"
+      title="displaykey.Web.CommissionSubPlan.Incentives.Title">
+      <DetailViewPanel
+        editable="subPlanNotInUse or commissionSubPlan.New">
+        <Variable
+          name="newIncentiveType"
+          type="typekey.Incentive"/>
+        <InputColumn>
+          <ListViewInput>
+            <Toolbar>
+              <ToolbarRangeInput
+                hideIfReadOnly="true"
+                id="IncentiveType"
+                label="displaykey.Web.CommissionSubPlan.Incentives.IncentiveToAdd"
+                value="newIncentiveType"
+                valueRange="commissionSubPlan.AvailableIncentiveTypes">
+                <PostOnChange/>
+              </ToolbarRangeInput>
+              <IteratorButtons
+                addVisible="newIncentiveType != null"
+                iterator="IncentivesLV"/>
+            </Toolbar>
+            <ListViewPanel
+              id="IncentivesLV">
+              <RowIterator
+                editable="true"
+                elementName="incentive"
+                hideCheckBoxesIfReadOnly="true"
+                pickLocation="NewIncentivePopup.push(commissionSubPlan, newIncentiveType)"
+                toAdd="commissionSubPlan.addToIncentives(incentive)"
+                toRemove="commissionSubPlan.removeFromIncentives(incentive)"
+                value="commissionSubPlan.Incentives">
+                <Row>
+                  <LinkCell
+                    id="Edit">
+                    <Link
+                      action="IncentiveDetailPopup.push(incentive)"
+                      hideIfReadOnly="true"
+                      id="EditLink"
+                      label="displaykey.Web.CommissionSubPlan.Incentives.Edit"
+                      styleClass="miniButton"/>
+                  </LinkCell>
+                  <Cell
+                    id="IncentiveName"
+                    label="displaykey.Web.CommissionSubPlan.Incentives.IncentiveName"
+                    value="incentive.DisplayName"/>
+                  <Cell
+                    id="Description"
+                    label="displaykey.Web.CommissionSubPlan.Incentives.Description"
+                    value="incentive.Description"/>
+                  <Cell
+                    id="Application"
+                    label="displaykey.Web.CommissionSubPlan.Incentives.Application"
+                    value="incentive.Application"/>
+                </Row>
+              </RowIterator>
+            </ListViewPanel>
+          </ListViewInput>
+        </InputColumn>
+      </DetailViewPanel>
+    </Card>
+    <Card
+      id="SubPlanRestrictionsCard"
+      title="displaykey.Web.CommissionSubPlan.SubPlanRestrictions.Title"
+      visible="commissionSubPlan typeis CondCmsnSubPlan">
+      <DetailViewPanel
+        editable="subPlanNotInUse or commissionSubPlan.New">
+        <InputColumn>
+          <BooleanRadioInput
+            boldLabel="true"
+            editable="true"
+            falseLabel="displaykey.Web.CommissionSubPlan.SubPlanRestrictions.Select"
+            id="AllLOBCodes"
+            label="displaykey.Web.CommissionSubPlan.SubPlanRestrictions.AllowLOBCodes"
+            trueLabel="displaykey.Web.CommissionSubPlan.SubPlanRestrictions.All"
+            value="conditionalCommissionSubPlan.AllLOBCodes">
+            <PostOnChange
+              onChange="if (conditionalCommissionSubPlan.AllLOBCodes) conditionalCommissionSubPlan.LOBCodes.each( \ lob -&gt; {lob.Selected = true})"
+              target="DATA_ONLY"/>
+          </BooleanRadioInput>
+          <InputIterator
+            elementName="lobCode"
+            id="LOBCodes"
+            value="conditionalCommissionSubPlan.LOBCodes">
+            <Input
+              available="!conditionalCommissionSubPlan.AllLOBCodes"
+              editable="true"
+              id="LOBCode"
+              label="lobCode"
+              value="lobCode.Selected"/>
+          </InputIterator>
+          <BooleanRadioInput
+            boldLabel="true"
+            editable="true"
+            falseLabel="displaykey.Web.CommissionSubPlan.SubPlanRestrictions.Select"
+            id="AllTerms"
+            label="displaykey.Web.CommissionSubPlan.SubPlanRestrictions.Terms"
+            trueLabel="displaykey.Web.CommissionSubPlan.SubPlanRestrictions.All"
+            value="conditionalCommissionSubPlan.AllTerms">
+            <PostOnChange
+              onChange="if (conditionalCommissionSubPlan.AllTerms) conditionalCommissionSubPlan.getRenewalRange(0, -1).Covered = true"
+              target="DATA_ONLY"/>
+          </BooleanRadioInput>
+          <Input
+            available="!conditionalCommissionSubPlan.AllTerms"
+            editable="true"
+            id="InitialBusiness"
+            label="displaykey.Web.CommissionSubPlan.SubPlanRestrictions.InitialBusiness"
+            value="conditionalCommissionSubPlan.getRenewalRange(0, 1).Covered"/>
+          <Input
+            available="!conditionalCommissionSubPlan.AllTerms"
+            editable="true"
+            id="FirstRenewal"
+            label="displaykey.Web.CommissionSubPlan.SubPlanRestrictions.FirstRenewal"
+            value="conditionalCommissionSubPlan.getRenewalRange(1, 2).Covered"/>
+          <Input
+            available="!conditionalCommissionSubPlan.AllTerms"
+            editable="true"
+            id="SecondRenewal"
+            label="displaykey.Web.CommissionSubPlan.SubPlanRestrictions.SecondRenewal"
+            value="conditionalCommissionSubPlan.getRenewalRange(2, 3).Covered"/>
+          <Input
+            available="!conditionalCommissionSubPlan.AllTerms"
+            editable="true"
+            id="ThirdRenewal"
+            label="displaykey.Web.CommissionSubPlan.SubPlanRestrictions.ThirdRenewal"
+            value="conditionalCommissionSubPlan.getRenewalRange(3, 4).Covered"/>
+          <Input
+            available="!conditionalCommissionSubPlan.AllTerms"
+            editable="true"
+            id="Thereafter"
+            label="displaykey.Web.CommissionSubPlan.SubPlanRestrictions.Thereafter"
+            value="conditionalCommissionSubPlan.getRenewalRangeOnOrAfter(4).Covered"/>
+        </InputColumn>
+        <InputColumn>
+          <TypeKeyInput
+            boldLabel="true"
+            editable="true"
+            id="AllowAssignedRisk"
+            label="displaykey.Web.CommissionSubPlan.SubPlanRestrictions.AllowAssignedRisk"
+            value="conditionalCommissionSubPlan.AssignedRisk"/>
+          <BooleanRadioInput
+            boldLabel="true"
+            editable="true"
+            falseLabel="displaykey.Web.CommissionSubPlan.SubPlanRestrictions.Select"
+            id="AllSegments"
+            label="displaykey.Web.CommissionSubPlan.SubPlanRestrictions.AllowSegments"
+            trueLabel="displaykey.Web.CommissionSubPlan.SubPlanRestrictions.All"
+            value="conditionalCommissionSubPlan.AllSegments">
+            <PostOnChange
+              onChange="if (conditionalCommissionSubPlan.AllSegments) conditionalCommissionSubPlan.SelectedSegments.each( \ segment-&gt; {segment.Selected = true})"
+              target="DATA_ONLY"/>
+          </BooleanRadioInput>
+          <InputIterator
+            elementName="accountSegment"
+            id="Segments"
+            value="conditionalCommissionSubPlan.SelectedSegments">
+            <Input
+              available="!conditionalCommissionSubPlan.AllSegments"
+              editable="true"
+              id="Segment"
+              label="accountSegment"
+              value="accountSegment.Selected"/>
+          </InputIterator>
+          <BooleanRadioInput
+            boldLabel="true"
+            editable="true"
+            falseLabel="displaykey.Web.CommissionSubPlan.SubPlanRestrictions.Select"
+            id="AllEvaluations"
+            label="displaykey.Web.CommissionSubPlan.SubPlanRestrictions.AllowEvaluations"
+            trueLabel="displaykey.Web.CommissionSubPlan.SubPlanRestrictions.All"
+            value="conditionalCommissionSubPlan.AllEvaluations">
+            <PostOnChange
+              onChange="if (conditionalCommissionSubPlan.AllEvaluations) conditionalCommissionSubPlan.SelectedEvaluations.each( \ evaluation -&gt; {evaluation.Selected = true})"
+              target="DATA_ONLY"/>
+          </BooleanRadioInput>
+          <InputIterator
+            elementName="accountEvaluation"
+            id="Evaluations"
+            value="conditionalCommissionSubPlan.SelectedEvaluations">
+            <Input
+              available="!conditionalCommissionSubPlan.AllEvaluations"
+              editable="true"
+              id="Evaluation"
+              label="accountEvaluation"
+              value="accountEvaluation.Selected"/>
+          </InputIterator>
+        </InputColumn>
+        <InputColumn>
+          <BooleanRadioInput
+            boldLabel="true"
+            editable="true"
+            falseLabel="displaykey.Web.CommissionSubPlan.SubPlanRestrictions.Select"
+            id="AllJurisdictions"
+            label="displaykey.Web.CommissionSubPlan.SubPlanRestrictions.AllowJurisdictions"
+            trueLabel="displaykey.Web.CommissionSubPlan.SubPlanRestrictions.All"
+            value="conditionalCommissionSubPlan.AllJurisdictions">
+            <PostOnChange
+              target="JurisdictionsLV"/>
+          </BooleanRadioInput>
+          <ListViewInput
+            available="!conditionalCommissionSubPlan.AllJurisdictions"
+            labelAbove="true">
+            <Toolbar>
+              <IteratorButtons
+                iterator="JurisdictionsLV"/>
+            </Toolbar>
+            <ListViewPanel
+              id="JurisdictionsLV">
+              <RowIterator
+                editable="true"
+                elementName="condCmsnSubPlanJurisdiction"
+                pageSize="8"
+                toAdd="conditionalCommissionSubPlan.addToIncludedJurisdictions(condCmsnSubPlanJurisdiction)"
+                toRemove="conditionalCommissionSubPlan.removeFromIncludedJurisdictions(condCmsnSubPlanJurisdiction)"
+                value="conditionalCommissionSubPlan.IncludedJurisdictions">
+                <Row>
+                  <TypeKeyCell
+                    editable="true"
+                    id="Jurisdiction"
+                    label="displaykey.Web.CommissionSubPlan.SubPlanRestrictions.Jurisdiction"
+                    required="true"
+                    sortOrder="1"
+                    unique="true"
+                    value="condCmsnSubPlanJurisdiction.Jurisdiction"/>
+                </Row>
+              </RowIterator>
+            </ListViewPanel>
+          </ListViewInput>
+          <BooleanRadioInput
+            boldLabel="true"
+            editable="true"
+            falseLabel="displaykey.Web.CommissionSubPlan.SubPlanRestrictions.Select"
+            id="AllUWCompanies"
+            label="displaykey.Web.CommissionSubPlan.SubPlanRestrictions.AllowUWCompanies"
+            trueLabel="displaykey.Web.CommissionSubPlan.SubPlanRestrictions.All"
+            value="conditionalCommissionSubPlan.AllUWCompanies">
+            <PostOnChange
+              onChange="if (conditionalCommissionSubPlan.AllUWCompanies) conditionalCommissionSubPlan.SelectedUWCompanies.each( \ uwComp -&gt; {uwComp.Selected = true})"
+              target="DATA_ONLY"/>
+          </BooleanRadioInput>
+          <InputIterator
+            elementName="UWCompany"
+            id="UWCompanies"
+            value="conditionalCommissionSubPlan.SelectedUWCompanies">
+            <Input
+              available="!conditionalCommissionSubPlan.AllUWCompanies"
+              editable="true"
+              id="UWCompany"
+              label="UWCompany"
+              value="UWCompany.Selected"/>
+          </InputIterator>
+        </InputColumn>
+      </DetailViewPanel>
+    </Card>
+    <Code><![CDATA[
+property get conditionalCommissionSubPlan() : CondCmsnSubPlan {
+        return commissionSubPlan as CondCmsnSubPlan;
+      }
+
+function getErrorMessageIfDuplicateSpecialRate( specialRate : CommissionSubPlanChargePatternRate) : String {
+  return isDuplicated( specialRate )
+  ? displaykey.Web.CommissionSubPlan.SpecialChargePatternRates.ErrorDuplicateChargePatternRate( specialRate.ChargePattern, specialRate.Role )
+  : null;
+}
+
+function isDuplicated( specialRate : CommissionSubPlanChargePatternRate ) : Boolean {
+  return commissionSubPlan.SpecialChargePatternRates.countWhere(\ eachRate -> areSameSpecialRates(specialRate, eachRate)) > 1;
+}
+
+function areSameSpecialRates(specialRate1 : CommissionSubPlanChargePatternRate, specialRate2 : CommissionSubPlanChargePatternRate) : Boolean {
+  return specialRate1.ChargePattern == specialRate2.ChargePattern
+    && specialRate1.Role == specialRate2.Role
+}
+      
+    ]]></Code>
+  </CardViewPanel>
+</PCF>

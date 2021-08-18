@@ -1,0 +1,68 @@
+<?xml version="1.0"?>
+<PCF
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:noNamespaceSchemaLocation="../../../../../pcf.xsd">
+  <Popup
+    beforeCommit="duplicateContactsPopupNavigator.beforeCommitOfContactCreationPage(\ c -&gt; {policyPeriodContact.Contact = c})"
+    canEdit="true"
+    canVisit="perm.PolicyPeriodContact.create"
+    id="NewPolicyContactPopup"
+    returnType="PolicyPeriodContact"
+    startInEditMode="true"
+    title="displaykey.Web.NewPolicyContact.Title">
+    <LocationEntryPoint
+      signature="NewPolicyContactPopup(policyPeriod : PolicyPeriod, contactSubtype : Type&lt;Contact&gt;)"/>
+    <Variable
+      name="policyPeriod"
+      type="PolicyPeriod"/>
+    <Variable
+      initialValue="initNewPolicyContact()"
+      name="policyPeriodContact"
+      type="PolicyPeriodContact"/>
+    <Variable
+      name="contactSubtype"
+      type="Type&lt;Contact&gt;"/>
+    <Variable
+      initialValue="createDuplicateContactsPopupNavigator()"
+      name="duplicateContactsPopupNavigator"
+      type="gw.pcf.duplicatecontacts.DuplicateContactsPopupNavigator"/>
+    <Screen
+      id="NewPolicyContactScreen">
+      <Toolbar>
+        <ToolbarButton
+          action="duplicateContactsPopupNavigator.checkForDuplicatesOrUpdate(\ -&gt; CurrentLocation.commit())"
+          id="UpdateButtonThatForcesCheckForDuplicates"
+          label="displaykey.Button.Update"
+          visible="duplicateContactsPopupNavigator.ShowCheckForDuplicatesButton"/>
+        <EditButtons
+          pickValue="policyPeriodContact"
+          updateVisible="not duplicateContactsPopupNavigator.ShowCheckForDuplicatesButton"/>
+        <ToolbarButton
+          action="duplicateContactsPopupNavigator.pushFromCurrentLocationToDuplicateContactsPopup()"
+          id="CheckForDuplicates"
+          label="displaykey.Web.Contact.CheckForDuplicates"
+          visible="duplicateContactsPopupNavigator.ShowCheckForDuplicatesButton"/>
+      </Toolbar>
+      <PanelRef
+        def="PolicyContactDetailDV(policyPeriodContact, true)"/>
+    </Screen>
+    <Code><![CDATA[function initNewPolicyContact() : PolicyPeriodContact {
+  var newPolicyPeriodContact = new PolicyPeriodContact();
+  var newContact = instantiateContact()
+  newPolicyPeriodContact.Contact = newContact
+  policyPeriod.addToContacts(newPolicyPeriodContact)
+  return newPolicyPeriodContact;
+}
+
+private function instantiateContact() : Contact {
+  // Instantiate the appropriate contact subtype (e.g. a Person or a Company)
+  return contactSubtype.TypeInfo.getConstructor(null).Constructor.newInstance(null) as Contact  
+}
+
+function createDuplicateContactsPopupNavigator() : gw.pcf.duplicatecontacts.DuplicateContactsPopupNavigator {
+  var newContactBeingCreatedOnThisPage = policyPeriodContact.Contact
+  var existingContactsOnThisAccount = policyPeriod.Contacts.map(\ ac -> ac.Contact).where(\ c -> c != newContactBeingCreatedOnThisPage)
+  return new gw.pcf.duplicatecontacts.DuplicateContactsPopupNavigatorImpl(newContactBeingCreatedOnThisPage, existingContactsOnThisAccount, entity.PolicyPeriod)
+}]]></Code>
+  </Popup>
+</PCF>

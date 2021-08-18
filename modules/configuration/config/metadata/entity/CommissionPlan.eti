@@ -1,0 +1,29 @@
+<?xml version="1.0"?>
+<!-- ====================================================================  CommissionPlan  ==================================================================== -->
+<subtype
+  xmlns="http://guidewire.com/datamodel"
+  desc="Describes how to calculate the commission on a policy."
+  entity="CommissionPlan"
+  subpackage="commission"
+  supertype="Plan">
+  <implementsEntity
+    name="InCurrencySilo"/>
+  <array
+    arrayentity="CommissionPlanTier"
+    desc="The producer tiers for which this commission plan is valid."
+    exportable="false"
+    getterScriptability="doesNotExist"
+    name="AllowedTiers"
+    owner="true"
+    setterScriptability="doesNotExist"/>
+  <array
+    arrayentity="CommissionSubPlan"
+    desc="Sub-plans for the plan."
+    exportable="false"
+    name="SubPlans"
+    owner="true"
+    setterScriptability="doesNotExist"/>
+  <dbcheckbuilder
+    className="com.guidewire.bc.system.database.dbchecks.commission.CommissionPlanDBCheckBuilder"/>
+  <fulldescription><![CDATA[Describes how to calculate the commission on a policy. A commission plan has a set of producer tiers to which it applies. The plan only applies to a producer if that producer's tier is in the AllowedTiers set. A commission plan also has a set of sub plans which apply in specific conditions, depending on the implementation of the ICommission plugin ]]></fulldescription>
+</subtype>

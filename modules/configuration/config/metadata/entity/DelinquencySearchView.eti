@@ -1,0 +1,35 @@
+<?xml version="1.0"?>
+<!-- ====================================================================  DelinquencySearchView  ==================================================================== -->
+<viewEntity
+  xmlns="http://guidewire.com/datamodel"
+  entity="DelinquencySearchView"
+  desc="Supports the efficient creation of DelinquencyProcess lists in BillingCenter's views."
+  exportable="false"
+  final="false"
+  subpackage="search.view"
+  primaryEntity="DelinquencyProcess">
+  <viewEntityLink
+    name="DelinquencyProcess"
+    path="ID"/>
+  <viewEntityLink
+    name="Account"
+    path="Account"/>
+  <viewEntityLink
+    name="DelinquencyPlan"
+    path="Account.DelinquencyPlan"/>
+  <viewEntityColumn
+    name="StartDate"
+    path="StartDate"/>
+  <viewEntityColumn
+    name="AccountNumber"
+    path="Account.AccountNumber"/>
+  <viewEntityColumn
+    name="InsuredName"
+    path="Account.Insured.Contact.Name"/>
+  <viewEntityTypekey
+    name="Status"
+    path="Status"/>
+  <viewEntityTypekey
+    name="CurrentEvent"
+    path="CurrentEventDenorm.EventName"/>
+</viewEntity>

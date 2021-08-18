@@ -1,0 +1,141 @@
+<?xml version="1.0"?>
+<PCF
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:noNamespaceSchemaLocation="../../../../../../pcf.xsd">
+  <DetailViewPanel
+    id="ActivityPatternDV">
+    <Require
+      name="activityPattern"
+      type="ActivityPattern"/>
+    <InputColumn>
+      <Label
+        label="displaykey.Web.Admin.ActivityPatternDV.ActivityPattern"/>
+      <Input
+        editable="true"
+        id="Subject"
+        label="displaykey.Web.Admin.ActivityPatternDV.Subject"
+        required="true"
+        value="activityPattern.Subject"/>
+      <Input
+        editable="true"
+        id="ShortSubject"
+        label="displaykey.Web.Admin.ActivityPatternDV.ShortSubject"
+        value="activityPattern.ShortSubject"/>
+      <TypeKeyInput
+        id="Type"
+        label="displaykey.Web.Admin.ActivityPatternDV.Type"
+        value="activityPattern.Type"/>
+      <TypeKeyInput
+        editable="!activityPattern.SystemPattern"
+        id="Category"
+        label="displaykey.Web.Admin.ActivityPatternDV.Category"
+        value="activityPattern.Category"/>
+      <Input
+        editable="!activityPattern.SystemPattern"
+        id="Code"
+        label="displaykey.Web.Admin.ActivityPatternDV.Code"
+        required="true"
+        value="activityPattern.Code"/>
+      <TypeKeyInput
+        editable="true"
+        id="Priority"
+        label="displaykey.Web.Admin.ActivityPatternDV.Priority"
+        required="true"
+        value="activityPattern.Priority"/>
+      <BooleanRadioInput
+        editable="true"
+        id="Mandatory"
+        label="displaykey.Web.Admin.ActivityPatternDV.Mandatory"
+        required="true"
+        value="activityPattern.Mandatory"/>
+      <TextAreaInput
+        editable="true"
+        id="Description"
+        label="displaykey.Web.Admin.ActivityPatternDV.Description"
+        numCols="30"
+        numRows="3"
+        value="activityPattern.Description"/>
+    </InputColumn>
+    <InputColumn>
+      <Label
+        label="displaykey.Web.Admin.ActivityPatternDV.ActivityPatternDatesForTarget"/>
+      <Input
+        editable="true"
+        id="TargetDays"
+        label="displaykey.Web.Admin.ActivityPatternDV.TargetDays"
+        value="activityPattern.TargetDays"
+        visible="activityPattern.ActivityClass == &quot;task&quot;"/>
+      <Input
+        editable="true"
+        id="TargetHours"
+        label="displaykey.Web.Admin.ActivityPatternDV.TargetHours"
+        value="activityPattern.TargetHours"
+        visible="activityPattern.ActivityClass == &quot;task&quot;"/>
+      <TypeKeyInput
+        editable="true"
+        id="TargetStartPoint"
+        label="displaykey.Web.Admin.ActivityPatternDV.TargetStartPoint"
+        value="activityPattern.TargetStartPoint"
+        visible="activityPattern.ActivityClass == &quot;task&quot;"/>
+      <TypeKeyInput
+        editable="true"
+        id="TargetIncludeDays"
+        label="displaykey.Web.Admin.ActivityPatternDV.TargetIncludeDays"
+        value="activityPattern.TargetIncludeDays"
+        visible="activityPattern.ActivityClass == &quot;task&quot;"/>
+      <Label
+        label="displaykey.Web.Admin.ActivityPatternDV.ActivityPatternDatesForEscalation"/>
+      <Input
+        editable="true"
+        id="EscalationDays"
+        label="displaykey.Web.Admin.ActivityPatternDV.EscalationDays"
+        value="activityPattern.EscalationDays"/>
+      <Input
+        editable="true"
+        id="EscalationHours"
+        label="displaykey.Web.Admin.ActivityPatternDV.EscalationHours"
+        value="activityPattern.EscalationHours"/>
+      <TypeKeyInput
+        editable="true"
+        id="EscalationStartPoint"
+        label="displaykey.Web.Admin.ActivityPatternDV.EscalationStartPoint"
+        value="activityPattern.EscalationStartPt"/>
+      <TypeKeyInput
+        editable="true"
+        id="EscalationIncludeDays"
+        label="displaykey.Web.Admin.ActivityPatternDV.EscalationIncludeDays"
+        value="activityPattern.EscalationInclDays"/>
+    </InputColumn>
+    <InputColumn>
+      <Label
+        label="displaykey.Web.Admin.ActivityPatternDV.Templates"/>
+      <DocumentTemplateInput
+        conversionExpression="PickedValue.TemplateId"
+        editable="true"
+        freeInputEnabled="false"
+        id="DocumentTemplate"
+        label="displaykey.Admin.AdminActivityPattern.DocumentTemplate"
+        pickLocation="DocumentTemplateSearchPopup.push( { &quot;activity&quot; } )"
+        value="activityPattern.DocumentTemplate"/>
+      <PickerInput
+        conversionExpression="PickedValue.Filename"
+        editable="true"
+        freeInputEnabled="false"
+        id="EmailTemplate"
+        label="displaykey.Web.Admin.ActivityPatternDV.EmailTemplate"
+        outputConversion="getDisplayName(VALUE)"
+        pickLocation="PickEmailTemplatePopup.push(new gw.api.email.EmailTemplateSearchCriteria({&quot;activity&quot;}))"
+        value="activityPattern.EmailTemplate"/>
+    </InputColumn>
+    <Code><![CDATA[
+function getDisplayName(templateFilename : String) : String {
+    if (templateFilename == null) {
+      return null
+    }
+    var ets = gw.plugin.Plugins.get(gw.plugin.email.IEmailTemplateSource)
+    return ets.getEmailTemplate(templateFilename).getName();
+  }
+      
+    ]]></Code>
+  </DetailViewPanel>
+</PCF>

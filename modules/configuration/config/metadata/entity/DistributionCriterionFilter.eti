@@ -1,0 +1,37 @@
+<?xml version="1.0"?>
+<entity
+  xmlns="http://guidewire.com/datamodel"
+  desc="Specifies an InvoiceItem distribution target filter criterion associated with an Allocation Plan"
+  entity="DistributionCriterionFilter"
+  extendable="false"
+  loadable="false"
+  subpackage="account"
+  table="distcriterionfilter"
+  type="versionable">
+  <implementsEntity
+    name="NotInCurrencySilo"/>
+  <typekey
+    desc="The distribution criterion filter type"
+    name="DistributionFilterType"
+    nullok="false"
+    setterScriptability="doesNotExist"
+    typelist="DistributionFilterType"/>
+  <foreignkey
+    columnName="allocationplanID"
+    desc="The containing AllocationPlan for this distribution target invoice item filter."
+    fkentity="PaymentAllocationPlan"
+    name="ContainingAllocationPlan"
+    nullok="false"
+    setterScriptability="doesNotExist"/>
+  <index
+    desc="Enforces the DistributionFilterType uniqueness constraint for DistributionCriteriaFilters belonging to a Payment Allocation Plan."
+    name="AllocPlanFiltrUniq"
+    unique="true">
+    <indexcol
+      keyposition="1"
+      name="allocationplanID"/>
+    <indexcol
+      keyposition="2"
+      name="DistributionFilterType"/>
+  </index>
+</entity>

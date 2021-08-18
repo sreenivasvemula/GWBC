@@ -1,0 +1,76 @@
+<?xml version="1.0"?>
+<PCF
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:noNamespaceSchemaLocation="../../../../../pcf.xsd">
+  <ListViewPanel
+    id="AgencyBillPolicyTxnsLV">
+    <Require
+      name="policyPeriod"
+      type="PolicyPeriod"/>
+    <Variable
+      initialValue="libraries.TransactionRelation.TC_POLICY"
+      name="transactionContext"/>
+    <RowIterator
+      editable="false"
+      elementName="transactionWrapper"
+      id="ChargesLV"
+      pageSize="0"
+      value="policyPeriod.getChargeTransactionWrappers()">
+      <Row>
+        <Cell
+          id="TransactionType"
+          label="displaykey.Web.AgencyBillPolicyTxnsLV.TransactionType"
+          value="transactionWrapper.transactionType"/>
+        <DateCell
+          id="Date"
+          label="displaykey.Web.TransactionDetailsLV.Date"
+          sortOrder="1"
+          value="transactionWrapper.transaction.TransactionDate"/>
+        <Cell
+          action="TransactionDetailPopup.push(transactionWrapper.transaction)"
+          id="TransactionNumber"
+          label="displaykey.Web.TransactionDetailsLV.TransactionNumber"
+          value="transactionWrapper.transaction.TransactionNumber"/>
+        <Cell
+          enableSort="false"
+          id="Item"
+          label="displaykey.Web.TransactionDetailsLV.Item"
+          value="transactionWrapper.transaction.ShortDisplayName"/>
+        <TypeKeyCell
+          enableSort="false"
+          id="Event"
+          label="displaykey.Web.TransactionDetailsLV.Event"
+          value="transactionWrapper.transaction.Subtype"/>
+        <MonetaryAmountCell
+          currency="transactionWrapper.transaction.Currency"
+          enableSort="false"
+          formatType="currency"
+          id="Gross"
+          label="displaykey.Web.TransactionDetailsLV.Gross"
+          value="transactionWrapper.transaction.getGrossAmount( transactionContext )"/>
+        <MonetaryAmountCell
+          currency="transactionWrapper.transaction.Currency"
+          enableSort="false"
+          formatType="currency"
+          id="Commission"
+          label="displaykey.Web.TransactionDetailsLV.Commission"
+          value="transactionWrapper.transaction.getCommissionAmount( transactionContext )"/>
+        <TextCell
+          align="right"
+          enableSort="false"
+          format="displaykey.Web.AgencyBill.CommissionPercentFormat"
+          id="Rate"
+          label="displaykey.Web.TransactionDetailsLV.CommissionRate"
+          value="transactionWrapper.transaction.getCommissionRate( transactionContext )"
+          width="80"/>
+        <MonetaryAmountCell
+          currency="transactionWrapper.transaction.Currency"
+          enableSort="false"
+          formatType="currency"
+          id="Net"
+          label="displaykey.Web.TransactionDetailsLV.Net"
+          value="transactionWrapper.transaction.getNetAmount( transactionContext )"/>
+      </Row>
+    </RowIterator>
+  </ListViewPanel>
+</PCF>

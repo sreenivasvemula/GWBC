@@ -1,0 +1,249 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xml:lang="en" lang="en" xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+    <meta http-equiv="Content-Style-Type" content="text/css" />
+    <!-- MOTW-DISABLED saved from url=(0014)about:internet -->
+    <title>Modifying Field Validators</title>
+    <link rel="StyleSheet" href="css/fieldvalidators.css" type="text/css" media="all" />
+    <link rel="StyleSheet" href="css/webworks.css" type="text/css" media="all" />
+    <link rel="StyleSheet" href="css/css-guidewire-extra.css" type="text/css" media="all" />
+    <script type="text/javascript" language="JavaScript1.2" src="wwhdata/common/context.js"></script>
+    <script type="text/javascript" language="JavaScript1.2" src="wwhdata/common/towwhdir.js"></script>
+    <script type="text/javascript" language="JavaScript1.2" src="wwhdata/common/wwhpagef.js"></script>
+    <script type="text/javascript" language="JavaScript1.2">
+      <!--
+        var  WebWorksRootPath = "";
+      // -->
+    </script>
+    <script type="text/javascript" language="JavaScript1.2">
+      <!--
+        // Set reference to top level help frame
+        //
+        var  WWHFrame = WWHGetWWHFrame("", true);
+      // -->
+    </script>
+    <script type="text/javascript" language="JavaScript1.2" src="scripts/expand.js"></script>
+    <!-- THE FOLLOWING IS A GUIDEWIRE STYLE DEFINITION FOR THE LINK TO THIS FEATURE -->
+    <link rel="StyleSheet" href="css/css-guidewire-extra.css" type="text/css" media="all" />
+    <!-- THE FOLLOWING IS A GUIDEWIRE GSCRIPT FUNCTION FOR THE LINK TO THIS FEATURE -->
+    <script type="text/javascript">
+function guidewire_selectall()
+{
+var text_val=eval("document.linktothisurlform.urlfield");
+text_val.focus();
+text_val.select();
+}
+</script>
+  </head>
+  <body onLoad="WWHUpdate();" onUnload="WWHUnload();" onKeyDown="WWHHandleKeyDown((document.all||document.getElementById||document.layers)?event:null);" onKeyPress="WWHHandleKeyPress((document.all||document.getElementById||document.layers)?event:null);" onKeyUp="WWHHandleKeyUp((document.all||document.getElementById||document.layers)?event:null);">
+    <!-- THE FOLLOWING IS A GUIDEWIRE DIV FOR THE 'LINK TO THIS' FEATURE -->
+    <div id="linkToThisPage" class="popup" style="display: none;">
+      <div class="popupTitle">Link Directly to This Page 
+           <a href="#" onclick="var thePopup = getElementById('linkToThisPage');thePopup.style.display='none';return false;"><img class="popupClosebox" src="wwhelp/wwhimpl/common/images/close.gif" /></a></div>
+      <div style="padding:6px;">
+        <div class="popupText" id="linkToThisPageBookmark">An error has occurred if you see this messsage.</div>
+        <form name="linktothisurlform" method="post" action="" style="width:275px;margin:0px">
+          <input type="text" class="popupURLText" id="linkToThisPageURL" name="urlfield" rows="1" cols="55" onClick="guidewire_selectall();" onFocus="guidewire_selectall();"></input>
+        </form>
+      </div>
+    </div>
+    <br />
+    <div class="WebWorks_Breadcrumbs" style="text-align: left;">
+      <span>BillingCenter Configuration Guide</span> : 
+    <span class="WebWorks_Breadcrumbs" style="text-align: left;"><a class="WebWorks_Breadcrumb_Link" href="p-datamodel_2.html#2208593">Data Model Configuration</a> : <a class="WebWorks_Breadcrumb_Link" href="fieldvalidators.25.1.html#2208593">Field Validation</a> : Modifying Field Validators</span></div>
+    <hr align="left" />
+    <blockquote>
+      <h3 class="H1_-_Heading_1"><a name="2208593">Modifying Field Validators</a></h3>
+      <div class="B_-_Body"><a name="2431905">You configure field validation in Guidewire Studio by editing </a><span class="cv_-_computer_voice">fieldvalidtors.xml</span> files in various locations in the <span class="cv_-_computer_voice">fieldvalidators</span> folder. In Studio, navigate in the <span class="uis_-_UI_element_Studio">Project</span> window to <span class="uis_-_UI_element_Studio">configuration</span> → <span class="uis_-_UI_element_Studio">config</span> → <span class="cv_-_computer_voice">fieldvalidators</span>.</div>
+      <div class="BI_-_Bullet_Item_outer" style="margin-left: 57pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="BI_-_Bullet_Item_inner" style="width: 15pt; white-space: nowrap">
+                <span class="bu_-_bullet">•	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="BI_-_Bullet_Item_inner"><a name="2431912">You define global field validators once in the </a><span class="cv_-_computer_voice">fieldvalidtors.xml</span> file located in the root of the <span class="cv_-_computer_voice">fieldvalidators</span> folder.</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="BI_-_Bullet_Item_outer" style="margin-left: 57pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="BI_-_Bullet_Item_inner" style="width: 15pt; white-space: nowrap">
+                <span class="bu_-_bullet">•	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="BI_-_Bullet_Item_inner"><a name="2431913">You define national field validators in </a><span class="cv_-_computer_voice">fieldvalidtors.xml</span> files located in country-specific packages in the <span class="cv_-_computer_voice">fieldvalidators</span> folder.</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="B_-_Body"><a name="2205752">You can, for example:</a></div>
+      <div class="BI_-_Bullet_Item_outer" style="margin-left: 57pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="BI_-_Bullet_Item_inner" style="width: 15pt; white-space: nowrap">
+                <span class="bu_-_bullet">•	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="BI_-_Bullet_Item_inner"><a name="2205753">Create a new field validator. For example:</a></div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <PRE class="CF_-_Code_First_Line"><a name="2432056">&lt;!-- Create a new validator --&gt;</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2432057">&lt;ValidatorDef name="ExampleValidator" value="[A-z]{1,5}" description="Validator.Example" </a></PRE>
+      <PRE class="CL_-_Code_Last_Line"><a name="2432058">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;input-mask="#####" /&gt;</a></PRE>
+      <div class="BI_-_Bullet_Item_outer" style="margin-left: 57pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="BI_-_Bullet_Item_inner" style="width: 15pt; white-space: nowrap">
+                <span class="bu_-_bullet">•	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="BI_-_Bullet_Item_inner"><a name="2205754">Modify attributes of an existing validator. For example:</a></div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <PRE class="CF_-_Code_First_Line"><a name="2432095">&lt;!-- Modify a validator definition. Adding a ValidatorDef element with the same name as one defined</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2432096">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;in the base fieldvaldators.xml file replaces the base validator. --&gt; </a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2432103">&lt;ValidatorDef name="AccountNumber" value="[0-9]{3}-[0-9]{5}" description="Validator.AccountNumber"  </a></PRE>
+      <PRE class="CL_-_Code_Last_Line"><a name="2432104">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;input-mask="###-#####" /&gt; </a></PRE>
+      <div class="BI_-_Bullet_Item_outer" style="margin-left: 57pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="BI_-_Bullet_Item_inner" style="width: 15pt; white-space: nowrap">
+                <span class="bu_-_bullet">•	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="BI_-_Bullet_Item_inner"><a name="2431944">Define field validators for a specific country.</a></div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <h6 class="HS_-_Head_Sub"><a name="2431994">See also</a></h6>
+      <div class="BI_-_Bullet_Item_outer" style="margin-left: 57pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="BI_-_Bullet_Item_inner" style="width: 15pt; white-space: nowrap">
+                <span class="bu_-_bullet">•	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="BI_-_Bullet_Item_inner"><a href="javascript:WWHClickedPopup('global', 'localization_fieldvalidation.25.1.html#2357845', '');" title="Configuring National Field Validation" name="2431998">“Configuring National Field Validation” in the </a><span class="bt_-_book_title"><a href="javascript:WWHClickedPopup('global', 'localization_fieldvalidation.25.1.html#2357845', '');" title="Configuring National Field Validation">Globalization Guide</a></span></div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <h4 class="H2_-_Heading_2"><a name="2209784">Using &lt;column-override&gt; to Modify Field Validation</a></h4>
+      <div class="B_-_Body"><a name="2209890">You use the </a><span class="cv_-_computer_voice">&lt;column-override&gt;</span> element in an extension file to override attributes on a field validator or to add a field validator to a field that does not contain one.</div>
+      <h6 class="HS_-_Head_Sub"><a name="2209897">Adding a Field Validator to a Field</a></h6>
+      <div class="B_-_Body"><a name="2347855">Occasionally, you want—or need—to add a validator to an application field that currently does not have one. You need to use a </a><span class="cv_-_computer_voice">&lt;column-override&gt;</span> element in the specific entity extension file. Use the following syntax:</div>
+      <PRE class="CF_-_Code_First_Line"><a name="2208282">&lt;extension entityName="SomeEntity"&gt;</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2208284">&nbsp;&nbsp;&lt;column-override name="SomeColumn"&gt;</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2208286">&nbsp;&nbsp;&nbsp;&nbsp;&lt;columnParam name="validator" value="SomeCustomValidator"/&gt;</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2208492">&nbsp;&nbsp;&lt;/column-override&gt;</a></PRE>
+      <PRE class="CL_-_Code_Last_Line"><a name="2208288">&lt;/extension&gt;</a></PRE>
+      <div class="B_-_Body"><a name="2208289">Suppose that you want to create a validator for a Date of Birth field (</a><span class="cv_-_computer_voice">Person.DateOfBirth</span>). To create this validator, you need to perform the following steps in Studio.</div>
+      <div class="LS_-_List_Start_outer" style="margin-left: 57pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="LS_-_List_Start_inner" style="width: 15pt; white-space: nowrap">
+                <span class="ri_-_run_in_header">	1.	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="LS_-_List_Start_inner"><a name="2208552">Create a </a><span class="cv_-_computer_voice">Person.etx</span> file if one does not exist and add the following to it.</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <PRE class="CF_-_Code_First_Line"><a name="2208298">&lt;extension entityName="Person"&gt;   </a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2208300">&nbsp;&nbsp;&lt;column-override name="DateOfBirth"&gt;</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2208302">&nbsp;&nbsp;&nbsp;&nbsp;&lt;columnParam name="validator" value="DateOfBirth"/&gt;</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2208503">&nbsp;&nbsp;&lt;/column-override&gt;</a></PRE>
+      <PRE class="CL_-_Code_Last_Line"><a name="2208304">&lt;/extension&gt;</a></PRE>
+      <div class="LI_-_List_Item_outer" style="margin-left: 57pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="LI_-_List_Item_inner" style="width: 15pt; white-space: nowrap">
+                <span class="ri_-_run_in_header">	2.	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="LI_-_List_Item_inner"><a name="2208305">Add a validation definition for the </a><span class="cv_-_computer_voice">DateOfBirth</span> validator to <span class="cv_-_computer_voice">fieldvalidators.xml</span>. For example:</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="CS_-_Code_Single_Line"><a name="2208312">&lt;ValidatorDef description="Validator.DateOfBirth" ... name="DateOfBirth" .../&gt;</a></div>
+      <div class="B_-_Body"><a name="2208478">In this case, you can potentially create different </a><span class="cv_-_computer_voice">DateOfBirth</span> validators in different country-specific <span class="cv_-_computer_voice">fieldvalidators</span> files.</div>
+      <h6 class="HS_-_Head_Sub"><a name="2244343">Changing the Length of a Text Field</a></h6>
+      <div class="B_-_Body"><a name="2347875">You can also use the </a><span class="cv_-_computer_voice">&lt;column-override&gt;</span> element to change the size (length) of the text that a user can enter into a text box or field. Guidewire makes a distinction between the <span class="cv_-_computer_voice">size</span> attribute and the <span class="cv_-_computer_voice">logicalSize</span> attribute.</div>
+      <div class="BI_-_Bullet_Item_outer" style="margin-left: 57pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="BI_-_Bullet_Item_inner" style="width: 15pt; white-space: nowrap">
+                <span class="bu_-_bullet">•	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="BI_-_Bullet_Item_inner"><a name="2260734">The </a><span class="cv_-_computer_voice">size</span> attribute is the length of the database column (if a <span class="cv_-_computer_voice">VARCHAR</span> column). </div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="BI_-_Bullet_Item_outer" style="margin-left: 57pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="BI_-_Bullet_Item_inner" style="width: 15pt; white-space: nowrap">
+                <span class="bu_-_bullet">•	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="BI_-_Bullet_Item_inner"><a name="2260767">The </a><span class="cv_-_computer_voice">logicalSize</span> attribute is the maximum length of the field that the application permits. It must not be greater than <span class="cv_-_computer_voice">size</span> attribute (if applicable). </div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="B_-_Body"><a name="2244335">In this case, you set the </a><span class="cv_-_computer_voice">logicalSize</span> parameter, not a <span class="cv_-_computer_voice">size</span> parameter. This parameter does not change the column length of the field in the database. You use the <span class="cv_-_computer_voice">logicalSize</span> parameter simply to set the field length in the BillingCenter interface. For example:</div>
+      <PRE class="CF_-_Code_First_Line"><a name="2209820">&lt;column-override name="EmailAddressHome"&gt; </a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2209821">&nbsp;&nbsp;&lt;columnParam name="</a><span class="s_-_strong">logicalSize</span>" value="42"/&gt; </PRE>
+      <PRE class="CL_-_Code_Last_Line"><a name="2209822">&lt;/column-override&gt;</a></PRE>
+      <div class="B_-_Body"><a name="2210081">The use of the </a><span class="cv_-_computer_voice">logicalSize</span> parameter does not affect the actual length of the column in the database. It merely affects how many characters a user can enter into a text field.</div>
+      <script type="text/javascript" language="JavaScript1.2">
+        <!--
+          // Clear related topics
+          //
+          WWHClearRelatedTopics();
+
+          document.writeln(WWHRelatedTopicsInlineHTML());
+        // -->
+      </script>
+    </blockquote>
+    <script type="text/javascript" language="JavaScript1.2">
+      <!--
+        document.write(WWHRelatedTopicsDivTag() + WWHPopupDivTag() + WWHALinksDivTag());
+      // -->
+    </script>
+  </body>
+</html>

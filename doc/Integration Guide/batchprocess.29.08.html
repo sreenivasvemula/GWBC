@@ -1,0 +1,187 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xml:lang="en" lang="en" xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+    <meta http-equiv="Content-Style-Type" content="text/css" />
+    <!-- MOTW-DISABLED saved from url=(0014)about:internet -->
+    <title>Custom Work Queue Overview</title>
+    <link rel="StyleSheet" href="css/batchprocess.css" type="text/css" media="all" />
+    <link rel="StyleSheet" href="css/webworks.css" type="text/css" media="all" />
+    <link rel="StyleSheet" href="css/css-guidewire-extra.css" type="text/css" media="all" />
+    <script type="text/javascript" language="JavaScript1.2" src="wwhdata/common/context.js"></script>
+    <script type="text/javascript" language="JavaScript1.2" src="wwhdata/common/towwhdir.js"></script>
+    <script type="text/javascript" language="JavaScript1.2" src="wwhdata/common/wwhpagef.js"></script>
+    <script type="text/javascript" language="JavaScript1.2">
+      <!--
+        var  WebWorksRootPath = "";
+      // -->
+    </script>
+    <script type="text/javascript" language="JavaScript1.2">
+      <!--
+        // Set reference to top level help frame
+        //
+        var  WWHFrame = WWHGetWWHFrame("", true);
+      // -->
+    </script>
+    <script type="text/javascript" language="JavaScript1.2" src="scripts/expand.js"></script>
+    <!-- THE FOLLOWING IS A GUIDEWIRE STYLE DEFINITION FOR THE LINK TO THIS FEATURE -->
+    <link rel="StyleSheet" href="css/css-guidewire-extra.css" type="text/css" media="all" />
+    <!-- THE FOLLOWING IS A GUIDEWIRE GSCRIPT FUNCTION FOR THE LINK TO THIS FEATURE -->
+    <script type="text/javascript">
+function guidewire_selectall()
+{
+var text_val=eval("document.linktothisurlform.urlfield");
+text_val.focus();
+text_val.select();
+}
+</script>
+  </head>
+  <body onLoad="WWHUpdate();" onUnload="WWHUnload();" onKeyDown="WWHHandleKeyDown((document.all||document.getElementById||document.layers)?event:null);" onKeyPress="WWHHandleKeyPress((document.all||document.getElementById||document.layers)?event:null);" onKeyUp="WWHHandleKeyUp((document.all||document.getElementById||document.layers)?event:null);">
+    <!-- THE FOLLOWING IS A GUIDEWIRE DIV FOR THE 'LINK TO THIS' FEATURE -->
+    <div id="linkToThisPage" class="popup" style="display: none;">
+      <div class="popupTitle">Link Directly to This Page 
+           <a href="#" onclick="var thePopup = getElementById('linkToThisPage');thePopup.style.display='none';return false;"><img class="popupClosebox" src="wwhelp/wwhimpl/common/images/close.gif" /></a></div>
+      <div style="padding:6px;">
+        <div class="popupText" id="linkToThisPageBookmark">An error has occurred if you see this messsage.</div>
+        <form name="linktothisurlform" method="post" action="" style="width:275px;margin:0px">
+          <input type="text" class="popupURLText" id="linkToThisPageURL" name="urlfield" rows="1" cols="55" onClick="guidewire_selectall();" onFocus="guidewire_selectall();"></input>
+        </form>
+      </div>
+    </div>
+    <br />
+    <div class="WebWorks_Breadcrumbs" style="text-align: left;">
+      <span>BillingCenter Integration Guide</span> : 
+    <span class="WebWorks_Breadcrumbs" style="text-align: left;"><a class="WebWorks_Breadcrumb_Link" href="p-claims.html#2226428">Other Integration Topics</a> : <a class="WebWorks_Breadcrumb_Link" href="batchprocess.29.01.html#2226428">Custom Batch Processing</a> : <a class="WebWorks_Breadcrumb_Link" href="batchprocess.29.07.html#2226428">Developing Custom Work Queues</a> : Custom Work Queue Overview</span></div>
+    <hr align="left" />
+    <blockquote>
+      <h4 class="H2B_-_Heading_2_Break"><a name="2226428">Custom Work Queue Overview</a></h4>
+      <div class="B_-_Body"><a name="2279606">A custom work queues comprises the following components:</a></div>
+      <div class="BI_-_Bullet_Item_outer" style="margin-left: 57pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="BI_-_Bullet_Item_inner" style="width: 15pt; white-space: nowrap">
+                <span class="bu_-_bullet">•	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="BI_-_Bullet_Item_inner"><span class="ri_-_run_in_header"><a name="2316757">Writer </a></span>– The <span class="cv_-_computer_voice">findTargets</span> Gosu method on a class that extends <span class="cv_-_computer_voice">WorkQueuBase</span> to select the units of work for a batch and writes work items for them in the work queue table</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="BI_-_Bullet_Item_outer" style="margin-left: 57pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="BI_-_Bullet_Item_inner" style="width: 15pt; white-space: nowrap">
+                <span class="bu_-_bullet">•	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="BI_-_Bullet_Item_inner"><span class="ri_-_run_in_header"><a name="2316758">Work queue</a></span> – An entity type that implements the <span class="cv_-_computer_voice">WorkItem</span> delegate, such as the <span class="cv_-_computer_voice">StandardWorkItem</span> entity, to establish the database table for the work queue and its work items</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="BI_-_Bullet_Item_outer" style="margin-left: 57pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="BI_-_Bullet_Item_inner" style="width: 15pt; white-space: nowrap">
+                <span class="bu_-_bullet">•	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="BI_-_Bullet_Item_inner"><span class="ri_-_run_in_header"><a name="2316749">Worker </a></span>– The <span class="cv_-_computer_voice">processWorkItem</span> Gosu method on the same class that extends <span class="cv_-_computer_voice">WorkQueuBase</span> base class to process units of work identified on the work queue by work items </div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="B_-_Body"><a name="2316750">Starting the writer initiates a run of the type of batch processing that a work queue performs. The batch is complete when the workers exhaust the queue of all work items in the batch, except those they fail to process successfully. </a></div>
+      <div class="H3_-_Heading_3_outer" style="margin-left: 36pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <h5 class="H3_-_Heading_3_inner" style="width: 18pt; white-space: nowrap"></h5>
+            </td>
+            <td width="100%">
+              <h5 class="H3_-_Heading_3_inner"><a name="2328360">Your Custom Work Queue Class</a></h5>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="B_-_Body"><a name="2328361">You implement the code for your writer and your workers as methods on a single Gosu class. You must derive you custom work queue class from the </a><span class="cv_-_computer_voice">WorkQueueBase</span> class. This base class and the work queue framework provide most of the logic for managing the work items in your work queue. You must override a only few methods in the base class to implement the code for your writer and your workers. </div>
+      <h6 class="HS_-_Head_Sub"><a name="2328362">Work Queue Writer</a></h6>
+      <div class="B_-_Body"><a name="2328954">You implement the writer for your work queue by overriding the </a><span class="cv_-_computer_voice">findTargets</span> method inherited from the base class. Your code selects the units of work for a batch and returns an iterator for the result set. The work queue framework then uses the iterator to create and insert work items into your work queue. Each work items holds the instance ID of a unit of work in your result set. </div>
+      <div class="B_-_Body"><a name="2329274">For example, your custom work queue sends email about overdue activities to their assignees. In this example, instances of the </a><span class="cv_-_computer_voice">Activity</span> entity type are the units of work for the work queue. In your <span class="cv_-_computer_voice">findTargets</span> methods, you query the database for activity instances where the last viewed date of an open activities exceeds 30 days. You return an iterator to the result set, and then the framework creates a work item for each element in the result. </div>
+      <h6 class="HS_-_Head_Sub"><a name="2328371">Workers of a Work Queue</a></h6>
+      <div class="B_-_Body"><a name="2328372">You implement the workers of your work queue by overriding the </a><span class="cv_-_computer_voice">processWorkItem</span> method inherited from the base class. The work queue framework calls the method with a work item as the sole parameter. Your code accesses the unit of work identified in the work item and processes it to completion. Upon completion, your code returns from the method, and the work queue framework deletes the work item from the work queue. </div>
+      <div class="B_-_Body"><a name="2330521">For example, the units of work for your work queue are open activities that have not been viewed in the past 30 days. In your </a><span class="cv_-_computer_voice">processWorkItem</span> method, you access the activity instance identified by the work item. Then, you generate and send an email message to the assignee of that activity. After your code sends the email, it returns from the method. The framework then deletes the work item and updates the count of successfully processed work items in the process history for the batch. </div>
+      <div class="H3_-_Heading_3_outer" style="margin-left: 36pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <h5 class="H3_-_Heading_3_inner" style="width: 18pt; white-space: nowrap"></h5>
+            </td>
+            <td width="100%">
+              <h5 class="H3_-_Heading_3_inner"><a name="2386078">Work Queues and Work Item Entity Types</a></h5>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="B_-_Body"><a name="2233056">A work item is an instance of entity type that implements the </a><span class="cv_-_computer_voice">WorkItem</span> delegate, such as <span class="cv_-_computer_voice">StandardWorkItem</span>. The entity type provides the database table in which the work items for your custom work queue persist. Work items in the work queue table are accessible from all servers in a BillingCenter cluster, so workers can access them asynchronously, in parallel, and distributed on different servers. </div>
+      <div class="B_-_Body"><a name="2333967">Work items have many properties that the work queue framework uses to manage work items and the process histories of work queue batches. If you use </a><span class="cv_-_computer_voice">StandardWorkItem</span> for your work queue, the only field on a work item that your custom code uses is the <span class="cv_-_computer_voice">Target</span> field. The <span class="cv_-_computer_voice">Target</span> field holds the ID of a unit of work that your writer selected. The code for your writer and your workers can safely ignore the other properties on work item instances. However, you can define a custom work item type with additional fields for your custom code to use. </div>
+      <div class="H3_-_Heading_3_outer" style="margin-left: 36pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <h5 class="H3_-_Heading_3_inner" style="width: 18pt; white-space: nowrap"></h5>
+            </td>
+            <td width="100%">
+              <h5 class="H3_-_Heading_3_inner"><a name="2319292">Lifecycle of a Work Item</a></h5>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="B_-_Body"><a name="2319425">The </a><span class="cv_-_computer_voice">Status</span> field of a work item records the current state of its lifecycle. The work queue framework manages this field and the lifecycle of work items for your writer and workers. The following diagram illustrates the lifecycle. </div>
+      <div class="F_-_Figure"><a name="2319539"><img class="Default" src="images/batchprocess.29.08.1.png" style="display: inline; float: none; left: 0.0; top: 0.0" alt="" /></a></div>
+      <div class="B_-_Body"><a name="2322135">A work item begins life after the writer selects the units of work for a batch and returns an iterator for the collection. The framework then creates work items that reference the units of work for a batch. The initial state of a work item is </a><span class="cv_-_computer_voice">available</span>. At the time the framework checks out a quota of work items for a worker, the state of the work items becomes <span class="cv_-_computer_voice">checkedout</span>. The framework then hands the quota of work items to the worker one at a time. After a worker finishes processing a work item successfully, the framework deletes it from the work queue and updates the statistics in the process history for the batch.</div>
+      <h6 class="HS_-_Head_Sub"><a name="2337900">Returning Work Items to the Work Queue</a></h6>
+      <div class="B_-_Body"><a name="2322142">Sometimes a worker cannot finish processing a work item successfully. For example, a network resource may be temporarily unavailable. Or, a concurrent data change exception (CDCE) can occur when to workers simultaneously update common entity data in the domain graphs of two separate units of work. Whenever errors occur, the worker throws an exception to return the work item to the work queue as </a><span class="cv_-_computer_voice">available</span> again. </div>
+      <div class="B_-_Body"><a name="2321494">Whenever a worker returns a work item to the work queue, BillingCenter increments the </a><span class="cv_-_computer_voice">Attempts</span> property on the work item. If the value of <span class="cv_-_computer_voice">Attempts</span> remains below the retry limit for the worker, the state of the work item remains <span class="cv_-_computer_voice">available</span>. The work item is subsequently checked out in a quota for the same or another worker. If the temporary error condition clears, the next worker completes it successfully and BillingCenter removes the work item from the work queue. </div>
+      <h6 class="HS_-_Head_Sub"><a name="2327667">Work Items that Fail</a></h6>
+      <div class="B_-_Body"><a name="2346834">Whenever a worker returns a checked out work item and the </a><span class="cv_-_computer_voice">Attempts</span> property exceeds the work item retry limit, the state of the work item becomes <span class="cv_-_computer_voice">failed</span>. Failed work items end their lifecycle in this state. As long as failed work items remain in a work queue, the writer will not select another batch. Someone must take corrective action and remove all failed work items from the work queue before the next batch can run.</div>
+      <h6 class="HS_-_Head_Sub"><a name="2409151">See also</a></h6>
+      <div class="BI_-_Bullet_Item_outer" style="margin-left: 57pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="BI_-_Bullet_Item_inner" style="width: 15pt; white-space: nowrap">
+                <span class="bu_-_bullet">•	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="BI_-_Bullet_Item_inner"><a name="2409620">For more information on the lifecycle of work queues, see </a><a href="javascript:WWHClickedPopup('admin', 'batch.11.09.html#2166427', '');" title="Troubleshooting Work Queues">“Troubleshooting Work Queues” in the </a><span class="bt_-_book_title"><a href="javascript:WWHClickedPopup('admin', 'batch.11.09.html#2166427', '');" title="Troubleshooting Work Queues">System Administration Guide</a></span>.</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <script type="text/javascript" language="JavaScript1.2">
+        <!--
+          // Clear related topics
+          //
+          WWHClearRelatedTopics();
+
+          document.writeln(WWHRelatedTopicsInlineHTML());
+        // -->
+      </script>
+    </blockquote>
+    <script type="text/javascript" language="JavaScript1.2">
+      <!--
+        document.write(WWHRelatedTopicsDivTag() + WWHPopupDivTag() + WWHALinksDivTag());
+      // -->
+    </script>
+  </body>
+</html>

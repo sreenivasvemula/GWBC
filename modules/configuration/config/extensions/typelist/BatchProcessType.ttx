@@ -1,0 +1,472 @@
+<?xml version="1.0"?>
+<typelistextension
+  xmlns="http://guidewire.com/typelists"
+  desc="Types of batch processes"
+  name="BatchProcessType">
+  <!-- batch processes -->
+  <typecode
+    code="ActivityEsc"
+    desc="Activity escalation monitor"
+    name="Activity Escalation">
+    <category
+      code="UIRunnable"
+      typelist="BatchProcessTypeUsage"/>
+    <category
+      code="Schedulable"
+      typelist="BatchProcessTypeUsage"/>
+  </typecode>
+  <typecode
+    code="BulkPurge"
+    desc="Purge records through table updates"
+    name="BulkPurge"
+    retired="true"/>
+  <typecode
+    code="DataDistribution"
+    desc="Data distribution for the database"
+    name="Data Distribution">
+    <category
+      code="APIRunnable"
+      typelist="BatchProcessTypeUsage"/>
+  </typecode>
+  <typecode
+    code="DBStats"
+    desc="Database statistics"
+    name="Database statistics">
+    <category
+      code="Schedulable"
+      typelist="BatchProcessTypeUsage"/>
+  </typecode>
+  <typecode
+    code="GroupException"
+    desc="Group exception Monitor"
+    name="Group Exception">
+    <category
+      code="UIRunnable"
+      typelist="BatchProcessTypeUsage"/>
+    <category
+      code="Schedulable"
+      typelist="BatchProcessTypeUsage"/>
+  </typecode>
+  <typecode
+    code="UserException"
+    desc="User exception Monitor"
+    name="User Exception">
+    <category
+      code="UIRunnable"
+      typelist="BatchProcessTypeUsage"/>
+    <category
+      code="Schedulable"
+      typelist="BatchProcessTypeUsage"/>
+  </typecode>
+  <typecode
+    code="Workflow"
+    desc="Workflows work queue writer."
+    name="Workflow Writer">
+    <category
+      code="UIRunnable"
+      typelist="BatchProcessTypeUsage"/>
+    <category
+      code="Schedulable"
+      typelist="BatchProcessTypeUsage"/>
+  </typecode>
+  <!-- work queues -->
+  <typecode
+    code="ContactAutoSync"
+    desc="Automatically synchronize the local contact that are out of syn and marked 'allow' auto-sync."
+    name="ContactAutoSync">
+    <category
+      code="UIRunnable"
+      typelist="BatchProcessTypeUsage"/>
+    <category
+      code="Schedulable"
+      typelist="BatchProcessTypeUsage"/>
+  </typecode>
+  <typecode
+    code="Geocode"
+    desc="Geocoding Addresses queue writer."
+    name="Geocode Writer">
+    <category
+      code="UIRunnable"
+      typelist="BatchProcessTypeUsage"/>
+    <category
+      code="Schedulable"
+      typelist="BatchProcessTypeUsage"/>
+  </typecode>
+  <!-- unused -->
+  <typecode
+    code="StatReport"
+    desc="Stat Report work queue writer"
+    name="Stat Report Writer"
+    retired="true"/>
+  <typecode
+    code="PurgeProfilerData"
+    desc="Purge profiler data at regular intervals"
+    name="Purge Profiler Data">
+    <category
+      code="UIRunnable"
+      typelist="BatchProcessTypeUsage"/>
+    <category
+      code="Schedulable"
+      typelist="BatchProcessTypeUsage"/>
+  </typecode>
+  <typecode
+    code="PhoneNumberNormalizer"
+    desc="Performs a normalization of phone numbers contact"
+    name="Phone number normalizer">
+    <category
+      code="UIRunnable"
+      typelist="BatchProcessTypeUsage"/>
+  </typecode>
+  <typecode
+    code="TroubleTicketEsc"
+    desc="Trouble Ticket escalation monitor"
+    name="Trouble Ticket Escalation">
+    <category
+      code="UIRunnable"
+      typelist="BatchProcessTypeUsage"/>
+    <category
+      code="Schedulable"
+      typelist="BatchProcessTypeUsage"/>
+  </typecode>
+  <typecode
+    code="AccountInactivity"
+    desc="Checks for accounts that have been inactive for many days and creates notification activities for those accounts."
+    name="Account Inactivity">
+    <category
+      code="UIRunnable"
+      typelist="BatchProcessTypeUsage"/>
+    <category
+      code="Schedulable"
+      typelist="BatchProcessTypeUsage"/>
+  </typecode>
+  <typecode
+    code="AdvanceExpiration"
+    desc="Checks for commission advances whose &quot;maintain until&quot; dates have passed and expires them. Results in any remaining advance balance becoming owed by the producer."
+    name="Advance Expiration">
+    <category
+      code="UIRunnable"
+      typelist="BatchProcessTypeUsage"/>
+    <category
+      code="Schedulable"
+      typelist="BatchProcessTypeUsage"/>
+  </typecode>
+  <typecode
+    code="AgencySuspensePayment"
+    desc="Process agency cycle payments and promises that match policy periods"
+    name="Agency Suspense Payment">
+    <category
+      code="UIRunnable"
+      typelist="BatchProcessTypeUsage"/>
+    <category
+      code="Schedulable"
+      typelist="BatchProcessTypeUsage"/>
+  </typecode>
+  <typecode
+    code="AutomaticDisbursement"
+    desc="Checks for accounts whose unapplied funds' amount less the (amount under contract + amount slated for disbursement) is greater than billing-plan defined &quot;Disbursement Over&quot; amount and creates a disbursement for such accounts."
+    name="Automatic Disbursement">
+    <category
+      code="UIRunnable"
+      typelist="BatchProcessTypeUsage"/>
+    <category
+      code="Schedulable"
+      typelist="BatchProcessTypeUsage"/>
+  </typecode>
+  <typecode
+    code="ChargeProRataTx"
+    desc="Moves part of the total charge amount from the pro-rata charge's unearned T-Account (liability) to its revenue T-Account (income)."
+    name="Charge ProRata Tx">
+    <category
+      code="UIRunnable"
+      typelist="BatchProcessTypeUsage"/>
+    <category
+      code="Schedulable"
+      typelist="BatchProcessTypeUsage"/>
+  </typecode>
+  <typecode
+    code="CmsnPayable"
+    desc="Checks for commissions that need to be made payable."
+    name="Commission Payable Calculations">
+    <category
+      code="UIRunnable"
+      typelist="BatchProcessTypeUsage"/>
+    <category
+      code="Schedulable"
+      typelist="BatchProcessTypeUsage"/>
+  </typecode>
+  <typecode
+    code="CollEffective"
+    desc="Checks for Pending Collateral Requirements whose effective dates have passed"
+    name="Collateral Requirement Effective">
+    <category
+      code="UIRunnable"
+      typelist="BatchProcessTypeUsage"/>
+    <category
+      code="Schedulable"
+      typelist="BatchProcessTypeUsage"/>
+  </typecode>
+  <typecode
+    code="CollExpiration"
+    desc="Checks for Active Collateral Requirements whose expiration dates have passed"
+    name="Collateral Requirement Expiration">
+    <category
+      code="UIRunnable"
+      typelist="BatchProcessTypeUsage"/>
+    <category
+      code="Schedulable"
+      typelist="BatchProcessTypeUsage"/>
+  </typecode>
+  <typecode
+    code="CommissionPmt"
+    desc="Checks for manual commission payments that have been scheduled to occur on a future date. Any commission payment whose scheduled date has passed is executed by this process."
+    name="Commission Payment">
+    <category
+      code="UIRunnable"
+      typelist="BatchProcessTypeUsage"/>
+    <category
+      code="Schedulable"
+      typelist="BatchProcessTypeUsage"/>
+  </typecode>
+  <typecode
+    code="Disbursement"
+    desc="Checks for disbursements whose due dates have passed and are approved and pays that amount to the account."
+    name="Disbursement">
+    <category
+      code="UIRunnable"
+      typelist="BatchProcessTypeUsage"/>
+    <category
+      code="Schedulable"
+      typelist="BatchProcessTypeUsage"/>
+  </typecode>
+  <typecode
+    code="FullPayDiscount"
+    desc="Evaluates whether a policy is eligible for a full pay discount"
+    name="Full Pay Discount">
+    <category
+      code="UIRunnable"
+      typelist="BatchProcessTypeUsage"/>
+    <category
+      code="Schedulable"
+      typelist="BatchProcessTypeUsage"/>
+  </typecode>
+  <typecode
+    code="Invoice"
+    desc="Changes the status of planned invoices whose billing date has passed to &quot;billed&quot;. As a consequence of this change, the invoices are sent to the account."
+    name="Invoice">
+    <category
+      code="UIRunnable"
+      typelist="BatchProcessTypeUsage"/>
+    <category
+      code="Schedulable"
+      typelist="BatchProcessTypeUsage"/>
+  </typecode>
+  <typecode
+    code="InvoiceDue"
+    desc="Changes the status of billed invoices whose due date has passed to &quot;due&quot;. Delinquency will be triggered for any policies with past due amounts."
+    name="Invoice Due">
+    <category
+      code="UIRunnable"
+      typelist="BatchProcessTypeUsage"/>
+    <category
+      code="Schedulable"
+      typelist="BatchProcessTypeUsage"/>
+  </typecode>
+  <typecode
+    code="LetterOfCredit"
+    desc="Changes the status of Current LOCs to Expired when their expiration date has passed"
+    name="Letter Of Credit">
+    <category
+      code="UIRunnable"
+      typelist="BatchProcessTypeUsage"/>
+    <category
+      code="Schedulable"
+      typelist="BatchProcessTypeUsage"/>
+  </typecode>
+  <typecode
+    code="LegacyAgencyBill"
+    desc="Starts workflow on staging table imported active agency bill cycle"
+    name="Legacy Agency Bill">
+    <category
+      code="UIRunnable"
+      typelist="BatchProcessTypeUsage"/>
+    <category
+      code="Schedulable"
+      typelist="BatchProcessTypeUsage"/>
+  </typecode>
+  <typecode
+    code="LegacyDelinquency"
+    desc="Starts workflow on staging table imported active delinquency processes"
+    name="Legacy Delinquency">
+    <category
+      code="UIRunnable"
+      typelist="BatchProcessTypeUsage"/>
+    <category
+      code="Schedulable"
+      typelist="BatchProcessTypeUsage"/>
+  </typecode>
+  <typecode
+    code="NewPayment"
+    desc="Distributes a payment, moving funds from the account's unapplied T-Account to the account's policies."
+    name="New Payment">
+    <category
+      code="UIRunnable"
+      typelist="BatchProcessTypeUsage"/>
+    <category
+      code="Schedulable"
+      typelist="BatchProcessTypeUsage"/>
+  </typecode>
+  <typecode
+    code="PaymentRequest"
+    desc="Checks for need to change payment request status"
+    name="Payment Request">
+    <category
+      code="UIRunnable"
+      typelist="BatchProcessTypeUsage"/>
+    <category
+      code="Schedulable"
+      typelist="BatchProcessTypeUsage"/>
+  </typecode>
+  <typecode
+    code="PolicyClosure"
+    desc="Checks for policies that are not locked and that have been fully paid. Any such policy is closed by this process."
+    name="Policy Closure">
+    <category
+      code="UIRunnable"
+      typelist="BatchProcessTypeUsage"/>
+    <category
+      code="Schedulable"
+      typelist="BatchProcessTypeUsage"/>
+  </typecode>
+  <typecode
+    code="PremiumReportReportDue"
+    desc="Checks to see if any premium reports are past due, kicks off delinquency if they are."
+    name="Premium Reporting Report Due">
+    <category
+      code="UIRunnable"
+      typelist="BatchProcessTypeUsage"/>
+    <category
+      code="Schedulable"
+      typelist="BatchProcessTypeUsage"/>
+  </typecode>
+  <typecode
+    code="ProducerPayment"
+    desc="Pays producers whose next scheduled auto-payment date has passed. Payment includes the amount currently payable to the producer, plus any manual commission payments that have been scheduled to occur with next payment."
+    name="Producer Payment">
+    <category
+      code="UIRunnable"
+      typelist="BatchProcessTypeUsage"/>
+    <category
+      code="Schedulable"
+      typelist="BatchProcessTypeUsage"/>
+  </typecode>
+  <typecode
+    code="ReleaseTtktHoldTypes"
+    desc="Checks for hold types on trouble tickets whose released dates have passed and removes those hold types from their holds."
+    name="Release Trouble Ticket Hold Types">
+    <category
+      code="UIRunnable"
+      typelist="BatchProcessTypeUsage"/>
+    <category
+      code="Schedulable"
+      typelist="BatchProcessTypeUsage"/>
+  </typecode>
+  <typecode
+    code="ReleaseChargeHolds"
+    desc="Checks for charge holds whose released dates have passed and release them."
+    name="Release Charge Holds">
+    <category
+      code="UIRunnable"
+      typelist="BatchProcessTypeUsage"/>
+    <category
+      code="Schedulable"
+      typelist="BatchProcessTypeUsage"/>
+  </typecode>
+  <typecode
+    code="StatementBilled"
+    desc="Changes the status of &quot;Planned&quot; Agency Bill Statements whose Bill Date has passed to &quot;Billed&quot;."
+    name="Statement Billed">
+    <category
+      code="UIRunnable"
+      typelist="BatchProcessTypeUsage"/>
+    <category
+      code="Schedulable"
+      typelist="BatchProcessTypeUsage"/>
+  </typecode>
+  <typecode
+    code="StatementDue"
+    desc="Changes the status of &quot;Billed&quot; Agency Bill Statements whose Due Date has passed to &quot;Due&quot;."
+    name="Statement Due">
+    <category
+      code="UIRunnable"
+      typelist="BatchProcessTypeUsage"/>
+    <category
+      code="Schedulable"
+      typelist="BatchProcessTypeUsage"/>
+  </typecode>
+  <typecode
+    code="SuspensePayment"
+    desc="Process the suspense payments who match accounts"
+    name="Suspense Payment">
+    <category
+      code="UIRunnable"
+      typelist="BatchProcessTypeUsage"/>
+    <category
+      code="Schedulable"
+      typelist="BatchProcessTypeUsage"/>
+  </typecode>
+  <typecode
+    code="WriteoffStaging"
+    desc="Distributes any undistributed imported writeoffs, to be used after staging table loading."
+    name="Writeoff Staging">
+    <category
+      code="UIRunnable"
+      typelist="BatchProcessTypeUsage"/>
+    <category
+      code="Schedulable"
+      typelist="BatchProcessTypeUsage"/>
+  </typecode>
+  <typecode
+    code="LegacyLetterOfCredit"
+    desc="Runs allocate on Collateral with LOCs but no cash"
+    name="Legacy Letter Of Credit">
+    <category
+      code="UIRunnable"
+      typelist="BatchProcessTypeUsage"/>
+    <category
+      code="Schedulable"
+      typelist="BatchProcessTypeUsage"/>
+  </typecode>
+  <typecode
+    code="UpgradeBillingInstructionPaymentPlan"
+    desc="Initializes policy billing instructions' payment plans after upgrade"
+    name="Upgrade Billing Instruction Payment Plan">
+    <category
+      code="UIRunnable"
+      typelist="BatchProcessTypeUsage"/>
+    <category
+      code="Schedulable"
+      typelist="BatchProcessTypeUsage"/>
+  </typecode>
+  <typecode
+    code="FundsAllotment"
+    desc="Allots funds from fund sources to fund uses for funds tracking.  Allots funds for all accounts that have unallotted or partially unallotted funds."
+    name="Allot Funds for Funds Tracking">
+    <category
+      code="UIRunnable"
+      typelist="BatchProcessTypeUsage"/>
+    <category
+      code="Schedulable"
+      typelist="BatchProcessTypeUsage"/>
+  </typecode>
+  <typecode
+    code="LegacyCollateral"
+    desc="Runs allocate on Collateral with requirements and resources of the same type"
+    name="Legacy Collateral">
+    <category
+      code="UIRunnable"
+      typelist="BatchProcessTypeUsage"/>
+    <category
+      code="Schedulable"
+      typelist="BatchProcessTypeUsage"/>
+  </typecode>
+</typelistextension>

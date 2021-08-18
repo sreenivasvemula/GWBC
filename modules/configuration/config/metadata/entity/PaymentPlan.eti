@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?><subtype xmlns="http://guidewire.com/datamodel" desc="new payment plan" entity="PaymentPlan" subpackage="invoice" supertype="Plan">
+  <implementsEntity
+    name="InCurrencySilo"/>
+  <column default="true" desc="Whether this payment plan shows in lists of payment plans selectable by users" name="UserVisible" nullok="false" type="bit"/>
+  <typekey desc="The periodicity of installments -- Weekly, Monthly, Quarterly, etc." name="Periodicity" nullok="false" typelist="Periodicity"/>
+  <column columnName="DaysBeforePlcyExpForInvBlckout" default="30" desc="The invoicing blackout starts this number days of days before the policy expiration date.  No invoice items            for the charge will be billed or due, depending on the InvoicingBlackoutType, on or after the invoicing blackout." name="DaysBeforePolicyExpirationForInvoicingBlackout" nullok="false" type="integer"/>
+  <typekey default="billed" desc="When placing invoice items, BillingCenter needs to know the last invoice on which items can be placed.             InvoicingBlackoutType determines whether DaysBeforePolicyExpirationForInvoicingBlackout means that no invoice             items will be *billed* that number of days before the policy expires or whether it means that no invoice             items will be *due* that number of days before the policy expires." name="InvoicingBlackoutType" nullok="false" typelist="InvoicingBlackoutType"/>
+  <typekey default="invoicebilldate" desc="Invoice items created by the payment plan can be placed on invoices whose cutoff date is after the             date of the invoice item.  InvoiceItemPlacementCutoffType chooses the cutoff date -- it can be either the             invoice event (bill) date or the invoice payment due date." name="InvoiceItemPlacementCutoffType" nullok="false" typelist="InvoiceItemPlacementCutoffType"/>
+  <column default="false" desc="Whether this payment plan is for premium reporting" name="Reporting" nullok="false" type="bit"/>
+  <monetaryamount amountColumnName="InstallmentFee"
+    amountRange="nonnegative" desc="The amount of the installment fee" name="InstallmentFee" nullok="true" scaleToCurrency="true"/>
+  <column default="true" desc="Whether to skip the installment fee for the down payment" name="SkipFeeForDownPayment" nullok="false" type="bit"/>
+  <column desc="The down payment percent" name="DownPaymentPercent" nullok="false" type="percentagedec"/>
+  <column desc="The maximum number of installments for new business" name="MaximumNumberOfInstallments" nullok="false" type="integer"/>
+  <typekey default="chargedate" desc="The down payment is scheduled daysFromReferenceDateToDownPayment after this reference date." name="DownPaymentAfter" nullok="false" typelist="PaymentScheduledAfter"/>
+  <column columnName="DaysFromRefDateToDownPayment" default="0" desc="The down payment is scheduled this many days after the DownPaymentAfter reference date." name="DaysFromReferenceDateToDownPayment" nullok="false" type="integer"/>
+  <typekey default="chargedate" desc="The first installment is scheduled daysFromReferenceDateToFirstInstall after this reference date." name="FirstInstallmentAfter" nullok="false" typelist="PaymentScheduledAfter"/>
+  <column columnName="DaysFromRefDateToFirstInstall" default="0" desc="The first installment is scheduled this many days after the FirstInstallmentAfter reference date." name="DaysFromReferenceDateToFirstInstallment" nullok="false" type="integer"/>
+  <typekey default="chargedate" desc="The payment for a one time charge is scheduled daysFromReferenceDateToOneTimeCharge after this reference date." name="OneTimeChargeAfter" nullok="false" typelist="PaymentScheduledAfter"/>
+  <column columnName="DaysFromRefDateToOneTimeCharge" default="0" desc="The payment for a one time charge is scheduled this many days after the OneTimeChargeAfter reference date." name="DaysFromReferenceDateToOneTimeCharge" nullok="false" type="integer"/>
+  <array arrayentity="ChargeSlicingModifier" desc="A map of BillingInstructionType-&gt;ChargeSlicingModifier.  The ChargeSlicingModifier is used           to customize the charge slicing settings of the payment plan when the plan is used by billing instructions           of the given type." getterScriptability="doesNotExist" name="ChargeSlicingModifiers" owner="true" setterScriptability="doesNotExist">
+    <link-association>
+      <typelist-map field="BillingInstructionType"/>
+    </link-association>
+  </array>
+  <index desc="Legacy" name="uservisible" unique="false">
+    <indexcol keyposition="1" name="UserVisible"/>
+    <indexcol keyposition="2" name="Retired"/>
+  </index>
+  <!-- This is our best guess at a set of columns that will be the most selective when we're looking for a  
+  custom plan to reuse when making a custom plan with payment plan modifiers. -->
+  <index desc="Legacy" name="matchingplans" unique="false">
+    <indexcol keyposition="1" name="MaximumNumberOfInstallments"/>
+    <indexcol keyposition="2" name="Periodicity"/>
+    <indexcol keyposition="3" name="FirstInstallmentAfter"/>
+    <indexcol keyposition="4" name="DownPaymentPercent"/>
+  </index>
+</subtype>

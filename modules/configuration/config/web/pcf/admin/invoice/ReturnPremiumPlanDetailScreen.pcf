@@ -1,0 +1,206 @@
+<?xml version="1.0"?>
+<PCF
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:noNamespaceSchemaLocation="pcf.xsd">
+  <Screen
+    id="ReturnPremiumPlanDetailScreen">
+    <Require
+      name="returnPremiumPlan"
+      type="ReturnPremiumPlan"/>
+    <Variable
+      initialValue="gw.api.util.LocaleUtil.getAllLanguages().Count &gt; 1"
+      name="hasMultipleLanguages"/>
+    <Toolbar>
+      <EditButtons/>
+      <ToolbarButton
+        action="CloneReturnPremiumPlan.go(returnPremiumPlan)"
+        hideIfEditable="true"
+        id="Clone"
+        label="displaykey.Web.ReturnPremiumPlanDetailScreen.Clone"
+        visible="perm.System.retpremplancreate"/>
+    </Toolbar>
+    <DetailViewPanel
+      editable="true"
+      id="ReturnPremiumPlanDetailDV">
+      <InputColumn>
+        <Label
+          id="ReturnPremiumPlanLabel"
+          label="displaykey.Web.ReturnPremiumPlanDetailDV.ReturnPremiumPlan"/>
+        <Input
+          editable="true"
+          id="Name"
+          label="displaykey.Web.ReturnPremiumPlanDetailDV.Name"
+          required="true"
+          value="returnPremiumPlan.Name">
+          <PostOnChange/>
+        </Input>
+        <Input
+          editable="true"
+          id="Description"
+          label="displaykey.Web.PaymentPlanDetailDV.Description"
+          value="returnPremiumPlan.Description">
+          <PostOnChange/>
+        </Input>
+        <DateInput
+          editable="true"
+          id="EffectiveDate"
+          label="displaykey.Web.ReturnPremiumPlanDetailDV.EffectiveDate"
+          required="true"
+          value="returnPremiumPlan.EffectiveDate"/>
+        <DateInput
+          editable="true"
+          id="ExpirationDate"
+          label="displaykey.Web.ReturnPremiumPlanDetailDV.ExpirationDate"
+          validationExpression="returnPremiumPlan.hasValidExpirationDate() ? null : displaykey.Web.Plan.ExpirationDate.ValidationError"
+          value="returnPremiumPlan.ExpirationDate"/>
+        <TypeKeyInput
+          editable="true"
+          id="ChargeQualification"
+          label="displaykey.Web.ReturnPremiumPlanDetailDV.ChargeQualifier"
+          required="true"
+          value="returnPremiumPlan.ChargeQualification"
+          valueWidth="240"/>
+        <TypeKeyInput
+          editable="true"
+          id="ListBillAccountExcessOption"
+          label="displaykey.Web.ReturnPremiumPlanDetailDV.ListBillAccountExcessTreatment"
+          required="true"
+          value="returnPremiumPlan.ListBillAccountExcessTreatment"/>
+      </InputColumn>
+    </DetailViewPanel>
+    <PanelRef>
+      <TitleBar
+        title="displaykey.Web.ReturnPremiumPlanDetailDV.HandlingSchemesLV.Title"/>
+      <Toolbar
+        visible="true">
+        <AddButton
+          flags="exists AddEnabled"
+          hideIfReadOnly="true"
+          id="AddScheme"
+          iterator="HandlingSchemesIterator"
+          label="displaykey.Web.ReturnPremiumPlansLV.Add"
+          subMenuOnDemand="true">
+          <AddMenuItemIterator
+            elementName="schemeConditionSelector"
+            id="schemeCondition"
+            value="availableConditions()">
+            <AddMenuItem
+              id="AddSchemeMenuItem"
+              iterator="HandlingSchemesIterator"
+              label="schemeConditionSelector"
+              toCreateAndAdd="addScheme(schemeConditionSelector)"/>
+          </AddMenuItemIterator>
+        </AddButton>
+        <RemoveButton
+          flags="all NotOther"
+          hideIfReadOnly="true"
+          id="RemoveScheme"
+          iterator="HandlingSchemesIterator"
+          label="displaykey.Web.ReturnPremiumPlansLV.Remove"/>
+      </Toolbar>
+      <ListViewPanel
+        id="ReturnPremiumSchemesLV">
+        <RowIterator
+          editable="true"
+          elementName="returnPremiumScheme"
+          hideCheckBoxesIfReadOnly="true"
+          id="HandlingSchemesIterator"
+          toRemove="if (returnPremiumScheme.HandlingCondition &lt;&gt; &quot;Other&quot;) returnPremiumPlan.removeHandlingScheme(returnPremiumScheme)"
+          value="java.util.Arrays.asList(returnPremiumPlan.getReturnPremiumHandlingSchemes())">
+          <ToolbarFlag
+            condition="returnPremiumScheme.HandlingCondition &lt;&gt; &quot;Other&quot;"
+            name="NotOther"/>
+          <ToolbarFlag
+            condition="availableConditions().Count &gt; 0"
+            name="AddEnabled"/>
+          <Row>
+            <Cell
+              id="Priority"
+              label="displaykey.Web.ReturnPremiumPlanDetailDV.HandlingSchemesLV.Priority"
+              sortOrder="1"
+              value="returnPremiumScheme.Priority"/>
+            <Cell
+              enableSort="false"
+              id="Condition"
+              label="displaykey.Web.ReturnPremiumPlanDetailDV.HandlingSchemesLV.IdentificationType"
+              value="returnPremiumScheme.HandlingCondition.Value"/>
+            <TypeKeyCell
+              editable="true"
+              enableSort="false"
+              id="StartDateOption"
+              label="displaykey.Web.ReturnPremiumPlanDetailDV.HandlingSchemesLV.StartDate"
+              value="returnPremiumScheme.StartDateOption"/>
+            <TypeKeyCell
+              editable="true"
+              enableSort="false"
+              id="AllocateTiming"
+              label="displaykey.Web.ReturnPremiumPlanDetailDV.HandlingSchemesLV.AllocateTiming"
+              value="returnPremiumScheme.AllocateTiming"/>
+            <TypeKeyCell
+              editable="true"
+              enableSort="false"
+              id="AllocateMethod"
+              label="displaykey.Web.ReturnPremiumPlanDetailDV.HandlingSchemesLV.AllocateMethod"
+              value="returnPremiumScheme.AllocateMethod"/>
+            <TypeKeyCell
+              editable="true"
+              enableSort="false"
+              id="ExcessTreatment"
+              label="displaykey.Web.ReturnPremiumPlanDetailDV.HandlingSchemesLV.ExcessTreatment"
+              value="returnPremiumScheme.ExcessTreatment"/>
+            <LinkCell
+              id="MovePriority"
+              label="displaykey.Web.ReturnPremiumPlanDetailDV.HandlingSchemesLV.PriorityOrder.MovePriority">
+              <Link
+                action="moveUp(returnPremiumScheme)"
+                available="perm.System.retpremplanedit &amp;&amp; CurrentLocation.InEditMode"
+                icon="CurrentLocation.InEditMode ? &quot;arrow_up.png&quot; : &quot;arrow_up_disabled.png&quot;"
+                id="MoveUp"
+                tooltip="displaykey.Web.ReturnPremiumPlanDetailDV.HandlingSchemesLV.PriorityOrder.MoveUp"
+                visible="returnPremiumScheme.Priority &gt; 1 and returnPremiumScheme.HandlingCondition &lt;&gt; &quot;Other&quot;"/>
+              <Link
+                action="moveDown(returnPremiumScheme)"
+                available="perm.System.retpremplanedit &amp;&amp; CurrentLocation.InEditMode"
+                icon="CurrentLocation.InEditMode ? &quot;arrow_down.png&quot; : &quot;arrow_down_disabled.png&quot;"
+                id="MoveDown"
+                tooltip="displaykey.Web.ReturnPremiumPlanDetailDV.HandlingSchemesLV.PriorityOrder.MoveDown"
+                visible="canMoveDown(returnPremiumScheme)"/>
+            </LinkCell>
+          </Row>
+        </RowIterator>
+      </ListViewPanel>
+    </PanelRef>
+    <PanelRef
+      def="LocalizedValuesDV(returnPremiumPlan, { &quot;Name&quot;, &quot;Description&quot; }, { displaykey.Web.ReturnPremiumPlanDetailDV.Name, displaykey.Web.ReturnPremiumPlanDetailDV.Description })"/>
+    <Code><![CDATA[uses java.util.ArrayList
+
+private function addScheme(identifyingCondition : ReturnPremiumHandlingCondition) : ReturnPremiumHandlingScheme {
+    return returnPremiumPlan.addHandlingSchemeFor(identifyingCondition)
+}
+
+private function availableConditions() : List<ReturnPremiumHandlingCondition> {
+    // don't include those for existing schemes because schemes are unique by condition...
+    var conditions = new ArrayList<ReturnPremiumHandlingCondition>(ReturnPremiumHandlingCondition.getTypeKeys(false))
+    conditions.removeAll(returnPremiumPlan.ReturnPremiumHandlingSchemes.toList().map(\ scheme -> scheme.HandlingCondition))
+    return conditions
+}
+
+private function moveUp(returnPremiumScheme : ReturnPremiumHandlingScheme) {
+    returnPremiumPlan.increaseHandlingSchemePriority(returnPremiumScheme)
+}
+
+private function moveDown(returnPremiumScheme : ReturnPremiumHandlingScheme) {
+    returnPremiumPlan.decreaseHandlingSchemePriority(returnPremiumScheme)
+}
+
+private function canMoveDown(returnPremiumScheme : ReturnPremiumHandlingScheme) : boolean {
+  final var schemes = returnPremiumPlan.ReturnPremiumHandlingSchemes
+  final var defaultSchemePriority = returnPremiumPlan.DefaultHandlingSchemePriority
+  return schemes.Count > 2 and returnPremiumScheme.Priority < defaultSchemePriority - 1
+    // there is a scheme with lower priority that is not the default
+    // (which is the absolute lowest)
+    and schemes.hasMatch(\ scheme -> scheme.Priority != defaultSchemePriority
+          and scheme.Priority > returnPremiumScheme.Priority)
+}]]></Code>
+  </Screen>
+</PCF>

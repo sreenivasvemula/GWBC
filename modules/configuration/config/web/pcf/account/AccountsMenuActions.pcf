@@ -1,0 +1,24 @@
+<?xml version="1.0"?>
+<PCF
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:noNamespaceSchemaLocation="../../../../../pcf.xsd">
+  <MenuActions
+    id="AccountsMenuActions">
+    <MenuItem
+      action="NewAccount.go(gw.api.util.CurrencyUtil.getDefaultCurrency())"
+      id="AccountsMenuActions_NewAccount"
+      label="displaykey.Web.AccountsMenuActions.New"
+      shortcut="A"
+      visible="perm.Account.create">
+      <MenuItemIterator
+        elementName="currency"
+        value="Currency.getTypeKeys(false)"
+        visible="gw.api.util.CurrencyUtil.isMultiCurrencyMode()">
+        <MenuItem
+          action="NewAccount.go(currency)"
+          id="CurrencyItem"
+          label="currency"/>
+      </MenuItemIterator>
+    </MenuItem>
+  </MenuActions>
+</PCF>

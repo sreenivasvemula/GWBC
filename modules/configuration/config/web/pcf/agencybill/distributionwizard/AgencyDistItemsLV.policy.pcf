@@ -1,0 +1,88 @@
+<?xml version="1.0"?>
+<PCF
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:noNamespaceSchemaLocation="../../../../../../pcf.xsd">
+  <ListViewPanel
+    id="AgencyDistItemsLV"
+    mode="policy">
+    <Require
+      name="agencyCycleDistView"
+      type="gw.api.web.producer.agencybill.distributionwizard.AgencyCycleDistView"/>
+    <Require
+      name="wizardState"
+      type="gw.agencybill.AgencyDistributionWizardHelper"/>
+    <RowIterator
+      editable="true"
+      elementName="policyPeriodView"
+      id="PolicyPeriodInvoiceItems"
+      value="agencyCycleDistView.ChargeOwners">
+      <Row>
+        <Cell
+          action="AgencyChargeOwnerDetailForward.push(policyPeriodView)"
+          actionAvailable="policyPeriodView.ChargeOwner typeis PolicyPeriod or policyPeriodView.ChargeOwner typeis Account"
+          id="PolicyDescription"
+          label="displaykey.Web.AgencyDistributionWizard.Step.Distribution.AgencyDistItemsLV.PolicyNumber"
+          sortBy="policyPeriodView.ChargeOwnerTypeName, policyPeriodView.DisplayName"
+          value="policyPeriodView.DisplayName"
+          valueVisible="PolicyPeriod.Type.isAssignableFrom(typeof policyPeriodView.ChargeOwner)"/>
+        <Cell
+          action="AccountDetailSummaryPopup.push(policyPeriodView.Account)"
+          id="OwnerAccount"
+          label="displaykey.Web.AgencyDistributionWizard.Step.Distribution.AgencyDistItemsLV.Account"
+          value="getAccountDisplayName(policyPeriodView)"/>
+        <MonetaryAmountCell
+          currency="policyPeriodView.NetAmountOwed.Currency"
+          formatType="currency"
+          id="NewOwed"
+          label="displaykey.Web.AgencyDistributionWizard.Step.Distribution.AgencyDistItemsLV.NetOwed"
+          value="policyPeriodView.NetAmountOwed"/>
+        <LinkCell
+          id="FillDefaultsButtonCell"
+          label="displaykey.Web.AgencyDistributionWizard.Step.Distribution.AgencyDistItemsLV.Copy"
+          tooltip="">
+          <Link
+            action="policyPeriodView.TotalNetAmountToDistribute = policyPeriodView.NetAmountOwed"
+            icon="&quot;copyover.png&quot;"
+            id="FillDefaultsButton"
+            tooltip="displaykey.Web.AgencyDistributionWizard.Step.Distribution.AgencyDistItemsLV.FillDefaultsButtonInfo"/>
+        </LinkCell>
+        <MonetaryAmountCell
+          currency="policyPeriodView.TotalNetAmountToDistribute.Currency"
+          editable="policyPeriodView.NetModifiable"
+          formatType="currency"
+          id="NetToApply"
+          label="displaykey.Web.AgencyDistributionWizard.Step.Distribution.AgencyDistItemsLV.NetToApply"
+          value="policyPeriodView.TotalNetAmountToDistribute">
+          <PostOnChange
+            onChange="if (policyPeriodView.NetAmountToApplyException) throw new gw.api.util.DisplayableException(displaykey.Java.Error.AgencyCycleDistChargeOwnerView.InvalidNetDistributionAmount)"
+            target="DATA_ONLY"/>
+        </MonetaryAmountCell>
+        <LinkCell
+          label="displaykey.Web.AgencyDistributionWizard.Step.Distribution.AgencyDistItemsLV.DetailsHeader">
+          <Link
+            action="AgencyDistributionWizard_DetailsPopup.push(policyPeriodView, policyPeriodView.TotalNetAmountToDistribute, wizardState)"
+            icon="&quot;viewdetail.png&quot;"
+            id="DetailsButton"
+            label="displaykey.Web.AgencyDistributionWizard.Step.Distribution.AgencyDistItemsLV.DetailsButton"
+            tooltip="displaykey.Web.AgencyDistributionWizard.Step.Distribution.AgencyDistItemsLV.DetailsButton.Tooltip"/>
+        </LinkCell>
+        <MonetaryAmountCell
+          currency="policyPeriodView.NetAmountOwed.Currency"
+          formatType="currency"
+          id="Difference"
+          label="displaykey.Web.AgencyDistributionWizard.Step.Distribution.AgencyDistItemsLV.Difference"
+          value="policyPeriodView.NetAmountOwed - policyPeriodView.TotalNetAmountToDistribute"/>
+        <Cell
+          icon="&quot;menu-checked.png&quot;"
+          iconLabel="displaykey.Web.AgencyDistributionWizard.Step.Distribution.AgencyDistItemsLV.Comments.PolicyLevelTooltip"
+          id="Comments"
+          label="displaykey.Web.AgencyDistributionWizard.Step.Distribution.AgencyDistItemsLV.Comments"
+          showHeaderIcon="false"
+          value="policyPeriodView.hasDistItemsComments()"/>
+      </Row>
+    </RowIterator>
+    <Code><![CDATA[function getAccountDisplayName(chargeOwnerView : gw.api.web.producer.agencybill.distributionwizard.AgencyCycleDistChargeOwnerView) : String {
+  return chargeOwnerView typeis gw.api.web.producer.agencybill.distributionwizard.AgencyCycleDistPolicyView ? chargeOwnerView.Account.DisplayName : chargeOwnerView.DisplayName
+}]]></Code>
+  </ListViewPanel>
+</PCF>

@@ -1,0 +1,74 @@
+<?xml version="1.0"?>
+<PCF
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:noNamespaceSchemaLocation="../../../../../../pcf.xsd">
+  <Page
+    canVisit="perm.System.admintabview and perm.System.billplanview"
+    id="BillingPlans"
+    title="displaykey.Web.BillingPlans.Title">
+    <Variable
+      initialValue="new web.plan.PlanHelper()"
+      name="PlanHelper"/>
+    <Screen
+      id="BillingPlansScreen">
+      <Toolbar/>
+      <ListViewPanel
+        id="BillingPlansLV">
+        <RowIterator
+          editable="false"
+          elementName="billingPlan"
+          value="gw.api.database.Query.make(BillingPlan).select()">
+          <ToolbarFilter
+            label="displaykey.Web.BillingPlansLV.Show"
+            name="Filter">
+            <ToolbarFilterOptionGroup
+              filters="new web.plan.PlanListFilterSet().FilterOptions"/>
+          </ToolbarFilter>
+          <Row>
+            <Cell
+              align="left"
+              id="PlanOrder"
+              label="displaykey.Web.BillingPlansLV.PlanOrder"
+              sortOrder="1"
+              value="billingPlan.PlanOrder"/>
+            <Cell
+              action="BillingPlanDetail.go(billingPlan)"
+              id="Name"
+              label="displaykey.Web.BillingPlansLV.Name"
+              value="billingPlan.Name"/>
+            <Cell
+              id="Description"
+              label="displaykey.Web.BillingPlansLV.Description"
+              value="billingPlan.Description"/>
+            <DateCell
+              id="EffectiveDate"
+              label="displaykey.Web.BillingPlansLV.EffectiveDate"
+              value="billingPlan.EffectiveDate"/>
+            <DateCell
+              id="ExpirationDate"
+              label="displaykey.Web.BillingPlansLV.ExpirationDate"
+              value="billingPlan.ExpirationDate"/>
+            <LinkCell
+              id="MovePriority"
+              label="displaykey.Web.BillingPlansLV.PlanOrder.MovePriority">
+              <Link
+                action="PlanHelper.moveUp(billingPlan);"
+                available="perm.System.billplanedit"
+                icon="&quot;arrow_up.png&quot;"
+                id="MoveUp"
+                tooltip="displaykey.Web.BillingPlansLV.PlanOrder.MoveUp"
+                visible="billingPlan.PlanOrder &gt; 1"/>
+              <Link
+                action="PlanHelper.moveDown(billingPlan);"
+                available="perm.System.billplanedit"
+                icon="&quot;arrow_down.png&quot;"
+                id="MoveDown"
+                tooltip="displaykey.Web.BillingPlansLV.PlanOrder.MoveDown"
+                visible="!billingPlan.hasHighestPlanOrder()"/>
+            </LinkCell>
+          </Row>
+        </RowIterator>
+      </ListViewPanel>
+    </Screen>
+  </Page>
+</PCF>

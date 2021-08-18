@@ -1,0 +1,37 @@
+<?xml version="1.0"?>
+<PCF
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:noNamespaceSchemaLocation="../../../../../pcf.xsd">
+  <Popup
+    id="DirectBillAddInvoiceItemsPopup"
+    title="displaykey.Web.AddInvoiceItemsPopup.Title">
+    <LocationEntryPoint
+      signature="DirectBillAddInvoiceItemsPopup( directBillPaymentView : gw.api.web.payment.DirectBillPaymentView, amountAvailableToDistribute : gw.pl.currency.MonetaryAmount)"/>
+    <Variable
+      name="directBillPaymentView"
+      type="gw.api.web.payment.DirectBillPaymentView"/>
+    <Variable
+      name="amountAvailableToDistribute"
+      type="gw.pl.currency.MonetaryAmount"/>
+    <Screen>
+      <Toolbar>
+        <CheckedValuesToolbarButton
+          allCheckedRowsAction="directBillPaymentView.manuallyAddItems( CheckedValues ); recalculateDistribution(); CurrentLocation.commit()"
+          flags="any Row"
+          id="SelectInvoiceItems"
+          iterator="InvoiceItemSearchPanelSet.InvoiceItemsLV"
+          label="displaykey.Web.AddInvoiceItemsPopup.AddSelectedInvoiceItems"/>
+        <ToolbarButton
+          action="CurrentLocation.cancel()"
+          id="cancel"
+          label="displaykey.Button.Cancel"/>
+      </Toolbar>
+      <PanelRef
+        def="InvoiceItemSearchPanelSet(directBillPaymentView.Payment, directBillPaymentView.TargetAccount, null)"/>
+    </Screen>
+    <Code><![CDATA[public function recalculateDistribution() {
+  if (directBillPaymentView.MoneyReceived.Amount == null) return
+  directBillPaymentView.recalculateDistribution(amountAvailableToDistribute)
+}]]></Code>
+  </Popup>
+</PCF>

@@ -1,0 +1,43 @@
+<?xml version="1.0"?>
+<PCF
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:noNamespaceSchemaLocation="../../../../../pcf.xsd">
+  <DetailViewPanel
+    editable="false"
+    id="MinimalTAccountOwnerDetailsDV"
+    mode="accountdesignated">
+    <Require
+      name="tAccountOwner"
+      type="TAccountOwner"/>
+    <Require
+      name="unapplied"
+      type="UnappliedFund"/>
+    <InputColumn>
+      <InputSet
+        visible="policyPeriod != null">
+        <Label
+          label="displaykey.Web.NewWriteoffWizardDetailsStepScreen.TargetDetails"/>
+      </InputSet>
+      <Input
+        action="pcf.AccountDetailSummaryPopup.push(unapplied.Account)"
+        id="Account"
+        label="displaykey.Web.NewWriteoffWizardDetailsStepScreen.Account"
+        value="unapplied.Account"
+        visible="unapplied != null"/>
+      <Input
+        id="Insured"
+        label="displaykey.Web.NewWriteoffWizardDetailsStepScreen.Name"
+        value="unapplied.Account.AccountNameLocalized"
+        visible="unapplied != null"/>
+      <MonetaryAmountInput
+        align="left"
+        boldLabel="true"
+        currency="unapplied.Currency"
+        formatType="currency"
+        id="UnappliedAmount"
+        label="displaykey.Web.MinimalAccountDetailsDV.UnappliedAmount"
+        value="unapplied.Balance"
+        visible="unapplied != null"/>
+    </InputColumn>
+  </DetailViewPanel>
+</PCF>

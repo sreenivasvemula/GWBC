@@ -1,0 +1,40 @@
+<?xml version="1.0"?>
+<entity
+  xmlns="http://guidewire.com/datamodel"
+  entity="CondCmsnSubPlanEvaluation"
+  type="versionable"
+  desc="Represents an entry in the CondCmsnSubPlan's ExcludedEvaluations table. Each entry represents an                 account evaluation excluded by the sub-plan."
+  admin="true"
+  subpackage="commission"
+  loadable="false"
+  platform="false"
+  table="condcmsnsubplanevaluation">
+  <implementsEntity
+    name="NotInCurrencySilo"/>
+  <foreignkey
+    name="CondCmsnSubPlan"
+    desc="FK to container."
+    columnName="CondCmsnSubPlanID"
+    fkentity="CondCmsnSubPlan"
+    getterScriptability="doesNotExist"
+    nullok="false"
+    setterScriptability="doesNotExist"/>
+  <typekey
+    name="Evaluation"
+    typelist="AccountEvaluation"
+    desc="The evaluation."
+    getterScriptability="doesNotExist"
+    nullok="false"
+    setterScriptability="doesNotExist"/>
+  <index
+    desc="Legacy"
+    name="commsubplaneval"
+    unique="true">
+    <indexcol
+      name="CondCmsnSubPlanID"
+      keyposition="1"/>
+    <indexcol
+      name="Evaluation"
+      keyposition="2"/>
+  </index>
+</entity>

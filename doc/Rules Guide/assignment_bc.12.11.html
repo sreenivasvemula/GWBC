@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xml:lang="en" lang="en" xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+    <meta http-equiv="Content-Style-Type" content="text/css" />
+    <!-- MOTW-DISABLED saved from url=(0014)about:internet -->
+    <title>Group Assignment (within the Assignment Rules)</title>
+    <link rel="StyleSheet" href="css/assignment_bc.css" type="text/css" media="all" />
+    <link rel="StyleSheet" href="css/webworks.css" type="text/css" media="all" />
+    <link rel="StyleSheet" href="css/css-guidewire-extra.css" type="text/css" media="all" />
+    <script type="text/javascript" language="JavaScript1.2" src="wwhdata/common/context.js"></script>
+    <script type="text/javascript" language="JavaScript1.2" src="wwhdata/common/towwhdir.js"></script>
+    <script type="text/javascript" language="JavaScript1.2" src="wwhdata/common/wwhpagef.js"></script>
+    <script type="text/javascript" language="JavaScript1.2">
+      <!--
+        var  WebWorksRootPath = "";
+      // -->
+    </script>
+    <script type="text/javascript" language="JavaScript1.2">
+      <!--
+        // Set reference to top level help frame
+        //
+        var  WWHFrame = WWHGetWWHFrame("", true);
+      // -->
+    </script>
+    <script type="text/javascript" language="JavaScript1.2" src="scripts/expand.js"></script>
+    <!-- THE FOLLOWING IS A GUIDEWIRE STYLE DEFINITION FOR THE LINK TO THIS FEATURE -->
+    <link rel="StyleSheet" href="css/css-guidewire-extra.css" type="text/css" media="all" />
+    <!-- THE FOLLOWING IS A GUIDEWIRE GSCRIPT FUNCTION FOR THE LINK TO THIS FEATURE -->
+    <script type="text/javascript">
+function guidewire_selectall()
+{
+var text_val=eval("document.linktothisurlform.urlfield");
+text_val.focus();
+text_val.select();
+}
+</script>
+  </head>
+  <body onLoad="WWHUpdate();" onUnload="WWHUnload();" onKeyDown="WWHHandleKeyDown((document.all||document.getElementById||document.layers)?event:null);" onKeyPress="WWHHandleKeyPress((document.all||document.getElementById||document.layers)?event:null);" onKeyUp="WWHHandleKeyUp((document.all||document.getElementById||document.layers)?event:null);">
+    <!-- THE FOLLOWING IS A GUIDEWIRE DIV FOR THE 'LINK TO THIS' FEATURE -->
+    <div id="linkToThisPage" class="popup" style="display: none;">
+      <div class="popupTitle">Link Directly to This Page 
+           <a href="#" onclick="var thePopup = getElementById('linkToThisPage');thePopup.style.display='none';return false;"><img class="popupClosebox" src="wwhelp/wwhimpl/common/images/close.gif" /></a></div>
+      <div style="padding:6px;">
+        <div class="popupText" id="linkToThisPageBookmark">An error has occurred if you see this messsage.</div>
+        <form name="linktothisurlform" method="post" action="" style="width:275px;margin:0px">
+          <input type="text" class="popupURLText" id="linkToThisPageURL" name="urlfield" rows="1" cols="55" onClick="guidewire_selectall();" onFocus="guidewire_selectall();"></input>
+        </form>
+      </div>
+    </div>
+    <br />
+    <div class="WebWorks_Breadcrumbs" style="text-align: left;">
+      <span>BillingCenter Rules Guide</span> : 
+    <span class="WebWorks_Breadcrumbs" style="text-align: left;"><a class="WebWorks_Breadcrumb_Link" href="p-rules_advanced.html#15788364">Advanced Topics</a> : <a class="WebWorks_Breadcrumb_Link" href="assignment_bc.12.01.html#15788364">Assignment in BillingCenter</a> : <a class="WebWorks_Breadcrumb_Link" href="assignment_bc.12.09.html#15788364">Assignment Method Reference</a> : Group Assignment (within the Assignment Rules)</span></div>
+    <hr align="left" />
+    <blockquote>
+      <h4 class="H2B_-_Heading_2_Break"><a name="15788364">Group Assignment (within the Assignment Rules)</a></h4>
+      <div class="B_-_Body"><a name="15788365">Methods that only assign a group are </a><span class="e_-_emphasis">most useful</span> from within the Global Assignment rule set (which is only responsible for assigning a group). In all other contexts, you need to assign both a user and a group. Therefore, it makes more sense to use one of the other types of assignment methods which perform both assignments. These methods include the following:</div>
+      <div class="BI_-_Bullet_Item_outer" style="margin-left: 57pt; margin-bottom: 2.0pt; vertical-align: baseline">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="BI_-_Bullet_Item_inner" style="width: 15pt; white-space: nowrap; color: #000000; font-style: normal; font-variant: normal; font-weight: normal; text-transform: none">
+                <span class="bu_-_bullet">•	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="BI_-_Bullet_Item_inner" style="color: #000000; font-style: normal; font-variant: normal; font-weight: normal; text-transform: none"><span class="cv_-_computer_voice"><a href="javascript:WWHClickedPopup('rules', 'assignment_bc.12.11.html#15892414', '');" title="Group Assignment (within the Assignment Rules)" name="15892245">assignGroupByRoundRobin</a></span></div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="B_-_Body"><a name="15772875">It is important to understand that these methods do not assign the assignable item to a user. They simply pick a group to use during the rest of the assignment process. To complete the assignment, you must use one of the other assignment methods to assign the item to a user.</a></div>
+      <h6 class="HS_-_Head_Sub"><span class="cvh_-_computer_voice_in_heading"><a name="15892414">assignGroupByRoundRobin</a></span></h6>
+      <PRE class="CF_-_Code_First_Line"><a name="15668813">boolean assignGroupByRoundRobin(groupType, includeSubGroups, group)</a></PRE>
+      <div class="B_-_Body"><a name="15668815">This method assigns an entity to a group (or one of its subgroups) using round-robin assignment. The method restricts the set of available groups to those matching the specified group type. Use this method to distribute work (assignable items) among the different groups equitably.</a></div>
+      <div class="B_-_Body"><a name="15676434">For example, suppose you have several groups of people who specialize in handling complex issues. For some high-complexity items, you might want to rotate among the groups on an equitable basis. The passed-in </a><span class="cv_-_computer_voice">groupType</span> (if non-null) ensures&nbsp;that the method only considers for round-robin assignment those groups that have the matching value for their <span class="cv_-_computer_voice">groupType</span> fields. Thus, if there are three groups, all with the same group type, this method performs round-robin assignment between the three groups.</div>
+      <div class="B_-_Body"><a name="16167842">The </a><span class="cv_-_computer_voice">assignGroupByRoundRobin</span> method ignores any group for which the <span class="cv_-_computer_voice">Group.LoadFactor</span> value is zero (0).</div>
+      <div class="B_-_Body"><a name="15891370">The following example assigns a troubleticket to one of the “special handling” groups within the currently assigned group. </a></div>
+      <div class="CS_-_Code_Single_Line"><a name="16077373">TroubleTicket.assignGroupByRoundRobin(  "special handling", true, Activity.AssignedGroup )</a></div>
+      <script type="text/javascript" language="JavaScript1.2">
+        <!--
+          // Clear related topics
+          //
+          WWHClearRelatedTopics();
+
+          document.writeln(WWHRelatedTopicsInlineHTML());
+        // -->
+      </script>
+    </blockquote>
+    <script type="text/javascript" language="JavaScript1.2">
+      <!--
+        document.write(WWHRelatedTopicsDivTag() + WWHPopupDivTag() + WWHALinksDivTag());
+      // -->
+    </script>
+  </body>
+</html>

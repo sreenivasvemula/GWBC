@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PCF
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:noNamespaceSchemaLocation="../../../../../pcf.xsd">
+  <ToolbarButtonSet
+          id="ActivityDetailToolbarButtonSet"
+    mode="disbursementapproval">
+    <Require
+      name="activity"
+      type="Activity"/>
+    <Require
+      name="assigneeHolder"
+      type="assignment.Assignee[]"/>
+    <ToolbarButton
+      action="assigneeHolder[0].assignToThis(activity); CurrentLocation.commit()"
+      hideIfReadOnly="true"
+      id="ActivityDetailToolbarButtonSet_UpdateButton"
+      label="displaykey.Web.ActivityDetail.Button.Update"/>
+    <ToolbarButton
+      action="web.activity.ActivityUtil.approveActivity(activity); CurrentLocation.commit();"
+      hideIfReadOnly="true"
+      id="ActivityDetailToolbarButtonSet_ApproveButton"
+      label="displaykey.Web.ActivityDetail.Button.Approve"
+      visible="Activity.canApprove()"/>
+    <ToolbarButton
+      action="web.activity.DisbApprActivityUtil.rejectActivity(activity as DisbApprActivity); CurrentLocation.commit();"
+      hideIfReadOnly="true"
+      id="ActivityDetailToolbarButtonSet_RejectButton"
+      label="displaykey.Web.ActivityDetail.Button.Reject"
+      visible="Activity.canApprove()"/>
+    <ToolbarButton
+      action="web.activity.DisbApprActivityUtil.rejectActivityWithHold(activity as DisbApprActivity); CurrentLocation.commit();"
+      hideIfReadOnly="true"
+      id="ActivityDetailToolbarButtonSet_RejectWithHold"
+      label="displaykey.Web.ActivityDetail.Button.RejectWithHold"
+      visible="Activity.canApprove()"/>
+    <ToolbarButton
+      action="CurrentLocation.cancel()"
+      id="ActivityDetailToolbarButtonSet_CancelButton"
+      label="displaykey.Web.ActivityDetail.Button.Cancel"/>
+  </ToolbarButtonSet>
+</PCF>

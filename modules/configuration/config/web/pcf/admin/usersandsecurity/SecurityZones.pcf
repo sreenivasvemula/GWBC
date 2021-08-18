@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PCF
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:noNamespaceSchemaLocation="../../../../../../pcf.xsd">
+  <Page
+    canEdit="perm.Group.edit"
+    canVisit="perm.System.admintabview and perm.System.useradmin"
+    id="SecurityZones"
+    title="displaykey.Web.Admin.SecurityZones">
+    <Variable
+      initialValue="gw.api.database.Query.make(SecurityZone).select()"
+      name="SecurityZones"
+      type="SecurityZoneQuery"/>
+    <Screen
+      id="SecurityZonesScreen">
+      <TitleBar
+        appendListViewPaging="true"
+        title="displaykey.Web.Admin.SecurityZones"/>
+      <Toolbar>
+        <ToolbarButton
+          action="NewSecurityZone.go()"
+          id="SecurityZones_NewSecurityZoneButton"
+          label="displaykey.Web.Admin.NewSecurityZone"
+          shortcut="S"/>
+      </Toolbar>
+      <PanelRef
+        def="SecurityZonesLV(SecurityZones)"/>
+    </Screen>
+  </Page>
+</PCF>

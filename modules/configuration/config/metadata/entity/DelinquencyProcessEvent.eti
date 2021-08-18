@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?><entity xmlns="http://guidewire.com/datamodel" desc="An event occuring in the delinquency process workflow." entity="DelinquencyProcessEvent" exportable="false" extendable="false" final="true" platform="false" setterScriptability="hidden" subpackage="delinquency" table="delinquencyprocessevent" type="retireable">
+  <implementsEntity name="DelinquencyEvent"/>
+  <implementsEntity name="InCurrencySilo"/>
+  <column desc="Exact target date set after the workflow begins" name="ExactTargetDate" nullok="true" type="dateonly"/>
+  <foreignkey columnName="CurrentDelinquencyProcessID" desc="The associated delinquency process for which this event is the current event. (other end of onetoone)" fkentity="DelinquencyProcess" name="CurrentDelinquencyProcess" nullok="true"/>
+  <foreignkey columnName="DelinquencyProcessID" desc="The associated delinquency process" fkentity="DelinquencyProcess" importableagainstexistingobject="false" name="DelinquencyProcess" nullok="true"/>
+  <foreignkey desc="Activity approving the event; will be null if the event is automatic" fkentity="Activity" name="ApprovalActivity" nullok="true"/>
+  <!-- Set by DelinquencyProcess -->
+  <column name="CompletionTime" nullok="true" setterScriptability="doesNotExist" type="pastdatetime"/>
+  <checkconstraint predicate="(ExactTargetDate is null or OffsetDays is null)"/>
+</entity>

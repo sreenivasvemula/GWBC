@@ -1,0 +1,30 @@
+<?xml version="1.0"?>
+<PCF
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:noNamespaceSchemaLocation="../../../../../pcf.xsd">
+  <Popup
+    afterCommit="AccountCollateral.go(collateral.Account)"
+    afterEnter="collateral.addToLetterOfCredits(newLOC)"
+    canEdit="true"
+    id="AccountNewLOCPopup"
+    startInEditMode="true"
+    title="displaykey.Web.AccountNewLOCPopup.Title">
+    <LocationEntryPoint
+      signature="AccountNewLOCPopup(collateral:Collateral)"/>
+    <Variable
+      name="collateral"
+      type="Collateral"/>
+    <Variable
+      initialValue="new LetterOfCredit(collateral.Currency)"
+      name="newLOC"
+      type="LetterOfCredit"/>
+    <Screen
+      id="AccountNewLOCScreen">
+      <Toolbar>
+        <EditButtons/>
+      </Toolbar>
+      <PanelRef
+        def="LOCDV(newLOC)"/>
+    </Screen>
+  </Popup>
+</PCF>

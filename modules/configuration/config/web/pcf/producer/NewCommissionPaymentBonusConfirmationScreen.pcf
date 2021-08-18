@@ -1,0 +1,49 @@
+<?xml version="1.0"?>
+<PCF
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:noNamespaceSchemaLocation="../../../../../pcf.xsd">
+  <Screen
+    editable="true"
+    id="NewCommissionPaymentBonusConfirmationScreen">
+    <Require
+      name="bonusPayment"
+      type="BonusCmsnPayment"/>
+    <Require
+      name="producer"
+      type="Producer"/>
+    <Variable
+      initialValue="bonusPayment.getOpenApprovalActivity()"
+      name="approvalActivity"/>
+    <Variable
+      initialValue="(bonusPayment.PaymentTime == CommissionPaymentTime.TC_PAYONDATE) ? bonusPayment.PayOn.toString() : bonusPayment.PaymentTime.DisplayName"
+      name="paymentTime"
+      type="String"/>
+    <Toolbar>
+      <WizardButtons/>
+    </Toolbar>
+    <AlertBar
+      id="ApprovalActivityAlertBar"
+      label="displaykey.Web.ApprovalActivityAlertBar"
+      visible="approvalActivity != null"/>
+    <PanelRef
+      def="NewCommissionPaymentBonusDV(bonusPayment, producer, false)"/>
+    <DetailViewPanel>
+      <InputColumn>
+        <Label
+          label="displaykey.Web.NewCommissionPaymentTimeDV.PaymentTime"/>
+        <TextInput
+          id="PaymentTime"
+          label="bonusPayment.PaymentTime == CommissionPaymentTime.TC_IMMEDIATELY ? displaykey.Web.NewCommissionPaymentTimeDV.Immediately : displaykey.Web.NewCommissionPaymentTimeDV.NextPayment"
+          value="&quot;&quot;"
+          visible="bonusPayment.PaymentTime != CommissionPaymentTime.TC_PAYONDATE"/>
+        <DateInput
+          id="PaymentDate"
+          label="displaykey.Web.NewCommissionPaymentTimeDV.PayOnDate"
+          value="bonusPayment.PayOn"
+          visible="bonusPayment.PaymentTime == CommissionPaymentTime.TC_PAYONDATE"/>
+      </InputColumn>
+    </DetailViewPanel>
+    <PanelRef
+      def="ApprovalActivityDV(approvalActivity)"/>
+  </Screen>
+</PCF>

@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?><delegate xmlns="http://guidewire.com/datamodel" name="ItemState" subpackage="invoice">
+    <fulldescription>
+        This delegate contains a set of dynamic state information about an invoice item,
+        including the commission amount of the invoice item for the active primary producer (which can change when there
+        is
+        a commission override) and the current amount of commission paid on the invoice item for the active primary
+        producer
+        (which changes whenever there is a payment against the invoice item)
+    </fulldescription>
+    <monetaryamount amountColumnName="PrimaryPaidCommission"
+            desc="Denormalization of the total commission paid by ChargePaidFromUnapplieds applied on this invoice item for the active primary producer" name="PrimaryPaidCommission" nullok="false" loadable="false" loadedByCallback="true" scaleToCurrency="true" setterScriptability="doesNotExist" soapnullok="true">
+      <tag name="DefaultValueZero"/>
+    </monetaryamount>
+    <monetaryamount amountColumnName="PrimaryCmsnPayableAmount"
+            desc="The amount of the invoice item commission that has been made payable for the active primary producer." name="PrimaryCmsnPayableAmount" nullok="false" loadable="false" loadedByCallback="true" scaleToCurrency="true" setterScriptability="doesNotExist" soapnullok="true">
+      <tag name="DefaultValueZero"/>
+    </monetaryamount>
+    <monetaryamount amountColumnName="PrimaryCommissionAmount"
+            desc="Denormalization of the commission amount for the invoice item for the active primary producer" name="PrimaryCommissionAmount" nullok="false" loadable="false" loadedByCallback="true" scaleToCurrency="true" setterScriptability="doesNotExist" soapnullok="true">
+      <tag name="DefaultValueZero"/>
+    </monetaryamount>
+    <monetaryamount amountColumnName="PrimaryWrittenOffCommission"
+            currencyColumnName="PrimaryWrittenOffCmsn_cur" desc="Denormalization of the amount of invoice item's commission for the active primary producer that was written off" name="PrimaryWrittenOffCommission" nullok="false" loadable="false" loadedByCallback="true" scaleToCurrency="true" setterScriptability="doesNotExist" soapnullok="true">
+      <tag name="DefaultValueZero"/>
+    </monetaryamount>
+    <monetaryamount amountColumnName="PromisedCommission"
+            desc="Denormalization of the total primary commission promised on this invoice item" name="PromisedCommission" nullok="false" loadable="false" loadedByCallback="true" scaleToCurrency="true" setterScriptability="hidden" soapnullok="true">
+      <tag name="DefaultValueZero"/>
+    </monetaryamount>
+    <monetaryamount amountColumnName="PromisedAndPaidAmount"
+            desc="Denormalization of the total gross amount promised and paid on this invoice item" name="PromisedAndPaidAmount" nullok="false" loadable="false" loadedByCallback="true" scaleToCurrency="true" setterScriptability="hidden" soapnullok="true">
+      <tag name="DefaultValueZero"/>
+    </monetaryamount>
+    <column desc="The number describing where the associated invoice item falls on the invoice.  This should be a unique and unchanging number." name="LineItemNumber" nullok="true" type="integer"/>
+</delegate>

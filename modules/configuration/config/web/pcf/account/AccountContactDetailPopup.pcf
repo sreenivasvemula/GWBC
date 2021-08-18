@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<PCF
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:noNamespaceSchemaLocation="../../../../../pcf.xsd">
+  <Popup
+    canEdit="true"
+    canVisit="perm.AccountContact.edit"
+    id="AccountContactDetailPopup"
+    returnType="AccountContact"
+    startInEditMode="true"
+    title="displaykey.Web.AccountContactDetail.Title">
+    <LocationEntryPoint
+      signature="AccountContactDetailPopup(accountContact : AccountContact)"/>
+    <Variable
+      name="accountContact"
+      type="AccountContact"/>
+    <ScreenRef
+      def="NewAccountContactScreen(accountContact, new gw.pcf.duplicatecontacts.DoNothingDuplicateContactsPopupNavigator(accountContact.Contact))"/>
+  </Popup>
+</PCF>

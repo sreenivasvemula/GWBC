@@ -1,0 +1,190 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xml:lang="en" lang="en" xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+    <meta http-equiv="Content-Style-Type" content="text/css" />
+    <!-- MOTW-DISABLED saved from url=(0014)about:internet -->
+    <title>BillingCenter 7.0 Upgrade Tool Automated Steps</title>
+    <link rel="StyleSheet" href="css/procedure-config-c.css" type="text/css" media="all" />
+    <link rel="StyleSheet" href="css/webworks.css" type="text/css" media="all" />
+    <link rel="StyleSheet" href="css/css-guidewire-extra.css" type="text/css" media="all" />
+    <script type="text/javascript" language="JavaScript1.2" src="wwhdata/common/context.js"></script>
+    <script type="text/javascript" language="JavaScript1.2" src="wwhdata/common/towwhdir.js"></script>
+    <script type="text/javascript" language="JavaScript1.2" src="wwhdata/common/wwhpagef.js"></script>
+    <script type="text/javascript" language="JavaScript1.2">
+      <!--
+        var  WebWorksRootPath = "";
+      // -->
+    </script>
+    <script type="text/javascript" language="JavaScript1.2">
+      <!--
+        // Set reference to top level help frame
+        //
+        var  WWHFrame = WWHGetWWHFrame("", true);
+      // -->
+    </script>
+    <script type="text/javascript" language="JavaScript1.2" src="scripts/expand.js"></script>
+    <!-- THE FOLLOWING IS A GUIDEWIRE STYLE DEFINITION FOR THE LINK TO THIS FEATURE -->
+    <link rel="StyleSheet" href="css/css-guidewire-extra.css" type="text/css" media="all" />
+    <!-- THE FOLLOWING IS A GUIDEWIRE GSCRIPT FUNCTION FOR THE LINK TO THIS FEATURE -->
+    <script type="text/javascript">
+function guidewire_selectall()
+{
+var text_val=eval("document.linktothisurlform.urlfield");
+text_val.focus();
+text_val.select();
+}
+</script>
+  </head>
+  <body onLoad="WWHUpdate();" onUnload="WWHUnload();" onKeyDown="WWHHandleKeyDown((document.all||document.getElementById||document.layers)?event:null);" onKeyPress="WWHHandleKeyPress((document.all||document.getElementById||document.layers)?event:null);" onKeyUp="WWHHandleKeyUp((document.all||document.getElementById||document.layers)?event:null);">
+    <!-- THE FOLLOWING IS A GUIDEWIRE DIV FOR THE 'LINK TO THIS' FEATURE -->
+    <div id="linkToThisPage" class="popup" style="display: none;">
+      <div class="popupTitle">Link Directly to This Page 
+           <a href="#" onclick="var thePopup = getElementById('linkToThisPage');thePopup.style.display='none';return false;"><img class="popupClosebox" src="wwhelp/wwhimpl/common/images/close.gif" /></a></div>
+      <div style="padding:6px;">
+        <div class="popupText" id="linkToThisPageBookmark">An error has occurred if you see this messsage.</div>
+        <form name="linktothisurlform" method="post" action="" style="width:275px;margin:0px">
+          <input type="text" class="popupURLText" id="linkToThisPageURL" name="urlfield" rows="1" cols="55" onClick="guidewire_selectall();" onFocus="guidewire_selectall();"></input>
+        </form>
+      </div>
+    </div>
+    <br />
+    <div class="WebWorks_Breadcrumbs" style="text-align: left;">
+      <span>BillingCenter Upgrade Guide</span> : 
+    <span class="WebWorks_Breadcrumbs" style="text-align: left;"><a class="WebWorks_Breadcrumb_Link" href="part-basicupgrade_2.html#1889042">Upgrading from 3.0.x</a> : <a class="WebWorks_Breadcrumb_Link" href="procedure-config-c.16.01.html#1889042">Upgrading the BillingCenter 3.0.x Configuration</a> : BillingCenter 7.0 Upgrade Tool Automated Steps</span></div>
+    <hr align="left" />
+    <blockquote>
+      <h3 class="H1_-_Heading_1"><a name="1889042">BillingCenter 7.0 Upgrade Tool Automated Steps</a></h3>
+      <div class="BKN_-_Body_002c_Keep_Next"><a name="1889044">The Configuration Upgrade Tool performs a number of automated steps. Review these steps as some might require manual intervention if there is an issue.</a></div>
+      <h4 class="H2_-_Heading_2"><a name="1957526">Moving Typelist Localizations into </a><span class="cvh_-_computer_voice_in_heading">typelist.properties</span> Files</h4>
+      <div class="B_-_Body"><a name="1957530">This upgrade step refactors typelist localizations. In versions of BillingCenter prior to 7.0, typecode localizations were stored in typelist XML files. This required you to modify and possibly extend a typelist definition to localize typecode names and descriptions.</a></div>
+      <div class="B_-_Body"><a name="1957534">In BillingCenter 7.0, typecode localizations are stored in </a><span class="cv_-_computer_voice">typelist.properties</span> files that follow the same pattern as display keys. These files are stored per module per locale as:</div>
+      <div class="CS_-_Code_Single_Line"><span class="pc_-_parameter_in_code"><a name="1957535">module</a></span>/config/locale/<span class="pc_-_parameter_in_code">locale</span>/typelist.properties</div>
+      <div class="B_-_Body"><a name="1957536">The upgrade functions on a per-module basis and performs the following actions:</a></div>
+      <div class="LS_-_List_Start_outer" style="margin-left: 57pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="LS_-_List_Start_inner" style="width: 15pt; white-space: nowrap">
+                <span class="ri_-_run_in_header">	1.	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="LS_-_List_Start_inner"><a name="1957537">Scans the </a><span class="cv_-_computer_voice">config/metadata</span> and <span class="cv_-_computer_voice">config/extension</span> directories for all typelist files.</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="LI_-_List_Item_outer" style="margin-left: 57pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="LI_-_List_Item_inner" style="width: 15pt; white-space: nowrap">
+                <span class="ri_-_run_in_header">	2.	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="LI_-_List_Item_inner"><a name="1957538">Opens each file and parses the XML.</a></div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="LI_-_List_Item_outer" style="margin-left: 57pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="LI_-_List_Item_inner" style="width: 15pt; white-space: nowrap">
+                <span class="ri_-_run_in_header">	3.	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="LI_-_List_Item_inner"><a name="1957539">Removes all typecode localizations, caching them in memory keyed by locale.</a></div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="LI_-_List_Item_outer" style="margin-left: 57pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="LI_-_List_Item_inner" style="width: 15pt; white-space: nowrap">
+                <span class="ri_-_run_in_header">	4.	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="LI_-_List_Item_inner"><a name="1957540">Saves the edited XML back to the typelist file.</a></div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="LI_-_List_Item_outer" style="margin-left: 57pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="LI_-_List_Item_inner" style="width: 15pt; white-space: nowrap">
+                <span class="ri_-_run_in_header">	5.	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="LI_-_List_Item_inner"><a name="1957541">After all typelist files are scanned, the upgrader iterates over the cached localizations.</a></div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="LI_-_List_Item_outer" style="margin-left: 57pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="LI_-_List_Item_inner" style="width: 15pt; white-space: nowrap">
+                <span class="ri_-_run_in_header">	6.	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="LI_-_List_Item_inner"><a name="1957542">For each locale, creates the </a><span class="cv_-_computer_voice">typelist.properties</span> file and writes out the localizations.</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <h4 class="H2_-_Heading_2"><a name="1957543">Removing Redundant </a><span class="cvh_-_computer_voice_in_heading">TTX</span> Files</h4>
+      <div class="B_-_Body"><a name="1957544">Many </a><span class="cv_-_computer_voice">TTX</span> files in the <span class="cv_-_computer_voice">configuration</span> module exist only because a typelist was localized. That leaves <span class="cv_-_computer_voice">TTX</span> files that contain no real customizations in the <span class="cv_-_computer_voice">configuration</span> module.</div>
+      <div class="B_-_Body"><a name="1957548">As of BillingCenter 7.0, all typelist localizations are stored in </a><span class="cv_-_computer_voice">typelist.properties</span> files. The prior upgrade step moves the typelist localizations to <span class="cv_-_computer_voice">typelist.properties</span>.</div>
+      <div class="B_-_Body"><a name="1957549">This upgrade step deletes TTX files that were created in prior versions that only contain localization information.</a></div>
+      <h4 class="H2_-_Heading_2"><a name="1957550">Removing </a><span class="cvh_-_computer_voice_in_heading">searchTypeVisible</span> Attribute from <span class="cvh_-_computer_voice_in_heading">DateCriterionChoiceInputNode</span></h4>
+      <div class="B_-_Body"><a name="1957551">The configuration upgrade updates PCF files to remove the </a><span class="cv_-_computer_voice">searchTypeVisible</span> attribute from <span class="cv_-_computer_voice">DateCriterionChoiceInput</span> elements.</div>
+      <h4 class="H2_-_Heading_2"><a name="1957552">Copying Display Properties Files into Target Configuration</a></h4>
+      <div class="B_-_Body"><a name="1957558">This step copies </a><span class="cv_-_computer_voice">display.properties</span> files from the <span class="cv_-_computer_voice">locale</span> directories of the working configuration module to the target configuration module.</div>
+      <div class="B_-_Body"><a name="1957561">If the file already exists in the target configuration, the tool skips the copy and logs a message. This is a precaution to make sure that the Configuration Upgrade Tool does not overwrite customized </a><span class="cv_-_computer_voice">display.properties </span>files if you run the tool again.</div>
+      <h4 class="H2_-_Heading_2"><a name="1957568">Copying Custom Rules and Adding BillingCenter 8.0.4 Default Rules</a></h4>
+      <div class="B_-_Body"><a name="1957570">This step copies customized rules to the target configuration </a><span class="cv_-_computer_voice">modules/configuration/config/rules/rules</span> directory. </div>
+      <div class="B_-_Body"><a name="1957583">This step also copies the default rules provided with BillingCenter 8.0.4 to a BillingCenter 8.0.4 folder within the </a><span class="cv_-_computer_voice">modules/configuration/config/rules/rules</span> directory of the target configuration. This is so you have a copy of the default rules in a folder in Studio that you can use to compare with your custom rules.</div>
+      <div class="B_-_Body"><a name="1957587">See </a><a href="javascript:WWHClickedPopup('upgrade', 'procedure-config-c.16.29.html#1958146', '');" title="Upgrading Rules to BillingCenter 8.0.4">“Upgrading Rules to BillingCenter 8.0.4”</a>.</div>
+      <h4 class="H2_-_Heading_2"><a name="1957588">Referencing </a><span class="cvh_-_computer_voice_in_heading">XSD</span> Files</h4>
+      <div class="B_-_Body"><a name="1957589">Guidewire now provides a </a><span class="cv_-_computer_voice">compatibility-xsd.xml</span> file in <span class="cv_-_computer_voice">modules/configuration/config/registry</span>. This file contains a list of the XSD files that exist in BillingCenter. This upgrade step locates XSD files and places an entry in <span class="cv_-_computer_voice">compatibility-xsd.xml</span> for each XSD file.</div>
+      <h4 class="H2_-_Heading_2"><a name="1957593">Removing </a><span class="cvh_-_computer_voice_in_heading">AdminTable</span> Delegate from Custom Extensions</h4>
+      <div class="B_-_Body"><a name="1957595">This step removes the </a><span class="cv_-_computer_voice">AdminTable</span> delegate from custom extensions.</div>
+      <h4 class="H2_-_Heading_2"><a name="1957596">Converting </a><span class="cvh_-_computer_voice_in_heading">sessiontimeoutsecs</span> Security Element to Parameter</h4>
+      <div class="B_-_Body"><a name="1957597">This step converts the </a><span class="cv_-_computer_voice">security</span> element <span class="cv_-_computer_voice">sessiontimeoutsecs</span> in <span class="cv_-_computer_voice">config.xml</span> to a parameter. For example, the tool converts:</div>
+      <div class="CS_-_Code_Single_Line"><a name="1957598">&lt;security sessiontimeoutsecs="10800"/&gt;</a></div>
+      <div class="B_-_Body"><a name="1957599">to</a></div>
+      <div class="CS_-_Code_Single_Line"><a name="1957600">&lt;param name="SessionTimeoutSecs" value="10800"/&gt;</a></div>
+      <div class="B_-_Body"><a name="1957601">The value is preserved during the conversion.</a></div>
+      <h4 class="H2_-_Heading_2"><a name="1957602">Removing Redundant Batch Server Parameter</a></h4>
+      <div class="B_-_Body"><a name="1957603">This step removes the redundant </a><span class="cv_-_computer_voice">BatchServer</span> parameter from <span class="cv_-_computer_voice">config.xml</span>.</div>
+      <script type="text/javascript" language="JavaScript1.2">
+        <!--
+          // Clear related topics
+          //
+          WWHClearRelatedTopics();
+
+          document.writeln(WWHRelatedTopicsInlineHTML());
+        // -->
+      </script>
+    </blockquote>
+    <script type="text/javascript" language="JavaScript1.2">
+      <!--
+        document.write(WWHRelatedTopicsDivTag() + WWHPopupDivTag() + WWHALinksDivTag());
+      // -->
+    </script>
+  </body>
+</html>

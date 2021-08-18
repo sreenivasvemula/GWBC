@@ -1,0 +1,32 @@
+<?xml version="1.0"?>
+<!-- ============================================================================================================  SuspensePayment  ============================================================================================================ -->
+<Entity
+  name="SuspensePayment">
+  <Columns>
+    <Column
+      beanPath="SuspensePayment.AccountNumber"
+      name="AccountNumber"/>
+    <Column
+      beanPath="SuspensePayment.PolicyNumber"
+      name="PolicyNumber"/>
+    <Column
+      beanPath="SuspensePayment.DisbursementAppliedTo.DisbursementNumber"
+      name="DisbursementNumber"/>
+    <Column
+      beanPath="SuspensePayment.OfferNumber"
+      name="OfferNumber"/>
+  </Columns>
+  <DisplayName><![CDATA[
+    if (DisbursementNumber != null) {
+      return DisbursementNumber;
+    } else if (AccountNumber != null) {
+      return AccountNumber;
+    } else if (PolicyNumber != null) {
+      return PolicyNumber;
+    } else if (OfferNumber != null) {
+      return OfferNumber;
+    } else {
+      return "Suspense Payment";
+    }
+  ]]></DisplayName>
+</Entity>

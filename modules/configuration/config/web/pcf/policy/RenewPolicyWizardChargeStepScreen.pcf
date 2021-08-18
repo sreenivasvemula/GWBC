@@ -1,0 +1,88 @@
+<?xml version="1.0"?>
+<PCF
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:noNamespaceSchemaLocation="../../../../../pcf.xsd">
+  <Screen
+    id="RenewPolicyWizardChargeStepScreen">
+    <Require
+      name="renewal"
+      type="Renewal"/>
+    <Variable
+      initialValue="new web.accounting.ChargePatternHelper()"
+      name="chargePatternHelper"
+      type="web.accounting.ChargePatternHelper"/>
+    <Toolbar>
+      <WizardButtons/>
+      <IteratorButtons
+        iterator="RenewPolicyChargesLV"/>
+    </Toolbar>
+    <ListViewPanel
+      id="RenewPolicyChargesLV">
+      <RowIterator
+        editable="true"
+        elementName="initializer"
+        toCreateAndAdd="renewal.buildCharge(0bd.ofCurrency(renewal.Currency), gw.api.domain.accounting.ChargePatternKey.PREMIUM.get())"
+        toRemove="renewal.removeChargeInitializer(initializer)"
+        value="renewal.ChargeInitializers">
+        <Row>
+          <RangeCell
+            editable="true"
+            id="Type"
+            label="displaykey.Web.RenewPolicyChargesLV.Type"
+            optionLabel="VALUE.ChargeName"
+            required="true"
+            value="initializer.ChargePattern"
+            valueRange="chargePatternHelper.getChargePatterns( entity.PolicyPeriod )"/>
+          <TextCell
+            editable="true"
+            id="ChargeGroup"
+            label="displaykey.Web.RenewPolicyChargesLV.ChargeGroup"
+            value="initializer.ChargeGroup"/>
+          <MonetaryAmountCell
+            currency="renewal.Currency"
+            editable="true"
+            id="Amount"
+            label="displaykey.Web.RenewPolicyChargesLV.Amount"
+            required="true"
+            validationExpression="initializer.Amount.IsZero ? displaykey.Web.Charge.ChargeAmountCannotBeZero : null"
+            value="initializer.Amount"/>
+        </Row>
+      </RowIterator>
+    </ListViewPanel>
+    <DetailViewPanel
+      editable="true"
+      id="FullPayDiscountDV"
+      visible="renewal.NewPolicyPeriod.EligibleForFullPayDiscount">
+      <InputColumn>
+        <Label
+          label="displaykey.Web.NewPolicyReportingChargeDV.FullPayDiscountDetails"/>
+        <DateInput
+          editable="true"
+          id="FullPayDate"
+          label="displaykey.Web.NewPolicyReportingChargeDV.FullPayDate"
+          required="renewal.NewPolicyPeriod.EligibleForFullPayDiscount"
+          value="renewal.NewPolicyPeriod.FullPayDiscountUntil"/>
+        <MonetaryAmountInput
+          currency="renewal.Currency"
+          editable="true"
+          formatType="currency"
+          id="DiscountedPayment"
+          label="displaykey.Web.NewPolicyReportingChargeDV.DiscountedPayment"
+          required="renewal.NewPolicyPeriod.EligibleForFullPayDiscount"
+          validationExpression="isDiscountedPaymentValid() ? null : displaykey.Web.NewPolicyReportingChargeDV.DiscountedPaymentNotValid"
+          value="renewal.NewPolicyPeriod.DiscountedPaymentThreshold"/>
+      </InputColumn>
+    </DetailViewPanel>
+    <Code><![CDATA[function isDiscountedPaymentValid() : Boolean{
+  if(!renewal.NewPolicyPeriod.EligibleForFullPayDiscount){
+    return true;
+  }
+  
+  var totalChargeAmount = 0bd.ofCurrency(renewal.Currency)
+  for(charge in renewal.ChargeInitializers){
+    totalChargeAmount = totalChargeAmount.add(charge.Amount)
+  }
+  return totalChargeAmount > renewal.NewPolicyPeriod.DiscountedPaymentThreshold
+}]]></Code>
+  </Screen>
+</PCF>

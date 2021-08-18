@@ -1,0 +1,34 @@
+<?xml version="1.0"?>
+<PCF
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:noNamespaceSchemaLocation="../../../../../pcf.xsd">
+  <Page
+    canVisit="perm.System.prodtabview and perm.System.prodsuspitemsview"
+    id="AgencyBillSuspenseItems"
+    title="displaykey.Web.AgencyBillSuspenseItems.Title">
+    <LocationEntryPoint
+      signature="AgencyBillSuspenseItems(producer : Producer)"/>
+    <Variable
+      name="producer"
+      type="Producer"/>
+    <Screen
+      id="AgencyBillSuspenseItemsScreen">
+      <CardViewPanel>
+        <Card
+          id="AgencyBillSuspensePaymentItemsCard"
+          title="displaykey.Web.AgencyBillSuspenseItems.PaymentItemsCard">
+          <PanelRef
+            def="AgencyBillSuspenseItemPanelSet(producer.findAssociatedSuspensePaymentItems() as BaseSuspDistItem[], Payment)"
+            id="PaymentItemsPanel"/>
+        </Card>
+        <Card
+          id="AgencyBillSuspensePromiseItemsCard"
+          title="displaykey.Web.AgencyBillSuspenseItems.PromiseItemsCard">
+          <PanelRef
+            def="AgencyBillSuspenseItemPanelSet(producer.findAssociatedSuspensePromiseItems() as BaseSuspDistItem[], Promise)"
+            id="PromiseItemsPanel"/>
+        </Card>
+      </CardViewPanel>
+    </Screen>
+  </Page>
+</PCF>

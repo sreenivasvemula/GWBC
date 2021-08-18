@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PCF
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:noNamespaceSchemaLocation="../../../../../pcf.xsd">
+  <Forward
+    id="TroubleTicketAlertForward">
+    <LocationEntryPoint
+      signature="TroubleTicketAlertForward(entity : HoldRelatedEntity)"/>
+    <LocationEntryPoint
+      signature="TroubleTicketAlertForward(entity : HoldRelatedEntity, policyPeriod : PolicyPeriod)"/>
+    <Variable
+      name="entity"
+      type="HoldRelatedEntity"/>
+    <Variable
+      initialValue="entity.ActiveTroubleTickets"
+      name="troubleTickets"
+      type="TroubleTicket[]"/>
+    <Variable
+      name="policyPeriod"
+      type="PolicyPeriod"/>
+    <ForwardCondition
+      action="TroubleTicketDetailsPopup.push(entity.firstActiveTroubleTicket)"
+      condition="troubleTickets.length == 1"/>
+    <ForwardCondition
+      action="AccountDetailTroubleTickets.go(entity as Account)"
+      condition="entity typeis Account"/>
+    <ForwardCondition
+      action="PolicyDetailTroubleTickets.go(entity as PolicyPeriod, false, true)"
+      condition="entity typeis PolicyPeriod"/>
+    <ForwardCondition
+      action="PolicyDetailTroubleTickets.go(policyPeriod, true, false)"
+      condition="entity typeis Policy"/>
+    <ForwardCondition
+      action="ProducerDetailTroubleTickets.go(entity as Producer)"
+      condition="entity typeis Producer"/>
+  </Forward>
+</PCF>

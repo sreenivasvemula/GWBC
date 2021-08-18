@@ -1,0 +1,215 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xml:lang="en" lang="en" xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+    <meta http-equiv="Content-Style-Type" content="text/css" />
+    <!-- MOTW-DISABLED saved from url=(0014)about:internet -->
+    <title>Payment Plan Plugin</title>
+    <link rel="StyleSheet" href="css/bc-plugins.css" type="text/css" media="all" />
+    <link rel="StyleSheet" href="css/webworks.css" type="text/css" media="all" />
+    <link rel="StyleSheet" href="css/css-guidewire-extra.css" type="text/css" media="all" />
+    <script type="text/javascript" language="JavaScript1.2" src="wwhdata/common/context.js"></script>
+    <script type="text/javascript" language="JavaScript1.2" src="wwhdata/common/towwhdir.js"></script>
+    <script type="text/javascript" language="JavaScript1.2" src="wwhdata/common/wwhpagef.js"></script>
+    <script type="text/javascript" language="JavaScript1.2">
+      <!--
+        var  WebWorksRootPath = "";
+      // -->
+    </script>
+    <script type="text/javascript" language="JavaScript1.2">
+      <!--
+        // Set reference to top level help frame
+        //
+        var  WWHFrame = WWHGetWWHFrame("", true);
+      // -->
+    </script>
+    <script type="text/javascript" language="JavaScript1.2" src="scripts/expand.js"></script>
+    <!-- THE FOLLOWING IS A GUIDEWIRE STYLE DEFINITION FOR THE LINK TO THIS FEATURE -->
+    <link rel="StyleSheet" href="css/css-guidewire-extra.css" type="text/css" media="all" />
+    <!-- THE FOLLOWING IS A GUIDEWIRE GSCRIPT FUNCTION FOR THE LINK TO THIS FEATURE -->
+    <script type="text/javascript">
+function guidewire_selectall()
+{
+var text_val=eval("document.linktothisurlform.urlfield");
+text_val.focus();
+text_val.select();
+}
+</script>
+  </head>
+  <body onLoad="WWHUpdate();" onUnload="WWHUnload();" onKeyDown="WWHHandleKeyDown((document.all||document.getElementById||document.layers)?event:null);" onKeyPress="WWHHandleKeyPress((document.all||document.getElementById||document.layers)?event:null);" onKeyUp="WWHHandleKeyUp((document.all||document.getElementById||document.layers)?event:null);">
+    <!-- THE FOLLOWING IS A GUIDEWIRE DIV FOR THE 'LINK TO THIS' FEATURE -->
+    <div id="linkToThisPage" class="popup" style="display: none;">
+      <div class="popupTitle">Link Directly to This Page 
+           <a href="#" onclick="var thePopup = getElementById('linkToThisPage');thePopup.style.display='none';return false;"><img class="popupClosebox" src="wwhelp/wwhimpl/common/images/close.gif" /></a></div>
+      <div style="padding:6px;">
+        <div class="popupText" id="linkToThisPageBookmark">An error has occurred if you see this messsage.</div>
+        <form name="linktothisurlform" method="post" action="" style="width:275px;margin:0px">
+          <input type="text" class="popupURLText" id="linkToThisPageURL" name="urlfield" rows="1" cols="55" onClick="guidewire_selectall();" onFocus="guidewire_selectall();"></input>
+        </form>
+      </div>
+    </div>
+    <br />
+    <div class="WebWorks_Breadcrumbs" style="text-align: left;">
+      <span>BillingCenter Integration Guide</span> : 
+    <span class="WebWorks_Breadcrumbs" style="text-align: left;"><a class="WebWorks_Breadcrumb_Link" href="p-plugins.html#3616372">Plugins</a> : <a class="WebWorks_Breadcrumb_Link" href="bc-plugins.13.01.html#3616372">Billing Plugins</a> : Payment Plan Plugin</span></div>
+    <hr align="left" />
+    <blockquote>
+      <h3 class="H1_-_Heading_1"><a name="3616372">Payment Plan Plugin</a></h3>
+      <div class="B_-_Body"><a name="3616373">The Payment Plan plugin enables customization of the following items:</a></div>
+      <div class="BI_-_Bullet_Item_outer" style="margin-left: 57pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="BI_-_Bullet_Item_inner" style="width: 15pt; white-space: nowrap">
+                <span class="bu_-_bullet">•	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="BI_-_Bullet_Item_inner"><a name="3708307">Installment event dates for a new charge</a></div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="BI_-_Bullet_Item_outer" style="margin-left: 57pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="BI_-_Bullet_Item_inner" style="width: 15pt; white-space: nowrap">
+                <span class="bu_-_bullet">•	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="BI_-_Bullet_Item_inner"><a name="3719007">Installment event dates for an existing charge that were altered because of a change to a payment plan</a></div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="BI_-_Bullet_Item_outer" style="margin-left: 57pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="BI_-_Bullet_Item_inner" style="width: 15pt; white-space: nowrap">
+                <span class="bu_-_bullet">•	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="BI_-_Bullet_Item_inner"><a name="3708384">Invoice items that were replaced because of a change to a payment plan</a></div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="B_-_Body"><a name="3697055">BillingCenter provides a base configuration implementation of the Payment Plan plugin in the Gosu class </a><span class="cv_-_computer_voice">gw.plugin.invoice.impl.PaymentPlan</span>. The class implements the <span class="cv_-_computer_voice">IPaymentPlan</span> interface. The base configuration’s implementation of the interface methods can be modified to customize the plugin’s operations.</div>
+      <h4 class="H2_-_Heading_2"><a name="3708642">Method: </a><span class="cvh_-_computer_voice_in_heading">createFullSetOfInstallmentEventDates</span></h4>
+      <div class="B_-_Body"><a name="3718885">The </a><span class="cv_-_computer_voice">createFullSetOfInstallmentEventDates</span> method is called during the processing of a new charge. The method enables the customization of the event dates for the charge.</div>
+      <div class="H3_-_Heading_3_outer" style="margin-left: 36pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <h5 class="H3_-_Heading_3_inner" style="width: 18pt; white-space: nowrap"></h5>
+            </td>
+            <td width="100%">
+              <h5 class="H3_-_Heading_3_inner"><a name="3718886">Parameters and Return Value</a></h5>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="B_-_Body"><a name="3718887">The </a><span class="cv_-_computer_voice">createFullSetOfInstallmentEventDates</span> method receives a <span class="cv_-_computer_voice">ChargeInitializer</span> object and a list of installment event dates generated for the charge. The plugin method can modify the event dates to achieve a desired customization.</div>
+      <div class="B_-_Body"><a name="3718888">Properties in the </a><span class="cv_-_computer_voice">ChargeInitializer</span> object can be retrieved, but they cannot be set. Also, at the time the plugin method is invoked, the object is still progressing along its path of creation. Accordingly, all of its properties have not yet been initialized. The object essentially contains the information received from the originating billing instruction but not the complete set of properties generated by BillingCenter.</div>
+      <div class="B_-_Body"><a name="3718889">The method returns the potentially customized list of event dates. In the base configuration, the method returns the list of event dates unmodified.</a></div>
+      <div class="H3_-_Heading_3_outer" style="margin-left: 36pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <h5 class="H3_-_Heading_3_inner" style="width: 18pt; white-space: nowrap"></h5>
+            </td>
+            <td width="100%">
+              <h5 class="H3_-_Heading_3_inner"><a name="3718890">When the Method is Called</a></h5>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="B_-_Body"><a name="3718891">There are two operations that lead to the invocation of the method.</a></div>
+      <h6 class="HS_-_Head_Sub"><a name="3718892">Preparing a Charge for Customization</a></h6>
+      <div class="B_-_Body"><a name="3718893">Before performing customizations on a new charge, the charge must be prepared. A charge is prepared by calling the </a><span class="cv_-_computer_voice">prepareForManualModification</span> method of the <span class="cv_-_computer_voice">BillingInstruction</span> class. During charge preparation, the plugin method <span class="cv_-_computer_voice">createFullSetOfInstallmentEventDates</span> is invoked. Charge preparation occurs at an early stage of the charge processing operation.</div>
+      <div class="B_-_Body"><a name="3718894">Sample code to demonstrate charge processing when customizing a charge is shown below.</a></div>
+      <PRE class="CF_-_Code_First_Line"><a name="3718895">billingInstruction = ... // Previously assigned billing instruction object of appropriate type</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="3718896">&nbsp;</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="3718897">// New charges are handled by a ChargeInitializer object</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="3718898">var chargeInitializer = billingInstruction.buildCharge( amount, chargePattern )</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="3718899">&nbsp;</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="3718900">// Prepare the charge for modification.</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="3718901">// The Payment Plan plugin method createFullSetOfInstallmentEventDates() is invoked during the</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="3718902">// processing of this method.</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="3718903">billingInstruction.prepareForManualModification()</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="3718904">&nbsp;</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="3718905">// ... Customization of event dates occurs here ...</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="3718906">&nbsp;</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="3718907">// Execute the customized charge.</a></PRE>
+      <PRE class="CL_-_Code_Last_Line"><a name="3718908">billingInstruction.executeCustomizedCharges()</a></PRE>
+      <h6 class="HS_-_Head_Sub"><a name="3718909">Executing a Standard Charge</a></h6>
+      <div class="B_-_Body"><a name="3718910">Charges that follow the standard charge invoicing process can customize the charge’s event dates when the charge is executed. A charge is executed at the end of the charge processing operation.</a></div>
+      <div class="B_-_Body"><a name="3718911">Sample code to demonstrate standard charge processing is shown below.</a></div>
+      <PRE class="CF_-_Code_First_Line"><a name="3718912">billingInstruction = ... // Previously assigned billing instruction object of appropriate type</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="3718913">&nbsp;</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="3718914">// New charges are handled by a ChargeInitializer object</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="3718915">var chargeInitializer = billingInstruction.buildCharge( amount, chargePattern )</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="3718916">&nbsp;</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="3718917">// Execute the charge.</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="3718918">// The Payment Plan plugin method createFullSetOfInstallmentEventDates() is invoked during the</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="3718919">// processing of this method.</a></PRE>
+      <PRE class="CL_-_Code_Last_Line"><a name="3718920">billingInstruction.execute()</a></PRE>
+      <h4 class="H2_-_Heading_2"><a name="3718921">Method: </a><span class="cvh_-_computer_voice_in_heading">recreatePlannedInstallmentEventDatesForPaymentPlanChange</span></h4>
+      <div class="B_-_Body"><a name="3718922">Whenever a policy period’s payment plan is changed, the </a><span class="cv_-_computer_voice">recreatePlannedInstallmentEventDatesForPaymentPlanChange</span> method is called for each<span class="e_-_emphasis"> non-one‑time</span> charge. The method is not invoked for a one-time charge. The method enables customization of the event dates that were generated based on the modified payment plan.</div>
+      <div class="H3_-_Heading_3_outer" style="margin-left: 36pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <h5 class="H3_-_Heading_3_inner" style="width: 18pt; white-space: nowrap"></h5>
+            </td>
+            <td width="100%">
+              <h5 class="H3_-_Heading_3_inner"><a name="3718923">Parameters and Return Value</a></h5>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="B_-_Body"><a name="3718924">The </a><span class="cv_-_computer_voice">recreatePlannedInstallmentEventDatesForPaymentPlanChange</span> method accepts a <span class="cv_-_computer_voice">Charge</span> object for the relevant charge and a list of event dates that have been generated based on the modified payment plan. The event dates can be for<span class="e_-_emphasis"> any</span> installment, not just planned items as the method’s name implies.</div>
+      <div class="B_-_Body"><a name="3718925">The method returns the potentially customized list of event dates. In the base configuration, the method returns the list of event dates unmodified.</a></div>
+      <h4 class="H2_-_Heading_2"><a name="3718926">Method: </a><span class="cvh_-_computer_voice_in_heading">recreateInvoiceItemsForPaymentPlanChange</span></h4>
+      <div class="B_-_Body"><a name="3718927">Whenever a policy period’s payment plan is changed, the </a><span class="cv_-_computer_voice">recreateInvoiceItemsForPaymentPlanChange</span> method is called for each charge. The method enables customization of invoice item settings. Invoice items are modified by setting the properties of their intermediate <span class="cv_-_computer_voice">Entry</span> objects. For more information, see <a href="javascript:WWHClickedPopup('integration', 'bc-plugins.13.11.html#3696329', '');" title="ChargeInitializer Plugin">Customize a Charge Based on the Billing Instruction Type</a>.</div>
+      <div class="H3_-_Heading_3_outer" style="margin-left: 36pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <h5 class="H3_-_Heading_3_inner" style="width: 18pt; white-space: nowrap"></h5>
+            </td>
+            <td width="100%">
+              <h5 class="H3_-_Heading_3_inner"><a name="3718928">Parameters and Return Value</a></h5>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="B_-_Body"><a name="3718929">The </a><span class="cv_-_computer_voice">recreateInvoiceItemsForPaymentPlanChange</span> method accepts a <span class="cv_-_computer_voice">ChargeInstallmentChanger</span> object for the relevant charge. The list of <span class="cv_-_computer_voice">Entry</span> objects for the charge is stored within that object.</div>
+      <div class="B_-_Body"><a name="3718930">The method has no return value. Configuration of the charge’s invoice items is performed on the </a><span class="cv_-_computer_voice">Entry</span> objects stored in the <span class="cv_-_computer_voice">ChargeInstallmentChanger</span> parameter.</div>
+      <div class="B_-_Body"><a name="3718931">The plugin method in the base configuration is an empty placeholder method.</a></div>
+      <h4 class="H2_-_Heading_2"><a name="3718932">Plugin Methods Invoked Following a Payment Plan Change</a></h4>
+      <div class="B_-_Body"><a name="3718933">When a payment plan is changed, the charge handling process invokes different plugin methods depending on the type of charge.</a></div>
+      <div class="B_-_Body"><a name="3718934">Charges that are</a><span class="e_-_emphasis"> not</span> one‑time charges call the <span class="cv_-_computer_voice">recreatePlannedInstallmentEventDatesForPaymentPlanChange</span> and <span class="cv_-_computer_voice">recreateInvoiceItemsForPaymentPlanChange</span> methods, in that order.</div>
+      <div class="B_-_Body"><span class="e_-_emphasis"><a name="3716065">One‑time</a></span> charges invoke only the <span class="cv_-_computer_voice">recreateInvoiceItemsForPaymentPlanChange</span> method.</div>
+      <script type="text/javascript" language="JavaScript1.2">
+        <!--
+          // Clear related topics
+          //
+          WWHClearRelatedTopics();
+
+          document.writeln(WWHRelatedTopicsInlineHTML());
+        // -->
+      </script>
+    </blockquote>
+    <script type="text/javascript" language="JavaScript1.2">
+      <!--
+        document.write(WWHRelatedTopicsDivTag() + WWHPopupDivTag() + WWHALinksDivTag());
+      // -->
+    </script>
+  </body>
+</html>

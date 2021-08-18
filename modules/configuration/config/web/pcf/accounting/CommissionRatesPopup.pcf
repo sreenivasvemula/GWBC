@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PCF
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:noNamespaceSchemaLocation="../../../../../pcf.xsd">
+  <Popup
+    canEdit="true"
+    canVisit="perm.Account.chrgcmsnrateoverride"
+    id="CommissionRatesPopup"
+    startInEditMode="true"
+    title="displaykey.Web.CommissionRatesPopup.Title">
+    <LocationEntryPoint
+      signature="CommissionRatesPopup(charges : Charge[])"/>
+    <Variable
+      name="charges"
+      type="Charge[]"/>
+    <Variable
+      name="isAgencyBillCharge"
+      type="Boolean"/>
+    <Screen
+      id="CommissionRatesScreen">
+      <Toolbar>
+        <EditButtons
+          updateLabel="displaykey.Button.OK"/>
+      </Toolbar>
+      <!-- List of Charges that have been selected to be held -->
+      <PanelRef
+        def="ChargesLV(charges, false, 2, true, false, false)"/>
+    </Screen>
+  </Popup>
+</PCF>

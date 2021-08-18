@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xml:lang="en" lang="en" xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+    <meta http-equiv="Content-Style-Type" content="text/css" />
+    <!-- MOTW-DISABLED saved from url=(0014)about:internet -->
+    <title>Account Evaluation Calculation Plugin</title>
+    <link rel="StyleSheet" href="css/bc-plugins.css" type="text/css" media="all" />
+    <link rel="StyleSheet" href="css/webworks.css" type="text/css" media="all" />
+    <link rel="StyleSheet" href="css/css-guidewire-extra.css" type="text/css" media="all" />
+    <script type="text/javascript" language="JavaScript1.2" src="wwhdata/common/context.js"></script>
+    <script type="text/javascript" language="JavaScript1.2" src="wwhdata/common/towwhdir.js"></script>
+    <script type="text/javascript" language="JavaScript1.2" src="wwhdata/common/wwhpagef.js"></script>
+    <script type="text/javascript" language="JavaScript1.2">
+      <!--
+        var  WebWorksRootPath = "";
+      // -->
+    </script>
+    <script type="text/javascript" language="JavaScript1.2">
+      <!--
+        // Set reference to top level help frame
+        //
+        var  WWHFrame = WWHGetWWHFrame("", true);
+      // -->
+    </script>
+    <script type="text/javascript" language="JavaScript1.2" src="scripts/expand.js"></script>
+    <!-- THE FOLLOWING IS A GUIDEWIRE STYLE DEFINITION FOR THE LINK TO THIS FEATURE -->
+    <link rel="StyleSheet" href="css/css-guidewire-extra.css" type="text/css" media="all" />
+    <!-- THE FOLLOWING IS A GUIDEWIRE GSCRIPT FUNCTION FOR THE LINK TO THIS FEATURE -->
+    <script type="text/javascript">
+function guidewire_selectall()
+{
+var text_val=eval("document.linktothisurlform.urlfield");
+text_val.focus();
+text_val.select();
+}
+</script>
+  </head>
+  <body onLoad="WWHUpdate();" onUnload="WWHUnload();" onKeyDown="WWHHandleKeyDown((document.all||document.getElementById||document.layers)?event:null);" onKeyPress="WWHHandleKeyPress((document.all||document.getElementById||document.layers)?event:null);" onKeyUp="WWHHandleKeyUp((document.all||document.getElementById||document.layers)?event:null);">
+    <!-- THE FOLLOWING IS A GUIDEWIRE DIV FOR THE 'LINK TO THIS' FEATURE -->
+    <div id="linkToThisPage" class="popup" style="display: none;">
+      <div class="popupTitle">Link Directly to This Page 
+           <a href="#" onclick="var thePopup = getElementById('linkToThisPage');thePopup.style.display='none';return false;"><img class="popupClosebox" src="wwhelp/wwhimpl/common/images/close.gif" /></a></div>
+      <div style="padding:6px;">
+        <div class="popupText" id="linkToThisPageBookmark">An error has occurred if you see this messsage.</div>
+        <form name="linktothisurlform" method="post" action="" style="width:275px;margin:0px">
+          <input type="text" class="popupURLText" id="linkToThisPageURL" name="urlfield" rows="1" cols="55" onClick="guidewire_selectall();" onFocus="guidewire_selectall();"></input>
+        </form>
+      </div>
+    </div>
+    <br />
+    <div class="WebWorks_Breadcrumbs" style="text-align: left;">
+      <span>BillingCenter Integration Guide</span> : 
+    <span class="WebWorks_Breadcrumbs" style="text-align: left;"><a class="WebWorks_Breadcrumb_Link" href="p-plugins.html#3434565">Plugins</a> : <a class="WebWorks_Breadcrumb_Link" href="bc-plugins.13.01.html#3434565">Billing Plugins</a> : Account Evaluation Calculation Plugin</span></div>
+    <hr align="left" />
+    <blockquote>
+      <h3 class="H1_-_Heading_1"><a name="3434565">Account Evaluation Calculation Plugin</a></h3>
+      <div class="B_-_Body"><a name="3434567">You can customize BillingCenter account evaluation by implementing the </a><span class="cv_-_computer_voice">IAccountEvaluationCalculator</span> plugin. For general information about account evaluation, see <a href="javascript:WWHClickedPopup('app', 'accountevaluation.47.1.html#1463262', '');" title="Account Evaluation">“Account Evaluation” in the </a><span class="bt_-_book_title"><a href="javascript:WWHClickedPopup('app', 'accountevaluation.47.1.html#1463262', '');" title="Account Evaluation">Application Guide</a></span>.</div>
+      <div class="B_-_Body"><a name="3434571">You must implement several interface methods to perform the following tasks.</a></div>
+      <div class="B_-_Body"><a name="3434573">To compute an evaluation rating for an account, implement the </a><span class="cv_-_computer_voice">calculateEvaluation</span> method. It takes information about how many negative events occurred in a specified time period. It takes the number of delinquencies, insufficient funds occurrences, and cancellations in that time period. It returns results in an <span class="cv_-_computer_voice">AccountEvaluation</span> entity.</div>
+      <div class="B_-_Body"><a name="3434575">To decide how to count the number of delinquencies, implement the </a><span class="cv_-_computer_voice">countUniqueDelinquenciesAndCancellationsOnly</span> method. It returns <span class="cv_-_computer_voice">true</span> or <span class="cv_-_computer_voice">false</span>. </div>
+      <div class="B_-_Body"><a name="3434576">If the method returns </a><span class="cv_-_computer_voice">true</span>, only unique instances of delinquency count if calculating the number of delinquencies and the number of policy cancellations metrics for account evaluation. For example, suppose you had an account with four policies. If one payment causes all four policies to be delinquent (or cancelled), if this method returns true the problem calculates only as one delinquency (or cancellation).</div>
+      <div class="B_-_Body"><a name="3434577">If the method returns </a><span class="cv_-_computer_voice">false</span>, BillingCenter uses only the raw counts of delinquencies and policy cancellations. In that earlier example, that would count as four delinquencies (or cancellations) rather than one.</div>
+      <div class="B_-_Body"><a name="3434579">To customize how many days to search for negative events, implement the </a><span class="cv_-_computer_voice">getMetricsQueryTimePeriod</span> method. As part of account evaluation, the system queries the number of negative events recently. BillingCenter must query for delinquencies, cancellations, and pejorative payment reversals on the account in recent days. This method returns that number of days before today to use for the query.</div>
+      <div class="B_-_Body"><a name="3434583">Refer to the Javadoc for </a><span class="cv_-_computer_voice">IAccountEvaluationCalculator</span> for method signature details<span class="cv_-_computer_voice">.</span></div>
+      <div class="B_-_Body"><a name="3434584">The following example implements this plugin interface as a Java plugin:</a></div>
+      <PRE class="CF_-_Code_First_Line"><a name="3434585">public class AccountEvaluationCalculator implements IAccountEvaluationCalculator {</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="3434586">&nbsp;</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="3434587">  // Time period in days over which system runs queries for </a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="3434588">&nbsp;&nbsp;// various pieces of information you use in</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="3434589">  // determining the account evaluation rating (for example: how many delinquencies </a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="3434590">&nbsp;&nbsp;// on the account in the last 365 days)</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="3434591">  private static final int NumberOfDaysForSearch = 365;</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="3434592">&nbsp;</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="3434593">  // Thresholds for number of delinquencies on the account</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="3434594">  private static final int MaxDelinquenciesForExcellent = 1;</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="3434595">  private static final int MaxDelinquenciesForGood = 2;</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="3434596">  private static final int MaxDelinquenciesForAcceptable = 4;</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="3434597">  private static final int MaxDelinquenciesForMarginal = 6;</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="3434598">&nbsp;</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="3434599">  // Thresholds for number of occurrences of pejorative payment reversals on the account</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="3434600">  private static final int MaxPaymentReversalsForExcellent  = 0;</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="3434601">  private static final int MaxPaymentReversalsForGood       = 0;</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="3434602">  private static final int MaxPaymentReversalsForAcceptable = 1;</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="3434603">  private static final int MaxPaymentReversalsForMarginal   = 2;</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="3434604">&nbsp;</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="3434605">  // Thresholds for number of policy cancellations on the account</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="3434606">  private static final int MaxPolicyCancellationsForExcellent = 0;</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="3434607">  private static final int MaxPolicyCancellationsForGood = 1;</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="3434608">  private static final int MaxPolicyCancellationsForAcceptable = 2;</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="3434609">  private static final int MaxPolicyCancellationsForMarginal = 3;</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="3434610">&nbsp;</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="3434611">  // give an account an evaluation of New Account if it is less than a year old</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="3434612">  private static final long MaxAgeOfNewAccountInMilliseconds = 365L * 24L * 60L * 60L * 1000L;</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="3434613">&nbsp;</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="3434614">  public AccountEvaluation calculateEvaluation(Account account,</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="3434615">                                               Date currentTime,</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="3434616">                                               int numberDelinquenciesInTimePeriod,</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="3434617">                                               int numberPaymentReversalsInQueryPeriod,</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="3434618">                                               int numberPolicyCancellationsInTimePeriod) {</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="3434619">&nbsp;</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="3434620">&nbsp;&nbsp;if (currentTime.getTime() - account.getCreateTime().getTime() &lt;= MaxAgeOfNewAccountInMilliseconds)</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="3434621">&nbsp;&nbsp;&nbsp;&nbsp;{</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="3434622">      return  AccountEvaluation.NEWACCOUNT;</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="3434623">    }</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="3434624">    else if (numberDelinquenciesInTimePeriod &lt;= MaxDelinquenciesForExcellent &amp;&amp;</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="3434625">             numberPaymentReversalsInQueryPeriod &lt;= MaxPaymentReversalsForExcellent &amp;&amp;</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="3434626">             numberPolicyCancellationsInTimePeriod &lt;= MaxPolicyCancellationsForExcellent) {</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="3434627">      return AccountEvaluation.EXCELLENT;</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="3434628">    }</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="3434629">    else if (numberDelinquenciesInTimePeriod &lt;= MaxDelinquenciesForGood &amp;&amp;</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="3434630">             numberPaymentReversalsInQueryPeriod &lt;= MaxPaymentReversalsForGood &amp;&amp;</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="3434631">             numberPolicyCancellationsInTimePeriod &lt;= MaxPolicyCancellationsForGood) {</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="3434632">      return AccountEvaluation.GOOD;</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="3434633">    }</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="3434634">    else if (numberDelinquenciesInTimePeriod &lt;= MaxDelinquenciesForAcceptable &amp;&amp;</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="3434635">             numberPaymentReversalsInQueryPeriod &lt;= MaxPaymentReversalsForAcceptable &amp;&amp;</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="3434636">             numberPolicyCancellationsInTimePeriod &lt;= MaxPolicyCancellationsForAcceptable) {</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="3434637">      return AccountEvaluation.ACCEPTABLE;</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="3434638">    }</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="3434639">    else if (numberDelinquenciesInTimePeriod &lt;= MaxDelinquenciesForMarginal &amp;&amp;</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="3434640">             numberPaymentReversalsInQueryPeriod &lt;= MaxPaymentReversalsForMarginal &amp;&amp;</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="3434641">             numberPolicyCancellationsInTimePeriod &lt;= MaxPolicyCancellationsForMarginal) {</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="3434642">      return AccountEvaluation.MARGINAL;</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="3434643">    }</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="3434644">    else {</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="3434645">      return AccountEvaluation.POOR;</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="3434646">    }</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="3434647">  }</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="3434648">&nbsp;</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="3434649">  public int getMetricsQueryTimePeriod() {</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="3434650">    return NumberOfDaysForSearch;</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="3434651">  }</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="3434652">&nbsp;</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="3434653">&nbsp;&nbsp;public Boolean countUniqueDelinquenciesAndCancellationsOnly() { </a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="3434654">&nbsp;&nbsp;&nbsp;&nbsp;return true;</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="3434655">&nbsp;&nbsp;}</a></PRE>
+      <PRE class="CL_-_Code_Last_Line"><a name="3434656">}</a></PRE>
+      <div class="B_-_Body"><a name="3434657">This example can be modified or customized as needed to meet business requirements.</a></div>
+      <div class="B_-_Body"><a name="3434658">If you wish to different rating values other than the built-in ones (Excellent, Good, and so on), you can extend them in the </a><span class="cv_-_computer_voice">AccountEvaluation</span> typelist defined in the <span class="cv_-_computer_voice">tl_bc_account.xml</span> file. Its reference implementation includes these values:</div>
+      <PRE class="CF_-_Code_First_Line"><a name="3434661">&lt;typelist name="AccountEvaluation" final="true" desc="Evaluation rating for an account"&gt;</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="3434662">   &lt;typecode code="newaccount" name="New Account" desc="New Account"/&gt;</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="3434663">   &lt;typecode code="excellent" name="Excellent" desc="Excellent"/&gt;</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="3434664">   &lt;typecode code="good" name="Good" desc="Good"/&gt;</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="3434665">   &lt;typecode code="acceptable" name="Acceptable" desc="Acceptable"/&gt;</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="3434666">   &lt;typecode code="marginal" name="Marginal" desc="Marginal"/&gt;</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="3434667">   &lt;typecode code="poor" name="Poor" desc="Poor"/&gt;</a></PRE>
+      <PRE class="CL_-_Code_Last_Line"><a name="3434668"> &lt;/typelist&gt;</a></PRE>
+      <script type="text/javascript" language="JavaScript1.2">
+        <!--
+          // Clear related topics
+          //
+          WWHClearRelatedTopics();
+
+          document.writeln(WWHRelatedTopicsInlineHTML());
+        // -->
+      </script>
+    </blockquote>
+    <script type="text/javascript" language="JavaScript1.2">
+      <!--
+        document.write(WWHRelatedTopicsDivTag() + WWHPopupDivTag() + WWHALinksDivTag());
+      // -->
+    </script>
+  </body>
+</html>

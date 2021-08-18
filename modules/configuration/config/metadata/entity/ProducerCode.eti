@@ -1,0 +1,85 @@
+<?xml version="1.0"?>
+<!-- ==============================================  Producer Code  ================================================ -->
+<entity
+        xmlns="http://guidewire.com/datamodel"
+        entity="ProducerCode"
+        type="retireable"
+        desc="A producer code"
+        subpackage="producer"
+        platform="false"
+        table="producercode"
+        setterScriptability="hidden">
+  <implementsEntity
+          name="TAccountOwner"/>
+  <column
+          name="Active"
+          type="bit"
+          desc="Whether or not this producer code is active for the producer."
+          default="true"
+          nullok="false"/>
+  <column
+          name="Code"
+          type="shorttext"
+          desc="The code for this producer code"
+          nullok="false"
+          supportsLinguisticSearch="true"/>
+  <foreignkey
+          name="CommissionPlan"
+          desc="The commission plan to use for calculating commission for this producer code."
+          columnName="CommissionPlanID"
+          exportasid="true"
+          fkentity="CommissionPlan"
+          nullok="false"/>
+  <foreignkey
+          name="HiddenTAccountContainer"
+          columnName="HiddenTAccountContainerID"
+          exportable="false"
+          fkentity="ProdCodeTAcctContainer"
+          getterScriptability="doesNotExist"
+          importableagainstexistingobject="false"
+          nullok="false"
+          setterScriptability="doesNotExist"/>
+  <foreignkey
+          name="Producer"
+          desc="FK to container."
+          columnName="ProducerID"
+          exportable="false"
+          fkentity="Producer"
+          importableagainstexistingobject="false"
+          nullok="false"
+          setterScriptability="doesNotExist"/>
+  <index
+          desc="Legacy"
+          name="producercode"
+          unique="true">
+    <indexcol
+            name="ProducerID"
+            keyposition="1"/>
+    <indexcol
+            name="Code"
+            keyposition="2"/>
+    <indexcol
+            name="Retired"
+            keyposition="3"/>
+  </index>
+  <index
+          desc="Legacy"
+          name="taccountcontainer"
+          unique="true">
+    <indexcol
+            name="HiddenTAccountContainerID"
+            keyposition="1"/>
+  </index>
+  <!-- NOTE pdalbora 27-Jul-2006: Intentionally leaving Retired off this index. Each new ProducerCode
+      mints a new TAccountContainer. -->
+  <index
+          desc="Legacy"
+          name="codedenorm">
+    <indexcol
+            name="CodeDenorm"
+            keyposition="1"/>
+    <indexcol
+            name="Retired"
+            keyposition="2"/>
+  </index>
+</entity>

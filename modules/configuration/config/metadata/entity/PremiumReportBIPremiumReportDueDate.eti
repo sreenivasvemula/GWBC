@@ -1,0 +1,23 @@
+<?xml version="1.0"?>
+<entity
+  xmlns="http://guidewire.com/datamodel"
+  entity="PremiumReportBIPremiumReportDueDate"
+  type="versionable"
+  desc="Join table between PremiumReportBI and PremiumReportDueDate, allows only 1 entry per PremiumReportBI"
+  subpackage="accounting.billinginstruction"
+  platform="false"
+  table="premrepbiduedate"
+  setterScriptability="hidden">
+  <implementsEntity
+    name="InCurrencySilo" />
+  <foreignkey
+    name="PremiumReportBI"
+    columnName="PremiumReportBIID"
+    fkentity="PremiumReportBI"
+    nullok="false"/>
+  <foreignkey
+    name="PremiumReportDueDate"
+    columnName="PremiumReportDueDateID"
+    fkentity="PremiumReportDueDate"
+    nullok="false"/>
+</entity>

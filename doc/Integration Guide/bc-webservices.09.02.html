@@ -1,0 +1,220 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xml:lang="en" lang="en" xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+    <meta http-equiv="Content-Style-Type" content="text/css" />
+    <!-- MOTW-DISABLED saved from url=(0014)about:internet -->
+    <title>Billing Web Services Overview</title>
+    <link rel="StyleSheet" href="css/bc-webservices.css" type="text/css" media="all" />
+    <link rel="StyleSheet" href="css/webworks.css" type="text/css" media="all" />
+    <link rel="StyleSheet" href="css/css-guidewire-extra.css" type="text/css" media="all" />
+    <script type="text/javascript" language="JavaScript1.2" src="wwhdata/common/context.js"></script>
+    <script type="text/javascript" language="JavaScript1.2" src="wwhdata/common/towwhdir.js"></script>
+    <script type="text/javascript" language="JavaScript1.2" src="wwhdata/common/wwhpagef.js"></script>
+    <script type="text/javascript" language="JavaScript1.2">
+      <!--
+        var  WebWorksRootPath = "";
+      // -->
+    </script>
+    <script type="text/javascript" language="JavaScript1.2">
+      <!--
+        // Set reference to top level help frame
+        //
+        var  WWHFrame = WWHGetWWHFrame("", true);
+      // -->
+    </script>
+    <script type="text/javascript" language="JavaScript1.2" src="scripts/expand.js"></script>
+    <!-- THE FOLLOWING IS A GUIDEWIRE STYLE DEFINITION FOR THE LINK TO THIS FEATURE -->
+    <link rel="StyleSheet" href="css/css-guidewire-extra.css" type="text/css" media="all" />
+    <!-- THE FOLLOWING IS A GUIDEWIRE GSCRIPT FUNCTION FOR THE LINK TO THIS FEATURE -->
+    <script type="text/javascript">
+function guidewire_selectall()
+{
+var text_val=eval("document.linktothisurlform.urlfield");
+text_val.focus();
+text_val.select();
+}
+</script>
+  </head>
+  <body onLoad="WWHUpdate();" onUnload="WWHUnload();" onKeyDown="WWHHandleKeyDown((document.all||document.getElementById||document.layers)?event:null);" onKeyPress="WWHHandleKeyPress((document.all||document.getElementById||document.layers)?event:null);" onKeyUp="WWHHandleKeyUp((document.all||document.getElementById||document.layers)?event:null);">
+    <!-- THE FOLLOWING IS A GUIDEWIRE DIV FOR THE 'LINK TO THIS' FEATURE -->
+    <div id="linkToThisPage" class="popup" style="display: none;">
+      <div class="popupTitle">Link Directly to This Page 
+           <a href="#" onclick="var thePopup = getElementById('linkToThisPage');thePopup.style.display='none';return false;"><img class="popupClosebox" src="wwhelp/wwhimpl/common/images/close.gif" /></a></div>
+      <div style="padding:6px;">
+        <div class="popupText" id="linkToThisPageBookmark">An error has occurred if you see this messsage.</div>
+        <form name="linktothisurlform" method="post" action="" style="width:275px;margin:0px">
+          <input type="text" class="popupURLText" id="linkToThisPageURL" name="urlfield" rows="1" cols="55" onClick="guidewire_selectall();" onFocus="guidewire_selectall();"></input>
+        </form>
+      </div>
+    </div>
+    <br />
+    <div class="WebWorks_Breadcrumbs" style="text-align: left;">
+      <span>BillingCenter Integration Guide</span> : 
+    <span class="WebWorks_Breadcrumbs" style="text-align: left;"><a class="WebWorks_Breadcrumb_Link" href="p-webservices.html#3686972">Web Services</a> : <a class="WebWorks_Breadcrumb_Link" href="bc-webservices.09.01.html#3686972">Billing Web Services</a> : Billing Web Services Overview</span></div>
+    <hr align="left" />
+    <blockquote>
+      <h3 class="H1_-_Heading_1"><a name="3686972">Billing Web Services Overview</a></h3>
+      <div class="B_-_Body"><a name="3686985">BillingCenter publishes web services for external systems to manipulate billing information. Some of the web services are used for the BillingCenter integration with PolicyCenter. However, you can use any of the web services with other policy administration systems. </a></div>
+      <h6 class="HS_-_Head_Sub"><a name="3734997">See also</a></h6>
+      <div class="BI_-_Bullet_Item_outer" style="margin-left: 57pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="BI_-_Bullet_Item_inner" style="width: 15pt; white-space: nowrap">
+                <span class="bu_-_bullet">•	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="BI_-_Bullet_Item_inner"><a name="3735336">For information about the PolicyCenter integration with BillingCenter, see “Billing Integration” in the </a><span class="e_-_emphasis">PolicyCenter Integration Guide</span>. The integration information is in the PolicyCenter documentation set, not the BillingCenter documentation set. </div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <h4 class="H2_-_Heading_2"><a name="3735341">BillingCenter Data Transfer Objects (DTOs)</a></h4>
+      <div class="B_-_Body"><a name="3735342">The WS-I web services do not support entity data directly as method arguments or return values. Instead, BillingCenter web service APIs use separate </a><span class="e_-_emphasis">data transfer objects</span> (DTOs) to encapsulate entity data. Carefully read this section before extending the data model.</div>
+      <div class="B_-_Body"><a name="3554794">BillingCenter uses two types of DTOs to represent data that billing web services receive or send back: </a></div>
+      <div class="BI_-_Bullet_Item_outer" style="margin-left: 57pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="BI_-_Bullet_Item_inner" style="width: 15pt; white-space: nowrap">
+                <span class="bu_-_bullet">•	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="BI_-_Bullet_Item_inner"><a name="3647808">Gosu class DTOs</a></div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="BI_-_Bullet_Item_outer" style="margin-left: 57pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="BI_-_Bullet_Item_inner" style="width: 15pt; white-space: nowrap">
+                <span class="bu_-_bullet">•	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="BI_-_Bullet_Item_inner"><a name="3647813">XML DTOs</a></div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="B_-_Body"><a name="3647839">Both types of DTOs encapsulate entity and other data for transfer between BillingCenter and external systems. A DTO transfers only the data required by a web service method, rather than the entire set of data for an entity instance. In most cases, a DTO property represents a simple entity property, such as a </a><span class="cv_-_computer_voice">Date</span> property, and both DTO property and entity property have the same names. </div>
+      <div class="B_-_Body"><a name="3729361">For entity properties that represent links to related objects, the definitions and names of DTO properties differ slightly from their corresponding entity definitions. BillingCenter implements DTO properties that link to related objects in one of two ways:</a></div>
+      <div class="BI_-_Bullet_Item_outer" style="margin-left: 57pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="BI_-_Bullet_Item_inner" style="width: 15pt; white-space: nowrap">
+                <span class="bu_-_bullet">•	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="BI_-_Bullet_Item_inner"><a name="3648233">The DTO property includes the related objects directly.</a></div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="BI_-_Bullet_Item_outer" style="margin-left: 57pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="BI_-_Bullet_Item_inner" style="width: 15pt; white-space: nowrap">
+                <span class="bu_-_bullet">•	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="BI_-_Bullet_Item_inner"><a name="3648289">The DTO property includes the related objects indirectly by reference to their unique identifiers, typically their public IDs.</a></div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="B_-_Body"><a name="3728160">The name of a DTO property helps you determine how the property implements its representation of the links to related objects:</a></div>
+      <div class="BI_-_Bullet_Item_outer" style="margin-left: 57pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="BI_-_Bullet_Item_inner" style="width: 15pt; white-space: nowrap">
+                <span class="bu_-_bullet">•	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="BI_-_Bullet_Item_inner"><a name="3703532">If the name of a DTO property ends with the singular </a><span class="cv_-_computer_voice">Info</span>, typically it is a DTO that represents a related object. The related object is of the entity type named without the suffix. </div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="LP_-_List_Para"><a name="3727890">For example, a DTO property named </a><span class="cv_-_computer_voice">InvoiceStreamInfo</span> typically is a DTO that represents a related instance of the <span class="cv_-_computer_voice">InvoiceStream</span> entity type. </div>
+      <div class="BI_-_Bullet_Item_outer" style="margin-left: 57pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="BI_-_Bullet_Item_inner" style="width: 15pt; white-space: nowrap">
+                <span class="bu_-_bullet">•	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="BI_-_Bullet_Item_inner"><a name="3735224">If the name of a DTO property ends with the plural </a><span class="cv_-_computer_voice">Infos</span>, typically it is a list of DTOs that represents related objects. The related objects are of the entity type named without the suffix. </div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="LP_-_List_Para"><a name="3735225">For example, a DTO property named </a><span class="cv_-_computer_voice">ChargeInfos</span> typically is a list of DTOs that represent related instances of the <span class="cv_-_computer_voice">Charge</span> entity type.</div>
+      <div class="BI_-_Bullet_Item_outer" style="margin-left: 57pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="BI_-_Bullet_Item_inner" style="width: 15pt; white-space: nowrap">
+                <span class="bu_-_bullet">•	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="BI_-_Bullet_Item_inner"><a name="3729890">If the name of a DTO property ends with the singular </a><span class="cv_-_computer_voice">PublicID</span> or <span class="cv_-_computer_voice">ID</span>, it is a simple <span class="cv_-_computer_voice">String</span> property that references the public ID for the related object. The related object is of the entity type named without the suffix.</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="BI_-_Bullet_Item_outer" style="margin-left: 57pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="BI_-_Bullet_Item_inner" style="width: 15pt; white-space: nowrap">
+                <span class="bu_-_bullet">•	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="BI_-_Bullet_Item_inner"><a name="3729891">If the name of a DTO property ends with the plural </a><span class="cv_-_computer_voice">IDs</span>, it is a list of simple <span class="cv_-_computer_voice">String</span> properties that reference the public IDs for related objects. The related objects are of the entity type named without the suffix.</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <h4 class="H2_-_Heading_2"><a name="3554795">Gosu Class DTOs</a></h4>
+      <div class="B_-_Body"><a name="3647488">Guidewire implements many DTOs as Gosu classes that you can view and edit in Studio. If a Gosu class name ends with </a><span class="cv_-_computer_voice">DTO</span>, it is likely a Gosu class DTO for the entity type named without the suffix. For example, a Gosu class called <span class="cv_-_computer_voice">AddressDTO</span> is likely a DTO for the <span class="cv_-_computer_voice">Address</span> entity type. However, some Gosu class DTOs do not have the <span class="cv_-_computer_voice">DTO</span> suffix.</div>
+      <div class="B_-_Body"><a name="3730856">If you extend the entity data model with a property that a web service must receive or send back, you must also extend the corresponding Gosu class DTO. Add to the set of properties in the corresponding Gosu class named with the </a><span class="cv_-_computer_voice">DTO</span> suffix. For example, if you add an important property to the <span class="cv_-_computer_voice">Address</span> entity, also add the property to the Gosu class <span class="cv_-_computer_voice">AddressDTO</span>.</div>
+      <div class="NI_-_Note_Important">
+        <span class="n_-_note">IMPORTANT   </span><a name="3731840">Before editing Gosu class DTO files, carefully review the introductory comments at the top of each DTO file.</a></div>
+      <h4 class="H2_-_Heading_2"><a name="3731841">XML DTOs</a></h4>
+      <div class="B_-_Body"><a name="3731842">Guidewire implements some DTOs as XML/XSD types defined in the XSD file called </a><span class="cv_-_computer_voice">entity.xsd</span>. </div>
+      <div class="B_-_Body"><a name="3730903">If you extend the entity data model with a property that a web service must receive or send back, also extend the corresponding XML DTO. Add to the set of properties in the corresponding XML/XSD type definition. For example, if you add an important property to </a><span class="cv_-_computer_voice">Address</span> entity, also add the property to the <span class="cv_-_computer_voice">Address</span> part of the <span class="cv_-_computer_voice">entity.xsd</span> file.</div>
+      <div class="B_-_Body"><a name="3703554">Some of the XML/XSD types in </a><span class="cv_-_computer_voice">entity.xsd</span> have Gosu enhancements. Gosu enhancements provide additional functionality, such as validating received data or moving data between DTOs and entity instances. If you add properties to the XML/XSD type for an XML DTO, you may need to modify its Gosu enhancements to manage the DTO properties that you added. </div>
+      <script type="text/javascript" language="JavaScript1.2">
+        <!--
+          // Clear related topics
+          //
+          WWHClearRelatedTopics();
+
+          document.writeln(WWHRelatedTopicsInlineHTML());
+        // -->
+      </script>
+    </blockquote>
+    <script type="text/javascript" language="JavaScript1.2">
+      <!--
+        document.write(WWHRelatedTopicsDivTag() + WWHPopupDivTag() + WWHALinksDivTag());
+      // -->
+    </script>
+  </body>
+</html>

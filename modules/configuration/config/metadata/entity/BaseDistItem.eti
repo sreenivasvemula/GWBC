@@ -1,0 +1,141 @@
+<?xml version="1.0"?>
+<entity
+  xmlns="http://guidewire.com/datamodel"
+  abstract="true"
+  desc="Base class for DistItems: Stores values to be applied to an invoice item as part of a Distribution"
+  entity="BaseDistItem"
+  final="false"
+  setterScriptability="hidden"
+  subpackage="payment"
+  table="basedistitem"
+  type="retireable">
+  <implementsEntity
+    name="Validatable"/>
+  <implementsEntity
+    name="InCurrencySilo"/>
+  <monetaryamount
+    amountColumnName="GrossAmountToApply"
+    desc="Gross amount entered for this invoice item during payment application"
+    name="GrossAmountToApply"
+    nullok="false"
+    scaleToCurrency="true"/>
+  <monetaryamount
+    amountColumnName="CommissionAmountToApply"
+    desc="Commission amount entered for this invoice item during payment application"
+    name="CommissionAmountToApply"
+    nullok="false"
+    scaleToCurrency="true"/>
+  <column
+    desc="Comments entered for this invoice item during payment application"
+    name="PaymentComments"
+    nullok="true"
+    type="shorttext"/>
+  <typekey
+    default="autoexception"
+    desc="How should this item be handled in exception processing when this payment is executed?"
+    name="Disposition"
+    nullok="false"
+    typelist="DistItemDisposition"/>
+  <foreignkey
+    columnName="InvoiceItemID"
+    desc="The invoice item being paid"
+    fkentity="InvoiceItem"
+    importableagainstexistingobject="false"
+    name="InvoiceItem"
+    nullok="false"/>
+  <foreignkey
+    columnName="ActiveDistID"
+    desc="The Distribution that contains this Payment Item if the payment item is active"
+    fkentity="BaseDist"
+    getterScriptability="hidden"
+    importableagainstexistingobject="false"
+    name="ActiveDist"
+    nullok="true"
+    setterScriptability="doesNotExist"/>
+  <foreignkey
+    columnName="ReversedDistID"
+    desc="The Distribution that contains this Payment Item if the payment item is reversed"
+    fkentity="BaseDist"
+    getterScriptability="hidden"
+    importableagainstexistingobject="false"
+    name="ReversedDist"
+    nullok="true"
+    setterScriptability="doesNotExist"/>
+  <foreignkey
+    columnName="PolicyPeriodID"
+    desc="The policy period associated with this dist item. This is a denormalized field needed only for performance improvement."
+    fkentity="PolicyPeriod"
+    name="PolicyPeriod"
+    nullok="true"
+    overwrittenInStagingTable="true"
+    setterScriptability="doesNotExist"/>
+  <column
+    desc="Date that this payment item was executed."
+    name="ExecutedDate"
+    nullok="true"
+    setterScriptability="doesNotExist"
+    type="pastdatetime"/>
+  <column
+    desc="Date that this payment item was reversed. This will be null if the item isn't reversed."
+    name="ReversedDate"
+    nullok="true"
+    setterScriptability="doesNotExist"
+    type="pastdatetime"/>
+  <edgeForeignKey
+    desc="Points to an existing BaseDistItem being modified."
+    edgeTableName="ModifiedFromDI"
+    fkentity="BaseDistItem"
+    ignoreforevents="true"
+    name="ModifiedFrom"
+    nullok="true"/>
+  <index
+    desc="Legacy"
+    name="invoiceitem">
+    <indexcol
+      keyposition="1"
+      name="ActiveDistID"/>
+    <indexcol
+      keyposition="2"
+      name="InvoiceItemID"/>
+    <indexcol
+      keyposition="3"
+      name="Retired"/>
+  </index>
+  <index
+    desc="Legacy"
+    name="invoiceitemsubtype"
+    unique="true">
+    <indexcol
+      keyposition="1"
+      name="InvoiceItemID"/>
+    <indexcol
+      keyposition="2"
+      name="Retired"/>
+    <indexcol
+      keyposition="3"
+      name="Subtype"/>
+    <indexcol
+      keyposition="4"
+      name="Id"/>
+  </index>
+  <checkconstraint
+    desc="Found BaseDistItem with subtype that cannot be loaded from staging tables.  Only AgencyPaymentItems and DirectBillPaymentItems can be loaded."
+    stagingtablepredicate="Subtype IN ('AgencyPaymentItem', 'DirectBillPaymentItem')"/>
+  <checkconstraint
+    desc="Found BaseDist with no ExecutedDate in staging table.  Only executed BaseDists can be loaded."
+    stagingtablepredicate="ExecutedDate IS NOT NULL"/>
+  <checkconstraint
+    desc="Found DirectBillPaymentItem with non-zero CommissionAmountToApply in staging table.  DirectBillPaymentItems must have 0 CommissionAmountToApply to be loaded."
+    stagingtablepredicate="NOT (Subtype = 'DirectBillPaymentItem' AND CommissionAmountToApply != 0)"/>
+  <checkconstraint
+    desc="Either ActiveDistID is populated or ReversedDistID is populated."
+    predicate="(ActiveDistID IS NOT NULL and ReversedDistID IS NULL) OR (ActiveDistID IS NULL and ReversedDistID IS NOT NULL) OR Retired != 0"/>
+  <checkconstraint
+    desc="ReversedDate is populated only when ReversedDistID is populated."
+    predicate="(ReversedDistID IS NOT NULL AND ReversedDate IS NOT NULL) OR (ReversedDistID IS NULL AND ReversedDate IS NULL) OR Retired != 0"/>
+  <checkconstraint
+    desc="ReversedDate is populated only when ActiveDistID is not populated, otherwise it is not populated."
+    predicate="(ActiveDistID IS NULL AND ReversedDate IS NOT NULL) OR (ActiveDistID IS NOT NULL AND ReversedDate IS NULL) OR Retired != 0"/>
+  <dbcheckbuilder
+    className="com.guidewire.bc.system.database.dbchecks.payment.BaseDistItemDBCheckBuilder"/>
+</entity>

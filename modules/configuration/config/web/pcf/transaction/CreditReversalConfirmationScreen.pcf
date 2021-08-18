@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PCF
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:noNamespaceSchemaLocation="../../../../../pcf.xsd">
+  <!-- This screen is one of the steps in the New Credit Reversal wizard.  It is where the user confirms the credit and
+  selects a reason for the reveral -->
+  <Screen
+    id="CreditReversalConfirmationScreen">
+    <Require
+      name="account"
+      type="Account"/>
+    <Require
+      name="creditReversal"
+      type="CreditReversal"/>
+    <Variable
+      initialValue="creditReversal.getOpenApprovalActivity()"
+      name="approvalActivity"/>
+    <Toolbar>
+      <WizardButtons/>
+    </Toolbar>
+    <AlertBar
+      id="ApprovalActivityAlertBar"
+      label="displaykey.Web.ApprovalActivityAlertBar"
+      visible="approvalActivity != null"/>
+    <DetailViewPanel
+      id="CreditReversalConfirmationDV">
+      <InputColumn>
+        <Label
+          label="displaykey.Web.NewWriteoffWizard.Confirmation.ClickFinish"/>
+        <Label
+          label="displaykey.Web.CreditReversal.Confirmation(creditReversal.Credit.Amount.render(), account)"/>
+      </InputColumn>
+    </DetailViewPanel>
+    <PanelRef
+      def="ApprovalActivityDV(approvalActivity)"/>
+  </Screen>
+</PCF>

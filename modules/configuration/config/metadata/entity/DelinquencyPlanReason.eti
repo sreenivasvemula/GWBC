@@ -1,0 +1,39 @@
+<?xml version="1.0"?>
+<entity
+  xmlns="http://guidewire.com/datamodel"
+  entity="DelinquencyPlanReason"
+  type="retireable"
+  desc="Contain per delinquency reason specific information"
+  admin="true"
+  exportable="false"
+  subpackage="delinquency"
+  loadable="false"
+  platform="false"
+  table="delinquencyplanreason">
+  <implementsEntity
+    name="NotInCurrencySilo"/>
+  <foreignkey
+    name="DelinquencyPlan"
+    desc="The delinquency plan this reason belongs to."
+    columnName="DelinquencyPlanID"
+    fkentity="DelinquencyPlan"
+    nullok="false"/>
+  <typekey
+    name="DelinquencyReason"
+    typelist="DelinquencyReason"
+    desc="The delinquency reason, such as past due, failure to report, etc."
+    default="PastDue"
+    nullok="false"/>
+  <typekey
+    name="WorkflowType"
+    typelist="Workflow"
+    desc="The workflow to use for the delinquency reason."
+    nullok="false"/>
+  <array
+    name="PlanEvents"
+    desc="The delinquency plan events for this reason."
+    arrayentity="DelinquencyPlanEvent"
+    owner="true"/>
+  <dbcheckbuilder
+    className="com.guidewire.bc.system.database.dbchecks.delinquency.DelinquencyPlanMustHavePastDueDBCheckBuilder"/>
+</entity>

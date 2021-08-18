@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+  <Entity name="ChargeCommission">
+    <Columns>
+      <DisplayNameColumn name="policyPeriod" beanPath="ChargeCommission.PolicyCommission.PolicyPeriod"/>
+      <Column name="role" beanPath="ChargeCommission.PolicyCommission.Role"/>
+      <DisplayNameColumn name="producerCode" beanPath="ChargeCommission.PolicyCommission.ProducerCode"/>
+      <DisplayNameColumn name="charge" beanPath="ChargeCommission.Charge"/>
+      <Column name="billingInstruction" beanPath="ChargeCommission.Charge.BillingInstruction"/>
+    </Columns>
+    <DisplayName>
+      var billingInstructionStr = "";
+      if (billingInstruction != null) {
+        billingInstructionStr = "(" + billingInstruction + ")";
+      }
+      return displaykey.Java.ChargeCommission.DisplayName(policyPeriod, role, producerCode, charge, billingInstructionStr)
+    </DisplayName>
+  </Entity>

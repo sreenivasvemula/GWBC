@@ -1,0 +1,397 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xml:lang="en" lang="en" xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+    <meta http-equiv="Content-Style-Type" content="text/css" />
+    <!-- MOTW-DISABLED saved from url=(0014)about:internet -->
+    <title>Writing an Invoice Item Filter</title>
+    <link rel="StyleSheet" href="css/cash-handling-config-bc.css" type="text/css" media="all" />
+    <link rel="StyleSheet" href="css/webworks.css" type="text/css" media="all" />
+    <link rel="StyleSheet" href="css/css-guidewire-extra.css" type="text/css" media="all" />
+    <script type="text/javascript" language="JavaScript1.2" src="wwhdata/common/context.js"></script>
+    <script type="text/javascript" language="JavaScript1.2" src="wwhdata/common/towwhdir.js"></script>
+    <script type="text/javascript" language="JavaScript1.2" src="wwhdata/common/wwhpagef.js"></script>
+    <script type="text/javascript" language="JavaScript1.2">
+      <!--
+        var  WebWorksRootPath = "";
+      // -->
+    </script>
+    <script type="text/javascript" language="JavaScript1.2">
+      <!--
+        // Set reference to top level help frame
+        //
+        var  WWHFrame = WWHGetWWHFrame("", true);
+      // -->
+    </script>
+    <script type="text/javascript" language="JavaScript1.2" src="scripts/expand.js"></script>
+    <!-- THE FOLLOWING IS A GUIDEWIRE STYLE DEFINITION FOR THE LINK TO THIS FEATURE -->
+    <link rel="StyleSheet" href="css/css-guidewire-extra.css" type="text/css" media="all" />
+    <!-- THE FOLLOWING IS A GUIDEWIRE GSCRIPT FUNCTION FOR THE LINK TO THIS FEATURE -->
+    <script type="text/javascript">
+function guidewire_selectall()
+{
+var text_val=eval("document.linktothisurlform.urlfield");
+text_val.focus();
+text_val.select();
+}
+</script>
+  </head>
+  <body onLoad="WWHUpdate();" onUnload="WWHUnload();" onKeyDown="WWHHandleKeyDown((document.all||document.getElementById||document.layers)?event:null);" onKeyPress="WWHHandleKeyPress((document.all||document.getElementById||document.layers)?event:null);" onKeyUp="WWHHandleKeyUp((document.all||document.getElementById||document.layers)?event:null);">
+    <!-- THE FOLLOWING IS A GUIDEWIRE DIV FOR THE 'LINK TO THIS' FEATURE -->
+    <div id="linkToThisPage" class="popup" style="display: none;">
+      <div class="popupTitle">Link Directly to This Page 
+           <a href="#" onclick="var thePopup = getElementById('linkToThisPage');thePopup.style.display='none';return false;"><img class="popupClosebox" src="wwhelp/wwhimpl/common/images/close.gif" /></a></div>
+      <div style="padding:6px;">
+        <div class="popupText" id="linkToThisPageBookmark">An error has occurred if you see this messsage.</div>
+        <form name="linktothisurlform" method="post" action="" style="width:275px;margin:0px">
+          <input type="text" class="popupURLText" id="linkToThisPageURL" name="urlfield" rows="1" cols="55" onClick="guidewire_selectall();" onFocus="guidewire_selectall();"></input>
+        </form>
+      </div>
+    </div>
+    <br />
+    <div class="WebWorks_Breadcrumbs" style="text-align: left;">
+      <span>BillingCenter Configuration Guide</span> : 
+    <span class="WebWorks_Breadcrumbs" style="text-align: left;"><a class="WebWorks_Breadcrumb_Link" href="p-BillingCenter.html#1156436">Guidewire BillingCenter Configuration</a> : <a class="WebWorks_Breadcrumb_Link" href="cash-handling-config-bc.45.1.html#1156436">Configuring Payment Allocation Plans</a> : Writing an Invoice Item Filter</span></div>
+    <hr align="left" />
+    <blockquote>
+      <h3 class="H1_-_Heading_1"><a name="1156436">Writing an Invoice Item Filter</a></h3>
+      <div class="B_-_Body"><a name="1177233">An invoice item filter determines whether a particular invoice item is eligible to be paid. This section describes the programming tasks necessary to create a special invoice item filter. A sample filter written in Gosu is also provided.</a></div>
+      <h4 class="H2_-_Heading_2"><a name="1177488">Programming Tasks</a></h4>
+      <div class="B_-_Body"><a name="1174173">The following tasks outline the steps necessary to write a special invoice item filter for a payment allocation plan:</a></div>
+      <div class="LS_-_List_Start_outer" style="margin-left: 57pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="LS_-_List_Start_inner" style="width: 15pt; white-space: nowrap">
+                <span class="ri_-_run_in_header">	1.	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="LS_-_List_Start_inner"><a name="1174305">Define a new typecode in the </a><span class="cv_-_computer_voice">DistributionFilterType</span> typelist.</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="LI_-_List_Item_outer" style="margin-left: 57pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="LI_-_List_Item_inner" style="width: 15pt; white-space: nowrap">
+                <span class="ri_-_run_in_header">	2.	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="LI_-_List_Item_inner"><a name="1174368">Create a thread‑safe class that implements the </a><span class="cv_-_computer_voice">DistributionFilterCriterion</span> interface.</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="LI_-_List_Item_outer" style="margin-left: 57pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="LI_-_List_Item_inner" style="width: 15pt; white-space: nowrap">
+                <span class="ri_-_run_in_header">	3.	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="LI_-_List_Item_inner"><a name="1176262">Implement the new class. This entails writing (a)&nbsp;the </a><span class="cv_-_computer_voice">TypeKey</span> property to return the newly-defined typecode and (b)&nbsp;the <span class="cv_-_computer_voice">restrict</span> method to perform the desired filter operation.</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="LI_-_List_Item_outer" style="margin-left: 57pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="LI_-_List_Item_inner" style="width: 15pt; white-space: nowrap">
+                <span class="ri_-_run_in_header">	4.	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="LI_-_List_Item_inner"><a name="1176264">Register the class in the </a><span class="cv_-_computer_voice">LinkedImplementationLoaderImpl.returnDistributionFilterCriteria</span> method.</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <h4 class="H2_-_Heading_2"><a name="1177624">Sample Invoice Item Filter in Gosu</a></h4>
+      <div class="B_-_Body"><a name="1177678">This section describes the implementation of a sample invoice item filter using the Gosu programming language. The filter accepts invoice items associated with a delinquent policy period and rejects items in a non-delinquent policy period.</a></div>
+      <div class="H3_-_Heading_3_outer" style="margin-left: 36pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <h5 class="H3_-_Heading_3_inner" style="width: 18pt; white-space: nowrap"></h5>
+            </td>
+            <td width="100%">
+              <h5 class="H3_-_Heading_3_inner"><a name="1177997">Define the Filter Typecode</a></h5>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="B_-_Body"><a name="1178059">A new typecode for the filter must be added to the </a><span class="cv_-_computer_voice">DistributionFilterType</span> typelist.</div>
+      <div class="LS_-_List_Start_outer" style="margin-left: 57pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="LS_-_List_Start_inner" style="width: 15pt; white-space: nowrap">
+                <span class="ri_-_run_in_header">	1.	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="LS_-_List_Start_inner"><a name="1178159">If the </a><span class="cv_-_computer_voice">DistributionFilterType</span> typelist has not already been extended, right‑click <span class="ui_-_UI_element">configuration</span>&nbsp;→ <span class="ui_-_UI_element">config</span>&nbsp;→ <span class="ui_-_UI_element">Metadata</span>&nbsp;→ <span class="ui_-_UI_element">Typelist</span>&nbsp;→ <span class="ui_-_UI_element">DistributionFilterType.tti</span> and select <span class="ui_-_UI_element">New</span>&nbsp;→ <span class="ui_-_UI_element">Typelist Extension</span>.</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="LI_-_List_Item_outer" style="margin-left: 57pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="LI_-_List_Item_inner" style="width: 15pt; white-space: nowrap">
+                <span class="ri_-_run_in_header">	2.	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="LI_-_List_Item_inner"><a name="1178473">If the </a><span class="cv_-_computer_voice">DistributionFilterType</span> typelist has already been extended, select <span class="ui_-_UI_element">configuration</span>&nbsp;→ <span class="ui_-_UI_element">config</span>&nbsp;→ <span class="ui_-_UI_element">Extensions</span>&nbsp;→ <span class="ui_-_UI_element">Typelist</span>&nbsp;→ <span class="ui_-_UI_element">DistributionFilterType.ttx</span>.</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="LI_-_List_Item_outer" style="margin-left: 57pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="LI_-_List_Item_inner" style="width: 15pt; white-space: nowrap">
+                <span class="ri_-_run_in_header">	3.	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="LI_-_List_Item_inner"><a name="1178712">Add a new typecode to the extended typelist. For the sample filter, set the typecode fields as shown below.</a></div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="BI2_-_Bullet_Item_002c_Level_2_outer" style="margin-left: 67pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="BI2_-_Bullet_Item_002c_Level_2_inner" style="width: 15pt; white-space: nowrap">
+                <span class="bu_-_bullet">•	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="BI2_-_Bullet_Item_002c_Level_2_inner"><span class="ui_-_UI_element"><a name="1178865">code</a></span>: DelinquentPolicyPeriod</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="BI2_-_Bullet_Item_002c_Level_2_outer" style="margin-left: 67pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="BI2_-_Bullet_Item_002c_Level_2_inner" style="width: 15pt; white-space: nowrap">
+                <span class="bu_-_bullet">•	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="BI2_-_Bullet_Item_002c_Level_2_inner"><span class="ui_-_UI_element"><a name="1178911">name</a></span>: Delinquent Policy Period</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="BI2_-_Bullet_Item_002c_Level_2_outer" style="margin-left: 67pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="BI2_-_Bullet_Item_002c_Level_2_inner" style="width: 15pt; white-space: nowrap">
+                <span class="bu_-_bullet">•	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="BI2_-_Bullet_Item_002c_Level_2_inner"><span class="ui_-_UI_element"><a name="1178943">desc</a></span>: Accept invoice items if policy period is delinquent</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="H3_-_Heading_3_outer" style="margin-left: 36pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <h5 class="H3_-_Heading_3_inner" style="width: 18pt; white-space: nowrap"></h5>
+            </td>
+            <td width="100%">
+              <h5 class="H3_-_Heading_3_inner"><a name="1179012">Define the Filter Class</a></h5>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="B_-_Body"><a name="1179051">A new class for the filter must be defined. The class must implement the </a><span class="cv_-_computer_voice">DistributionFilterCriterion</span> interface, and the class implementation must be thread-safe.</div>
+      <div class="LS_-_List_Start_outer" style="margin-left: 57pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="LS_-_List_Start_inner" style="width: 15pt; white-space: nowrap">
+                <span class="ri_-_run_in_header">	1.	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="LS_-_List_Start_inner"><a name="1180233">A recommended best practice places configuration code in your own packages. The sample filter is written for an imaginary company called Acme. Accordingly, its payment allocation configuration code is placed in a package named </a><span class="cv_-_computer_voice">acme.payment</span>. To create the package, right‑click <span class="ui_-_UI_element">configuration</span>&nbsp;→ <span class="ui_-_UI_element">gsrc</span> and select <span class="ui_-_UI_element">New</span>&nbsp;→ <span class="ui_-_UI_element">Package</span>. Name the package <span class="cv_-_computer_voice">acme.payment</span>.</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="LI_-_List_Item_outer" style="margin-left: 57pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="LI_-_List_Item_inner" style="width: 15pt; white-space: nowrap">
+                <span class="ri_-_run_in_header">	2.	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="LI_-_List_Item_inner"><a name="1180261">Define the new filter class. Right‑click </a><span class="ui_-_UI_element">configuration</span>&nbsp;→ <span class="ui_-_UI_element">gsrc</span>&nbsp;→ <span class="ui_-_UI_element">acme.payment</span> and select <span class="ui_-_UI_element">New</span>&nbsp;→ <span class="ui_-_UI_element">Gosu class</span>. Name the class <span class="cv_-_computer_voice">DelinquentPolicyPeriodFilterCriterion</span>.</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="LI_-_List_Item_outer" style="margin-left: 57pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="LI_-_List_Item_inner" style="width: 15pt; white-space: nowrap">
+                <span class="ri_-_run_in_header">	3.	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="LI_-_List_Item_inner"><a name="1181348">The new filter class must implement the </a><span class="cv_-_computer_voice">DistributionFilterCriterion</span> interface. The empty skeleton definition for the filter class is shown below.</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <PRE class="CF_-_Code_First_Line"><a name="1181525">package acme.payment</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="1181551">&nbsp;</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="1181666">uses gw.bc.payment.DistributionFilterCriterion</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="1181715">&nbsp;</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="1181553">class DelinquentPolicyPeriodFilterCriterion implements DistributionFilterCriterion {</a></PRE>
+      <PRE class="CL_-_Code_Last_Line"><a name="1181659">}</a></PRE>
+      <div class="H3_-_Heading_3_outer" style="margin-left: 36pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <h5 class="H3_-_Heading_3_inner" style="width: 18pt; white-space: nowrap"></h5>
+            </td>
+            <td width="100%">
+              <h5 class="H3_-_Heading_3_inner"><a name="1180464">Implement the </a><span class="cvh_-_computer_voice_in_heading">TypeKey</span> Method</h5>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="B_-_Body"><a name="1180526">The filter class must implement a getter method for the </a><span class="cv_-_computer_voice">TypeKey</span> property. The method must return the filter’s typecode added to the <span class="cv_-_computer_voice">DistributionFilterType</span> typelist in an earlier step.</div>
+      <div class="B_-_Body"><a name="1180786">The </a><span class="cv_-_computer_voice">TypeKey</span> method for the sample filter is shown below.</div>
+      <PRE class="CF_-_Code_First_Line"><a name="1180849">override property get</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="1180875">TypeKey() : DistributionFilterType {</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="1180914">&nbsp;&nbsp;return TC_DELINQUENTPOLICYPERIOD</a></PRE>
+      <PRE class="CL_-_Code_Last_Line"><a name="1180959">}</a></PRE>
+      <div class="H3_-_Heading_3_outer" style="margin-left: 36pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <h5 class="H3_-_Heading_3_inner" style="width: 18pt; white-space: nowrap"></h5>
+            </td>
+            <td width="100%">
+              <h5 class="H3_-_Heading_3_inner"><a name="1180966">Implement the </a><span class="cvh_-_computer_voice_in_heading">restrict</span> Method</h5>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="B_-_Body"><a name="1181011">The filter class must implement the </a><span class="cv_-_computer_voice">restrict</span> method which performs the actual filtering operation and returns the group of invoice items that passed through the filter. The returned invoice items are eligible to be paid. The <span class="cv_-_computer_voice">restrict</span> method must be thread‑safe.</div>
+      <div class="B_-_Body"><a name="1181345">The </a><span class="cv_-_computer_voice">restrict</span> method for the sample filter uses two Gosu convenience classes provided in the base configuration: <span class="cv_-_computer_voice">Paths</span> and <span class="cv_-_computer_voice">RestrictionBuilder</span>. For information about <span class="cv_-_computer_voice">Paths</span> and <span class="cv_-_computer_voice">RestrictionBuilder</span>, see <a href="javascript:WWHClickedPopup('gosu', 'querybuilder.10.42.html#3504630', '');" title="Paths and Restriction Builders">“Paths and Restriction Builders” in the </a><span class="bt_-_book_title"><a href="javascript:WWHClickedPopup('gosu', 'querybuilder.10.42.html#3504630', '');" title="Paths and Restriction Builders">Gosu Reference Guide</a></span>.</div>
+      <div class="B_-_Body"><a name="1181993">The sample filter implementation of the </a><span class="cv_-_computer_voice">restrict</span> method is shown below.</div>
+      <PRE class="CF_-_Code_First_Line"><a name="1182070">uses gw.api.path.Paths</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="1182097">uses gw.api.restriction.RestrictionBuilder</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="1182142">&nbsp;</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="1182144">override function</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="1182183">restrict( restrictions : RestrictionBuilder &lt;InvoiceItem&gt;,</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="1182246">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;moneyRcvd&nbsp;&nbsp;&nbsp;&nbsp;: DirectBillMoneyRcvd ){</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="1182296">&nbsp;</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="1182298">&nbsp;&nbsp;// If payment is associated with a policy period AND the policy period is delinquent...</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="1182394">&nbsp;&nbsp;if( moneyRcvd.PolicyPeriod != null</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="1182432">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&amp;&amp;</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="1182442">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;moneyRcvd.PolicyPeriod.hasActiveDelinquencyProcess() ){</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="1182507">&nbsp;&nbsp;&nbsp;&nbsp;// ...then accept and return all the invoice items associated with this policy period.</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="1182603">&nbsp;&nbsp;&nbsp;&nbsp;restrictions.compare( Paths.make( InvoiceItem#PolicyPeriod ),</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="1182680">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Equals,</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="1182715">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;moneyRcvd.PolicyPeriod )</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="1182766">&nbsp;&nbsp;}</a></PRE>
+      <PRE class="CL_-_Code_Last_Line"><a name="1182771">}</a></PRE>
+      <div class="H3_-_Heading_3_outer" style="margin-left: 36pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <h5 class="H3_-_Heading_3_inner" style="width: 18pt; white-space: nowrap"></h5>
+            </td>
+            <td width="100%">
+              <h5 class="H3_-_Heading_3_inner"><a name="1182778">Register the Filter Class</a></h5>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="B_-_Body"><a name="1183273">The filter class must be registered in the </a><span class="cv_-_computer_voice">LinkedImplementationLoaderImpl.returnDistributionFilterCriteria</span> method. This entails adding a code statement to the <span class="cv_-_computer_voice">returnDistributionFilterCriteria</span> method. The code statement must construct a new instance of the filter class. The following steps register the sample filter class.</div>
+      <div class="LS_-_List_Start_outer" style="margin-left: 57pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="LS_-_List_Start_inner" style="width: 15pt; white-space: nowrap">
+                <span class="ri_-_run_in_header">	1.	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="LS_-_List_Start_inner"><a name="1183274">Select </a><span class="ui_-_UI_element">Navigate</span> → <span class="ui_-_UI_element">Class...</span> and enter <span class="cv_-_computer_voice">LinkedImplementationLoaderImpl</span> to load the class’s implementation file.</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="LI_-_List_Item_outer" style="margin-left: 57pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="LI_-_List_Item_inner" style="width: 15pt; white-space: nowrap">
+                <span class="ri_-_run_in_header">	2.	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="LI_-_List_Item_inner"><a name="1183406">Register the sample filter class in the </a><span class="cv_-_computer_voice">returnDistributionFilterCriteria</span> method. The code is shown below.</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <PRE class="CF_-_Code_First_Line"><a name="1183537">uses acme.payment.DelinquentPolicyPeriodFilterCriterion&nbsp;&nbsp;&nbsp;&nbsp;// Sample filter class</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="1183599">&nbsp;</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="1183601">override function</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="1183620">returnDistributionFilterCriteria() : Collection&lt;DistributionFilterCriterion&gt; {</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="1183703">&nbsp;&nbsp;return {</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="1183715">&nbsp;&nbsp;&nbsp;&nbsp;new PositiveDistributionFilterCriterion(),</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="1183764">&nbsp;&nbsp;&nbsp;&nbsp;// ... other filter registrations ...</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="1183773">&nbsp;&nbsp;&nbsp;&nbsp;new PastDueDistributionFilterCriterion(),</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="1183822">&nbsp;&nbsp;&nbsp;&nbsp;// Register sample filter</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="1183856">&nbsp;&nbsp;&nbsp;&nbsp;new DelinquentPolicyPeriodFilterCriterion()</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="1183905">&nbsp;&nbsp;}</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="1183910">}</a></PRE>
+      <script type="text/javascript" language="JavaScript1.2">
+        <!--
+          // Clear related topics
+          //
+          WWHClearRelatedTopics();
+
+          document.writeln(WWHRelatedTopicsInlineHTML());
+        // -->
+      </script>
+    </blockquote>
+    <script type="text/javascript" language="JavaScript1.2">
+      <!--
+        document.write(WWHRelatedTopicsDivTag() + WWHPopupDivTag() + WWHALinksDivTag());
+      // -->
+    </script>
+  </body>
+</html>

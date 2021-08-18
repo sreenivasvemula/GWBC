@@ -1,0 +1,265 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xml:lang="en" lang="en" xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+    <meta http-equiv="Content-Style-Type" content="text/css" />
+    <!-- MOTW-DISABLED saved from url=(0014)about:internet -->
+    <title>Changes to the Logging API</title>
+    <link rel="StyleSheet" href="css/procedure-config-c.css" type="text/css" media="all" />
+    <link rel="StyleSheet" href="css/webworks.css" type="text/css" media="all" />
+    <link rel="StyleSheet" href="css/css-guidewire-extra.css" type="text/css" media="all" />
+    <script type="text/javascript" language="JavaScript1.2" src="wwhdata/common/context.js"></script>
+    <script type="text/javascript" language="JavaScript1.2" src="wwhdata/common/towwhdir.js"></script>
+    <script type="text/javascript" language="JavaScript1.2" src="wwhdata/common/wwhpagef.js"></script>
+    <script type="text/javascript" language="JavaScript1.2">
+      <!--
+        var  WebWorksRootPath = "";
+      // -->
+    </script>
+    <script type="text/javascript" language="JavaScript1.2">
+      <!--
+        // Set reference to top level help frame
+        //
+        var  WWHFrame = WWHGetWWHFrame("", true);
+      // -->
+    </script>
+    <script type="text/javascript" language="JavaScript1.2" src="scripts/expand.js"></script>
+    <!-- THE FOLLOWING IS A GUIDEWIRE STYLE DEFINITION FOR THE LINK TO THIS FEATURE -->
+    <link rel="StyleSheet" href="css/css-guidewire-extra.css" type="text/css" media="all" />
+    <!-- THE FOLLOWING IS A GUIDEWIRE GSCRIPT FUNCTION FOR THE LINK TO THIS FEATURE -->
+    <script type="text/javascript">
+function guidewire_selectall()
+{
+var text_val=eval("document.linktothisurlform.urlfield");
+text_val.focus();
+text_val.select();
+}
+</script>
+  </head>
+  <body onLoad="WWHUpdate();" onUnload="WWHUnload();" onKeyDown="WWHHandleKeyDown((document.all||document.getElementById||document.layers)?event:null);" onKeyPress="WWHHandleKeyPress((document.all||document.getElementById||document.layers)?event:null);" onKeyUp="WWHHandleKeyUp((document.all||document.getElementById||document.layers)?event:null);">
+    <!-- THE FOLLOWING IS A GUIDEWIRE DIV FOR THE 'LINK TO THIS' FEATURE -->
+    <div id="linkToThisPage" class="popup" style="display: none;">
+      <div class="popupTitle">Link Directly to This Page 
+           <a href="#" onclick="var thePopup = getElementById('linkToThisPage');thePopup.style.display='none';return false;"><img class="popupClosebox" src="wwhelp/wwhimpl/common/images/close.gif" /></a></div>
+      <div style="padding:6px;">
+        <div class="popupText" id="linkToThisPageBookmark">An error has occurred if you see this messsage.</div>
+        <form name="linktothisurlform" method="post" action="" style="width:275px;margin:0px">
+          <input type="text" class="popupURLText" id="linkToThisPageURL" name="urlfield" rows="1" cols="55" onClick="guidewire_selectall();" onFocus="guidewire_selectall();"></input>
+        </form>
+      </div>
+    </div>
+    <br />
+    <div class="WebWorks_Breadcrumbs" style="text-align: left;">
+      <span>BillingCenter Upgrade Guide</span> : 
+    <span class="WebWorks_Breadcrumbs" style="text-align: left;"><a class="WebWorks_Breadcrumb_Link" href="part-basicupgrade_2.html#1958479">Upgrading from 3.0.x</a> : <a class="WebWorks_Breadcrumb_Link" href="procedure-config-c.16.01.html#1958479">Upgrading the BillingCenter 3.0.x Configuration</a> : Changes to the Logging API</span></div>
+    <hr align="left" />
+    <blockquote>
+      <h3 class="H1_-_Heading_1"><a name="1958479">Changes to the Logging API</a></h3>
+      <div class="B_-_Body"><a name="1958483">Guidewire updated the logging API between BillingCenter </a>7.0.1 and 7.0.2. Although changes to logging infrastructure were extensive, the purpose of these changes is simplification of logging usage. This document describes changes to the Guidewire logging API. If you are upgrading from a version prior to BillingCenter 7.0.2, use this section as a guide to update your configuration files to the new logging API.</div>
+      <h4 class="H2_-_Heading_2"><a name="1958487">Conceptual Changes to Logging</a></h4>
+      <h6 class="HS_-_Head_Sub"><a name="1958488">Old API</a></h6>
+      <div class="T_-_Table"><a name="1958507">&nbsp;</a></div>
+      <table class="withoutHeading" style="text-align: left" border="0" cellpadding="10" cellspacing="0" summary="">
+        <caption></caption>
+        <tr>
+          <td style="border-bottom-color: #c0d1d1; border-bottom-style: solid; border-bottom-width: 0.15pt; border-top-color: #000000; border-top-style: solid; border-top-width: 0.5pt; padding-bottom: 4pt; padding-left: 2pt; padding-right: 8pt; padding-top: 0pt; vertical-align: top">
+            <div class="TT_-_Table_Text" style="color: #000000; font-family: &quot;Lucida Sans Typewriter&quot;; font-style: normal; font-variant: normal; font-weight: normal; margin-top: 3.0pt; text-transform: none; vertical-align: baseline"><span class="cvt_-_computer_voice_table"><a name="1958491">com.guidewire.logging.Logger</a></span></div>
+          </td>
+          <td style="border-bottom-color: #c0d1d1; border-bottom-style: solid; border-bottom-width: 0.15pt; border-top-color: #000000; border-top-style: solid; border-top-width: 0.5pt; padding-bottom: 4pt; padding-left: 2pt; padding-right: 8pt; padding-top: 0pt; vertical-align: top">
+            <div class="TT_-_Table_Text"><a name="1958493">The </a><span class="cvt_-_computer_voice_table">Logger</span> class implements all logging functions. Instantiate the class with a new statement. This class is a wrapper around the Log4J <span class="cvt_-_computer_voice_table">Logger</span> class.</div>
+          </td>
+        </tr>
+        <tr>
+          <td style="border-bottom-color: #c0d1d1; border-bottom-style: solid; border-bottom-width: 0.15pt; border-top-color: #c0d1d1; border-top-style: solid; border-top-width: 0.15pt; padding-bottom: 4pt; padding-left: 2pt; padding-right: 8pt; padding-top: 0pt; vertical-align: top">
+            <div class="TT_-_Table_Text" style="color: #000000; font-family: &quot;Lucida Sans Typewriter&quot;; font-style: normal; font-variant: normal; font-weight: normal; margin-top: 3.0pt; text-transform: none; vertical-align: baseline"><span class="cvt_-_computer_voice_table"><a name="1958495">com.guidewire.logging.LoggerFactory</a></span></div>
+          </td>
+          <td style="border-bottom-color: #c0d1d1; border-bottom-style: solid; border-bottom-width: 0.15pt; border-top-color: #c0d1d1; border-top-style: solid; border-top-width: 0.15pt; padding-bottom: 4pt; padding-left: 2pt; padding-right: 8pt; padding-top: 0pt; vertical-align: top">
+            <div class="TT_-_Table_Text"><a name="1958497">The </a><span class="cvt_-_computer_voice_table">LoggerFactory</span> class has two purposes. First, the class instantiates the logging infrastructure and determines the logging configuration. Second, the class is a factory that produces <span class="cvt_-_computer_voice_table">Logger</span> instances.</div>
+          </td>
+        </tr>
+        <tr>
+          <td style="border-bottom-color: #c0d1d1; border-bottom-style: solid; border-bottom-width: 0.15pt; border-top-color: #c0d1d1; border-top-style: solid; border-top-width: 0.15pt; padding-bottom: 4pt; padding-left: 2pt; padding-right: 8pt; padding-top: 0pt; vertical-align: top">
+            <div class="TT_-_Table_Text" style="color: #000000; font-family: &quot;Lucida Sans Typewriter&quot;; font-style: normal; font-variant: normal; font-weight: normal; margin-top: 3.0pt; text-transform: none; vertical-align: baseline"><span class="cvt_-_computer_voice_table"><a name="1958499">com.guidewire.logging.LoggerCategory</a></span></div>
+          </td>
+          <td style="border-bottom-color: #c0d1d1; border-bottom-style: solid; border-bottom-width: 0.15pt; border-top-color: #c0d1d1; border-top-style: solid; border-top-width: 0.15pt; padding-bottom: 4pt; padding-left: 2pt; padding-right: 8pt; padding-top: 0pt; vertical-align: top">
+            <div class="TT_-_Table_Text"><a name="1958501">The </a><span class="cvt_-_computer_voice_table">LoggerCategory</span> class is a subclass of the <span class="cvt_-_computer_voice_table">Logger</span> class. An instance of the <span class="cvt_-_computer_voice_table">LoggerCategory</span> class behaves exactly the same way as instance of <span class="cvt_-_computer_voice_table">Logger</span>, but <span class="cvt_-_computer_voice_table">LoggerCategory</span> also maintains a set of static members, which are predefined loggers.</div>
+          </td>
+        </tr>
+        <tr>
+          <td style="border-bottom-color: #000000; border-bottom-style: solid; border-bottom-width: 0.5pt; border-top-color: #c0d1d1; border-top-style: solid; border-top-width: 0.15pt; padding-bottom: 4pt; padding-left: 2pt; padding-right: 8pt; padding-top: 0pt; vertical-align: top">
+            <div class="TT_-_Table_Text" style="color: #000000; font-family: &quot;Lucida Sans Typewriter&quot;; font-style: normal; font-variant: normal; font-weight: normal; margin-top: 3.0pt; text-transform: none; vertical-align: baseline"><span class="cvt_-_computer_voice_table"><a name="1958503">com.guidewire.xx.system.logging.</a></span><span class="pt_-_parameter_in_table">XX</span><span class="cvt_-_computer_voice_table">LoggerCategory</span></div>
+            <div class="TT_-_Table_Text"><a name="1958504">in which </a><span class="cvt_-_computer_voice_table">xx</span> is a product-specific code such as <span class="cvt_-_computer_voice_table">bc</span>, <span class="cvt_-_computer_voice_table">cc</span>, or <span class="cvt_-_computer_voice_table">pc</span>.</div>
+          </td>
+          <td style="border-bottom-color: #000000; border-bottom-style: solid; border-bottom-width: 0.5pt; border-top-color: #c0d1d1; border-top-style: solid; border-top-width: 0.15pt; padding-bottom: 4pt; padding-left: 2pt; padding-right: 8pt; padding-top: 0pt; vertical-align: top">
+            <div class="TT_-_Table_Text"><a name="1958506">The </a><span class="pt_-_parameter_in_table">XX</span><span class="cvt_-_computer_voice_table">LoggerCategory</span> classes are application-specific subclasses of <span class="cvt_-_computer_voice_table">LoggerCategory</span>. Normally, application-specific <span class="cvt_-_computer_voice_table">LoggerCategory</span> classes maintain additional static <span class="cvt_-_computer_voice_table">Logger</span> members for applications to use.</div>
+          </td>
+        </tr>
+      </table>
+      <h6 class="HS_-_Head_Sub"><a name="1958508">New API</a></h6>
+      <div class="T_-_Table"><a name="1958543">&nbsp;</a></div>
+      <table class="withoutHeading" style="text-align: left" border="0" cellpadding="10" cellspacing="0" summary="">
+        <caption></caption>
+        <tr>
+          <td style="border-bottom-color: #c0d1d1; border-bottom-style: solid; border-bottom-width: 0.15pt; border-top-color: #000000; border-top-style: solid; border-top-width: 0.5pt; padding-bottom: 4pt; padding-left: 2pt; padding-right: 8pt; padding-top: 0pt; vertical-align: top">
+            <div class="TT_-_Table_Text" style="color: #000000; font-family: &quot;Lucida Sans Typewriter&quot;; font-style: normal; font-variant: normal; font-weight: normal; margin-top: 3.0pt; text-transform: none; vertical-align: baseline"><span class="cvt_-_computer_voice_table"><a name="1958511">gw.pl.logging.Logger</a></span></div>
+          </td>
+          <td style="border-bottom-color: #c0d1d1; border-bottom-style: solid; border-bottom-width: 0.15pt; border-top-color: #000000; border-top-style: solid; border-top-width: 0.5pt; padding-bottom: 4pt; padding-left: 2pt; padding-right: 8pt; padding-top: 0pt; vertical-align: top">
+            <div class="TT_-_Table_Text"><span class="cvt_-_computer_voice_table"><a name="1958515">Logger</a></span> was converted from a class to an interface in BillingCenter 7.0.2. In 8.0, Logger is deprecated. You can update code to use <span class="cvt_-_computer_voice_table">org.slf4j.Logger</span> instead of <span class="cvt_-_computer_voice_table">gw.pl.logging.Logger</span>.</div>
+            <div class="TT_-_Table_Text"><a name="1958519">The </a><span class="cvt_-_computer_voice_table">Logger </span>interface provides all necessary functionality and hides implementation. This <span class="cvt_-_computer_voice_table">Logger</span> interface explicitly prohibits certain functions that the previous <span class="cvt_-_computer_voice_table">Logger</span> class allowed:</div>
+            <div class="BIT_-_Bullet_Item_Table_outer" style="margin-left: 2.16pt">
+              <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+                <tr style="vertical-align: baseline">
+                  <td>
+                    <div class="BIT_-_Bullet_Item_Table_inner" style="width: 7.199999999999999pt; white-space: nowrap">
+                      <span class="but_-_bullet_in_table">•	</span>
+                    </div>
+                  </td>
+                  <td width="100%">
+                    <div class="BIT_-_Bullet_Item_Table_inner"><a name="1958520">You cannot set logging level within the application</a></div>
+                  </td>
+                </tr>
+              </table>
+            </div>
+            <div class="BIT_-_Bullet_Item_Table_outer" style="margin-left: 2.16pt">
+              <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+                <tr style="vertical-align: baseline">
+                  <td>
+                    <div class="BIT_-_Bullet_Item_Table_inner" style="width: 7.199999999999999pt; white-space: nowrap">
+                      <span class="but_-_bullet_in_table">•	</span>
+                    </div>
+                  </td>
+                  <td width="100%">
+                    <div class="BIT_-_Bullet_Item_Table_inner"><a name="1958521">You cannot add nor remove appenders within the application</a></div>
+                  </td>
+                </tr>
+              </table>
+            </div>
+            <div class="TT_-_Table_Text"><a name="1958522">The purpose of the </a><span class="cvt_-_computer_voice_table">Logger</span> interface is to log application-specific messages. Every application component must use its own <span class="cvt_-_computer_voice_table">Logger</span> instance to log messages relevant to the component itself. </div>
+            <div class="TT_-_Table_Text"><a name="1958523">Do not perform logger management from within the component, such as defining the logging level for a logger. Instead, use the </a><span class="cvt_-_computer_voice_table">logging.properties</span> file and the application interface to control logging levels and appenders.</div>
+          </td>
+        </tr>
+        <tr>
+          <td style="border-bottom-color: #c0d1d1; border-bottom-style: solid; border-bottom-width: 0.15pt; border-top-color: #c0d1d1; border-top-style: solid; border-top-width: 0.15pt; padding-bottom: 4pt; padding-left: 2pt; padding-right: 8pt; padding-top: 0pt; vertical-align: top">
+            <div class="TT_-_Table_Text" style="color: #000000; font-family: &quot;Lucida Sans Typewriter&quot;; font-style: normal; font-variant: normal; font-weight: normal; margin-top: 3.0pt; text-transform: none; vertical-align: baseline"><span class="cvt_-_computer_voice_table"><a name="1958525">gw.pl.logging.LoggerFactory</a></span></div>
+          </td>
+          <td style="border-bottom-color: #c0d1d1; border-bottom-style: solid; border-bottom-width: 0.15pt; border-top-color: #c0d1d1; border-top-style: solid; border-top-width: 0.15pt; padding-bottom: 4pt; padding-left: 2pt; padding-right: 8pt; padding-top: 0pt; vertical-align: top">
+            <div class="TT_-_Table_Text"><a name="1958527">The </a><span class="cvt_-_computer_voice_table">LoggerFactory</span> class retains its original functionality, but some methods have changed.</div>
+            <div class="TT_-_Table_Text"><a name="1958528">This </a><span class="cvt_-_computer_voice_table">LoggerFactory</span> has two purposes. First, the class instantiates the logging infrastructure and determines the logging configuration. Second, the class is a factory that produces <span class="cvt_-_computer_voice_table">Logger</span> instances.</div>
+          </td>
+        </tr>
+        <tr>
+          <td style="border-bottom-color: #c0d1d1; border-bottom-style: solid; border-bottom-width: 0.15pt; border-top-color: #c0d1d1; border-top-style: solid; border-top-width: 0.15pt; padding-bottom: 4pt; padding-left: 2pt; padding-right: 8pt; padding-top: 0pt; vertical-align: top">
+            <div class="TT_-_Table_Text" style="color: #000000; font-family: &quot;Lucida Sans Typewriter&quot;; font-style: normal; font-variant: normal; font-weight: normal; margin-top: 3.0pt; text-transform: none; vertical-align: baseline"><span class="cvt_-_computer_voice_table"><a name="1958530">gw.api.util.Logger.forCategory</a></span></div>
+          </td>
+          <td style="border-bottom-color: #c0d1d1; border-bottom-style: solid; border-bottom-width: 0.15pt; border-top-color: #c0d1d1; border-top-style: solid; border-top-width: 0.15pt; padding-bottom: 4pt; padding-left: 2pt; padding-right: 8pt; padding-top: 0pt; vertical-align: top">
+            <div class="TT_-_Table_Text"><a name="1958532">The </a><span class="cvt_-_computer_voice_table">forCategory</span> method of the <span class="cvt_-_computer_voice_table">Logger</span> class returns a Logger for the category, which is passed as a parameter to the <span class="cvt_-_computer_voice_table">forCategory</span> method.</div>
+          </td>
+        </tr>
+        <tr>
+          <td style="border-bottom-color: #c0d1d1; border-bottom-style: solid; border-bottom-width: 0.15pt; border-top-color: #c0d1d1; border-top-style: solid; border-top-width: 0.15pt; padding-bottom: 4pt; padding-left: 2pt; padding-right: 8pt; padding-top: 0pt; vertical-align: top">
+            <div class="TT_-_Table_Text" style="color: #000000; font-family: &quot;Lucida Sans Typewriter&quot;; font-style: normal; font-variant: normal; font-weight: normal; margin-top: 3.0pt; text-transform: none; vertical-align: baseline"><span class="cvt_-_computer_voice_table"><a name="1958534">com.guidewire.xx.system.logging.</a></span><span class="pt_-_parameter_in_table">XX</span><span class="cvt_-_computer_voice_table">LoggerCategory</span></div>
+            <div class="TT_-_Table_Text"><a name="1958535">in which </a><span class="cvt_-_computer_voice_table">xx</span> is a product-specific code such as <span class="cvt_-_computer_voice_table">bc</span>, <span class="cvt_-_computer_voice_table">cc</span>, or <span class="cvt_-_computer_voice_table">pc</span>.</div>
+          </td>
+          <td style="border-bottom-color: #c0d1d1; border-bottom-style: solid; border-bottom-width: 0.15pt; border-top-color: #c0d1d1; border-top-style: solid; border-top-width: 0.15pt; padding-bottom: 4pt; padding-left: 2pt; padding-right: 8pt; padding-top: 0pt; vertical-align: top">
+            <div class="TT_-_Table_Text"><a name="1958537">The </a><span class="pt_-_parameter_in_table">XX</span><span class="cvt_-_computer_voice_table">LoggerCategory</span> classes are application-specific subclasses of <span style="font-family: &quot;Lucida Sans Typewriter&quot;; font-size: 7.0pt">LoggerCategory</span>. They retain their function of maintaining additional static <span class="cvt_-_computer_voice_table">Logger</span> members for applications to use, but the static members now are instances of the <span class="cvt_-_computer_voice_table">Logger</span> interface. You can no longer instantiate application-specific subclasses of <span class="cvt_-_computer_voice_table">LoggerCategory</span>.</div>
+          </td>
+        </tr>
+        <tr>
+          <td style="border-bottom-color: #000000; border-bottom-style: solid; border-bottom-width: 0.5pt; border-top-color: #c0d1d1; border-top-style: solid; border-top-width: 0.15pt; padding-bottom: 4pt; padding-left: 2pt; padding-right: 8pt; padding-top: 0pt; vertical-align: top">
+            <div class="TT_-_Table_Text" style="color: #000000; font-family: &quot;Lucida Sans Typewriter&quot;; font-style: normal; font-variant: normal; font-weight: normal; margin-top: 3.0pt; text-transform: none; vertical-align: baseline"><span style="color: #000000; font-family: &quot;Lucida Sans Typewriter&quot;; font-size: 7.0pt; font-style: normal; font-variant: normal; font-weight: normal; text-transform: none; vertical-align: baseline"><a name="1958539">gw.api.system.</a></span><span class="pt_-_parameter_in_table">XX</span><span class="cvt_-_computer_voice_table">LoggerCategory</span></div>
+            <div class="TT_-_Table_Text"><a name="1958540">in which </a><span class="cvt_-_computer_voice_table">xx</span> is a product-specific code such as <span class="cvt_-_computer_voice_table">bc</span>, <span class="cvt_-_computer_voice_table">cc</span>, or <span class="cvt_-_computer_voice_table">pc</span>.</div>
+          </td>
+          <td style="border-bottom-color: #000000; border-bottom-style: solid; border-bottom-width: 0.5pt; border-top-color: #c0d1d1; border-top-style: solid; border-top-width: 0.15pt; padding-bottom: 4pt; padding-left: 2pt; padding-right: 8pt; padding-top: 0pt; vertical-align: top">
+            <div class="TT_-_Table_Text"><a name="1958542">A mirror class to expose the logger category. It inherits all loggers defined in its </a><span class="cvt_-_computer_voice_table">gw.pl</span> counterpart.</div>
+          </td>
+        </tr>
+      </table>
+      <h4 class="H2_-_Heading_2"><a name="1958544">Instantiating Loggers</a></h4>
+      <h6 class="HS_-_Head_Sub"><a name="1958545">Old API</a></h6>
+      <div class="B_-_Body"><a name="1958546">With the old API, you can instantiate logger instances using </a><span class="cv_-_computer_voice">Logger</span>, <span class="cv_-_computer_voice">LoggerCategory</span>, <span class="cv_-_computer_voice">LoggerFactory</span> or an instance of <span class="cv_-_computer_voice">LoggerCategory</span>. Any of the following statements instantiates a logger:</div>
+      <div class="CS_-_Code_Single_Line"><a name="1958547">Logger logger1 = new Logger("Logger1");</a></div>
+      <div class="CS_-_Code_Single_Line"><a name="1958548">Logger logger12 = new Logger(logger1, "Sublogger2");</a></div>
+      <div class="CS_-_Code_Single_Line"><a name="1958549">LoggerCategory category1 = new LoggerCategory("Category1");</a></div>
+      <div class="CS_-_Code_Single_Line"><a name="1958550">LoggerCategory category12 = new LoggerCategory(category1, "Subcategory2");</a></div>
+      <div class="CS_-_Code_Single_Line"><a name="1958551">Logger factoryLogger1 = LoggerFactory.getInstance().getLogger("FactoryLogger1");</a></div>
+      <div class="CS_-_Code_Single_Line"><a name="1958552">Logger factoryLogger12 = LoggerFactory.getInstance().getLogger(factoryLogger1,"Sublogger2");</a></div>
+      <div class="CS_-_Code_Single_Line"><a name="1958553">Logger apiLogger = LoggerCategory.API;</a></div>
+      <div class="CS_-_Code_Single_Line"><a name="1958554">LoggerCategory apiCategory = LoggerCategory.API;</a></div>
+      <div class="CS_-_Code_Single_Line"><a name="1958555">Logger apiSubLogger = new LoggerCategory(LoggerCategory.API, "WebAPI");</a></div>
+      <div class="CS_-_Code_Single_Line"><a name="1958556">LoggerCategory apiSubCategory = new LoggerCategory(LoggerCategory.API, "WebAPI");</a></div>
+      <h6 class="HS_-_Head_Sub"><a name="1958557">New API</a></h6>
+      <div class="B_-_Body"><a name="1958558">With the new API, you work only with instances of the </a><span class="cv_-_computer_voice">Logger</span> interface. You can no longer directly instantiate logger instances, so the new API supports only a few methods to obtain a logger instance: </div>
+      <PRE class="CF_-_Code_First_Line"><a name="1958559">// Using gw.* package</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="1958560">import gw.util.*;</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="1958561">import gw.api.system.*;</a></PRE>
+      <PRE class="CL_-_Code_Last_Line"><a name="1958562">import gw.api.util.*</a></PRE>
+      <div class="CS_-_Code_Single_Line"><a name="1958563">ILogger apiLogger = PLLoggerCategory.API;</a></div>
+      <div class="CS_-_Code_Single_Line"><a name="1958564">ILogger apiSubLogger = Logger.forCategory.(PLLoggerCategory.API, "WebAPI");</a></div>
+      <div class="CS_-_Code_Single_Line"><a name="1958565">&nbsp;</a></div>
+      <PRE class="CF_-_Code_First_Line"><a name="1958566">// Using com.quidewire.* package</a></PRE>
+      <PRE class="CL_-_Code_Last_Line"><a name="1958567">import com.guidewire.logging.*;</a></PRE>
+      <div class="CS_-_Code_Single_Line"><a name="1958568">Logger logger1 = LoggerFactory.getLogger("Logger1");</a></div>
+      <div class="CS_-_Code_Single_Line"><a name="1958569">Logger logger12 = LoggerFactory.getLogger(logger1, "Sublogger2");</a></div>
+      <div class="CS_-_Code_Single_Line"><a name="1958570">Logger apiLogger = LoggerCategory.API;</a></div>
+      <div class="CS_-_Code_Single_Line"><a name="1958571">Logger apiSubLogger = LoggerFactory.getLogger(PLLoggerCategory.API, "WebAPI");</a></div>
+      <div class="B_-_Body"><a name="1958572">The new API loses no functionality compared with the old API, but fewer arbitrary options exist.</a></div>
+      <div class="N_-_Note">
+        <span class="n_-_note">Note: </span><a name="1958573">The </a><span class="cv_-_computer_voice">LoggerFactory</span> class no longer has a <span class="cv_-_computer_voice">getInstance()</span> method. The <span class="cv_-_computer_voice">LoggerFactory.getLogger()</span> method is now static.</div>
+      <h4 class="H2_-_Heading_2"><a name="1958574">Logging Messages</a></h4>
+      <div class="B_-_Body"><a name="1958575">After you obtain an instance of the </a><span class="cv_-_computer_voice">Logger</span> with the new API, you can use the same methods as the old API to log messages. However, a new interface also allows SLF4J formatting of the messages. </div>
+      <h6 class="HS_-_Head_Sub"><a name="1958576">Old API</a></h6>
+      <PRE class="CM_-_Code_Middle_Line"><a name="1958577">logger.info("Started application " + appName + " with parameters " + parms.toString()); </a></PRE>
+      <PRE class="CL_-_Code_Last_Line"><a name="1958578">logger.info("Listening to the port " + Integer.toString(portNumber));</a></PRE>
+      <h6 class="HS_-_Head_Sub"><a name="1958579">New API</a></h6>
+      <PRE class="CM_-_Code_Middle_Line"><a name="1958580">if (wantOldStyle) {    // Old style</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="1958581">&nbsp;&nbsp;logger.info("Started application " + appName + " with parameters " + parms.toString()); </a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="1958582">&nbsp;&nbsp;logger.info("Listening to the port " + Integer.toString(portNumber)); </a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="1958583">} else {               // New style         </a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="1958584">&nbsp;&nbsp;logger.info("Started application {} with parameters {}", appName, parms.toString()); </a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="1958585">&nbsp;&nbsp;logger.info("Listening to the port {}", new Integer(portNumber));</a></PRE>
+      <PRE class="CL_-_Code_Last_Line"><a name="1958586">} </a></PRE>
+      <h4 class="H2_-_Heading_2"><a name="1958587">Passing Loggers as Parameters</a></h4>
+      <div class="B_-_Body"><a name="1958588">With the new API, the </a><span class="cv_-_computer_voice">LoggerCategory</span> class exists and has static members. However, those members are instances of the <span class="cv_-_computer_voice">Logger</span> interface instead of the <span class="cv_-_computer_voice">LoggerCategory</span> itself. </div>
+      <h6 class="HS_-_Head_Sub"><a name="1958589">Old API</a></h6>
+      <PRE class="CF_-_Code_First_Line"><a name="1958590">private LoggerCategory getApiLogger() {</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="1958591">&nbsp;&nbsp;return LoggerCategory.API;</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="1958592">}</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="1958593">&nbsp;</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="1958594">// ...</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="1958595">LoggerCategory myLogger = getApiLogger();</a></PRE>
+      <PRE class="CL_-_Code_Last_Line"><a name="1958596">myLogger.debug("...");</a></PRE>
+      <h6 class="HS_-_Head_Sub"><a name="1958597">New API</a></h6>
+      <PRE class="CF_-_Code_First_Line"><a name="1958598">// Using gw.* package.</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="1958599">private gw.pl.logging.Logger getApiLogger() {</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="1958600">  return PLLoggerCategory.API;</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="1958601">}</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="1958602">// ...</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="1958603">gw.pl.logging.Logger myLogger = getApiLogger();</a></PRE>
+      <PRE class="CL_-_Code_Last_Line"><a name="1958604">myLogger.debug("...");</a></PRE>
+      <div class="CS_-_Code_Single_Line"><a name="1958605">&nbsp;</a></div>
+      <PRE class="CF_-_Code_First_Line"><a name="1958606">// Using SLF4J.</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="1958607">private org.slf4jLogger getApiLogger() {</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="1958608">&nbsp;&nbsp;return PLLoggerCategory.API;</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="1958609">}</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="1958610">&nbsp;</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="1958611">// ...</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="1958612">org.slf4j.Logger myLogger = getApiLogger();</a></PRE>
+      <PRE class="CL_-_Code_Last_Line"><a name="1958613">myLogger.debug("I am Logger {}", myLogger.toString());</a></PRE>
+      <script type="text/javascript" language="JavaScript1.2">
+        <!--
+          // Clear related topics
+          //
+          WWHClearRelatedTopics();
+
+          document.writeln(WWHRelatedTopicsInlineHTML());
+        // -->
+      </script>
+    </blockquote>
+    <script type="text/javascript" language="JavaScript1.2">
+      <!--
+        document.write(WWHRelatedTopicsDivTag() + WWHPopupDivTag() + WWHALinksDivTag());
+      // -->
+    </script>
+  </body>
+</html>

@@ -1,0 +1,52 @@
+<?xml version="1.0"?>
+<PCF
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:noNamespaceSchemaLocation="../../../../../pcf.xsd">
+  <Screen
+    id="NewNegativeWriteoffReversalConfirmationScreen">
+    <Require
+      name="negativeWriteoffToReverse"
+      type="NegativeWriteoffRev"/>
+    <Toolbar>
+      <WizardButtons/>
+    </Toolbar>
+    <AlertBar
+      id="ApprovalActivityAlertBar"
+      label="displaykey.Web.ApprovalActivityAlertBar"
+      visible="!negativeWriteoffToReverse.getApprovalHandler().isCurrentUserCanApproveAction()"/>
+    <DetailViewPanel
+      id="NewWriteoffReversalConfirmationDV">
+      <InputColumn>
+        <DateInput
+          id="TransactionDate"
+          label="displaykey.Web.NewWriteoffReversalConfirmationScreen.Date"
+          value="negativeWriteoffToReverse.getNegativeWriteoff().CreateTime"/>
+        <MonetaryAmountInput
+          currency="negativeWriteoffToReverse.getNegativeWriteoff().Currency"
+          id="Amount"
+          label="displaykey.Web.NewWriteoffReversalConfirmationScreen.Amount"
+          value="negativeWriteoffToReverse.getNegativeWriteoff().Amount"/>
+        <Input
+          id="Description"
+          label="displaykey.Web.NewWriteoffReversalConfirmationScreen.Description"
+          value="negativeWriteoffToReverse.getNegativeWriteoff().DisplayName"/>
+        <InputDivider/>
+      </InputColumn>
+    </DetailViewPanel>
+    <PanelRef
+      def="ApprovalActivityDV(getApprovalActivityIfRequired())"
+      visible="!negativeWriteoffToReverse.getApprovalHandler().isCurrentUserCanApproveAction()"/>
+    <Code><![CDATA[
+function getApprovalActivityIfRequired() : NegWoffRevApprActivity{
+  
+  if(!negativeWriteoffToReverse.getApprovalHandler().isCurrentUserCanApproveAction()){
+    negativeWriteoffToReverse.getApprovalHandler().approvalRequired(null)
+    return negativeWriteoffToReverse.getOpenApprovalActivity()
+  }else{
+    return null
+  }
+  
+}
+    ]]></Code>
+  </Screen>
+</PCF>

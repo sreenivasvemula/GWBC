@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<subtype
+  xmlns="http://guidewire.com/datamodel"
+  entity="MatchPlannedInstallments"
+  desc="Modifies a PaymentPlan by overriding its maximum number of installments, which will be set to equal the number of remaining planned invoice items that have been sliced from the associated reference charge. The intended result is that the the new charge's installments have the same dates as those of the reference charge."
+  subpackage="invoice"
+  supertype="PaymentPlanModifier">
+  <implementsInterface
+    iface="gw.api.domain.invoice.PaymentPlanModifierMethods"
+    impl="gw.paymentplanmodifier.MatchPlannedInstallmentsMethodsImpl"/>
+  <foreignkey
+    name="ReferenceCharge"
+    desc="The charge whose number of installments and installment dates should be matched."
+    columnName="ReferenceChargeID"
+    exportasid="true"
+    fkentity="Charge"
+    nullok="false"/>
+</subtype>

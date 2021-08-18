@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?><entity xmlns="http://guidewire.com/datamodel" abstract="true" admin="true" desc="Base type for plans" entity="Plan" final="false" loadable="false" platform="false" setterScriptability="hidden" subpackage="plan" table="plan" type="retireable">
+  <implementsEntity name="Validatable"/>
+  <implementsEntity name="HistoryEventContainer"/>
+  <column desc="The description of the plan" name="Description" nullok="true" type="mediumtext">
+    <localization nullok="true" tableName="plan_desc_l10n"/>
+  </column>
+  <column desc="The date on which this plan becomes effective." name="EffectiveDate" nullok="false" type="dateonly"/>
+  <column desc="The date on which this plan expires. Null indicates that this plan has no definite expiration date." name="ExpirationDate" nullok="true" type="dateonly"/>
+  <column default="false" desc="Internal flag used to determine whether or not this plan is in use." name="InUse" nullok="false" setterScriptability="hidden" type="bit"/>
+  <column desc="The name of the plan" name="Name" nullok="false" supportsLinguisticSearch="true" type="shorttext">
+    <localization nullok="false" tableName="plan_name_l10n"/>
+  </column>
+  <column desc="The order of this plan in the list of all plans.  Lower PlanOrder values are higher priority" name="PlanOrder" nullok="false" setterScriptability="doesNotExist" type="integer"/>
+  <array arrayentity="PlanHistory" arrayfield="Plan" desc="History events for this Plan" ignoreforevents="true" name="History"/>
+  <events/>
+  <datetimeordering firstcolumnname="EffectiveDate" operator="LE" secondcolumnname="ExpirationDate"/>
+  <index desc="Legacy" name="planorder" unique="true">
+    <indexcol keyposition="1" name="PlanOrder"/>
+    <indexcol keyposition="2" name="Subtype"/>
+    <indexcol keyposition="3" name="Retired"/>
+  </index>
+  <index desc="Legacy" name="planname" unique="true">
+    <indexcol keyposition="1" name="Name"/>
+    <indexcol keyposition="2" name="Subtype"/>
+    <indexcol keyposition="3" name="Retired"/>
+  </index>
+  <index desc="Legacy" name="namedenorm">
+    <indexcol keyposition="1" name="NameDenorm"/>
+    <indexcol keyposition="2" name="Retired"/>
+  </index>
+</entity>

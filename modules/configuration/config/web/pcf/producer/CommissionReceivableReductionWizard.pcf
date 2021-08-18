@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PCF
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:noNamespaceSchemaLocation="../../../../../pcf.xsd">
+  <Wizard
+    beforeCommit="helper.doWriteoff()"
+    id="CommissionReceivableReductionWizard">
+    <LocationEntryPoint
+      signature="CommissionReceivableReductionWizard(producer : Producer)"/>
+    <Variable
+      name="producer"
+      type="Producer"/>
+    <Variable
+      initialValue="new gw.producer.CommissionReceivableReductionHelper(producer)"
+      name="helper"
+      type="gw.producer.CommissionReceivableReductionHelper"/>
+    <WizardStep
+      id="TargetStep"
+      label="displaykey.Web.CommissionPayableReductionWizard.Targets.Label"
+      screen="CommissionReceivableReductionWizardTargetsStepScreen(helper)"
+      title="displaykey.Web.CommissionReceivableReductionWizard.Targets.Title"/>
+    <WizardStep
+      allowFinish="true"
+      id="ConfirmationStep"
+      label="displaykey.Web.CommissionReceivableReductionWizard.Confirmation.Label"
+      screen="CommissionReceivableReductionWizardConfirmationStepScreen(helper)"
+      title="displaykey.Web.CommissionReceivableReductionWizard.Confirmation.Title"/>
+  </Wizard>
+</PCF>

@@ -1,0 +1,40 @@
+<?xml version="1.0"?>
+<PCF
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:noNamespaceSchemaLocation="../../../../../pcf.xsd">
+  <DetailViewPanel
+    editable="false"
+    id="MinimalTAccountOwnerDetailsDV"
+    mode="producer">
+    <Require
+      name="tAccountOwner"
+      type="TAccountOwner"/>
+    <Require
+      name="unapplied"
+      type="UnappliedFund"/>
+    <Variable
+      initialValue="tAccountOwner as Producer"
+      name="producer"
+      type="Producer"/>
+    <InputColumn>
+      <Label
+        label="displaykey.Web.NewWriteoffWizardDetailsStepScreen.TargetDetails"/>
+      <Input
+        action="pcf.ProducerDetailPopup.push(producer)"
+        id="Producer"
+        label="displaykey.Web.NewWriteoffWizardDetailsStepScreen.Producer"
+        value="producer"/>
+      <InputDivider/>
+      <Label
+        label="displaykey.Web.MinimalProducerDetailsDV.Balances"/>
+      <MonetaryAmountInput
+        align="left"
+        boldLabel="true"
+        currency="producer.Currency"
+        formatType="currency"
+        id="UnappliedAmount"
+        label="displaykey.Web.MinimalProducerDetailsDV.UnappliedAmount"
+        value="producer.UnappliedAmount"/>
+    </InputColumn>
+  </DetailViewPanel>
+</PCF>

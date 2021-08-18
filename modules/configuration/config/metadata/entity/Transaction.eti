@@ -1,0 +1,71 @@
+<?xml version="1.0"?>
+<entity
+  xmlns="http://guidewire.com/datamodel"
+  abstract="true"
+  desc="The mechanism by which balances are reflected in T-accounts. Transactions provide the means for finding out the actions that caused a change in T-account balances."
+  entity="Transaction"
+  final="false"
+  overwrittenInStagingTable="true"
+  setterScriptability="hidden"
+  subpackage="accounting.transaction"
+  table="transaction"
+  type="retireable">
+  <implementsEntity
+    name="Validatable"/>
+  <implementsEntity
+    name="Reversible"/>
+  <implementsEntity
+    name="InCurrencySilo"/>
+  <monetaryamount
+    amountColumnName="Amount"
+    desc="The amount of this transaction. The precise meaning depends on the subtype. Typically, the amounts in the individual line items will be some function of this value."
+    name="Amount"
+    nullok="false"
+    scaleToCurrency="true"
+    setterScriptability="doesNotExist"/>
+  <column
+    desc="The date of the transaction"
+    name="TransactionDate"
+    nullok="false"
+    setterScriptability="doesNotExist"
+    type="pastdatetime"/>
+  <column
+    desc="The number for this transaction"
+    name="TransactionNumber"
+    nullok="false"
+    setterScriptability="doesNotExist"
+    supportsLinguisticSearch="true"
+    type="shorttext"/>
+  <edgeForeignKey
+    desc="If non-null, refers to the transaction which this transaction reversed."
+    edgeTableName="revtrans"
+    fkentity="Transaction"
+    ignoreforevents="true"
+    loadable="true"
+    name="ReversedTransaction"
+    nullok="true"
+    overwrittenInStagingTable="true"
+    setterScriptability="doesNotExist"/>
+  <array
+    arrayentity="LineItem"
+    desc="Set of line items associated with this transaction"
+    exportable="false"
+    name="LineItems"
+    owner="true"
+    setterScriptability="doesNotExist"/>
+  <events/>
+  <index
+    desc="Legacy"
+    name="transactionnumnorm">
+    <indexcol
+      keyposition="1"
+      name="TransactionNumberDenorm"/>
+    <indexcol
+      keyposition="2"
+      name="Retired"/>
+  </index>
+  <dbcheckbuilder
+    className="com.guidewire.bc.system.database.dbchecks.accounting.transaction.TransactionContextDBCheckBuilder"/>
+  <dbcheckbuilder
+    className="com.guidewire.bc.system.database.dbchecks.accounting.transaction.TransactionLineItemDBCheckBuilder"/>
+</entity>

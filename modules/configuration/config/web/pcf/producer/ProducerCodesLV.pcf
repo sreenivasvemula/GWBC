@@ -1,0 +1,67 @@
+<?xml version="1.0"?>
+<PCF
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:noNamespaceSchemaLocation="../../../../../pcf.xsd">
+  <ListViewPanel
+    editable="true"
+    id="ProducerCodesLV"
+    validationExpression="producer.ActiveProducerCodes.length &gt; 0 ? null : displaykey.Web.ProducerDetail.ProducerCodes.Validation.AtLeastOneActiveProducerCode">
+    <ExposeIterator
+      flags="NewProducerCode"
+      valueType="entity.ProducerCode"
+      widget="ProducerCodesLV"/>
+    <Require
+      name="producer"
+      type="Producer"/>
+    <Require
+      name="isNew"
+      type="Boolean"/>
+    <RowIterator
+      autoAdd="producer.ProducerCodes.length == 0"
+      editable="true"
+      elementName="producerCode"
+      hideCheckBoxesIfReadOnly="true"
+      toCreateAndAdd="addNewProducerCode()"
+      toRemove="producer.removeFromProducerCodes(producerCode)"
+      validationLabel="displaykey.Web.ProducerDetail.ProducerCodes"
+      value="producer.ProducerCodes">
+      <ToolbarFlag
+        condition="producerCode.New"
+        name="NewProducerCode"/>
+      <Row>
+        <Cell
+          editable="true"
+          id="Code"
+          label="displaykey.Web.ProducerDetail.ProducerCodes.Code"
+          value="producerCode.Code"/>
+        <PickerCell
+          pickLocation="CommissionPlanSearchPopup.push(producer.Tier)"
+          action="CommissionPlanDetailPopup.push(producerCode.CommissionPlan)"
+          editable="isNew or perm.Producer.commplanassnedit"
+          id="CommissionPlan"
+          inputConversion="web.plan.commission.CommissionPlanUtil.getActiveCommissionPlan(VALUE, producer.Tier)"
+          label="displaykey.Web.ProducerDetail.ProducerCodes.CommissionPlan"
+          validationExpression="(producerCode.CommissionPlan != null and producerCode.CommissionPlan.isAllowedTier(producer.Tier)) ? null : displaykey.Web.ProducerDetail.ProducerCodes.Validation.HasTierInProducerCode(producer.Tier)"
+          value="producerCode.CommissionPlan">
+            <PostOnChange/>
+        </PickerCell>
+        <Cell
+          editable="true"
+          id="Active"
+          label="displaykey.Web.ProducerDetail.ProducerCodes.Active"
+          value="producerCode.Active"/>
+        <TextCell
+          format="displaykey.Web.AgencyBill.CommissionPercentFormat"
+          id="CommissionRate"
+          label="displaykey.Web.ProducerDetail.ProducerCodes.CommissionPlanRate"
+          outputConversion="util.StringUtil.formatPercentagePoints(VALUE, 3)"
+          value="producerCode.CommissionPlan.DefaultSubPlan != null ? producerCode.CommissionPlan.DefaultSubPlan.getBaseRate(&quot;primary&quot;) : null"/>
+      </Row>
+    </RowIterator>
+    <Code><![CDATA[function addNewProducerCode() : ProducerCode {
+  var producerCode = new entity.ProducerCode(producer.Currency)
+  producer.addToProducerCodes(producerCode)
+  return producerCode
+}]]></Code>
+  </ListViewPanel>
+</PCF>

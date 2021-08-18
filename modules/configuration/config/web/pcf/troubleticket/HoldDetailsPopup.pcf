@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PCF
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:noNamespaceSchemaLocation="../../../../../pcf.xsd">
+  <Popup
+    beforeCommit="hold.checkForHoldReleases(); hold.checkForHoldAdditions()"
+    canEdit="true"
+    id="HoldDetailsPopup"
+    startInEditMode="true"
+    title="displaykey.Web.HoldDetails.Title">
+    <LocationEntryPoint
+      signature="HoldDetailsPopup(hold : Hold)"/>
+    <Variable
+      name="hold"
+      type="Hold"/>
+    <Screen
+      id="HoldDetailsScreen">
+      <Toolbar>
+        <EditButtons/>
+      </Toolbar>
+      <AlertBar
+        id="HoldDetailsPopup_NoRelatedEntitiesAlertBar"
+        label="displaykey.Web.HoldDetailsPopup.WarningHasNoRelatedEntities"
+        visible="!hold.TroubleTicket.hasRelatedEntities()"/>
+      <PanelRef
+        def="HoldDV(hold, true)"/>
+    </Screen>
+  </Popup>
+</PCF>

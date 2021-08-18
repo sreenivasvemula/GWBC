@@ -1,0 +1,35 @@
+<?xml version="1.0"?>
+<PCF
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:noNamespaceSchemaLocation="../../../../../../pcf.xsd">
+  <Page
+    afterCancel="Groups.go()"
+    afterCommit="Groups.go()"
+    canEdit="perm.Group.edit"
+    canVisit="perm.System.admintabview and perm.System.useradmin"
+    id="Groups"
+    showUpLink="true"
+    title="displaykey.Web.Admin.Groups.Title">
+    <Variable
+      initialValue="getGroupQuerySortedByGroupName()"
+      name="AllGroups"
+      type="GroupQuery"/>
+    <Screen
+      id="GroupsScreen">
+      <Toolbar>
+        <ToolbarButton
+          action="NewGroup.push()"
+          id="Groups_NewGroupButton"
+          label="displaykey.Web.Admin.NewGroup"
+          shortcut="G"/>
+      </Toolbar>
+      <PanelRef
+        def="GroupsLV(AllGroups)"/>
+    </Screen>
+    <Code><![CDATA[function getGroupQuerySortedByGroupName() : GroupQuery {
+  var query = gw.api.database.Query.make(Group).select()
+  query.orderBy(\ group -> group.Name)
+  return query
+}]]></Code>
+  </Page>
+</PCF>

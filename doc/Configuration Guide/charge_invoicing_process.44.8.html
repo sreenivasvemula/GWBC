@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xml:lang="en" lang="en" xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+    <meta http-equiv="Content-Style-Type" content="text/css" />
+    <!-- MOTW-DISABLED saved from url=(0014)about:internet -->
+    <title>InvoiceStream and DateSequence Plugins</title>
+    <link rel="StyleSheet" href="css/charge_invoicing_process.css" type="text/css" media="all" />
+    <link rel="StyleSheet" href="css/webworks.css" type="text/css" media="all" />
+    <link rel="StyleSheet" href="css/css-guidewire-extra.css" type="text/css" media="all" />
+    <script type="text/javascript" language="JavaScript1.2" src="wwhdata/common/context.js"></script>
+    <script type="text/javascript" language="JavaScript1.2" src="wwhdata/common/towwhdir.js"></script>
+    <script type="text/javascript" language="JavaScript1.2" src="wwhdata/common/wwhpagef.js"></script>
+    <script type="text/javascript" language="JavaScript1.2">
+      <!--
+        var  WebWorksRootPath = "";
+      // -->
+    </script>
+    <script type="text/javascript" language="JavaScript1.2">
+      <!--
+        // Set reference to top level help frame
+        //
+        var  WWHFrame = WWHGetWWHFrame("", true);
+      // -->
+    </script>
+    <script type="text/javascript" language="JavaScript1.2" src="scripts/expand.js"></script>
+    <!-- THE FOLLOWING IS A GUIDEWIRE STYLE DEFINITION FOR THE LINK TO THIS FEATURE -->
+    <link rel="StyleSheet" href="css/css-guidewire-extra.css" type="text/css" media="all" />
+    <!-- THE FOLLOWING IS A GUIDEWIRE GSCRIPT FUNCTION FOR THE LINK TO THIS FEATURE -->
+    <script type="text/javascript">
+function guidewire_selectall()
+{
+var text_val=eval("document.linktothisurlform.urlfield");
+text_val.focus();
+text_val.select();
+}
+</script>
+  </head>
+  <body onLoad="WWHUpdate();" onUnload="WWHUnload();" onKeyDown="WWHHandleKeyDown((document.all||document.getElementById||document.layers)?event:null);" onKeyPress="WWHHandleKeyPress((document.all||document.getElementById||document.layers)?event:null);" onKeyUp="WWHHandleKeyUp((document.all||document.getElementById||document.layers)?event:null);">
+    <!-- THE FOLLOWING IS A GUIDEWIRE DIV FOR THE 'LINK TO THIS' FEATURE -->
+    <div id="linkToThisPage" class="popup" style="display: none;">
+      <div class="popupTitle">Link Directly to This Page 
+           <a href="#" onclick="var thePopup = getElementById('linkToThisPage');thePopup.style.display='none';return false;"><img class="popupClosebox" src="wwhelp/wwhimpl/common/images/close.gif" /></a></div>
+      <div style="padding:6px;">
+        <div class="popupText" id="linkToThisPageBookmark">An error has occurred if you see this messsage.</div>
+        <form name="linktothisurlform" method="post" action="" style="width:275px;margin:0px">
+          <input type="text" class="popupURLText" id="linkToThisPageURL" name="urlfield" rows="1" cols="55" onClick="guidewire_selectall();" onFocus="guidewire_selectall();"></input>
+        </form>
+      </div>
+    </div>
+    <br />
+    <div class="WebWorks_Breadcrumbs" style="text-align: left;">
+      <span>BillingCenter Configuration Guide</span> : 
+    <span class="WebWorks_Breadcrumbs" style="text-align: left;"><a class="WebWorks_Breadcrumb_Link" href="p-BillingCenter.html#2249699">Guidewire BillingCenter Configuration</a> : <a class="WebWorks_Breadcrumb_Link" href="charge_invoicing_process.44.1.html#2249699">Configuring the Charge Invoicing Process</a> : InvoiceStream and DateSequence Plugins</span></div>
+    <hr align="left" />
+    <blockquote>
+      <h3 class="H1_-_Heading_1"><span class="cvh_-_computer_voice_in_heading"><a name="2249699">InvoiceStream</a></span> and <span class="cvh_-_computer_voice_in_heading">DateSequence</span> Plugins</h3>
+      <div class="B_-_Body"><a name="2249700">The</a><span class="e_-_emphasis"> invoice stream</span> comprises all invoices for a single policy period. Invoice streams never cross over to other policy periods. Invoices contain individual invoice items. Each item can be placed on or moved to any invoice within the invoice stream; they cannot be placed on or moved to invoices in other streams.</div>
+      <div class="B_-_Body"><a name="2249701">An invoice stream is organized by a</a><span class="e_-_emphasis"> date sequence</span>. A date sequence is a series of dates based on a time interval or<span class="e_-_emphasis"> periodicity</span>, such as a week or a month. BillingCenter examples of periodicities include <span class="cv_-_computer_voice">Monthly</span>, <span class="cv_-_computer_voice">Weekly</span>, and <span class="cv_-_computer_voice">Twice Per Month</span>.</div>
+      <div class="B_-_Body"><a name="2249702">The</a><span class="e_-_emphasis"> anchor date</span> is related to a date sequence. The anchor date is the day of the month used as the basis for generating a date sequence, such as the first day of the month. For example, if the anchor date is the 15th, a <span class="cv_-_computer_voice">Monthly</span> date sequence produces invoices on the 15th of every month—January 15, February 15, and so on.</div>
+      <div class="B_-_Body"><a name="2249703">The date sequences </a><span class="cv_-_computer_voice">Monthly</span>, <span class="cv_-_computer_voice">Every Other Month</span>, <span class="cv_-_computer_voice">Quarterly</span>, <span class="cv_-_computer_voice">Every Four Months</span>, and <span class="cv_-_computer_voice">Every Six Months</span> use one anchor date. The <span class="cv_-_computer_voice">Twice Per Month</span> periodicity requires two anchor dates—one for each invoice date.</div>
+      <div class="B_-_Body"><a name="2249704">The following diagram demonstrates the relationship between invoice streams, date sequences, and anchor dates. The invoice streams depicted use four common date sequences: </a><span class="cv_-_computer_voice">Monthly</span>, <span class="cv_-_computer_voice">Twice Per Month</span>, <span class="cv_-_computer_voice">Weekly</span>, and <span class="cv_-_computer_voice">Every Other Week</span>. Although each invoice stream can have a different anchor date, the <span class="cv_-_computer_voice">Monthly</span> and <span class="cv_-_computer_voice">Twice Per Month</span> streams shown in the diagram use the same anchor date—the 15th of the month. The <span class="cv_-_computer_voice">Twice Per Month</span> stream includes a second anchor date of the 31st of the month. The <span class="cv_-_computer_voice">Weekly</span> stream uses an anchor date of Friday.</div>
+      <div class="F_-_Figure"><a name="2249708"><img class="Default" src="images/charge_invoicing_process.44.8.1.png" style="display: block; float: none; left: 0.0; top: 0.0" alt="" /></a></div>
+      <div class="B_-_Body"><a name="2160000">BillingCenter provides two plugins that enable you to configure invoice streams and date sequences. The following table provides a brief description of each plugin.</a></div>
+      <table class="withHeading" style="text-align: left" border="0" cellpadding="10" cellspacing="0" summary="">
+        <caption></caption>
+        <tr>
+          <td style="border-bottom-color: #000000; border-bottom-style: solid; border-bottom-width: 0.5pt; border-top-color: #000000; border-top-style: solid; border-top-width: 0.5pt; padding-bottom: 4pt; padding-left: 2pt; padding-right: 8pt; padding-top: 0pt; vertical-align: bottom">
+            <div class="TH_-_Table_Heading"><a name="2249712">Plugin</a></div>
+          </td>
+          <td style="border-bottom-color: #000000; border-bottom-style: solid; border-bottom-width: 0.5pt; border-top-color: #000000; border-top-style: solid; border-top-width: 0.5pt; padding-bottom: 4pt; padding-left: 2pt; padding-right: 8pt; padding-top: 0pt; vertical-align: bottom">
+            <div class="TH_-_Table_Heading"><a name="2249714">Description</a></div>
+          </td>
+        </tr>
+        <tr>
+          <td style="border-bottom-color: #c0d1d1; border-bottom-style: solid; border-bottom-width: 0.15pt; border-top-color: #000000; border-top-style: solid; border-top-width: 0.5pt; padding-bottom: 4pt; padding-left: 2pt; padding-right: 8pt; padding-top: 0pt; vertical-align: top">
+            <div class="TT_-_Table_Text" style="color: #000000; font-family: &quot;Lucida Sans Typewriter&quot;; font-style: normal; font-variant: normal; font-weight: normal; margin-top: 3.0pt; text-transform: none; vertical-align: baseline"><span class="cvt_-_computer_voice_table"><a name="2249716">InvoiceStream.gs</a></span></div>
+          </td>
+          <td style="border-bottom-color: #c0d1d1; border-bottom-style: solid; border-bottom-width: 0.15pt; border-top-color: #000000; border-top-style: solid; border-top-width: 0.5pt; padding-bottom: 4pt; padding-left: 2pt; padding-right: 8pt; padding-top: 0pt; vertical-align: top">
+            <div class="TT_-_Table_Text"><a name="2249718">Called when the </a><span class="cvt_-_computer_voice_table">InvoiceAssembler </span>entity creates an invoice. The Invoice Stream plugin selects the invoice stream to use for the invoice. In the base configuration, the plugin returns the appropriate default invoice stream based on the periodicity. See <a href="javascript:WWHClickedPopup('integration', 'bc-plugins.13.15.html#3510704', '');" title="Invoice Stream Plugin">“Invoice Stream Plugin” in the </a><span class="bt_-_book_title"><a href="javascript:WWHClickedPopup('integration', 'bc-plugins.13.15.html#3510704', '');" title="Invoice Stream Plugin">Integration Guide</a></span>.</div>
+          </td>
+        </tr>
+        <tr>
+          <td style="border-bottom-color: #000000; border-bottom-style: solid; border-bottom-width: 0.5pt; border-top-color: #c0d1d1; border-top-style: solid; border-top-width: 0.15pt; padding-bottom: 4pt; padding-left: 2pt; padding-right: 8pt; padding-top: 0pt; vertical-align: top">
+            <div class="TT_-_Table_Text" style="color: #000000; font-family: &quot;Lucida Sans Typewriter&quot;; font-style: normal; font-variant: normal; font-weight: normal; margin-top: 3.0pt; text-transform: none; vertical-align: baseline"><span class="cvt_-_computer_voice_table"><a name="2249723">DateSequence.gs</a></span></div>
+          </td>
+          <td style="border-bottom-color: #000000; border-bottom-style: solid; border-bottom-width: 0.5pt; border-top-color: #c0d1d1; border-top-style: solid; border-top-width: 0.15pt; padding-bottom: 4pt; padding-left: 2pt; padding-right: 8pt; padding-top: 0pt; vertical-align: top">
+            <div class="TT_-_Table_Text"><a name="2249725">Called by the Invoice Stream plugin. The Date Sequence plugin creates a date sequence that contains the anchor date and specifies the date interval or </a><span class="e_-_emphasis">periodicity</span>. The plugin can be customized to return a date sequence other than the default. It can also be extended to recognize custom periodicities. See <a href="javascript:WWHClickedPopup('integration', 'bc-plugins.13.21.html#3525075', '');" title="Date Sequence Plugin">“Date Sequence Plugin” in the </a><span class="bt_-_book_title"><a href="javascript:WWHClickedPopup('integration', 'bc-plugins.13.21.html#3525075', '');" title="Date Sequence Plugin">Integration Guide</a></span>.</div>
+          </td>
+        </tr>
+      </table>
+      <script type="text/javascript" language="JavaScript1.2">
+        <!--
+          // Clear related topics
+          //
+          WWHClearRelatedTopics();
+
+          document.writeln(WWHRelatedTopicsInlineHTML());
+        // -->
+      </script>
+    </blockquote>
+    <script type="text/javascript" language="JavaScript1.2">
+      <!--
+        document.write(WWHRelatedTopicsDivTag() + WWHPopupDivTag() + WWHALinksDivTag());
+      // -->
+    </script>
+  </body>
+</html>

@@ -1,0 +1,149 @@
+<?xml version="1.0"?>
+<import xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://www.guidewire.com/ab/import/ab_import.xsd">
+<!-- Internal ChargePatterns -->
+<!-- BillingCenter needs the following charge patterns to work correctly. Please do not delete them. --> 
+<!-- Please do not change the chargecode since it is used by BillingCenter. --> 
+
+  <ProRataCharge public-id="default_data:1">
+    <internalcharge>true</internalcharge>
+    <chargecode>Premium</chargecode>
+    <chargename>Premium</chargename>
+    <category>Premium</category>
+    <taccountownerpattern public-id="default_data:3"/> <!-- PolicyPeriod -->
+    <priority>medium</priority>
+    <invoicetreatment>depositandinstallments</invoicetreatment>
+    <periodicity>monthly</periodicity>
+    <includedinequitydating>true</includedinequitydating>
+  </ProRataCharge>
+
+  <ImmediateCharge public-id="default_data:2">
+    <internalcharge>true</internalcharge>
+    <chargecode>InvoiceFee</chargecode>
+    <chargename>Invoice Fee</chargename>
+    <taccountownerpattern public-id="default_data:1"/>  <!-- Account -->
+    <invoicetreatment>onetime</invoicetreatment>
+    <category>fee</category>
+  </ImmediateCharge>
+
+  <ImmediateCharge public-id="default_data:3">
+    <internalcharge>true</internalcharge>
+    <chargecode>InstallmentFee</chargecode>
+    <chargename>Installment Fee</chargename>
+    <taccountownerpattern public-id="default_data:3"/> <!-- PolicyPeriod -->
+    <invoicetreatment>onetime</invoicetreatment>
+    <category>fee</category>
+  </ImmediateCharge>
+
+  <ImmediateCharge public-id="default_data:4">
+    <internalcharge>true</internalcharge>
+    <chargecode>ReinstatementFee</chargecode>
+    <chargename>Reinstatement Fee</chargename>
+    <taccountownerpattern public-id="default_data:3"/> <!-- PolicyPeriod -->
+    <invoicetreatment>onetime</invoicetreatment>
+    <category>fee</category>
+  </ImmediateCharge>
+
+  <ImmediateCharge public-id="default_data:5">
+    <internalcharge>true</internalcharge>
+    <chargecode>Subrogation</chargecode>
+    <chargename>Subrogation</chargename>
+    <taccountownerpattern public-id="default_data:1"/>  <!-- Account -->
+    <invoicetreatment>onetime</invoicetreatment>
+  </ImmediateCharge>
+
+  <PassThroughCharge public-id="default_data:6">
+    <internalcharge>true</internalcharge>
+    <chargecode>Taxes</chargecode>
+    <chargename>Taxes</chargename>
+    <category>tax</category>
+    <priority>medium</priority>
+    <taccountownerpattern public-id="default_data:3"/> <!-- PolicyPeriod -->
+    <invoicetreatment>onetime</invoicetreatment>
+  </PassThroughCharge>
+
+  <ImmediateCharge public-id="default_data:7">
+    <internalcharge>true</internalcharge>
+    <chargecode>LateFee</chargecode>
+    <chargename>Late Fee</chargename>
+    <taccountownerpattern public-id="default_data:1"/>  <!-- Account -->
+    <invoicetreatment>onetime</invoicetreatment>
+    <category>fee</category>
+  </ImmediateCharge>
+
+  <ImmediateCharge public-id="default_data:8">
+    <internalcharge>true</internalcharge>
+    <chargecode>PaymentReversalFee</chargecode>
+    <chargename>Payment Reversal Fee</chargename>
+    <taccountownerpattern public-id="default_data:1"/>  <!-- Account -->
+    <invoicetreatment>onetime</invoicetreatment>
+    <category>fee</category>
+  </ImmediateCharge>
+
+  <CollateralCharge public-id="default_data:9">
+    <internalcharge>true</internalcharge>
+    <chargecode>CollateralFulfillment</chargecode>
+    <chargename>Collateral Fulfillment</chargename>
+    <taccountownerpattern public-id="default_data:2"/>  <!-- Collateral -->
+    <invoicetreatment>onetime</invoicetreatment>
+    <priority>high</priority>
+
+  </CollateralCharge>
+
+  <CollateralCharge public-id="default_data:10">
+    <internalcharge>true</internalcharge>
+    <chargecode>CollateralReplenishment</chargecode>
+    <chargename>Collateral Replenishment</chargename>
+    <taccountownerpattern public-id="default_data:2"/>  <!-- Collateral -->
+    <invoicetreatment>onetime</invoicetreatment>
+    <priority>high</priority>
+
+  </CollateralCharge>
+
+  <RecaptureCharge public-id="default_data:11">
+    <internalcharge>true</internalcharge>
+    <chargecode>Recapture</chargecode>
+    <chargename>Recapture</chargename>
+    <taccountownerpattern public-id="default_data:1"/>  <!-- Account -->
+    <invoicetreatment>onetime</invoicetreatment>
+    <category>recapture</category>
+    <priority>high</priority>
+  </RecaptureCharge>
+
+
+  <CollateralCharge public-id="default_data:12">
+    <internalcharge>true</internalcharge>
+    <chargecode>CollateralRequirementFulfillment</chargecode>
+    <chargename>Collateral Requirement Fulfillment</chargename>
+    <taccountownerpattern public-id="default_data:9"/>  <!-- Collateral Requirement-->
+    <invoicetreatment>onetime</invoicetreatment>
+    <priority>high</priority>
+  </CollateralCharge>
+
+  <ImmediateCharge public-id="default_data:13">
+    <internalcharge>true</internalcharge>
+    <chargecode>PolicyLateFee</chargecode>
+    <chargename>Policy Late Fee</chargename>
+    <taccountownerpattern public-id="default_data:3"/>  <!-- PolicyPeriod -->
+    <invoicetreatment>onetime</invoicetreatment>
+    <category>fee</category>
+  </ImmediateCharge>
+
+  <ImmediateCharge public-id="default_data:14">
+    <internalcharge>true</internalcharge>
+    <chargecode>PolicyPaymentReversalFee</chargecode>
+    <chargename>Policy Payment Reversal Fee</chargename>
+    <taccountownerpattern public-id="default_data:3"/>  <!-- PolicyPeriod -->
+    <invoicetreatment>onetime</invoicetreatment>
+    <category>fee</category>
+  </ImmediateCharge>
+
+  <RecaptureCharge public-id="default_data:15">
+    <internalcharge>true</internalcharge>
+    <chargecode>PolicyRecapture</chargecode>
+    <chargename>Policy Recapture</chargename>
+    <taccountownerpattern public-id="default_data:3"/>  <!-- PolicyPeriod -->
+    <invoicetreatment>onetime</invoicetreatment>
+    <category>recapture</category>
+    <priority>high</priority>
+  </RecaptureCharge>
+</import>

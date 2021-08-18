@@ -1,0 +1,17 @@
+package rules.EventMessage.EventFired_dir.MessagingTools_dir
+
+@gw.rules.RuleName("PolicyPeriodResync")
+internal class PolicyPeriodResync {
+  static function doCondition(messageContext : entity.MessageContext) : boolean {
+/*start00rule*/
+return messageContext.Root typeis PolicyPeriod and
+messageContext.EventName == "PolicyPeriodResync"
+/*end00rule*/
+}
+
+  static function doAction(messageContext : entity.MessageContext, actions : gw.rules.Action) {
+/*start00rule*/
+messageContext.createMessage("PolicyPeriod Resync")
+/*end00rule*/
+  }
+}

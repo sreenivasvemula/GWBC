@@ -1,0 +1,50 @@
+<?xml version="1.0"?>
+<entity
+  xmlns="http://guidewire.com/datamodel"
+  entity="CommissionSubPlanChargePatternRate"
+  type="retireable"
+  desc="The commission rate for a particular PolicyRole and ChargePattern in a CommissionSubPlan"
+  subpackage="commission"
+  platform="false"
+  table="commsubplanchargepattrate">
+  <implementsEntity
+    name="NotInCurrencySilo"/>
+  <typekey
+    name="Role"
+    typelist="PolicyRole"
+    desc="The producer code's role on the policy period associated with the charge"
+    nullok="false"/>
+  <foreignkey
+    name="ChargePattern"
+    columnName="ChargePatternID"
+    fkentity="ChargePattern"
+    nullok="false"/>
+  <column
+    name="Rate"
+    type="percentagedec"
+    desc="The special commission rate to use for this individual charge and PolicyRole instead of the commission plan defaults"
+    nullok="false"/>
+  <foreignkey
+    name="CommissionSubPlan"
+    columnName="CommissionSubPlanID"
+    fkentity="CommissionSubPlan"
+    nullok="false"
+    setterScriptability="doesNotExist"/>
+  <index
+    desc="Legacy"
+    name="ForUniqueness"
+    unique="true">
+    <indexcol
+      name="ChargePatternID"
+      keyposition="1"/>
+    <indexcol
+      name="Role"
+      keyposition="2"/>
+    <indexcol
+      name="CommissionSubPlanID"
+      keyposition="3"/>
+    <indexcol
+      name="Retired"
+      keyposition="4"/>
+  </index>
+</entity>

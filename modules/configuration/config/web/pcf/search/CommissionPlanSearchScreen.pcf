@@ -1,0 +1,68 @@
+<?xml version="1.0"?>
+<PCF
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:noNamespaceSchemaLocation="../../../../../pcf.xsd">
+  <Screen
+    id="CommissionPlanSearchScreen">
+    <Require
+      name="tier"
+      type="ProducerTier"/>
+    <Require
+      name="isClearBundle"
+      type="boolean"/>
+    <!-- NOTE: Disable result caching, because this search may be parametrized by a "tier" argument. Each time
+    we re-enter this page, it could be with a different "tier", so we need to re-perform the search on enter. -->
+    <SearchPanel
+      criteriaName="searchCriteria"
+      maxSearchResults="gw.api.system.BCConfigParameters.MaxSearchResults.Value"
+      resultCachingEnabled="false"
+      resultsName="commissionPlans"
+      search="searchCriteria.performSearch(tier, isClearBundle)"
+      searchCriteria="new CommissionPlanSearchCriteria()"
+      searchResultsType="CommissionPlanQuery">
+      <PanelRef
+        def="CommissionPlanSearchDV(searchCriteria)">
+        <Toolbar/>
+      </PanelRef>
+      <PanelRef>
+        <Toolbar/>
+        <ListViewPanel
+          id="CommissionPlanSearchResultsLV">
+          <RowIterator
+            editable="false"
+            elementName="commissionPlan"
+            pickValue="commissionPlan"
+            value="commissionPlans">
+            <Row>
+              <Cell
+                action="CommissionPlanDetailPopup.push(commissionPlan)"
+                id="Name"
+                label="displaykey.Web.Search.CommissionPlan.Results.Name"
+                sortOrder="1"
+                value="commissionPlan.Name"/>
+              <Cell
+                enableSort="false"
+                id="BasePercentage"
+                label="displaykey.Web.Search.CommissionPlan.Results.BasePercentage"
+                outputConversion="util.StringUtil.formatPercentagePoints(VALUE, 1)"
+                value="commissionPlan.DefaultSubPlan.getBaseRate(&quot;primary&quot;)"/>
+              <Cell
+                enableSort="false"
+                id="IncludesIncentives"
+                label="displaykey.Web.Search.CommissionPlan.Results.IncludesIncentives"
+                value="commissionPlan.DefaultSubPlan.Incentives.length &gt; 0"/>
+              <DateCell
+                id="EffectiveDate"
+                label="displaykey.Web.Search.CommissionPlan.Results.EffectiveDate"
+                value="commissionPlan.EffectiveDate"/>
+              <DateCell
+                id="ExpirationDate"
+                label="displaykey.Web.Search.CommissionPlan.Results.ExpirationDate"
+                value="commissionPlan.ExpirationDate"/>
+            </Row>
+          </RowIterator>
+        </ListViewPanel>
+      </PanelRef>
+    </SearchPanel>
+  </Screen>
+</PCF>

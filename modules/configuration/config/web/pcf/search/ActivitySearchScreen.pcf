@@ -1,0 +1,76 @@
+<?xml version="1.0"?>
+<PCF
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:noNamespaceSchemaLocation="../../../../../pcf.xsd">
+  <Screen
+    id="ActivitySearchScreen">
+    <SearchPanel
+      criteriaName="searchCriteria"
+      maxSearchResults="gw.api.system.BCConfigParameters.MaxSearchResults.Value"
+      resultsName="activitySearchViews"
+      search="gw.search.SearchMethods.validateAndSearch(searchCriteria)"
+      searchCriteria="new ActivitySearchCriteria()"
+      searchResultsType="ActivitySearchViewQuery">
+      <PanelRef
+        def="ActivitySearchDV(searchCriteria)">
+        <Toolbar/>
+      </PanelRef>
+      <PanelRef>
+        <Toolbar/>
+        <ListViewPanel
+          editable="false"
+          id="ActivitySearchResultsLV">
+          <RowIterator
+            editable="false"
+            elementName="activitySearchView"
+            pickValue="activitySearchView"
+            value="activitySearchViews">
+            <!-- IMPORTANT: Do not call activitySearchView.Activity unless as an argument in a go() or push() call.
+              Instead, simply access the field off the viewEntity. To access a field not already on the viewEntity,
+              configure or extend dm_bc_search_view.xml to add the appropriate viewEntityLink/Name/Column/Typekey, etc.
+              Accessing large entities via FK from viewEntities leads to serious performance issues. -->
+            <Row>
+              <Cell
+                icon="&quot;escalated.png&quot;"
+                iconLabel="displaykey.Web.DesktopActivitiesLV.EscalatedIconLabel"
+                id="Escalated"
+                tooltip="displaykey.Web.DesktopActivitiesLV.EscalatedIconLabel"
+                value="activitySearchView.Escalated"/>
+              <DateCell
+                id="CreateDate"
+                label="displaykey.Web.DesktopActivitiesLV.CreateDate"
+                value="activitySearchView.CreateDate"/>
+              <DateCell
+                id="DueDate"
+                label="displaykey.Web.DesktopActivitiesLV.DueDate"
+                sortDirection="descending"
+                sortOrder="1"
+                value="activitySearchView.TargetDate"/>
+              <Cell
+                action="gw.activity.ActivityMethods.viewActivityDetails(activitySearchView.Activity)"
+                id="Subject"
+                label="displaykey.Web.DesktopActivitiesLV.Subject"
+                value="activitySearchView.Subject"/>
+              <TypeKeyCell
+                id="Priority"
+                label="displaykey.Web.DesktopActivitiesLV.Priority"
+                value="activitySearchView.Priority"/>
+              <TypeKeyCell
+                id="Status"
+                label="displaykey.Web.DesktopActivitiesLV.Status"
+                value="activitySearchView.Status"/>
+              <Cell
+                id="ActivityPattern"
+                label="displaykey.Web.DesktopActivitiesLV.ActivityPattern"
+                value="activitySearchView.ActivityPattern"/>
+              <TextCell
+                id="AssignedTo"
+                label="displaykey.Web.DesktopActivitiesLV.AssignedTo"
+                value="activitySearchView.AssignedUser"/>
+            </Row>
+          </RowIterator>
+        </ListViewPanel>
+      </PanelRef>
+    </SearchPanel>
+  </Screen>
+</PCF>

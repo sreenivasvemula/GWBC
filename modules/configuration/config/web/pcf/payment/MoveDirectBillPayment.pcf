@@ -1,0 +1,27 @@
+<?xml version="1.0"?>
+<PCF
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:noNamespaceSchemaLocation="../../../../../pcf.xsd">
+  <Page
+    beforeCommit="paymentView.execute( CurrentLocation )"
+    canEdit="true"
+    canVisit="perm.DirectBillMoneyRcvd.pmntmanproc"
+    id="MoveDirectBillPayment"
+    parent="AccountGroup( account )"
+    startInEditMode="true"
+    title="displaykey.Web.MoveDirectBillPayment.Title">
+    <LocationEntryPoint
+      signature="MoveDirectBillPayment(account: Account, originalMoney : DirectBillMoneyRcvd)"/>
+    <Variable
+      name="account"
+      type="Account"/>
+    <Variable
+      name="originalMoney"
+      type="DirectBillMoneyRcvd"/>
+    <Variable
+      initialValue="new gw.api.web.payment.MoveDirectBillPaymentView(originalMoney, DBPmntGroupingCriteria.TC_INVOICE, DBPmntAggregateCriteria.TC_ITEM)"
+      name="paymentView"/>
+    <ScreenRef
+      def="EditDBPaymentScreen(paymentView) "/>
+  </Page>
+</PCF>

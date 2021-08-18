@@ -1,0 +1,56 @@
+<?xml version="1.0"?>
+<PCF
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:noNamespaceSchemaLocation="../../../../../pcf.xsd">
+  <Screen
+    id="CollateralDisbursementDetailScreen">
+    <Require
+      name="disbursementVar"
+      type="CollateralDisbursement"/>
+    <Variable
+      initialValue="util.DateUtil.currentDate()"
+      name="today"/>
+    <Variable
+      initialValue="perm.Transaction.disbpayeeedit"
+      name="CanEditDisbursementPayee"
+      type="Boolean"/>
+    <Variable
+      initialValue="new gw.api.web.account.CollateralUtil()"
+      name="collateralUtil"
+      type="gw.api.web.account.CollateralUtil"/>
+    <Toolbar>
+      <WizardButtons/>
+    </Toolbar>
+    <DetailViewPanel
+      id="DisbursementPage2DV">
+      <InputColumn>
+        <Label
+          label="displaykey.Web.CollateralDisbursementDetailScreen.Details"/>
+        <Input
+          id="account"
+          label="displaykey.Web.CollateralDisbursementDetailScreen.Account"
+          value="disbursementVar.Collateral.Account.AccountNumber"/>
+        <Input
+          id="insured"
+          label="displaykey.Web.CollateralDisbursementDetailScreen.Insured"
+          value="disbursementVar.Collateral.Account.AccountNameLocalized"/>
+        <MonetaryAmountInput
+          align="right"
+          currency="disbursementVar.Currency"
+          formatType="currency"
+          id="unapplied"
+          label="displaykey.Web.CollateralDisbursementDetailScreen.Cash"
+          value="collateralUtil.getTotalCashHeld(disbursementVar.Collateral)"/>
+        <MonetaryAmountInput
+          align="right"
+          currency="disbursementVar.Currency"
+          formatType="currency"
+          id="pending"
+          label="displaykey.Web.CollateralDisbursementDetailScreen.DisbursementsPending"
+          value="disbursementVar.Collateral.PendingDisbursement"/>
+      </InputColumn>
+    </DetailViewPanel>
+    <PanelRef
+      def="CreateDisbursementDetailDV(disbursementVar, true)"/>
+  </Screen>
+</PCF>

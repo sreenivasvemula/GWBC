@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PCF
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:noNamespaceSchemaLocation="../../../../../pcf.xsd">
+  <Screen
+    id="TransferPolicyProducerScreen">
+    <Require
+      name="policyTransfer"
+      type="PolTransferByProdCode"/>
+    <Require
+      name="producer"
+      type="Producer"/>
+    <Toolbar>
+      <WizardButtons/>
+    </Toolbar>
+    <DetailViewPanel
+      id="pageoneDV">
+      <InputColumn>
+        <Label
+          label="displaykey.Web.TransferPolicyProducer.SourceProducerCode"/>
+        <Input
+          id="Producer"
+          label="displaykey.Web.TransferPolicyProducer.Producer"
+          value="producer"/>
+        <RangeInput
+          editable="true"
+          id="producerCode"
+          label="displaykey.Web.TransferPolicyProducer.Code"
+          optionLabel="VALUE.Code"
+          required="true"
+          value="policyTransfer.SourceProducerCode"
+          valueRange="producer.ProducerCodes"/>
+      </InputColumn>
+    </DetailViewPanel>
+  </Screen>
+</PCF>

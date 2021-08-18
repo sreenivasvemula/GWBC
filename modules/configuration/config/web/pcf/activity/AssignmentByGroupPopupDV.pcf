@@ -1,0 +1,56 @@
+<?xml version="1.0"?>
+<PCF
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:noNamespaceSchemaLocation="../../../../../pcf.xsd">
+  <DetailViewPanel
+    id="AssignmentByGroupPopupDV">
+    <Require
+      name="AssignmentPopup"
+      type="assignment.AssignmentPopup"/>
+    <Require
+      name="SearchResult"
+      type="assignment.AssignmentSearchResult"/>
+    <Require
+      name="SearchCriteria"
+      type="assignment.AssignmentSearchCriteria"/>
+    <InputColumn>
+      <Label
+        label="displaykey.Web.Assignment.Popup.SelectMethod"/>
+      <!-- <Choice value="AssignmentPopup.SelectionType" option="&quot;FromGroups&quot;"><RangeInput id="FromGroups" label="displaykey.Web.Assignment.Popup.SelectGroup"value="AssignmentPopup.SelectedFromList" valueRange="AssignmentPopup.SuggestedAssignees"sortValueRange="false" available="true" required="true" editable="true"/><ButtonInput value="displaykey.Web.Assignment.Popup.Button" id="AssignmentByGroupPopupScreen_ButtonButton" action="if(AssignmentPopup.performAssignment()) CurrentLocation.cancel()"/></Choice><InputDivider/> -->
+      <Choice
+        id="SelectFromListChoice"
+        option="&quot;FromList&quot;"
+        value="AssignmentPopup.SelectionType">
+        <RangeInput
+          available="AssignmentPopup.SelectionType == &quot;FromList&quot;"
+          editable="true"
+          id="SelectFromList"
+          label="displaykey.Web.Assignment.Popup.SelectFromList"
+          required="true"
+          sortValueRange="false"
+          value="AssignmentPopup.SelectedFromList"
+          valueRange="AssignmentPopup.SuggestedAssignees"/>
+        <ButtonInput
+          action="if(AssignmentPopup.performAssignment()) CurrentLocation.cancel()"
+          id="AssignmentByGroupPopupScreen_ButtonButton"
+          value="displaykey.Web.Assignment.Popup.Button"/>
+      </Choice>
+      <InputDivider/>
+      <Choice
+        id="SelectFromSearchChoice"
+        option="&quot;FromSearch&quot;"
+        value="AssignmentPopup.SelectionType">
+        <Input
+          id="SelectFromSearch"
+          label="AssignmentPopup.SelectFromSearchLabel"
+          value="AssignmentPopup.Picker.Selection"/>
+        <InputSetRef
+          def="BCAssignmentSearchInputSet(AssignmentPopup.Picker.AllowedAssignmentSearchTypes as typekey.AssignmentSearchType[], SearchResult, SearchCriteria)"/>
+      </Choice>
+    </InputColumn>
+    <InputFooterSection>
+      <InputSetRef
+        def="SearchAndResetInputSet()"/>
+    </InputFooterSection>
+  </DetailViewPanel>
+</PCF>

@@ -1,0 +1,67 @@
+<?xml version="1.0"?>
+<PCF
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:noNamespaceSchemaLocation="../../../../../pcf.xsd">
+  <Screen
+    id="CreditDetailsScreen">
+    <Require
+      name="account"
+      type="Account"/>
+    <Require
+      name="credit"
+      type="Credit"/>
+    <Variable
+      initialValue="(credit.UnappliedFund != null and credit.UnappliedFund != account.DefaultUnappliedFund) ? credit.UnappliedFund : null"
+      name="targetUnapplied"
+      type="UnappliedFund"/>
+    <Toolbar>
+      <WizardButtons/>
+    </Toolbar>
+    <DetailViewPanel>
+      <InputColumn>
+        <Input
+          id="Account"
+          label="displaykey.Web.CreditDetailsScreen.Account"
+          value="account"/>
+        <RangeInput
+          editable="true"
+          id="DesignatedUnapplieds"
+          label="displaykey.Web.CreditDetailsScreen.UnappliedFund"
+          required="true"
+          value="targetUnapplied"
+          valueRange="account.UnappliedFundsOrdered"
+          visible="account.DesignatedUnappliedFundsOrdered.HasElements">
+          <PostOnChange
+            onChange="credit.UnappliedFund = targetUnapplied"/>
+        </RangeInput>
+        <RangeInput
+          editable="true"
+          id="creditType"
+          label="displaykey.Web.CreditDetailsScreen.Type"
+          required="true"
+          value="credit.CreditType"
+          valueRange="CreditType.getTypeKeys(false)"/>
+        <MonetaryAmountInput
+          currency="credit.Currency"
+          editable="true"
+          id="Amount"
+          label="displaykey.Web.CreditDetailsScreen.Amount"
+          validationExpression="validateCreditAmount()"
+          value="credit.Amount"/>
+      </InputColumn>
+    </DetailViewPanel>
+    <Code><![CDATA[function validateCreditAmount(): String {
+                    if (!credit.Amount.IsPositive) {
+                        return displaykey.Web.NewCreditWizard.NonPositiveCreditAmount
+                    }
+                    return null;
+                }
+
+                function updateUnapplied() {
+                  if (targetUnapplied == null) {
+                    targetUnapplied = account.DefaultUnappliedFund
+                  }
+                  credit.UnappliedFund = targetUnapplied
+                }]]></Code>
+  </Screen>
+</PCF>

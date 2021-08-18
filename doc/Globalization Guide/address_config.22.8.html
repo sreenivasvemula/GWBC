@@ -1,0 +1,2349 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xml:lang="en" lang="en" xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+    <meta http-equiv="Content-Style-Type" content="text/css" />
+    <!-- MOTW-DISABLED saved from url=(0014)about:internet -->
+    <title>Example: Adding a Country with a New Address Field</title>
+    <link rel="StyleSheet" href="css/address_config.css" type="text/css" media="all" />
+    <link rel="StyleSheet" href="css/webworks.css" type="text/css" media="all" />
+    <link rel="StyleSheet" href="css/css-guidewire-extra.css" type="text/css" media="all" />
+    <script type="text/javascript" language="JavaScript1.2" src="wwhdata/common/context.js"></script>
+    <script type="text/javascript" language="JavaScript1.2" src="wwhdata/common/towwhdir.js"></script>
+    <script type="text/javascript" language="JavaScript1.2" src="wwhdata/common/wwhpagef.js"></script>
+    <script type="text/javascript" language="JavaScript1.2">
+      <!--
+        var  WebWorksRootPath = "";
+      // -->
+    </script>
+    <script type="text/javascript" language="JavaScript1.2">
+      <!--
+        // Set reference to top level help frame
+        //
+        var  WWHFrame = WWHGetWWHFrame("", true);
+      // -->
+    </script>
+    <script type="text/javascript" language="JavaScript1.2" src="scripts/expand.js"></script>
+    <!-- THE FOLLOWING IS A GUIDEWIRE STYLE DEFINITION FOR THE LINK TO THIS FEATURE -->
+    <link rel="StyleSheet" href="css/css-guidewire-extra.css" type="text/css" media="all" />
+    <!-- THE FOLLOWING IS A GUIDEWIRE GSCRIPT FUNCTION FOR THE LINK TO THIS FEATURE -->
+    <script type="text/javascript">
+function guidewire_selectall()
+{
+var text_val=eval("document.linktothisurlform.urlfield");
+text_val.focus();
+text_val.select();
+}
+</script>
+  </head>
+  <body onLoad="WWHUpdate();" onUnload="WWHUnload();" onKeyDown="WWHHandleKeyDown((document.all||document.getElementById||document.layers)?event:null);" onKeyPress="WWHHandleKeyPress((document.all||document.getElementById||document.layers)?event:null);" onKeyUp="WWHHandleKeyUp((document.all||document.getElementById||document.layers)?event:null);">
+    <!-- THE FOLLOWING IS A GUIDEWIRE DIV FOR THE 'LINK TO THIS' FEATURE -->
+    <div id="linkToThisPage" class="popup" style="display: none;">
+      <div class="popupTitle">Link Directly to This Page 
+           <a href="#" onclick="var thePopup = getElementById('linkToThisPage');thePopup.style.display='none';return false;"><img class="popupClosebox" src="wwhelp/wwhimpl/common/images/close.gif" /></a></div>
+      <div style="padding:6px;">
+        <div class="popupText" id="linkToThisPageBookmark">An error has occurred if you see this messsage.</div>
+        <form name="linktothisurlform" method="post" action="" style="width:275px;margin:0px">
+          <input type="text" class="popupURLText" id="linkToThisPageURL" name="urlfield" rows="1" cols="55" onClick="guidewire_selectall();" onFocus="guidewire_selectall();"></input>
+        </form>
+      </div>
+    </div>
+    <br />
+    <div class="WebWorks_Breadcrumbs" style="text-align: left;">
+      <span>BillingCenter Globalization Guide</span> : 
+    <span class="WebWorks_Breadcrumbs" style="text-align: left;"><a class="WebWorks_Breadcrumb_Link" href="p-national.html#2488342">National Formats and Data Configuration</a> : <a class="WebWorks_Breadcrumb_Link" href="address_config.22.1.html#2488342">Configuring Address Information</a> : Example: Adding a Country with a New Address Field</span></div>
+    <hr align="left" />
+    <blockquote>
+      <h3 class="H1_-_Heading_1"><a name="2488342">Example: Adding a Country with a New Address Field</a></h3>
+      <div class="B_-_Body"><a name="2488399">This example shows how to add a new New Zealand address field named Suburb to BillingCenter and ContactManager. The example configures classes, entities, and configuration files that support address fields so the new field can be used in the user interface and be available for autofill and autocompletion. </a></div>
+      <h4 class="H2_-_Heading_2"><a name="2505452">Basic Configuration of the Suburb Field</a></h4>
+      <div class="B_-_Body"><a name="2505454">The region being added is New Zealand, and the new address field is </a><span class="cv_-_computer_voice">Suburb</span>. This example is not a full example showing how to perform a complete localization configuration, but rather focuses on configuring the new address field to work in ContactManager and BillingCenter. When configured, if you edit a contact’s address and set the country to New Zealand, you will be able to use the Suburb field.</div>
+      <div class="N_-_Note">
+        <span class="n_-_note">Note: </span><a name="2490860">Except where the instructions say explicitly to work only in ContactManager or only in BillingCenter, do everything in both ContactManager and BillingCenter.</a></div>
+      <h6 class="HS_-_Head_Sub"><a name="2504637">To perform the basic configuration in Studio</a></h6>
+      <div class="LS_-_List_Start_outer" style="margin-left: 57pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="LS_-_List_Start_inner" style="width: 15pt; white-space: nowrap">
+                <span class="ri_-_run_in_header">	1.	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="LS_-_List_Start_inner"><a name="2488725">Add a </a><span class="cv_-_computer_voice">Suburb</span> field to the <span class="cv_-_computer_voice">GlobalAddress</span> entity.</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="LS2A_-_List_Start_002c_Level_2_Alpha_outer" style="margin-left: 67pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="LS2A_-_List_Start_002c_Level_2_Alpha_inner" style="width: 15pt; white-space: nowrap">
+                <span class="ri_-_run_in_header">a.	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="LS2A_-_List_Start_002c_Level_2_Alpha_inner"><a name="2488766">Navigate to </a><span class="uis_-_UI_element_Studio">configuration</span> → <span class="uis_-_UI_element_Studio">config</span> → <span class="uis_-_UI_element_Studio">Extensions</span> → <span class="uis_-_UI_element_Studio">Entity</span> and double-click <span class="cv_-_computer_voice">GlobalAddress.etx</span> to open it in the editor.</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="LI2A_-_List_Item_002c_Level_2_Alpha_outer" style="margin-left: 67pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="LI2A_-_List_Item_002c_Level_2_Alpha_inner" style="width: 15pt; white-space: nowrap">
+                <span class="ri_-_run_in_header">b.	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="LI2A_-_List_Item_002c_Level_2_Alpha_inner"><a name="2488974">Right-click the top element on the left, the </a><span class="uis_-_UI_element_Studio">delegate(extension)</span> <span class="cv_-_computer_voice">GlobalAddress</span>, and choose <span class="uis_-_UI_element_Studio">Add new</span> → <span class="uis_-_UI_element_Studio">column</span>.</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="LI2A_-_List_Item_002c_Level_2_Alpha_outer" style="margin-left: 67pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="LI2A_-_List_Item_002c_Level_2_Alpha_inner" style="width: 15pt; white-space: nowrap">
+                <span class="ri_-_run_in_header">c.	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="LI2A_-_List_Item_002c_Level_2_Alpha_inner"><a name="2489149">Enter the following values on the right:</a></div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="BI2_-_Bullet_Item_002c_Level_2_outer" style="margin-left: 67pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="BI2_-_Bullet_Item_002c_Level_2_inner" style="width: 15pt; white-space: nowrap">
+                <span class="bu_-_bullet">•	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="BI2_-_Bullet_Item_002c_Level_2_inner"><span class="cv_-_computer_voice"><a name="2489192">name</a></span> – <span class="cv_-_computer_voice">Suburb</span></div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="BI2_-_Bullet_Item_002c_Level_2_outer" style="margin-left: 67pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="BI2_-_Bullet_Item_002c_Level_2_inner" style="width: 15pt; white-space: nowrap">
+                <span class="bu_-_bullet">•	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="BI2_-_Bullet_Item_002c_Level_2_inner"><span class="cv_-_computer_voice"><a name="2489210">type</a></span> – <span class="cv_-_computer_voice">varchar</span></div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="BI2_-_Bullet_Item_002c_Level_2_outer" style="margin-left: 67pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="BI2_-_Bullet_Item_002c_Level_2_inner" style="width: 15pt; white-space: nowrap">
+                <span class="bu_-_bullet">•	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="BI2_-_Bullet_Item_002c_Level_2_inner"><span class="cv_-_computer_voice"><a name="2489228">nullok</a></span> – <span class="cv_-_computer_voice">true</span></div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="BI2_-_Bullet_Item_002c_Level_2_outer" style="margin-left: 67pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="BI2_-_Bullet_Item_002c_Level_2_inner" style="width: 15pt; white-space: nowrap">
+                <span class="bu_-_bullet">•	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="BI2_-_Bullet_Item_002c_Level_2_inner"><span class="cv_-_computer_voice"><a name="2489243">desc</a></span> – <span class="it_-_input_text">Address field for countries that have both a suburb and a city field</span></div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="LI2A_-_List_Item_002c_Level_2_Alpha_outer" style="margin-left: 67pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="LI2A_-_List_Item_002c_Level_2_Alpha_inner" style="width: 15pt; white-space: nowrap">
+                <span class="ri_-_run_in_header">d.	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="LI2A_-_List_Item_002c_Level_2_Alpha_inner"><a name="2490933">On the left, right-click the new </a><span class="cv_-_computer_voice">Suburb</span> column and choose <span class="uis_-_UI_element_Studio">Add new</span> → <span class="uis_-_UI_element_Studio">columnParam</span>.</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="LI2A_-_List_Item_002c_Level_2_Alpha_outer" style="margin-left: 67pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="LI2A_-_List_Item_002c_Level_2_Alpha_inner" style="width: 15pt; white-space: nowrap">
+                <span class="ri_-_run_in_header">e.	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="LI2A_-_List_Item_002c_Level_2_Alpha_inner"><a name="2490934">Enter the following values on the right:</a></div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="BI2_-_Bullet_Item_002c_Level_2_outer" style="margin-left: 67pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="BI2_-_Bullet_Item_002c_Level_2_inner" style="width: 15pt; white-space: nowrap">
+                <span class="bu_-_bullet">•	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="BI2_-_Bullet_Item_002c_Level_2_inner"><span class="cv_-_computer_voice"><a name="2490935">name</a></span> – <span class="it_-_input_text">size</span></div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="BI2_-_Bullet_Item_002c_Level_2_outer" style="margin-left: 67pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="BI2_-_Bullet_Item_002c_Level_2_inner" style="width: 15pt; white-space: nowrap">
+                <span class="bu_-_bullet">•	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="BI2_-_Bullet_Item_002c_Level_2_inner"><span class="cv_-_computer_voice"><a name="2490936">value</a></span> – <span class="it_-_input_text">50</span></div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="LI_-_List_Item_outer" style="margin-left: 57pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="LI_-_List_Item_inner" style="width: 15pt; white-space: nowrap">
+                <span class="ri_-_run_in_header">	2.	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="LI_-_List_Item_inner"><a name="2489402">Make the following changes so the </a><span class="cv_-_computer_voice">Suburb</span> field can participate in autofill.</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="LS2A_-_List_Start_002c_Level_2_Alpha_outer" style="margin-left: 67pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="LS2A_-_List_Start_002c_Level_2_Alpha_inner" style="width: 15pt; white-space: nowrap">
+                <span class="ri_-_run_in_header">a.	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="LS2A_-_List_Start_002c_Level_2_Alpha_inner"><a name="2489478">Press </a><span class="cv_-_computer_voice">Ctrl+N</span> and enter <span class="cv_-_computer_voice">AddressFillableExtension</span>, and then double-click <span class="cv_-_computer_voice">AddressFillableExtension</span> in the search results to open this class.</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="LI2A_-_List_Item_002c_Level_2_Alpha_outer" style="margin-left: 67pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="LI2A_-_List_Item_002c_Level_2_Alpha_inner" style="width: 15pt; white-space: nowrap">
+                <span class="ri_-_run_in_header">b.	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="LI2A_-_List_Item_002c_Level_2_Alpha_inner"><a name="2489624">Add the following lines of code:</a></div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <PRE class="CF_-_Code_First_Line"><a name="2489672">&nbsp;&nbsp;&nbsp;&nbsp;property get Suburb() : String</a></PRE>
+      <PRE class="CL_-_Code_Last_Line"><a name="2489673">&nbsp;&nbsp;&nbsp;&nbsp;property set Suburb(value : String)</a></PRE>
+      <div class="LI2A_-_List_Item_002c_Level_2_Alpha_outer" style="margin-left: 67pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="LI2A_-_List_Item_002c_Level_2_Alpha_inner" style="width: 15pt; white-space: nowrap">
+                <span class="ri_-_run_in_header">c.	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="LI2A_-_List_Item_002c_Level_2_Alpha_inner"><a name="2489944">Press </a><span class="cv_-_computer_voice">Ctrl+N</span> and enter <span class="cv_-_computer_voice">AddressFillableExtensionImpl</span>, and then double-click <span class="cv_-_computer_voice">AddressFillableExtensionImpl</span> in the search results to open this class.</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="LI2A_-_List_Item_002c_Level_2_Alpha_outer" style="margin-left: 67pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="LI2A_-_List_Item_002c_Level_2_Alpha_inner" style="width: 15pt; white-space: nowrap">
+                <span class="ri_-_run_in_header">d.	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="LI2A_-_List_Item_002c_Level_2_Alpha_inner"><a name="2489945">Add the following line of code:</a></div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="CS_-_Code_Single_Line"><a name="2489946">&nbsp;&nbsp;&nbsp;&nbsp;var _Suburb : String as Suburb</a></div>
+      <div class="LI2A_-_List_Item_002c_Level_2_Alpha_outer" style="margin-left: 67pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="LI2A_-_List_Item_002c_Level_2_Alpha_inner" style="width: 15pt; white-space: nowrap">
+                <span class="ri_-_run_in_header">e.	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="LI2A_-_List_Item_002c_Level_2_Alpha_inner"><a name="2510983">Press </a><span class="cv_-_computer_voice">Ctrl+N</span> and enter <span class="cv_-_computer_voice">ContactCriteriaDelegate</span>, and then double-click <span class="cv_-_computer_voice">ContactCriteriaDelegate</span> in the search results to open this class.</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="LI2A_-_List_Item_002c_Level_2_Alpha_outer" style="margin-left: 67pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="LI2A_-_List_Item_002c_Level_2_Alpha_inner" style="width: 15pt; white-space: nowrap">
+                <span class="ri_-_run_in_header">f.	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="LI2A_-_List_Item_002c_Level_2_Alpha_inner"><a name="2510984">Add the following lines of code:</a></div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <PRE class="CF_-_Code_First_Line"><a name="2510985">&nbsp;&nbsp;override property get Suburb(): String {</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2510986">&nbsp;&nbsp;&nbsp;&nbsp;return null</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2510987">&nbsp;&nbsp;}</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2510988">&nbsp;&nbsp;override property set Suburb(value: String) {</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2510989">&nbsp;&nbsp;&nbsp;&nbsp;throw notSupported()</a></PRE>
+      <PRE class="CL_-_Code_Last_Line"><a name="2510990">&nbsp;&nbsp;}</a></PRE>
+      <div class="LI2A_-_List_Item_002c_Level_2_Alpha_outer" style="margin-left: 67pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="LI2A_-_List_Item_002c_Level_2_Alpha_inner" style="width: 15pt; white-space: nowrap">
+                <span class="ri_-_run_in_header">g.	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="LI2A_-_List_Item_002c_Level_2_Alpha_inner"><a name="2489742">Press </a><span class="cv_-_computer_voice">Ctrl+N</span> and enter <span class="cv_-_computer_voice">AddressAutofillableDelegate</span>, and then double-click <span class="cv_-_computer_voice">AddressAutofillableDelegate</span> in the search results to open this class.</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="LI2A_-_List_Item_002c_Level_2_Alpha_outer" style="margin-left: 67pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="LI2A_-_List_Item_002c_Level_2_Alpha_inner" style="width: 15pt; white-space: nowrap">
+                <span class="ri_-_run_in_header">h.	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="LI2A_-_List_Item_002c_Level_2_Alpha_inner"><a name="2489743">Add the following lines of code:</a></div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <PRE class="CF_-_Code_First_Line"><a name="2489858">&nbsp;&nbsp;&nbsp;&nbsp;override property set Suburb(value : String) { _af.Suburb = value }</a></PRE>
+      <PRE class="CL_-_Code_Last_Line"><a name="2489744">&nbsp;&nbsp;&nbsp;&nbsp;override property get Suburb() : String { return _af.Suburb }</a></PRE>
+      <div class="LI2A_-_List_Item_002c_Level_2_Alpha_outer" style="margin-left: 67pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="LI2A_-_List_Item_002c_Level_2_Alpha_inner" style="width: 15pt; white-space: nowrap">
+                <span class="ri_-_run_in_header">i.	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="LI2A_-_List_Item_002c_Level_2_Alpha_inner"><a name="2490008">Press </a><span class="cv_-_computer_voice">Ctrl+N</span> and enter <span class="cv_-_computer_voice">AddressEntityDelegate</span>, and then double-click <span class="cv_-_computer_voice">AddressEntityDelegate</span> in the search results to open this class.</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="LI2A_-_List_Item_002c_Level_2_Alpha_outer" style="margin-left: 67pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="LI2A_-_List_Item_002c_Level_2_Alpha_inner" style="width: 15pt; white-space: nowrap">
+                <span class="ri_-_run_in_header">j.	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="LI2A_-_List_Item_002c_Level_2_Alpha_inner"><a name="2490009">Add the following lines of code:</a></div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <PRE class="CF_-_Code_First_Line"><a name="2490047">&nbsp;&nbsp;&nbsp;&nbsp;override property get Suburb() : String {</a></PRE>
+      <PRE class="CF_-_Code_First_Line"><a name="2490048">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return _ao.Address.Suburb }</a></PRE>
+      <PRE class="CF_-_Code_First_Line"><a name="2490051">&nbsp;&nbsp;&nbsp;&nbsp;override property set Suburb(value : String) {</a></PRE>
+      <PRE class="CF_-_Code_First_Line"><a name="2507756">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;_ao.Address.Suburb = value }</a></PRE>
+      <div class="LI_-_List_Item_outer" style="margin-left: 57pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="LI_-_List_Item_inner" style="width: 15pt; white-space: nowrap">
+                <span class="ri_-_run_in_header">	3.	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="LI_-_List_Item_inner"><a name="2507757">Add a New Zealand locale type and a </a><span class="cv_-_computer_voice">suburb</span> zone type.</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="LS2A_-_List_Start_002c_Level_2_Alpha_outer" style="margin-left: 67pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="LS2A_-_List_Start_002c_Level_2_Alpha_inner" style="width: 15pt; white-space: nowrap">
+                <span class="ri_-_run_in_header">a.	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="LS2A_-_List_Start_002c_Level_2_Alpha_inner"><a name="2507767">Navigate in the </a><span class="uis_-_UI_element_Studio">Project</span> window to <span class="uis_-_UI_element_Studio">configuration</span> → <span class="uis_-_UI_element_Studio">config </span>→ <span class="uis_-_UI_element_Studio">Metadata</span> → <span class="uis_-_UI_element_Studio">Typelist</span> and right-click <span class="cv_-_computer_voice">LocaleType.tti</span>.</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="LI2A_-_List_Item_002c_Level_2_Alpha_outer" style="margin-left: 67pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="LI2A_-_List_Item_002c_Level_2_Alpha_inner" style="width: 15pt; white-space: nowrap">
+                <span class="ri_-_run_in_header">b.	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="LI2A_-_List_Item_002c_Level_2_Alpha_inner"><a name="2492185">Choose </a><span class="uis_-_UI_element_Studio">New</span> → <span class="uis_-_UI_element_Studio">Typelist extension</span> to create the file <span class="cv_-_computer_voice">LocalType.ttx</span>.</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="LP2_-_List_Para_002c_Level_2"><span class="s_-_strong"><a name="2510246">Note:</a></span> If you have a language pack installed, you see a <span class="uis_-_UI_element_Studio">Typelist Extension</span> dialog enabling you to choose one of several <span class="cv_-_computer_voice">LocaleType.ttx</span> locations. Choose the one in <span class="cv_-_computer_voice">configuration/config/extensions/typelist/</span> and then click OK.</div>
+      <div class="LP2_-_List_Para_002c_Level_2"><span class="s_-_strong"><a name="2492325">Note: </a></span>If you see a message saying that typelist extension is not allowed, then the file <span class="cv_-_computer_voice">LocalType.ttx</span> already exists. Open that file instead.</div>
+      <div class="LI2A_-_List_Item_002c_Level_2_Alpha_outer" style="margin-left: 67pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="LI2A_-_List_Item_002c_Level_2_Alpha_inner" style="width: 15pt; white-space: nowrap">
+                <span class="ri_-_run_in_header">c.	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="LI2A_-_List_Item_002c_Level_2_Alpha_inner"><a name="2492242">In the editor for </a><span class="cv_-_computer_voice">LocaleType.ttx</span>, right-click the top element on the left, <span class="uis_-_UI_element_Studio">typelistextension</span> <span class="cv_-_computer_voice">LocaleType</span>, and choose <span class="uis_-_UI_element_Studio">Add new</span> → <span class="uis_-_UI_element_Studio">typecode</span>.</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="LI2A_-_List_Item_002c_Level_2_Alpha_outer" style="margin-left: 67pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="LI2A_-_List_Item_002c_Level_2_Alpha_inner" style="width: 15pt; white-space: nowrap">
+                <span class="ri_-_run_in_header">d.	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="LI2A_-_List_Item_002c_Level_2_Alpha_inner"><a name="2492605">Enter the following values for the new typecode:</a></div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="BI2_-_Bullet_Item_002c_Level_2_outer" style="margin-left: 67pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="BI2_-_Bullet_Item_002c_Level_2_inner" style="width: 15pt; white-space: nowrap">
+                <span class="bu_-_bullet">•	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="BI2_-_Bullet_Item_002c_Level_2_inner"><span class="cv_-_computer_voice"><a name="2492678">code</a></span> – <span class="cv_-_computer_voice">en_NZ</span></div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="BI2_-_Bullet_Item_002c_Level_2_outer" style="margin-left: 67pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="BI2_-_Bullet_Item_002c_Level_2_inner" style="width: 15pt; white-space: nowrap">
+                <span class="bu_-_bullet">•	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="BI2_-_Bullet_Item_002c_Level_2_inner"><span class="cv_-_computer_voice"><a name="2492679">name</a></span> – <span class="it_-_input_text">New Zealand (English)</span></div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="BI2_-_Bullet_Item_002c_Level_2_outer" style="margin-left: 67pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="BI2_-_Bullet_Item_002c_Level_2_inner" style="width: 15pt; white-space: nowrap">
+                <span class="bu_-_bullet">•	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="BI2_-_Bullet_Item_002c_Level_2_inner"><span class="cv_-_computer_voice"><a name="2492681">desc</a></span> – <span class="it_-_input_text">New Zealand (English)</span></div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="LI2A_-_List_Item_002c_Level_2_Alpha_outer" style="margin-left: 67pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="LI2A_-_List_Item_002c_Level_2_Alpha_inner" style="width: 15pt; white-space: nowrap">
+                <span class="ri_-_run_in_header">e.	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="LI2A_-_List_Item_002c_Level_2_Alpha_inner"><a name="2493628">Navigate in the </a><span class="uis_-_UI_element_Studio">Project</span> window to <span class="uis_-_UI_element_Studio">configuration</span> → <span class="uis_-_UI_element_Studio">config </span>→ <span class="uis_-_UI_element_Studio">Extensions</span> → <span class="uis_-_UI_element_Studio">Typelist</span> and double-click <span class="cv_-_computer_voice">ZoneType.ttx</span>.</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="LI2A_-_List_Item_002c_Level_2_Alpha_outer" style="margin-left: 67pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="LI2A_-_List_Item_002c_Level_2_Alpha_inner" style="width: 15pt; white-space: nowrap">
+                <span class="ri_-_run_in_header">f.	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="LI2A_-_List_Item_002c_Level_2_Alpha_inner"><a name="2493634">In the editor, right-click the top element on the left, </a><span class="uis_-_UI_element_Studio">typelistextension</span> <span class="cv_-_computer_voice">ZoneType</span>, and choose <span class="uis_-_UI_element_Studio">Add new</span> → <span class="uis_-_UI_element_Studio">typecode</span>.</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="LI2A_-_List_Item_002c_Level_2_Alpha_outer" style="margin-left: 67pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="LI2A_-_List_Item_002c_Level_2_Alpha_inner" style="width: 15pt; white-space: nowrap">
+                <span class="ri_-_run_in_header">g.	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="LI2A_-_List_Item_002c_Level_2_Alpha_inner"><a name="2493638">Enter the following values for the new typecode:</a></div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="BI2_-_Bullet_Item_002c_Level_2_outer" style="margin-left: 67pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="BI2_-_Bullet_Item_002c_Level_2_inner" style="width: 15pt; white-space: nowrap">
+                <span class="bu_-_bullet">•	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="BI2_-_Bullet_Item_002c_Level_2_inner"><span class="cv_-_computer_voice"><a name="2493639">code</a></span> – <span class="cv_-_computer_voice">suburb</span></div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="BI2_-_Bullet_Item_002c_Level_2_outer" style="margin-left: 67pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="BI2_-_Bullet_Item_002c_Level_2_inner" style="width: 15pt; white-space: nowrap">
+                <span class="bu_-_bullet">•	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="BI2_-_Bullet_Item_002c_Level_2_inner"><span class="cv_-_computer_voice"><a name="2493640">name</a></span> – <span class="it_-_input_text">Suburb</span></div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="BI2_-_Bullet_Item_002c_Level_2_outer" style="margin-left: 67pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="BI2_-_Bullet_Item_002c_Level_2_inner" style="width: 15pt; white-space: nowrap">
+                <span class="bu_-_bullet">•	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="BI2_-_Bullet_Item_002c_Level_2_inner"><span class="cv_-_computer_voice"><a name="2493641">desc</a></span> – <span class="it_-_input_text">Suburb</span></div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="LI2A_-_List_Item_002c_Level_2_Alpha_outer" style="margin-left: 67pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="LI2A_-_List_Item_002c_Level_2_Alpha_inner" style="width: 15pt; white-space: nowrap">
+                <span class="ri_-_run_in_header">h.	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="LI2A_-_List_Item_002c_Level_2_Alpha_inner"><a name="2493761">In the editor right-click the </a><span class="cv_-_computer_voice">suburb</span> typecode and choose <span class="uis_-_UI_element_Studio">Add new</span> → <span class="uis_-_UI_element_Studio">Add categories</span>.</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="LI2A_-_List_Item_002c_Level_2_Alpha_outer" style="margin-left: 67pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="LI2A_-_List_Item_002c_Level_2_Alpha_inner" style="width: 15pt; white-space: nowrap">
+                <span class="ri_-_run_in_header">i.	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="LI2A_-_List_Item_002c_Level_2_Alpha_inner"><a name="2493762">Click </a><span class="uis_-_UI_element_Studio">suburb</span> in the list of typecodes and then click <span class="uis_-_UI_element_Studio">Next</span>.</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="LI2A_-_List_Item_002c_Level_2_Alpha_outer" style="margin-left: 67pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="LI2A_-_List_Item_002c_Level_2_Alpha_inner" style="width: 15pt; white-space: nowrap">
+                <span class="ri_-_run_in_header">j.	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="LI2A_-_List_Item_002c_Level_2_Alpha_inner"><a name="2492765">In the </a><span class="uis_-_UI_element_Studio">Typelist</span> list, click <span class="cv_-_computer_voice">Country</span>, and in the <span class="uis_-_UI_element_Studio">Category</span> list, click <span class="cv_-_computer_voice">NZ</span>, and then click <span class="uis_-_UI_element_Studio">Finish</span>.</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="LI_-_List_Item_outer" style="margin-left: 57pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="LI_-_List_Item_inner" style="width: 15pt; white-space: nowrap">
+                <span class="ri_-_run_in_header">	4.	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="LI_-_List_Item_inner"><a name="2507773">Add a localization folder for New Zealand add required configuration files:</a></div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="LS2A_-_List_Start_002c_Level_2_Alpha_outer" style="margin-left: 67pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="LS2A_-_List_Start_002c_Level_2_Alpha_inner" style="width: 15pt; white-space: nowrap">
+                <span class="ri_-_run_in_header">a.	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="LS2A_-_List_Start_002c_Level_2_Alpha_inner"><a name="2507780">Navigate in the </a><span class="uis_-_UI_element_Studio">Project</span> window to <span class="uis_-_UI_element_Studio">configuration</span> → <span class="uis_-_UI_element_Studio">config</span> → <span class="uis_-_UI_element_Studio">Localizations</span>.</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="LI2A_-_List_Item_002c_Level_2_Alpha_outer" style="margin-left: 67pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="LI2A_-_List_Item_002c_Level_2_Alpha_inner" style="width: 15pt; white-space: nowrap">
+                <span class="ri_-_run_in_header">b.	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="LI2A_-_List_Item_002c_Level_2_Alpha_inner"><a name="2507784">Right-click </a><span class="uis_-_UI_element_Studio">Localizations</span> and choose <span class="uis_-_UI_element_Studio">New</span> → <span class="uis_-_UI_element_Studio">Package</span>. Name the new package <span class="cv_-_computer_voice">en_NZ</span>.</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="LI2A_-_List_Item_002c_Level_2_Alpha_outer" style="margin-left: 67pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="LI2A_-_List_Item_002c_Level_2_Alpha_inner" style="width: 15pt; white-space: nowrap">
+                <span class="ri_-_run_in_header">c.	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="LI2A_-_List_Item_002c_Level_2_Alpha_inner"><a name="2507785">Copy the </a><span class="cv_-_computer_voice">localization.xml</span> file under the <span class="cv_-_computer_voice">en_US</span> folder to this new folder. </div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="LI2A_-_List_Item_002c_Level_2_Alpha_outer" style="margin-left: 67pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="LI2A_-_List_Item_002c_Level_2_Alpha_inner" style="width: 15pt; white-space: nowrap">
+                <span class="ri_-_run_in_header">d.	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="LI2A_-_List_Item_002c_Level_2_Alpha_inner"><a name="2507786">Double-click the new </a><span class="cv_-_computer_voice">localization.xml</span> file to open it in the editor.</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="LI2A_-_List_Item_002c_Level_2_Alpha_outer" style="margin-left: 67pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="LI2A_-_List_Item_002c_Level_2_Alpha_inner" style="width: 15pt; white-space: nowrap">
+                <span class="ri_-_run_in_header">e.	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="LI2A_-_List_Item_002c_Level_2_Alpha_inner"><a name="2507791">Configure the </a><span class="cv_-_computer_voice">&lt;GWLocale&gt;</span> element to use <span class="cv_-_computer_voice">en_NZ</span> as the country and to use date configurations appropriate for New Zealand:</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2508013">&nbsp;&nbsp;&lt;GWLocale code="en_NZ" name="New Zealand (English)" typecode="en_NZ"&gt;</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2508014">&nbsp;&nbsp;&nbsp;&nbsp;&lt;DateFormat long="E d MMM yyyy" medium="d MMM yyyy" short="dd/MM/yyyy"/&gt;</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2508015">&nbsp;&nbsp;&nbsp;&nbsp;&lt;TimeFormat long="h:mm:ss a z" medium="hh:mm:ss a" short="h:mm a"/&gt;</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2508016">&nbsp;&nbsp;&nbsp;&nbsp;&lt;NumberFormat decimalSymbol="." thousandsSymbol=","/&gt;</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2508017">&nbsp;&nbsp;&nbsp;&nbsp;&lt;CurrencyFormat negativePattern="($#)" positivePattern="$#" zeroValue="-"/&gt;</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2508018">&nbsp;&nbsp;&lt;/GWLocale&gt;</a></PRE>
+      <div class="LI_-_List_Item_outer" style="margin-left: 57pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="LI_-_List_Item_inner" style="width: 15pt; white-space: nowrap">
+                <span class="ri_-_run_in_header">	5.	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="LI_-_List_Item_inner"><a name="2494177">Add a folder for New Zealand in </a><span class="cv_-_computer_voice">geodata</span>, and add configuration files for country, address, and zone:</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="LS2A_-_List_Start_002c_Level_2_Alpha_outer" style="margin-left: 67pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="LS2A_-_List_Start_002c_Level_2_Alpha_inner" style="width: 15pt; white-space: nowrap">
+                <span class="ri_-_run_in_header">a.	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="LS2A_-_List_Start_002c_Level_2_Alpha_inner"><a name="2494245">Navigate in the </a><span class="uis_-_UI_element_Studio">Project</span> window to <span class="uis_-_UI_element_Studio">configuration</span> → <span class="uis_-_UI_element_Studio">config</span> → <span class="uis_-_UI_element_Studio">geodata</span>.</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="LI2A_-_List_Item_002c_Level_2_Alpha_outer" style="margin-left: 67pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="LI2A_-_List_Item_002c_Level_2_Alpha_inner" style="width: 15pt; white-space: nowrap">
+                <span class="ri_-_run_in_header">b.	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="LI2A_-_List_Item_002c_Level_2_Alpha_inner"><a name="2494249">Right-click </a><span class="uis_-_UI_element_Studio">geodata</span> and choose <span class="uis_-_UI_element_Studio">New</span> → <span class="uis_-_UI_element_Studio">Package</span>. Name the new package <span class="cv_-_computer_voice">NZ</span>.</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="LI2A_-_List_Item_002c_Level_2_Alpha_outer" style="margin-left: 67pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="LI2A_-_List_Item_002c_Level_2_Alpha_inner" style="width: 15pt; white-space: nowrap">
+                <span class="ri_-_run_in_header">c.	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="LI2A_-_List_Item_002c_Level_2_Alpha_inner"><a name="2492753">Copy the three files under the </a><span class="cv_-_computer_voice">geodata/AU</span> folder to this new folder. The three files are <span class="cv_-_computer_voice">address-config.xml</span>, <span class="cv_-_computer_voice">country.xml</span>, and <span class="cv_-_computer_voice">zone-config.xml</span>.</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="LI2A_-_List_Item_002c_Level_2_Alpha_outer" style="margin-left: 67pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="LI2A_-_List_Item_002c_Level_2_Alpha_inner" style="width: 15pt; white-space: nowrap">
+                <span class="ri_-_run_in_header">d.	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="LI2A_-_List_Item_002c_Level_2_Alpha_inner"><a name="2493182">Double-click the copied </a><span class="cv_-_computer_voice">country.xml</span> file to open it in the editor.</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="LI2A_-_List_Item_002c_Level_2_Alpha_outer" style="margin-left: 67pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="LI2A_-_List_Item_002c_Level_2_Alpha_inner" style="width: 15pt; white-space: nowrap">
+                <span class="ri_-_run_in_header">e.	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="LI2A_-_List_Item_002c_Level_2_Alpha_inner"><a name="2493253">Add </a><span class="cv_-_computer_voice">Suburb</span> to the <span class="cv_-_computer_voice">visibleFields</span> definition and remove <span class="cv_-_computer_voice">State</span>:</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <PRE class="CF_-_Code_First_Line"><a name="2493298">&nbsp;&nbsp;visibleFields=</a></PRE>
+      <PRE class="CL_-_Code_Last_Line"><a name="2493368">&nbsp;&nbsp;&nbsp;&nbsp;"Country,AddressLine1,AddressLine2,AddressLine3,</a><span class="s_-_strong">Suburb,</span>City,PostalCode"</PRE>
+      <div class="LI2A_-_List_Item_002c_Level_2_Alpha_outer" style="margin-left: 67pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="LI2A_-_List_Item_002c_Level_2_Alpha_inner" style="width: 15pt; white-space: nowrap">
+                <span class="ri_-_run_in_header">f.	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="LI2A_-_List_Item_002c_Level_2_Alpha_inner"><a name="2493397">Double-click the copied </a><span class="cv_-_computer_voice">address-config.xml</span> file to open it in the editor.</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="LI2A_-_List_Item_002c_Level_2_Alpha_outer" style="margin-left: 67pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="LI2A_-_List_Item_002c_Level_2_Alpha_inner" style="width: 15pt; white-space: nowrap">
+                <span class="ri_-_run_in_header">g.	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="LI2A_-_List_Item_002c_Level_2_Alpha_inner"><a name="2493398">Set the file up to use </a><span class="cv_-_computer_voice">NZ</span> as the country and the name, and to use <span class="cv_-_computer_voice">Suburb</span> instead of <span class="cv_-_computer_voice">State</span>:</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <PRE class="CF_-_Code_First_Line"><a name="2494414">&nbsp;&nbsp;&lt;AddressConfig xmlns="http://guidewire.com/address-config"&gt;</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2494415">&nbsp;&nbsp;&nbsp;&nbsp;&lt;AddressDef name="NZ"&gt;</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2494416">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;Match&gt;</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2494417">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;Field name="Country" value="NZ"/&gt;</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2494418">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;/Match&gt;</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2494419">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;Fields&gt;</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2494420">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;Field name="City" zonecode="city"&gt;</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2500517">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;AutoFillFromZone code="suburb"/&gt;</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2494421">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;AutoFillFromZone code="postalcode"/&gt;</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2494423">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;/Field&gt;</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2494424">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;Field name="Suburb" zonecode="suburb"&gt;</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2500532">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;!-- Do not autofill from the city because a definitive match </a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2500571">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;to suburb from the city isn't possible--&gt;</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2494425">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;AutoFillFromZone code="postalcode"/&gt;</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2494427">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;/Field&gt;</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2494428">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;Field name="PostalCode" zonecode="postalcode"&gt;</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2500627">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;!-- Autofill first from suburb, because most people use suburb and </a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2500657">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;postcode is a new concept. --&gt;</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2500611">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;!-- Postcodes are not unique by city. For example, 0420 maps to the</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2500724">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;following cities: Cable Bay, Coopers Beach, Mangonui, Taipa --&gt;</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2494429">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;AutoFillFromZone code="suburb"/&gt;</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2500594">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;AutoFillFromZone code="city"/&gt;</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2494430">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;ValidatorDef value="[0-9]{4}" </a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2494453">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;description="Validator.PostalCode.NZ" input-mask="####"/&gt;</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2494431">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;/Field&gt;</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2494432">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;/Fields&gt;</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2494433">&nbsp;&nbsp;&nbsp;&nbsp;&lt;/AddressDef&gt;</a></PRE>
+      <PRE class="CL_-_Code_Last_Line"><a name="2493399">&nbsp;&nbsp;&lt;/AddressConfig&gt;</a></PRE>
+      <div class="LI2A_-_List_Item_002c_Level_2_Alpha_outer" style="margin-left: 67pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="LI2A_-_List_Item_002c_Level_2_Alpha_inner" style="width: 15pt; white-space: nowrap">
+                <span class="ri_-_run_in_header">h.	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="LI2A_-_List_Item_002c_Level_2_Alpha_inner"><a name="2493412">Double-click the copied </a><span class="cv_-_computer_voice">zone-config.xml</span> file to open it in the editor.</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="LI2A_-_List_Item_002c_Level_2_Alpha_outer" style="margin-left: 67pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="LI2A_-_List_Item_002c_Level_2_Alpha_inner" style="width: 15pt; white-space: nowrap">
+                <span class="ri_-_run_in_header">i.	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="LI2A_-_List_Item_002c_Level_2_Alpha_inner"><a name="2493413">Change the country code to </a><span class="cv_-_computer_voice">NZ</span>:</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="CS_-_Code_Single_Line"><a name="2493515">&nbsp;&nbsp;countryCode="NZ"</a></div>
+      <div class="LI2A_-_List_Item_002c_Level_2_Alpha_outer" style="margin-left: 67pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="LI2A_-_List_Item_002c_Level_2_Alpha_inner" style="width: 15pt; white-space: nowrap">
+                <span class="ri_-_run_in_header">j.	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="LI2A_-_List_Item_002c_Level_2_Alpha_inner"><a name="2493476">Add </a><span class="cv_-_computer_voice">Suburb</span> to the zone definitions, change its relationship to postal code and city, and remove <span class="cv_-_computer_voice">State</span>:</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="LP2_-_List_Para_002c_Level_2"><span class="s_-_strong"><a name="2501344">Note: </a></span>This file defines the CSV file order for each zone data entry to be postal code, suburb, city.</div>
+      <PRE class="CF_-_Code_First_Line"><a name="2494465">&nbsp;&nbsp;&lt;Zones countryCode="NZ"&gt;</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2500772">&nbsp;&nbsp;&lt;!-- The uniqueness of the postcode is based on the containing zone. </a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2500773">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;The postcode's container is the country and the deciding factor is whether </a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2500774">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;or not the postcode is unique within the country. and not the fact that the same</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2500775">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;postal code is shared by multiple cities. For example, 0420 maps to the following</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2500768">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;cities: Cable Bay, Coopers Beach, Mangonui, Taipa --&gt;</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2494466">&nbsp;&nbsp;&nbsp;&nbsp;&lt;Zone code="postalcode" fileColumn="1" granularity="1" regionMatchOrder="1"&gt;</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2494467">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;AddressZoneValue&gt;Address.PostalCode.substring(0,4)&lt;/AddressZoneValue&gt;</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2494468">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;Links&gt;</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2501032">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;Link toZone="suburb" lookupOrder="1"/&gt;</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2494470">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;Link toZone="city" lookupOrder="2"/&gt;</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2494471">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;/Links&gt;</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2494472">&nbsp;&nbsp;&nbsp;&nbsp;&lt;/Zone&gt;</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2497536">&nbsp;&nbsp;&nbsp;&nbsp;&lt;Zone code="suburb" fileColumn="2" granularity="2" regionMatchOrder="2"&gt;</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2500923">&nbsp;&nbsp;&nbsp;&nbsp;&lt;!-- As described for the postcode, the containing zone for the suburb </a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2500941">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;is the city and therefore the suburb is not unique per city. </a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2500919">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Some examples: HillCrest is a suburb of both Hamilton and Rotorua. </a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2501060">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Avondale is a suburb of Auckland and Christchurch --&gt;</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2501092">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;ZoneCode&gt; city + ":" + suburb &lt;/ZoneCode&gt;</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2497537">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;AddressZoneValue&gt;</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2497538">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Address.City + ":" + Address.Suburb</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2497539">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;/AddressZoneValue&gt;</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2497540">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;Links&gt;</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2497541">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;Link toZone="postalcode" lookupOrder="1"/&gt;</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2497542">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;Link toZone="city" lookupOrder="2"/&gt;</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2497543">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;/Links&gt;</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2497544">&nbsp;&nbsp;&nbsp;&nbsp;&lt;/Zone&gt;</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2494473">&nbsp;&nbsp;&nbsp;&nbsp;&lt;Zone code="city" fileColumn="3" granularity="3" regionMatchOrder="3"&gt;</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2501159">&nbsp;&nbsp;&nbsp;&nbsp;&lt;!-- City (and town) names are unique in the country. They might have similar</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2501204">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;names such as Palmerston North, which is in the North Island,</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2501220">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;and Palmerston, which is in the South Island, but there is </a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2501234">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;always a distinction. --&gt;</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2494476">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;AddressZoneValue&gt; Address.City &lt;/AddressZoneValue&gt;</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2494477">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;Links&gt;</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2494479">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;Link toZone="postalcode" lookupOrder="1"/&gt;</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2494480">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;Link toZone="suburb" lookupOrder="2"/&gt;</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2494481">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;/Links&gt;</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2494482">&nbsp;&nbsp;&nbsp;&nbsp;&lt;/Zone&gt;</a></PRE>
+      <PRE class="CL_-_Code_Last_Line"><a name="2494490">&nbsp;&nbsp;&lt;/Zones&gt;</a></PRE>
+      <div class="LI_-_List_Item_outer" style="margin-left: 57pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="LI_-_List_Item_inner" style="width: 15pt; white-space: nowrap">
+                <span class="ri_-_run_in_header">	6.	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="LI_-_List_Item_inner"><a name="2501530">Add a field validator file for New Zealand and add the field validator for a New Zealand postal code to it:</a></div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="LS2A_-_List_Start_002c_Level_2_Alpha_outer" style="margin-left: 67pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="LS2A_-_List_Start_002c_Level_2_Alpha_inner" style="width: 15pt; white-space: nowrap">
+                <span class="ri_-_run_in_header">a.	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="LS2A_-_List_Start_002c_Level_2_Alpha_inner"><a name="2501696">Navigate in the </a><span class="uis_-_UI_element_Studio">Project</span> window to <span class="uis_-_UI_element_Studio">configuration</span> → <span class="uis_-_UI_element_Studio">config</span> → <span class="uis_-_UI_element_Studio">fieldvalidators</span>.</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="LI2A_-_List_Item_002c_Level_2_Alpha_outer" style="margin-left: 67pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="LI2A_-_List_Item_002c_Level_2_Alpha_inner" style="width: 15pt; white-space: nowrap">
+                <span class="ri_-_run_in_header">b.	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="LI2A_-_List_Item_002c_Level_2_Alpha_inner"><a name="2501750">Right-click </a><span class="uis_-_UI_element_Studio">fieldvalidators</span> and choose <span class="uis_-_UI_element_Studio">New</span> → <span class="uis_-_UI_element_Studio">Package</span>, and then enter <span class="cv_-_computer_voice">NZ</span> and click <span class="uis_-_UI_element_Studio">OK</span>.</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="LI2A_-_List_Item_002c_Level_2_Alpha_outer" style="margin-left: 67pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="LI2A_-_List_Item_002c_Level_2_Alpha_inner" style="width: 15pt; white-space: nowrap">
+                <span class="ri_-_run_in_header">c.	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="LI2A_-_List_Item_002c_Level_2_Alpha_inner"><a name="2501862">Copy </a><span class="cv_-_computer_voice">fieldvalidators.xml</span> from <span class="uis_-_UI_element_Studio">AU</span> to the new <span class="uis_-_UI_element_Studio">NZ</span> folder.</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="LI2A_-_List_Item_002c_Level_2_Alpha_outer" style="margin-left: 67pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="LI2A_-_List_Item_002c_Level_2_Alpha_inner" style="width: 15pt; white-space: nowrap">
+                <span class="ri_-_run_in_header">d.	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="LI2A_-_List_Item_002c_Level_2_Alpha_inner"><a name="2501948">In the new file, change </a><span class="cv_-_computer_voice">Validator.PostalCode.FourDigit</span> to <span class="cv_-_computer_voice">Validator.PostalCode.NZ</span>. The new validator definition is:</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <PRE class="CF_-_Code_First_Line"><a name="2502098">&nbsp;&nbsp;&lt;ValidatorDef</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2502091">&nbsp;&nbsp;&nbsp;&nbsp;description="Validator.PostalCode.NZ" </a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2502117">&nbsp;&nbsp;&nbsp;&nbsp;input-mask="####" name="PostalCode" </a></PRE>
+      <PRE class="CL_-_Code_Last_Line"><a name="2502124">&nbsp;&nbsp;&nbsp;&nbsp;value="[0-9]{4}"/&gt;</a></PRE>
+      <div class="LI_-_List_Item_outer" style="margin-left: 57pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="LI_-_List_Item_inner" style="width: 15pt; white-space: nowrap">
+                <span class="ri_-_run_in_header">	7.	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="LI_-_List_Item_inner"><a name="2491713">Configure the following typelists to set up typecodes for currency and jurisdiction:</a></div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="LS2A_-_List_Start_002c_Level_2_Alpha_outer" style="margin-left: 67pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="LS2A_-_List_Start_002c_Level_2_Alpha_inner" style="width: 15pt; white-space: nowrap">
+                <span class="ri_-_run_in_header">a.	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="LS2A_-_List_Start_002c_Level_2_Alpha_inner"><a name="2497663">Navigate in the </a><span class="uis_-_UI_element_Studio">Project</span> window to <span class="uis_-_UI_element_Studio">configuration</span> → <span class="uis_-_UI_element_Studio">config</span> → <span class="uis_-_UI_element_Studio">Extensions</span> → <span class="uis_-_UI_element_Studio">Typelist</span>.</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="LI2A_-_List_Item_002c_Level_2_Alpha_outer" style="margin-left: 67pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="LI2A_-_List_Item_002c_Level_2_Alpha_inner" style="width: 15pt; white-space: nowrap">
+                <span class="ri_-_run_in_header">b.	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="LI2A_-_List_Item_002c_Level_2_Alpha_inner"><a name="2497819">Double-click </a><span class="cv_-_computer_voice">Currency.ttx</span> to open this typelist in the editor.</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="LI2A_-_List_Item_002c_Level_2_Alpha_outer" style="margin-left: 67pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="LI2A_-_List_Item_002c_Level_2_Alpha_inner" style="width: 15pt; white-space: nowrap">
+                <span class="ri_-_run_in_header">c.	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="LI2A_-_List_Item_002c_Level_2_Alpha_inner"><a name="2497899">In the editor, right-click the top element on the left, </a><span class="uis_-_UI_element_Studio">typelistextension</span> <span class="cv_-_computer_voice">Currency</span>, and choose <span class="uis_-_UI_element_Studio">Add new</span> → <span class="uis_-_UI_element_Studio">typecode</span>.</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="LI2A_-_List_Item_002c_Level_2_Alpha_outer" style="margin-left: 67pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="LI2A_-_List_Item_002c_Level_2_Alpha_inner" style="width: 15pt; white-space: nowrap">
+                <span class="ri_-_run_in_header">d.	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="LI2A_-_List_Item_002c_Level_2_Alpha_inner"><a name="2497900">Enter the following values for the new typecode:</a></div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="BI2_-_Bullet_Item_002c_Level_2_outer" style="margin-left: 67pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="BI2_-_Bullet_Item_002c_Level_2_inner" style="width: 15pt; white-space: nowrap">
+                <span class="bu_-_bullet">•	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="BI2_-_Bullet_Item_002c_Level_2_inner"><span class="cv_-_computer_voice"><a name="2497901">code</a></span> – <span class="cv_-_computer_voice">nzd</span></div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="BI2_-_Bullet_Item_002c_Level_2_outer" style="margin-left: 67pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="BI2_-_Bullet_Item_002c_Level_2_inner" style="width: 15pt; white-space: nowrap">
+                <span class="bu_-_bullet">•	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="BI2_-_Bullet_Item_002c_Level_2_inner"><span class="cv_-_computer_voice"><a name="2497902">name</a></span> – <span class="it_-_input_text">NZD</span></div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="BI2_-_Bullet_Item_002c_Level_2_outer" style="margin-left: 67pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="BI2_-_Bullet_Item_002c_Level_2_inner" style="width: 15pt; white-space: nowrap">
+                <span class="bu_-_bullet">•	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="BI2_-_Bullet_Item_002c_Level_2_inner"><span class="cv_-_computer_voice"><a name="2497903">desc</a></span> – <span class="it_-_input_text">New Zealand Dollar</span></div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="LI2A_-_List_Item_002c_Level_2_Alpha_outer" style="margin-left: 67pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="LI2A_-_List_Item_002c_Level_2_Alpha_inner" style="width: 15pt; white-space: nowrap">
+                <span class="ri_-_run_in_header">e.	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="LI2A_-_List_Item_002c_Level_2_Alpha_inner"><a name="2498009">Double-click </a><span class="cv_-_computer_voice">Country.ttx</span> to open this typelist in the editor.</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="LI2A_-_List_Item_002c_Level_2_Alpha_outer" style="margin-left: 67pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="LI2A_-_List_Item_002c_Level_2_Alpha_inner" style="width: 15pt; white-space: nowrap">
+                <span class="ri_-_run_in_header">f.	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="LI2A_-_List_Item_002c_Level_2_Alpha_inner"><a name="2497907">In the editor, right-click the </a><span class="cv_-_computer_voice">NZ</span> typecode and choose <span class="uis_-_UI_element_Studio">Add new</span> → <span class="uis_-_UI_element_Studio">Add categories</span>.</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="LI2A_-_List_Item_002c_Level_2_Alpha_outer" style="margin-left: 67pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="LI2A_-_List_Item_002c_Level_2_Alpha_inner" style="width: 15pt; white-space: nowrap">
+                <span class="ri_-_run_in_header">g.	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="LI2A_-_List_Item_002c_Level_2_Alpha_inner"><a name="2497908">Click </a><span class="uis_-_UI_element_Studio">NZ</span> in the list of category typecodes and then click <span class="uis_-_UI_element_Studio">Next</span>.</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="LI2A_-_List_Item_002c_Level_2_Alpha_outer" style="margin-left: 67pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="LI2A_-_List_Item_002c_Level_2_Alpha_inner" style="width: 15pt; white-space: nowrap">
+                <span class="ri_-_run_in_header">h.	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="LI2A_-_List_Item_002c_Level_2_Alpha_inner"><a name="2497909">In the </a><span class="uis_-_UI_element_Studio">Typelist</span> list, click <span class="cv_-_computer_voice">Currency</span>, and in the <span class="uis_-_UI_element_Studio">Category</span> list, click <span class="cv_-_computer_voice">nzd</span>, and then click <span class="uis_-_UI_element_Studio">Finish</span>.</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="LI2A_-_List_Item_002c_Level_2_Alpha_outer" style="margin-left: 67pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="LI2A_-_List_Item_002c_Level_2_Alpha_inner" style="width: 15pt; white-space: nowrap">
+                <span class="ri_-_run_in_header">i.	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="LI2A_-_List_Item_002c_Level_2_Alpha_inner"><a name="2498128">Double-click </a><span class="cv_-_computer_voice">Jursdiction.ttx</span> to open this typelist in the editor.</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="LI2A_-_List_Item_002c_Level_2_Alpha_outer" style="margin-left: 67pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="LI2A_-_List_Item_002c_Level_2_Alpha_inner" style="width: 15pt; white-space: nowrap">
+                <span class="ri_-_run_in_header">j.	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="LI2A_-_List_Item_002c_Level_2_Alpha_inner"><a name="2498132">In the editor, right-click the top element on the left, </a><span class="uis_-_UI_element_Studio">typelistextension</span> <span class="cv_-_computer_voice">Jursdiction</span>, and choose <span class="uis_-_UI_element_Studio">Add new</span> → <span class="uis_-_UI_element_Studio">typecode</span>.</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="LI2A_-_List_Item_002c_Level_2_Alpha_outer" style="margin-left: 67pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="LI2A_-_List_Item_002c_Level_2_Alpha_inner" style="width: 15pt; white-space: nowrap">
+                <span class="ri_-_run_in_header">k.	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="LI2A_-_List_Item_002c_Level_2_Alpha_inner"><a name="2498133">Enter the following values for the new typecode:</a></div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="BI2_-_Bullet_Item_002c_Level_2_outer" style="margin-left: 67pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="BI2_-_Bullet_Item_002c_Level_2_inner" style="width: 15pt; white-space: nowrap">
+                <span class="bu_-_bullet">•	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="BI2_-_Bullet_Item_002c_Level_2_inner"><span class="cv_-_computer_voice"><a name="2498134">code</a></span> – <span class="cv_-_computer_voice">NZ</span></div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="BI2_-_Bullet_Item_002c_Level_2_outer" style="margin-left: 67pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="BI2_-_Bullet_Item_002c_Level_2_inner" style="width: 15pt; white-space: nowrap">
+                <span class="bu_-_bullet">•	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="BI2_-_Bullet_Item_002c_Level_2_inner"><span class="cv_-_computer_voice"><a name="2498135">name</a></span> – <span class="it_-_input_text">New Zealand</span></div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="BI2_-_Bullet_Item_002c_Level_2_outer" style="margin-left: 67pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="BI2_-_Bullet_Item_002c_Level_2_inner" style="width: 15pt; white-space: nowrap">
+                <span class="bu_-_bullet">•	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="BI2_-_Bullet_Item_002c_Level_2_inner"><span class="cv_-_computer_voice"><a name="2498136">desc</a></span> – <span class="it_-_input_text">New Zealand</span></div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="LI2A_-_List_Item_002c_Level_2_Alpha_outer" style="margin-left: 67pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="LI2A_-_List_Item_002c_Level_2_Alpha_inner" style="width: 15pt; white-space: nowrap">
+                <span class="ri_-_run_in_header">l.	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="LI2A_-_List_Item_002c_Level_2_Alpha_inner"><a name="2498253">In the editor, right-click the </a><span class="cv_-_computer_voice">NZ</span> typecode and choose <span class="uis_-_UI_element_Studio">Add new</span> → <span class="uis_-_UI_element_Studio">Add categories</span>.</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="LI2A_-_List_Item_002c_Level_2_Alpha_outer" style="margin-left: 67pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="LI2A_-_List_Item_002c_Level_2_Alpha_inner" style="width: 15pt; white-space: nowrap">
+                <span class="ri_-_run_in_header">m.	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="LI2A_-_List_Item_002c_Level_2_Alpha_inner"><a name="2498254">Click </a><span class="uis_-_UI_element_Studio">NZ</span> in the list of category typecodes and then click <span class="uis_-_UI_element_Studio">Next</span>.</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="LI2A_-_List_Item_002c_Level_2_Alpha_outer" style="margin-left: 67pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="LI2A_-_List_Item_002c_Level_2_Alpha_inner" style="width: 15pt; white-space: nowrap">
+                <span class="ri_-_run_in_header">n.	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="LI2A_-_List_Item_002c_Level_2_Alpha_inner"><a name="2498255">In the </a><span class="uis_-_UI_element_Studio">Typelist</span> list, click <span class="cv_-_computer_voice">Country</span>, and in the <span class="uis_-_UI_element_Studio">Category</span> list, click <span class="cv_-_computer_voice">NZ</span>, and then click <span class="uis_-_UI_element_Studio">Finish</span>.</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="LI2A_-_List_Item_002c_Level_2_Alpha_outer" style="margin-left: 67pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="LI2A_-_List_Item_002c_Level_2_Alpha_inner" style="width: 15pt; white-space: nowrap">
+                <span class="ri_-_run_in_header">o.	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="LI2A_-_List_Item_002c_Level_2_Alpha_inner"><a name="2498282">In the editor, right-click the </a><span class="cv_-_computer_voice">NZ</span> typecode again and choose <span class="uis_-_UI_element_Studio">Add new</span> → <span class="uis_-_UI_element_Studio">Add categories</span>.</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="LI2A_-_List_Item_002c_Level_2_Alpha_outer" style="margin-left: 67pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="LI2A_-_List_Item_002c_Level_2_Alpha_inner" style="width: 15pt; white-space: nowrap">
+                <span class="ri_-_run_in_header">p.	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="LI2A_-_List_Item_002c_Level_2_Alpha_inner"><a name="2498283">Click </a><span class="uis_-_UI_element_Studio">NZ</span> in the list of typecodes and then click <span class="uis_-_UI_element_Studio">Next</span>.</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="LI2A_-_List_Item_002c_Level_2_Alpha_outer" style="margin-left: 67pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="LI2A_-_List_Item_002c_Level_2_Alpha_inner" style="width: 15pt; white-space: nowrap">
+                <span class="ri_-_run_in_header">q.	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="LI2A_-_List_Item_002c_Level_2_Alpha_inner"><a name="2498284">In the </a><span class="uis_-_UI_element_Studio">Typelist</span> list, click <span class="cv_-_computer_voice">JurisdictionType</span>, and in the <span class="uis_-_UI_element_Studio">Category</span> list, click <span class="cv_-_computer_voice">insurance</span>, and then click <span class="uis_-_UI_element_Studio">Finish</span>.</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="LI_-_List_Item_outer" style="margin-left: 57pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="LI_-_List_Item_inner" style="width: 15pt; white-space: nowrap">
+                <span class="ri_-_run_in_header">	8.	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="LI_-_List_Item_inner"><a name="2498336">Configure the currency XML file for New Zealand currency:</a></div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="LS2A_-_List_Start_002c_Level_2_Alpha_outer" style="margin-left: 67pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="LS2A_-_List_Start_002c_Level_2_Alpha_inner" style="width: 15pt; white-space: nowrap">
+                <span class="ri_-_run_in_header">a.	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="LS2A_-_List_Start_002c_Level_2_Alpha_inner"><a name="2498346">Navigate in the </a><span class="uis_-_UI_element_Studio">Project</span> window to <span class="uis_-_UI_element_Studio">configuration</span> → <span class="uis_-_UI_element_Studio">config</span> → <span class="uis_-_UI_element_Studio">currencies</span>.</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="LI2A_-_List_Item_002c_Level_2_Alpha_outer" style="margin-left: 67pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="LI2A_-_List_Item_002c_Level_2_Alpha_inner" style="width: 15pt; white-space: nowrap">
+                <span class="ri_-_run_in_header">b.	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="LI2A_-_List_Item_002c_Level_2_Alpha_inner"><a name="2498453">Right-click </a><span class="uis_-_UI_element_Studio">currencies</span> and choose <span class="uis_-_UI_element_Studio">New</span> → <span class="uis_-_UI_element_Studio">Package</span>, and then enter <span class="cv_-_computer_voice">nzd</span> and click <span class="uis_-_UI_element_Studio">OK</span>.</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="LI2A_-_List_Item_002c_Level_2_Alpha_outer" style="margin-left: 67pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="LI2A_-_List_Item_002c_Level_2_Alpha_inner" style="width: 15pt; white-space: nowrap">
+                <span class="ri_-_run_in_header">c.	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="LI2A_-_List_Item_002c_Level_2_Alpha_inner"><a name="2498570">Copy the </a><span class="cv_-_computer_voice">currency.xml</span> file from the <span class="uis_-_UI_element_Studio">aud</span> folder to the new <span class="uis_-_UI_element_Studio">nzd</span> folder.</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="LI2A_-_List_Item_002c_Level_2_Alpha_outer" style="margin-left: 67pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="LI2A_-_List_Item_002c_Level_2_Alpha_inner" style="width: 15pt; white-space: nowrap">
+                <span class="ri_-_run_in_header">d.	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="LI2A_-_List_Item_002c_Level_2_Alpha_inner"><a name="2498347">In the editor for </a><span class="cv_-_computer_voice">nzd/currrency.xml</span>, change the currency code from <span class="cv_-_computer_voice">"aud"</span> to <span class="cv_-_computer_voice">"nzd"</span> and the currency description from <span class="cv_-_computer_voice">"Australian Dollar"</span> to <span class="cv_-_computer_voice">"New Zealand Dollar"</span>. The resulting code is:</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <PRE class="CF_-_Code_First_Line"><a name="2498955">&nbsp;&nbsp;&lt;Currency xmlns="http://guidewire.com/currency"&gt;</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2498956">&nbsp;&nbsp;&nbsp;&nbsp;&lt;CurrencyType code="nzd" desc="New Zealand Dollar" storageScale="2"&gt;</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2498957">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;CurrencyFormat zeroValue="-"/&gt;</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2498958">&nbsp;&nbsp;&nbsp;&nbsp;&lt;/CurrencyType&gt;</a></PRE>
+      <PRE class="CL_-_Code_Last_Line"><a name="2498819">&nbsp;&nbsp;&lt;/Currency&gt;</a></PRE>
+      <div class="LI_-_List_Item_outer" style="margin-left: 57pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="LI_-_List_Item_inner" style="width: 15pt; white-space: nowrap">
+                <span class="ri_-_run_in_header">	9.	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="LI_-_List_Item_inner"><a name="2499171">Edit supporting files for the user interface and add the New Zealand suburb field:</a></div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="LS2A_-_List_Start_002c_Level_2_Alpha_outer" style="margin-left: 67pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="LS2A_-_List_Start_002c_Level_2_Alpha_inner" style="width: 15pt; white-space: nowrap">
+                <span class="ri_-_run_in_header">a.	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="LS2A_-_List_Start_002c_Level_2_Alpha_inner"><a name="2499172">Press </a><span class="cv_-_computer_voice">Ctrl+Shift+N</span> and enter <span class="cv_-_computer_voice">Address.en</span>, and then double-click <span class="cv_-_computer_voice">Address.en</span> in the search results to open it in the editor.</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="LI2A_-_List_Item_002c_Level_2_Alpha_outer" style="margin-left: 67pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="LI2A_-_List_Item_002c_Level_2_Alpha_inner" style="width: 15pt; white-space: nowrap">
+                <span class="ri_-_run_in_header">b.	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="LI2A_-_List_Item_002c_Level_2_Alpha_inner"><a name="2499436">In the top part of the editor, click <img class="Default" src="images/add.png" style="display: inline; float: none; left: 0.0; top: 0.0" alt="" /> and then enter the following values:</a></div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="BI2_-_Bullet_Item_002c_Level_2_outer" style="margin-left: 67pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="BI2_-_Bullet_Item_002c_Level_2_inner" style="width: 15pt; white-space: nowrap">
+                <span class="bu_-_bullet">•	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="BI2_-_Bullet_Item_002c_Level_2_inner"><span class="uis_-_UI_element_Studio"><a name="2499542">Name</a></span> – <span class="cv_-_computer_voice">suburb</span></div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="BI2_-_Bullet_Item_002c_Level_2_outer" style="margin-left: 67pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="BI2_-_Bullet_Item_002c_Level_2_inner" style="width: 15pt; white-space: nowrap">
+                <span class="bu_-_bullet">•	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="BI2_-_Bullet_Item_002c_Level_2_inner"><span class="uis_-_UI_element_Studio"><a name="2499560">Entity Path</a></span> – <span class="cv_-_computer_voice">Address.Suburb</span></div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="LI2A_-_List_Item_002c_Level_2_Alpha_outer" style="margin-left: 67pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="LI2A_-_List_Item_002c_Level_2_Alpha_inner" style="width: 15pt; white-space: nowrap">
+                <span class="ri_-_run_in_header">c.	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="LI2A_-_List_Item_002c_Level_2_Alpha_inner"><a name="2499204">Below this top pane, there is a code pane with a </a><span class="cv_-_computer_voice">Default</span> tab. Click this tab and add a line of code defining a <span class="cv_-_computer_voice">Suburb</span> to the list of <span class="cv_-_computer_voice">formatter</span> address field definitions. If necessary, add a comma to the end of the preceding line:</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <PRE class="CF_-_Code_First_Line"><a name="2506951">&nbsp;&nbsp;&nbsp;&nbsp;:CEDEXBureau = CEDEXBureau</a><span class="s_-_strong">,</span></PRE>
+      <PRE class="CL_-_Code_Last_Line" style="font-style: normal; font-variant: normal; font-weight: bold; text-transform: none; vertical-align: baseline"><span class="s_-_strong"><a name="2499142">&nbsp;&nbsp;&nbsp;&nbsp;:Suburb = suburb</a></span></PRE>
+      <div class="LI2A_-_List_Item_002c_Level_2_Alpha_outer" style="margin-left: 67pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="LI2A_-_List_Item_002c_Level_2_Alpha_inner" style="width: 15pt; white-space: nowrap">
+                <span class="ri_-_run_in_header">d.	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="LI2A_-_List_Item_002c_Level_2_Alpha_inner"><a name="2499806">In ContactManager only, this code pane also has a </a><span class="cv_-_computer_voice">Full</span> tab. Click this tab and make the same addition as you did in the <span class="cv_-_computer_voice">Default</span> tab.</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="LI2A_-_List_Item_002c_Level_2_Alpha_outer" style="margin-left: 67pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="LI2A_-_List_Item_002c_Level_2_Alpha_inner" style="width: 15pt; white-space: nowrap">
+                <span class="ri_-_run_in_header">e.	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="LI2A_-_List_Item_002c_Level_2_Alpha_inner"><a name="2509376">Press </a><span class="cv_-_computer_voice">Ctrl+N</span> and enter <span class="cv_-_computer_voice">AddressOwnerFieldId</span>, and then double-click <span class="cv_-_computer_voice">AddressOwnerFieldId</span> in the search results to open this class in the editor.</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="LI2A_-_List_Item_002c_Level_2_Alpha_outer" style="margin-left: 67pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="LI2A_-_List_Item_002c_Level_2_Alpha_inner" style="width: 15pt; white-space: nowrap">
+                <span class="ri_-_run_in_header">f.	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="LI2A_-_List_Item_002c_Level_2_Alpha_inner"><a name="2499864">Add the following line of code to the constant declarations for available fields:</a></div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <PRE class="CF_-_Code_First_Line"><a name="2499865">&nbsp;&nbsp;&nbsp;&nbsp;public static final var SUBURB : AddressOwnerFieldId = </a></PRE>
+      <PRE class="CL_-_Code_Last_Line"><a name="2500032">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;new AddressOwnerFieldId("Suburb")</a></PRE>
+      <div class="LI2A_-_List_Item_002c_Level_2_Alpha_outer" style="margin-left: 67pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="LI2A_-_List_Item_002c_Level_2_Alpha_inner" style="width: 15pt; white-space: nowrap">
+                <span class="ri_-_run_in_header">g.	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="LI2A_-_List_Item_002c_Level_2_Alpha_inner"><a name="2500074">Add the </a><span class="cv_-_computer_voice">Suburb</span> field to the constant representing all PCF address fields:</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <PRE class="CF_-_Code_First_Line"><a name="2508265">&nbsp;&nbsp;&nbsp;&nbsp;public final static var ALL_PCF_FIELDS : Set&lt;AddressOwnerFieldId&gt; =</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2508387">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{ ADDRESSLINE1, ADDRESSLINE2, ADDRESSLINE3, </a><span class="s_-_strong">SUBURB,</span> CITY, COUNTY, </PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2508388">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;STATE, POSTALCODE, COUNTRY, ADDRESSLINE1KANJI, ADDRESSLINE2KANJI, </a></PRE>
+      <PRE class="CL_-_Code_Last_Line"><a name="2508389">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;CITYKANJI, CEDEX, CEDEXBUREAU }.freeze()</a></PRE>
+      <div class="LI2A_-_List_Item_002c_Level_2_Alpha_outer" style="margin-left: 67pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="LI2A_-_List_Item_002c_Level_2_Alpha_inner" style="width: 15pt; white-space: nowrap">
+                <span class="ri_-_run_in_header">h.	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="LI2A_-_List_Item_002c_Level_2_Alpha_inner"><a name="2508196">Hide the </a><span class="cv_-_computer_voice">Suburb</span> field from the default search screens by changing the settings in <span class="cv_-_computer_voice">AddressOwnerFieldId</span> for <span class="cv_-_computer_voice">HIDDEN_FOR_SEARCH</span> and <span class="cv_-_computer_voice">HIDDEN_FOR_PROXIMITY_SEARCH</span>:</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <PRE class="CF_-_Code_First_Line"><a name="2500204">&nbsp;&nbsp;&nbsp;&nbsp;public final static var HIDDEN_FOR_SEARCH : Set&lt;AddressOwnerFieldId&gt; = </a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2508372">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{ ADDRESSLINE1, ADDRESSLINE2, ADDRESSLINE3, </a><span class="s_-_strong">SUBURB,</span> COUNTY, ADDRESSLINE1KANJI, </PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2508373">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ADDRESSLINE2KANJI, CEDEX, CEDEXBUREAU }.freeze()</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2500206">&nbsp;</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2500207">&nbsp;&nbsp;&nbsp;&nbsp;public final static var HIDDEN_FOR_PROXIMITY_SEARCH : Set&lt;AddressOwnerFieldId&gt; = </a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2500075">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{ ADDRESSLINE1KANJI, ADDRESSLINE2KANJI, </a><span class="s_-_strong">SUBURB,</span> CITYKANJI, </PRE>
+      <PRE class="CL_-_Code_Last_Line"><a name="2500375">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;CEDEX, CEDEXBUREAU }.freeze()</a></PRE>
+      <div class="N_-_Note">
+        <span class="n_-_note">Note: </span><a name="2507030">You can change this setting later if New Zealand is to be the default region.</a></div>
+      <div class="LI2A_-_List_Item_002c_Level_2_Alpha_outer" style="margin-left: 67pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="LI2A_-_List_Item_002c_Level_2_Alpha_inner" style="width: 15pt; white-space: nowrap">
+                <span class="ri_-_run_in_header">i.	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="LI2A_-_List_Item_002c_Level_2_Alpha_inner"><a name="2502214">Press </a><span class="cv_-_computer_voice">Ctrl+N</span> and enter <span class="cv_-_computer_voice">AddressFormatter</span>, and then double-click <span class="cv_-_computer_voice">AddressFormatter</span> in the search results to open this class in the editor.</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="LI2A_-_List_Item_002c_Level_2_Alpha_outer" style="margin-left: 67pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="LI2A_-_List_Item_002c_Level_2_Alpha_inner" style="width: 15pt; white-space: nowrap">
+                <span class="ri_-_run_in_header">j.	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="LI2A_-_List_Item_002c_Level_2_Alpha_inner"><a name="2502198">Add the following case to </a><span class="cv_-_computer_voice">switch(_addrCountry)</span> to indicate the suburb, city, and postal code format for a New Zealand address:</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <PRE class="CF_-_Code_First_Line"><a name="2502447">&nbsp;&nbsp;&nbsp;&nbsp;case TC_NZ:</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2502448">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;append(cszBuf, fieldId.SUBURB, delimiter, addr.Suburb)</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2502449">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;append(cszBuf, fieldId.CITY,  " ", addr.City)</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2502450">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;append(cszBuf, fieldId.POSTALCODE, " ", addr.PostalCode)</a></PRE>
+      <PRE class="CL_-_Code_Last_Line"><a name="2502686">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;break</a></PRE>
+      <div class="LI_-_List_Item_outer" style="margin-left: 57pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="LI_-_List_Item_inner" style="width: 15pt; white-space: nowrap">
+                <span class="ri_-_run_in_header">	10.	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="LI_-_List_Item_inner"><a name="2503793">Add the New Zealand suburb field to the user interface:</a></div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="LS2A_-_List_Start_002c_Level_2_Alpha_outer" style="margin-left: 67pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="LS2A_-_List_Start_002c_Level_2_Alpha_inner" style="width: 15pt; white-space: nowrap">
+                <span class="ri_-_run_in_header">a.	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="LS2A_-_List_Start_002c_Level_2_Alpha_inner"><a name="2502690">Navigate in the </a><span class="uis_-_UI_element_Studio">Project</span> window to <span class="uis_-_UI_element_Studio">configuration</span> → <span class="uis_-_UI_element_Studio">config</span> → <span class="uis_-_UI_element_Studio">Page Configuration</span> → <span class="uis_-_UI_element_Studio">pcf</span> → <span class="uis_-_UI_element_Studio">address</span> and double-click <span class="cv_-_computer_voice">GlobalAddressInputSet.default</span> to open it in the editor.</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="LI2A_-_List_Item_002c_Level_2_Alpha_outer" style="margin-left: 67pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="LI2A_-_List_Item_002c_Level_2_Alpha_inner" style="width: 15pt; white-space: nowrap">
+                <span class="ri_-_run_in_header">b.	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="LI2A_-_List_Item_002c_Level_2_Alpha_inner"><a name="2503837">Click </a><span class="cv_-_computer_voice">InputSet: GlobalAddressInputSet</span> at the top of the screen to open its <span class="cv_-_computer_voice">Properties</span> pane at the bottom.</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="LI2A_-_List_Item_002c_Level_2_Alpha_outer" style="margin-left: 67pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="LI2A_-_List_Item_002c_Level_2_Alpha_inner" style="width: 15pt; white-space: nowrap">
+                <span class="ri_-_run_in_header">c.	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="LI2A_-_List_Item_002c_Level_2_Alpha_inner"><a name="2503974">Click the </a><span class="uis_-_UI_element_Studio">Variables</span> tab, and then click <img class="Default" src="images/add.png" style="display: inline; float: none; left: 0.0; top: 0.0" alt="" /> to add a new variable. Enter the following values:</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="BI2_-_Bullet_Item_002c_Level_2_outer" style="margin-left: 67pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="BI2_-_Bullet_Item_002c_Level_2_inner" style="width: 15pt; white-space: nowrap">
+                <span class="bu_-_bullet">•	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="BI2_-_Bullet_Item_002c_Level_2_inner"><span class="uis_-_UI_element_Studio"><a name="2504098">initialValue</a></span> – <span class="cv_-_computer_voice">contact.AddressAutocompleteHandler.createHandler(<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"Suburb","Suburb,City,County,State,PostalCode,Country",true)</span></div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="BI2_-_Bullet_Item_002c_Level_2_outer" style="margin-left: 67pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="BI2_-_Bullet_Item_002c_Level_2_inner" style="width: 15pt; white-space: nowrap">
+                <span class="bu_-_bullet">•	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="BI2_-_Bullet_Item_002c_Level_2_inner"><span class="uis_-_UI_element_Studio"><a name="2504126">name</a></span> – <span class="cv_-_computer_voice">suburbhandler</span></div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="LI2A_-_List_Item_002c_Level_2_Alpha_outer" style="margin-left: 67pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="LI2A_-_List_Item_002c_Level_2_Alpha_inner" style="width: 15pt; white-space: nowrap">
+                <span class="ri_-_run_in_header">d.	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="LI2A_-_List_Item_002c_Level_2_Alpha_inner"><a name="2502875">In the screen, select the Address 3 </a><span class="cv_-_computer_voice">Input</span> widget.</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="LI2A_-_List_Item_002c_Level_2_Alpha_outer" style="margin-left: 67pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="LI2A_-_List_Item_002c_Level_2_Alpha_inner" style="width: 15pt; white-space: nowrap">
+                <span class="ri_-_run_in_header">e.	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="LI2A_-_List_Item_002c_Level_2_Alpha_inner"><a name="2504206">Drag an </a><span class="cv_-_computer_voice">AddressAutofillInput</span> widget from the <span class="uis_-_UI_element_Studio">Toolbox</span> to the Address 3 <span class="cv_-_computer_voice">Input</span> widget and drop it so it appears after this widget. Select the new widget.</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="LI2A_-_List_Item_002c_Level_2_Alpha_outer" style="margin-left: 67pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="LI2A_-_List_Item_002c_Level_2_Alpha_inner" style="width: 15pt; white-space: nowrap">
+                <span class="ri_-_run_in_header">f.	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="LI2A_-_List_Item_002c_Level_2_Alpha_inner"><a name="2502998">In the </a><span class="uis_-_UI_element_Studio">Properties</span> panel, set the following values:</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="BI2_-_Bullet_Item_002c_Level_2_outer" style="margin-left: 67pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="BI2_-_Bullet_Item_002c_Level_2_inner" style="width: 15pt; white-space: nowrap">
+                <span class="bu_-_bullet">•	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="BI2_-_Bullet_Item_002c_Level_2_inner"><span class="uis_-_UI_element_Studio"><a name="2503061">editable</a></span> – <span class="cv_-_computer_voice">addressOwner.isEditable(fieldId.SUBURB)</span></div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="BI2_-_Bullet_Item_002c_Level_2_outer" style="margin-left: 67pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="BI2_-_Bullet_Item_002c_Level_2_inner" style="width: 15pt; white-space: nowrap">
+                <span class="bu_-_bullet">•	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="BI2_-_Bullet_Item_002c_Level_2_inner"><span class="uis_-_UI_element_Studio"><a name="2503088">id</a></span> – <span class="cv_-_computer_voice">Suburb</span></div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="BI2_-_Bullet_Item_002c_Level_2_outer" style="margin-left: 67pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="BI2_-_Bullet_Item_002c_Level_2_inner" style="width: 15pt; white-space: nowrap">
+                <span class="bu_-_bullet">•	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="BI2_-_Bullet_Item_002c_Level_2_inner"><span class="uis_-_UI_element_Studio"><a name="2503100">label</a></span> – <span class="cv_-_computer_voice">displaykey.Web.AddressBook.AddressInputSet.Suburb</span></div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="LP2_-_List_Para_002c_Level_2"><span class="s_-_strong"><a name="2503314">Note: </a></span>Click the red icon and choose <span class="uis_-_UI_element_Studio">Create Display Key</span> to create this display key. Under <span class="cv_-_computer_voice">en_US</span>, enter <span class="it_-_input_text">Suburb</span> and then click <span class="uis_-_UI_element_Studio">OK</span>. If no red icon appears, navigate to <span class="uis_-_UI_element_Studio">configuration</span> → <span class="uis_-_UI_element_Studio">config</span> → <span class="uis_-_UI_element_Studio">Localizations</span> → <span class="uis_-_UI_element_Studio">en_US</span> and double-click <span class="cv_-_computer_voice">display.properties</span>. Then add the key <span class="cv_-_computer_voice">Web.AddressBook.AddressInputSet.Suburb = Suburb</span> to that file.</div>
+      <div class="BI2_-_Bullet_Item_002c_Level_2_outer" style="margin-left: 67pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="BI2_-_Bullet_Item_002c_Level_2_inner" style="width: 15pt; white-space: nowrap">
+                <span class="bu_-_bullet">•	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="BI2_-_Bullet_Item_002c_Level_2_inner"><span class="uis_-_UI_element_Studio"><a name="2503112">required</a></span> – <span class="cv_-_computer_voice">addressOwner.isRequired(fieldId.SUBURB)</span></div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="BI2_-_Bullet_Item_002c_Level_2_outer" style="margin-left: 67pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="BI2_-_Bullet_Item_002c_Level_2_inner" style="width: 15pt; white-space: nowrap">
+                <span class="bu_-_bullet">•	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="BI2_-_Bullet_Item_002c_Level_2_inner"><span class="uis_-_UI_element_Studio"><a name="2503124">value</a></span> – <span class="cv_-_computer_voice">addressOwner.AddressDelegate.Suburb</span></div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="BI2_-_Bullet_Item_002c_Level_2_outer" style="margin-left: 67pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="BI2_-_Bullet_Item_002c_Level_2_inner" style="width: 15pt; white-space: nowrap">
+                <span class="bu_-_bullet">•	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="BI2_-_Bullet_Item_002c_Level_2_inner"><span class="uis_-_UI_element_Studio"><a name="2503136">action</a></span> – <span class="cv_-_computer_voice">if (addressOwner.AutofillIconEnabled)</span> <br /><span class="cv_-_computer_voice">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;gw.api.contact.AddressAutocompleteUtil.autofillAddress(<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;addressOwner.AddressDelegate, "Suburb")</span></div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="BI2_-_Bullet_Item_002c_Level_2_outer" style="margin-left: 67pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="BI2_-_Bullet_Item_002c_Level_2_inner" style="width: 15pt; white-space: nowrap">
+                <span class="bu_-_bullet">•	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="BI2_-_Bullet_Item_002c_Level_2_inner"><span class="uis_-_UI_element_Studio"><a name="2503148">actionavailable</a></span> – <span class="cv_-_computer_voice">addressOwner.AutofillIconEnabled</span></div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="BI2_-_Bullet_Item_002c_Level_2_outer" style="margin-left: 67pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="BI2_-_Bullet_Item_002c_Level_2_inner" style="width: 15pt; white-space: nowrap">
+                <span class="bu_-_bullet">•	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="BI2_-_Bullet_Item_002c_Level_2_inner"><span class="uis_-_UI_element_Studio"><a name="2508462">autoComplete</a></span> – <span class="cv_-_computer_voice">suburbhandler</span></div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="BI2_-_Bullet_Item_002c_Level_2_outer" style="margin-left: 67pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="BI2_-_Bullet_Item_002c_Level_2_inner" style="width: 15pt; white-space: nowrap">
+                <span class="bu_-_bullet">•	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="BI2_-_Bullet_Item_002c_Level_2_inner"><span class="uis_-_UI_element_Studio"><a name="2503160">autoCompleteArgIds</a></span> – <span class="cv_-_computer_voice">Suburb,City,County,State,PostalCode,Country</span></div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="BI2_-_Bullet_Item_002c_Level_2_outer" style="margin-left: 67pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="BI2_-_Bullet_Item_002c_Level_2_inner" style="width: 15pt; white-space: nowrap">
+                <span class="bu_-_bullet">•	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="BI2_-_Bullet_Item_002c_Level_2_inner"><span class="uis_-_UI_element_Studio"><a name="2503172">available</a></span> – <span class="cv_-_computer_voice">addressOwner.isAvailable(fieldId.SUBURB)</span></div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="BI2_-_Bullet_Item_002c_Level_2_outer" style="margin-left: 67pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="BI2_-_Bullet_Item_002c_Level_2_inner" style="width: 15pt; white-space: nowrap">
+                <span class="bu_-_bullet">•	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="BI2_-_Bullet_Item_002c_Level_2_inner"><span class="uis_-_UI_element_Studio"><a name="2508490">visible</a></span> – <span class="cv_-_computer_voice">addressOwner.isVisible(fieldId.SUBURB)</span></div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="LI_-_List_Item_outer" style="margin-left: 57pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="LI_-_List_Item_inner" style="width: 15pt; white-space: nowrap">
+                <span class="ri_-_run_in_header">	11.	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="LI_-_List_Item_inner"><a name="2509724">Close and restart Studio to clear any errors you see reported in the classes that you changed.</a></div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="LI_-_List_Item_outer" style="margin-left: 57pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="LI_-_List_Item_inner" style="width: 15pt; white-space: nowrap">
+                <span class="ri_-_run_in_header">	12.	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="LI_-_List_Item_inner"><span class="s_-_strong"><a name="2502694">Note:</a></span> This step and the remaining steps apply only if you have ContactManager installed and integrated with BillingCenter. For more information, see <a href="javascript:WWHClickedPopup('contact', 'integrate.06.1.html#2078890', '');" title="Integrating ContactManager with Guidewire Core Applications">“Integrating ContactManager with Guidewire Core Applications” in the </a><span class="bt_-_book_title"><a href="javascript:WWHClickedPopup('contact', 'integrate.06.1.html#2078890', '');" title="Integrating ContactManager with Guidewire Core Applications">Contact Management Guide</a></span>.</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="LP_-_List_Para"><a name="2509641">Modify the </a><span class="cv_-_computer_voice">ContactMapper</span> class in both BillingCenter and ContactManager to pass the field to and from ContactManager:</div>
+      <div class="LS2A_-_List_Start_002c_Level_2_Alpha_outer" style="margin-left: 67pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="LS2A_-_List_Start_002c_Level_2_Alpha_inner" style="width: 15pt; white-space: nowrap">
+                <span class="ri_-_run_in_header">a.	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="LS2A_-_List_Start_002c_Level_2_Alpha_inner"><a name="2497704">Navigate in the </a><span class="uis_-_UI_element_Studio">Project</span> window to <span class="uis_-_UI_element_Studio">configuration</span> → <span class="uis_-_UI_element_Studio">gsrc</span> and then to <span class="cv_-_computer_voice">gw/contactmapper/ab800/ContactMapper</span>.</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="LI2A_-_List_Item_002c_Level_2_Alpha_outer" style="margin-left: 67pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="LI2A_-_List_Item_002c_Level_2_Alpha_inner" style="width: 15pt; white-space: nowrap">
+                <span class="ri_-_run_in_header">b.	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="LI2A_-_List_Item_002c_Level_2_Alpha_inner"><a name="2497705">Add a call to </a><span class="cv_-_computer_voice">fieldMapping</span> for <span class="cv_-_computer_voice">Address#Suburb</span> after the field mapping call for <span class="cv_-_computer_voice">Address#CEDEXBureau</span>:</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <PRE class="CF_-_Code_First_Line"><a name="2497706">&nbsp;&nbsp;&nbsp;&nbsp;fieldMapping(Address#CEDEXBureau),</a></PRE>
+      <PRE class="CL_-_Code_Last_Line"><a name="2497707">&nbsp;&nbsp;&nbsp;&nbsp;</a><span class="s_-_strong">fieldMapping(Address#Suburb),</span></PRE>
+      <div class="LI_-_List_Item_outer" style="margin-left: 57pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="LI_-_List_Item_inner" style="width: 15pt; white-space: nowrap">
+                <span class="ri_-_run_in_header">	13.	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="LI_-_List_Item_inner"><a name="2497593">Make the following web service change in ContactManager only:</a></div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="LS2A_-_List_Start_002c_Level_2_Alpha_outer" style="margin-left: 67pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="LS2A_-_List_Start_002c_Level_2_Alpha_inner" style="width: 15pt; white-space: nowrap">
+                <span class="ri_-_run_in_header">a.	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="LS2A_-_List_Start_002c_Level_2_Alpha_inner"><a name="2490230">If necessary, open ContactManager Studio.</a></div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="LI2A_-_List_Item_002c_Level_2_Alpha_outer" style="margin-left: 67pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="LI2A_-_List_Item_002c_Level_2_Alpha_inner" style="width: 15pt; white-space: nowrap">
+                <span class="ri_-_run_in_header">b.	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="LI2A_-_List_Item_002c_Level_2_Alpha_inner"><a name="2490744">Navigate in the </a><span class="uis_-_UI_element_Studio">Project</span> window to <span class="uis_-_UI_element_Studio">configuration</span> → <span class="uis_-_UI_element_Studio">gsrc</span> and then to <span class="cv_-_computer_voice">gw/webservice/ab/ab801/abcontactapi/AddressInfo</span>.</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="LI2A_-_List_Item_002c_Level_2_Alpha_outer" style="margin-left: 67pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="LI2A_-_List_Item_002c_Level_2_Alpha_inner" style="width: 15pt; white-space: nowrap">
+                <span class="ri_-_run_in_header">c.	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="LI2A_-_List_Item_002c_Level_2_Alpha_inner"><a name="2490395">Add the following variable definition to the list of variables at the top of the class:</a></div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="CS_-_Code_Single_Line"><a name="2490504">&nbsp;&nbsp;&nbsp;&nbsp;public var Suburb : String</a></div>
+      <div class="LI2A_-_List_Item_002c_Level_2_Alpha_outer" style="margin-left: 67pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="LI2A_-_List_Item_002c_Level_2_Alpha_inner" style="width: 15pt; white-space: nowrap">
+                <span class="ri_-_run_in_header">d.	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="LI2A_-_List_Item_002c_Level_2_Alpha_inner"><a name="2490574">Add the following line of code to the method </a><span class="cv_-_computer_voice">construct(address : Address)</span>:</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="CS_-_Code_Single_Line"><a name="2490665">&nbsp;&nbsp;&nbsp;&nbsp;this.Suburb = address.Suburb</a></div>
+      <div class="LI_-_List_Item_outer" style="margin-left: 57pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="LI_-_List_Item_inner" style="width: 15pt; white-space: nowrap">
+                <span class="ri_-_run_in_header">	14.	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="LI_-_List_Item_inner"><a name="2508580">Restart ContactManager.</a></div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="LI_-_List_Item_outer" style="margin-left: 57pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="LI_-_List_Item_inner" style="width: 15pt; white-space: nowrap">
+                <span class="ri_-_run_in_header">	15.	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="LI_-_List_Item_inner"><a name="2508607">In BillingCenter studio, reload the ContactManager web service, as follows:</a></div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="LS2A_-_List_Start_002c_Level_2_Alpha_outer" style="margin-left: 67pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="LS2A_-_List_Start_002c_Level_2_Alpha_inner" style="width: 15pt; white-space: nowrap">
+                <span class="ri_-_run_in_header">a.	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="LS2A_-_List_Start_002c_Level_2_Alpha_inner"><a name="2508709">In the </a><span class="uis_-_UI_element_Studio">Project</span> window, navigate to <span class="uis_-_UI_element_Studio">configuration</span> → <span class="uis_-_UI_element_Studio">gsrc</span> → <span class="uis_-_UI_element_Studio">wsi</span> → <span class="uis_-_UI_element_Studio">remote</span> → <span class="uis_-_UI_element_Studio">ab</span> → <span class="uis_-_UI_element_Studio">ab801</span> and double-click <span class="cv_-_computer_voice">ab801.wsc</span> to open it in the editor.</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="LI2A_-_List_Item_002c_Level_2_Alpha_outer" style="margin-left: 67pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="LI2A_-_List_Item_002c_Level_2_Alpha_inner" style="width: 15pt; white-space: nowrap">
+                <span class="ri_-_run_in_header">b.	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="LI2A_-_List_Item_002c_Level_2_Alpha_inner"><a name="2508951">In the Resources pane, click </a><span class="cv_-_computer_voice">${ab}/ws/gw/webservice/ab/ab801/abcontactapi/ABContactAPI?wsdl</span> to select it.</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="LI2A_-_List_Item_002c_Level_2_Alpha_outer" style="margin-left: 67pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="LI2A_-_List_Item_002c_Level_2_Alpha_inner" style="width: 15pt; white-space: nowrap">
+                <span class="ri_-_run_in_header">c.	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="LI2A_-_List_Item_002c_Level_2_Alpha_inner"><a name="2509017">At the bottom of the </a><span class="cv_-_computer_voice">Resources</span> pane, click <span class="cv_-_computer_voice">Fetch Updates</span>.</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <h6 class="HS_-_Head_Sub"><a name="2505929">See also</a></h6>
+      <div class="BI_-_Bullet_Item_outer" style="margin-left: 57pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="BI_-_Bullet_Item_inner" style="width: 15pt; white-space: nowrap">
+                <span class="bu_-_bullet">•	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="BI_-_Bullet_Item_inner"><a href="javascript:WWHClickedPopup('global', 'address_config.22.3.html#2288623', '');" title="Understanding Global Addresses" name="2505958">“Understanding Global Addresses”</a></div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="BI_-_Bullet_Item_outer" style="margin-left: 57pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="BI_-_Bullet_Item_inner" style="width: 15pt; white-space: nowrap">
+                <span class="bu_-_bullet">•	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="BI_-_Bullet_Item_inner"><a href="javascript:WWHClickedPopup('global', 'address_config.22.3.html#2433349', '');" title="Understanding Global Addresses" name="2505969">“Configuring Address Data and Field Order for a Country”</a></div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="zChapterTopic_outer" style="margin-left: 57.6pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="zChapterTopic_inner" style="width: 9.899999999999998pt; white-space: nowrap">
+                <span class="bu_-_bullet">•	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="zChapterTopic_inner"><a href="javascript:WWHClickedPopup('global', 'address_config.22.4.html#2293241', '');" title="Address Modes in Page Configuration" name="2505997">“Address Modes in Page Configuration”</a></div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="zChapterTopic_outer" style="margin-left: 57.6pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="zChapterTopic_inner" style="width: 9.899999999999998pt; white-space: nowrap">
+                <span class="bu_-_bullet">•	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="zChapterTopic_inner"><a href="javascript:WWHClickedPopup('global', 'address_config.22.5.html#2434159', '');" title="Address Owners" name="2506001">“Address Owners”</a></div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="zChapterTopic_outer" style="margin-left: 57.6pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="zChapterTopic_inner" style="width: 9.899999999999998pt; white-space: nowrap">
+                <span class="bu_-_bullet">•	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="zChapterTopic_inner"><a href="javascript:WWHClickedPopup('global', 'address_config.22.7.html#2293845', '');" title="Address Autocompletion and Autofill" name="2506009">“Address Autocompletion and Autofill”</a></div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="BI_-_Bullet_Item_outer" style="margin-left: 57pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="BI_-_Bullet_Item_inner" style="width: 15pt; white-space: nowrap">
+                <span class="bu_-_bullet">•	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="BI_-_Bullet_Item_inner"><a href="javascript:WWHClickedPopup('global', 'localization_jurisdictions.21.7.html#2314282', '');" title="Configuring Zone Information" name="2505975">“Configuring Zone Information”</a></div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <h4 class="H2_-_Heading_2"><a name="2504698">Additional Steps for Configuring New Zealand Localization</a></h4>
+      <div class="B_-_Body"><a name="2504796">To test autofill and autocomplete in the New Zealand configuration, you need to import New Zealand sample data supporting the zones defined in </a><span class="cv_-_computer_voice">zone-config.xml</span>. If you use the previous <span class="cv_-_computer_voice">zone-config.xml</span> configuration, the format of the data is postal code, suburb, city. For example:</div>
+      <PRE class="CF_-_Code_First_Line"><a name="2505890">0110,Abbey Caves,Whangarei</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2505891">9018,Abbotsford,Dunedin</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2505892">3330,Acacia Bay,Taupo</a></PRE>
+      <PRE class="CL_-_Code_Last_Line"><a name="2505883">8011,Addington,Christchurch</a></PRE>
+      <div class="BI_-_Bullet_Item_outer" style="margin-left: 57pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="BI_-_Bullet_Item_inner" style="width: 15pt; white-space: nowrap">
+                <span class="bu_-_bullet">•	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="BI_-_Bullet_Item_inner"><a name="2505723">For information on creating zone information in a file you can import, see </a><a href="javascript:WWHClickedPopup('global', 'localization_jurisdictions.21.7.html#2314282', '');" title="Configuring Zone Information">“Configuring Zone Information”</a>.</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="BI_-_Bullet_Item_outer" style="margin-left: 57pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="BI_-_Bullet_Item_inner" style="width: 15pt; white-space: nowrap">
+                <span class="bu_-_bullet">•	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="BI_-_Bullet_Item_inner"><a name="2510771">For information on importing the file you create, see </a><a href="javascript:WWHClickedPopup('admin', 'commandsref.15.11.html#1775858', '');" title="Zone Import Command">“Zone Import Command” in the </a><span class="bt_-_book_title"><a href="javascript:WWHClickedPopup('admin', 'commandsref.15.11.html#1775858', '');" title="Zone Import Command">System Administration Guide</a></span>.</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="B_-_Body"><a name="2505914">Additional configurations you can perform are:</a></div>
+      <div class="BI_-_Bullet_Item_outer" style="margin-left: 57pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="BI_-_Bullet_Item_inner" style="width: 15pt; white-space: nowrap">
+                <span class="bu_-_bullet">•	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="BI_-_Bullet_Item_inner"><a name="2506648">Adding New Zealand jurisdictions to </a><span class="cv_-_computer_voice">Jursidiction.ttx</span> to provide drop-down lists of jurisdictions in the user interface. The previous example adds only New Zealand itself as a country typecode to this typelist.</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="BI_-_Bullet_Item_outer" style="margin-left: 57pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="BI_-_Bullet_Item_inner" style="width: 15pt; white-space: nowrap">
+                <span class="bu_-_bullet">•	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="BI_-_Bullet_Item_inner"><a name="2506059">Adding New Zealand regions in the BillingCenter Administration tab. You can then associate these regions with user groups and use them to assign work. </a></div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="BI2_-_Bullet_Item_002c_Level_2_outer" style="margin-left: 67pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="BI2_-_Bullet_Item_002c_Level_2_inner" style="width: 15pt; white-space: nowrap">
+                <span class="bu_-_bullet">•	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="BI2_-_Bullet_Item_002c_Level_2_inner"><a name="2506601">See </a><a href="javascript:WWHClickedPopup('app', 'security.72.2.html#1237058', '');" title="Users, Groups, and Roles">“Users, Groups, and Roles” in the </a><span class="bt_-_book_title"><a href="javascript:WWHClickedPopup('app', 'security.72.2.html#1237058', '');" title="Users, Groups, and Roles">Application Guide</a></span>.</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="BI_-_Bullet_Item_outer" style="margin-left: 57pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="BI_-_Bullet_Item_inner" style="width: 15pt; white-space: nowrap">
+                <span class="bu_-_bullet">•	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="BI_-_Bullet_Item_inner"><a name="2506044">Configuring New Zealand language support and regional formats. For example, after completing the previous configuration for the </a><span class="cv_-_computer_voice">Suburb</span> field, the only English language support is <span class="cv_-_computer_voice">en_US</span>. See:</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="BI2_-_Bullet_Item_002c_Level_2_outer" style="margin-left: 67pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="BI2_-_Bullet_Item_002c_Level_2_inner" style="width: 15pt; white-space: nowrap">
+                <span class="bu_-_bullet">•	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="BI2_-_Bullet_Item_002c_Level_2_inner"><a href="javascript:WWHClickedPopup('global', 'language_packs.06.1.html#2384556', '');" title="Working with Languages" name="2506841">“Working with Languages”</a></div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="BI2_-_Bullet_Item_002c_Level_2_outer" style="margin-left: 67pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="BI2_-_Bullet_Item_002c_Level_2_inner" style="width: 15pt; white-space: nowrap">
+                <span class="bu_-_bullet">•	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="BI2_-_Bullet_Item_002c_Level_2_inner"><a href="javascript:WWHClickedPopup('global', 'localization_add.15.1.html#1945233', '');" title="Working with Regional Formats" name="2506854">“Working with Regional Formats”</a></div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="B_-_Body"><a name="2475598">&nbsp;</a></div>
+      <script type="text/javascript" language="JavaScript1.2">
+        <!--
+          // Clear related topics
+          //
+          WWHClearRelatedTopics();
+
+          document.writeln(WWHRelatedTopicsInlineHTML());
+        // -->
+      </script>
+    </blockquote>
+    <script type="text/javascript" language="JavaScript1.2">
+      <!--
+        document.write(WWHRelatedTopicsDivTag() + WWHPopupDivTag() + WWHALinksDivTag());
+      // -->
+    </script>
+  </body>
+</html>

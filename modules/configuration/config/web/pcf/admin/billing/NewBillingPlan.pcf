@@ -1,0 +1,40 @@
+<?xml version="1.0"?>
+<PCF
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:noNamespaceSchemaLocation="../../../../../../pcf.xsd">
+  <Page
+    afterCancel="BillingPlans.go()"
+    afterCommit="BillingPlans.go()"
+    canEdit="true"
+    canVisit="perm.System.admintabview and perm.System.billplancreate"
+    id="NewBillingPlan"
+    parent="BillingPlans()"
+    showUpLink="true"
+    startInEditMode="true"
+    title="displaykey.Web.NewBillingPlan.Title">
+    <LocationEntryPoint
+      signature="NewBillingPlan(currency:Currency)"/>
+    <Variable
+      initialValue="initBillingPlan()"
+      name="billingPlan"
+      type="BillingPlan"/>
+    <Variable
+      name="currency"
+      type="Currency"/>
+    <Screen
+      id="NewBillingPlanDetailScreen">
+      <Toolbar>
+        <EditButtons/>
+      </Toolbar>
+      <PanelRef
+        def="BillingPlanDetailDV(billingPlan)"/>
+      <PanelRef
+        def="LocalizedValuesDV(billingPlan, { &quot;Name&quot;}, { displaykey.Web.Admin.Plan.Name })"/>
+    </Screen>
+    <Code><![CDATA[function initBillingPlan() : BillingPlan {
+  var newBillingPlan = new BillingPlan(currency, CurrentLocation)
+  newBillingPlan.EffectiveDate = util.DateUtil.currentDate();
+  return newBillingPlan;
+}]]></Code>
+  </Page>
+</PCF>

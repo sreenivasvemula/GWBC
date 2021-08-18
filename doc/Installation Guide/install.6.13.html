@@ -1,0 +1,278 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xml:lang="en" lang="en" xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+    <meta http-equiv="Content-Style-Type" content="text/css" />
+    <!-- MOTW-DISABLED saved from url=(0014)about:internet -->
+    <title>Creating a JDNI Data Source on Tomcat</title>
+    <link rel="StyleSheet" href="css/install.css" type="text/css" media="all" />
+    <link rel="StyleSheet" href="css/webworks.css" type="text/css" media="all" />
+    <link rel="StyleSheet" href="css/css-guidewire-extra.css" type="text/css" media="all" />
+    <script type="text/javascript" language="JavaScript1.2" src="wwhdata/common/context.js"></script>
+    <script type="text/javascript" language="JavaScript1.2" src="wwhdata/common/towwhdir.js"></script>
+    <script type="text/javascript" language="JavaScript1.2" src="wwhdata/common/wwhpagef.js"></script>
+    <script type="text/javascript" language="JavaScript1.2">
+      <!--
+        var  WebWorksRootPath = "";
+      // -->
+    </script>
+    <script type="text/javascript" language="JavaScript1.2">
+      <!--
+        // Set reference to top level help frame
+        //
+        var  WWHFrame = WWHGetWWHFrame("", true);
+      // -->
+    </script>
+    <script type="text/javascript" language="JavaScript1.2" src="scripts/expand.js"></script>
+    <!-- THE FOLLOWING IS A GUIDEWIRE STYLE DEFINITION FOR THE LINK TO THIS FEATURE -->
+    <link rel="StyleSheet" href="css/css-guidewire-extra.css" type="text/css" media="all" />
+    <!-- THE FOLLOWING IS A GUIDEWIRE GSCRIPT FUNCTION FOR THE LINK TO THIS FEATURE -->
+    <script type="text/javascript">
+function guidewire_selectall()
+{
+var text_val=eval("document.linktothisurlform.urlfield");
+text_val.focus();
+text_val.select();
+}
+</script>
+  </head>
+  <body onLoad="WWHUpdate();" onUnload="WWHUnload();" onKeyDown="WWHHandleKeyDown((document.all||document.getElementById||document.layers)?event:null);" onKeyPress="WWHHandleKeyPress((document.all||document.getElementById||document.layers)?event:null);" onKeyUp="WWHHandleKeyUp((document.all||document.getElementById||document.layers)?event:null);">
+    <!-- THE FOLLOWING IS A GUIDEWIRE DIV FOR THE 'LINK TO THIS' FEATURE -->
+    <div id="linkToThisPage" class="popup" style="display: none;">
+      <div class="popupTitle">Link Directly to This Page 
+           <a href="#" onclick="var thePopup = getElementById('linkToThisPage');thePopup.style.display='none';return false;"><img class="popupClosebox" src="wwhelp/wwhimpl/common/images/close.gif" /></a></div>
+      <div style="padding:6px;">
+        <div class="popupText" id="linkToThisPageBookmark">An error has occurred if you see this messsage.</div>
+        <form name="linktothisurlform" method="post" action="" style="width:275px;margin:0px">
+          <input type="text" class="popupURLText" id="linkToThisPageURL" name="urlfield" rows="1" cols="55" onClick="guidewire_selectall();" onFocus="guidewire_selectall();"></input>
+        </form>
+      </div>
+    </div>
+    <br />
+    <div class="WebWorks_Breadcrumbs" style="text-align: left;">
+      <span>BillingCenter Installation Guide</span> : 
+    <span class="WebWorks_Breadcrumbs" style="text-align: left;"><a class="WebWorks_Breadcrumb_Link" href="install.6.01.html#2351087">Installing a BillingCenter Production Environment</a> : <a class="WebWorks_Breadcrumb_Link" href="install.6.03.html#2351087">Configuring a Database Connection</a> : Creating a JDNI Data Source on Tomcat</span></div>
+    <hr align="left" />
+    <blockquote>
+      <h4 class="H2B_-_Heading_2_Break"><a name="2351087">Creating a JDNI Data Source on Tomcat</a></h4>
+      <div class="B_-_Body"><a name="2351144">This topic describes how to create a JNDI data source on Tomcat. To configure BillingCenter to use the data source, see </a><a href="javascript:WWHClickedPopup('install', 'install.6.11.html#2267940', '');" title="Configuring BillingCenter to Use a JNDI Data Source">“Configuring BillingCenter to Use a JNDI Data Source”</a>.</div>
+      <div class="B_-_Body"><a name="2351148">This topic includes the following:</a></div>
+      <div class="BI_-_Bullet_Item_outer" style="margin-left: 57pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="BI_-_Bullet_Item_inner" style="width: 15pt; white-space: nowrap">
+                <span class="bu_-_bullet">•	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="BI_-_Bullet_Item_inner"><a href="javascript:WWHClickedPopup('install', 'install.6.13.html#2352558', '');" title="Creating a JDNI Data Source on Tomcat" name="2351152">Creating an Oracle JNDI Data Source on Tomcat</a></div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="BI_-_Bullet_Item_outer" style="margin-left: 57pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="BI_-_Bullet_Item_inner" style="width: 15pt; white-space: nowrap">
+                <span class="bu_-_bullet">•	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="BI_-_Bullet_Item_inner"><a href="javascript:WWHClickedPopup('install', 'install.6.13.html#2351137', '');" title="Creating a JDNI Data Source on Tomcat" name="2351156">Creating a SQL Server JNDI Data Source on Tomcat</a></div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <h6 class="HS_-_Head_Sub"><a name="2352429">See also</a></h6>
+      <div class="BI_-_Bullet_Item_outer" style="margin-left: 57pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="BI_-_Bullet_Item_inner" style="width: 15pt; white-space: nowrap">
+                <span class="bu_-_bullet">•	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="BI_-_Bullet_Item_inner"><span class="cv_-_computer_voice"><a href="http://commons.apache.org/proper/commons-dbcp/configuration.html" target="external_window" name="2352446">http://commons.apache.org/proper/commons-dbcp/configuration.html</a></span> for more info about configuring the data source.</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="H3_-_Heading_3_outer" style="margin-left: 36pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <h5 class="H3_-_Heading_3_inner" style="width: 18pt; white-space: nowrap"></h5>
+            </td>
+            <td width="100%">
+              <h5 class="H3_-_Heading_3_inner"><a name="2352558">Creating an Oracle JNDI Data Source on Tomcat</a></h5>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="LS_-_List_Start_outer" style="margin-left: 57pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="LS_-_List_Start_inner" style="width: 15pt; white-space: nowrap">
+                <span class="ri_-_run_in_header">	1.	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="LS_-_List_Start_inner"><a name="2352562">Copy the </a><span class="cv_-_computer_voice">ojdbc7-12.1.0.1.0-prod.jar</span> file from the <span class="cv_-_computer_voice">BillingCenter/admin/lib</span> directory to the <span class="cv_-_computer_voice">lib</span> directory within the Tomcat home. The <span class="cv_-_computer_voice">ojdbc7-12.1.0.1.0-prod.jar</span> file contains the APIs for connecting to the BillingCenter database.</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="LI_-_List_Item_outer" style="margin-left: 57pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="LI_-_List_Item_inner" style="width: 15pt; white-space: nowrap">
+                <span class="ri_-_run_in_header">	2.	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="LI_-_List_Item_inner"><a name="2352566">Add a </a><span class="cv_-_computer_voice">Resource</span> entry to the <span class="cv_-_computer_voice">context.xml</span> file in the <span class="cv_-_computer_voice">conf</span> directory of the Tomcat instance. If the <span class="cv_-_computer_voice">context.xml</span> file does not exist, create it. The <span class="cv_-_computer_voice">Resource</span> element must be a child of the top-level <span class="cv_-_computer_voice">Context</span> element. The resource name must match the <span class="cv_-_computer_voice">datasource-name</span> attribute of the <span class="cv_-_computer_voice">jndi-connection-pool</span> element in <span class="cv_-_computer_voice">database-config.xml</span>. For example:</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <PRE class="CF_-_Code_First_Line"><a name="2352570">&lt;Resource name="jdbc/bcDataSource" auth="Container" type="javax.sql.DataSource"</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2352571">&nbsp;driverClassName="oracle.jdbc.OracleDriver"</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2352572">&nbsp;url="jdbc:oracle:thin:</a><span class="pc_-_parameter_in_code">database user</span>/<span class="pc_-_parameter_in_code">database password@database server name</span>:<span class="pc_-_parameter_in_code">port</span>/<span class="pc_-_parameter_in_code">OracleSID"</span></PRE>
+      <PRE class="CL_-_Code_Last_Line"><a name="2352573">&nbsp;username="</a><span class="pc_-_parameter_in_code">database user</span>" password="<span class="pc_-_parameter_in_code">database password</span>" maxActive="20" maxIdle="10" maxWait="-1"/&gt;</PRE>
+      <div class="LI_-_List_Item_outer" style="margin-left: 57pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="LI_-_List_Item_inner" style="width: 15pt; white-space: nowrap">
+                <span class="ri_-_run_in_header">	3.	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="LI_-_List_Item_inner"><a name="2352574">Add a </a><span class="cv_-_computer_voice">resource-ref</span> entry to the <span class="cv_-_computer_voice">web.xml</span> file in the <span class="cv_-_computer_voice">conf</span> directory of the Tomcat instance. For example:</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <PRE class="CF_-_Code_First_Line"><a name="2352575">&lt;resource-ref&gt;</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2352576">&nbsp;&nbsp;&lt;description&gt;Oracle Datasource&lt;/description&gt;</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2352577">&nbsp;&nbsp;&lt;res-ref-name&gt;jdbc/</a><span class="pc_-_parameter_in_code">Datasource name</span>&lt;/res-ref-name&gt;</PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2352578">&nbsp;&nbsp;&lt;res-type&gt;javax.sql.DataSource&lt;/res-type&gt;</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2352579">&nbsp;&nbsp;&lt;res-auth&gt;Container&lt;/res-auth&gt;</a></PRE>
+      <PRE class="CL_-_Code_Last_Line"><a name="2352580">&lt;/resource-ref&gt;</a></PRE>
+      <div class="LI_-_List_Item_outer" style="margin-left: 57pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="LI_-_List_Item_inner" style="width: 15pt; white-space: nowrap">
+                <span class="ri_-_run_in_header">	4.	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="LI_-_List_Item_inner"><a name="2352581">Restart the Tomcat instance.</a></div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="H3_-_Heading_3_outer" style="margin-left: 36pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <h5 class="H3_-_Heading_3_inner" style="width: 18pt; white-space: nowrap"></h5>
+            </td>
+            <td width="100%">
+              <h5 class="H3_-_Heading_3_inner"><a name="2351137">Creating a SQL Server JNDI Data Source on Tomcat</a></h5>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="LS_-_List_Start_outer" style="margin-left: 57pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="LS_-_List_Start_inner" style="width: 15pt; white-space: nowrap">
+                <span class="ri_-_run_in_header">	1.	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="LS_-_List_Start_inner"><a name="2351251">Copy the </a><span class="cv_-_computer_voice">sqljdbc4-4.0.2206.100.jar</span> file from the <span class="cv_-_computer_voice">BillingCenter/admin/lib</span> directory to the <span class="cv_-_computer_voice">lib</span> directory within the Tomcat home. The <span class="cv_-_computer_voice">sqljdbc4-4.0.2206.100.jar</span> file contains the APIs for connecting to the BillingCenter database.</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="LI_-_List_Item_outer" style="margin-left: 57pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="LI_-_List_Item_inner" style="width: 15pt; white-space: nowrap">
+                <span class="ri_-_run_in_header">	2.	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="LI_-_List_Item_inner"><a name="2352119">Add a </a><span class="cv_-_computer_voice">Resource</span> entry to the <span class="cv_-_computer_voice">context.xml</span> file in the <span class="cv_-_computer_voice">conf</span> directory of the Tomcat instance. If the <span class="cv_-_computer_voice">context.xml</span> file does not exist, create it. The <span class="cv_-_computer_voice">Resource</span> element must be a child of the top-level <span class="cv_-_computer_voice">Context</span> element. The resource <span class="cv_-_computer_voice">name</span> attribute must match the <span class="cv_-_computer_voice">datasource-name</span> attribute of the <span class="cv_-_computer_voice">jndi-connection-pool</span> element in <span class="cv_-_computer_voice">database-config.xml</span>. For example:</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <PRE class="CF_-_Code_First_Line"><a name="2352253">&lt;Resource name="jdbc/bcDataSource" auth="Container" type="javax.sql.DataSource"</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2352254">&nbsp;driverClassName="com.microsoft.sqlserver.jdbc.SQLServerDriver"</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2352255">&nbsp;url="jdbc:sqlserver://</a><span class="pc_-_parameter_in_code">database server name</span>:<span class="pc_-_parameter_in_code">database server port</span>;selectMethod=direct;</PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2352256">&nbsp;&nbsp;&nbsp;databaseName=</a><span class="pc_-_parameter_in_code">database name</span>;sendStringParametersAsUnicode=false;user=<span class="pc_-_parameter_in_code">database user</span>;</PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2352257">&nbsp;&nbsp;&nbsp;password=</a><span class="pc_-_parameter_in_code">database password</span>"</PRE>
+      <PRE class="CL_-_Code_Last_Line"><a name="2352406">&nbsp;username="</a><span class="pc_-_parameter_in_code">database user</span>" password="<span class="pc_-_parameter_in_code">database password</span>" maxActive="20" maxIdle="10" maxWait="-1"/&gt;</PRE>
+      <div class="LI_-_List_Item_outer" style="margin-left: 57pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="LI_-_List_Item_inner" style="width: 15pt; white-space: nowrap">
+                <span class="ri_-_run_in_header">	3.	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="LI_-_List_Item_inner"><a name="2351796">Add a </a><span class="cv_-_computer_voice">resource-ref</span> entry to the <span class="cv_-_computer_voice">web.xml</span> file in the <span class="cv_-_computer_voice">conf</span> directory of the Tomcat instance. For example:</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <PRE class="CF_-_Code_First_Line"><a name="2351860">&lt;resource-ref&gt;</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2351861">&nbsp;&nbsp;&lt;description&gt;SQL Server Datasource&lt;/description&gt;</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2351862">&nbsp;&nbsp;&lt;res-ref-name&gt;jdbc/</a><span class="pc_-_parameter_in_code">Datasource name</span>&lt;/res-ref-name&gt;</PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2351863">&nbsp;&nbsp;&lt;res-type&gt;javax.sql.DataSource&lt;/res-type&gt;</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2351864">&nbsp;&nbsp;&lt;res-auth&gt;Container&lt;/res-auth&gt;</a></PRE>
+      <PRE class="CL_-_Code_Last_Line"><a name="2351856">&lt;/resource-ref&gt;</a></PRE>
+      <div class="LI_-_List_Item_outer" style="margin-left: 57pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="LI_-_List_Item_inner" style="width: 15pt; white-space: nowrap">
+                <span class="ri_-_run_in_header">	4.	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="LI_-_List_Item_inner"><a name="2352536">Restart the Tomcat instance.</a></div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <script type="text/javascript" language="JavaScript1.2">
+        <!--
+          // Clear related topics
+          //
+          WWHClearRelatedTopics();
+
+          document.writeln(WWHRelatedTopicsInlineHTML());
+        // -->
+      </script>
+    </blockquote>
+    <script type="text/javascript" language="JavaScript1.2">
+      <!--
+        document.write(WWHRelatedTopicsDivTag() + WWHPopupDivTag() + WWHALinksDivTag());
+      // -->
+    </script>
+  </body>
+</html>

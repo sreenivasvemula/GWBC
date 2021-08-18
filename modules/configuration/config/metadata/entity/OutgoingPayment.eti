@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?><entity xmlns="http://guidewire.com/datamodel" abstract="true" desc="Represents information about a payment sent out by the carrier" entity="OutgoingPayment" final="false" platform="false" setterScriptability="hidden" subpackage="payment" table="outgoingpayment" type="retireable">
+  <implementsEntity name="Validatable"/>
+  <implementsEntity name="PaymentReceipt"/>
+  <implementsEntity name="InCurrencySilo"/>
+  <!-- Note: The three Date fields (IssueDate, PaidDate, RejectedDate) are not intentionally not used in the base product -->
+  <column desc="Date the payment was issued." name="IssueDate" nullok="true" type="datetime"/>
+  <column desc="Date the payment was actually paid, if ever." name="PaidDate" nullok="true" type="datetime"/>
+  <column desc="Date the payment was rejected, if ever." name="RejectedDate" nullok="true" type="datetime"/>
+  <column desc="Name of the person/company to whom the payment should be sent" name="MailTo" nullok="false" setterScriptability="hidden" type="shorttext"/>
+  <column desc="Address of the person/company to whom the payment should be sent" name="MailToAddress" nullok="true" setterScriptability="hidden" type="shorttext"/>
+  <column desc="Memo to include on the payment." name="Memo" nullok="true" type="shorttext"/>
+  <column desc="Pay to the order of." name="PayTo" nullok="false" setterScriptability="hidden" supportsLinguisticSearch="true" type="shorttext"/>
+  <typekey default="draft" desc="Status of the payment." name="Status" nullok="false" typelist="OutgoingPaymentStatus"/>
+  <index desc="Index to support linguistic search of the PayTo text field" name="paytodenorm">
+    <indexcol keyposition="1" name="PayToDenorm"/>
+    <indexcol keyposition="2" name="Retired"/>
+  </index>
+  <events>
+    <event description="Fired when the payment is created, and each time its status changes." name="OutgoingPaymentStatusChanged"/>
+  </events>
+  <dbcheckbuilder className="com.guidewire.bc.system.database.dbchecks.payment.OutgoingPaymentDBCheckBuilder"/>
+</entity>

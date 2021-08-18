@@ -1,0 +1,35 @@
+<?xml version="1.0"?>
+<entity
+  xmlns="http://guidewire.com/datamodel"
+  entity="CollateralContext"
+  type="editable"
+  desc="Context for collateral-level transactions."
+  final="false"
+  ignoreForEvents="true"
+  subpackage="accounting.transaction"
+  overwrittenInStagingTable="true"
+  platform="false"
+  table="collateralcontext"
+  setterScriptability="hidden">
+  <implementsEntity
+    name="TransactionContext"/>
+  <implementsEntity
+    name="InCurrencySilo"/>
+  <foreignkey
+    name="Collateral"
+    desc="The collateral associated with this transaction"
+    columnName="CollateralID"
+    fkentity="Collateral"
+    getterScriptability="hidden"
+    ignoreforevents="true"
+    nullok="false"
+    setterScriptability="hidden"/>
+  <foreignkey
+    name="Transaction"
+    desc="Reference to collateral transaction"
+    columnName="TransactionID"
+    fkentity="CollateralTransaction"
+    getterScriptability="doesNotExist"
+    nullok="false"
+    setterScriptability="doesNotExist"/>
+</entity>

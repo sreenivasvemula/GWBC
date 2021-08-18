@@ -1,0 +1,145 @@
+<?xml version="1.0"?>
+<PCF
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:noNamespaceSchemaLocation="../../../../../pcf.xsd">
+  <MenuActions
+    id="AdminMenuActions">
+    <MenuItem
+      action="NewBillingPlan.go(gw.api.util.CurrencyUtil.getDefaultCurrency())"
+      id="AdminMenuActions_NewBillingPlan"
+      label="displaykey.Web.Admin.Menu.NewBillingPlan"
+      visible="perm.System.admintabview and perm.System.billplancreate">
+      <MenuItemIterator
+        elementName="currency"
+        value="Currency.getTypeKeys(false)"
+        visible="isMultiCurrencyMode()">
+        <MenuItem
+          action="NewBillingPlan.go(currency)"
+          id="BillingPlanCurrencyItem"
+          label="currency"/>
+      </MenuItemIterator>
+    </MenuItem>
+    <MenuItem
+      action="NewPaymentPlan.go(gw.api.util.CurrencyUtil.getDefaultCurrency())"
+      id="AdminMenuActions_NewPaymentPlan"
+      label="displaykey.Web.Admin.Menu.NewPaymentPlan"
+      visible="perm.System.admintabview and perm.System.pmntplancreate">
+      <MenuItemIterator
+        elementName="currency"
+        value="Currency.getTypeKeys(false)"
+        visible="isMultiCurrencyMode()">
+        <MenuItem
+          action="NewPaymentPlan.go(currency)"
+          id="PaymentPlanCurrencyItem"
+          label="currency"/>
+      </MenuItemIterator>
+    </MenuItem>
+    <MenuItem
+      action="NewCommissionPlan.go(gw.api.util.CurrencyUtil.getDefaultCurrency())"
+      id="AdminMenuActions_NewCommissionPlan"
+      label="displaykey.Web.Admin.Menu.NewCommissionPlan"
+      visible="perm.System.admintabview and perm.System.commplancreate">
+      <MenuItemIterator
+        elementName="currency"
+        value="Currency.getTypeKeys(false)"
+        visible="isMultiCurrencyMode()">
+        <MenuItem
+          action="NewCommissionPlan.go(currency)"
+          id="CommissionPlanCurrencyItem"
+          label="currency"/>
+      </MenuItemIterator>
+    </MenuItem>
+    <MenuItem
+      action="NewDelinquencyPlan.go(gw.api.util.CurrencyUtil.getDefaultCurrency())"
+      id="AdminMenuActions_NewDelinquencyPlan"
+      label="displaykey.Web.Admin.Menu.NewDelinquencyPlan"
+      visible="perm.System.admintabview and perm.System.delplancreate">
+      <MenuItemIterator
+        elementName="currency"
+        value="Currency.getTypeKeys(false)"
+        visible="isMultiCurrencyMode()">
+        <MenuItem
+          action="NewDelinquencyPlan.go(currency)"
+          id="DelinquencyPlanCurrencyItem"
+          label="currency"/>
+      </MenuItemIterator>
+    </MenuItem>
+    <MenuItem
+      action="NewAgencyBillPlan.go(gw.api.util.CurrencyUtil.getDefaultCurrency())"
+      id="AdminMenuActions_NewAgencyBillPlan"
+      label="displaykey.Web.Admin.Menu.NewAgencyBillPlan"
+      visible="perm.System.admintabview and perm.System.agencybillplancreate">
+      <MenuItemIterator
+        elementName="currency"
+        value="Currency.getTypeKeys(false)"
+        visible="isMultiCurrencyMode()">
+        <MenuItem
+          action="NewAgencyBillPlan.go(currency)"
+          id="AgencyBillPlanCurrencyItem"
+          label="currency"/>
+      </MenuItemIterator>
+    </MenuItem>
+    <MenuItem
+      action="NewReturnPremiumPlan.go()"
+      id="AdminMenuActions_NewReturnPremiumPlan"
+      label="displaykey.Web.Admin.Menu.NewReturnPremiumPlan"
+      visible="perm.System.admintabview and perm.System.retpremplancreate"/>
+    <MenuItem
+      action="NewPaymentAllocationPlan.go()"
+      id="AdminMenuActions_NewPaymentAllocationPlan"
+      label="displaykey.Web.Admin.Menu.NewPaymentAllocationPlan"
+      visible="perm.System.admintabview and perm.System.payallocplancreate"/>
+    <MenuItem
+      action="NewCollectionAgency.go()"
+      id="AdminMenuActions_NewCollectionAgency"
+      label="displaykey.Web.Admin.Menu.NewCollectionAgency"
+      visible="perm.System.admintabview and perm.System.colagencycreate"/>
+    <MenuItem
+      id="AdminMenuActions_NewChargePattern"
+      label="displaykey.Web.ChargePatternsScreen.NewChargePattern">
+      <MenuItem
+        action="NewChargePattern.go(&quot;ImmediateCharge&quot;)"
+        id="NewImmediateCharge"
+        label="displaykey.Web.ChargePatternsScreen.NewImmediateCharge"
+        visible="perm.System.admintabview and perm.System.chargepatterncreate"/>
+      <MenuItem
+        action="NewChargePattern.go(&quot;PassThroughCharge&quot;)"
+        id="NewPassThroughCharge"
+        label="displaykey.Web.ChargePatternsScreen.NewPassThroughCharge"
+        visible="perm.System.admintabview and perm.System.chargepatterncreate"/>
+      <MenuItem
+        action="NewChargePattern.go(&quot;ProRataCharge&quot;)"
+        id="NewProRataCharge"
+        label="displaykey.Web.ChargePatternsScreen.NewProRataCharge"
+        visible="perm.System.admintabview and perm.System.chargepatterncreate"/>
+      <MenuItem
+        action="NewChargePattern.go(&quot;RecaptureCharge&quot;)"
+        id="NewRecaptureCharge"
+        label="displaykey.Web.ChargePatternsScreen.NewRecaptureCharge"
+        visible="perm.System.admintabview and perm.System.chargepatterncreate"/>
+    </MenuItem>
+    <MenuItem
+      action="NewUserWizard.go()"
+      id="AdminMenuActions_NewUser"
+      label="displaykey.Web.Admin.Menu.NewUser"
+      visible="perm.User.create and perm.System.useradmin"/>
+    <MenuItem
+      action="NewRole.go()"
+      id="AdminMenuActions_NewRole"
+      label="displaykey.Web.Admin.Menu.NewRole"
+      visible="perm.Role.create"/>
+    <MenuItem
+      action="NewGroup.go()"
+      id="AdminMenuActions_NewGroup"
+      label="displaykey.Web.Admin.Menu.NewGroup"
+      visible="perm.Group.create"/>
+    <MenuItem
+      action="NewAuthorityLimitProfile.go()"
+      id="AdminMenuActions_NewAuthorityLimitProfile"
+      label="displaykey.Web.Admin.Menu.AuthorityLimitProfile"
+      visible="perm.System.alpmanage"/>
+    <Code><![CDATA[function isMultiCurrencyMode() : boolean {
+  return gw.api.util.CurrencyUtil.isMultiCurrencyMode() and Currency.getTypeKeys(true).Count > 1
+}]]></Code>
+  </MenuActions>
+</PCF>

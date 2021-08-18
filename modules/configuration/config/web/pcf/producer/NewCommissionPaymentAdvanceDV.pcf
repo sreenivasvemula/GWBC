@@ -1,0 +1,35 @@
+<?xml version="1.0"?>
+<PCF
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:noNamespaceSchemaLocation="../../../../../pcf.xsd">
+  <DetailViewPanel
+    editable="canEdit"
+    id="NewCommissionPaymentAdvanceDV">
+    <Require
+      name="advancePayment"
+      type="AdvanceCmsnPayment"/>
+    <Require
+      name="canEdit"
+      type="Boolean"/>
+    <InputColumn>
+      <Label
+        id="invoiceItemType"
+        label="displaykey.Web.NewCommissionPaymentAdvanceDV.Details"/>
+      <MonetaryAmountInput
+        currency="advancePayment.Currency"
+        editable="true"
+        formatType="currency"
+        id="Amount"
+        label="displaykey.Web.NewCommissionPaymentAdvanceDV.Amount"
+        required="true"
+        value="advancePayment.Amount"/>
+      <DateInput
+        editable="true"
+        id="MaintainUntil"
+        label="displaykey.Web.NewCommissionPaymentAdvanceDV.MaintainUntil"
+        required="true"
+        validationExpression="advancePayment.MaintainUntil &lt;= util.DateUtil.currentDate() ? displaykey.Web.NewCommissionPaymentAdvanceDV.Error.InvalidMaintainUntil : null"
+        value="advancePayment.MaintainUntil"/>
+    </InputColumn>
+  </DetailViewPanel>
+</PCF>

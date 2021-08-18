@@ -1,0 +1,92 @@
+<?xml version="1.0"?>
+<PCF
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:noNamespaceSchemaLocation="../../../../../pcf.xsd">
+  <!-- This Detail View displays basic information about an existing Trouble Ticket.
+       Typical usage is on the Trouble Ticket Details page. -->
+  <DetailViewPanel
+    id="TroubleTicketInfoDV">
+    <Require
+      name="ticket"
+      type="TroubleTicket"/>
+    <Require
+      name="AssigneeHolder"
+      type="assignment.Assignee[]"/>
+    <!-- First Column displays information about the trouble ticket such as the title, creation date, priority, etc -->
+    <InputColumn>
+      <Label
+        label="displaykey.Web.TroubleTicketInfoDV.TroubleTicketInformation"/>
+      <Input
+        id="TicketNumber"
+        label="displaykey.Web.TroubleTicketInfoDV.TicketNumber"
+        value="ticket.TroubleTicketNumber"
+        visible="ticket.TroubleTicketNumber != null"/>
+      <RangeInput
+        editable="true"
+        id="TicketType"
+        label="displaykey.Web.TroubleTicketInfoDV.Type"
+        required="true"
+        value="ticket.TicketType"
+        valueRange="ticket.AvailableTicketTypes"/>
+      <Input
+        editable="true"
+        id="Subject"
+        label="displaykey.Web.TroubleTicketInfoDV.Subject"
+        required="true"
+        value="ticket.Title"/>
+      <AssigneeInput
+        assignable="ticket"
+        editable="perm.TroubleTicket.assign(ticket)"
+        id="AssignTicketOwner"
+        label="displaykey.Web.TroubleTicketInfoDV.AssignedTo"
+        required="true"
+        sortValueRange="false"
+        value="AssigneeHolder[0]"
+        valueRange="ticket.SuggestedAssignees"/>
+      <TextInput
+        id="CreatedBy"
+        label="displaykey.Web.TroubleTicketInfoDV.CreatedBy"
+        value="ticket.CreateUser"
+        visible="ticket.CreateUser != null"/>
+      <Input
+        id="CreateDate"
+        label="displaykey.Web.TroubleTicketInfoDV.DateOpened"
+        value="ticket.CreateTime"
+        visible="ticket.CreateTime != null"/>
+      <Input
+        editable="true"
+        id="DueDate"
+        label="displaykey.Web.TroubleTicketInfoDV.DueDate"
+        validationExpression="gw.troubleticket.TroubleTicketMethods.validateTargetDate(ticket)"
+        value="ticket.TargetDate"/>
+      <DateInput
+        editable="true"
+        id="EscalationDate"
+        label="displaykey.Web.TroubleTicketInfoDV.EscalationDate"
+        validationExpression="gw.troubleticket.TroubleTicketMethods.validateEscalationDate(ticket)"
+        value="ticket.EscalationDate"/>
+      <TypeKeyInput
+        editable="true"
+        id="Priority"
+        label="displaykey.Web.TroubleTicketInfoDV.Priority"
+        required="true"
+        value="ticket.Priority"/>
+      <Input
+        id="Status"
+        label="displaykey.Web.TroubleTicketInfoDV.Status"
+        value="ticket.TicketStatus"/>
+    </InputColumn>
+    <!-- Second Column displays the detailed description of the trouble ticket -->
+    <InputColumn>
+      <!-- Detailed Description of the Trouble Ticket -->
+      <Label
+        label="displaykey.Web.TroubleTicketInfoDV.DetailedDescription"/>
+      <TextAreaInput
+        editable="true"
+        id="DetailedDescription"
+        numRows="10"
+        required="true"
+        value="ticket.DetailedDescription"/>
+    </InputColumn>
+  </DetailViewPanel>
+</PCF>

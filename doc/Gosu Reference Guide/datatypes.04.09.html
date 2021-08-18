@@ -1,0 +1,240 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xml:lang="en" lang="en" xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+    <meta http-equiv="Content-Style-Type" content="text/css" />
+    <!-- MOTW-DISABLED saved from url=(0014)about:internet -->
+    <title>Entity Arrays and Their Automatic Methods</title>
+    <link rel="StyleSheet" href="css/datatypes.css" type="text/css" media="all" />
+    <link rel="StyleSheet" href="css/webworks.css" type="text/css" media="all" />
+    <link rel="StyleSheet" href="css/css-guidewire-extra.css" type="text/css" media="all" />
+    <script type="text/javascript" language="JavaScript1.2" src="wwhdata/common/context.js"></script>
+    <script type="text/javascript" language="JavaScript1.2" src="wwhdata/common/towwhdir.js"></script>
+    <script type="text/javascript" language="JavaScript1.2" src="wwhdata/common/wwhpagef.js"></script>
+    <script type="text/javascript" language="JavaScript1.2">
+      <!--
+        var  WebWorksRootPath = "";
+      // -->
+    </script>
+    <script type="text/javascript" language="JavaScript1.2">
+      <!--
+        // Set reference to top level help frame
+        //
+        var  WWHFrame = WWHGetWWHFrame("", true);
+      // -->
+    </script>
+    <script type="text/javascript" language="JavaScript1.2" src="scripts/expand.js"></script>
+    <!-- THE FOLLOWING IS A GUIDEWIRE STYLE DEFINITION FOR THE LINK TO THIS FEATURE -->
+    <link rel="StyleSheet" href="css/css-guidewire-extra.css" type="text/css" media="all" />
+    <!-- THE FOLLOWING IS A GUIDEWIRE GSCRIPT FUNCTION FOR THE LINK TO THIS FEATURE -->
+    <script type="text/javascript">
+function guidewire_selectall()
+{
+var text_val=eval("document.linktothisurlform.urlfield");
+text_val.focus();
+text_val.select();
+}
+</script>
+  </head>
+  <body onLoad="WWHUpdate();" onUnload="WWHUnload();" onKeyDown="WWHHandleKeyDown((document.all||document.getElementById||document.layers)?event:null);" onKeyPress="WWHHandleKeyPress((document.all||document.getElementById||document.layers)?event:null);" onKeyUp="WWHHandleKeyUp((document.all||document.getElementById||document.layers)?event:null);">
+    <!-- THE FOLLOWING IS A GUIDEWIRE DIV FOR THE 'LINK TO THIS' FEATURE -->
+    <div id="linkToThisPage" class="popup" style="display: none;">
+      <div class="popupTitle">Link Directly to This Page 
+           <a href="#" onclick="var thePopup = getElementById('linkToThisPage');thePopup.style.display='none';return false;"><img class="popupClosebox" src="wwhelp/wwhimpl/common/images/close.gif" /></a></div>
+      <div style="padding:6px;">
+        <div class="popupText" id="linkToThisPageBookmark">An error has occurred if you see this messsage.</div>
+        <form name="linktothisurlform" method="post" action="" style="width:275px;margin:0px">
+          <input type="text" class="popupURLText" id="linkToThisPageURL" name="urlfield" rows="1" cols="55" onClick="guidewire_selectall();" onFocus="guidewire_selectall();"></input>
+        </form>
+      </div>
+    </div>
+    <br />
+    <div class="WebWorks_Breadcrumbs" style="text-align: left;">
+      <span>Gosu Reference Guide</span> : 
+    <span class="WebWorks_Breadcrumbs" style="text-align: left;"><a class="WebWorks_Breadcrumb_Link" href="datatypes.04.01.html#1550269">Types</a> : <a class="WebWorks_Breadcrumb_Link" href="datatypes.04.07.html#1550269">Array Types</a> : Entity Arrays and Their Automatic Methods</span></div>
+    <hr align="left" />
+    <blockquote>
+      <h4 class="H2B_-_Heading_2_Break"><a name="1550269">Entity Arrays and Their Automatic Methods</a></h4>
+      <div class="B_-_Body"><a name="1550274">In the metadata definition for an entity type, you can define a property that is an array of read-only entity instances of another specific type. In Guidewire BillingCenter for example, the property </a><span class="cv_-_computer_voice">Roles</span> in entity metadata definition <span class="cv_-_computer_voice">user.eti</span> is an associative array of <span class="cv_-_computer_voice">role</span> objects that relate to a user.</div>
+      <div class="CS_-_Code_Single_Line"><a name="1550276">&lt;array arrayentity="UserRole" name="Roles" ... /&gt; </a></div>
+      <div class="B_-_Body"><a name="1550278">Gosu automatically adds an </a><span class="cv_-_computer_voice">addTo…</span> method and a <span class="cv_-_computer_voice">removeFrom…</span> method to the containing entity type to help manage the elements of each associative array defined on the entity. In the preceding example, Gosu adds the methods <span class="cv_-_computer_voice">addToRoles</span> and <span class="cv_-_computer_voice">removeFromRoles</span> to the entity type <span class="cv_-_computer_voice">User</span>. </div>
+      <div class="B_-_Body"><a name="1616569">The order of elements in an entity array is not fixed. The order in which an </a><span class="cv_-_computer_voice">addTo…</span> method adds elements to its entity array is not necessarily the order in which a <span class="cv_-_computer_voice">for</span> loop retrieves them. </div>
+      <h6 class="HS_-_Head_Sub"><a name="1614627">See also</a></h6>
+      <div class="BI_-_Bullet_Item_outer" style="margin-left: 57pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="BI_-_Bullet_Item_inner" style="width: 15pt; white-space: nowrap">
+                <span class="bu_-_bullet">•	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="BI_-_Bullet_Item_inner"><a href="javascript:WWHClickedPopup('config', 'associative_arrays.22.2.html#2845028', '');" title="Overview of Associative Arrays" name="1614628">“Overview of Associative Arrays” in the </a><span class="bt_-_book_title"><a href="javascript:WWHClickedPopup('config', 'associative_arrays.22.2.html#2845028', '');" title="Overview of Associative Arrays">Configuration Guide</a></span> </div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="BI_-_Bullet_Item_outer" style="margin-left: 57pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="BI_-_Bullet_Item_inner" style="width: 15pt; white-space: nowrap">
+                <span class="bu_-_bullet">•	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="BI_-_Bullet_Item_inner"><a href="javascript:WWHClickedPopup('config', 'entities.21.03.html#2842270', '');" title="Overview of Data Entities" name="1615474">“Overview of Data Entities” in the </a><span class="bt_-_book_title"><a href="javascript:WWHClickedPopup('config', 'entities.21.03.html#2842270', '');" title="Overview of Data Entities">Configuration Guide</a></span></div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="H3_-_Heading_3_outer" style="margin-left: 36pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <h5 class="H3_-_Heading_3_inner" style="width: 18pt; white-space: nowrap"></h5>
+            </td>
+            <td width="100%">
+              <h5 class="H3_-_Heading_3_inner"><span class="cvh_-_computer_voice_in_heading"><a name="1550286">addTo…</a></span> Methods on Entity Arrays </h5>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="B_-_Body"><a name="1614039">The </a><span class="cv_-_computer_voice">addTo…</span> method sets a foreign key on each element in an entity array that points back to the entity that owns the array. You must call the <span class="cv_-_computer_voice">addTo…</span> method on newly created array elements. Otherwise, the Rule Engine does not commit the array elements to the database. As a best practice, Guidewire strongly recommends that you always call the appropriate <span class="cv_-_computer_voice">addTo…</span> method to relate new array elements with the entity that owns the array.</div>
+      <div class="H3_-_Heading_3_outer" style="margin-left: 36pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <h5 class="H3_-_Heading_3_inner" style="width: 18pt; white-space: nowrap"></h5>
+            </td>
+            <td width="100%">
+              <h5 class="H3_-_Heading_3_inner"><span class="cvh_-_computer_voice_in_heading"><a name="1614040">removeFrom…</a></span> Methods on Entity Arrays</h5>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="B_-_Body"><a name="1614041">The </a><span class="cv_-_computer_voice">removeFrom…</span> method behaves differently depending on whether the elements of an entity array are a retireable type:</div>
+      <div class="BI_-_Bullet_Item_outer" style="margin-left: 57pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="BI_-_Bullet_Item_inner" style="width: 15pt; white-space: nowrap">
+                <span class="bu_-_bullet">•	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="BI_-_Bullet_Item_inner"><a name="1550290">If the element type of the array is retirable, the </a><span class="cv_-_computer_voice">removeFrom…</span> method retires the element.</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="BI_-_Bullet_Item_outer" style="margin-left: 57pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="BI_-_Bullet_Item_inner" style="width: 15pt; white-space: nowrap">
+                <span class="bu_-_bullet">•	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="BI_-_Bullet_Item_inner"><a name="1614485">If the element type of the array is not retireable, the </a><span class="cv_-_computer_voice">removeFrom…</span> method deletes the element.</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="B_-_Body"><a name="1614486">The following example removes elements in an array of claim contributing factors in which the primary contributing factor was driver error.</a></div>
+      <PRE class="CF_-_Code_First_Line"><a name="1550293">for (factor in claim.ContributingFactors) { </a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="1550294">&nbsp;&nbsp;if (factor.primary == "Driver Factors") { </a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="1550295">&nbsp;&nbsp;&nbsp;&nbsp;claim.removeFromContribFactors(factor) </a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="1550296">&nbsp;</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="1614501">&nbsp;&nbsp;} </a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="1550297">&nbsp;</a></PRE>
+      <PRE class="CL_-_Code_Last_Line"><a name="1614504">} </a></PRE>
+      <div class="H3_-_Heading_3_outer" style="margin-left: 36pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <h5 class="H3_-_Heading_3_inner" style="width: 18pt; white-space: nowrap"></h5>
+            </td>
+            <td width="100%">
+              <h5 class="H3_-_Heading_3_inner"><a name="1550298">Additional Methods on Entity Arrays</a></h5>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="B_-_Body"><a name="1550299">Gosu provides additional methods for working with entity arrays:</a></div>
+      <div class="BI_-_Bullet_Item_outer" style="margin-left: 57pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="BI_-_Bullet_Item_inner" style="width: 15pt; white-space: nowrap">
+                <span class="bu_-_bullet">•	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="BI_-_Bullet_Item_inner"><span class="cv_-_computer_voice"><a name="1550300">get…</a></span> methods retrieve specific array elements</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="BI_-_Bullet_Item_outer" style="margin-left: 57pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="BI_-_Bullet_Item_inner" style="width: 15pt; white-space: nowrap">
+                <span class="bu_-_bullet">•	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="BI_-_Bullet_Item_inner"><span class="cv_-_computer_voice"><a name="1550301">isArrayElement…</a></span> methods determine the status of specific array elements</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <h6 class="HS_-_Head_Sub"><a name="1613359">See also</a></h6>
+      <div class="BI_-_Bullet_Item_outer" style="margin-left: 57pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="BI_-_Bullet_Item_inner" style="width: 15pt; white-space: nowrap">
+                <span class="bu_-_bullet">•	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="BI_-_Bullet_Item_inner"><a href="javascript:WWHClickedPopup('config', 'entities.21.06.html#2649649', '');" title="&lt;array&gt;" name="1613372">“&lt;array&gt;” in the </a><span class="bt_-_book_title"><a href="javascript:WWHClickedPopup('config', 'entities.21.06.html#2649649', '');" title="&lt;array&gt;">Configuration Guide</a></span>.</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="BI_-_Bullet_Item_outer" style="margin-left: 57pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="BI_-_Bullet_Item_inner" style="width: 15pt; white-space: nowrap">
+                <span class="bu_-_bullet">•	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="BI_-_Bullet_Item_inner"><a name="1616532">For information about specific automatic methods, consult the </a><span class="e_-_emphasis">Gosu API Reference</span>. </div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <script type="text/javascript" language="JavaScript1.2">
+        <!--
+          // Clear related topics
+          //
+          WWHClearRelatedTopics();
+
+          document.writeln(WWHRelatedTopicsInlineHTML());
+        // -->
+      </script>
+    </blockquote>
+    <script type="text/javascript" language="JavaScript1.2">
+      <!--
+        document.write(WWHRelatedTopicsDivTag() + WWHPopupDivTag() + WWHALinksDivTag());
+      // -->
+    </script>
+  </body>
+</html>

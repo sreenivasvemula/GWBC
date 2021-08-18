@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?><entity xmlns="http://guidewire.com/datamodel" desc="Join entity between a contact and an account" displayName="Account Contact" entity="AccountContact" subpackage="account" table="accountcontact" type="retireable">
+  <implementsEntity name="NotInCurrencySilo"/>
+  <column default="false" desc="Whether this payer is the primary payer on the account" name="PrimaryPayer" nullok="true" type="bit"/>
+  <foreignkey columnName="AccountID" desc="The related account" fkentity="Account" importableagainstexistingobject="false" name="Account" nullok="false"/>
+  <foreignkey columnName="ContactID" desc="The related contact" fkentity="Contact" importableagainstexistingobject="false" name="Contact" nullok="false"/>
+  <foreignkey columnName="InsuredAccountID" desc="The account for which this contact is the insured (other end of onetoone)" fkentity="Account" importableagainstexistingobject="false" name="InsuredAccount" nullok="true"/>
+  <array arrayentity="AccountContactRole" desc="The roles for this account contact" name="Roles" owner="true"/>
+  <array arrayentity="AcctCorrespondenceEntry" desc="Types of correspondence that this AccountContact should receive" exportable="false" name="CorrespondenceTypes" owner="true">
+    <link-association>
+      <typelist-map field="AcctCorrespondenceType"/>
+    </link-association>
+  </array>
+  <index desc="Legacy" name="InsuredAccountID" unique="true">
+    <indexcol keyposition="1" name="InsuredAccountID"/>
+    <indexcol keyposition="2" name="Retired"/>
+    <indexcol keyposition="3" name="ID"/>
+  </index>
+  <dbcheckbuilder className="com.guidewire.bc.system.database.dbchecks.account.AccountContactAddressDBCheckBuilder"/>
+</entity>

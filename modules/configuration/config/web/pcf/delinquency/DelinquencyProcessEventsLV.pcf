@@ -1,0 +1,65 @@
+<?xml version="1.0"?>
+<PCF
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:noNamespaceSchemaLocation="../../../../../pcf.xsd">
+  <ListViewPanel
+    id="DelinquencyProcessEventsLV">
+    <Require
+      name="DelinquencyProcess"
+      type="DelinquencyProcess"/>
+    <Variable
+      initialValue="util.DateUtil.currentDate()"
+      name="today"/>
+    <RowIterator
+      editable="true"
+      elementName="event"
+      pageSize="0"
+      value="DelinquencyProcess.OrderedEvents as DelinquencyProcessEvent[]">
+      <Row>
+        <CheckBoxCell
+          id="Completed"
+          label="displaykey.Web.DelinquencyProcessActivitiesLV.Complete"
+          value="event.Completed"/>
+        <DateCell
+          fontColor="getEventTargetDateColor(event)"
+          id="TargetDate"
+          label="displaykey.Web.DelinquencyProcessEventsLV.TargetDate"
+          value="event.TargetDate"
+          valueVisible="event.hasTargetDate()"/>
+        <DateCell
+          id="CompletionDate"
+          label="displaykey.Web.DelinquencyProcessEventsLV.CompletionDate"
+          value="event.CompletionTime"
+          valueVisible="event.Completed"/>
+        <Cell
+          id="Name"
+          label="displaykey.Web.DelinquencyProcessEventsLV.Description"
+          value="event.EventName.Description"/>
+        <Cell
+          id="Trigger"
+          label="displaykey.Web.DelinquencyProcessEventsLV.TriggerBasis"
+          value="getTriggerBasisMessage( event )"/>
+      </Row>
+    </RowIterator>
+    <Code><![CDATA[
+// helper functions
+        function getEventTargetDateColor(event : entity.DelinquencyProcessEvent) : String {
+          if (!event.Completed && event.TargetDate <= today) return "red";
+          return "";
+        }
+
+        function getTriggerBasisMessage(event : entity.DelinquencyProcessEvent) : String{
+          if ( ( event.OffsetDays == null ) || ( event.OffsetDays == null ) || ( event.OffsetDays == 0 ) ) {
+            return event.TriggerBasis.DisplayName
+          } else if ( event.OffsetDays < -1 ) {
+            return displaykey.Web.DelinquencyProcessEventsLV.TriggerBasis.WithNegativeOffsetDays(event.TriggerBasis, ( - event.OffsetDays ) )
+          } else if ( event.OffsetDays < 0 ) {
+            return displaykey.Web.DelinquencyProcessEventsLV.TriggerBasis.WithNegativeOffsetDay(event.TriggerBasis, ( - event.OffsetDays ) )
+          } else if ( event.OffsetDays < 2 ) {
+            return displaykey.Web.DelinquencyProcessEventsLV.TriggerBasis.WithPositiveOffsetDay(event.TriggerBasis, event.OffsetDays)
+          }
+          return displaykey.Web.DelinquencyProcessEventsLV.TriggerBasis.WithPositiveOffsetDays(event.TriggerBasis, event.OffsetDays)          
+        }
+    ]]></Code>
+  </ListViewPanel>
+</PCF>

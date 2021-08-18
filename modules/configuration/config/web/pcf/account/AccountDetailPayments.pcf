@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<PCF
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:noNamespaceSchemaLocation="pcf.xsd">
+  <LocationGroup
+    id="AccountDetailPayments"
+    title="displaykey.Web.AccountDetailPayments.Title">
+    <LocationEntryPoint
+      signature="AccountDetailPayments(account : Account)"/>
+    <Variable
+      name="account"
+      type="Account"/>
+    <LocationRef
+      location="AccountPayments(account)"/>
+    <LocationRef
+      location="AccountCreditDistributions(account)"/>
+    <LocationRef
+      location="AccountPaymentRequests(account)"/>
+  </LocationGroup>
+</PCF>

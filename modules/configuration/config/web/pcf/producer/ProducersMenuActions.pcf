@@ -1,0 +1,23 @@
+<?xml version="1.0"?>
+<PCF
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:noNamespaceSchemaLocation="../../../../../pcf.xsd">
+  <MenuActions
+    id="ProducersMenuActions">
+    <MenuItem
+      action="NewProducerWizard.go(gw.api.util.CurrencyUtil.getDefaultCurrency())"
+      id="ProducersMenuActions_NewProducer"
+      label="displaykey.Web.ProducersMenuActions.NewProducer"
+      visible="perm.Producer.create">
+      <MenuItemIterator
+        elementName="currency"
+        value="Currency.getTypeKeys(false)"
+        visible="gw.api.util.CurrencyUtil.isMultiCurrencyMode()">
+        <MenuItem
+          action="NewProducerWizard.go(currency)"
+          id="ProducerCurrencyItem"
+          label="currency"/>
+      </MenuItemIterator>
+    </MenuItem>
+  </MenuActions>
+</PCF>

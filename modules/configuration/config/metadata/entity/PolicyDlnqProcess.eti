@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+<!-- ====================================================================  PolicyDlnqProcess  ==================================================================== -->
+<subtype
+  xmlns="http://guidewire.com/datamodel"
+  entity="PolicyDlnqProcess"
+  desc="DelinquencyProcess for a policy"
+  subpackage="delinquency"
+  supertype="DelinquencyProcess">
+  <foreignkey
+    name="PolicyPeriod"
+    columnName="PolicyPeriodID"
+    fkentity="PolicyPeriod"
+    importableagainstexistingobject="false"
+    nullok="false"
+    setterScriptability="doesNotExist"/>
+    <dbcheckbuilder className="com.guidewire.bc.system.database.dbchecks.delinquency.DelinquencyProcessDBCheckBuilder"/>
+</subtype>

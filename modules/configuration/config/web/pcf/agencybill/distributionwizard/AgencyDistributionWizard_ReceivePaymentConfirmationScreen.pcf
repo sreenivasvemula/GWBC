@@ -1,0 +1,35 @@
+<?xml version="1.0"?>
+<PCF
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:noNamespaceSchemaLocation="../../../../../../pcf.xsd">
+  <Screen
+    editable="false"
+    id="AgencyDistributionWizard_ReceivePaymentConfirmationScreen">
+    <Require
+      name="money"
+      type="AgencyBillMoneyRcvd"/>
+    <Toolbar>
+      <WizardButtons/>
+    </Toolbar>
+    <DetailViewPanel>
+      <InputColumn>
+        <Label
+          label="displaykey.Web.AgencyDistributionWizard.Step.ReceivePaymentConfirmation.ClickFinish"/>
+        <TextInput
+          id="PaymentInstrument"
+          label="displaykey.Web.AgencyDistributionWizard.Step.ReceivePaymentConfirmation.PaymentInstrument"
+          value="money.PaymentInstrument"/>
+        <Input
+          id="RefNumber"
+          label="displaykey.Web.AgencyDistributionWizard.Step.ReceivePaymentConfirmation.RefNumber"
+          value="money.RefNumber"/>
+        <MonetaryAmountInput
+          currency="money.Currency"
+          formatType="currency"
+          id="Amount"
+          label="displaykey.Web.AgencyDistributionWizard.Step.ReceivePaymentConfirmation.PaymentAmount"
+          value="money.Amount"/>
+      </InputColumn>
+    </DetailViewPanel>
+  </Screen>
+</PCF>

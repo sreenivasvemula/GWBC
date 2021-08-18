@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xml:lang="en" lang="en" xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+    <meta http-equiv="Content-Style-Type" content="text/css" />
+    <!-- MOTW-DISABLED saved from url=(0014)about:internet -->
+    <title>Account Distribution Limit Plugin</title>
+    <link rel="StyleSheet" href="css/bc-plugins.css" type="text/css" media="all" />
+    <link rel="StyleSheet" href="css/webworks.css" type="text/css" media="all" />
+    <link rel="StyleSheet" href="css/css-guidewire-extra.css" type="text/css" media="all" />
+    <script type="text/javascript" language="JavaScript1.2" src="wwhdata/common/context.js"></script>
+    <script type="text/javascript" language="JavaScript1.2" src="wwhdata/common/towwhdir.js"></script>
+    <script type="text/javascript" language="JavaScript1.2" src="wwhdata/common/wwhpagef.js"></script>
+    <script type="text/javascript" language="JavaScript1.2">
+      <!--
+        var  WebWorksRootPath = "";
+      // -->
+    </script>
+    <script type="text/javascript" language="JavaScript1.2">
+      <!--
+        // Set reference to top level help frame
+        //
+        var  WWHFrame = WWHGetWWHFrame("", true);
+      // -->
+    </script>
+    <script type="text/javascript" language="JavaScript1.2" src="scripts/expand.js"></script>
+    <!-- THE FOLLOWING IS A GUIDEWIRE STYLE DEFINITION FOR THE LINK TO THIS FEATURE -->
+    <link rel="StyleSheet" href="css/css-guidewire-extra.css" type="text/css" media="all" />
+    <!-- THE FOLLOWING IS A GUIDEWIRE GSCRIPT FUNCTION FOR THE LINK TO THIS FEATURE -->
+    <script type="text/javascript">
+function guidewire_selectall()
+{
+var text_val=eval("document.linktothisurlform.urlfield");
+text_val.focus();
+text_val.select();
+}
+</script>
+  </head>
+  <body onLoad="WWHUpdate();" onUnload="WWHUnload();" onKeyDown="WWHHandleKeyDown((document.all||document.getElementById||document.layers)?event:null);" onKeyPress="WWHHandleKeyPress((document.all||document.getElementById||document.layers)?event:null);" onKeyUp="WWHHandleKeyUp((document.all||document.getElementById||document.layers)?event:null);">
+    <!-- THE FOLLOWING IS A GUIDEWIRE DIV FOR THE 'LINK TO THIS' FEATURE -->
+    <div id="linkToThisPage" class="popup" style="display: none;">
+      <div class="popupTitle">Link Directly to This Page 
+           <a href="#" onclick="var thePopup = getElementById('linkToThisPage');thePopup.style.display='none';return false;"><img class="popupClosebox" src="wwhelp/wwhimpl/common/images/close.gif" /></a></div>
+      <div style="padding:6px;">
+        <div class="popupText" id="linkToThisPageBookmark">An error has occurred if you see this messsage.</div>
+        <form name="linktothisurlform" method="post" action="" style="width:275px;margin:0px">
+          <input type="text" class="popupURLText" id="linkToThisPageURL" name="urlfield" rows="1" cols="55" onClick="guidewire_selectall();" onFocus="guidewire_selectall();"></input>
+        </form>
+      </div>
+    </div>
+    <br />
+    <div class="WebWorks_Breadcrumbs" style="text-align: left;">
+      <span>BillingCenter Integration Guide</span> : 
+    <span class="WebWorks_Breadcrumbs" style="text-align: left;"><a class="WebWorks_Breadcrumb_Link" href="p-plugins.html#3435172">Plugins</a> : <a class="WebWorks_Breadcrumb_Link" href="bc-plugins.13.01.html#3435172">Billing Plugins</a> : Account Distribution Limit Plugin</span></div>
+    <hr align="left" />
+    <blockquote>
+      <h3 class="H1_-_Heading_1"><a name="3435172">Account Distribution Limit Plugin</a></h3>
+      <div class="B_-_Body"><a name="3703446">The Account Distribution Limit plugin is implemented by the </a><span class="cv_-_computer_voice">IAccount</span> interface. The plugin can customize the distribution limit for a given account. It also informs whether a hold exists on automatic disbursements, either for an entire account or for a specific <span class="cv_-_computer_voice">Unapplied</span> fund in the account. For details about the implementation provided in the base configuration, load the plugin source file located at <span class="uis_-_UI_element_Studio">configuration</span>&nbsp;<span class="ui_-_UI_element">→ </span><span class="uis_-_UI_element_Studio">gsrc</span><span class="ui_-_UI_element">&nbsp;→ </span><span class="uis_-_UI_element_Studio">gw</span><span class="ui_-_UI_element">&nbsp;→ </span><span class="uis_-_UI_element_Studio">plugin</span><span class="ui_-_UI_element">&nbsp;→ </span><span class="uis_-_UI_element_Studio">account</span><span class="ui_-_UI_element">&nbsp;→ </span><span class="uis_-_UI_element_Studio">impl</span><span class="ui_-_UI_element">&nbsp;→ </span><span class="uis_-_UI_element_Studio">Account.gs</span>.</div>
+      <h4 class="H2_-_Heading_2"><a name="3703705">Customizing the Distribution Limit</a></h4>
+      <div class="B_-_Body"><a name="3435174">To customize the distribution limit for a given account, implement the </a><span class="cv_-_computer_voice">getDistributionLimitType</span> method of the <span class="cv_-_computer_voice">IAccount</span> interface. The method accepts an argument that references the account. A second argument specifies a distribution limit type, but this argument is reserved for future use and is currently ignored. The method returns the distribution limit type to use for the referenced account.</div>
+      <div class="B_-_Body"><a name="3702963">The default implementation of the plugin determines the appropriate distribution limit type based on the distribution filters defined in the account’s payment allocation plan.</a></div>
+      <h4 class="H2_-_Heading_2"><a name="3435179">Placing a Hold on Automatic Disbursements</a></h4>
+      <div class="B_-_Body"><a name="3704026">The </a><span class="cv_-_computer_voice">IAccount</span> interface includes two methods that inform the caller on whether a hold exists on disbursements. A hold can be either on the entire account or on a specific <span class="cv_-_computer_voice">Unapplied</span> fund in the account. The methods return <span class="cv_-_computer_voice">True</span> if a hold exists, and <span class="cv_-_computer_voice">False</span> if there is no hold.</div>
+      <div class="B_-_Body"><a name="3704510">The two methods share the same name of </a><span class="cv_-_computer_voice">getShouldHoldAutomaticDisbursement</span>. One method accepts an argument of type <span class="cv_-_computer_voice">Account</span> to check for a hold on the entire account. The other method accepts an argument of type <span class="cv_-_computer_voice">Unapplied</span> to check for a hold on the specified <span class="cv_-_computer_voice">Unapplied</span> fund.</div>
+      <div class="B_-_Body"><a name="3704864">The implementation of these methods in the base configuration return immediately with a value of </a><span class="cv_-_computer_voice">False</span>.</div>
+      <div class="B_-_Body"><a name="3704512">The Automatic Disbursement batch process distributes funds from an account’s </a><span class="cv_-_computer_voice">Unapplied</span> T‑accounts. During its operation, the batch process invokes the <span class="cv_-_computer_voice">Unapplied</span> version of <span class="cv_-_computer_voice">getShouldHoldAutomaticDisbursement</span> to see if a hold exists on a particular <span class="cv_-_computer_voice">Unapplied</span> fund. If a hold does exist, the batch process does not distribute any money from the fund. For further information about the batch process, see <a href="javascript:WWHClickedPopup('admin', 'batch.11.16.html#3897575', '');" title="Automatic Disbursement Batch Processing">“Automatic Disbursement Batch Processing” in the </a><span class="bt_-_book_title"><a href="javascript:WWHClickedPopup('admin', 'batch.11.16.html#3897575', '');" title="Automatic Disbursement Batch Processing">System Administration Guide</a></span>.</div>
+      <script type="text/javascript" language="JavaScript1.2">
+        <!--
+          // Clear related topics
+          //
+          WWHClearRelatedTopics();
+
+          document.writeln(WWHRelatedTopicsInlineHTML());
+        // -->
+      </script>
+    </blockquote>
+    <script type="text/javascript" language="JavaScript1.2">
+      <!--
+        document.write(WWHRelatedTopicsDivTag() + WWHPopupDivTag() + WWHALinksDivTag());
+      // -->
+    </script>
+  </body>
+</html>

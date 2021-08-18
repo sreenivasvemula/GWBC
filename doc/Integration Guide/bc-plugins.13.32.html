@@ -1,0 +1,241 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xml:lang="en" lang="en" xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+    <meta http-equiv="Content-Style-Type" content="text/css" />
+    <!-- MOTW-DISABLED saved from url=(0014)about:internet -->
+    <title>Funds Tracking Plugin</title>
+    <link rel="StyleSheet" href="css/bc-plugins.css" type="text/css" media="all" />
+    <link rel="StyleSheet" href="css/webworks.css" type="text/css" media="all" />
+    <link rel="StyleSheet" href="css/css-guidewire-extra.css" type="text/css" media="all" />
+    <script type="text/javascript" language="JavaScript1.2" src="wwhdata/common/context.js"></script>
+    <script type="text/javascript" language="JavaScript1.2" src="wwhdata/common/towwhdir.js"></script>
+    <script type="text/javascript" language="JavaScript1.2" src="wwhdata/common/wwhpagef.js"></script>
+    <script type="text/javascript" language="JavaScript1.2">
+      <!--
+        var  WebWorksRootPath = "";
+      // -->
+    </script>
+    <script type="text/javascript" language="JavaScript1.2">
+      <!--
+        // Set reference to top level help frame
+        //
+        var  WWHFrame = WWHGetWWHFrame("", true);
+      // -->
+    </script>
+    <script type="text/javascript" language="JavaScript1.2" src="scripts/expand.js"></script>
+    <!-- THE FOLLOWING IS A GUIDEWIRE STYLE DEFINITION FOR THE LINK TO THIS FEATURE -->
+    <link rel="StyleSheet" href="css/css-guidewire-extra.css" type="text/css" media="all" />
+    <!-- THE FOLLOWING IS A GUIDEWIRE GSCRIPT FUNCTION FOR THE LINK TO THIS FEATURE -->
+    <script type="text/javascript">
+function guidewire_selectall()
+{
+var text_val=eval("document.linktothisurlform.urlfield");
+text_val.focus();
+text_val.select();
+}
+</script>
+  </head>
+  <body onLoad="WWHUpdate();" onUnload="WWHUnload();" onKeyDown="WWHHandleKeyDown((document.all||document.getElementById||document.layers)?event:null);" onKeyPress="WWHHandleKeyPress((document.all||document.getElementById||document.layers)?event:null);" onKeyUp="WWHHandleKeyUp((document.all||document.getElementById||document.layers)?event:null);">
+    <!-- THE FOLLOWING IS A GUIDEWIRE DIV FOR THE 'LINK TO THIS' FEATURE -->
+    <div id="linkToThisPage" class="popup" style="display: none;">
+      <div class="popupTitle">Link Directly to This Page 
+           <a href="#" onclick="var thePopup = getElementById('linkToThisPage');thePopup.style.display='none';return false;"><img class="popupClosebox" src="wwhelp/wwhimpl/common/images/close.gif" /></a></div>
+      <div style="padding:6px;">
+        <div class="popupText" id="linkToThisPageBookmark">An error has occurred if you see this messsage.</div>
+        <form name="linktothisurlform" method="post" action="" style="width:275px;margin:0px">
+          <input type="text" class="popupURLText" id="linkToThisPageURL" name="urlfield" rows="1" cols="55" onClick="guidewire_selectall();" onFocus="guidewire_selectall();"></input>
+        </form>
+      </div>
+    </div>
+    <br />
+    <div class="WebWorks_Breadcrumbs" style="text-align: left;">
+      <span>BillingCenter Integration Guide</span> : 
+    <span class="WebWorks_Breadcrumbs" style="text-align: left;"><a class="WebWorks_Breadcrumb_Link" href="p-plugins.html#3451437">Plugins</a> : <a class="WebWorks_Breadcrumb_Link" href="bc-plugins.13.01.html#3451437">Billing Plugins</a> : Funds Tracking Plugin</span></div>
+    <hr align="left" />
+    <blockquote>
+      <h3 class="H1_-_Heading_1"><a name="3451437">Funds Tracking Plugin</a></h3>
+      <div class="B_-_Body"><a name="3451438">Guidewire provides the </a><span class="cv_-_computer_voice">IFundsTracking</span> plugin to integrate your own funds allotment logic with funds tracking in BillingCenter. The plugin also lets you integrate your own logic to aggregate payment items into payment item groups. The default configuration of BillingCenter uses a built-in implementation of the <span class="cv_-_computer_voice">IFundsTracking</span> plugin, <span class="cv_-_computer_voice">FundsTracking.gs</span>. To open the plugin registry, in the <span class="uis_-_UI_element_Studio">Project</span> window in Studio, navigate to <span class="uis_-_UI_element_Studio">configuration</span> → <span class="uis_-_UI_element_Studio">config → Plugins</span> → <span class="uis_-_UI_element_Studio">registry</span>, and then open <span class="cv_-_computer_voice">IFundsTracking.gwp</span>.</div>
+      <h4 class="H2_-_Heading_2"><a name="3451660">Overview of Funds Tracking Integration</a></h4>
+      <div class="B_-_Body"><a name="3452222">Billing clerks can distribute payments directly within an account, but surplus funds that cannot be distributed directly remain in Account: Unapplied. Funds tracking provides an alternative view of how funds flow through an account, independent of the general ledger view that payment distribution by clerks provides. Funds tracking is completely independent of other parts of BillingCenter. Other BillingCenter features do not depend on funds tracking data. If you enable funds tracking, payment distribution works the same as before. </a></div>
+      <div class="H3_-_Heading_3_outer" style="margin-left: 36pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <h5 class="H3_-_Heading_3_inner" style="width: 18pt; white-space: nowrap"></h5>
+            </td>
+            <td width="100%">
+              <h5 class="H3_-_Heading_3_inner"><a name="3452214">About Funds Trackers and Trackables</a></h5>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="B_-_Body"><a name="3453634">Funds tracking uses the following Gosu interfaces and entity types to track and provide details about funds that flow through an account: </a></div>
+      <div class="BI_-_Bullet_Item_outer" style="margin-left: 57pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="BI_-_Bullet_Item_inner" style="width: 15pt; white-space: nowrap">
+                <span class="bu_-_bullet">•	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="BI_-_Bullet_Item_inner"><span class="ri_-_run_in_header"><a name="3453636">funds sources</a></span> – Money in, such as a payment, that adds funds to Account: Unapplied</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="BI_-_Bullet_Item_outer" style="margin-left: 57pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="BI_-_Bullet_Item_inner" style="width: 15pt; white-space: nowrap">
+                <span class="bu_-_bullet">•	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="BI_-_Bullet_Item_inner"><span class="ri_-_run_in_header"><a name="3453638">funds uses</a></span> – Money out, such as an invoice item paid, that subtracts funds from Account: Unapplied</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="BI_-_Bullet_Item_outer" style="margin-left: 57pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="BI_-_Bullet_Item_inner" style="width: 15pt; white-space: nowrap">
+                <span class="bu_-_bullet">•	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="BI_-_Bullet_Item_inner"><span class="ri_-_run_in_header"><a name="3451793">funds source trackers</a></span> – Funds tracking representations of funds sources</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="BI_-_Bullet_Item_outer" style="margin-left: 57pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="BI_-_Bullet_Item_inner" style="width: 15pt; white-space: nowrap">
+                <span class="bu_-_bullet">•	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="BI_-_Bullet_Item_inner"><span class="ri_-_run_in_header"><a name="3454486">funds use trackers</a></span> – Funds tracking representations of funds uses</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="BI_-_Bullet_Item_outer" style="margin-left: 57pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="BI_-_Bullet_Item_inner" style="width: 15pt; white-space: nowrap">
+                <span class="bu_-_bullet">•	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="BI_-_Bullet_Item_inner"><span class="ri_-_run_in_header"><a name="3455059">funds allotments</a></span> – Associations between funds source trackers and funds use trackers</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="F_-_Figure"><a name="3455068"><img class="Default" src="images/bc-plugins.13.32.1.png" style="display: inline; float: none; left: 0.0; top: 0.0" alt="" /></a></div>
+      <div class="B_-_Body"><a name="3455063">BillingCenter provides the </a><span class="cv_-_computer_voice">FundsSource</span> and <span class="cv_-_computer_voice">FundsUse</span> marker interfaces to identify entity types that are funds source or uses. For example, the <span class="cv_-_computer_voice">DirectBillMoneyRcvd</span> entity type is a kind of <span class="cv_-_computer_voice">FundsSource</span>. The <span class="cv_-_computer_voice">PaymentItemGroup</span> entity type, which is a collection of payment items, is a kind of <span class="cv_-_computer_voice">FundsUse</span>. </div>
+      <div class="B_-_Body"><a name="3454580">For each source and use of funds, a corresponding </a><span class="cv_-_computer_voice">FundsSourceTracker</span> or <span class="cv_-_computer_voice">FundsUseTracker</span> instance provides tracking information, such as the total amount and the amount allotted. The <span class="cv_-_computer_voice">FundsAllotment</span> entity type associates funds sources with funds uses. </div>
+      <div class="B_-_Body"><a name="3455093">For a complete list of entity types that are funds sources or funds uses, see </a><a href="javascript:WWHClickedPopup('app', 'funds_tracking.44.2.html#1150833', '');" title="Funds Tracking Basics">“Funds Tracking Basics” in the </a><span class="bt_-_book_title"><a href="javascript:WWHClickedPopup('app', 'funds_tracking.44.2.html#1150833', '');" title="Funds Tracking Basics">Application Guide</a></span>. </div>
+      <div class="H3_-_Heading_3_outer" style="margin-left: 36pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <h5 class="H3_-_Heading_3_inner" style="width: 18pt; white-space: nowrap"></h5>
+            </td>
+            <td width="100%">
+              <h5 class="H3_-_Heading_3_inner"><a name="3454358">About Payments and Payment Item Groups</a></h5>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="B_-_Body"><a name="3454616">Funds tracking uses the following Gosu interfaces and entity types to group payment items into a single, trackable funds use:</a></div>
+      <div class="BI_-_Bullet_Item_outer" style="margin-left: 57pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="BI_-_Bullet_Item_inner" style="width: 15pt; white-space: nowrap">
+                <span class="bu_-_bullet">•	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="BI_-_Bullet_Item_inner"><span class="ri_-_run_in_header"><a name="3454696">payment item group</a></span> – A trackable funds use that comprises one or more payment actions</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="BI_-_Bullet_Item_outer" style="margin-left: 57pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="BI_-_Bullet_Item_inner" style="width: 15pt; white-space: nowrap">
+                <span class="bu_-_bullet">•	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="BI_-_Bullet_Item_inner"><span class="ri_-_run_in_header"><a name="3454697">payment item action</a></span> – An association between a payment item group and a payment item</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="BI_-_Bullet_Item_outer" style="margin-left: 57pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="BI_-_Bullet_Item_inner" style="width: 15pt; white-space: nowrap">
+                <span class="bu_-_bullet">•	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="BI_-_Bullet_Item_inner"><span class="ri_-_run_in_header"><a name="3454698">groupable payment item</a></span> – Any payment item type that can be included in a payment item group</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="BI_-_Bullet_Item_outer" style="margin-left: 57pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="BI_-_Bullet_Item_inner" style="width: 15pt; white-space: nowrap">
+                <span class="bu_-_bullet">•	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="BI_-_Bullet_Item_inner"><span class="ri_-_run_in_header"><a name="3455037">payment item</a></span>– A funds tracking representation of a payment distribution</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="F_-_Figure"><a name="3455210"><img class="Default" src="images/bc-plugins.13.32.2.png" style="display: inline; float: none; left: 0.0; top: 0.0" alt="" /></a></div>
+      <div class="B_-_Body"><a name="3455142">BillingCenter provides the </a><span class="cv_-_computer_voice">PaymentItemGroup</span> entity type as single funds use to represent one or more payment distributions. The <span class="ui_-_UI_element">Funds Tracking</span> screen uses payment item groups to show a simplified list of funds uses. For example, the <span class="ui_-_UI_element">Funds Uses</span> tab shows a direct bill payment as a single payment item group, even if the payment was applied to multiple invoice items.</div>
+      <div class="B_-_Body"><a name="3455243">The </a><span class="cv_-_computer_voice">PaymentItemAction</span> entity type associates various types of payment items with a payment item group. The <span class="cv_-_computer_voice">GroupablePaymentItem</span> marker interface identifies payment item types that payment item groups can include. In the default configuration, the <span class="cv_-_computer_voice">DirectBillPaymentItem</span> type is the only type that a <span class="cv_-_computer_voice">PaymentItemAction</span> can associate with a <span class="cv_-_computer_voice">PaymentItemGroup</span>. A <span class="cv_-_computer_voice">DirectBillPamyentItem</span> instance relates to a single <span class="cv_-_computer_voice">DirectBillPayment</span> instance. </div>
+      <div class="B_-_Body"><a name="3455317">You can change the default configuration of funds tracking to let other payment distribution types be included in a payment item group. Write a new Gosu class that extends the </a><span class="cv_-_computer_voice">BasePaymentItem</span> class and implements the <span class="cv_-_computer_voice">GroupablePaymentItem</span> marker interface. Include a property to reference an instance of the payment distribution type that your new payment item type represents. The <span class="cv_-_computer_voice">GroupablePaymentItem</span> interface lets BillingCenter know which payment distribution types to include in the <span class="cv_-_computer_voice">PaymentItemNarrative</span> instances that it passes to the plugin method <span class="cv_-_computer_voice">createPaymentItemGroupings</span>. A <span class="cv_-_computer_voice">PaymentItemNarrative</span> is a directed acyclic graph of payment actions that occurred in a single, committed bundle. </div>
+      <div class="N_-_Note">
+        <span class="n_-_note">Note: </span><a name="3455179">Unlike payment distributions, other types of transactions, such as account transfers, write-offs, and disbursements are themselves funds sources or funds uses. They implement the </a><span class="cv_-_computer_voice">FundsSource</span> or <span class="cv_-_computer_voice">FundsUse</span> interfaces, so they do not need an aggregating entity to be trackable by funds tracking in BillingCenter. </div>
+      <div class="B_-_Body"><a name="3455402">For more information, see </a><a href="javascript:WWHClickedPopup('app', 'funds_tracking.44.3.html#1175886', '');" title="Payment Item Groups">“Payment Item Groups” in the </a><span class="bt_-_book_title"><a href="javascript:WWHClickedPopup('app', 'funds_tracking.44.3.html#1175886', '');" title="Payment Item Groups">Application Guide</a></span>. </div>
+      <script type="text/javascript" language="JavaScript1.2">
+        <!--
+          // Clear related topics
+          //
+          WWHClearRelatedTopics();
+
+          document.writeln(WWHRelatedTopicsInlineHTML());
+        // -->
+      </script>
+    </blockquote>
+    <script type="text/javascript" language="JavaScript1.2">
+      <!--
+        document.write(WWHRelatedTopicsDivTag() + WWHPopupDivTag() + WWHALinksDivTag());
+      // -->
+    </script>
+  </body>
+</html>

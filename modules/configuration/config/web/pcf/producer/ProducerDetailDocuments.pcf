@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PCF
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:noNamespaceSchemaLocation="../../../../../pcf.xsd">
+  <Page
+    canVisit="perm.System.prodtabview and perm.System.proddocview"
+    id="ProducerDetailDocuments"
+    showUpLink="true"
+    title="displaykey.Web.ProducerDetailDocuments.Title">
+    <LocationEntryPoint
+      signature="ProducerDetailDocuments(producer : Producer)"/>
+    <Variable
+      name="producer"
+      type="Producer"/>
+    <Screen
+      id="ProducerDetailDocumentsScreen">
+      <SearchPanel
+        criteriaName="documentSearchCriteria"
+        resultsName="documentList"
+        search="return documentSearchCriteria.performSearch(true)"
+        searchCriteria="var c = new DocumentSearchCriteria(); c.IncludeObsoletes = false; c.Producer = producer; return c;"
+        searchOnRefresh="true"
+        searchResultsType="DocumentQuery">
+        <PanelRef
+          def="DocumentSearchDV(documentSearchCriteria)"/>
+        <PanelRef
+          def="DocumentsLV(documentList)">
+          <Toolbar>
+            <ToolbarDivider/>
+          </Toolbar>
+        </PanelRef>
+      </SearchPanel>
+    </Screen>
+  </Page>
+</PCF>

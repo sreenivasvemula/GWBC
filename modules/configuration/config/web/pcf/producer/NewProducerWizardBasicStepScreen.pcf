@@ -1,0 +1,207 @@
+<?xml version="1.0"?>
+<PCF
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:noNamespaceSchemaLocation="../../../../../pcf.xsd">
+  <Screen
+    id="NewProducerWizardBasicStepScreen">
+    <Require
+      name="producer"
+      type="Producer"/>
+    <Variable
+      initialValue="producer.AccountRep.DisplayName"
+      name="accountRepDisplayName"
+      type="String"/>
+    <Variable
+      initialValue="gw.api.database.Query.make(SecurityZone).select()"
+      name="allSecurityZones"
+      type="SecurityZoneQuery"/>
+    <Variable
+      initialValue="new gw.payment.PaymentInstrumentRange(producer.PaymentInstruments)"
+      name="paymentInstrumentRange"
+      type="gw.payment.PaymentInstrumentRange"/>
+    <Toolbar>
+      <WizardButtons/>
+    </Toolbar>
+    <DetailViewPanel
+      id="NewProducerDV">
+      <InputColumn>
+        <Label
+          label="displaykey.Web.NewProducerDV.Basics"/>
+        <Input
+          editable="true"
+          id="Name"
+          label="gw.api.util.LocaleUtil.CurrentLocaleType == LocaleType.TC_JA_JP ? displaykey.Web.NewProducerDV.Basics.NamePhonetic : displaykey.Web.NewProducerDV.Basics.Name"
+          value="producer.Name"/>
+        <Input
+          editable="true"
+          id="NameKanji"
+          label="displaykey.Web.NewProducerDV.Basics.Name"
+          value="producer.NameKanji"
+          visible="gw.api.util.LocaleUtil.CurrentLocaleType == LocaleType.TC_JA_JP"/>
+        <TypeKeyInput
+          editable="true"
+          id="Tier"
+          label="displaykey.Web.NewProducerDV.Basics.Tier"
+          value="producer.Tier">
+          <PostOnChange/>
+        </TypeKeyInput>
+        <TextInput
+          id="Currency"
+          label="displaykey.Web.NewProducerDV.Basics.Currency"
+          value="producer.Currency"/>
+        <RangeInput
+          editable="true"
+          id="SecurityZone"
+          label="displaykey.Web.AccountDetailDV.SecurityZone"
+          value="producer.SecurityZone"
+          valueRange="allSecurityZones"/>
+        <Label
+          label="displaykey.Web.NewProducerDV.DirectBill"/>
+        <TypeKeyInput
+          editable="true"
+          id="Periodicity"
+          label="displaykey.Web.NewProducerDV.DirectBill.PaymentPeriodicity"
+          value="producer.ProducerPaymentRecurrable.Periodicity"/>
+        <BooleanRadioInput
+          editable="true"
+          id="SuspendNegativeAmounts"
+          label="displaykey.Web.NewProducerDV.DirectBill.SuspendNegativeAmounts"
+          value="producer.SuspendNegativeAmounts"/>
+        <RangeInput
+          editable="true"
+          id="PaymentInstrument"
+          label="displaykey.Web.NewProducerDV.DirectBill.PaymentInstrument"
+          required="true"
+          value="producer.DefaultPaymentInstrument"
+          valueRange="gw.payment.PaymentInstrumentFilters.applyFilter(paymentInstrumentRange, gw.payment.PaymentInstrumentFilters.producerDetailsPaymentInstrumentFilter)">
+          <MenuItem
+            action="NewPaymentInstrumentPopup.push(gw.payment.PaymentInstrumentFilters.producerDetailsPaymentInstrumentOptions,producer,false)"
+            id="CreateNewPaymentInstrument"
+            label="displaykey.Web.NewPaymentInstrument.CreateNewPaymentInstrument"/>
+        </RangeInput>
+        <Input
+          editable="true"
+          id="CommissionDayOfMonth"
+          label="displaykey.Web.NewProducerDV.CommissionDayOfMonth"
+          requestValidationExpression="VALUE != null and VALUE &gt; 0 and VALUE &lt;= 31 ? null : displaykey.Java.Account.InvoiceDayOfMonth.ValidationError"
+          value="producer.ProducerPaymentRecurrable.DayOfMonth"/>
+        <Label
+          label="displaykey.Web.NewProducerDV.AgencyBill"/>
+        <RangeInput
+          editable="true"
+          id="AgencyBillPlan"
+          label="displaykey.Web.NewProducerDV.AgencyBill.Plan"
+          required="false"
+          value="producer.AgencyBillPlan"
+          valueRange="Plan.finder.findAllAvailablePlans(AgencyBillPlan, producer.Currency)"/>
+        <PickerInput
+          conversionExpression="PickedValue.DisplayName"
+          editable="true"
+          id="AccountRep"
+          label="displaykey.Web.ProducerDetail.AccountRep"
+          pickLocation="UserSearchPopup.push()"
+          validationExpression="validateAndSetAccountRep()"
+          value="accountRepDisplayName"/>
+        <Label
+          label="displaykey.Web.NewProducerDV.PrimaryContact"/>
+        <Input
+          id="PrimaryContactName"
+          label="displaykey.Web.NewProducerDV.PrimaryContact.Name"
+          value="producer.PrimaryContact.DisplayName"/>
+        <Input
+          id="Address"
+          label="displaykey.Web.NewProducerDV.PrimaryContact.Address"
+          value="new gw.api.address.AddressFormatter().format(producer.PrimaryContact.Contact.PrimaryAddress, &quot;\n&quot;)"/>
+        <InputSetRef
+          def="GlobalPhoneInputSet(new gw.api.phone.BusinessPhoneOwner(new gw.api.phone.ContactPhoneDelegate(producer.PrimaryContact.Contact, Contact#WorkPhone), displaykey.Web.NewProducerDV.PrimaryContact.Phone))"
+          editable="false"
+          id="PrimaryContactPhone"/>
+        <Input
+          id="PrimaryContactEmail"
+          label="displaykey.Web.NewProducerDV.PrimaryContact.Email"
+          value="producer.PrimaryContact.Contact.EmailAddress1"/>
+      </InputColumn>
+      <InputFooterSection>
+        <ListViewInput
+          boldLabel="true"
+          label="displaykey.Web.NewProducerDV.Contacts"
+          labelAbove="true"
+          validationExpression="producer.checkPrimaryContact()">
+          <Toolbar>
+            <ToolbarButton
+              hideIfReadOnly="true"
+              id="addNewContact"
+              label="displaykey.Button.Add">
+              <MenuItem
+                action="NewProducerContactPopup.push(producer, Company)"
+                id="addNewCompany"
+                label="displaykey.Web.PolicyDetailContacts.AddNewCompany"/>
+              <MenuItem
+                action="NewProducerContactPopup.push(producer, Person)"
+                id="addNewPerson"
+                label="displaykey.Web.PolicyDetailContacts.AddNewPerson"/>
+            </ToolbarButton>
+            <IteratorButtons
+              addVisible="false"
+              iterator="NewProducerContactsLV"/>
+            <PickerToolbarButton
+              action="ContactSearchPopup.push(true)"
+              available="true"
+              hideIfReadOnly="true"
+              id="addExistingContact"
+              label="displaykey.Web.ProducerContacts.AddExistingContact"
+              onPick="gw.contact.ContactConnection.connectContactToProducer(PickedValue, producer)"/>
+          </Toolbar>
+          <ListViewPanel
+            id="NewProducerContactsLV">
+            <RowIterator
+              editable="true"
+              elementName="producerContact"
+              id="producerContactIterator"
+              toRemove="producer.removeFromContacts(producerContact)"
+              value="producer.Contacts">
+              <Row>
+                <LinkCell
+                  id="Edit">
+                  <Link
+                    action="ProducerContactDetailPopup.push(producerContact)"
+                    hideIfReadOnly="true"
+                    id="EditLink"
+                    label="displaykey.Web.NewProducerContactsLV.Edit"
+                    styleClass="miniButton"/>
+                </LinkCell>
+                <Cell
+                  id="ContactName"
+                  label="displaykey.Web.NewProducerContactsLV.Name"
+                  value="producerContact.DisplayName"/>
+                <Cell
+                  id="ContactAddress"
+                  label="displaykey.Web.NewProducerContactsLV.Address"
+                  value="producerContact.Contact.PrimaryAddress"/>
+                <Cell
+                  id="ContactRoles"
+                  label="displaykey.Web.NewProducerContactsLV.Roles"
+                  value="gw.api.web.producer.ProducerUtil.getRolesForDisplay(producerContact)"/>
+              </Row>
+            </RowIterator>
+          </ListViewPanel>
+        </ListViewInput>
+      </InputFooterSection>
+    </DetailViewPanel>
+    <Code><![CDATA[function validateAndSetAccountRep() : String {
+  if (accountRepDisplayName == null) {
+    producer.AccountRep = null
+    return null
+  }
+  
+  var allUsers = gw.api.database.Query.make(User).select().toList()
+  var user = allUsers.firstWhere( \ user -> user.DisplayName == accountRepDisplayName )
+  if (user == null) {
+    return displaykey.Web.ProducerDetail.InvalidAccountRep  
+  } else {
+    producer.AccountRep = user
+    return null
+  }
+}]]></Code>
+  </Screen>
+</PCF>

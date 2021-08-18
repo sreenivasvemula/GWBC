@@ -1,0 +1,48 @@
+<?xml version="1.0"?>
+<PCF
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="../../../../../pcf.xsd">
+  <Wizard
+          beforeCommit="uiWriteoff.doWriteOff()"
+          cancelWarning="displaykey.Web.NewNegativeWriteoffWizard.CancelConfirmation"
+          id="AccountNewNegativeWriteoffWizard">
+    <LocationEntryPoint
+            signature="AccountNewNegativeWriteoffWizard(account : Account)"/>
+    <Variable
+            name="account"
+            type="Account"/>
+    <Variable
+            initialValue="createUIWriteoff()"
+            name="uiWriteoff"
+            type="web.accounting.UIWriteOffCreation"/>
+    <WizardStep
+            allowNext="uiWriteoff != null"
+            id="TargetStep"
+            label="displaykey.Web.NewNegativeWriteoffWizard.Target.Label"
+            screen="AccountNewNegativeWriteoffWizardTargetStepScreen(account, uiWriteoff)"
+            title="displaykey.Web.NewNegativeWriteoffWizard.Target.Title"/>
+    <WizardStep
+            id="DetailsStep"
+            label="displaykey.Web.NewNegativeWriteoffWizard.Details.Label"
+            onExit="onExitFromDetailsStep()"
+            screen="NewNegativeWriteoffWizardDetailsStepScreen(uiWriteoff)"
+            title="displaykey.Web.NewNegativeWriteoffWizard.Details.Title"/>
+    <WizardStep
+            allowFinish="uiWriteoff != null &amp;&amp; uiWriteoff.Amount != null"
+            id="ConfirmationStep"
+            label="displaykey.Web.NewNegativeWriteoffWizard.Confirmation.Label"
+            screen="NewNegativeWriteoffWizardConfirmationStepScreen(uiWriteoff)"
+            title="displaykey.Web.NewNegativeWriteoffWizard.Confirmation.Title"/>
+    <Code><![CDATA[
+              function onExitFromDetailsStep() {
+                uiWriteoff.initiateApprovalActivityIfUserLacksAuthority()
+              }
+
+              function createUIWriteoff(): gw.api.web.accounting.UIWriteOffCreation {
+                var factory = new gw.api.web.accounting.WriteOffFactory(CurrentLocation)
+                var writeOff = factory.createAccountNegativeWriteOff(account)
+                return new gw.api.web.accounting.UIWriteOffCreation(writeOff)
+              }
+      ]]></Code>
+  </Wizard>
+</PCF>

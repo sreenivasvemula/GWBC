@@ -1,0 +1,68 @@
+<?xml version="1.0"?>
+<PCF
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:noNamespaceSchemaLocation="../../../../../pcf.xsd">
+  <ListViewPanel
+    id="CycleExceptionsLV">
+    <ExposeIterator
+      flags="CycleException"
+      valueType="entity.AgencyCycleProcess"
+      widget="CycleExceptionsLV"/>
+    <Require
+      name="agencyCyclesWithException"
+      type="AgencyCycleProcess[]"/>
+    <Require
+      name="isLatePayments"
+      type="boolean"/>
+    <RowIterator
+      checkBoxVisible="true"
+      editable="false"
+      elementName="agencyCycleWithException"
+      hasCheckBoxes="true"
+      value="agencyCyclesWithException">
+      <Variable
+        initialValue="agencyCycleWithException.AgencyBillCycle.StatementInvoice"
+        name="statementInvoice"/>
+      <ToolbarFlag
+        name="CycleException"/>
+      <Row>
+        <Cell
+          action="AgencyBillStatementDetail.go(agencyCycleWithException.AgencyBillCycle)"
+          id="statementNumber"
+          label="displaykey.Web.AgencyBillExceptions.OtherExceptions.StatementNumber"
+          value="statementInvoice.InvoiceNumber"/>
+        <DateCell
+          id="statementDate"
+          label="displaykey.Web.AgencyBillExceptions.OtherExceptions.StatementDate"
+          value="statementInvoice.EventDate"/>
+        <TypeKeyCell
+          id="statementStatus"
+          label="displaykey.Web.AgencyBillExceptions.OtherExceptions.StatementStatus"
+          value="statementInvoice.Status"/>
+        <DateCell
+          id="dueDate"
+          label="displaykey.Web.AgencyBillExceptions.OtherExceptions.DueDate"
+          value="getDueDate(agencyCycleWithException)"/>
+        <MonetaryAmountCell
+          currency="statementInvoice.Currency"
+          id="StatementAmount"
+          label="displaykey.Web.AgencyBillExceptions.OtherExceptions.StatementAmount"
+          value="statementInvoice.NetAmount"/>
+        <MonetaryAmountCell
+          currency="statementInvoice.Currency"
+          id="UnpaidAmount"
+          label="isLatePayments ? displaykey.Web.AgencyBillExceptions.OtherExceptions.UnpaidAmount : displaykey.Web.AgencyBillExceptions.OtherExceptions.UnpromisedAmount"
+          value="isLatePayments ? statementInvoice.NetAmountUnsettled : statementInvoice.NetAmountUnsettledIncludingPromises"/>
+        <Cell
+          id="Comments"
+          label="displaykey.Web.AgencyBillExceptions.OtherExceptions.Comments"
+          value="isLatePayments? agencyCycleWithException.PaymentPastDueComments : agencyCycleWithException.PromisePastDueComments"/>
+      </Row>
+    </RowIterator>
+    <Code><![CDATA[
+
+function getDueDate(agencyCycleWithException : AgencyCycleProcess) : java.util.Date {
+  return isLatePayments ? agencyCycleWithException.AgencyBillCycle.StatementInvoice.DUEDATE : agencyCycleWithException.AgencyBillCycle.StatementInvoice.PromiseDueDate
+}]]></Code>
+  </ListViewPanel>
+</PCF>

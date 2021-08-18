@@ -1,0 +1,36 @@
+<?xml version="1.0"?>
+<Entity
+  name="PremiumReportBI">
+  <Columns>
+    <Column
+      beanPath="PremiumReportBI.Subtype"
+      name="Subtype"/>
+    <Column
+      beanPath="PremiumReportBI.PeriodStartDate"
+      name="startDate"/>
+    <Column
+      beanPath="PremiumReportBI.PeriodEndDate"
+      name="endDate"/>
+  </Columns>
+  <DisplayName><![CDATA[var sb = new java.lang.StringBuffer();
+    var close = false;
+    sb.append(gw.api.util.TypeKeyUtil.toDisplayName(Subtype));
+    if (startDate != null) {
+      close = true;
+      sb.append(" (");
+      sb.append(startDate?.format("short"));
+    }
+    if (endDate != null) {
+      sb.append(" - ");
+      sb.append(endDate?.format("short"));
+    }
+    if (close) {
+      sb.append(")");
+    }
+    var retString = sb.toString();
+    if (retString.length() == 0) {
+      retString = "(Newly Created)";
+    }
+    return retString;
+  ]]></DisplayName>
+</Entity>

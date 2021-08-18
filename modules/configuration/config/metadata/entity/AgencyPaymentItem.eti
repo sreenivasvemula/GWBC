@@ -1,0 +1,29 @@
+<?xml version="1.0"?>
+<!-- ====================================================================  AgencyPaymentItem  ==================================================================== -->
+<subtype
+  xmlns="http://guidewire.com/datamodel"
+  entity="AgencyPaymentItem"
+  desc="Stores values to be applied to an invoice item as part of an Agency Payment"
+  subpackage="payment"
+  supertype="BasePaymentItem">
+  <foreignkey
+    name="ProducerCode"
+    columnName="ProducerCodeID"
+    exportable="false"
+    setterScriptability="doesNotExist"
+    fkentity="ProducerCode"
+    overwrittenInStagingTable="true"
+    nullok="true"/>
+  <array
+    name="CommissionWriteoffs"
+    desc="The commission writeoff transactions that have been associated with this payment item."
+    arrayentity="ItemCommissionWriteoff"/>
+  <array
+    name="GrossWriteoffs"
+    desc="The gross writeoff transactions that have been associated with this payment item."
+    arrayentity="ItemGrossWriteoff"/>
+  <array
+    name="ChrgePaidFromProdCtxs"
+    desc="The set of ChrgePaidFromProdCtxs that are associated with this AgencyPaymentItem."
+    arrayentity="ChrgePaidFromProdCtx"/>
+</subtype>

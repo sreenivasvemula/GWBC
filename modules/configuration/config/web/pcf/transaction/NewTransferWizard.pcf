@@ -1,0 +1,59 @@
+<?xml version="1.0"?>
+<PCF
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:noNamespaceSchemaLocation="../../../../../pcf.xsd">
+  <Wizard
+    afterCancel="DesktopGroup.go()"
+    afterFinish="DesktopGroup.go()"
+    beforeCommit="validateTransferAmount(); fundsTransferUtil.createTransfers()"
+    canVisit="perm.Transaction.cashtx"
+    cancelWarning="displaykey.Web.NewTransferWizard.CancelConfirmation"
+    countsAsWork="false"
+    id="NewTransferWizard">
+    <LocationEntryPoint
+      signature="NewTransferWizard()"/>
+    <Variable
+      initialValue="createNewFundsTransferUtil()"
+      name="fundsTransferUtil"
+      type="gw.api.web.transaction.FundsTransferUtil"/>
+    <Variable
+      initialValue="new web.accounting.TAccountOwnerReference()"
+      name="tAccountOwnerReference"
+      type="web.accounting.TAccountOwnerReference"/>
+    <WizardStep
+      allowNext="fundsTransferUtil.SourceOwner != null"
+      id="Step1"
+      label="displaykey.Web.NewTransferWizard.AccountPolicySearch.Label"
+      onExit="fundsTransferUtil.SourceOwner = tAccountOwnerReference.TAccountOwner"
+      screen="WizardsStep1AccountPolicySearchScreen(tAccountOwnerReference, null, true, false)"
+      title="displaykey.Web.NewTransferWizard.AccountPolicySearch.Title"/>
+    <WizardStep
+      id="Step2"
+      label="displaykey.Web.NewTransferWizard.TransferDetails.Label"
+      onExit="fundsTransferUtil.setSourcesAndApprovalActivitiesIfRequired()"
+      onFirstEnter="createInitialTransferRow()"
+      screen="TransferDetailsScreen(fundsTransferUtil)"
+      title="displaykey.Web.NewTransferWizard.TransferDetails.Title"/>
+    <WizardStep
+      allowFinish="true"
+      id="Step3"
+      label="displaykey.Web.NewTransferWizard.TransferConfirmation.Label"
+      screen="TransferConfirmationScreen(fundsTransferUtil)"
+      title="displaykey.Web.NewTransferWizard.TransferConfirmation.Title"/>
+    <Code><![CDATA[function createInitialTransferRow() { 
+  fundsTransferUtil.addToTransfers(new FundsTransfer(fundsTransferUtil.SourceOwner.Currency, CurrentLocation))
+}
+
+function createNewFundsTransferUtil() : gw.api.web.transaction.FundsTransferUtil {
+  fundsTransferUtil = new gw.api.web.transaction.FundsTransferUtil();
+  fundsTransferUtil.TargetType = TAccountOwnerType.TC_ACCOUNT
+  return fundsTransferUtil;
+}
+
+function validateTransferAmount() {
+  if (!fundsTransferUtil.validateAmounts()) {
+    throw new util.DisplayableException(displaykey.Web.NewTransferWizard.InsufficientUnappliedFundsForTransfer)
+  }
+}]]></Code>
+  </Wizard>
+</PCF>

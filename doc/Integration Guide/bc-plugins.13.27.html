@@ -1,0 +1,179 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xml:lang="en" lang="en" xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+    <meta http-equiv="Content-Style-Type" content="text/css" />
+    <!-- MOTW-DISABLED saved from url=(0014)about:internet -->
+    <title>Collateral Cash Plugin</title>
+    <link rel="StyleSheet" href="css/bc-plugins.css" type="text/css" media="all" />
+    <link rel="StyleSheet" href="css/webworks.css" type="text/css" media="all" />
+    <link rel="StyleSheet" href="css/css-guidewire-extra.css" type="text/css" media="all" />
+    <script type="text/javascript" language="JavaScript1.2" src="wwhdata/common/context.js"></script>
+    <script type="text/javascript" language="JavaScript1.2" src="wwhdata/common/towwhdir.js"></script>
+    <script type="text/javascript" language="JavaScript1.2" src="wwhdata/common/wwhpagef.js"></script>
+    <script type="text/javascript" language="JavaScript1.2">
+      <!--
+        var  WebWorksRootPath = "";
+      // -->
+    </script>
+    <script type="text/javascript" language="JavaScript1.2">
+      <!--
+        // Set reference to top level help frame
+        //
+        var  WWHFrame = WWHGetWWHFrame("", true);
+      // -->
+    </script>
+    <script type="text/javascript" language="JavaScript1.2" src="scripts/expand.js"></script>
+    <!-- THE FOLLOWING IS A GUIDEWIRE STYLE DEFINITION FOR THE LINK TO THIS FEATURE -->
+    <link rel="StyleSheet" href="css/css-guidewire-extra.css" type="text/css" media="all" />
+    <!-- THE FOLLOWING IS A GUIDEWIRE GSCRIPT FUNCTION FOR THE LINK TO THIS FEATURE -->
+    <script type="text/javascript">
+function guidewire_selectall()
+{
+var text_val=eval("document.linktothisurlform.urlfield");
+text_val.focus();
+text_val.select();
+}
+</script>
+  </head>
+  <body onLoad="WWHUpdate();" onUnload="WWHUnload();" onKeyDown="WWHHandleKeyDown((document.all||document.getElementById||document.layers)?event:null);" onKeyPress="WWHHandleKeyPress((document.all||document.getElementById||document.layers)?event:null);" onKeyUp="WWHHandleKeyUp((document.all||document.getElementById||document.layers)?event:null);">
+    <!-- THE FOLLOWING IS A GUIDEWIRE DIV FOR THE 'LINK TO THIS' FEATURE -->
+    <div id="linkToThisPage" class="popup" style="display: none;">
+      <div class="popupTitle">Link Directly to This Page 
+           <a href="#" onclick="var thePopup = getElementById('linkToThisPage');thePopup.style.display='none';return false;"><img class="popupClosebox" src="wwhelp/wwhimpl/common/images/close.gif" /></a></div>
+      <div style="padding:6px;">
+        <div class="popupText" id="linkToThisPageBookmark">An error has occurred if you see this messsage.</div>
+        <form name="linktothisurlform" method="post" action="" style="width:275px;margin:0px">
+          <input type="text" class="popupURLText" id="linkToThisPageURL" name="urlfield" rows="1" cols="55" onClick="guidewire_selectall();" onFocus="guidewire_selectall();"></input>
+        </form>
+      </div>
+    </div>
+    <br />
+    <div class="WebWorks_Breadcrumbs" style="text-align: left;">
+      <span>BillingCenter Integration Guide</span> : 
+    <span class="WebWorks_Breadcrumbs" style="text-align: left;"><a class="WebWorks_Breadcrumb_Link" href="p-plugins.html#3435181">Plugins</a> : <a class="WebWorks_Breadcrumb_Link" href="bc-plugins.13.01.html#3435181">Billing Plugins</a> : Collateral Cash Plugin</span></div>
+    <hr align="left" />
+    <blockquote>
+      <h3 class="H1_-_Heading_1"><a name="3435181">Collateral Cash Plugin</a></h3>
+      <div class="B_-_Body"><a name="3435184">Implement the </a><span class="cv_-_computer_voice">ICollateral</span> plugin to customize how BillingCenter deals with collateral cash requirements.</div>
+      <div class="B_-_Body"><a name="3435186">The default implementation performs default behavior, and you can customize this as needed.</a></div>
+      <div class="B_-_Body"><a name="3435187">The methods you must implement are as follows:</a></div>
+      <div class="BI_-_Bullet_Item_outer" style="margin-left: 57pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="BI_-_Bullet_Item_inner" style="width: 15pt; white-space: nowrap">
+                <span class="bu_-_bullet">•	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="BI_-_Bullet_Item_inner"><span class="cv_-_computer_voice"><a name="3435188">createCashRequirementCharge</a></span> – Determine whether collateral creates a new charge to force cash requirement compliance. Return <span class="cv_-_computer_voice">true</span> to create a new charge. Otherwise, return <span class="cv_-_computer_voice">false</span>.</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="BI_-_Bullet_Item_outer" style="margin-left: 57pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="BI_-_Bullet_Item_inner" style="width: 15pt; white-space: nowrap">
+                <span class="bu_-_bullet">•	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="BI_-_Bullet_Item_inner"><span class="cv_-_computer_voice"><a name="3435189">getCollateralChargeDate</a></span> – Determine the effective date of the collateral requirement charge (a <span class="cv_-_computer_voice">CollateralRequirement</span> object). This method must return a <span class="cv_-_computer_voice">Date</span> object.</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="BI_-_Bullet_Item_outer" style="margin-left: 57pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="BI_-_Bullet_Item_inner" style="width: 15pt; white-space: nowrap">
+                <span class="bu_-_bullet">•	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="BI_-_Bullet_Item_inner"><span class="cv_-_computer_voice"><a name="3435190">getCollateralRequirementsSorted</a></span> – Get an ordered list of collateral requirements. Takes a Collateral object as an argument, and returns an array of <span class="cv_-_computer_voice">CollateralRequirement</span> objects.</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="BI_-_Bullet_Item_outer" style="margin-left: 57pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="BI_-_Bullet_Item_inner" style="width: 15pt; white-space: nowrap">
+                <span class="bu_-_bullet">•	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="BI_-_Bullet_Item_inner"><span class="cv_-_computer_voice"><a name="3435191">paySegregatedCashRequirements</a></span> – Pay the segregated cash requirements. This method takes a <span class="cv_-_computer_voice">Collateral</span> object, a collateral payment distributed transaction object (<span class="cv_-_computer_voice">CollPmntDistributed</span>), and a <span class="cv_-_computer_voice">BigDecimal</span>. The <span class="cv_-_computer_voice">BigDecimal</span> represents the denormalized value of the total cash amount at collateral (the collateral-held <span class="cv_-_computer_voice">TAccount</span>). The method returns nothing.</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="B_-_Body"><a name="3435193">For example:</a></div>
+      <PRE class="CM_-_Code_Middle_Line"><a name="3435194">class Collateral implements ICollateral</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="3435195">{</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="3435196">&nbsp;&nbsp;override function createCashRequirementCharge() :Boolean{</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="3435197">    return true;    </a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="3435198">  }</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="3435199">  </a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="3435200">  override function getCollateralChargeDate(collateralRequirement : CollateralRequirement) : Date {</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="3435201">    if(collateralRequirement != null and collateralRequirement.PolicyPeriod != null){</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="3435202">      if(gw.api.util.DateUtil.verifyDateOnOrAfterToday(</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="3435203">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;collateralRequirement.PolicyPeriod.PolicyPerEffDate )){</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="3435204">        return collateralRequirement.PolicyPeriod.PolicyPerEffDate; </a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="3435205">      }</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="3435206">    }    </a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="3435207">    return gw.api.util.DateUtil.currentDate();</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="3435208">  }</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="3435209">  </a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="3435210">  override function getCollateralRequirementsSorted(collateral : Collateral) : CollateralRequirement[]{</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="3435211">    var collateralRequirements = collateral.Requirements</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="3435212">    return collateralRequirements.sortBy( \ c -&gt; c.EffectiveDate )</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="3435213">  }</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="3435214">&nbsp;</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="3435215">  override function paySegregatedCashRequirements(collateral : Collateral, </a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="3435216">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;collPmntDistributed : CollPmntDistributed, totalCashAtCollateral : BigDecimal){    </a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="3435217">    var requirements = find(cr in CollateralRequirement where cr.Collateral == collateral  </a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="3435218">                            and cr.Segregated</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="3435219">                            and (cr.Compliance == ComplianceStatus.TC_COMPLIANT or </a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="3435220">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;cr.Compliance == ComplianceStatus.TC_NOTCOMPLIANT)).iterator()</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="3435221">    var availableCash = collPmntDistributed.Amount                            </a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="3435222">    while(requirements.hasNext()){</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="3435223">      var requirement = requirements.next() as CollateralRequirement</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="3435224">      requirement = collateral.Bundle.add( requirement )</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="3435225">      var neededAmount = requirement.Required -  requirement.TotalCashValue</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="3435226">      if(neededAmount &gt;0){</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="3435227">        var amountToAdd = BigDecimalUtil.min(availableCash, neededAmount)</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="3435228">        requirement.addToSegregated( amountToAdd, totalCashAtCollateral, collPmntDistributed)</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="3435229">        availableCash = availableCash - amountToAdd </a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="3435230">        totalCashAtCollateral = totalCashAtCollateral - amountToAdd</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="3435231">        if(availableCash == 0){</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="3435232">          return</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="3435233">        }</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="3435234">      }</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="3435235">    }</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="3435236">  }</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="3435237">}</a></PRE>
+      <script type="text/javascript" language="JavaScript1.2">
+        <!--
+          // Clear related topics
+          //
+          WWHClearRelatedTopics();
+
+          document.writeln(WWHRelatedTopicsInlineHTML());
+        // -->
+      </script>
+    </blockquote>
+    <script type="text/javascript" language="JavaScript1.2">
+      <!--
+        document.write(WWHRelatedTopicsDivTag() + WWHPopupDivTag() + WWHALinksDivTag());
+      // -->
+    </script>
+  </body>
+</html>

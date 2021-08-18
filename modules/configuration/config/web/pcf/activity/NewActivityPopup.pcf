@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PCF
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:noNamespaceSchemaLocation="../../../../../pcf.xsd">
+  <Popup
+    afterCommit="gw.api.web.activity.ActivityUtil.markActivityAsViewed(activity)"
+    beforeCommit="assigneeHolder[0].assignToThis(activity)"
+    canEdit="true"
+    id="NewActivityPopup"
+    startInEditMode="true"
+    title="displaykey.Web.NewActivity.Title">
+    <LocationEntryPoint
+      signature="NewActivityPopup(activityPattern : ActivityPattern, isShared : Boolean, troubleTicket : TroubleTicket)"/>
+    <Variable
+      name="activityPattern"
+      type="ActivityPattern"/>
+    <Variable
+      name="isShared"
+      type="Boolean"/>
+    <Variable
+      name="troubleTicket"
+      type="TroubleTicket"/>
+    <Variable
+      initialValue="createActivity()"
+      name="activity"/>
+    <Variable
+      initialValue="activity.InitialAssigneeForPicker"
+      name="assigneeHolder"
+      type="assignment.Assignee[]"/>
+    <Screen
+      id="NewActivityScreen">
+      <Toolbar>
+        <EditButtons/>
+      </Toolbar>
+      <PanelRef
+        def="ActivityDetailDV(activity, assigneeHolder)"/>
+    </Screen>
+    <Code>
+function createActivity() : Activity
+      {
+        if(isShared)
+        {
+          if(troubleTicket == null)
+          {
+            activity = new SharedActivity();
+          }
+          else
+          {
+            activity = troubleTicket.createSharedActivity();
+          }
+        }
+        else
+        {
+          if(troubleTicket == null)
+          {
+            activity = new Activity();
+          }
+          else
+          {
+            activity = troubleTicket.createActivity();
+          }
+        }
+        activity.ActivityPattern = activityPattern;
+        return activity;
+      }
+    </Code>
+  </Popup>
+</PCF>

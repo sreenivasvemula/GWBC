@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<subtype xmlns="http://guidewire.com/datamodel"
+         desc="A subtype of TAccount indicating that the t-account that can appear multiple times per t-account owner"
+         entity="MultiTAccount"
+         subpackage="accounting"
+         supertype="TAccount">
+    <column
+            name="Description"
+            type="shorttext"
+            setterScriptability="doesNotExist"
+            desc="The the description that was given to this multi t-account at creation time."
+            nullok="false"/>
+    <column
+            name="CreationOrder"
+            type="integer"
+            desc="The sort order of multi t-accounts."
+            nullok="false"
+            default="1"
+            setterScriptability="doesNotExist"/>
+    <dbcheckbuilder className="com.guidewire.bc.system.database.dbchecks.accounting.MultiTAccountDBCheckBuilder"/>
+</subtype>

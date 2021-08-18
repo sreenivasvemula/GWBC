@@ -1,0 +1,26 @@
+<?xml version="1.0"?>
+<!-- ====================================================================  ProdCorrespondenceEntry  ==================================================================== -->
+<entity
+  xmlns="http://guidewire.com/datamodel"
+  entity="ProdCorrespondenceEntry"
+  type="retireable"
+  desc="Represents an entry in an ProducerContact's CorrespondenceTypes array."
+  subpackage="producer"
+  platform="false"
+  table="prodcorrespondenceentry">
+  <implementsEntity
+    name="NotInCurrencySilo"/>
+  <foreignkey
+    name="ProducerContact"
+    desc="FK to container"
+    columnName="ProducerContactID"
+    fkentity="ProducerContact"
+    getterScriptability="hidden"
+    nullok="false"
+    setterScriptability="hidden"/>
+  <typekey
+    name="ProdCorrespondenceType"
+    typelist="ProdCorrespondenceType"
+    nullok="false"
+    setterScriptability="hidden"/>
+</entity>

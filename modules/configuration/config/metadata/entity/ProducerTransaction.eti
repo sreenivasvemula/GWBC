@@ -1,0 +1,61 @@
+<?xml version="1.0"?>
+<subtype
+  xmlns="http://guidewire.com/datamodel"
+  abstract="true"
+  desc="Base type for producer-level transactions."
+  displayName="Producer Transaction"
+  entity="ProducerTransaction"
+  subpackage="accounting.transaction"
+  supertype="Transaction">
+  <monetaryamount
+    amountColumnName="Basis"
+    desc="The basis for the commission, if applicable."
+    name="Basis"
+    nullok="false"
+    scaleToCurrency="true"
+    setterScriptability="doesNotExist"
+    soapnullok="true">
+    <tag
+      name="DefaultValueZero"/>
+  </monetaryamount>
+  <onetoone
+    desc="Related context entity"
+    fkentity="ProducerContext"
+    ignoreforevents="true"
+    name="ProducerContext"
+    nullok="true"
+    setterScriptability="doesNotExist"/>
+  <!-- Initially for performance of Producer.getCommissionPaid(Date start, Date end) but should speed up
+         any transaction query using date range.  If you change this index, please make corresponding edits to
+         the index hints in ProducerStatementImpl#createProducerTransactionQuery(), ProducerPaymentTransactionGetter#restrictTransactionQuery(),
+         and ProducerPaymentBalanceGetter#buildTAccountContainerToSumQuery() -->
+  <index
+    desc="For performance on summing transactions"
+    name="transactionsum"
+    unique="true">
+    <indexcol
+      keyposition="1"
+      name="id"/>
+    <indexcol
+      keyposition="2"
+      name="Retired"/>
+    <indexcol
+      keyposition="3"
+      name="transactiondate"/>
+    <indexcol
+      keyposition="4"
+      name="subtype"/>
+    <indexcol
+      keyposition="5"
+      name="amount"/>
+    <indexcol
+      keyposition="6"
+      name="amount_cur"/>
+    <indexcol
+      keyposition="7"
+      name="basis"/>
+    <indexcol
+      keyposition="8"
+      name="basis_cur"/>
+  </index>
+</subtype>

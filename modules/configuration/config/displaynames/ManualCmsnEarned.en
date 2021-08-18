@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Entity name="ManualCmsnEarned">
+  <Columns>
+    <Column name="Subtype" beanPath="Transaction.Subtype"/>
+    <Column name="ReversedTransactionNumber" beanPath="Transaction.ReversedTransaction.TransactionNumber"/>
+    <DisplayNameColumn name="Producer" beanPath="ManualCmsnEarned.Producer"/>
+  </Columns>
+  <DisplayName>
+    <![CDATA[
+    gw.api.domain.accounting.ReversibleUtil.formatReversibleDisplayName(gw.api.util.TypeKeyUtil.toDisplayName(Subtype), ReversedTransactionNumber)
+    ]]>
+  </DisplayName>
+  <DisplayName type="Short">
+    <![CDATA[
+    gw.api.domain.accounting.ReversibleUtil.formatReversibleDisplayName(displaykey.DisplayName.ManualCmsnEarned.Short, ReversedTransactionNumber)
+    ]]>
+  </DisplayName>
+  <DisplayName type="Long">
+    <![CDATA[
+    gw.api.domain.accounting.ReversibleUtil.formatReversibleDisplayName(displaykey.DisplayName.ManualCmsnEarned.Long(Producer), ReversedTransactionNumber)
+    ]]>
+  </DisplayName>
+</Entity>

@@ -1,0 +1,43 @@
+<?xml version="1.0"?>
+<PCF
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:noNamespaceSchemaLocation="../../../../../pcf.xsd">
+  <Screen
+    id="NewNegativeWriteoffWizardConfirmationStepScreen">
+    <Require
+      name="uiWriteoff"
+      type="web.accounting.UIWriteOffCreation"/>
+    <Variable
+      initialValue="uiWriteoff.WriteOff.getOpenApprovalActivity()"
+      name="approvalActivity"/>
+    <Variable
+      initialValue="(uiWriteoff.WriteOff typeis AcctNegativeWriteoff) ? uiWriteoff.WriteOff.UnappliedFund.DisplayName : uiWriteoff.WriteOff.TAccountOwner.DisplayName"
+      name="targetForWriteoff"
+      type="String"/>
+    <Toolbar>
+      <WizardButtons/>
+    </Toolbar>
+    <AlertBar
+      id="NullAmountAlertBar"
+      label="displaykey.Web.NewNegativeWriteoffWizardConfirmationStepScreen.NullAmountErrorMessage"
+      visible="!hasAmount()"/>
+    <AlertBar
+      id="ApprovalActivityAlertBar"
+      label="displaykey.Web.ApprovalActivityAlertBar"
+      visible="approvalActivity != null"/>
+    <DetailViewPanel
+      id="ConfirmDV"
+      visible="hasAmount()">
+      <InputColumn>
+        <Label
+          label="displaykey.Web.NewNegativeWriteoffWizard.Confirmation(uiWriteoff.Amount.render(), targetForWriteoff)"/>
+      </InputColumn>
+    </DetailViewPanel>
+    <PanelRef
+      def="ApprovalActivityDV(approvalActivity)"
+      visible="hasAmount()"/>
+    <Code><![CDATA[function hasAmount() : boolean {
+  return uiWriteoff != null && uiWriteoff.Amount != null
+}]]></Code>
+  </Screen>
+</PCF>

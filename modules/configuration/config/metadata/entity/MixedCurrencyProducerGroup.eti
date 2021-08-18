@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<entity
+        xmlns="http://guidewire.com/datamodel"
+        desc="Groups a set of mixed currency BillingCenter splinter producers that correspond to one mixed currency PolicyCenter account. The group can contain at most one splinter account per currency."
+        entity="MixedCurrencyProducerGroup"
+        subpackage="producer"
+        table="producergroup"
+        type="retireable">
+  <implementsEntity
+          name="NotInCurrencySilo"/>
+  <foreignkey
+          columnName="MainProducerID"
+          desc="The central (initial) producer for the group. (This is the PolicyCenter producer.)"
+          fkentity="Producer"
+          name="MainProducer"
+          nullok="false"
+          setterScriptability="hidden"/>
+</entity>

@@ -1,0 +1,84 @@
+<?xml version="1.0"?>
+<subtype
+  xmlns="http://guidewire.com/datamodel"
+  desc="A statement associated with an Agency Bill Producer"
+  entity="StatementInvoice"
+  subpackage="invoice"
+  supertype="Invoice">
+  <array
+    arrayentity="SnapshotInvoiceItem"
+    desc="For a BILLED statement: Snapshot of invoice items as of the bill date of this statement. For a PLANNED statement: Snapshot of past exactly paid invoice items that became not exactly paid"
+    name="SnapshotInvoiceItems"
+    owner="true"
+    setterScriptability="hidden"/>
+  <onetoone
+    desc="The cycle of this agency bill statement"
+    fkentity="AgencyBillCycle"
+    name="AgencyBillCycle"
+    nullok="true"
+    setterScriptability="doesNotExist"/>
+  <!-- Denormalizations -->
+  <monetaryamount
+    amountColumnName="NetAmountPaid"
+    desc="Total Primary Net Amount paid against invoice items on this statement invoice.  This is a denormalized field."
+    loadable="false"
+    loadedByCallback="true"
+    name="NetAmountPaid"
+    nullok="false"
+    scaleToCurrency="true"
+    setterScriptability="doesNotExist"
+    soapnullok="true">
+    <tag
+      name="DefaultValueZero"/>
+  </monetaryamount>
+  <monetaryamount
+    amountColumnName="NetAmount"
+    desc="Total Primary Net Amount of invoice items on this statement invoice.  This is a denormalized field."
+    loadable="false"
+    loadedByCallback="true"
+    name="NetAmount"
+    nullok="false"
+    scaleToCurrency="true"
+    setterScriptability="doesNotExist"
+    soapnullok="true">
+    <tag
+      name="DefaultValueZero"/>
+  </monetaryamount>
+  <monetaryamount
+    amountColumnName="NetAmountWrittenOff"
+    desc="Total Primary Net Amount written off against invoice items on this statement.  This is a denormalized field."
+    name="NetAmountWrittenOff"
+    nullok="false"
+    scaleToCurrency="true"
+    setterScriptability="doesNotExist"
+    soapnullok="true">
+    <tag
+      name="DefaultValueZero"/>
+  </monetaryamount>
+  <monetaryamount
+    amountColumnName="CommissionPayable"
+    desc="Total Primary Commission Payable on invoice items on this statement.  This is a denormalized field."
+    name="CommissionPayable"
+    nullok="false"
+    scaleToCurrency="true"
+    setterScriptability="doesNotExist"
+    soapnullok="true">
+    <tag
+      name="DefaultValueZero"/>
+  </monetaryamount>
+  <column
+    default="false"
+    desc="True if gross and commissions is settled on every invoice item.  This is a denormalized field."
+    loadable="false"
+    loadedByCallback="true"
+    name="AllInvoiceItemsExactlyPaid"
+    nullok="false"
+    setterScriptability="doesNotExist"
+    type="bit"/>
+  <dbcheckbuilder
+    className="com.guidewire.bc.system.database.dbchecks.producer.agencybill.StatementInvoiceCycleDBCheckBuilder"/>
+  <dbcheckbuilder
+    className="com.guidewire.bc.system.database.dbchecks.producer.agencybill.AgencyCycleProcessDBCheckBuilder"/>
+  <dbcheckbuilder
+    className="com.guidewire.bc.system.database.dbchecks.producer.agencybill.StatementInvoiceSnapshotDBCheckBuilder"/>
+</subtype>

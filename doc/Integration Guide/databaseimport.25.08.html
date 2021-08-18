@@ -1,0 +1,201 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xml:lang="en" lang="en" xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+    <meta http-equiv="Content-Style-Type" content="text/css" />
+    <!-- MOTW-DISABLED saved from url=(0014)about:internet -->
+    <title>Populating the Staging Tables</title>
+    <link rel="StyleSheet" href="css/databaseimport.css" type="text/css" media="all" />
+    <link rel="StyleSheet" href="css/webworks.css" type="text/css" media="all" />
+    <link rel="StyleSheet" href="css/css-guidewire-extra.css" type="text/css" media="all" />
+    <script type="text/javascript" language="JavaScript1.2" src="wwhdata/common/context.js"></script>
+    <script type="text/javascript" language="JavaScript1.2" src="wwhdata/common/towwhdir.js"></script>
+    <script type="text/javascript" language="JavaScript1.2" src="wwhdata/common/wwhpagef.js"></script>
+    <script type="text/javascript" language="JavaScript1.2">
+      <!--
+        var  WebWorksRootPath = "";
+      // -->
+    </script>
+    <script type="text/javascript" language="JavaScript1.2">
+      <!--
+        // Set reference to top level help frame
+        //
+        var  WWHFrame = WWHGetWWHFrame("", true);
+      // -->
+    </script>
+    <script type="text/javascript" language="JavaScript1.2" src="scripts/expand.js"></script>
+    <!-- THE FOLLOWING IS A GUIDEWIRE STYLE DEFINITION FOR THE LINK TO THIS FEATURE -->
+    <link rel="StyleSheet" href="css/css-guidewire-extra.css" type="text/css" media="all" />
+    <!-- THE FOLLOWING IS A GUIDEWIRE GSCRIPT FUNCTION FOR THE LINK TO THIS FEATURE -->
+    <script type="text/javascript">
+function guidewire_selectall()
+{
+var text_val=eval("document.linktothisurlform.urlfield");
+text_val.focus();
+text_val.select();
+}
+</script>
+  </head>
+  <body onLoad="WWHUpdate();" onUnload="WWHUnload();" onKeyDown="WWHHandleKeyDown((document.all||document.getElementById||document.layers)?event:null);" onKeyPress="WWHHandleKeyPress((document.all||document.getElementById||document.layers)?event:null);" onKeyUp="WWHHandleKeyUp((document.all||document.getElementById||document.layers)?event:null);">
+    <!-- THE FOLLOWING IS A GUIDEWIRE DIV FOR THE 'LINK TO THIS' FEATURE -->
+    <div id="linkToThisPage" class="popup" style="display: none;">
+      <div class="popupTitle">Link Directly to This Page 
+           <a href="#" onclick="var thePopup = getElementById('linkToThisPage');thePopup.style.display='none';return false;"><img class="popupClosebox" src="wwhelp/wwhimpl/common/images/close.gif" /></a></div>
+      <div style="padding:6px;">
+        <div class="popupText" id="linkToThisPageBookmark">An error has occurred if you see this messsage.</div>
+        <form name="linktothisurlform" method="post" action="" style="width:275px;margin:0px">
+          <input type="text" class="popupURLText" id="linkToThisPageURL" name="urlfield" rows="1" cols="55" onClick="guidewire_selectall();" onFocus="guidewire_selectall();"></input>
+        </form>
+      </div>
+    </div>
+    <br />
+    <div class="WebWorks_Breadcrumbs" style="text-align: left;">
+      <span>BillingCenter Integration Guide</span> : 
+    <span class="WebWorks_Breadcrumbs" style="text-align: left;"><a class="WebWorks_Breadcrumb_Link" href="p-importingbillingandaccounts.fm.html#2233653">Importing Billing and Account Data</a> : <a class="WebWorks_Breadcrumb_Link" href="databaseimport.25.01.html#2233653">Importing from Database Staging Tables</a> : Populating the Staging Tables</span></div>
+    <hr align="left" />
+    <blockquote>
+      <h3 class="H1_-_Heading_1"><a name="2233653">Populating the Staging Tables</a></h3>
+      <div class="B_-_Body"><a name="2233655">The first step in importing data using the staging tables is mapping external data in the tables. There is a one-to-one correspondence between BillingCenter operational tables (prefix: “</a><span class="cv_-_computer_voice">bc_</span>”) and the staging tables (prefix: “<span class="cv_-_computer_voice">bcst_</span>”). </div>
+      <div class="B_-_Body"><a name="2270545">For example, the BillingCenter </a><span class="cv_-_computer_voice">bc_account</span> table would load from the <span class="cv_-_computer_voice">bcst_account</span> table. </div>
+      <div class="B_-_Body"><a name="2233722">Not all operational tables have a corresponding staging table. For example, BillingCenter does not import group hierarchies, roles, and system parameters. Also, BillingCenter excludes internal tables for the message Send&nbsp;Queue, the internal SMTP email queue, and statistics information. However, it does include most data, including user data using the staging tables.</a></div>
+      <div class="BI_-_Bullet_Item_outer" style="margin-left: 57pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="BI_-_Bullet_Item_inner" style="width: 15pt; white-space: nowrap">
+                <span class="bu_-_bullet">•	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="BI_-_Bullet_Item_inner"><a name="2233734">The staging version of the table (starts with </a><span class="cv_-_computer_voice">bcst_</span>) contains a row number column and a <span class="cv_-_computer_voice">LUWID</span> column that do not exist in the <span class="cv_-_computer_voice">bc_</span> tables. The purpose of these is described earlier.</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="BI_-_Bullet_Item_outer" style="margin-left: 57pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="BI_-_Bullet_Item_inner" style="width: 15pt; white-space: nowrap">
+                <span class="bu_-_bullet">•	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="BI_-_Bullet_Item_inner"><a name="2233742">The following properties do not exist in the </a><span class="cv_-_computer_voice">bcst_</span> versions of the tables: <span class="cv_-_computer_voice">CreateUserID</span>, <span class="cv_-_computer_voice">UpdateUserID</span>, <span class="cv_-_computer_voice">LoadCommandID</span>, <span class="cv_-_computer_voice">BeanVersion</span>, <span class="cv_-_computer_voice">CreateTime</span>, and <span class="cv_-_computer_voice">UpdateTime</span> properties. BillingCenter sets these properties automatically during import into the operational tables.</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="BI_-_Bullet_Item_outer" style="margin-left: 57pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="BI_-_Bullet_Item_inner" style="width: 15pt; white-space: nowrap">
+                <span class="bu_-_bullet">•	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="BI_-_Bullet_Item_inner"><a name="2233751">Some properties that track internal system state are not included in staging tables because BillingCenter itself sets these properties at run time.</a></div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="BI_-_Bullet_Item_outer" style="margin-left: 57pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="BI_-_Bullet_Item_inner" style="width: 15pt; white-space: nowrap">
+                <span class="bu_-_bullet">•	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="BI_-_Bullet_Item_inner"><a name="2233759">There are internal properties (for example, </a><span class="cv_-_computer_voice">State</span>) that BillingCenter cannot be certain of the value of the property upon import. Mark the account’s <span class="cv_-_computer_voice">state</span> as either open or closed upon import using the appropriate typelist codes.</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="B_-_Body"><a name="2233774">In the BillingCenter </a><span class="e_-_emphasis">Data Dictionary</span>, you can tell which properties are included in the <span class="cv_-_computer_voice">bcst_</span> table by checking if a property is loadable. </div>
+      <div class="B_-_Body"><a name="2270556">For example, click on an entity in the </a><span class="e_-_emphasis">Data Dictionary</span> and look at each property to see whether the dictionary says “<span class="cv_-_computer_voice">(loadable)</span>”. If it does, that property is included in the staging table for that entity. </div>
+      <div class="N_-_Note">
+        <span class="n_-_note">Note: </span><a name="2233793">Use load command IDs to tell whether an entity loaded from database staging tables. See </a><a href="javascript:WWHClickedPopup('integration', 'databaseimport.25.02.html#1608329', '');" title="Introduction to Database Staging Table Import">“Load Commands and Loadable Entities”</a>.</div>
+      <div class="B_-_Body"><a name="2233797">During database import planning, use the </a><span class="uix_-_UI_element_third-party">Conversion View</span> in the <span class="e_-_emphasis">Data Dictionary</span>. Get to the conversion view from the main <span class="ui_-_UI_element">Home</span> page of the <span class="e_-_emphasis">Data Dictionary</span>, with the links that say:</div>
+      <div class="BI_-_Bullet_Item_outer" style="margin-left: 57pt; margin-bottom: 2.0pt; vertical-align: baseline">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="BI_-_Bullet_Item_inner" style="width: 15pt; white-space: nowrap; color: #000000; font-style: normal; font-variant: normal; font-weight: bold; text-transform: none">
+                <span class="bu_-_bullet">•	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="BI_-_Bullet_Item_inner" style="color: #000000; font-style: normal; font-variant: normal; font-weight: bold; text-transform: none"><span class="uix_-_UI_element_third-party"><a name="2233798">Data Entities (Conversion View)</a></span><span class="ui_-_UI_element"> </span></div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="BI_-_Bullet_Item_outer" style="margin-left: 57pt; vertical-align: baseline">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="BI_-_Bullet_Item_inner" style="width: 15pt; white-space: nowrap; color: #000000; font-style: normal; font-variant: normal; font-weight: bold; text-transform: none">
+                <span class="bu_-_bullet">•	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="BI_-_Bullet_Item_inner" style="color: #000000; font-style: normal; font-variant: normal; font-weight: bold; text-transform: none"><span class="uixt_-_UI_element_third-party_table"><a name="2233799">Typelists (Conversion View)</a></span><span class="ui_-_UI_element"> </span></div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="B_-_Body"><a name="2233800">The </a><span class="uix_-_UI_element_third-party">Conversion View</span> hides all properties that are not backed by actual database columns or are not importable in staging tables. For example, all virtual properties, which are generated (calculated) from other properties at run time.</div>
+      <h4 class="H2_-_Heading_2"><a name="2233801">Important Properties and Concepts for Database Import</a></h4>
+      <div class="B_-_Body"><a name="2233802">Most business data properties are straightforward to populate in the staging tables. You can look at the </a><span class="e_-_emphasis">Data Dictionary</span> to understand the meaning of the properties on the operational tables. Put the right values into the properties by the same name on the staging tables. However, there are some general guidelines for how to populate the staging tables, described in the following subsections.</div>
+      <h6 class="HS_-_Head_Sub"><a name="2233805">Public IDs and the Retired Property</a></h6>
+      <div class="B_-_Body"><a name="2233811">BillingCenter relies on </a><span class="cv_-_computer_voice">PublicID</span> strings to identify rows in the staging tables. Every row you insert must have a <span class="cv_-_computer_voice">PublicID</span>, which must be unique within both the staging table and its corresponding operational table. For tables with a <span class="cv_-_computer_voice">retired</span> property, the combination of <span class="cv_-_computer_voice">PublicID</span> and <span class="cv_-_computer_voice">Retired</span> must be unique. </div>
+      <div class="B_-_Body"><a name="2233819">In the operational tables, logical deletes are done by setting the </a><span class="cv_-_computer_voice">Retired</span> property to something other than 0 (in practice, it is set to the ID of the row). This allows more than one row to have the same <span class="cv_-_computer_voice">PublicID</span> as long as only one is currently not retired. BillingCenter uses this to make sure that you are not inserting duplicate rows and to resolve foreign keys (references between tables). </div>
+      <div class="B_-_Body"><a name="2270567">You must have an algorithm for generating unique </a><span class="cv_-_computer_voice">PublicID</span> strings in the conversion tool. For example, the <span class="cv_-_computer_voice">PublicID</span> for each account could be the company name, then a colon character, then the account number. </div>
+      <div class="B_-_Body"><a name="2233828">Set the retired property (if any) to the value 0, indicating an active row in the operational tables. To retire a row, set the </a><span class="cv_-_computer_voice">retired</span> property to the object’s public&nbsp;ID. Once an object is retired, it can never revert to active.</div>
+      <div class="NW_-_Note_Warning">
+        <span class="w_-_warning">WARNING  </span><a name="2233829">Guidewire recommends that you not load retired data during staging table import.</a></div>
+      <div class="B_-_Body"><a name="2233838">Integration code must never explicitly set a public&nbsp;IDs to a string that starts with a two-character ID and then a colon because Guidewire reserves all such IDs. If you used the </a><span class="cv_-_computer_voice">PublicIDPrefix</span> configuration parameter to change the prefix of auto-created public&nbsp;IDs, integration code that sets explicit public IDs also must not conflict with that namespace. Additionally, plan your public ID naming carefully to support large (long) record numbers. Ensure your system can support a significant number of records over time and stay within the 20 character public&nbsp;ID limit. For detailed discussion on these issues, see <a href="javascript:WWHClickedPopup('integration', 'overview.04.9.html#2193723', '');" title="Public IDs and Integration Code">“Public IDs and Integration Code”</a>.</div>
+      <h6 class="HS_-_Head_Sub"><a name="2233844">Foreign Key Fields</a></h6>
+      <div class="B_-_Body"><a name="2233865">During the load phase, BillingCenter looks up the foreign key by public ID and insert its internal ID into the operational table.</a></div>
+      <h6 class="HS_-_Head_Sub"><a name="2233866">All Columns in the Staging Tables Are Nullable </a></h6>
+      <div class="B_-_Body"><a name="2233869">Most columns in the staging tables are nullable, even if the corresponding column in the operational table is not nullable. This is designed to allow you to insert rows and then set default values afterwards, if necessary, while loading the staging tables. </a></div>
+      <div class="B_-_Body"><a name="2233871">However, if the corresponding column in the operational table has a default value (check the </a><span class="e_-_emphasis">Data Dictionary</span>), then you can leave the staging table column <span class="cv_-_computer_voice">null.</span> In this case, BillingCenter sets the default value. If the property does not have a default value, you must set some value in the staging table even if merely a default value that your conversion tool chooses.</div>
+      <h6 class="HS_-_Head_Sub"><a name="2233877">Type Key Columns</a></h6>
+      <div class="B_-_Body"><a name="2233881">Type key columns must be loaded by a valid </a><span class="cv_-_computer_voice">Code</span> value from the type list. During population, BillingCenter converts this to an internal integer type code ID. </div>
+      <h6 class="HS_-_Head_Sub"><a name="2233890">Subtyped Tables</a></h6>
+      <div class="B_-_Body"><a name="2233893">If the operational table is subtyped, then there is a </a><span class="cv_-_computer_voice">subtype</span> column on the staging table. This property must load by the text name of the subtype. Look in the <span class="e_-_emphasis">Data Dictionary</span> for the subtype names. </div>
+      <h6 class="HS_-_Head_Sub"><a name="2233912">Ignore the Row Number Column</a></h6>
+      <div class="B_-_Body"><a name="2233916">Ignore the row number column. This column is automatically populated by BillingCenter by the database on inserting the row or by the integrity check process, depending on which database management system (DBMS) you are using. The row number property is only used for reporting errors.</a></div>
+      <h6 class="HS_-_Head_Sub"><a name="2233920">Populating the Logical Unit of Work ID (LUWID) Column</a></h6>
+      <div class="B_-_Body"><a name="2270592">Populate the </a><span class="cv_-_computer_voice">LUWID</span> column with something useful. For accounts, typically this is the account number, but other values could be used. If inserting users, it might appropriate to use the user’s login name (for example, <span class="cv_-_computer_voice">ssmith</span>). This way, you can delete all the data related to a user (in other words, <span class="cv_-_computer_voice">ccst_user</span>, <span class="cv_-_computer_voice">ccst_credential</span>, <span class="cv_-_computer_voice">ccst_contact</span>) if the user already exists in BillingCenter.</div>
+      <h6 class="HS_-_Head_Sub"><a name="2233951">Overwritten Tables and Columns</a></h6>
+      <div class="B_-_Body"><a name="2233952">There are also tables that have staging tables but are always overwritten during import. These are marked within the data model files as </a><span class="cv_-_computer_voice">overwritteninstagingtables</span> set to <span class="cv_-_computer_voice">true</span>. </div>
+      <div class="B_-_Body"><a name="2233954">Likewise, some columns are defined with the </a><span class="cv_-_computer_voice">loadable</span> attribute and also the attribute <span class="cv_-_computer_voice">overwriteinstagingtables</span>. These columns in the staging table are usually cleared and populated by the staging table loader subroutines.</div>
+      <h6 class="HS_-_Head_Sub"><a name="2233955">Virtual Properties</a></h6>
+      <div class="B_-_Body"><a name="2233956">Some Guidewire entities contain properties called virtual properties (virtual fields). They act like regular properties in many ways from Gosu such as reading property values. However, virtual properties are not backed from columns in the database. Values of these properties generate dynamically if Gosu code requests the property value. In many cases, virtual properties are read-only from Gosu code, from Java plugins, and from Java classes called from Gosu. Some virtual properties are also writable. Refer to </a><a href="javascript:WWHClickedPopup('gosu', 'classes.12.4.html#2447772', '');" title="Properties">“Properties” in the </a><span class="bt_-_book_title"><a href="javascript:WWHClickedPopup('gosu', 'classes.12.4.html#2447772', '');" title="Properties">Gosu Reference Guide</a></span> for related information.</div>
+      <div class="B_-_Body"><a name="2233960">Generally speaking, ignore all virtual properties for conversion projects using staging tables. </a></div>
+      <div class="B_-_Body"><a name="2233961">To determine where to load data for some virtual property (virtual field), there is no one answer. In some cases the virtual property calls a method that performs a complex calculation that pull from many different properties or even other entities. </a></div>
+      <div class="B_-_Body"><a name="2233962">As a general rule, to find out what properties the virtual property pulls information from, see the </a><span class="bt_-_book_title">BillingCenter Data Dictionary</span>. Sometimes the <span class="e_-_emphasis">Data Dictionary</span> contains the necessary information for staging table database import for how that virtual property is calculated. However, you are only responsible for populating loadable properties and columns. Use the Conversion View of the <span class="e_-_emphasis">Data Dictionary</span> to show only loadable entities and loadable columns that your conversion tool must populate.</div>
+      <h4 class="H2_-_Heading_2"><a name="2233966">Indexes in Staging Tables</a></h4>
+      <div class="B_-_Body"><a name="2233967">All staging tables must contain a unique index on each table before loading the staging tables. The system applies an integrity constraint during load that there is a unique index on all staging tables. If the table has a retired property, the unique index must be on the combined columns </a><span class="cv_-_computer_voice">(publicID,&nbsp;retired)</span>. If the table does not have a retired property, the unique index must be on the <span class="cv_-_computer_voice">publicID</span> column.</div>
+      <script type="text/javascript" language="JavaScript1.2">
+        <!--
+          // Clear related topics
+          //
+          WWHClearRelatedTopics();
+
+          document.writeln(WWHRelatedTopicsInlineHTML());
+        // -->
+      </script>
+    </blockquote>
+    <script type="text/javascript" language="JavaScript1.2">
+      <!--
+        document.write(WWHRelatedTopicsDivTag() + WWHPopupDivTag() + WWHALinksDivTag());
+      // -->
+    </script>
+  </body>
+</html>

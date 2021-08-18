@@ -1,0 +1,37 @@
+<?xml version="1.0"?>
+<PCF
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:noNamespaceSchemaLocation="../../../../../pcf.xsd">
+  <Wizard
+    beforeCommit="disbursement.executeDisbursementOrCreateApprovalActivityIfNeeded()"
+    canVisit="perm.Transaction.disbcreate"
+    cancelWarning="displaykey.Web.CollateralDisbursementWizard.CancelConfirmation"
+    countsAsWork="false"
+    id="CollateralDisbursementWizard">
+    <LocationEntryPoint
+      signature="CollateralDisbursementWizard(collateral : Collateral)"/>
+    <Variable
+      name="collateral"
+      type="Collateral"/>
+    <Variable
+      initialValue="newDisbursement()"
+      name="disbursement"
+      type="CollateralDisbursement"/>
+    <WizardStep
+      id="Step1"
+      label="displaykey.Web.CollateralDisbursementWizard.DetailStepLabel"
+      onExit="disbursement.initiateApprovalActivityIfUserLacksAuthority()"
+      screen="CollateralDisbursementDetailScreen(disbursement)"
+      title="displaykey.Web.CollateralDisbursementWizard.DetailStepTitle"/>
+    <WizardStep
+      id="Step2"
+      label="displaykey.Web.CollateralDisbursementWizard.ConfirmStepLabel"
+      screen="CollateralDisbursementConfirmScreen(disbursement)"
+      title="displaykey.Web.CollateralDisbursementWizard.ConfirmStepTitle"/>
+    <Code><![CDATA[function newDisbursement() : CollateralDisbursement{
+        var disb = new CollateralDisbursement(collateral.Currency)
+        disb.setCollateralAndFields(collateral);
+        return disb;
+      }]]></Code>
+  </Wizard>
+</PCF>

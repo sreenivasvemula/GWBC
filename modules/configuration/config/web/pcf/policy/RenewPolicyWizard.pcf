@@ -1,0 +1,40 @@
+<?xml version="1.0"?>
+<PCF
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:noNamespaceSchemaLocation="../../../../../pcf.xsd">
+  <Wizard
+    afterCancel="PolicyDetailSummary.go(prevPolicyPeriod)"
+    afterFinish="PolicyDetailSummary.go(renewal.NewPolicyPeriod)"
+    beforeCommit="gw.api.web.policy.PolicyPeriodUtil.validatePolicyPeriodCreatedFromUI(renewal);renewal.execute()"
+    canVisit="perm.PolicyPeriod.plcyrenew"
+    id="RenewPolicyWizard">
+    <LocationEntryPoint
+      signature="RenewPolicyWizard(prevPolicyPeriod : PolicyPeriod)"/>
+    <Variable
+      name="prevPolicyPeriod"
+      type="PolicyPeriod"/>
+    <Variable
+      initialValue="createNewRenewal()"
+      name="renewal"
+      type="Renewal"/>
+    <Variable
+      initialValue="new gw.invoice.InvoicingOverridesView(renewal.NewPolicyPeriod)"
+      name="invoicingOverridesView"/>
+    <WizardStep
+      id="BasicsStep"
+      label="displaykey.Web.PolicyDetail.RenewPolicyWizard.Basics.Label"
+      onExit="invoicingOverridesView.update()"
+      screen="RenewPolicyWizardBasicsStepScreen(prevPolicyPeriod, renewal.NewPolicyPeriod, renewal.ProducerCodes, invoicingOverridesView, renewal)"
+      title="displaykey.Web.PolicyDetail.RenewPolicyWizard.Basics.Title"/>
+    <WizardStep
+      allowFinish="true"
+      id="ChargeStep"
+      label="displaykey.Web.PolicyDetail.RenewPolicyWizard.Charges.Label"
+      screen="RenewPolicyWizardChargeStepScreen(renewal)"
+      title="displaykey.Web.PolicyDetail.RenewPolicyWizard.Charges.Title"/>
+    <Code><![CDATA[
+function createNewRenewal() : Renewal {
+  return gw.api.web.policy.NewPolicyUtil.createRenewal(prevPolicyPeriod)
+}]]></Code>
+  </Wizard>
+</PCF>

@@ -1,0 +1,34 @@
+<?xml version="1.0"?>
+<PCF
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:noNamespaceSchemaLocation="../../../../../pcf.xsd">
+  <Popup
+    id="PaymentDetailsPopup"
+    title="displaykey.Web.PaymentDetails.Title">
+    <LocationEntryPoint
+      signature="PaymentDetailsPopup(paymentReceipt : PaymentReceipt)"/>
+    <Variable
+      name="paymentReceipt"
+      type="PaymentReceipt"/>
+    <Screen
+      id="PaymentDetailsPopupScreen">
+      <DetailViewPanel>
+        <InputColumn>
+          <MonetaryAmountInput
+            currency="paymentReceipt.Amount.Currency"
+            id="Amount"
+            label="displaykey.Web.PaymentDetails.Amount"
+            value="paymentReceipt.Amount"/>
+          <Input
+            id="Method"
+            label="displaykey.Web.PaymentDetails.Method"
+            value="PaymentReceipt.PaymentInstrument.PaymentMethod"/>
+          <Input
+            id="RefNumber"
+            label="displaykey.Web.PaymentDetails.RefNumber"
+            value="paymentReceipt.RefNumber"/>
+        </InputColumn>
+      </DetailViewPanel>
+    </Screen>
+  </Popup>
+</PCF>

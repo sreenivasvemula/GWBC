@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PCF
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:noNamespaceSchemaLocation="../../../../../pcf.xsd">
+  <!-- This screen allows the user to upload a document file that exists on their local machine into the system -->
+  <Screen
+    id="NewDocumentLinkedScreen">
+    <Require
+      name="DocumentCreationInfo"
+      type="gw.document.DocumentCreationInfo"/>
+    <Toolbar>
+      <EditButtons/>
+    </Toolbar>
+    <!-- Input field with Browse... button next to it. This allows the user to choose a file on their local machine
+         to upload into the system -->
+    <PanelRef
+      def="DocumentAttachmentDV(DocumentCreationInfo)"/>
+    <DetailViewPanel>
+      <InputColumn>
+        <InputSetRef
+          def="DocumentMetadataInputSet(DocumentCreationInfo.Document, false)"/>
+      </InputColumn>
+    </DetailViewPanel>
+  </Screen>
+</PCF>

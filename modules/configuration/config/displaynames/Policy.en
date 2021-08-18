@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<Entity
+  name="Policy">
+  <Columns>
+    <Column
+      beanPath="Policy.LatestPolicyPeriod.PolicyNumber"
+      name="PolicyNumber"
+      sortOrder="0"/>
+    <Column
+      beanPath="Policy.PublicID"
+      name="PublicID"/>
+    <Column
+      beanPath="Policy.LatestPolicyPeriod"
+      name="LatestPolicyPeriod"/>
+  </Columns>
+  <DisplayName><![CDATA[var isPolicyWithNoPolicyPeriods = LatestPolicyPeriod == null
+return isPolicyWithNoPolicyPeriods
+  ? displaykey.DisplayName.PolicyWithNoPolicyPeriods(PublicID) 
+  : displaykey.DisplayName.PolicyNumber(PolicyNumber)
+]]></DisplayName>
+</Entity>

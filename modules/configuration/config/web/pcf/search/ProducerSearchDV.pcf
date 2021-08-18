@@ -1,0 +1,51 @@
+<?xml version="1.0"?>
+<PCF
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:noNamespaceSchemaLocation="../../../../../pcf.xsd">
+  <DetailViewPanel
+    id="ProducerSearchDV">
+    <Require
+      name="searchCriteria"
+      type="gw.search.ProducerSearchCriteria"/>
+    <InputColumn>
+      <Label
+        id="SearchCriteria"
+        label="displaykey.Web.ProducerSearchDV.SearchCriteria"/>
+      <Input
+        editable="true"
+        id="ProducerNameCriterion"
+        label="gw.api.util.LocaleUtil.CurrentLocaleType == LocaleType.TC_JA_JP ? displaykey.Web.ProducerSearchDV.ProducerNamePhonetic : displaykey.Web.ProducerSearchDV.ProducerName"
+        value="searchCriteria.ProducerName"/>
+      <Input
+        editable="true"
+        id="ProducerNameKanjiCriterion"
+        label="displaykey.Web.ProducerSearchDV.ProducerName"
+        value="searchCriteria.ProducerNameKanji"
+        visible="gw.api.util.LocaleUtil.CurrentLocaleType == LocaleType.TC_JA_JP"/>
+      <Input
+        editable="true"
+        id="ProducerCodeCriterion"
+        label="displaykey.Web.ProducerSearchDV.ProducerCode"
+        value="searchCriteria.ProducerCode"/>
+      <TypeKeyInput
+        editable="true"
+        id="CurrencyCriterion"
+        label="displaykey.Web.ProducerSearchDV.Currency"
+        value="searchCriteria.CurrencyCriterion"
+        visible="gw.api.util.CurrencyUtil.isMultiCurrencyMode()"/>
+      <CheckBoxInput
+        editable="true"
+        id="HasAgencyBillPlanCriterion"
+        label="displaykey.Web.ProducerSearchDV.HasAgencyBillPlan"
+        value="searchCriteria.HasAgencyBillPlan"/>
+    </InputColumn>
+    <InputColumn>
+      <InputSetRef
+        def="ContactCriteriaInputSet(searchCriteria.ContactCriteria)"/>
+    </InputColumn>
+    <InputFooterSection>
+      <InputSetRef
+        def="SearchAndResetInputSet()"/>
+    </InputFooterSection>
+  </DetailViewPanel>
+</PCF>

@@ -1,0 +1,78 @@
+<?xml version="1.0"?>
+<PCF
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:noNamespaceSchemaLocation="../../../../../pcf.xsd">
+  <Screen
+    id="TransferPolicyNewScreen">
+    <Require
+      name="policyTransfer"
+      type="PolicyTransfer"/>
+    <Variable
+      name="destProducer"
+      type="Producer"/>
+    <Variable
+      initialValue="new web.producer.ProducerSearchConverter()"
+      name="producerSearchConverter"
+      type="web.producer.ProducerSearchConverter"/>
+    <Variable
+      initialValue="policyTransfer.PolicyPeriodsToTransfer.firstWhere( \ p -&gt; p.AgencyBill ) == null"
+      name="allDirectBillPolicyPeriods"/>
+    <Toolbar>
+      <WizardButtons/>
+    </Toolbar>
+    <DetailViewPanel
+      id="TransferPolicyNewDV">
+      <InputColumn>
+        <Label
+          label="displaykey.Web.TransferPolicyNew.DestinationProducer"/>
+        <Input
+          editable="true"
+          id="Producer"
+          inputConversion="producerSearchConverter.getProducer(VALUE)"
+          label="displaykey.Web.TransferPolicyNew.Producer"
+          onPick="autoSelectSoleProducerCode()"
+          value="DestinationProducer">
+          <MenuItem
+            action="ProducerSearchPopup.push()"
+            icon="&quot;search.png&quot;"
+            id="ProducerPicker"/>
+          <PostOnChange
+            onChange="autoSelectSoleProducerCode()"/>
+        </Input>
+        <RangeInput
+          editable="true"
+          id="ProducerCode"
+          label="displaykey.Web.TransferPolicyNew.Code"
+          optionLabel="VALUE.Code"
+          required="not allDirectBillPolicyPeriods"
+          value="policyTransfer.DestinationProducerCode"
+          valueRange="DestinationProducer.ActiveProducerCodes"/>
+        <Label
+          label="displaykey.Web.TransferPolicyNew.CommissionOptions"/>
+        <RangeRadioInput
+          editable="true"
+          id="CommissionTransferOption"
+          label="displaykey.Web.TransferPolicyNew.CommissionOptions"
+          optionLabel="VALUE.Description"
+          required="true"
+          stacked="true"
+          value="policyTransfer.CommissionTransferOption"
+          valueRange="CommissionTransferOption.getTypeKeys( false )"/>
+      </InputColumn>
+    </DetailViewPanel>
+    <Code><![CDATA[property get DestinationProducer() : Producer {
+        return destProducer != null ? destProducer : policyTransfer.DestinationProducerCode.Producer;
+      }
+
+      property set DestinationProducer(producer : Producer) {
+        destProducer = producer;
+      }
+
+      function autoSelectSoleProducerCode() {
+        var activeProducerCodes = DestinationProducer.ActiveProducerCodes;
+        if (activeProducerCodes.length == 1) {
+          policyTransfer.DestinationProducerCode = activeProducerCodes[0];
+        }
+      }]]></Code>
+  </Screen>
+</PCF>

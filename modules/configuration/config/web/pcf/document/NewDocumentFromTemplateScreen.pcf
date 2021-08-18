@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PCF
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:noNamespaceSchemaLocation="../../../../../pcf.xsd">
+  <Screen
+    id="NewDocumentFromTemplateScreen">
+    <Require
+      name="documentCreationInfo"
+      type="gw.document.DocumentCreationInfo"/>
+    <Require
+      name="documentContainer"
+      type="DocumentContainer"/>
+    <Toolbar>
+      <ToolbarButton
+        action="documentCreationInfo.setCommitRequested(true)"
+        id="NewDocumentFromTemplate_CustomUpdate"
+        label="displaykey.Button.Update"
+        visible="gw.api.web.document.DocumentsHelper.isDocumentAssistantEnabled()"/>
+      <EditButtons
+        updateVisible="!gw.api.web.document.DocumentsHelper.isDocumentAssistantEnabled()"/>
+    </Toolbar>
+    <PanelRef
+      def="NewTemplateDocumentDV(documentCreationInfo, documentCreationInfo.Document, documentContainer)"/>
+  </Screen>
+</PCF>

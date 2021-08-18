@@ -1,0 +1,57 @@
+<?xml version="1.0"?>
+<PCF
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:noNamespaceSchemaLocation="../../../../../../pcf.xsd">
+  <Page
+    afterCancel="ChargePatterns.go()"
+    afterCommit="ChargePatterns.go()"
+    canEdit="true"
+    canVisit="perm.System.chargepatterncreate"
+    id="NewChargePattern"
+    parent="ChargePatterns()"
+    showUpLink="true"
+    startInEditMode="true"
+    title="displaykey.Web.NewChargePattern.Title">
+    <LocationEntryPoint
+      signature="NewChargePattern(patternType : String)"/>
+    <Variable
+      name="patternType"
+      type="String"/>
+    <Variable
+      initialValue="createChargePattern()"
+      name="chargePattern"
+      type="ChargePattern"/>
+    <Screen
+      id="NewChargePatternScreen">
+      <Toolbar>
+        <EditButtons/>
+      </Toolbar>
+      <PanelRef
+        def="ChargePatternDetailDV(chargePattern)"/>
+      <PanelRef
+        def="LocalizedValuesDV(chargePattern, { &quot;ChargeName&quot; }, { displaykey.Web.ChargePatternDetailDV.ChargeName })"/>
+    </Screen>
+    <Code><![CDATA[function createChargePattern() : ChargePattern {
+        if (patternType == "ImmediateCharge") {
+          var immediate = new ImmediateCharge();
+          immediate.InvoiceTreatment = "onetime"
+          return immediate;
+        } else if (patternType == "PassThroughCharge") {
+          var passThrough = new PassThroughCharge();
+          passThrough.InvoiceTreatment = "onetime"
+          return passThrough;
+        } else if (patternType == "RecaptureCharge") {
+          var recapture = new RecaptureCharge();
+          recapture.InvoiceTreatment = "onetime"
+          recapture.Category = ChargeCategory.TC_RECAPTURE
+          recapture.setTAccountOwnerPatternFromString(entity.Account.Type.RelativeName);
+          return recapture;
+        } else {
+          var proRata = new ProRataCharge();
+          proRata.InvoiceTreatment = "onetime"
+          proRata.setTAccountOwnerPatternFromString(entity.PolicyPeriod.Type.RelativeName);
+          return proRata;
+        }
+      }]]></Code>
+  </Page>
+</PCF>

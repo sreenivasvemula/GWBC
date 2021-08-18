@@ -1,0 +1,419 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xml:lang="en" lang="en" xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+    <meta http-equiv="Content-Style-Type" content="text/css" />
+    <!-- MOTW-DISABLED saved from url=(0014)about:internet -->
+    <title>Invoice Assembler Plugin</title>
+    <link rel="StyleSheet" href="css/bc-plugins.css" type="text/css" media="all" />
+    <link rel="StyleSheet" href="css/webworks.css" type="text/css" media="all" />
+    <link rel="StyleSheet" href="css/css-guidewire-extra.css" type="text/css" media="all" />
+    <script type="text/javascript" language="JavaScript1.2" src="wwhdata/common/context.js"></script>
+    <script type="text/javascript" language="JavaScript1.2" src="wwhdata/common/towwhdir.js"></script>
+    <script type="text/javascript" language="JavaScript1.2" src="wwhdata/common/wwhpagef.js"></script>
+    <script type="text/javascript" language="JavaScript1.2">
+      <!--
+        var  WebWorksRootPath = "";
+      // -->
+    </script>
+    <script type="text/javascript" language="JavaScript1.2">
+      <!--
+        // Set reference to top level help frame
+        //
+        var  WWHFrame = WWHGetWWHFrame("", true);
+      // -->
+    </script>
+    <script type="text/javascript" language="JavaScript1.2" src="scripts/expand.js"></script>
+    <!-- THE FOLLOWING IS A GUIDEWIRE STYLE DEFINITION FOR THE LINK TO THIS FEATURE -->
+    <link rel="StyleSheet" href="css/css-guidewire-extra.css" type="text/css" media="all" />
+    <!-- THE FOLLOWING IS A GUIDEWIRE GSCRIPT FUNCTION FOR THE LINK TO THIS FEATURE -->
+    <script type="text/javascript">
+function guidewire_selectall()
+{
+var text_val=eval("document.linktothisurlform.urlfield");
+text_val.focus();
+text_val.select();
+}
+</script>
+  </head>
+  <body onLoad="WWHUpdate();" onUnload="WWHUnload();" onKeyDown="WWHHandleKeyDown((document.all||document.getElementById||document.layers)?event:null);" onKeyPress="WWHHandleKeyPress((document.all||document.getElementById||document.layers)?event:null);" onKeyUp="WWHHandleKeyUp((document.all||document.getElementById||document.layers)?event:null);">
+    <!-- THE FOLLOWING IS A GUIDEWIRE DIV FOR THE 'LINK TO THIS' FEATURE -->
+    <div id="linkToThisPage" class="popup" style="display: none;">
+      <div class="popupTitle">Link Directly to This Page 
+           <a href="#" onclick="var thePopup = getElementById('linkToThisPage');thePopup.style.display='none';return false;"><img class="popupClosebox" src="wwhelp/wwhimpl/common/images/close.gif" /></a></div>
+      <div style="padding:6px;">
+        <div class="popupText" id="linkToThisPageBookmark">An error has occurred if you see this messsage.</div>
+        <form name="linktothisurlform" method="post" action="" style="width:275px;margin:0px">
+          <input type="text" class="popupURLText" id="linkToThisPageURL" name="urlfield" rows="1" cols="55" onClick="guidewire_selectall();" onFocus="guidewire_selectall();"></input>
+        </form>
+      </div>
+    </div>
+    <br />
+    <div class="WebWorks_Breadcrumbs" style="text-align: left;">
+      <span>BillingCenter Integration Guide</span> : 
+    <span class="WebWorks_Breadcrumbs" style="text-align: left;"><a class="WebWorks_Breadcrumb_Link" href="p-plugins.html#3554456">Plugins</a> : <a class="WebWorks_Breadcrumb_Link" href="bc-plugins.13.01.html#3554456">Billing Plugins</a> : Invoice Assembler Plugin</span></div>
+    <hr align="left" />
+    <blockquote>
+      <h3 class="H1_-_Heading_1"><a name="3554456">Invoice Assembler Plugin</a></h3>
+      <div class="B_-_Body"><a name="3525803">The placement of invoice items on invoices is determined by settings defined in various BillingCenter components, including the policy period’s payment plan and the account’s billing plan. After applying the settings of these components, BillingCenter generates sets of invoice items and invoices and places each invoice item on an appropriate invoice. At that point, the Invoice Assembler plugin is called, which enables customization of invoice item placement on invoices.</a></div>
+      <h4 class="H2_-_Heading_2"><a name="3769014">Method: </a><span class="cvh_-_computer_voice_in_heading">getCustomInvoiceItemPlacements</span></h4>
+      <div class="B_-_Body"><a name="3764045">The Invoice Assembler plugin implements the </a><span class="cv_-_computer_voice">IInvoiceAssembler</span> interface in the Gosu <span class="cv_-_computer_voice">gw.plugin.invoice.impl.InvoiceAssembler</span> class. The interface defines a single method called <span class="cv_-_computer_voice">getCustomInvoiceItemPlacements</span>, which accepts the following arguments:</div>
+      <div class="BI_-_Bullet_Item_outer" style="margin-left: 57pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="BI_-_Bullet_Item_inner" style="width: 15pt; white-space: nowrap">
+                <span class="bu_-_bullet">•	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="BI_-_Bullet_Item_inner"><span class="cv_-_computer_voice"><a name="3525609">defaultPlacements</a></span> – An <span class="cv_-_computer_voice">InvoiceItemPlacements</span> object that contains sets of invoice items and invoices. Each invoice item has been placed on an invoice based on the BillingCenter settings that determine item placement.</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="BI_-_Bullet_Item_outer" style="margin-left: 57pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="BI_-_Bullet_Item_inner" style="width: 15pt; white-space: nowrap">
+                <span class="bu_-_bullet">•	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="BI_-_Bullet_Item_inner"><span class="cv_-_computer_voice"><a name="3525610">context</a></span> – Many BillingCenter operations call the Invoice Assembler plugin. The <span class="cv_-_computer_voice">context</span> parameter identifies the operation that caused the current plugin call.</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="B_-_Body"><a name="3526971">The method returns an </a><span class="cv_-_computer_voice">InvoiceItemPlacements</span> object containing potentially modified invoice item placements. The base configuration method returns the <span class="cv_-_computer_voice">defaultPlacements</span> argument unchanged.</div>
+      <div class="H3_-_Heading_3_outer" style="margin-left: 36pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <h5 class="H3_-_Heading_3_inner" style="width: 18pt; white-space: nowrap"></h5>
+            </td>
+            <td width="100%">
+              <h5 class="H3_-_Heading_3_inner"><a name="3525773">The </a><span class="cvh_-_computer_voice_in_heading">defaultPlacements</span> Parameter</h5>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="B_-_Body"><a name="3525774">The </a><span class="cv_-_computer_voice">defaultPlacements</span> parameter is a Java object of type <span class="cv_-_computer_voice">InvoiceItemPlacements</span>. It contains the following fields:</div>
+      <div class="BI_-_Bullet_Item_outer" style="margin-left: 57pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="BI_-_Bullet_Item_inner" style="width: 15pt; white-space: nowrap">
+                <span class="bu_-_bullet">•	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="BI_-_Bullet_Item_inner"><span class="cv_-_computer_voice"><a name="3525775">InvoiceItems</a></span> – A Java <span class="cv_-_computer_voice">Set</span> of <span class="cv_-_computer_voice">InvoiceItem</span> objects that are being placed onto invoices as a result of the BillingCenter operation that called the plugin.</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="BI_-_Bullet_Item_outer" style="margin-left: 57pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="BI_-_Bullet_Item_inner" style="width: 15pt; white-space: nowrap">
+                <span class="bu_-_bullet">•	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="BI_-_Bullet_Item_inner"><span class="cv_-_computer_voice"><a name="3766477">AllInvoiceItemsToBePlaced</a></span> – Identical to <span class="cv_-_computer_voice">InvoiceItems</span>. Use of <span class="cv_-_computer_voice">InvoiceItems</span> is recommended.</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="BI_-_Bullet_Item_outer" style="margin-left: 57pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="BI_-_Bullet_Item_inner" style="width: 15pt; white-space: nowrap">
+                <span class="bu_-_bullet">•	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="BI_-_Bullet_Item_inner"><span class="cv_-_computer_voice"><a name="3498259">Invoices</a></span> – A Java <span class="cv_-_computer_voice">Set</span> of <span class="cv_-_computer_voice">Invoice</span> objects that contain the placed invoice items.</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="B_-_Body"><a name="3527268">The </a><span class="cv_-_computer_voice">defaultPlacements</span> parameter provides the following methods:</div>
+      <div class="BI_-_Bullet_Item_outer" style="margin-left: 57pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="BI_-_Bullet_Item_inner" style="width: 15pt; white-space: nowrap">
+                <span class="bu_-_bullet">•	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="BI_-_Bullet_Item_inner"><span class="cv_-_computer_voice"><a name="3498260">invoiceFor(InvoiceItem)</a></span> – Returns the <span class="cv_-_computer_voice">Invoice</span> object containing the specified <span class="cv_-_computer_voice">InvoiceItem</span>.</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="BI_-_Bullet_Item_outer" style="margin-left: 57pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="BI_-_Bullet_Item_inner" style="width: 15pt; white-space: nowrap">
+                <span class="bu_-_bullet">•	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="BI_-_Bullet_Item_inner"><span class="cv_-_computer_voice"><a name="3498261">getInvoiceItemsFor(Invoice)</a></span> – Returns a Java <span class="cv_-_computer_voice">Set</span> of <span class="cv_-_computer_voice">InvoiceItem</span> objects included on the specified <span class="cv_-_computer_voice">Invoice</span>. The returned set is a subset of the objects in the <span class="cv_-_computer_voice">InvoiceItems</span> set, which includes only the invoice items being placed for the BillingCenter operation that called the plugin.</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="BI_-_Bullet_Item_outer" style="margin-left: 57pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="BI_-_Bullet_Item_inner" style="width: 15pt; white-space: nowrap">
+                <span class="bu_-_bullet">•	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="BI_-_Bullet_Item_inner"><span class="cv_-_computer_voice"><a name="3498262">place(InvoiceItem)</a></span> – Returns a <span class="cv_-_computer_voice">Placer</span> object for the specified <span class="cv_-_computer_voice">InvoiceItem</span>. The <span class="cv_-_computer_voice">Placer</span> object provides the following method:</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="BI2_-_Bullet_Item_002c_Level_2_outer" style="margin-left: 67pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="BI2_-_Bullet_Item_002c_Level_2_inner" style="width: 15pt; white-space: nowrap">
+                <span class="bu_-_bullet">•	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="BI2_-_Bullet_Item_002c_Level_2_inner"><span class="cv_-_computer_voice"><a name="3767304">on(Invoice)</a></span> – Places the <span class="cv_-_computer_voice">InvoiceItem</span> associated with the <span class="cv_-_computer_voice">Placer</span> object onto the specified <span class="cv_-_computer_voice">Invoice</span>.</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="H3_-_Heading_3_outer" style="margin-left: 36pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <h5 class="H3_-_Heading_3_inner" style="width: 18pt; white-space: nowrap"></h5>
+            </td>
+            <td width="100%">
+              <h5 class="H3_-_Heading_3_inner"><a name="3498265">The </a><span class="cvh_-_computer_voice_in_heading">context</span> Parameter</h5>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="B_-_Body"><a name="3525847">Many operations cause BillingCenter to call the Invoice Assembler plugin. For example, the plugin is called when processing a new or modified charge, reversing a charge, or handling a change to a payment plan. The </a><span class="cv_-_computer_voice">context</span> parameter identifies the operation that BillingCenter is performing when the plugin is called.</div>
+      <div class="B_-_Body"><a name="3758778">The parameter value is a typecode from the </a><span class="cv_-_computer_voice">InvoiceAssemblerContext</span> typelist. Each typecode is described below, along with the public class method that calls the plugin, and the operation being performed when the plugin is called.</div>
+      <div class="T_-_Table"><a name="3758899">&nbsp;</a></div>
+      <table class="withHeading" style="text-align: left" border="0" cellpadding="10" cellspacing="0" summary="">
+        <caption></caption>
+        <tr>
+          <td style="border-bottom-color: #000000; border-bottom-style: solid; border-bottom-width: 0.5pt; border-top-color: #000000; border-top-style: solid; border-top-width: 0.5pt; padding-bottom: 4pt; padding-left: 2pt; padding-right: 8pt; padding-top: 0pt; vertical-align: bottom">
+            <div class="TH_-_Table_Heading"><span class="cvt_-_computer_voice_table"><a name="3773846">InvoiceAssemblerContext</a></span> Typecode</div>
+          </td>
+          <td style="border-bottom-color: #000000; border-bottom-style: solid; border-bottom-width: 0.5pt; border-top-color: #000000; border-top-style: solid; border-top-width: 0.5pt; padding-bottom: 4pt; padding-left: 2pt; padding-right: 8pt; padding-top: 0pt; vertical-align: bottom">
+            <div class="TH_-_Table_Heading"><a name="3773848">Calling Methods and the Operations Being Performed</a></div>
+          </td>
+        </tr>
+        <tr>
+          <td style="border-bottom-color: #c0d1d1; border-bottom-style: solid; border-bottom-width: 0.15pt; border-top-color: #000000; border-top-style: solid; border-top-width: 0.5pt; padding-bottom: 4pt; padding-left: 2pt; padding-right: 8pt; padding-top: 0pt; vertical-align: top">
+            <div class="TT_-_Table_Text" style="color: #000000; font-family: &quot;Lucida Sans Typewriter&quot;; font-style: normal; font-variant: normal; font-weight: normal; margin-top: 3.0pt; text-transform: none; vertical-align: baseline"><span class="cvt_-_computer_voice_table"><a name="3773850">TC_AGENCYPLANCHANGE</a></span></div>
+          </td>
+          <td style="border-bottom-color: #c0d1d1; border-bottom-style: solid; border-bottom-width: 0.15pt; border-top-color: #000000; border-top-style: solid; border-top-width: 0.5pt; padding-bottom: 4pt; padding-left: 2pt; padding-right: 8pt; padding-top: 0pt; vertical-align: top">
+            <div class="TT_-_Table_Text"><a name="3773852">Not used.</a></div>
+          </td>
+        </tr>
+        <tr>
+          <td style="border-bottom-color: #c0d1d1; border-bottom-style: solid; border-bottom-width: 0.15pt; border-top-color: #c0d1d1; border-top-style: solid; border-top-width: 0.15pt; padding-bottom: 4pt; padding-left: 2pt; padding-right: 8pt; padding-top: 0pt; vertical-align: top">
+            <div class="TT_-_Table_Text" style="color: #000000; font-family: &quot;Lucida Sans Typewriter&quot;; font-style: normal; font-variant: normal; font-weight: normal; margin-top: 3.0pt; text-transform: none; vertical-align: baseline"><span class="cvt_-_computer_voice_table"><a name="3773854">TC_API</a></span></div>
+          </td>
+          <td style="border-bottom-color: #c0d1d1; border-bottom-style: solid; border-bottom-width: 0.15pt; border-top-color: #c0d1d1; border-top-style: solid; border-top-width: 0.15pt; padding-bottom: 4pt; padding-left: 2pt; padding-right: 8pt; padding-top: 0pt; vertical-align: top">
+            <div class="TT_-_Table_Text"><span class="cvt_-_computer_voice_table"><a name="3773856">ChargeInstallmentChanger.execute</a></span>: Adding non-reversed invoice items to an existing charge. The <span class="cvt_-_computer_voice_table">context</span> value is set to <span class="cvt_-_computer_voice_table">TC_API</span> when the object is created by the <span class="cvt_-_computer_voice_table">ChargeInstallmentChanger(Charge)</span> constructor. Calls the plugin once per invoice that non-reversed items were added to and passes all non-reversed invoice items for the invoice.</div>
+            <div class="TT_-_Table_Text"><a name="3773857">If the </a><span class="cvt_-_computer_voice_table">ChargeInstallmentChanger</span> object includes any reversed invoice items, the plugin is called with the <span class="cvt_-_computer_voice_table">TC_OFFSET</span> context for each Reversal item. See the <span class="cvt_-_computer_voice_table">TC_OFFSET</span> typecode.</div>
+            <div class="TT_-_Table_Text"><span class="cvt_-_computer_voice_table"><a name="3773858">InvoiceItemImpl.setInvoice(Invoice)</a></span>: Placing Reversal invoice items on an invoice. Calls the plugin once for each Reversal invoice item. Does not call the plugin if the <span class="cvt_-_computer_voice_table">Invoice</span> parameter is <span class="cvt_-_computer_voice_table">null</span>. The base configuration does not call the plugin through this public method.</div>
+            <div class="TT_-_Table_Text"><span class="cvt_-_computer_voice_table"><a name="3773859">InvoiceUtil.moveInvoiceItems</a></span>: Moving invoice items to another invoice. Calls the plugin once for each invoice receiving moved items.</div>
+          </td>
+        </tr>
+        <tr>
+          <td style="border-bottom-color: #c0d1d1; border-bottom-style: solid; border-bottom-width: 0.15pt; border-top-color: #c0d1d1; border-top-style: solid; border-top-width: 0.15pt; padding-bottom: 4pt; padding-left: 2pt; padding-right: 8pt; padding-top: 0pt; vertical-align: top">
+            <div class="TT_-_Table_Text" style="color: #000000; font-family: &quot;Lucida Sans Typewriter&quot;; font-style: normal; font-variant: normal; font-weight: normal; margin-top: 3.0pt; text-transform: none; vertical-align: baseline"><span class="cvt_-_computer_voice_table"><a name="3773861">TC_ASSIGNMENTOFITEMS</a></span></div>
+          </td>
+          <td style="border-bottom-color: #c0d1d1; border-bottom-style: solid; border-bottom-width: 0.15pt; border-top-color: #c0d1d1; border-top-style: solid; border-top-width: 0.15pt; padding-bottom: 4pt; padding-left: 2pt; padding-right: 8pt; padding-top: 0pt; vertical-align: top">
+            <div class="TT_-_Table_Text"><span class="cvt_-_computer_voice_table"><a name="3773863">AccountImpl.becomePayerOfInvoiceItems</a></span>: Assigning invoice items to a new Account payer. Calls plugin once to place all items in the new invoice stream. The new invoice stream is specified as a parameter or, if <span class="cvt_-_computer_voice_table">null</span>, defaults to the invoice stream associated with the <span class="cvt_-_computer_voice_table">AccountImpl</span> object.</div>
+            <div class="TT_-_Table_Text"><span class="cvt_-_computer_voice_table"><a name="3773864">ProducerImpl.becomePayerOfInvoiceItems</a></span>: Assigning invoice items to a new Producer payer. Calls plugin once to place all items in the new invoice stream. The new stream is specified as a parameter or, if <span class="cvt_-_computer_voice_table">null</span> or unspecified, defaults to the invoice stream associated with the <span class="cvt_-_computer_voice_table">ProducerImpl</span> object. Note: Two instances of this method exist with different signatures. Both instances call the plugin.</div>
+          </td>
+        </tr>
+        <tr>
+          <td style="border-bottom-color: #c0d1d1; border-bottom-style: solid; border-bottom-width: 0.15pt; border-top-color: #c0d1d1; border-top-style: solid; border-top-width: 0.15pt; padding-bottom: 4pt; padding-left: 2pt; padding-right: 8pt; padding-top: 0pt; vertical-align: top">
+            <div class="TT_-_Table_Text" style="color: #000000; font-family: &quot;Lucida Sans Typewriter&quot;; font-style: normal; font-variant: normal; font-weight: normal; margin-top: 3.0pt; text-transform: none; vertical-align: baseline"><span class="cvt_-_computer_voice_table"><a name="3773866">TC_BILLINGINSTRUCTION</a></span></div>
+          </td>
+          <td style="border-bottom-color: #c0d1d1; border-bottom-style: solid; border-bottom-width: 0.15pt; border-top-color: #c0d1d1; border-top-style: solid; border-top-width: 0.15pt; padding-bottom: 4pt; padding-left: 2pt; padding-right: 8pt; padding-top: 0pt; vertical-align: top">
+            <div class="TT_-_Table_Text"><span class="cvt_-_computer_voice_table"><a name="3773868">ChargeInitializerImpl.executePreparedEntries</a></span>: Processing a new charge. Calls plugin once for each invoice that contains invoice items for the charge. Passes a list of all invoice items on the invoice.</div>
+            <div class="TT_-_Table_Text"><span class="cvt_-_computer_voice_table"><a name="3773869">InvoiceImpl.addFees</a></span>: Adding an invoice fee for a charge. Calls plugin with the fee invoice item.</div>
+          </td>
+        </tr>
+        <tr>
+          <td style="border-bottom-color: #c0d1d1; border-bottom-style: solid; border-bottom-width: 0.15pt; border-top-color: #c0d1d1; border-top-style: solid; border-top-width: 0.15pt; padding-bottom: 4pt; padding-left: 2pt; padding-right: 8pt; padding-top: 0pt; vertical-align: top">
+            <div class="TT_-_Table_Text" style="color: #000000; font-family: &quot;Lucida Sans Typewriter&quot;; font-style: normal; font-variant: normal; font-weight: normal; margin-top: 3.0pt; text-transform: none; vertical-align: baseline"><span class="cvt_-_computer_voice_table"><a name="3773871">TC_CARRIEDFORWARD</a></span></div>
+          </td>
+          <td style="border-bottom-color: #c0d1d1; border-bottom-style: solid; border-bottom-width: 0.15pt; border-top-color: #c0d1d1; border-top-style: solid; border-top-width: 0.15pt; padding-bottom: 4pt; padding-left: 2pt; padding-right: 8pt; padding-top: 0pt; vertical-align: top">
+            <div class="TT_-_Table_Text"><span class="cvt_-_computer_voice_table"><a name="3773873">AccountInvoiceImpl.doInvoiceProcessing</a></span>: Carrying invoice items forward to the next invoice. Calls plugin once and passes all invoice items being carried forward.</div>
+            <div class="TT_-_Table_Text"><span class="cvt_-_computer_voice_table"><a name="3773874">InvoiceItemImpl.pushForward</a></span>: Moving held invoice items to the next invoice. Calls plugin once for each held invoice item.</div>
+          </td>
+        </tr>
+        <tr>
+          <td style="border-bottom-color: #c0d1d1; border-bottom-style: solid; border-bottom-width: 0.15pt; border-top-color: #c0d1d1; border-top-style: solid; border-top-width: 0.15pt; padding-bottom: 4pt; padding-left: 2pt; padding-right: 8pt; padding-top: 0pt; vertical-align: top">
+            <div class="TT_-_Table_Text" style="color: #000000; font-family: &quot;Lucida Sans Typewriter&quot;; font-style: normal; font-variant: normal; font-weight: normal; margin-top: 3.0pt; text-transform: none; vertical-align: baseline"><span class="cvt_-_computer_voice_table"><a name="3773876">TC_COLLAPSEFUTUREINVOICES</a></span></div>
+          </td>
+          <td style="border-bottom-color: #c0d1d1; border-bottom-style: solid; border-bottom-width: 0.15pt; border-top-color: #c0d1d1; border-top-style: solid; border-top-width: 0.15pt; padding-bottom: 4pt; padding-left: 2pt; padding-right: 8pt; padding-top: 0pt; vertical-align: top">
+            <div class="TT_-_Table_Text"><span class="cvt_-_computer_voice_table"><a name="3773878">PolicyPeriodImpl.collapseFutureInvoices</a></span>: Collapsing future invoices due to a cancellation. Calls plugin once for each payer with collapsing invoice items. Items are placed on the invoice stream of the payer.</div>
+          </td>
+        </tr>
+        <tr>
+          <td style="border-bottom-color: #c0d1d1; border-bottom-style: solid; border-bottom-width: 0.15pt; border-top-color: #c0d1d1; border-top-style: solid; border-top-width: 0.15pt; padding-bottom: 4pt; padding-left: 2pt; padding-right: 8pt; padding-top: 0pt; vertical-align: top">
+            <div class="TT_-_Table_Text" style="color: #000000; font-family: &quot;Lucida Sans Typewriter&quot;; font-style: normal; font-variant: normal; font-weight: normal; margin-top: 3.0pt; text-transform: none; vertical-align: baseline"><span class="cvt_-_computer_voice_table"><a name="3773880">TC_COMMISSIONREMAINDER</a></span></div>
+          </td>
+          <td style="border-bottom-color: #c0d1d1; border-bottom-style: solid; border-bottom-width: 0.15pt; border-top-color: #c0d1d1; border-top-style: solid; border-top-width: 0.15pt; padding-bottom: 4pt; padding-left: 2pt; padding-right: 8pt; padding-top: 0pt; vertical-align: top">
+            <div class="TT_-_Table_Text"><span class="cvt_-_computer_voice_table"><a name="3773882">ChargeCommissionImpl.writeoffCommissionOnRemainderFor</a></span>: Writing off a commission remainder. Calls plugin with the single invoice item and places the item on the invoice stream of the charge’s default payer. Note: The code path to the plugin includes the public method <span class="cvt_-_computer_voice_table">ChargeImpl.createCommissionRemainderItem</span>.</div>
+            <div class="TT_-_Table_Text"><span class="cvt_-_computer_voice_table"><a name="3773883">CommissionDistributor.distributeCommission</a></span>: Creating a commission adjustment for an agency bill policy period. Calls plugin with the single invoice item and places it on the invoice stream of the charge’s default payer.</div>
+            <div class="TT_-_Table_Text"><span class="cvt_-_computer_voice_table"><a name="3773884">InvoiceItemImpl.overrideCommissionRate</a></span>: Creating a commission adjustment for an overridden commission rate for an agency bill policy period. Calls plugin with the single invoice item.</div>
+          </td>
+        </tr>
+        <tr>
+          <td style="border-bottom-color: #c0d1d1; border-bottom-style: solid; border-bottom-width: 0.15pt; border-top-color: #c0d1d1; border-top-style: solid; border-top-width: 0.15pt; padding-bottom: 4pt; padding-left: 2pt; padding-right: 8pt; padding-top: 0pt; vertical-align: top">
+            <div class="TT_-_Table_Text" style="color: #000000; font-family: &quot;Lucida Sans Typewriter&quot;; font-style: normal; font-variant: normal; font-weight: normal; margin-top: 3.0pt; text-transform: none; vertical-align: baseline"><span class="cvt_-_computer_voice_table"><a name="3773886">TC_INVOICEITEMEVENTDATECHANGE</a></span></div>
+          </td>
+          <td style="border-bottom-color: #c0d1d1; border-bottom-style: solid; border-bottom-width: 0.15pt; border-top-color: #c0d1d1; border-top-style: solid; border-top-width: 0.15pt; padding-bottom: 4pt; padding-left: 2pt; padding-right: 8pt; padding-top: 0pt; vertical-align: top">
+            <div class="TT_-_Table_Text"><span class="cvt_-_computer_voice_table"><a name="3773888">InvoiceItemImpl.setEventDateAndInvoice</a></span>: Changing the event date for an existing invoice item. Calls plugin with the single invoice item and places it on the invoice stream of the default payer. Note: The base configuration does not call this public method.</div>
+          </td>
+        </tr>
+        <tr>
+          <td style="border-bottom-color: #c0d1d1; border-bottom-style: solid; border-bottom-width: 0.15pt; border-top-color: #c0d1d1; border-top-style: solid; border-top-width: 0.15pt; padding-bottom: 4pt; padding-left: 2pt; padding-right: 8pt; padding-top: 0pt; vertical-align: top">
+            <div class="TT_-_Table_Text" style="color: #000000; font-family: &quot;Lucida Sans Typewriter&quot;; font-style: normal; font-variant: normal; font-weight: normal; margin-top: 3.0pt; text-transform: none; vertical-align: baseline"><span class="cvt_-_computer_voice_table"><a name="3773890">TC_INVOICINGOVERRIDABLECHANGE</a></span></div>
+          </td>
+          <td style="border-bottom-color: #c0d1d1; border-bottom-style: solid; border-bottom-width: 0.15pt; border-top-color: #c0d1d1; border-top-style: solid; border-top-width: 0.15pt; padding-bottom: 4pt; padding-left: 2pt; padding-right: 8pt; padding-top: 0pt; vertical-align: top">
+            <div class="TT_-_Table_Text"><span class="cvt_-_computer_voice_table"><a name="3773892">ChargeImpl.updateWith</a></span>,<br /><span class="cvt_-_computer_voice_table">ChargeInitializerImpl.updateWith</span>,<br /><span class="cvt_-_computer_voice_table">PolicyPeriodImpl.updateWith</span>: Updating the invoice stream or payer for the object. Calls the plugin once passing the affected invoice items. When processing a policy period, if the policy period has not yet been issued, the plugin is not called. Note: The code path to the plugin includes the public method <span class="cvt_-_computer_voice_table">InvoicingOverriderInternal.update</span>.</div>
+          </td>
+        </tr>
+        <tr>
+          <td style="border-bottom-color: #c0d1d1; border-bottom-style: solid; border-bottom-width: 0.15pt; border-top-color: #c0d1d1; border-top-style: solid; border-top-width: 0.15pt; padding-bottom: 4pt; padding-left: 2pt; padding-right: 8pt; padding-top: 0pt; vertical-align: top">
+            <div class="TT_-_Table_Text" style="color: #000000; font-family: &quot;Lucida Sans Typewriter&quot;; font-style: normal; font-variant: normal; font-weight: normal; margin-top: 3.0pt; text-transform: none; vertical-align: baseline"><span class="cvt_-_computer_voice_table"><a name="3773894">TC_MAKEITEMDUE</a></span></div>
+          </td>
+          <td style="border-bottom-color: #c0d1d1; border-bottom-style: solid; border-bottom-width: 0.15pt; border-top-color: #c0d1d1; border-top-style: solid; border-top-width: 0.15pt; padding-bottom: 4pt; padding-left: 2pt; padding-right: 8pt; padding-top: 0pt; vertical-align: top">
+            <div class="TT_-_Table_Text"><span class="cvt_-_computer_voice_table"><a name="3773896">BaseDistExecutor.executeDistItems</a></span>: Creating new due invoices. Calls plugin once for each invoice stream and passes all invoice items and the new invoice to place them on. The new invoice is subsequently made due.</div>
+          </td>
+        </tr>
+        <tr>
+          <td style="border-bottom-color: #c0d1d1; border-bottom-style: solid; border-bottom-width: 0.15pt; border-top-color: #c0d1d1; border-top-style: solid; border-top-width: 0.15pt; padding-bottom: 4pt; padding-left: 2pt; padding-right: 8pt; padding-top: 0pt; vertical-align: top">
+            <div class="TT_-_Table_Text" style="color: #000000; font-family: &quot;Lucida Sans Typewriter&quot;; font-style: normal; font-variant: normal; font-weight: normal; margin-top: 3.0pt; text-transform: none; vertical-align: baseline"><span class="cvt_-_computer_voice_table"><a name="3773898">TC_OFFSET</a></span></div>
+          </td>
+          <td style="border-bottom-color: #c0d1d1; border-bottom-style: solid; border-bottom-width: 0.15pt; border-top-color: #c0d1d1; border-top-style: solid; border-top-width: 0.15pt; padding-bottom: 4pt; padding-left: 2pt; padding-right: 8pt; padding-top: 0pt; vertical-align: top">
+            <div class="TT_-_Table_Text"><span class="cvt_-_computer_voice_table"><a name="3773900">ChargeInstallmentChanger.execute</a></span>: Reversing existing invoice items that are not caused by a payment plan change. Calls plugin once for each Reversal invoice item created. Note: The code path to the plugin includes the public method <span class="cvt_-_computer_voice_table">InvoiceItemImpl.createAndPlaceOffset</span>.</div>
+            <div class="TT_-_Table_Text"><span class="cvt_-_computer_voice_table"><a name="3774742">ChargeImpl.afterReversalCreated</a></span>: Reversing an entire charge. Every invoice item for the charge is reversed, creating Reversal items. Calls plugin once per payer and includes all the Reversal invoice items for the payer.</div>
+          </td>
+        </tr>
+        <tr>
+          <td style="border-bottom-color: #c0d1d1; border-bottom-style: solid; border-bottom-width: 0.15pt; border-top-color: #c0d1d1; border-top-style: solid; border-top-width: 0.15pt; padding-bottom: 4pt; padding-left: 2pt; padding-right: 8pt; padding-top: 0pt; vertical-align: top">
+            <div class="TT_-_Table_Text" style="color: #000000; font-family: &quot;Lucida Sans Typewriter&quot;; font-style: normal; font-variant: normal; font-weight: normal; margin-top: 3.0pt; text-transform: none; vertical-align: baseline"><span class="cvt_-_computer_voice_table"><a name="3773905">TC_PAYERBILLINGSETTINGSCHANGE</a></span></div>
+          </td>
+          <td style="border-bottom-color: #c0d1d1; border-bottom-style: solid; border-bottom-width: 0.15pt; border-top-color: #c0d1d1; border-top-style: solid; border-top-width: 0.15pt; padding-bottom: 4pt; padding-left: 2pt; padding-right: 8pt; padding-top: 0pt; vertical-align: top">
+            <div class="TT_-_Table_Text"><span class="cvt_-_computer_voice_table"><a name="3773907">InvoiceStreamUpdater.execute</a></span>: Updating invoice streams because of a change to the payer’s invoicing settings. Moving invoice items from obsolete invoices to invoices in the appropriate stream. Calls plugin once with all invoice items.</div>
+          </td>
+        </tr>
+        <tr>
+          <td style="border-bottom-color: #000000; border-bottom-style: solid; border-bottom-width: 0.5pt; border-top-color: #c0d1d1; border-top-style: solid; border-top-width: 0.15pt; padding-bottom: 4pt; padding-left: 2pt; padding-right: 8pt; padding-top: 0pt; vertical-align: top">
+            <div class="TT_-_Table_Text" style="color: #000000; font-family: &quot;Lucida Sans Typewriter&quot;; font-style: normal; font-variant: normal; font-weight: normal; margin-top: 3.0pt; text-transform: none; vertical-align: baseline"><span class="cvt_-_computer_voice_table"><a name="3773909">TC_PAYMENTPLANCHANGE</a></span></div>
+          </td>
+          <td style="border-bottom-color: #000000; border-bottom-style: solid; border-bottom-width: 0.5pt; border-top-color: #c0d1d1; border-top-style: solid; border-top-width: 0.15pt; padding-bottom: 4pt; padding-left: 2pt; padding-right: 8pt; padding-top: 0pt; vertical-align: top">
+            <div class="TT_-_Table_Text"><span class="cvt_-_computer_voice_table"><a name="3773911">ChargeInstallmentChanger.placeInvoiceItems</a></span>: Adding replacement invoice items caused by a change to the payment plan. The context parameter is set to <span class="cvt_-_computer_voice_table">TC_PAYMENTPLANCHANGE</span> when the object is created by the <span class="cvt_-_computer_voice_table">ChargeInstallmentChanger(Charge,PaymentPlan,boolean)</span> constructor. Calls plugin once for each invoice per charge that receives added invoice items. For example, if ChargeA adds invoice items to the January and February invoices, and ChargeB adds items to the same invoices, the plugin is called four times in the order:</div>
+            <div class="BIT_-_Bullet_Item_Table_outer" style="margin-left: 2.16pt">
+              <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+                <tr style="vertical-align: baseline">
+                  <td>
+                    <div class="BIT_-_Bullet_Item_Table_inner" style="width: 7.199999999999999pt; white-space: nowrap">
+                      <span class="but_-_bullet_in_table">•	</span>
+                    </div>
+                  </td>
+                  <td width="100%">
+                    <div class="BIT_-_Bullet_Item_Table_inner"><a name="3777210">January invoice with ChargeA invoice items</a></div>
+                  </td>
+                </tr>
+              </table>
+            </div>
+            <div class="BIT_-_Bullet_Item_Table_outer" style="margin-left: 2.16pt">
+              <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+                <tr style="vertical-align: baseline">
+                  <td>
+                    <div class="BIT_-_Bullet_Item_Table_inner" style="width: 7.199999999999999pt; white-space: nowrap">
+                      <span class="but_-_bullet_in_table">•	</span>
+                    </div>
+                  </td>
+                  <td width="100%">
+                    <div class="BIT_-_Bullet_Item_Table_inner"><a name="3777216">February invoice with ChargeA items</a></div>
+                  </td>
+                </tr>
+              </table>
+            </div>
+            <div class="BIT_-_Bullet_Item_Table_outer" style="margin-left: 2.16pt">
+              <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+                <tr style="vertical-align: baseline">
+                  <td>
+                    <div class="BIT_-_Bullet_Item_Table_inner" style="width: 7.199999999999999pt; white-space: nowrap">
+                      <span class="but_-_bullet_in_table">•	</span>
+                    </div>
+                  </td>
+                  <td width="100%">
+                    <div class="BIT_-_Bullet_Item_Table_inner"><a name="3777219">January invoice with ChargeB items</a></div>
+                  </td>
+                </tr>
+              </table>
+            </div>
+            <div class="BIT_-_Bullet_Item_Table_outer" style="margin-left: 2.16pt">
+              <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+                <tr style="vertical-align: baseline">
+                  <td>
+                    <div class="BIT_-_Bullet_Item_Table_inner" style="width: 7.199999999999999pt; white-space: nowrap">
+                      <span class="but_-_bullet_in_table">•	</span>
+                    </div>
+                  </td>
+                  <td width="100%">
+                    <div class="BIT_-_Bullet_Item_Table_inner"><a name="3777222">February invoice with ChargeB items</a></div>
+                  </td>
+                </tr>
+              </table>
+            </div>
+            <div class="TT_-_Table_Text"><span class="cvt_-_computer_voice_table"><a name="3775862">InvoiceItemImpl.createAndPlaceForPaymentPlanChange</a></span>: Processing Reversal invoice items caused by a payment plan change. Calls the plugin once for each Reversal item created because of the plan change.</div>
+          </td>
+        </tr>
+      </table>
+      <h4 class="H2_-_Heading_2"><a name="3526195">Overriding the Default Placement of Invoice Items on Invoices</a></h4>
+      <div class="B_-_Body"><a name="3606847">Invoice items are placed on invoices by using the </a><span class="cv_-_computer_voice">defaultPlacements</span> object’s <span class="cv_-_computer_voice">place</span> method to specify the invoice item and the <span class="cv_-_computer_voice">Placer</span> object’s <span class="cv_-_computer_voice">on</span> method to specify the invoice.</div>
+      <div class="CS_-_Code_Single_Line"><a name="3768211">defaultPlacements.place(anInvoiceItem).on(anInvoice)</a></div>
+      <div class="B_-_Body"><a name="3768997">If a more complex adjustment is required, such as adding a new invoice or new invoice item, the recommended practice is to perform the adjustment in the Payment Plan plugin. For details, see </a><a href="javascript:WWHClickedPopup('integration', 'bc-plugins.13.12.html#3616372', '');" title="Payment Plan Plugin">“Payment Plan Plugin”</a>. The adjustment can be performed in the Invoice Assembler plugin only if the Payment Plan plugin cannot accomplish the desired operation. If the Invoice Assembler plugin is used, the recommended practice is to create and return a new <span class="cv_-_computer_voice">InvoiceItemPlacements</span> object that contains the modified objects.</div>
+      <script type="text/javascript" language="JavaScript1.2">
+        <!--
+          // Clear related topics
+          //
+          WWHClearRelatedTopics();
+
+          document.writeln(WWHRelatedTopicsInlineHTML());
+        // -->
+      </script>
+    </blockquote>
+    <script type="text/javascript" language="JavaScript1.2">
+      <!--
+        document.write(WWHRelatedTopicsDivTag() + WWHPopupDivTag() + WWHALinksDivTag());
+      // -->
+    </script>
+  </body>
+</html>

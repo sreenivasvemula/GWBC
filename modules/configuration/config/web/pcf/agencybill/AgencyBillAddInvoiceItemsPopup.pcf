@@ -1,0 +1,55 @@
+<?xml version="1.0"?>
+<PCF
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:noNamespaceSchemaLocation="../../../../../pcf.xsd">
+  <Popup
+    canEdit="true"
+    id="AgencyBillAddInvoiceItemsPopup"
+    startInEditMode="true"
+    title="displaykey.Web.AddInvoiceItemsPopup.Title">
+    <LocationEntryPoint
+      signature="AgencyBillAddInvoiceItemsPopup(wizardState: gw.agencybill.AgencyDistributionWizardHelper)"/>
+    <Variable
+      name="wizardState"
+      type="gw.agencybill.AgencyDistributionWizardHelper"/>
+    <Variable
+      initialValue="wizardState.AgencyCycleDistView"
+      name="agencyCycleDistView"
+      type="gw.api.web.producer.agencybill.distributionwizard.AgencyCycleDistView"/>
+    <Variable
+      initialValue="wizardState.MoneySetup.Producer"
+      name="producer"
+      type="Producer"/>
+    <Variable
+      initialValue="AgencyCycleDistPrefill.TC_UNPAID"
+      name="prefill"
+      type="AgencyCycleDistPrefill"/>
+    <Screen>
+      <Toolbar>
+        <CheckedValuesToolbarButton
+          allCheckedRowsAction="agencyCycleDistView.addInvoiceItems( CheckedValues, prefill ); CurrentLocation.commit()"
+          flags="any Row"
+          id="SelectInvoiceItems"
+          iterator="InvoiceItemSearchPanelSet.InvoiceItemsLV"
+          label="displaykey.Web.AddInvoiceItemsPopup.AddSelectedInvoiceItems"/>
+        <ToolbarButton
+          action="CurrentLocation.cancel()"
+          id="cancel"
+          label="displaykey.Button.Cancel"/>
+      </Toolbar>
+      <DetailViewPanel>
+        <InputColumn>
+          <RangeInput
+            editable="true"
+            id="Prefill"
+            label="displaykey.Web.AddInvoiceItemsPopup.Prefill"
+            required="true"
+            value="prefill"
+            valueRange="new AgencyCycleDistPrefill[]{AgencyCycleDistPrefill.TC_UNPAID, AgencyCycleDistPrefill.TC_ZERO}"/>
+        </InputColumn>
+      </DetailViewPanel>
+      <PanelRef
+        def="InvoiceItemSearchPanelSet(agencyCycleDistView.AgencyCycleDist, null, producer)"/>
+    </Screen>
+  </Popup>
+</PCF>

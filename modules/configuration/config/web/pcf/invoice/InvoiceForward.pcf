@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PCF
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:noNamespaceSchemaLocation="../../../../../pcf.xsd">
+  <Forward
+    id="InvoiceForward">
+    <LocationEntryPoint
+      signature="InvoiceForward( invoice : Invoice )"/>
+    <LocationEntryPoint
+      signature="InvoiceForward(invoice : Invoice, account : Account)"/>
+    <Variable
+      name="invoice"
+      type="Invoice"/>
+    <Variable
+      name="account"
+      type="Account"/>
+    <Variable
+      initialValue="invoice typeis StatementInvoice"
+      name="isAgencyBill"
+      type="boolean"/>
+    <ForwardCondition
+      action="AgencyBillStatementDetail.go( ( invoice as StatementInvoice ).AgencyBillCycle )"
+      condition="isAgencyBill"/>
+    <ForwardCondition
+      action="AccountDetailInvoices.go(account, invoice as AccountInvoice)"
+      condition="!isAgencyBill"/>
+  </Forward>
+</PCF>

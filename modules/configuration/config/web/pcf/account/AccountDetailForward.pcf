@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PCF
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:noNamespaceSchemaLocation="../../../../../pcf.xsd">
+  <!-- Note: This is called in BCConstructors.java -->
+  <Forward
+    canVisit="perm.System.accttabview and perm.System.acctsummview and account.ViewableByCurrentUser"
+    id="AccountDetailForward">
+    <LocationEntryPoint
+      signature="AccountDetailForward(account : Account)"/>
+    <Variable
+      name="account"
+      type="Account"/>
+    <ForwardCondition
+      action="AccountDetailSummary.go(account)"/>
+  </Forward>
+</PCF>

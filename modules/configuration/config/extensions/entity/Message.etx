@@ -1,0 +1,64 @@
+<?xml version="1.0"?>
+<extension xmlns="http://guidewire.com/datamodel" entityName="Message">
+
+  <index name="PendingAccountIdx"
+         desc="Index for the query that gets all pending messages for Accounts to send to a Destination."
+         trackUsage="true"
+         unique="true">
+    <indexcol keyposition="1" name="DestinationId"/>
+    <indexcol keyposition="2" name="AccountID"/>
+    <indexcol keyposition="3" name="SendOrder"/>
+    <indexcol keyposition="4" name="Status"/>
+    <indexcol keyposition="5" name="CreationTime"/>
+    <indexcol keyposition="6" name="ID"/>
+  </index>
+  <index name="AccountSendOrder"
+         desc="Index on account and send order, used for getting the max send order value when creating new messages."
+         trackUsage="true">
+    <indexcol name="AccountID"
+              keyposition="1"/>
+    <indexcol name="SendOrder"
+              keyposition="2"/>
+  </index>
+
+  <index name="PendingProducerIdx"
+         desc="Index for the query that gets all pending messages for Producers to send to a Destination."
+         trackUsage="true"
+         unique="true">
+    <indexcol keyposition="1" name="DestinationId"/>
+    <indexcol keyposition="2" name="ProducerID"/>
+    <indexcol keyposition="3" name="SendOrder"/>
+    <indexcol keyposition="4" name="Status"/>
+    <indexcol keyposition="5" name="CreationTime"/>
+    <indexcol keyposition="6" name="ID"/>
+  </index>
+  <index name="ProducerSendOrder"
+         desc="Index on producer and send order, used for getting the max send order value when creating new messages."
+         trackUsage="true">
+    <indexcol name="ProducerID"
+              keyposition="1"/>
+    <indexcol name="SendOrder"
+              keyposition="2"/>
+  </index>
+
+  <index name="PendingPlcyPerIdx"
+         desc="Index for the query that gets all pending messages for PolicyPeriods to send to a Destination."
+         trackUsage="true"
+         unique="true">
+    <indexcol keyposition="1" name="DestinationId"/>
+    <indexcol keyposition="2" name="PolicyPeriodID"/>
+    <indexcol keyposition="3" name="SendOrder"/>
+    <indexcol keyposition="4" name="Status"/>
+    <indexcol keyposition="5" name="CreationTime"/>
+    <indexcol keyposition="6" name="ID"/>
+  </index>
+  <index name="PlcyPerSendOrder"
+         desc="Index on PolicyPeriod and send order, used for getting the max send order value when creating new messages."
+         trackUsage="true">
+    <indexcol name="PolicyPeriodID"
+              keyposition="1"/>
+    <indexcol name="SendOrder"
+              keyposition="2"/>
+  </index>
+
+</extension>

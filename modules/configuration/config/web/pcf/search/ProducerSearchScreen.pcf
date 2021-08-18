@@ -1,0 +1,33 @@
+<?xml version="1.0"?>
+<PCF
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:noNamespaceSchemaLocation="../../../../../pcf.xsd">
+  <Screen
+    id="ProducerSearchScreen">
+    <!-- If showHyperlinks is false, the producer names on this page will be rendered WITHOUT clickable hyperlinks -->
+    <Require
+      name="showHyperlinks"
+      type="Boolean"/>
+    <Require
+      name="isClearBundle"
+      type="boolean"/>
+    <!-- Regarding SearchMethods.validateAndSearch: The 2nd parameter controls whether to clear the bundle before
+         querying. The 3rd parameter controls the search mode of all associated contact fields. -->
+    <SearchPanel
+      criteriaName="searchCriteria"
+      maxSearchResults="gw.api.system.BCConfigParameters.MaxSearchResults.Value"
+      resultsName="producerSearchViews"
+      search="gw.search.SearchMethods.validateAndSearch(searchCriteria, StringCriterionMode.TC_STARTSWITH)"
+      searchCriteria="new gw.search.ProducerSearchCriteria()"
+      searchResultsType="ProducerSearchViewQuery">
+      <PanelRef
+        def="ProducerSearchDV(searchCriteria)">
+        <Toolbar/>
+      </PanelRef>
+      <PanelRef
+        def="ProducerSearchResultsLV(producerSearchViews, null, false, showHyperlinks, false)">
+        <Toolbar/>
+      </PanelRef>
+    </SearchPanel>
+  </Screen>
+</PCF>

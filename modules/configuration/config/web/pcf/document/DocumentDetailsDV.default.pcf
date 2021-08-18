@@ -1,0 +1,37 @@
+<?xml version="1.0"?>
+<PCF
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:noNamespaceSchemaLocation="../../../../../pcf.xsd">
+  <DetailViewPanel
+          id="DocumentDetailsDV"
+    mode="default">
+    <Require
+      name="Document"
+      type="Document"/>
+    <Require
+      name="DocumentDetailsInfo"
+      type="gw.document.DocumentDetailsInfo"/>
+    <InputColumn>
+      <InputSetRef
+        def="DocumentMetadataInputSet(Document, false)"/>
+      <Label
+        hideIfReadOnly="true"
+        label="displaykey.Web.DocumentDetailsDV.DocumentContents"/>
+      <BooleanRadioInput
+        editable="true"
+        hideIfReadOnly="true"
+        id="UploadFile"
+        label="displaykey.Web.DocumentDetailsDV.UploadChanges"
+        value="DocumentDetailsInfo.UploadFile">
+        <PostOnChange/>
+      </BooleanRadioInput>
+      <DocumentDetailsFileInput
+        available="DocumentDetailsInfo.UploadFile"
+        editable="DocumentDetailsInfo.UploadFile"
+        hideIfReadOnly="true"
+        id="Attachment"
+        label="displaykey.Web.DocumentDetailsDV.Attachment"
+        value="DocumentDetailsInfo.File"/>
+    </InputColumn>
+  </DetailViewPanel>
+</PCF>

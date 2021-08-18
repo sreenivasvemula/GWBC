@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PCF
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:noNamespaceSchemaLocation="../../../../../../pcf.xsd">
+  <Page
+    afterCancel="DelinquencyPlanDetail.go(delinquencyPlan)"
+    afterCommit="DelinquencyPlanDetail.go(clonedDelinquencyPlan)"
+    canEdit="true"
+    id="CloneDelinquencyPlan"
+    parent="DelinquencyPlans()"
+    showUpLink="true"
+    startInEditMode="true"
+    title="displaykey.Web.CloneDelinquencyPlan.Title(delinquencyPlan)">
+    <LocationEntryPoint
+      signature="CloneDelinquencyPlan(delinquencyPlan : DelinquencyPlan)"/>
+    <Variable
+      name="delinquencyPlan"
+      type="DelinquencyPlan"/>
+    <Variable
+      initialValue="delinquencyPlan.makeClone() as DelinquencyPlan"
+      name="clonedDelinquencyPlan"/>
+    <ScreenRef
+      def="DelinquencyPlanDetailScreen(clonedDelinquencyPlan)"/>
+  </Page>
+</PCF>

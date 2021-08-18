@@ -1,0 +1,187 @@
+<?xml version="1.0"?>
+<PCF
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:noNamespaceSchemaLocation="../../../../../pcf.xsd">
+  <Page
+    canEdit="true"
+    canVisit="perm.System.viewdesktop and perm.SuspensePayment.view"
+    id="DesktopSuspensePayments"
+    title="displaykey.Web.DesktopSuspensePayments">
+    <LocationEntryPoint
+      signature="DesktopSuspensePayments()"/>
+    <Variable
+      initialValue="new web.payment.SuspensePaymentUtil()"
+      name="suspensePaymentUtil"/>
+    <Variable
+      initialValue="suspensePaymentUtil.getSuspensePayments()"
+      name="suspensePayments"
+      type="SuspensePaymentQuery"/>
+    <Variable
+      initialValue="new web.payment.SuspensePaymentFilterSet()"
+      name="filterSet"
+      type="web.payment.SuspensePaymentFilterSet"/>
+    <Screen
+      id="DesktopSuspensePaymentsScreen">
+      <Variable
+        initialValue="gw.api.util.CurrencyUtil.getDefaultCurrency()"
+        name="currencyForNewPayment"
+        type="Currency"/>
+      <TitleBar
+        appendListViewPaging="true"
+        title="displaykey.Web.DesktopSuspensePayments"/>
+      <Toolbar>
+        <CheckedValuesToolbarButton
+          available="true"
+          checkedRowAction="SuspenseCreateDisbursementWizard.push(CheckedValue)"
+          flags="one paymentOpen"
+          id="createDisbursement"
+          iterator="DesktopSuspensePaymentsLV"
+          label="displaykey.Web.DesktopSuspensePayments.DisbursementButton"
+          showConfirmMessage="false"/>
+        <CheckedValuesToolbarButton
+          allCheckedRowsAction="suspensePaymentUtil.validateSuspensePaymentsAreReversible(CheckedValues as java.util.List&lt;entity.SuspensePayment&gt;); ReverseSuspensePaymentsPopup.push(CheckedValues as java.util.List&lt;entity.SuspensePayment&gt;)"
+          available="perm.SuspensePayment.edit"
+          flags="any paymentOpenOrDisbursed"
+          id="reversesuspensepayments"
+          iterator="DesktopSuspensePaymentsLV"
+          label="displaykey.Web.DesktopSuspensePayments.ReverseButton"/>
+        <ToolbarDivider/>
+        <ToolbarRangeInput
+          id="CurrencyToUse"
+          required="true"
+          value="currencyForNewPayment"
+          valueRange="Currency.getTypeKeys(false)"
+          visible="perm.SuspensePayment.process and gw.api.util.CurrencyUtil.isMultiCurrencyMode()"/>
+        <ToolbarButton
+          action="NewSuspensePayment.push(currencyForNewPayment)"
+          id="NewPayment"
+          label="displaykey.Web.DesktopSuspensePayments.NewButton"
+          visible="perm.SuspensePayment.process"/>
+      </Toolbar>
+      <ListViewPanel
+        id="DesktopSuspensePaymentsLV">
+        <RowIterator
+          checkBoxVisible="true"
+          editable="false"
+          elementName="suspensePayment"
+          hasCheckBoxes="true"
+          numEntriesRequired="0"
+          type="SuspensePayment"
+          value="suspensePayments">
+          <ToolbarFlag
+            condition="suspensePayment.Status == typekey.SuspensePaymentStatus.TC_OPEN"
+            name="paymentOpen"/>
+          <ToolbarFilter
+            name="SuspensePaymentStatusFilter">
+            <ToolbarFilterOption
+              filter="filterSet.AllFilter"
+              label="displaykey.Web.SuspensePaymentFilterSet.All"/>
+            <ToolbarFilterOption
+              filter="filterSet.ReversedFilter"
+              label="displaykey.Web.SuspensePaymentFilterSet.Reversed"/>
+            <ToolbarFilterOption
+              filter="filterSet.AppliedFilter"
+              label="displaykey.Web.SuspensePaymentFilterSet.Applied"/>
+            <ToolbarFilterOption
+              filter="filterSet.DisbursedFilter"
+              label="displaykey.Web.SuspensePaymentFilterSet.Disbursed"
+              selectOnEnter="true"/>
+            <ToolbarFilterOption
+              filter="filterSet.OpenFilter"
+              label="displaykey.Web.SuspensePaymentFilterSet.Open"
+              selectOnEnter="true"/>
+          </ToolbarFilter>
+          <ToolbarFlag
+            condition="suspensePayment.Status == typekey.SuspensePaymentStatus.TC_OPEN or suspensePayment.Status == typekey.SuspensePaymentStatus.TC_DISBURSED"
+            name="paymentOpenOrDisbursed"/>
+          <Row>
+            <DateCell
+              footerLabel="displaykey.Web.DesktopSuspensePaymentsLV.Total"
+              id="PaymentDate"
+              label="displaykey.Web.DesktopSuspensePaymentsLV.Date"
+              value="suspensePayment.PaymentDate"/>
+            <Cell
+              id="RefNumber"
+              label="displaykey.Web.DesktopSuspensePaymentsLV.CheckNumber"
+              value="suspensePayment.RefNumber"/>
+            <TypeKeyCell
+              id="Status"
+              label="displaykey.Web.DesktopSuspensePaymentsLV.Status"
+              value="suspensePayment.Status"/>
+            <Cell
+              action="transactionNumberAction(suspensePayment)"
+              enableSort="false"
+              id="TransactionNumber"
+              label="displaykey.Web.DesktopSuspensePaymentsLV.TransactionNumber"
+              value="suspensePaymentUtil.getDesktopTransactionDisplayValue(suspensePayment)"/>
+            <Cell
+              action="appliedAction(suspensePayment);"
+              actionAvailable="suspensePaymentUtil.isActionAvailable(suspensePayment)"
+              enableSort="false"
+              id="ApplyTo"
+              label="displaykey.Web.DesktopSuspensePaymentsLV.ApplyTo"
+              value="suspensePayment.ApplyEntity"/>
+            <Cell
+              id="AppliedBy"
+              label="displaykey.Web.DesktopSuspensePaymentsLV.AppliedBy"
+              value="suspensePayment.AppliedByUser"/>
+            <TypeKeyCell
+              id="Currency"
+              label="displaykey.Web.DesktopSuspensePaymentsLV.Currency"
+              required="true"
+              value="suspensePayment.Currency"/>
+            <MonetaryAmountCell
+              currency="suspensePayment.Currency"
+              footerSumValue="suspensePayment.Amount"
+              formatType="currency"
+              id="Amount"
+              label="displaykey.Web.DesktopSuspensePaymentsLV.Amount"
+              value="suspensePayment.Amount"/>
+            <TextCell
+              id="Description"
+              label="displaykey.Web.DesktopSuspensePaymentsLV.Description"
+              numCols="50"
+              value="suspensePayment.Description"/>
+            <Cell
+              action="EditSuspensePaymentPopup.push(suspensePayment)"
+              align="center"
+              available="suspensePayment.Status == SuspensePaymentStatus.TC_OPEN"
+              enableSort="false"
+              id="EditPayment"
+              styleClass="miniButton"
+              value="displaykey.Web.DesktopSuspensePaymentsLV.Edit"
+              valueVisible="perm.SuspensePayment.edit"/>
+            <Cell
+              action="ApplySuspensePaymentPopup.push(suspensePayment)"
+              align="center"
+              available="suspensePayment.Status == SuspensePaymentStatus.TC_OPEN"
+              enableSort="false"
+              id="ApplyPayment"
+              styleClass="miniButton"
+              value="displaykey.Web.DesktopSuspensePaymentsLV.Apply"
+              valueVisible="perm.SuspensePayment.edit"/>
+          </Row>
+        </RowIterator>
+      </ListViewPanel>
+    </Screen>
+    <Code><![CDATA[function appliedAction(suspensePayment : SuspensePayment) {
+  if (suspensePayment.PolicyPeriodAppliedTo != null) {
+    PolicyDetailSummaryPopup.push(suspensePayment.PolicyPeriodAppliedTo)
+  } else if (suspensePayment.AccountAppliedTo != null) {
+    AccountDetailSummaryPopup.push(suspensePayment.AccountAppliedTo);
+  } else if (suspensePayment.DisbursementAppliedTo != null) {
+    DisbursementDetail.push(suspensePayment.DisbursementAppliedTo, false);
+  } else if (suspensePayment.ProducerAppliedTo != null) {
+    ProducerDetailPopup.push(suspensePayment.ProducerAppliedTo);
+  }
+}
+
+function transactionNumberAction(suspensePayment : SuspensePayment) {
+  if (suspensePaymentUtil.getDesktopTransaction(suspensePayment) != null) {
+    TransactionDetailPopup.push(suspensePaymentUtil.getDesktopTransaction(suspensePayment))
+  } else {
+    SuspensePaymentMultipleTransactionsPopup.push(suspensePayment)
+  }
+}]]></Code>
+  </Page>
+</PCF>

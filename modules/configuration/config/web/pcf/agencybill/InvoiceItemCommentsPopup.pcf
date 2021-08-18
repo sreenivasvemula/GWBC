@@ -1,0 +1,38 @@
+<?xml version="1.0"?>
+<PCF
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:noNamespaceSchemaLocation="../../../../../pcf.xsd">
+  <Popup
+    afterCommit="agencyBillStatementView.PolicyPeriodInvoiceItems.get(0).InvoiceItemViews.get(0).updateItem(item)"
+    canEdit="true"
+    id="InvoiceItemCommentsPopup"
+    startInEditMode="true"
+    title="displaykey.Web.InvoiceItemCommentsPopup.Title">
+    <LocationEntryPoint
+      signature="InvoiceItemCommentsPopup(item :InvoiceItem, agencyBillStatementView : web.invoice.AgencyBillStatementView)"/>
+    <Variable
+      name="item"
+      type="InvoiceItem"/>
+    <Variable
+      name="agencyBillStatementView"
+      type="web.invoice.AgencyBillStatementView"/>
+    <Screen>
+      <Toolbar>
+        <EditButtons/>
+      </Toolbar>
+      <DetailViewPanel>
+        <InputColumn>
+          <TextAreaInput
+            editable="true"
+            id="Comments"
+            label="displaykey.Web.NewNoteDV.Text"
+            labelAbove="true"
+            maxChars="1000"
+            numCols="60"
+            numRows="15"
+            value="item.Comments"/>
+        </InputColumn>
+      </DetailViewPanel>
+    </Screen>
+  </Popup>
+</PCF>

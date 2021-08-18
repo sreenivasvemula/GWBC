@@ -1,0 +1,29 @@
+package rules.Preupdate.TransactionPreupdate_dir
+
+@gw.rules.RuleName("Account Adjustment")
+internal class AccountAdjustment {
+  static function doCondition(transaction : entity.Transaction) : boolean {
+    
+/*start00rule*/
+return transaction typeis AccountAdjustment
+/*end00rule*/
+
+  }
+
+  static function doAction(transaction : entity.Transaction, actions : gw.rules.Action) {
+
+/*start00rule*/
+var adjustment = transaction as AccountAdjustment;
+var history = new AccountHistory(adjustment);
+
+history.Account = adjustment.Account;
+history.EventDate = adjustment.TransactionDate;
+history.EventType = HistoryEventType.TC_ACCOUNTADJUSTED;
+history.Transaction = adjustment;
+history.Description = adjustment.LongDisplayName;
+
+adjustment.Account.addToHistory(history);
+/*end00rule*/
+
+  }
+}

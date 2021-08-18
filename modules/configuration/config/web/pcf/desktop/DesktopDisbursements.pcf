@@ -1,0 +1,62 @@
+<?xml version="1.0"?>
+<PCF
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:noNamespaceSchemaLocation="../../../../../pcf.xsd">
+  <Page
+    canEdit="true"
+    canVisit="perm.System.mydisbview and perm.System.viewdesktop"
+    id="DesktopDisbursements"
+    title="displaykey.Web.DesktopDisbursements">
+    <LocationEntryPoint
+      signature="DesktopDisbursements()"/>
+    <Screen
+      id="DesktopDisbursementsScreen">
+      <Variable
+        initialValue="gw.api.web.disbursement.DisbursementDisplayDateRange.LAST7DAYS"
+        name="disbursementDisplayDateRange"
+        type="gw.api.web.disbursement.DisbursementDisplayDateRange"/>
+      <Variable
+        initialValue="gw.api.web.disbursement.DisbursementDisplayStatus.OPEN_ONLY"
+        name="disbursementDisplayStatus"
+        type="gw.api.web.disbursement.DisbursementDisplayStatus"/>
+      <Variable
+        initialValue="new gw.api.web.disbursement.DisbursementUtil().getDisbursements(disbursementDisplayStatus, disbursementDisplayDateRange)"
+        name="disbursements"
+        recalculateOnRefresh="true"
+        type="DisbursementQuery"/>
+      <TitleBar
+        appendListViewPaging="true"
+        title="displaykey.Web.DesktopDisbursements"/>
+      <Toolbar/>
+      <PanelRef
+        def="DesktopDisbursementsLV(disbursements)">
+        <Toolbar>
+          <ToolbarRangeInput
+            editable="true"
+            id="disbursementDisplayStatus"
+            optionLabel="VALUE.DisplayKey as String"
+            required="true"
+            sortValueRange="false"
+            value="disbursementDisplayStatus"
+            valueRange="gw.api.web.disbursement.DisbursementDisplayStatus.AllDisbursementDisplayStatuses">
+            <PostOnChange/>
+          </ToolbarRangeInput>
+          <ToolbarRangeInput
+            editable="true"
+            id="disbursementDisplayDateRange"
+            optionLabel="VALUE.DisplayKey as String"
+            required="true"
+            sortValueRange="false"
+            value="disbursementDisplayDateRange"
+            valueRange="gw.api.web.disbursement.DisbursementDisplayDateRange.AllDisbursementDisplayDateRanges">
+            <PostOnChange/>
+          </ToolbarRangeInput>
+          <ToolbarButton
+            action="CreateDisbursementWizard.go()"
+            id="NewDisbursement"
+            label="displaykey.Web.DesktopDisbursements.NewButton"/>
+        </Toolbar>
+      </PanelRef>
+    </Screen>
+  </Page>
+</PCF>

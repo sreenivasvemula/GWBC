@@ -1,0 +1,216 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xml:lang="en" lang="en" xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+    <meta http-equiv="Content-Style-Type" content="text/css" />
+    <!-- MOTW-DISABLED saved from url=(0014)about:internet -->
+    <title>Writing a Startable Plugin</title>
+    <link rel="StyleSheet" href="css/plugins-startable.css" type="text/css" media="all" />
+    <link rel="StyleSheet" href="css/webworks.css" type="text/css" media="all" />
+    <link rel="StyleSheet" href="css/css-guidewire-extra.css" type="text/css" media="all" />
+    <script type="text/javascript" language="JavaScript1.2" src="wwhdata/common/context.js"></script>
+    <script type="text/javascript" language="JavaScript1.2" src="wwhdata/common/towwhdir.js"></script>
+    <script type="text/javascript" language="JavaScript1.2" src="wwhdata/common/wwhpagef.js"></script>
+    <script type="text/javascript" language="JavaScript1.2">
+      <!--
+        var  WebWorksRootPath = "";
+      // -->
+    </script>
+    <script type="text/javascript" language="JavaScript1.2">
+      <!--
+        // Set reference to top level help frame
+        //
+        var  WWHFrame = WWHGetWWHFrame("", true);
+      // -->
+    </script>
+    <script type="text/javascript" language="JavaScript1.2" src="scripts/expand.js"></script>
+    <!-- THE FOLLOWING IS A GUIDEWIRE STYLE DEFINITION FOR THE LINK TO THIS FEATURE -->
+    <link rel="StyleSheet" href="css/css-guidewire-extra.css" type="text/css" media="all" />
+    <!-- THE FOLLOWING IS A GUIDEWIRE GSCRIPT FUNCTION FOR THE LINK TO THIS FEATURE -->
+    <script type="text/javascript">
+function guidewire_selectall()
+{
+var text_val=eval("document.linktothisurlform.urlfield");
+text_val.focus();
+text_val.select();
+}
+</script>
+  </head>
+  <body onLoad="WWHUpdate();" onUnload="WWHUnload();" onKeyDown="WWHHandleKeyDown((document.all||document.getElementById||document.layers)?event:null);" onKeyPress="WWHHandleKeyPress((document.all||document.getElementById||document.layers)?event:null);" onKeyUp="WWHHandleKeyUp((document.all||document.getElementById||document.layers)?event:null);">
+    <!-- THE FOLLOWING IS A GUIDEWIRE DIV FOR THE 'LINK TO THIS' FEATURE -->
+    <div id="linkToThisPage" class="popup" style="display: none;">
+      <div class="popupTitle">Link Directly to This Page 
+           <a href="#" onclick="var thePopup = getElementById('linkToThisPage');thePopup.style.display='none';return false;"><img class="popupClosebox" src="wwhelp/wwhimpl/common/images/close.gif" /></a></div>
+      <div style="padding:6px;">
+        <div class="popupText" id="linkToThisPageBookmark">An error has occurred if you see this messsage.</div>
+        <form name="linktothisurlform" method="post" action="" style="width:275px;margin:0px">
+          <input type="text" class="popupURLText" id="linkToThisPageURL" name="urlfield" rows="1" cols="55" onClick="guidewire_selectall();" onFocus="guidewire_selectall();"></input>
+        </form>
+      </div>
+    </div>
+    <br />
+    <div class="WebWorks_Breadcrumbs" style="text-align: left;">
+      <span>BillingCenter Integration Guide</span> : 
+    <span class="WebWorks_Breadcrumbs" style="text-align: left;"><a class="WebWorks_Breadcrumb_Link" href="p-plugins.html#2422353">Plugins</a> : <a class="WebWorks_Breadcrumb_Link" href="plugins-startable.20.1.html#2422353">Startable Plugins</a> : Writing a Startable Plugin</span></div>
+    <hr align="left" />
+    <blockquote>
+      <h3 class="H1_-_Heading_1"><a name="2422353">Writing a Startable Plugin</a></h3>
+      <div class="B_-_Body"><a name="2422354">Most of your code of a startable plugin implements your custom listener code or other special service. Write a new class that implements the </a><span class="cv_-_computer_voice">IStartablePlugin</span> interface and implement the following methods:</div>
+      <div class="BI_-_Bullet_Item_outer" style="margin-left: 57pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="BI_-_Bullet_Item_inner" style="width: 15pt; white-space: nowrap">
+                <span class="bu_-_bullet">•	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="BI_-_Bullet_Item_inner"><a name="2422358">A </a><span class="cv_-_computer_voice">start</span> method to start your service </div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="BI_-_Bullet_Item_outer" style="margin-left: 57pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="BI_-_Bullet_Item_inner" style="width: 15pt; white-space: nowrap">
+                <span class="bu_-_bullet">•	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="BI_-_Bullet_Item_inner"><a name="2422362">A </a><span class="cv_-_computer_voice">stop</span> method to stop your service </div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="BI_-_Bullet_Item_outer" style="margin-left: 57pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="BI_-_Bullet_Item_inner" style="width: 15pt; white-space: nowrap">
+                <span class="bu_-_bullet">•	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="BI_-_Bullet_Item_inner"><a name="2422363">A property accessor function to get the </a><span class="cv_-_computer_voice">State</span> property from your startable plugin. </div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="LP_-_List_Para"><a name="2424964">This method returns a typecode from the typelist </a><span class="cv_-_computer_voice">StartablePluginState</span>: the value <span class="cv_-_computer_voice">Stopped</span> or <span class="cv_-_computer_voice">Started</span>. The administration user interface uses this property accessor to show the state to the user. Define a private variable to hold the current state and your property accessor (get) function can look simple:</div>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2422364">// private variables...</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2422365">var _state = StartablePluginState.Stopped;</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2422366">&nbsp;</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2422367">...</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2422368">&nbsp;</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2422369">// property accessor (get) function...</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2422370">override property get State() : StartablePluginState {</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2422371">    return _state // return our private variable</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2422372">  }</a></PRE>
+      <div class="LP_-_List_Para"><a name="2422373">Alternatively, combine the variable definition with the shortcut keyword to simplify your code. You can combine the variable definition with the property definition can be combined with the single variable definition:</a></div>
+      <div class="CS_-_Code_Single_Line"><a name="2422374">var _state : StartablePluginState as State</a></div>
+      <div class="B_-_Body"><a name="2422376">The plugin does include a constructor called on system startup. However, start your service code in the </a><span class="cv_-_computer_voice">start</span> method, not the constructor. Your start method must appropriately set the state (started or stopped) using an internal variable that you define. </div>
+      <div class="B_-_Body"><a name="2422377">At minimum, your start method must set your internal variable that tracks your started or stopped state, with code such as:</a></div>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2422378">_state = Started</a></PRE>
+      <div class="B_-_Body"><a name="2422379">Additionally, in your </a><span class="cv_-_computer_voice">start</span> method, start any listener code or threads such as a JMS queue listener.</div>
+      <div class="B_-_Body"><a name="2422380">Your </a><span class="cv_-_computer_voice">start</span> method has a method parameter that is a callback handler of type <span class="cv_-_computer_voice">StartablePluginCallbackHandler</span>. This callback is important if your startable plugin modifies any entity data, which is likely the case for most real-world startable plugins. </div>
+      <div class="B_-_Body"><a name="2422381">Your plugin must run any code that affects entity data within a code block that you pass to the callback handler method called </a><span class="cv_-_computer_voice">execute</span>. The <span class="cv_-_computer_voice">execute</span> method takes as its argument a <span class="e_-_emphasis">Gosu block</span>, which is a special type of in-line function. The Gosu block you pass to the <span class="cv_-_computer_voice">execute</span> method takes no arguments. For more information, see <a href="javascript:WWHClickedPopup('gosu', 'blocks.18.1.html#1445150', '');" title="Gosu Blocks">“Gosu Blocks” in the </a><span class="bt_-_book_title"><a href="javascript:WWHClickedPopup('gosu', 'blocks.18.1.html#1445150', '');" title="Gosu Blocks">Gosu Reference Guide</a></span>. </div>
+      <div class="N_-_Note">
+        <span class="n_-_note">Note: </span><a name="2422385">If you do not need a user context, use the simplest version of the callback handler method </a><span class="cv_-_computer_voice">execute</span>, whose one argument is the Gosu block. To run your code as a specific user, see <a href="javascript:WWHClickedPopup('integration', 'plugins-startable.20.3.html#2422435', '');" title="Writing a Startable Plugin">“User Contexts for Startable Plugins”</a>.</div>
+      <div class="B_-_Body"><a name="2422389">You do not need to create a separate bundle. If you create new entities to the current bundle, they are in the correct (default) database transaction the application sets up for you. Use the code </a><span class="cv_-_computer_voice">Transaction.getCurrent()</span> to get the current bundle if you need a reference to the current (writable) bundle. For more information, see <a href="javascript:WWHClickedPopup('gosu', 'transactions.22.01.html#1456387', '');" title="Bundles and Database Transactions">“Bundles and Database Transactions” in the </a><span class="bt_-_book_title"><a href="javascript:WWHClickedPopup('gosu', 'transactions.22.01.html#1456387', '');" title="Bundles and Database Transactions">Gosu Reference Guide</a></span>.</div>
+      <div class="NI_-_Note_Important">
+        <span class="n_-_note">IMPORTANT   </span><a name="2422393">The Java language does not directly support blocks. If you implement your plugin in Java, you cannot use a Gosu block but you can use an anonymous class to do the same thing. For more information, see </a><a href="javascript:WWHClickedPopup('integration', 'plugins-startable.20.6.html#2422607', '');" title="Java and Startable Plugins">“Defining Startable Plugins In Java”</a>.</div>
+      <div class="B_-_Body"><a name="2422397">The plugin’s </a><span class="cv_-_computer_voice">start</span> method also includes a <span class="cv_-_computer_voice">boolean</span> variable that indicates whether the server is starting. If <span class="cv_-_computer_voice">true</span>, the server is starting up. If <span class="cv_-_computer_voice">false</span>, the start request comes from the <span class="ui_-_UI_element">Server Tools</span> user interface.</div>
+      <div class="B_-_Body"><a name="2422398">The following shows a simple Gosu block that changes entity data. This example assumes your listener defined a variable </a><span class="cv_-_computer_voice">messageBody</span> with information from your remote system. If you get entities from a database query, remember to add them to the current bundle. Refer to <a href="javascript:WWHClickedPopup('gosu', 'querybuilder.10.32.html#2564207', '');" title="Updating Entity Instances in Query Results">“Updating Entity Instances in Query Results” in the </a><span class="bt_-_book_title"><a href="javascript:WWHClickedPopup('gosu', 'querybuilder.10.32.html#2564207', '');" title="Updating Entity Instances in Query Results">Gosu Reference Guide</a></span> for more information about bundles.</div>
+      <div class="B_-_Body"><a name="2422402">This simple example queries all </a><span class="cv_-_computer_voice">User</span> entities and sets a property on results of the query:</div>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2422404">//variable definition earlier in your class...</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2422405">var _callback : StartablePluginCallbackHandler;</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2422406">&nbsp;</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2422407">...</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2422408">&nbsp;</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2422409">override function start( cbh: StartablePluginCallbackHandler, isStarting: boolean ) : void</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2422410">  {</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2422411">    _callback = cbh</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2422412">&nbsp;&nbsp;&nbsp;&nbsp;_callback.execute( \ -&gt; {</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2422413">&nbsp;</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2422414">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;var q = gw.api.database.Query.make(User) // run a query</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2422415">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;var b = gw.Transaction.Transaction.Current // get the current bundle</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2422416">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2422417">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;for (e in q.select()) {</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2422418">&nbsp;</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2422419">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;// add entity instance to writable bundle, then save and only modify that result</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2422420">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;var writable_object = bundle.add(e) </a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2422421">&nbsp;</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2422422">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;// modify properties as desired on the result of bundle.add(e)</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2422423">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;writable_object.Department = "Example of setting a property on a writable entity instance."</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2422424">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2422425">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2422426">&nbsp;&nbsp;&nbsp;&nbsp;})</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2422427">&nbsp;&nbsp;//Note: You do not need to commit the bundle here. The execute method commits after your block runs.</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2422428">&nbsp;&nbsp;}</a></PRE>
+      <div class="B_-_Body"><a name="2422429">Note that to make an entity instance writable, save and use the return result of the bundle </a><span class="cv_-_computer_voice">add</span> method. For more information, see <a href="javascript:WWHClickedPopup('gosu', 'transactions.22.04.html#1611659', '');" title="Adding Entity Instances to Bundles">“Adding Entity Instances to Bundles” in the </a><span class="bt_-_book_title"><a href="javascript:WWHClickedPopup('gosu', 'transactions.22.04.html#1611659', '');" title="Adding Entity Instances to Bundles">Gosu Reference Guide</a></span>.</div>
+      <div class="B_-_Body"><a name="2422433">Just like your </a><span class="cv_-_computer_voice">start</span> method must set your internal variable that sets its state to started, your <span class="cv_-_computer_voice">stop</span> method must set your internal state variable to <span class="cv_-_computer_voice">StartablePluginState.Stopped</span>. Additionally, stop whatever background processes or listeners you started in your <span class="cv_-_computer_voice">start</span> method. For example, if your <span class="cv_-_computer_voice">start</span> method creates a new JMS queue listener, your <span class="cv_-_computer_voice">stop</span> method destroys the listener. Similar to the <span class="cv_-_computer_voice">start</span> method’s <span class="p_-_parameter">isStartingUp</span> parameter, the <span class="cv_-_computer_voice">stop</span> method includes a <span class="cv_-_computer_voice">boolean</span> variable that indicates whether the server is shutting down now. If <span class="cv_-_computer_voice">true</span>, the server is shutting down. If <span class="cv_-_computer_voice">false</span>, the stop request comes from the <span class="ui_-_UI_element">Server Tools</span> user interface.</div>
+      <h4 class="H2_-_Heading_2"><a name="2422435">User Contexts for Startable Plugins</a></h4>
+      <div class="B_-_Body"><a name="2422436">If you use the simplest method signature for the </a><span class="cv_-_computer_voice">execute</span> method on <span style="font-family: &quot;Lucida Sans Typewriter&quot;; font-size: 7.0pt">StartablePluginCallbackHandler</span>, your code does not run with a current BillingCenter user. Any code that directly or indirectly runs due to this plugin (including preupdate rules or any other code) must be prepared for the current user to be <span class="cv_-_computer_voice">null</span>. You must not rely on non-null values for current user if you use this version.</div>
+      <div class="B_-_Body"><a name="2422440">However, there are alternate method signatures for the </a><span class="cv_-_computer_voice">execute</span> method. Use these to perform your startable plugin tasks as a specific <span class="cv_-_computer_voice">User</span>. Depending on the method variant, pass either a user name or the actual <span class="cv_-_computer_voice">User</span> entity.</div>
+      <div class="B_-_Body"><a name="2422441">On a related note, the </a><span class="cv_-_computer_voice">gw.transaction.Transaction</span> class has an alternate version of the <span class="cv_-_computer_voice">runWithNewBundle</span> method to create a bundle with a specific user associated with it. You can use this in contexts in which there is no built-in user context or you need to use different users for different parts of your tasks. The method signature is:</div>
+      <div class="CS_-_Code_Single_Line"><a name="2422442">gw.transaction.Transaction.runWithNewBundle(\ bundle -&gt; </a><span class="pc_-_parameter_in_code">YOUR_BLOCK_BODY</span>, user)</div>
+      <div class="B_-_Body"><a name="2422443">For the second method argument to </a><span class="cv_-_computer_voice">runWithNewBundle</span>, pass either a <span class="cv_-_computer_voice">User</span> entity or a <span class="cv_-_computer_voice">String</span> that is the user name.</div>
+      <h4 class="H2_-_Heading_2"><a name="2422444">Simple Startable Plugin Example</a></h4>
+      <div class="B_-_Body"><a name="2422445">The following is a complete simple startable plugin. This example does not do anything useful in its start method, but demonstrates the basic structure of creating a block that you pass to the callback handler’s </a><span class="cv_-_computer_voice">execute</span> method:</div>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2422446">package gw.api.startableplugin</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2422447">uses gw.api.startable.IStartablePlugin</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2422448">uses gw.api.startable.StartablePluginCallbackHandler</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2422449">uses gw.api.startable.StartablePluginState</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2422450">&nbsp;</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2422451">class HelloWorldStartablePlugin implements IStartablePlugin</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2422452">{</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2422453">  var _state = StartablePluginState.Stopped;</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2422454">  var _callback : StartablePluginCallbackHandler;</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2422455">&nbsp;</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2422456">  construct()</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2422457">  {</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2422458">  }</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2422459">&nbsp;</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2422460">  override property get State() : StartablePluginState</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2422461">  {</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2422462">    return _state</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2422463">  }</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2422464">&nbsp;</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2422465">  override function start( cbh: StartablePluginCallbackHandler, isStarting: boolean ) : void</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2422466">  {</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2422467">    _callback = cbh</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2422468">    _callback.execute( \ -&gt; {</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2422469">      // Do some work:</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2422470">      // [...]</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2422471">    } )</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2422472">    _state = Started</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2422473">    _callback.log( "*** From HelloWorldStartablePlugin: Hello world." )</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2422474">  }</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2422475">&nbsp;</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2422476">  override function stop( isShuttingDown: boolean ) : void</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2422477">  {</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2422478">    _callback.log( "*** From HelloWorldStartablePlugin: Goodbye." )</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2422479">    _callback = null</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2422480">    _state = Stopped</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2422481">  }</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2422482">}</a></PRE>
+      <script type="text/javascript" language="JavaScript1.2">
+        <!--
+          // Clear related topics
+          //
+          WWHClearRelatedTopics();
+
+          document.writeln(WWHRelatedTopicsInlineHTML());
+        // -->
+      </script>
+    </blockquote>
+    <script type="text/javascript" language="JavaScript1.2">
+      <!--
+        document.write(WWHRelatedTopicsDivTag() + WWHPopupDivTag() + WWHALinksDivTag());
+      // -->
+    </script>
+  </body>
+</html>

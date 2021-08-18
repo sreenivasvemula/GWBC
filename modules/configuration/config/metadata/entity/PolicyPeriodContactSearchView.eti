@@ -1,0 +1,43 @@
+<?xml version="1.0"?>
+<!-- ====================================================================  PolicyPeriodContactSearchView  ==================================================================== -->
+<viewEntity
+  xmlns="http://guidewire.com/datamodel"
+  entity="PolicyPeriodContactSearchView"
+  desc="Supports the efficient creation of PolicyPeriodContact lists in BillingCenter's views."
+  exportable="false"
+  subpackage="search.view"
+  primaryEntity="PolicyPeriodContact">
+  <viewEntityLink
+    name="PolicyPeriodContact"
+    path="ID"/>
+  <viewEntityLink
+    name="PolicyPeriod"
+    path="PolicyPeriod"/>
+  <viewEntityColumn
+    name="ContactName"
+    path="Contact.Name"/>
+  <viewEntityColumn
+    name="ContactWorkPhone"
+    path="Contact.WorkPhone"/>
+  <viewEntityLink
+    name="PrimaryAddress"
+    path="Contact.PrimaryAddress"/>
+  <viewEntityColumn
+    name="PolicyNumber"
+    path="PolicyPeriod.PolicyNumberLong"/>
+  <viewEntityColumn
+    name="PolicyPerEffDate"
+    path="PolicyPeriod.PolicyPerEffDate"/>
+  <viewEntityColumn
+    name="PolicyPerExpirDate"
+    path="PolicyPeriod.PolicyPerExpirDate"/>
+  <viewEntityColumn
+    name="AccountNumber"
+    path="PolicyPeriod.Policy.Account.AccountNumber"/>
+  <viewEntityName
+    name="Producer"
+    path="PolicyPeriod.PrimaryPolicyCommission.ProducerCode.Producer"/>
+  <viewEntityColumn
+    name="Code"
+    path="PolicyPeriod.PrimaryPolicyCommission.ProducerCode.Code"/>
+</viewEntity>

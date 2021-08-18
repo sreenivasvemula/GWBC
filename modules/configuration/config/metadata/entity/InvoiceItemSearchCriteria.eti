@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?><nonPersistentEntity xmlns="http://guidewire.com/datamodel" desc="Search criteria for invoice items specifically in the context of making distributions against them" entity="InvoiceItemSearchCriteria" extendable="true" subpackage="search">
+  <implementsEntity name="NotInCurrencySilo"/>
+    <foreignkey desc="In the case of an DirectBill payment, the Account that is making the payment" fkentity="Account" name="PayingAccount" nullok="true"/>
+    <foreignkey desc="In the case of an AgencyBill payment, the Producer that is making the payment" fkentity="Producer" name="PayingProducer" nullok="true"/>
+    <column desc="Optional field to specify that we should restrict the results of the query to Invoice Items paid for by this payer" name="PayerAccountNumber" nullok="true" type="shorttext"/>
+    <column desc="Optional field to specify that we should restrict the results of the query to Invoice Items paid for by this payer" name="PayerProducerName" nullok="true" type="shorttext"/>
+    <column default="true" desc="True if searching for InvoiceItems with an Account as the payer, false if searching for InvoiceItems with a Producer as the payer" name="PayerIsAnAccount" nullok="false" type="bit"/>
+    <column desc="Optional field to specify that we should restrict the results of the query to Invoice Items owned by the Account represented by this AccountNumber" name="OwnerAccount" nullok="true" type="shorttext"/>
+    <column desc="Optional field to specify that we should restrict the results of the query to Invoice Items associated with the policy period represented by this PolicyPeriodNumber" name="PolicyPeriod" nullok="true" type="shorttext"/>
+    <column desc="Optional field to specify that we should restrict the results of the query to Invoice Items with a Charge having this ChargeGroup" name="ChargeGroup" nullok="true" type="shorttext"/>
+    <foreignkey desc="Optional field to specify that we should restrict the results of the query to Invoice Items with a Charge having this ChargePattern" fkentity="ChargePattern" name="ChargePattern" nullok="true"/>
+    <typekey desc="Optional field to specify that we should restrict the results of the query to Invoice Items on Invoices with this InvoiceStatus." name="BilledStatus" nullok="true" typelist="InvoiceStatus"/>
+    <column default="false" desc="True if we should allow items that are fully settled in the results set.  False if we should filter out anything that is fully or oversettled." name="IncludeFullySettledItems" nullok="false" type="bit"/>
+    <column default="false" desc="True if we should only include items that are on billed or due invoices." name="IncludeOnlyBilledAndDueItems" nullok="false" type="bit"/>
+    <column default="false" desc="True if the search is for InvoiceItems to be promised as opposed to paid. This is necessary for determining what invoice items are fully settled, as for promise distributions, we will count promised amounts as well as paid amounts towards settled values, but for payment distributions we should only count paid amounts." name="DistributionTypeIsPromise" nullok="true" type="bit"/>
+</nonPersistentEntity>

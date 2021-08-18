@@ -1,0 +1,29 @@
+<?xml version="1.0"?>
+<!-- ====================================================================  ProducerPaymentRecurrable  ==================================================================== -->
+<entity
+  xmlns="http://guidewire.com/datamodel"
+  entity="ProducerPaymentRecurrable"
+  type="versionable"
+  desc="Implementation of Recurrable that pays a producer's commissions on a recurring basis"
+  subpackage="producer"
+  platform="false"
+  table="producerpaymentrecurrable">
+  <implementsEntity
+    name="Recurrable"/>
+  <implementsEntity
+    name="NotInCurrencySilo"/>
+  <foreignkey
+    name="Producer"
+    desc="FK to the Producer."
+    columnName="ProducerID"
+    fkentity="Producer"
+    nullok="false"/>
+  <index
+    desc="Legacy"
+    name="producerid"
+    unique="true">
+    <indexcol
+      name="ProducerID"
+      keyposition="1"/>
+  </index>
+</entity>

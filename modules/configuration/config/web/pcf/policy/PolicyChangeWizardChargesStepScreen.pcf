@@ -1,0 +1,37 @@
+<?xml version="1.0"?>
+<PCF
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:noNamespaceSchemaLocation="../../../../../pcf.xsd">
+  <Screen
+    id="PolicyChangeWizardChargesStepScreen">
+    <Require
+      name="policyPeriod"
+      type="PolicyPeriod"/>
+    <Require
+      name="policyChange"
+      type="PolicyChange"/>
+    <Require
+      name="chargeToInvoicingOverridesMap"
+      type="java.util.HashMap&lt;gw.api.domain.charge.ChargeInitializer, gw.invoice.InvoicingOverridesView&gt;"/>
+    <Variable
+      initialValue="new web.accounting.ChargePatternHelper()"
+      name="chargePatternHelper"
+      type="web.accounting.ChargePatternHelper"/>
+    <Variable
+      initialValue="new web.account.AccountSearchConverter()"
+      name="accountSearchConverter"
+      type="web.account.AccountSearchConverter"/>
+    <Variable
+      initialValue="policyPeriod.DefaultPayer typeis Account ? policyPeriod.DefaultPayer : null"
+      name="payerAccount"
+      type="Account"/>
+    <PanelRef
+      def="PolicyAddChargesLV(policyChange, policyPeriod,chargeToInvoicingOverridesMap)">
+      <Toolbar>
+        <WizardButtons/>
+        <IteratorButtons
+          iterator="PolicyAddChargesLV.ChargeIterator"/>
+      </Toolbar>
+    </PanelRef>
+  </Screen>
+</PCF>

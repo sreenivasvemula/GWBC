@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?><internalExtension xmlns="http://guidewire.com/datamodel" entityName="Message">
+  <implementsEntity name="NotInCurrencySilo"/>
+  <foreignkey columnName="AccountID" desc="Associated account, if applicable." exportable="false" fkentity="Account" name="Account" nullok="true"/>
+  <foreignkey columnName="PolicyPeriodID" desc="Associated PolicyPeriod, if applicable." exportable="false" fkentity="PolicyPeriod" name="PolicyPeriod" nullok="true"/>
+  <foreignkey columnName="ProducerID" desc="Associated Producer, if applicable." exportable="false" fkentity="Producer" name="Producer" nullok="true"/>
+  <foreignkey columnName="ContactID" desc="Associated contact, if applicable." exportable="false" fkentity="Contact" name="Contact" nullok="true"/>
+
+  <index desc="Index for the query that gets all pending messages for Contacts to send to a Destination." name="PendingContactIdx" trackUsage="true" unique="true">
+    <indexcol keyposition="1" name="DestinationId"/>
+    <indexcol keyposition="2" name="ContactID"/>
+    <indexcol keyposition="3" name="SendOrder"/>
+    <indexcol keyposition="4" name="Status"/>
+    <indexcol keyposition="5" name="CreationTime"/>
+    <indexcol keyposition="6" name="Id"/>
+  </index>
+  <index desc="Index on contact and send order, used for getting the max send order value when creating new messages." name="ContactSendOrder" trackUsage="true">
+    <indexcol keyposition="1" name="ContactID"/>
+    <indexcol keyposition="2" name="SendOrder"/>
+  </index>
+
+  <dbcheckbuilder className="com.guidewire.pl.system.messaging.dbchecks.MessageDBCheckBuilder"/>
+</internalExtension>

@@ -1,0 +1,56 @@
+<?xml version="1.0"?>
+<PCF
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:noNamespaceSchemaLocation="../../../../../pcf.xsd">
+  <Page
+    afterCommit="AccountCollateral.push(account)"
+    beforeCommit="account.Collateral.transferDefaultUnappliedToCollateral( amount )"
+    canEdit="true"
+    id="AccountToCollateralXFerTransaction"
+    parent="AccountGroup(account)"
+    startInEditMode="true"
+    title="displaykey.Web.AccountToCollateralXferTransaction.Title">
+    <LocationEntryPoint
+      signature="AccountToCollateralXferTransaction(account : Account)"/>
+    <Variable
+      name="account"
+      type="Account"/>
+    <Variable
+      name="amount"
+      type="gw.pl.currency.MonetaryAmount"/>
+    <Screen
+      id="AccountToCollateralXferScreen">
+      <Toolbar>
+        <EditButtons
+          editVisible="false"
+          updateLabel="displaykey.Web.AccountToCollateralXferTransaction.Update"/>
+      </Toolbar>
+      <DetailViewPanel
+        id="AccountToCollateralXferDV">
+        <InputColumn>
+          <MonetaryAmountInput
+            currency="account.Currency"
+            formatType="currency"
+            id="amountInAccount"
+            label="displaykey.Web.AccountToCollateralXferTransaction.AmountAvailable"
+            value="account.UnappliedAmount"/>
+          <MonetaryAmountInput
+            currency="account.Currency"
+            editable="true"
+            id="transferAmount"
+            label="displaykey.Web.AccountToCollateralXferTransaction.TransferAmount"
+            required="true"
+            validationExpression="validateTransferAmount()"
+            value="amount"/>
+        </InputColumn>
+      </DetailViewPanel>
+    </Screen>
+    <Code><![CDATA[function validateTransferAmount() : String {
+        if (amount.IsNegative)
+          return displaykey.Web.AccountToCollateralXferTransaction.TransferAmountNegative
+        if (amount > account.UnappliedAmount)
+          return displaykey.Web.AccountToCollateralXferTransaction.TransferAmountMoreThanAvailable
+        return null
+}]]></Code>
+  </Page>
+</PCF>

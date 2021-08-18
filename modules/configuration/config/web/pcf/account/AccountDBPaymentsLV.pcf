@@ -1,0 +1,141 @@
+<?xml version="1.0"?>
+<PCF
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:noNamespaceSchemaLocation="../../../../../pcf.xsd">
+  <ListViewPanel
+    id="AccountDBPaymentsLV">
+    <Require
+      name="account"
+      type="Account"/>
+    <Require
+      name="moneyReceiveds"
+      type="PaymentMoneyReceivedQuery"/>
+    <Variable
+      initialValue="new java.util.HashMap&lt;entity.PaymentMoneyReceived, Boolean&gt;().toAutoMap(\ c -&gt; c.Modified)"
+      name="isMoneyModifiedMap"/>
+    <RowIterator
+      editable="false"
+      elementName="moneyReceived"
+      id="MoneyReceivedIterator"
+      value="moneyReceiveds">
+      <Variable
+        initialValue="moneyReceived.BaseDist as DirectBillPayment"
+        name="payment"
+        type="DirectBillPayment"/>
+      <Row>
+        <ButtonCell
+          available="!moneyReceived.Reversed &amp;&amp; !isMoneyModifiedMap[moneyReceived]"
+          hideIfDisabled="false"
+          id="ActionButton"
+          value="(moneyReceived.Reversed || isMoneyModifiedMap[moneyReceived]) ? displaykey.Web.AccountPaymentsLV.Reversed : displaykey.Web.AccountPaymentsLV.Actions">
+          <MenuItem
+            action="ModifyDirectBillPaymentPopup.push(account, moneyReceived as DirectBillMoneyRcvd, gw.api.web.payment.WhenModifyingDirectBillMoney.DoNotEditDistribution)"
+            available="!(moneyReceived typeis ZeroDollarDMR)"
+            id="ModifyMoney"
+            label="displaykey.Web.AccountPaymentsLV.ModifyMoney"/>
+          <MenuItem
+            action="ModifyDirectBillPaymentPopup.push(account, moneyReceived as DirectBillMoneyRcvd, gw.api.web.payment.WhenModifyingDirectBillMoney.EditDistribution)"
+            id="ModifyDistribution"
+            label="displaykey.Web.AccountPaymentsLV.ModifyDistribution"/>
+          <MenuItem
+            action="DBPaymentReversalConfirmationPopup.push(moneyReceived as DirectBillMoneyRcvd)"
+            available="!moneyReceived.Reversed &amp;&amp; !isMoneyModifiedMap[moneyReceived] &amp;&amp; !(moneyReceived typeis ZeroDollarReversal)"
+            hideIfDisabled="true"
+            id="ReversePayment"
+            label="displaykey.Web.AccountPaymentsLV.ReversePayment"/>
+          <MenuItem
+            action="MoveDirectBillPayment.push(account, moneyReceived as DirectBillMoneyRcvd)"
+            available="!(moneyReceived typeis ZeroDollarDMR)"
+            id="MoveToAccount"
+            label="displaykey.Web.AccountPaymentsLV.MoveToAccount"/>
+          <MenuItem
+            action="MovePaymentToSuspense.push(account, moneyReceived as DirectBillMoneyRcvd)"
+            available="!(moneyReceived typeis ZeroDollarDMR)"
+            id="MoveToSuspense"
+            label="displaykey.Web.AccountPaymentsLV.MoveToSuspense"/>
+          <MenuItem
+            action="DBUndistributePaymentConfirmationPopup.push(payment)"
+            available="payment != null &amp;&amp; payment.DistributedDate != null &amp;&amp; moneyReceived.DistributedDenorm &amp;&amp; !(moneyReceived typeis ZeroDollarDMR)"
+            id="Undistribute"
+            label="displaykey.Web.AccountPaymentsLV.Undistribute"/>
+          <MenuItem
+            action="AccountTransactionDetail.push(account, getMoneyTransactionOnlyWhenGoingToTransactionDetail(moneyReceived))"
+            available="not (moneyReceived.Executed and (moneyReceived typeis ZeroDollarDMR))"
+            hideIfDisabled="true"
+            id="ViewTransaction"
+            label="displaykey.Web.AccountPaymentsLV.Transaction"/>
+        </ButtonCell>
+        <DateCell
+          enableSort="false"
+          id="Date"
+          label="displaykey.Web.AccountPaymentsLV.PaymentDate"
+          value="moneyReceived.ReceivedDate"/>
+        <DateCell
+          enableSort="false"
+          id="Reversed"
+          label="displaykey.Web.AccountPaymentsLV.Reversed"
+          value="moneyReceived.ReversalDate"/>
+        <Cell
+          enableSort="false"
+          id="Method"
+          label="displaykey.Web.AccountPaymentsLV.PaymentInstrument"
+          value="moneyReceived.PaymentInstrument"/>
+        <Cell
+          enableSort="false"
+          id="CheckRef"
+          label="displaykey.Web.AccountPaymentsLV.CheckRef"
+          value="moneyReceived.RefNumber"/>
+        <Cell
+          enableSort="false"
+          fontColor="moneyReceived.Reversed ? (moneyReceived.Modifying  ? &quot;#336&quot; : &quot;#C00&quot;) : null"
+          id="UnappliedFund"
+          label="displaykey.Web.AccountPaymentsLV.UnappliedFund"
+          value="(moneyReceived as DirectBillMoneyRcvd).UnappliedFund"/>
+        <MonetaryAmountCell
+          currency="moneyReceived.Currency"
+          enableSort="false"
+          formatType="currency"
+          id="Amount"
+          label="displaykey.Web.AccountPaymentsLV.Amount"
+          value="moneyReceived.Amount"/>
+        <MonetaryAmountCell
+          currency="moneyReceived.Currency"
+          enableSort="false"
+          formatType="currency"
+          id="amountDistributed"
+          label="displaykey.Web.AccountPaymentsLV.AmountDistributed"
+          value="getAmountDistributed(moneyReceived, payment)"/>
+        <MonetaryAmountCell
+          currency="moneyReceived.Currency"
+          enableSort="false"
+          formatType="currency"
+          id="amountInSuspense"
+          label="displaykey.Web.AccountPaymentsLV.AmountSuspense"
+          value="getSuspenseAmount(moneyReceived, payment)"/>
+        <MonetaryAmountCell
+          currency="moneyReceived.Currency"
+          enableSort="false"
+          formatType="currency"
+          id="amountInCollateral"
+          label="displaykey.Web.AccountPaymentsLV.AmountCollateral"
+          value="getCollateralAmount(moneyReceived, payment)"/>
+      </Row>
+    </RowIterator>
+    <Code><![CDATA[function getAmountDistributed(moneyReceived: entity.PaymentMoneyReceived, payment: entity.DirectBillPayment) : gw.pl.currency.MonetaryAmount {
+  return moneyReceived.DistributedDenorm ? payment.NetDistributedToInvoiceItems : 0bd.ofCurrency(account.Currency)
+}
+
+function getSuspenseAmount(moneyReceived: entity.PaymentMoneyReceived, payment: entity.DirectBillPayment) : gw.pl.currency.MonetaryAmount {
+  return moneyReceived.DistributedDenorm ? payment.SuspDistItemsThatHaveNotBeenReleased.sum(account.Currency, \ b -> b.GrossAmountToApply) : 0bd.ofCurrency(account.Currency)
+}
+
+function getCollateralAmount(moneyReceived: entity.PaymentMoneyReceived, payment: entity.DirectBillPayment) : gw.pl.currency.MonetaryAmount {
+  return moneyReceived.DistributedDenorm ? payment.CollateralPaymentItems.where(\ c -> c.ReversedDate == null).sum(account.Currency, \ b -> b.GrossAmountToApply) : 0bd.ofCurrency(account.Currency)
+}
+
+// For performance reasons as this will only get evaluated when the Transaction action is clicked rather then at page render time
+function getMoneyTransactionOnlyWhenGoingToTransactionDetail(moneyReceived: PaymentMoneyReceived) : Transaction {
+   return moneyReceived.MoneyReceivedTransaction
+}]]></Code>
+  </ListViewPanel>
+</PCF>

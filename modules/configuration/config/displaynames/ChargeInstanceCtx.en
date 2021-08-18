@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Entity name="ChargeInstanceCtx">
+  <Columns>
+      <Column beanPath="ChargeInstanceCtx.SubType" name="SubType" />
+      <DisplayNameColumn beanPath="ChrgePaidFromProdCtx.FromProducer" name="Producer"/>
+      <DisplayNameColumn beanPath="ChrgePaidFromAcctCtx.FromAccount" name="Account"/>      
+  </Columns>
+  <DisplayName>
+     var retString = ""
+     if(ChrgePaidFromProdCtx.isAssignableFrom(Type.forName("entity." + SubType))){
+        return Producer
+      }else if(ChrgePaidFromAcctCtx.isAssignableFrom(Type.forName("entity." + SubType))){
+        return Account
+      }
+      return retString
+  </DisplayName>
+</Entity>

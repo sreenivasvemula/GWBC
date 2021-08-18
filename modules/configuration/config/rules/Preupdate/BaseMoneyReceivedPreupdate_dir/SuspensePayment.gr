@@ -1,0 +1,21 @@
+package rules.Preupdate.BaseMoneyReceivedPreupdate_dir
+
+@gw.rules.RuleName("SuspensePayment")
+internal class SuspensePayment {
+  static function doCondition(baseMoneyReceived : entity.BaseMoneyReceived) : boolean {
+    
+/*start00rule*/
+return baseMoneyReceived typeis PaymentMoneyReceived
+and baseMoneyReceived.SuspensePayment != null
+/*end00rule*/
+
+  }
+
+  static function doAction(baseMoneyReceived : entity.BaseMoneyReceived, actions : gw.rules.Action) {
+
+/*start00rule*/
+
+/*end00rule*/
+
+  }
+}

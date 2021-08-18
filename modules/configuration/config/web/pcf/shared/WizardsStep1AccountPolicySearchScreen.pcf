@@ -1,0 +1,126 @@
+<?xml version="1.0"?>
+<PCF
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:noNamespaceSchemaLocation="../../../../../pcf.xsd">
+  <Screen
+    id="WizardsStep1AccountPolicySearchScreen">
+    <Require
+      name="targetOfWriteoff"
+      type="web.accounting.TAccountOwnerReference"/>
+    <!-- possibleTAccountType can be entity.PolicyPeriod, entity.Account, or null (null means either one) -->
+    <Require
+      name="possibleSourceType"
+      type="TAccountOwnerType"/>
+    <Require
+      name="showProducerAsSource"
+      type="boolean"/>
+    <Require
+      name="showPolicyAsSource"
+      type="boolean"/>
+    <Variable
+      initialValue="possibleSourceType"
+      name="sourceType"
+      type="TAccountOwnerType"/>
+    <Toolbar>
+      <WizardButtons/>
+    </Toolbar>
+    <DetailViewPanel
+      id="SelectIfAccountOrPolicyDV">
+      <InputColumn>
+        <RangeRadioInput
+          boldLabel="true"
+          editable="true"
+          id="SourceType"
+          label="displaykey.Web.WizardStep1AccountPolicySearchScreen.TypeOfSource"
+          required="true"
+          stacked="true"
+          value="sourceType"
+          valueRange="getAvailableSourceTypes()"
+          visible="possibleSourceType==null">
+          <PostOnChange/>
+        </RangeRadioInput>
+      </InputColumn>
+    </DetailViewPanel>
+    <CardViewPanel>
+      <Card
+        id="Account"
+        title="displaykey.Web.WizardStep1AccountPolicySearchScreen.AccountCard"
+        visible="sourceType == TAccountOwnerType.TC_ACCOUNT">
+        <SearchPanel
+          criteriaName="searchCriteria"
+          resultsName="accountSearchViews"
+          search="gw.search.SearchMethods.validateAndSearch(searchCriteria, StringCriterionMode.TC_STARTSWITH)"
+          searchCriteria="new gw.search.AccountSearchCriteria()"
+          searchResultsType="AccountSearchViewQuery">
+          <PanelRef
+            def="AccountSearchDV(searchCriteria)">
+            <Toolbar/>
+          </PanelRef>
+          <!-- isWizard = true: we're within a wizard flow
+               showHyperlinks = false: don't show the account numbers as links -->
+          <PanelRef
+            def="AccountSearchResultsLV(accountSearchViews, targetOfWriteoff, true, false, false)">
+            <Toolbar/>
+          </PanelRef>
+        </SearchPanel>
+      </Card>
+      <Card
+        id="PolicyPeriod"
+        title="displaykey.Web.WizardStep1AccountPolicySearchScreen.PolicyCard"
+        visible="sourceType == TAccountOwnerType.TC_POLICYPERIOD">
+        <SearchPanel
+          criteriaName="searchCriteria"
+          resultsName="policySearchViews"
+          search="gw.search.SearchMethods.validateAndSearch(searchCriteria, StringCriterionMode.TC_STARTSWITH)"
+          searchCriteria="new gw.search.PolicySearchCriteria()"
+          searchResultsType="PolicySearchViewQuery">
+          <PanelRef
+            def="PolicySearchDV(searchCriteria)">
+            <Toolbar/>
+          </PanelRef>
+          <!-- isWizard = true: we're within a wizard flow
+               showHyperlinks = false: don't show the policy numbers as links -->
+          <PanelRef
+            def="PolicySearchResultsLV(policySearchViews, targetOfWriteoff, true, false, false)">
+            <Toolbar/>
+          </PanelRef>
+        </SearchPanel>
+      </Card>
+      <Card
+        id="Producer"
+        title="displaykey.Web.WizardStep1AccountPolicySearchScreen.Producer"
+        visible="sourceType == TAccountOwnerType.TC_PRODUCER">
+        <!-- Regarding SearchMethods.validateAndSearch: The 2nd parameter controls whether to clear the bundle before
+         querying. The 3rd parameter controls the search mode of all associated contact fields. -->
+        <SearchPanel
+          criteriaName="searchCriteria"
+          resultsName="producerSearchViews"
+          search="gw.search.SearchMethods.validateAndSearch(searchCriteria, StringCriterionMode.TC_STARTSWITH)"
+          searchCriteria="new gw.search.ProducerSearchCriteria()"
+          searchResultsType="ProducerSearchViewQuery">
+          <PanelRef
+            def="ProducerSearchDV(searchCriteria)">
+            <Toolbar/>
+          </PanelRef>
+          <!-- isWizard = true: we're within a wizard flow
+               showHyperlinks = false: don't show the policy numbers as links -->
+          <PanelRef
+            def="ProducerSearchResultsLV(producerSearchViews, targetOfWriteoff, true, false, false)">
+            <Toolbar/>
+          </PanelRef>
+        </SearchPanel>
+      </Card>
+    </CardViewPanel>
+    <Code><![CDATA[function getAvailableSourceTypes() : List<TAccountOwnerType> {
+  var sourceValues : List<TAccountOwnerType> = com.google.common.collect.Lists.newArrayList<TAccountOwnerType>()
+  sourceValues.add(TAccountOwnerType.TC_ACCOUNT)
+  if(showPolicyAsSource){
+    sourceValues.add(TAccountOwnerType.TC_POLICYPERIOD)
+  }
+  if(showProducerAsSource){
+    sourceValues.add(TAccountOwnerType.TC_PRODUCER)
+  }
+  return sourceValues
+}]]></Code>
+  </Screen>
+</PCF>

@@ -1,0 +1,38 @@
+<?xml version="1.0"?>
+<PCF
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:noNamespaceSchemaLocation="../../../../../pcf.xsd">
+  <Wizard
+    afterCancel="Producers.go()"
+    afterFinish="ProducerDetail.go(producer)"
+    canEdit="true"
+    canVisit="true"
+    id="NewProducerWizard"
+    parent="Producers()"
+    showUpLink="true"
+    title="displaykey.Web.NewProducer.Title">
+    <LocationEntryPoint
+      signature="NewProducerWizard(currency : Currency)"/>
+    <Variable
+      initialValue="createNewProducer()"
+      name="producer"
+      type="Producer"/>
+    <Variable
+      name="currency"
+      type="Currency"/>
+    <WizardStep
+      id="BasicsStep"
+      label="displaykey.Web.NewProducerWizard.Basics.Label"
+      screen="NewProducerWizardBasicStepScreen(producer)"
+      title="displaykey.Web.NewProducerWizard.Basics.Title"/>
+    <WizardStep
+      allowFinish="true"
+      id="CodesStep"
+      label="displaykey.Web.NewProducerWizard.Codes.Label"
+      screen="NewProducerWizardCodeStepScreen(producer)"
+      title="displaykey.Web.NewProducerWizard.Codes.Title"/>
+    <Code><![CDATA[function createNewProducer() : Producer {
+  return new Producer(currency, CurrentLocation)
+}]]></Code>
+  </Wizard>
+</PCF>

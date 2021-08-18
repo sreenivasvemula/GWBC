@@ -1,0 +1,34 @@
+<?xml version="1.0"?>
+<PCF
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:noNamespaceSchemaLocation="../../../../../pcf.xsd">
+  <Screen
+    id="CollateralManualDrawdownConfirmScreen">
+    <Require
+      name="collateralDrawdown"
+      type="gw.api.web.collateral.CollateralDrawdownUtil"/>
+    <Toolbar>
+      <WizardButtons/>
+    </Toolbar>
+    <DetailViewPanel
+      id="CollateralManualDrawdownConfirmDV">
+      <InputColumn>
+        <Label
+          label="displaykey.Web.CollateralManualDrawdownConfirmScreen.Execute"/>
+        <MonetaryAmountInput
+          currency="collateralDrawdown.Collateral.Currency"
+          formatType="currency"
+          id="drawdownAmount"
+          label="displaykey.Web.CollateralManualDrawdownConfirmScreen.Amount"
+          value="collateralDrawdown.Amount"/>
+        <MonetaryAmountInput
+          currency="collateralDrawdown.Collateral.Currency"
+          formatType="currency"
+          id="chargeAmount"
+          label="displaykey.Web.CollateralManualDrawdownConfirmScreen.ChargeAmount"
+          value="collateralDrawdown.ChargeAmount"
+          visible="collateralDrawdown.CreateCharge"/>
+      </InputColumn>
+    </DetailViewPanel>
+  </Screen>
+</PCF>

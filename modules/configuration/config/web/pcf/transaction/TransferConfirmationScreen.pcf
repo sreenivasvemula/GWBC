@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<PCF
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:noNamespaceSchemaLocation="../../../../../pcf.xsd">
+  <Screen
+    editable="false"
+    id="TransferConfirmationScreen">
+    <Require
+      name="fundsTransferUtil"
+      type="gw.api.web.transaction.FundsTransferUtil"/>
+    <Toolbar>
+      <WizardButtons/>
+    </Toolbar>
+    <AlertBar
+      id="ApprovalActivityAlertBar"
+      label="displaykey.Web.TransferConfirmationScreen.ApprovalActivityAlertBar"
+      visible="fundsTransferUtil.ApprovalActivitiesRequired"/>
+    <PanelRef
+      def="TransferDetailsDV(fundsTransferUtil, false)"/>
+  </Screen>
+</PCF>

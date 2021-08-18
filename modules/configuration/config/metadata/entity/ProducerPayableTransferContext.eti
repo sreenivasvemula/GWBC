@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?><subtype xmlns="http://guidewire.com/datamodel" desc="Context for ProducerPayableTransfer transaction" entity="ProducerPayableTransferContext" subpackage="accounting.transaction" supertype="ProducerContext">
+  <foreignkey columnName="CreditsPayableOfID" desc="The producer whose cash t-account we will be crediting." fkentity="Producer" getterScriptability="hidden" ignoreforevents="true" name="CreditsPayableOf" nullok="false" setterScriptability="hidden"/>
+  <foreignkey columnName="ProducerPayableXferID" desc="The ProducerPayableTransfer funds entity that wraps the transaction associated with this context."
+    fkentity="ProducerPayableTransfer" getterScriptability="hidden" ignoreforevents="true" name="ProducerPayableTransfer" nullok="false" setterScriptability="hidden"/>
+  <foreignkey columnName="PayableReceiverStatementID" desc="Producer statement of producer being credited on which this transaction appears, or null if this transaction has not yet been connected up to a statement." fkentity="ProducerStatement" getterScriptability="hidden" ignoreforevents="true" name="PayableReceiverStatement" nullok="true" setterScriptability="hidden"/>
+</subtype>

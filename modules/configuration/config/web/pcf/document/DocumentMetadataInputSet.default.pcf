@@ -1,0 +1,74 @@
+<?xml version="1.0"?>
+<PCF
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:noNamespaceSchemaLocation="../../../../../pcf.xsd">
+  <!-- Input Set that allows users to edit the metadata properties of a Document (like its name, description, etc) -->
+  <InputSet
+          id="DocumentMetadataInputSet"
+    mode="default">
+    <Require
+      name="document"
+      type="Document"/>
+    <Require
+      name="fromTemplate"
+      type="boolean"/>
+    <Input
+      editable="true"
+      id="DocumentName"
+      label="displaykey.Web.DocumentMetadataInputSet.DocumentName"
+      required="true"
+      value="document.Name"/>
+    <Input
+      editable="true"
+      id="Description"
+      label="displaykey.Web.DocumentMetadataInputSet.Description"
+      value="document.Description"/>
+    <RangeInput
+      editable="not fromTemplate"
+      id="MimeType"
+      label="displaykey.Web.DocumentMetadataInputSet.MimeType"
+      optionLabel="gw.document.DocumentsUtilBase.getMimeTypeDescription(VALUE)"
+      required="true"
+      value="document.MimeType"
+      valueRange="gw.document.DocumentsUtilBase.getMimeTypes()"/>
+    <RangeInput
+      editable="document.Language == null or not fromTemplate"
+      id="Language"
+      label="displaykey.Web.DocumentMetadataInputSet.Language"
+      value="document.Language"
+      valueRange="LanguageType.getTypeKeys( false )"
+      visible="LanguageType.getTypeKeys( false ).Count &gt; 1"/>
+    <InputDivider/>
+    <Input
+      editable="true"
+      id="Author"
+      label="displaykey.Web.DocumentMetadataInputSet.Author"
+      value="document.Author"/>
+    <Input
+      editable="true"
+      id="Recipient"
+      label="displaykey.Web.DocumentMetadataInputSet.Recipient"
+      value="document.Recipient"/>
+    <InputDivider/>
+    <TypeKeyInput
+      editable="true"
+      id="Status"
+      label="displaykey.Web.DocumentMetadataInputSet.Status"
+      required="true"
+      value="document.Status"/>
+    <TypeKeyInput
+      editable="true"
+      id="SecurityType"
+      label="displaykey.Web.DocumentMetadataInputSet.SecurityType"
+      required="true"
+      value="document.SecurityType">
+      <PostOnChange/>
+    </TypeKeyInput>
+    <TypeKeyInput
+      editable="true"
+      id="Type"
+      label="displaykey.Web.DocumentMetadataInputSet.Type"
+      required="true"
+      value="document.Type"/>
+  </InputSet>
+</PCF>

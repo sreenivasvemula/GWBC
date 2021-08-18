@@ -1,0 +1,31 @@
+<?xml version="1.0"?>
+<PCF
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:noNamespaceSchemaLocation="../../../../../../pcf.xsd">
+  <Page
+    afterCancel="Groups.go()"
+    afterCommit="GroupDetailPage.go(Group)"
+    canEdit="true"
+    canVisit="perm.Group.create and perm.System.useradmin"
+    id="NewGroup"
+    parent="Admin()"
+    startInEditMode="true"
+    title="displaykey.Web.Admin.NewGroup">
+    <LocationEntryPoint
+      signature="NewGroup()"/>
+    <Variable
+      initialValue="gw.api.web.admin.BCGroupUtil.createGroup()"
+      name="Group"
+      type="Group"/>
+    <Screen
+      id="NewGroupDetailScreen">
+      <Toolbar>
+        <EditButtons/>
+      </Toolbar>
+      <PanelRef
+        def="GroupDetailDV(Group)"/>
+      <PanelRef
+        def="LocalizedValuesDV(Group, { &quot;Name&quot; }, { (gw.api.util.LocaleUtil.CurrentLocaleType == LocaleType.TC_JA_JP) ? displaykey.Web.Admin.GroupDetail.BasicDV.NamePhonetic : displaykey.Web.Admin.GroupDetail.BasicDV.Name })"/>
+    </Screen>
+  </Page>
+</PCF>

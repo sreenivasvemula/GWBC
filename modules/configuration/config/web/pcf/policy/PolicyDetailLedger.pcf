@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PCF
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:noNamespaceSchemaLocation="../../../../../pcf.xsd">
+  <Page
+    canVisit="perm.System.plcytabview and perm.System.plcyledgerview"
+    id="PolicyDetailLedger"
+    showUpLink="true"
+    title="displaykey.Web.PolicyDetailLedger.Title">
+    <LocationEntryPoint
+      signature="PolicyDetailLedger(plcyPeriod: PolicyPeriod)"/>
+    <Variable
+      name="plcyPeriod"
+      type="PolicyPeriod"/>
+    <ScreenRef
+      def="LedgerScreen(plcyPeriod, gw.api.web.policy.PolicyPeriodUtil.findAllPolicyCommissionsWithChargeDetails(plcyPeriod))"/>
+  </Page>
+</PCF>

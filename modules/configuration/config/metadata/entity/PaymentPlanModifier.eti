@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?><entity xmlns="http://guidewire.com/datamodel" abstract="true" desc="A PaymentPlanModifier modifies a provided payment plan.          PaymentPlanModifier itself is abstract and serves as the superclass of other PaymentPlanModifier subclasses.         A subclass of PaymentPlanModifier does not need to have any methods -- it will automatically delegate the         implementation of PaymentPlanModifer methods to its custom subclass of PaymentPlanModifierMethodsImpl.         That custom subclass is specified in the subtype's .eti file with the implementsInterface element." entity="PaymentPlanModifier" exportable="true" final="false" subpackage="invoice" table="paymentplanmodifier" type="retireable">
+  <!-- Subtype .eti files should also specify implementsInterface, with the same iface but with impl as a custom
+  subclass of PaymentPlanModifierMethodsImpl -->
+  <implementsInterface iface="gw.api.domain.invoice.PaymentPlanModifierMethods" impl="gw.api.domain.invoice.PaymentPlanModifierMethodsImpl"/>
+  <implementsEntity name="NotInCurrencySilo"/>
+  <foreignkey columnName="PolicyBillingInstructionID" desc="The policy billing instruction which uses this modifier.  Null if the modifier is not used by a           billing instruction." fkentity="PlcyBillingInstruction" getterScriptability="all" name="policyBillingInstruction" nullok="true" setterScriptability="hidden"/>
+  <column desc="The order in which the modifier's billing instruction applies this modifier when the billing           instruction has multiple modifers. Null if the modifier is not used by a billing instruction." getterScriptability="hidden" name="ApplicationOrder" nullok="true" setterScriptability="hidden" type="integer"/>
+</entity>

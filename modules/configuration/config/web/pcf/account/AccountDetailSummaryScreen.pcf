@@ -1,0 +1,255 @@
+<?xml version="1.0"?>
+<PCF
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:noNamespaceSchemaLocation="../../../../../pcf.xsd">
+  <Screen
+    id="AccountDetailSummaryScreen">
+    <Require
+      name="account"
+      type="Account"/>
+    <Variable
+      initialValue="new web.account.AccountBalancesView(account)"
+      name="accountBalances"/>
+    <Variable
+      initialValue="util.DateUtil.currentDate()"
+      name="today"/>
+    <Variable
+      initialValue="account.hasHeldCharges()"
+      name="hasHeldCharges"/>
+    <Variable
+      initialValue="account.TotalValue"
+      name="totalValue"/>
+    <Toolbar>
+      <ToolbarButton
+        action="CurrentLocation.startEditing(); account.close(); CurrentLocation.commit();"
+        available="account.canClose() and perm.Account.close and !CurrentLocation.InEditMode"
+        id="CloseAccountButton"
+        label="displaykey.Web.AccountDetailSummary.CloseAccount"
+        visible="not account.Closed"/>
+      <ToolbarButton
+        action="StartDelinquencyProcessPopup.push(account.OpenDelinquencyTargets)"
+        available="!CurrentLocation.InEditMode"
+        id="StartDelinquencyButton"
+        label="displaykey.Web.StartDelinquencyProcess.StartDelinquency"/>
+      <EditButtons/>
+    </Toolbar>
+    <AlertBar
+      action="TroubleTicketAlertForward.push(account)"
+      available="perm.System.acctttktview"
+      id="AccountDetailSummary_TroubleTicketAlertAlertBar"
+      label="account.AlertBarDisplayText"
+      visible="account.HasActiveTroubleTickets"/>
+    <AlertBar
+      action="AccountDetailDelinquencies.go(account)"
+      available="perm.System.acctdelview"
+      id="AccountDetailSummary_DelinquencyAlertAlertBar"
+      label="displaykey.Web.AccountDetailSummary.DelinquencyAlert(account.getDelinquencyReasons())"
+      visible="account.hasActiveDelinquenciesOutOfGracePeriod()"/>
+    <AlertBar
+      id="AccountDetailSummary_WriteoffAlertAlertBar"
+      label="displaykey.Web.AccountDetailSummary.WriteoffAlert"
+      visible="account.WriteoffExpense.IsPositive &amp;&amp; account.WriteoffExpense &gt; (0.1 * account.TotalValue)"/>
+    <AlertBar
+      action="AccountDetailCharges.go(account)"
+      available="perm.System.acctchargesview"
+      id="AccountDetailSummary_HeldChargesAlertBar"
+      label="displaykey.Web.AccountDetailSummary.AlertBarChargesHeldText"
+      visible="hasHeldCharges"/>
+    <PanelRef
+      def="AccountDetailDV(account, accountBalances)"/>
+    <PanelRef>
+      <TitleBar
+        title="displaykey.Web.AccountDetailSummary.OpenPolicyStatus"/>
+      <Toolbar/>
+      <ListViewPanel
+        id="AccountPoliciesLV">
+        <Variable
+          initialValue="accountBalances.PoliciesAdjustedUnbilledAmount"
+          name="sumAdjUnbilledAmount"
+          recalculateOnRefresh="true"/>
+        <Variable
+          initialValue="accountBalances.PoliciesAdjustedBilledAmount"
+          name="sumAdjBilledAmount"
+          recalculateOnRefresh="true"/>
+        <Variable
+          initialValue="accountBalances.PoliciesAdjustedOutstandingAmount"
+          name="sumAdjOutstandingAmount"
+          recalculateOnRefresh="true"/>
+        <Variable
+          initialValue="account.PoliciesDelinquentAmount"
+          name="sumPastDueAmount"
+          recalculateOnRefresh="true"/>
+        <Variable
+          initialValue="account.PoliciesPaidAmount"
+          name="sumPaidAmount"
+          recalculateOnRefresh="true"/>
+        <Variable
+          initialValue="account.PoliciesTotalValue"
+          name="sumTotalValue"
+          recalculateOnRefresh="true"/>
+        <RowIterator
+          editable="false"
+          elementName="policyPeriod"
+          value="getPolicyPeriodsForLV()">
+          <Variable
+            initialValue="new web.policy.PolicyPeriodBalancesView(policyPeriod)"
+            name="policyPeriodBalances"/>
+          <Variable
+            initialValue="policyPeriodBalances.AdjustedUnbilledAmount"
+            name="unbilledAmount"/>
+          <Variable
+            initialValue="policyPeriodBalances.AdjustedBilledAmount"
+            name="billedAmount"/>
+          <Variable
+            initialValue="policyPeriodBalances.AdjustedOutstandingAmount"
+            name="outstandingAmount"/>
+          <Row>
+            <Cell
+              action="PolicyDetailSummary.go(policyPeriod)"
+              id="PolicyNumber"
+              label="displaykey.Web.AccountDetailSummary.PolicyNumber"
+              sortBy="policyPeriod.PolicyNumber"
+              value="policyPeriod.DisplayName"/>
+            <TypeKeyCell
+              action="PolicyDetailSummary.go(policyPeriod)"
+              id="Product"
+              label="displaykey.Web.AccountDetailSummary.Product"
+              value="policyPeriod.Policy.LOBCode"/>
+            <Cell
+              fontColor="policyPeriod.Delinquent ? &quot;Red&quot; : &quot;&quot;"
+              id="PolicyStatus"
+              label="displaykey.Web.AccountDetailSummary.PolicyStatus"
+              value="getPolicyDelinquencyStatusDescription(policyPeriod)"/>
+            <DateCell
+              id="PolicyPerEffDate"
+              label="displaykey.Web.AccountDetailSummary.PolicyPerEffDate"
+              value="policyPeriod.PolicyPerEffDate"/>
+            <DateCell
+              id="PolicyPerExpirDate"
+              label="displaykey.Web.AccountDetailSummary.PolicyPerExpirDate"
+              value="policyPeriod.PolicyPerExpirDate"/>
+            <MonetaryAmountCell
+              currency="account.Currency"
+              formatType="currency"
+              id="UnbilledAmount"
+              label="displaykey.Web.AccountDetailSummary.UnbilledAmount"
+              value="unbilledAmount"/>
+            <MonetaryAmountCell
+              currency="account.Currency"
+              formatType="currency"
+              id="CurrentAmountDue"
+              label="displaykey.Web.AccountDetailSummary.CurrentAmount"
+              value="billedAmount"/>
+            <MonetaryAmountCell
+              currency="account.Currency"
+              formatType="currency"
+              id="PastDueAmount"
+              label="displaykey.Web.AccountDetailSummary.PastDueAmount"
+              value="getDelinquentAmount(policyPeriod)"/>
+            <MonetaryAmountCell
+              currency="account.Currency"
+              formatType="currency"
+              id="TotalOutstanding"
+              label="displaykey.Web.AccountDetailSummary.TotalOutstanding"
+              value="outstandingAmount"/>
+            <MonetaryAmountCell
+              currency="account.Currency"
+              formatType="currency"
+              id="PaidAmount"
+              label="displaykey.Web.AccountDetailSummary.PaidAmount"
+              value="getPaidAmount(policyPeriod)"/>
+            <MonetaryAmountCell
+              currency="account.Currency"
+              formatType="currency"
+              id="TotalValue"
+              label="displaykey.Web.AccountDetailSummary.TotalValue"
+              value="getTotalValue(policyPeriod)"/>
+          </Row>
+        </RowIterator>
+        <Row>
+          <Cell
+            bold="true"
+            id="TotalLabel"
+            value="displaykey.Web.AccountDetailSummary.Total"/>
+          <Cell
+            id="Product_Unused"/>
+          <Cell
+            id="PolicyStatus_Unused"/>
+          <Cell
+            id="PolicyPerEffDate_Unused"/>
+          <Cell
+            id="PolicyPerExpirDate_Unused"/>
+          <MonetaryAmountCell
+            bold="true"
+            currency="account.Currency"
+            formatType="currency"
+            id="TotalUnbilledAmount"
+            value="sumAdjUnbilledAmount"/>
+          <MonetaryAmountCell
+            bold="true"
+            currency="account.Currency"
+            formatType="currency"
+            id="TotalCurrentAmountDue"
+            value="sumAdjBilledAmount"/>
+          <MonetaryAmountCell
+            bold="true"
+            currency="account.Currency"
+            formatType="currency"
+            id="TotalPastDueAmount"
+            value="sumPastDueAmount"/>
+          <MonetaryAmountCell
+            bold="true"
+            currency="account.Currency"
+            formatType="currency"
+            id="TotalTotalOutstanding"
+            value="sumAdjOutstandingAmount"/>
+          <MonetaryAmountCell
+            bold="true"
+            currency="account.Currency"
+            formatType="currency"
+            id="TotalPaidAmount"
+            value="sumPaidAmount"/>
+          <MonetaryAmountCell
+            bold="true"
+            currency="account.Currency"
+            formatType="currency"
+            id="TotalTotalValue"
+            value="sumTotalValue"/>
+        </Row>
+      </ListViewPanel>
+    </PanelRef>
+    <PanelRef
+      def="AccountDBPaymentsLV(account, account.findReceivedPaymentMoneysSortedByReceivedDateDescending())">
+      <TitleBar
+        title="displaykey.Web.AccountDetailSummary.RecentPayments"/>
+      <Toolbar/>
+    </PanelRef>
+    <Code><![CDATA[function getPolicyDelinquencyStatusDescription(policyPeriod : PolicyPeriod) : String {
+   return policyPeriod.Delinquent ? displaykey.Web.AccountPoliciesLV.PastDue : displaykey.Web.AccountPoliciesLV.GoodStanding
+}
+
+function getPolicyPeriodsPayedByListBillAccount(): gw.api.database.IQueryBeanResult<PolicyPeriod>{
+   return gw.api.web.account.Policies.findAllOpenPolicyPeriodsWhereAccountIsOverridingPayer(account, null) 
+}
+
+function getAllOpenPolicyPeriods() : gw.api.database.IQueryBeanResult<PolicyPeriod>{
+   return gw.api.web.account.Policies.findAllOpenPolicyPeriods(account)
+}
+
+function getPolicyPeriodsForLV() : gw.api.database.IQueryBeanResult<PolicyPeriod> {
+   return account.ListBill ? getPolicyPeriodsPayedByListBillAccount()  : getAllOpenPolicyPeriods() 
+}
+
+function getTotalValue(policyPeriod: PolicyPeriod): gw.pl.currency.MonetaryAmount {
+  return policyPeriod.TotalValue
+}
+
+function getPaidAmount(policyPeriod: PolicyPeriod): gw.pl.currency.MonetaryAmount {
+  return policyPeriod.PaidAmount
+}
+
+function getDelinquentAmount(policyPeriod: PolicyPeriod): gw.pl.currency.MonetaryAmount {
+  return policyPeriod.DelinquentAmount
+}]]></Code>
+  </Screen>
+</PCF>

@@ -1,0 +1,29 @@
+<?xml version="1.0"?>
+<Workflow locale="gw.api.util.LocaleUtil.getDefaultLocale()" subtype="CancelImmediately" version="1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="workflow.xsd">
+  <Context>
+    <Symbol name="dlnqProcess" type="DelinquencyProcess" value="Workflow.DelinquencyProcess"/>
+    <Symbol name="acct" type="Account" value="Workflow.DelinquencyProcess.Account"/>
+  </Context>
+  <Start firstStep="RequestCancellation"/>
+  <AutoStep id="RequestCancellation" layoutid="1235008061">
+    <Enter>// call out inception and generate history events
+dlnqProcess.onInception()
+dlnqProcess.cancelTarget()
+dlnqProcess.flagEventCompleted(typekey.DelinquencyEventName.TC_CANCELLATION)
+</Enter>
+    <Go desc="" id="Done" layoutid="32494549" nextStep="Done"/>
+  </AutoStep>
+  <Outcome id="Done" layoutid="16814883"/>
+  <Layout>
+    <BoxUI height="4" layoutid="1235008061" width="13" x="-5" y="0"/>
+    <ArrowUI layoutid="25419276">
+      <PointUI x="20" y="8"/>
+      <PointUI x="8" y="2"/>
+    </ArrowUI>
+    <BoxUI height="4" layoutid="16814883" width="10" x="-4" y="12"/>
+    <ArrowUI layoutid="32494549" visible="true">
+      <PointUI x="1" y="4"/>
+      <PointUI x="1" y="12"/>
+    </ArrowUI>
+  </Layout>
+</Workflow>

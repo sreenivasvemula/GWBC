@@ -1,0 +1,121 @@
+<?xml version="1.0"?>
+<PCF
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:noNamespaceSchemaLocation="../../../../../pcf.xsd">
+  <DetailViewPanel
+    id="DisbursementDetailDV">
+    <Require
+      name="disbursement"
+      type="Disbursement"/>
+    <Variable
+      initialValue="perm.Transaction.disbpayeeedit"
+      name="canEditDisbursementPayee"
+      type="Boolean"/>
+    <Variable
+      initialValue="disbursement.isEditable()"
+      name="isEditable"
+      type="Boolean"/>
+    <InputColumn>
+      <Label
+        label="displaykey.Web.DisbursementDetail.Details"/>
+      <Input
+        id="requestedBy"
+        label="displaykey.Web.DisbursementDetail.RequestedBy"
+        value="disbursement.CreateUser"
+        visible="disbursement.Reason != &quot;Automatic&quot;"/>
+      <DateInput
+        id="CreateTime"
+        label="displaykey.Web.DisbursementDetail.CreateTime"
+        value="disbursement.CreateTime"/>
+      <Input
+        id="age"
+        label="displaykey.Web.DisbursementDetail.Age"
+        value="disbursement.Age"/>
+      <TypeKeyInput
+        id="status"
+        label="displaykey.Web.DisbursementDetail.Status"
+        value="disbursement.Status"/>
+      <TypeKeyInput
+        id="reason"
+        label="displaykey.Web.DisbursementDetail.Reason"
+        value="disbursement.Reason"/>
+      <MonetaryAmountInput
+        currency="disbursement.Currency"
+        id="amount"
+        label="displaykey.Web.DisbursementDetail.Amount"
+        value="disbursement.Amount"/>
+      <TypeKeyInput
+        id="VoidReason"
+        label="displaykey.Web.DisbursementDetail.VoidReason"
+        value="disbursement.VoidReason"
+        visible="disbursement.VoidReason != null"/>
+      <Label
+        label="displaykey.Web.DisbursementDetail.AccountInfo"/>
+      <Input
+        action="AccountDetailSummary.push((disbursement as AccountDisbursement).Account)"
+        available="disbursement typeis AccountDisbursement"
+        id="accountNumber"
+        label="displaykey.Web.DisbursementDetail.AccountNumber"
+        value="disbursement typeis AccountDisbursement ? disbursement.Account.AccountNumber : null"/>
+      <Input
+        id="insured"
+        label="displaykey.Web.DisbursementDetail.Insured"
+        value="disbursement typeis AccountDisbursement ? disbursement.Account.AccountNameLocalized : null"/>
+    </InputColumn>
+    <InputColumn>
+      <Label
+        label="displaykey.Web.DisbursementDetail.Options"/>
+      <Input
+        id="refNumber"
+        label="displaykey.Web.DisbursementDetail.RefNumber"
+        value="disbursement.OutgoingPayment.RefNumber"
+        visible="disbursement.Status == &quot;Sent&quot;"/>
+      <DateInput
+        editable="isEditable"
+        id="dueDate"
+        label="displaykey.Web.DisbursementDetail.DueDate"
+        validationExpression="util.DateUtil.verifyDateOnOrAfterToday(disbursement.DueDate)? null : displaykey.Web.DisbursementDetail.DueDateInPast"
+        value="disbursement.DueDate"
+        visible="disbursement.Status != &quot;Rejected&quot;">
+        <PostOnChange
+          target="DATA_ONLY"/>
+      </DateInput>
+      <Input
+        editable="isEditable and canEditDisbursementPayee"
+        id="payTo"
+        label="displaykey.Web.DisbursementDetail.PayTo"
+        required="true"
+        value="disbursement.PayTo">
+        <PostOnChange/>
+      </Input>
+      <Input
+        editable="isEditable and canEditDisbursementPayee"
+        id="mailTo"
+        label="displaykey.Web.DisbursementDetail.MailTo"
+        required="true"
+        value="disbursement.MailTo">
+        <PostOnChange/>
+      </Input>
+      <TextAreaInput
+        editable="isEditable and canEditDisbursementPayee"
+        id="mailToAddress"
+        label="displaykey.Web.CreateDisbursementDetailScreen.MailToAddress"
+        numRows="4"
+        required="true"
+        value="disbursement.Address">
+        <PostOnChange/>
+      </TextAreaInput>
+      <Input
+        editable="isEditable and canEditDisbursementPayee"
+        id="memo"
+        label="displaykey.Web.DisbursementDetail.Memo"
+        value="disbursement.Memo"/>
+      <Input
+        editable="true"
+        id="internalComment"
+        label="displaykey.Web.DisbursementDetail.InternalComment"
+        value="disbursement.InternalComment"/>
+    </InputColumn>
+    <InputColumn/>
+  </DetailViewPanel>
+</PCF>

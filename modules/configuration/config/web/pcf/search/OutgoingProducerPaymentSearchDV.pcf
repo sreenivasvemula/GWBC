@@ -1,0 +1,103 @@
+<?xml version="1.0"?>
+<PCF
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:noNamespaceSchemaLocation="../../../../../pcf.xsd">
+  <DetailViewPanel
+    id="OutgoingProducerPaymentSearchDV">
+    <Require
+      name="searchCriteria"
+      type="OutgoingProducerPmntSearchCriteria"/>
+    <InputColumn>
+      <Label
+        id="SearchCriteria"
+        label="displaykey.Web.OutgoingProducerPaymentSearchDV.SearchCriteria"/>
+      <RangeInput
+        editable="true"
+        id="StatusCriterion"
+        label="displaykey.Web.OutgoingProducerPaymentSearchDV.Status"
+        value="searchCriteria.Status"
+        valueRange="getStatusRange()"/>
+      <DateInput
+        editable="true"
+        id="EarliestIssueDateCriterion"
+        label="displaykey.Web.OutgoingProducerPaymentSearchDV.EarliestIssueDate"
+        value="searchCriteria.EarliestIssueDate"/>
+      <DateInput
+        editable="true"
+        id="LatestIssueDateCriterion"
+        label="displaykey.Web.OutgoingProducerPaymentSearchDV.LatestIssueDate"
+        value="searchCriteria.LatestIssueDate"/>
+      <Input
+        editable="true"
+        id="CheckNumberCriterion"
+        label="displaykey.Web.OutgoingProducerPaymentSearchDV.CheckNumber"
+        value="searchCriteria.CheckNumber"/>
+      <TypeKeyInput
+        editable="true"
+        id="CurrencyCriterion"
+        label="displaykey.Web.ProducerSearchDV.Currency"
+        value="searchCriteria.Currency"
+        visible="gw.api.util.CurrencyUtil.isMultiCurrencyMode()">
+        <PostOnChange
+          onChange="blankMinimumAndMaximumFields()"/>
+      </TypeKeyInput>
+      <MonetaryAmountInput
+        available="(searchCriteria.Currency != null or gw.api.util.CurrencyUtil.isSingleCurrencyMode())"
+        currency="gw.search.SearchHelper.getDefaultCurrencyIfNull(searchCriteria.Currency)"
+        editable="true"
+        id="MinAmountCriterion"
+        label="displaykey.Web.OutgoingProducerPaymentSearchDV.MinAmount"
+        value="searchCriteria.MinAmount"/>
+      <MonetaryAmountInput
+        available="(searchCriteria.Currency != null or gw.api.util.CurrencyUtil.isSingleCurrencyMode())"
+        currency="gw.search.SearchHelper.getDefaultCurrencyIfNull(searchCriteria.Currency)"
+        editable="true"
+        id="MaxAmountCriterion"
+        label="displaykey.Web.OutgoingProducerPaymentSearchDV.MaxAmount"
+        value="searchCriteria.MaxAmount"/>
+      <PickerInput
+        conversionExpression="PickedValue.Name"
+        editable="true"
+        id="PayeeCriterion"
+        label="displaykey.Web.OutgoingProducerPaymentSearchDV.Payee"
+        pickLocation="ProducerSearchPopup.push()"
+        value="searchCriteria.Payee"/>
+      <RangeInput
+        editable="true"
+        id="MethodCriterion"
+        label="displaykey.Web.OutgoingProducerPaymentSearchDV.Method"
+        value="searchCriteria.Method"
+        valueRange="getPaymentMethodRange()"/>
+      <Input
+        editable="true"
+        id="TokenCriterion"
+        label="displaykey.Web.OutgoingProducerPaymentSearchDV.PaymentInstrumentToken"
+        value="searchCriteria.Token"/>
+    </InputColumn>
+    <InputFooterSection>
+      <InputSetRef
+        def="SearchAndResetInputSet()"/>
+    </InputFooterSection>
+    <Code><![CDATA[function getStatusRange() : List<OutgoingPaymentStatus> {
+  var statusRange = new java.util.ArrayList<OutgoingPaymentStatus>();
+  statusRange.add( OutgoingPaymentStatus.TC_ISSUED );
+  statusRange.add( OutgoingPaymentStatus.TC_VOIDED );
+  statusRange.add( OutgoingPaymentStatus.TC_CLEARED );
+  return statusRange;
+}
+
+function getPaymentMethodRange() : List<PaymentMethod> {
+  var paymentMethodRange = new java.util.ArrayList<PaymentMethod>();
+  paymentMethodRange.add( PaymentMethod.TC_ACH );
+  paymentMethodRange.add( PaymentMethod.TC_CHECK );
+  paymentMethodRange.add( PaymentMethod.TC_CREDITCARD );
+  paymentMethodRange.add( PaymentMethod.TC_WIRE );
+  return paymentMethodRange;
+}
+
+function blankMinimumAndMaximumFields() {
+  searchCriteria.MinAmount = null
+  searchCriteria.MaxAmount = null
+}]]></Code>
+  </DetailViewPanel>
+</PCF>

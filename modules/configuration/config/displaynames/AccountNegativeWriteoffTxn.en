@@ -1,0 +1,48 @@
+<?xml version="1.0"?>
+<Entity
+  name="AccountNegativeWriteoffTxn">
+  <Columns>
+    <Column
+      beanPath="Transaction.Subtype"
+      name="Subtype"/>
+    <Column
+      beanPath="Transaction.ReversedTransaction.TransactionNumber"
+      name="ReversedTransactionNumber"/>
+    <Column
+      beanPath="AccountNegativeWriteoffTxn.Amount"
+      name="Amount"/>
+    <DisplayNameColumn
+      beanPath="AccountNegativeWriteoffTxn.Account"
+      displayName="true"
+      name="Account"/>
+    <Column
+      beanPath="AccountNegativeWriteoffTxn.Reversed"
+      name="Reversed"/>
+    <DisplayNameColumn
+      beanPath="AccountNegativeWriteoffTxn.AccountNegativeWriteoffUnappliedFund"
+      displayName="false"
+      name="UnappliedFund"/>
+  </Columns>
+  <DisplayName><![CDATA[gw.api.domain.accounting.ReversibleUtil.formatReversibleDisplayName(Subtype.DisplayName, ReversedTransactionNumber)]]></DisplayName>
+  <DisplayName
+    type="Short"><![CDATA[gw.api.domain.accounting.ReversibleUtil.formatReversibleDisplayName(displaykey.DisplayName.NegativeWriteoffAcct.Short, ReversedTransactionNumber)]]></DisplayName>
+  <DisplayName
+    type="Long"><![CDATA[
+            if (not UnappliedFund.DefaultForAccount) {
+              return gw.api.domain.accounting.ReversibleUtil.formatReversibleDisplayName(
+                 displaykey.DisplayName.NegativeWriteoffAcct.LongWithDesignatedUnapplied(Account, Amount?.render(), UnappliedFund.Description), ReversedTransactionNumber)
+            } else {
+              return gw.api.domain.accounting.ReversibleUtil.formatReversibleDisplayName(displaykey.DisplayName.NegativeWriteoffAcct.Long(Account, Amount?.render()), ReversedTransactionNumber)
+            }]]></DisplayName>
+  <DisplayName
+    type="FundsUse"><![CDATA[if(!Reversed){
+  return displaykey.DisplayName.NegativeWriteoffAcct.FundsUse
+} else {
+  return displaykey.DisplayName.NegativeWriteoffAcct.FundsUse.Reversed
+}
+]]></DisplayName>
+  <DisplayName
+    type="FundsUseReversal"><![CDATA[displaykey.DisplayName.NegativeWriteoffAcct.FundsUseReversal]]></DisplayName>
+  <DisplayName
+    type="FundsUsePredatesFundsTracking"><![CDATA[displaykey.DisplayName.NegativeWriteoffAcct.FundsUse.PredatesFundsTracking]]></DisplayName>
+</Entity>

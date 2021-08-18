@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xml:lang="en" lang="en" xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+    <meta http-equiv="Content-Style-Type" content="text/css" />
+    <!-- MOTW-DISABLED saved from url=(0014)about:internet -->
+    <title>Loading Reversals</title>
+    <link rel="StyleSheet" href="css/databaseimport.css" type="text/css" media="all" />
+    <link rel="StyleSheet" href="css/webworks.css" type="text/css" media="all" />
+    <link rel="StyleSheet" href="css/css-guidewire-extra.css" type="text/css" media="all" />
+    <script type="text/javascript" language="JavaScript1.2" src="wwhdata/common/context.js"></script>
+    <script type="text/javascript" language="JavaScript1.2" src="wwhdata/common/towwhdir.js"></script>
+    <script type="text/javascript" language="JavaScript1.2" src="wwhdata/common/wwhpagef.js"></script>
+    <script type="text/javascript" language="JavaScript1.2">
+      <!--
+        var  WebWorksRootPath = "";
+      // -->
+    </script>
+    <script type="text/javascript" language="JavaScript1.2">
+      <!--
+        // Set reference to top level help frame
+        //
+        var  WWHFrame = WWHGetWWHFrame("", true);
+      // -->
+    </script>
+    <script type="text/javascript" language="JavaScript1.2" src="scripts/expand.js"></script>
+    <!-- THE FOLLOWING IS A GUIDEWIRE STYLE DEFINITION FOR THE LINK TO THIS FEATURE -->
+    <link rel="StyleSheet" href="css/css-guidewire-extra.css" type="text/css" media="all" />
+    <!-- THE FOLLOWING IS A GUIDEWIRE GSCRIPT FUNCTION FOR THE LINK TO THIS FEATURE -->
+    <script type="text/javascript">
+function guidewire_selectall()
+{
+var text_val=eval("document.linktothisurlform.urlfield");
+text_val.focus();
+text_val.select();
+}
+</script>
+  </head>
+  <body onLoad="WWHUpdate();" onUnload="WWHUnload();" onKeyDown="WWHHandleKeyDown((document.all||document.getElementById||document.layers)?event:null);" onKeyPress="WWHHandleKeyPress((document.all||document.getElementById||document.layers)?event:null);" onKeyUp="WWHHandleKeyUp((document.all||document.getElementById||document.layers)?event:null);">
+    <!-- THE FOLLOWING IS A GUIDEWIRE DIV FOR THE 'LINK TO THIS' FEATURE -->
+    <div id="linkToThisPage" class="popup" style="display: none;">
+      <div class="popupTitle">Link Directly to This Page 
+           <a href="#" onclick="var thePopup = getElementById('linkToThisPage');thePopup.style.display='none';return false;"><img class="popupClosebox" src="wwhelp/wwhimpl/common/images/close.gif" /></a></div>
+      <div style="padding:6px;">
+        <div class="popupText" id="linkToThisPageBookmark">An error has occurred if you see this messsage.</div>
+        <form name="linktothisurlform" method="post" action="" style="width:275px;margin:0px">
+          <input type="text" class="popupURLText" id="linkToThisPageURL" name="urlfield" rows="1" cols="55" onClick="guidewire_selectall();" onFocus="guidewire_selectall();"></input>
+        </form>
+      </div>
+    </div>
+    <br />
+    <div class="WebWorks_Breadcrumbs" style="text-align: left;">
+      <span>BillingCenter Integration Guide</span> : 
+    <span class="WebWorks_Breadcrumbs" style="text-align: left;"><a class="WebWorks_Breadcrumb_Link" href="p-importingbillingandaccounts.fm.html#2270785">Importing Billing and Account Data</a> : <a class="WebWorks_Breadcrumb_Link" href="databaseimport.25.01.html#2270785">Importing from Database Staging Tables</a> : <a class="WebWorks_Breadcrumb_Link" href="databaseimport.25.09.html#2270785">Loading BillingCenter-specific Entities</a> : Loading Reversals</span></div>
+    <hr align="left" />
+    <blockquote>
+      <h4 class="H2B_-_Heading_2_Break"><a name="2270785">Loading Reversals</a></h4>
+      <div class="B_-_Body"><a name="2271007">The way you load reversals depends on the type of item being reversed:</a></div>
+      <div class="BI_-_Bullet_Item_outer" style="margin-left: 57pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="BI_-_Bullet_Item_inner" style="width: 15pt; white-space: nowrap">
+                <span class="bu_-_bullet">•	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="BI_-_Bullet_Item_inner"><a name="2271270">Write-offs</a></div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="BI_-_Bullet_Item_outer" style="margin-left: 57pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="BI_-_Bullet_Item_inner" style="width: 15pt; white-space: nowrap">
+                <span class="bu_-_bullet">•	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="BI_-_Bullet_Item_inner"><a name="2271286">Payments</a></div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="BI_-_Bullet_Item_outer" style="margin-left: 57pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="BI_-_Bullet_Item_inner" style="width: 15pt; white-space: nowrap">
+                <span class="bu_-_bullet">•	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="BI_-_Bullet_Item_inner"><a name="2271296">Charges</a></div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <h6 class="HS_-_Head_Sub"><a name="2270786">Write-off Reversals</a></h6>
+      <div class="B_-_Body"><a name="2270857">For write-off reversals, populate the </a><span class="cv_-_computer_voice">bcst_writeoffreversal</span> table with <span class="cv_-_computer_voice">WriteoffID</span> referencing the write-off to be reversed. BillingCenter generates duplicate write-offs in the <span class="cv_-_computer_voice">writeoff</span> table. Set <span class="cv_-_computer_voice">reversed</span> to <span class="cv_-_computer_voice">1</span> on the original write-off, and add an entry to the <span class="cv_-_computer_voice">bcst_rev</span> edge table to relate original write-offs with reversal write-offs. </div>
+      <div class="B_-_Body"><a name="2271430">Later, when you run Write-off Staging batch processing, BillingCenter creates transactions for original write-offs, and then reverses them. </a></div>
+      <h6 class="HS_-_Head_Sub"><a name="2270787">Payment Reversals</a></h6>
+      <div class="B_-_Body"><a name="2271310">For payment reversals, set the </a><span class="cv_-_computer_voice">ReversalReason</span> and <span class="cv_-_computer_voice">ReversalDate</span> fields on the <span class="cv_-_computer_voice">bcst_payment</span> rows to be reversed. Also, set the <span class="cv_-_computer_voice">status</span> field to <span class="cv_-_computer_voice">distributed</span>. An integrity checks verifies that distributed payments have reversal fields and non-distributed payments do not. </div>
+      <div class="B_-_Body"><a name="2271306">Later, when you run New Payment batch processing, BillingCenter skips payment reversals because they are marked as distributed. Transactions and reversed transactions are not created, but you can find historic data based on the </a><span class="cv_-_computer_voice">ReversalReason</span> and <span class="cv_-_computer_voice">ReversalDate</span> fields. </div>
+      <h6 class="HS_-_Head_Sub"><a name="2270788">Charge Reversals</a></h6>
+      <div class="B_-_Body"><a name="2271553">For charge reversals, set the set the </a><span class="cv_-_computer_voice">reversed</span> field to <span class="cv_-_computer_voice">1</span>. Add another charge with an amount equal to the negative of the charge amount, and set the <span class="cv_-_computer_voice">reversed</span> field to <span class="cv_-_computer_voice">0</span>. Also, you need invoice items that are reversals for the original invoice items. Add a row to <span class="cv_-_computer_voice">bcst_revcharge</span> where <span class="cv_-_computer_voice">ownerid</span> references the new reversal charge and <span class="cv_-_computer_voice">foreignentityid</span> references the old reversal charge. </div>
+      <div class="B_-_Body"><a name="2271549">BillingCenter creates the </a><span class="cv_-_computer_voice">InitialChargeTxn</span> and <span class="cv_-_computer_voice">NegativeChargeBilled</span> transactions. These transactions move the amount of the charge into the <span class="cv_-_computer_voice">PP.Unapplied TAccount</span>. Like any negative charge, BillingCenter applies the amount the next time that Invoice Due batch processing runs. </div>
+      <script type="text/javascript" language="JavaScript1.2">
+        <!--
+          // Clear related topics
+          //
+          WWHClearRelatedTopics();
+
+          document.writeln(WWHRelatedTopicsInlineHTML());
+        // -->
+      </script>
+    </blockquote>
+    <script type="text/javascript" language="JavaScript1.2">
+      <!--
+        document.write(WWHRelatedTopicsDivTag() + WWHPopupDivTag() + WWHALinksDivTag());
+      // -->
+    </script>
+  </body>
+</html>

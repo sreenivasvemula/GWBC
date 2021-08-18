@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PCF
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:noNamespaceSchemaLocation="../../../../../pcf.xsd">
+  <!-- This screen is one of the steps in the Create Trouble Ticket wizard.  It is where the user will specify
+       entities (eg: accounts, policies, and producers) that are related to the new trouble ticket that they are creating -->
+  <Screen
+    id="CreateTroubleTicketEntitiesScreen">
+    <Require
+      name="TroubleTicket"
+      type="TroubleTicket"/>
+    <Require
+      name="AssigneeHolder"
+      type="assignment.Assignee[]"/>
+    <Require
+      name="CreateTroubleTicketHelper"
+      type="CreateTroubleTicketHelper"/>
+    <Toolbar>
+      <WizardButtons/>
+    </Toolbar>
+    <PanelRef
+      def="TroubleTicketRelatedEntitiesDV(TroubleTicket, CreateTroubleTicketHelper)"/>
+  </Screen>
+</PCF>

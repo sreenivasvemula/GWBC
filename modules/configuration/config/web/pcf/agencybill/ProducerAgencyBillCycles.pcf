@@ -1,0 +1,201 @@
+<?xml version="1.0"?>
+<PCF
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:noNamespaceSchemaLocation="../../../../../pcf.xsd">
+  <Page
+    canEdit="false"
+    canVisit="perm.System.prodtabview and perm.System.prodabcyclesview"
+    id="ProducerAgencyBillCycles"
+    showUpLink="true"
+    title="displaykey.Web.ProducerAgencyBillCycles.Title">
+    <LocationEntryPoint
+      signature="ProducerAgencyBillCycles(producer : Producer)"/>
+    <Variable
+      name="producer"
+      type="Producer"/>
+    <Variable
+      initialValue="gw.api.web.producer.ProducerUtil.getNonEmptyCyclesAsList(producer)"
+      name="cycles"
+      type="List&lt;AgencyBillCycle&gt;"/>
+    <Variable
+      initialValue="new java.util.HashMap&lt;AgencyBillCycle, AgencyCyclePromise&gt;()"
+      name="cycleToRecentPromiseMap"
+      type="java.util.Map&lt;AgencyBillCycle, AgencyCyclePromise&gt;"/>
+    <Screen
+      id="ProducerAgencyBillCyclesScreen">
+      <ListDetailPanel
+        id="ProducerAgencyBillCyclesLDV"
+        selectionName="selectedAgencyBillCycle"
+        selectionType="AgencyBillCycle">
+        <Variable
+          name="invoiceStreamSelection"
+          type="InvoiceStream"/>
+        <PanelRef>
+          <Toolbar>
+            <ToolbarRangeInput
+              id="InvoiceStreamFilter"
+              label="displaykey.Web.AccountDetailInvoices.InvoiceStreamFilter"
+              noneSelectedLabel="displaykey.Web.AccountDetailInvoices.ShowAllInvoices"
+              value="invoiceStreamSelection"
+              valueRange="producer.InvoiceStreams.sortDescending()">
+              <PostOnChange
+                onChange="cycles = invoiceStreamSelection != null ? producer.AgencyBillCyclesSortedByStatementDate.where(\ i -&gt; i.StatementInvoice.InvoiceStream == invoiceStreamSelection) : producer.AgencyBillCyclesSortedByStatementDate"/>
+            </ToolbarRangeInput>
+          </Toolbar>
+          <ListViewPanel
+            id="ProducerCycleLV">
+            <RowIterator
+              editable="false"
+              elementName="cycle"
+              id="agencyBillCycles"
+              value="cycles">
+              <ToolbarFilter
+                label="displaykey.Web.BillingPlansLV.Show"
+                name="AgencyBillCycleFilter">
+                <ToolbarFilterOption
+                  filter="gw.agencybill.ProducerAgencyBillCycleFilters.OPEN"
+                  label="displaykey.Web.ProducerAgencyBillCycles.Filter.Open"/>
+                <ToolbarFilterOption
+                  filter="gw.agencybill.ProducerAgencyBillCycleFilters.PLANNED"
+                  label="displaykey.Web.ProducerAgencyBillCycles.Filter.Planned"/>
+                <ToolbarFilterOption
+                  filter="gw.agencybill.ProducerAgencyBillCycleFilters.CLOSED"
+                  label="displaykey.Web.ProducerAgencyBillCycles.Filter.Closed"/>
+                <ToolbarFilterOption
+                  filter="gw.api.util.CoreFilters.ALL"
+                  label="displaykey.Web.ProducerAgencyBillCycles.Filter.All"/>
+              </ToolbarFilter>
+              <Row>
+                <DateCell
+                  footerLabel="displaykey.Web.ProducerAgencyBillCycles.Total"
+                  id="dateSent"
+                  label="displaykey.Web.ProducerAgencyBillCycles.CycleCloseDate"
+                  sortOrder="1"
+                  value="cycle.StatementInvoice.EventDate"/>
+                <DateCell
+                  enableSort="false"
+                  id="dateDue"
+                  label="displaykey.Web.ProducerAgencyBillCycles.DateDue"
+                  value="cycle.StatementInvoice.DUEDATE"/>
+                <Cell
+                  action="AgencyBillStatementDetail.drilldown(cycle)"
+                  id="number"
+                  label="displaykey.Web.ProducerAgencyBillCycles.Number"
+                  value="cycle.StatementInvoice.InvoiceNumber"/>
+                <MonetaryAmountCell
+                  currency="cycle.Currency"
+                  footerSumValue="cycle.NetAmount"
+                  formatType="currency"
+                  id="amount"
+                  label="displaykey.Web.ProducerAgencyBillCycles.NetAmount"
+                  value="cycle.StatementInvoice.NetAmount"/>
+                <MonetaryAmountCell
+                  currency="cycle.Currency"
+                  enableSort="false"
+                  footerSumValue="cycle.ActualPaidAmount"
+                  formatType="currency"
+                  id="paid"
+                  label="displaykey.Web.ProducerAgencyBillCycles.Paid"
+                  value="cycle.ActualPaidAmount"/>
+                <MonetaryAmountCell
+                  currency="cycle.Currency"
+                  enableSort="false"
+                  footerSumValue="cycle.WrittenOffAmount"
+                  formatType="currency"
+                  id="writtenOff"
+                  label="displaykey.Web.ProducerAgencyBillCycles.WrittenOff"
+                  value="cycle.WrittenOffAmount"/>
+                <MonetaryAmountCell
+                  currency="cycle.Currency"
+                  enableSort="false"
+                  footerSumValue="cycle.NetAmountDue"
+                  formatType="currency"
+                  id="due"
+                  label="displaykey.Web.ProducerAgencyBillCycles.Balance"
+                  value="cycle.NetAmountDue"/>
+                <Cell
+                  enableSort="false"
+                  id="status"
+                  label="displaykey.Web.ProducerAgencyBillCycles.Status"
+                  value="cycle.StatementInvoice.DisplayStatus"
+                  width="120"/>
+                <DateCell
+                  enableSort="false"
+                  id="promiseDue"
+                  label="displaykey.Web.ProducerAgencyBillCycles.PromiseDue"
+                  value="cycle.StatementInvoice.PromiseDueDate"/>
+                <Cell
+                  id="invoiceStream"
+                  label="displaykey.Web.ProducerAgencyBillCycles.InvoiceStream"
+                  value="cycle.StatementInvoice.InvoiceStream"/>
+              </Row>
+            </RowIterator>
+          </ListViewPanel>
+        </PanelRef>
+        <CardViewPanel>
+          <Variable
+            initialValue="getCachedPromise(selectedAgencyBillCycle)"
+            name="selectedPromise"
+            recalculateOnRefresh="true"
+            type="AgencyCyclePromise"/>
+          <Card
+            id="CycleDetailCard"
+            title="displaykey.Web.ProducerAgencyBillCycles.CycleDetails.Title">
+            <DetailViewPanel>
+              <InputColumn>
+                <MonetaryAmountInput
+                  currency="producer.Currency"
+                  id="ClearCommissionDifferencesLogic"
+                  label="displaykey.Web.ProducerAgencyBillCycles.CycleDetails.ClearCommissionDifferencesLogic"
+                  value="selectedAgencyBillCycle.StatementInvoice.AgencyBillCycle.Producer.AgencyBillPlan.ClearCommisionThreshold"
+                  visible="selectedAgencyBillCycle.StatementInvoice.AgencyBillCycle.Producer.AgencyBillPlan.LowCommissionCleared"/>
+                <MonetaryAmountInput
+                  currency="producer.Currency"
+                  id="ClearGrossDifferencesLogic"
+                  label="displaykey.Web.ProducerAgencyBillCycles.CycleDetails.ClearGrossDifferencesLogic"
+                  value="selectedAgencyBillCycle.StatementInvoice.AgencyBillCycle.Producer.AgencyBillPlan.ClearGrossThreshold"
+                  visible="selectedAgencyBillCycle.StatementInvoice.AgencyBillCycle.Producer.AgencyBillPlan.LowGrossCleared"/>
+                <Input
+                  action="AgencyBillPlanDetailPopup.push(producer.AgencyBillPlan)"
+                  id="PaymentType"
+                  label="displaykey.Web.ProducerAgencyBillCycles.CycleDetails.GoverningPlan"
+                  value="selectedAgencyBillCycle.Producer.AgencyBillPlan.Name"/>
+              </InputColumn>
+              <InputColumn>
+                <DateInput
+                  id="PromiseDate"
+                  label="displaykey.Web.ProducerAgencyBillCycles.CycleDetails.PromiseDate"
+                  value="selectedAgencyBillCycle.MostRecentExecutedPromise.DistributedDate"
+                  visible="selectedPromise != null"/>
+                <MonetaryAmountInput
+                  currency="producer.Currency"
+                  formatType="currency"
+                  id="PromiseAmount"
+                  label="displaykey.Web.ProducerAgencyBillCycles.CycleDetails.PromiseAmount"
+                  value="selectedAgencyBillCycle.MostRecentExecutedPromise.Amount"
+                  visible="selectedAgencyBillCycle.MostRecentExecutedPromise != null"/>
+              </InputColumn>
+            </DetailViewPanel>
+            <PanelRef
+              def="AgencyBillCycleEventsLV(selectedAgencyBillCycle.StatementInvoice)">
+              <TitleBar
+                title="displaykey.Web.ProducerAgencyBillCycles.CycleEvents.Title"/>
+            </PanelRef>
+          </Card>
+        </CardViewPanel>
+      </ListDetailPanel>
+    </Screen>
+    <Code><![CDATA[public static function isOpenOrPlanned(agencyBillCycle : AgencyBillCycle) : boolean {
+  var statementInvoice = agencyBillCycle.StatementInvoice
+  return statementInvoice.Status == displaykey.Java.AgencyBillStatement.Status.Open
+    or statementInvoice.Status == displaykey.Java.AgencyBillStatement.Status.Planned
+}
+
+public function getCachedPromise(agencyBillCycle : AgencyBillCycle) : AgencyCyclePromise {
+  if (not cycleToRecentPromiseMap.containsKey(agencyBillCycle)) {
+    cycleToRecentPromiseMap.put(agencyBillCycle, agencyBillCycle.MostRecentExecutedPromise)
+  }
+  return cycleToRecentPromiseMap.get(agencyBillCycle)
+}]]></Code>
+  </Page>
+</PCF>

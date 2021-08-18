@@ -1,0 +1,138 @@
+<?xml version="1.0"?>
+<entity
+  xmlns="http://guidewire.com/datamodel"
+  desc="An InvoiceStream is a stream of invoices for an Account or a Producer.  Invoices from different streams   will not be combined even if the invoices are billed on the same day. The stream's periodicity determines the   period of time between invoices in the stream (monthly, every-week, etc.)."
+  entity="InvoiceStream"
+  final="false"
+  setterScriptability="hidden"
+  subpackage="invoice"
+  table="invoicestream"
+  type="retireable">
+  <implementsEntity
+    name="Validatable"/>
+  <implementsEntity
+    name="InCurrencySilo"/>
+  <column
+    name="Description"
+    nullok="true"
+    type="mediumtext"/>
+  <column
+    default="1"
+    desc="The order of creation among streams having the same Payer, Periodicity, and Policy.       Used for automatic stream selection when there is more than one matching stream for a charge.       Also used for disambiguation among display names."
+    name="CreationOrder"
+    nullok="false"
+    setterScriptability="doesNotExist"
+    type="integer"/>
+  <foreignkey
+    columnName="AccountID"
+    desc="The payer of Invoices in this stream if the Invoices are paid by an Account."
+    fkentity="Account"
+    getterScriptability="doesNotExist"
+    name="Account"
+    nullok="true"
+    setterScriptability="doesNotExist"/>
+  <foreignkey
+    columnName="ProducerID"
+    desc="The payer of Invoices in this stream if the Invoices are paid by a Producer."
+    fkentity="Producer"
+    getterScriptability="doesNotExist"
+    name="Producer"
+    nullok="true"
+    setterScriptability="doesNotExist"/>
+  <foreignkey
+    columnName="PolicyID"
+    desc="The stream is for this policy if the payer is an Account that uses policy-level billing.     This is null if the payer is an Account that does not use policy-level billing or if the payer is a Producer."
+    exportasid="true"
+    fkentity="Policy"
+    name="Policy"
+    nullok="true"
+    setterScriptability="hidden"/>
+  <!-- TODO Pin the unapplied TAccount to the invoice stream when platform supplies this functionality -->
+  <foreignkey
+    columnName="UnappliedFundID"
+    desc="The unappliedfund for this invoice stream."
+    exportable="false"
+    fkentity="UnappliedFund"
+    importableagainstexistingobject="false"
+    name="UnappliedFund"
+    nullok="true"
+    setterScriptability="doesNotExist"/>
+  <typekey
+    desc="The stream's Periodicity determines the period of time between invoices in the stream."
+    name="Periodicity"
+    nullok="false"
+    setterScriptability="hidden"
+    typefilter="InvoiceStreamPeriodicities"
+    typelist="Periodicity"/>
+  <column
+    desc="An override of the payer's first invoicing anchor date for the stream's periodicity.     The anchor date determines the invoicing day of month, day of week, etc. This date should fall on the     desired invoicing day of month or day of week. If the stream is using DueDateBilling, this date     determines the invoice due date; if the stream is using BillDateBilling, this date determines the invoice     send (event) date. If the invoice payer does not send invoices on a non-business day, the     target bill (send) date will be adjusted to be a business day using the payer's method of adjusting     dates to a business day."
+    getterScriptability="doesNotExist"
+    name="OverridingFirstAnchorDate"
+    nullok="true"
+    setterScriptability="doesNotExist"
+    type="dateonly"/>
+  <column
+    desc="An override of the payer's second invoicing anchor date for the stream's periodicity.     The second anchor date determines the second invoicing day for periodicities such as twice-per-month     that need two anchor dates."
+    getterScriptability="doesNotExist"
+    name="OverridingSecondAnchorDate"
+    nullok="true"
+    setterScriptability="doesNotExist"
+    type="dateonly"/>
+  <typekey
+    columnName="OverridingBillOrDueDateBilling"
+    desc="An override of the payer's setting for whether the anchor dates are the dates invoices are sent or due.     If BillDateBilling, the anchor dates are the dates invoices are sent (Invoice.EventDate).     If DueDateBilling the anchor dates are the dates invoices are due (Invoice.PaymentDueDate).     If setting OverridingBillDateOrDueDateBilling makes the stream switch between due date and bill date billing, the     stream recreates its planned non-ad-hoc invoices to reflect the new setting."
+    name="OverridingBillDateOrDueDateBilling"
+    nullok="true"
+    typelist="BillDateOrDueDateBilling"/>
+  <column
+    desc="An override of the payer's settings for the invoicing lead time.  The invoicing lead time is     the number of days from the invoicing send (bill) date to the invoice due date.  If OverridingInvoicingLeadTime     is set, it is used as the lead time for invoices in the stream.  If it is not set, then the payer's lead     time for the stream's payment instrument determines the lead time for invoices in the stream.     If setting OverridingInvoicingLeadTime makes the stream have a new invoicing lead time, the     stream recreates its planned non-ad-hoc invoices to reflect the new setting."
+    name="OverridingInvoicingLeadTime"
+    nullok="true"
+    type="nonnegativeinteger"/>
+  <foreignkey
+    columnName="OverridingPaymentInstrumentID"
+    desc="An override of the payer's default payment instrument.     If setting OverridingPaymentInstrument makes the stream have a new invoicing lead time, the     stream recreates its planned non-ad-hoc invoices to reflect the new setting."
+    exportasid="true"
+    fkentity="PaymentInstrument"
+    name="OverridingPaymentInstrument"
+    nullok="true"/>
+  <array
+    arrayentity="Invoice"
+    desc="The list of invoices that this InvoiceStream holds.  (Note that the database level 'owner' of all of     the invoices in this array is the invoice payer.)"
+    name="Invoices"
+    setterScriptability="hidden"/>
+  <index
+    desc="Ensure CreationOrder is unique among InvoiceStreams that have the same Payer, Periodicity, Policy, and retired status."
+    name="UniqueStream"
+    unique="true">
+    <indexcol
+      keyposition="1"
+      name="AccountID"/>
+    <indexcol
+      keyposition="2"
+      name="ProducerID"/>
+    <indexcol
+      keyposition="3"
+      name="PolicyID"/>
+    <indexcol
+      keyposition="4"
+      name="Periodicity"/>
+    <indexcol
+      keyposition="5"
+      name="CreationOrder"/>
+    <indexcol
+      keyposition="6"
+      name="Retired"/>
+  </index>
+  <checkconstraint
+    desc="Either the Account or the Producer must be set."
+    predicate="AccountID IS NOT NULL OR ProducerID IS NOT NULL"/>
+  <checkconstraint
+    desc="Cannot set both the Account and the Producer."
+    predicate="AccountID IS NULL OR ProducerID IS NULL"/>
+  <checkconstraint
+    desc="Producer streams cannot have an UnappliedFund, but Account streams must have one."
+    predicate="ProducerID IS NOT NULL AND UnappliedFundID IS NULL OR AccountID IS NOT NULL AND UnappliedFundID IS NOT NULL"/>
+  <dbcheckbuilder
+    className="com.guidewire.bc.system.database.dbchecks.invoice.InvoiceStreamDBCheckBuilder"/>
+</entity>

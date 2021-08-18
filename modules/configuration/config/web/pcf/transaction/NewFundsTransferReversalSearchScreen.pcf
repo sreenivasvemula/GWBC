@@ -1,0 +1,132 @@
+<?xml version="1.0"?>
+<PCF
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:noNamespaceSchemaLocation="../../../../../pcf.xsd">
+  <Screen
+    id="NewFundsTransferReversalSearchScreen">
+    <Require
+      name="transferFundReversalContext"
+      type="gw.transaction.TransferFundsReversalWizardContext"/>
+    <Toolbar>
+      <WizardButtons/>
+    </Toolbar>
+    <CardViewPanel>
+      <Card
+        id="TransferFunds"
+        title="displaykey.Web.NewTransferFundsReversalTransferFundsSearchScreen.TransferFundsCard">
+        <SearchPanel
+          criteriaName="searchCriteria"
+          resultsName="transferFunds"
+          search="searchCriteria.performSearch()"
+          searchCriteria="new gw.search.TransferTransactionSearchCriteria()"
+          searchResultsType="TransferTransactionQuery">
+          <DetailViewPanel
+            id="TransactionSearchDV">
+            <InputColumn>
+              <Label
+                id="SearchCriteria"
+                label="displaykey.Web.TransactionSearchDV.SearchCriteria"/>
+              <Input
+                editable="true"
+                id="TransactionNumberCriterion"
+                label="displaykey.Web.TransactionSearchDV.TransactionNumber"
+                value="searchCriteria.TransactionNumber"/>
+              <RangeInput
+                editable="true"
+                id="TransactionTypeCriterion"
+                label="displaykey.Web.TransactionSearchDV.TransactionType"
+                sortValueRange="false"
+                value="searchCriteria.TransferType"
+                valueRange="gw.search.TransferTransactionSearchCriteria.TransferType.AllValues.sortBy(\ c -&gt; c.DisplayName)"
+                valueWidth="250">
+                <PostOnChange/>
+              </RangeInput>
+              <DateInput
+                editable="true"
+                id="EarliestDateCriterion"
+                label="displaykey.Web.TransactionSearchDV.EarliestDate"
+                value="searchCriteria.EarliestDate"/>
+              <DateInput
+                editable="true"
+                id="LatestDateCriterion"
+                label="displaykey.Web.TransactionSearchDV.LatestDate"
+                value="searchCriteria.LatestDate"/>
+            </InputColumn>
+            <InputFooterSection>
+              <InputSet>
+                <InputSetRef
+                  def="SearchLinksInputSet(true, true)"/>
+              </InputSet>
+            </InputFooterSection>
+          </DetailViewPanel>
+          <PanelRef>
+            <Toolbar/>
+            <ListViewPanel
+              id="TransactionsLV">
+              <RowIterator
+                editable="false"
+                elementName="transferFund"
+                value="transferFunds">
+                <Row>
+                  <LinkCell
+                    id="SelectCell"
+                    label="displaykey.Web.NewTransferFundsReversal.Select">
+                    <Link
+                      action="transferFundReversalContext.setTransferFundTransaction( transferFund ); (CurrentLocation as pcf.api.Wizard).next();"
+                      id="Select"
+                      label="displaykey.Web.NewTransferFundsReversal.Select"
+                      styleClass="miniButton"
+                      visible="transferFund.canReverse()"/>
+                  </LinkCell>
+                  <DateCell
+                    enableSort="false"
+                    id="WriteoffDate"
+                    label="displaykey.Web.NewTransferFundsReversal.Date"
+                    value="transferFund.CreateTime"/>
+                  <Cell
+                    enableSort="false"
+                    id="Source"
+                    label="displaykey.Web.NewTransferFundsReversal.Source"
+                    value="getSourceName(transferFund.FundsTransfer)"/>
+                  <Cell
+                    enableSort="false"
+                    id="Destination"
+                    label="displaykey.Web.NewTransferFundsReversal.Destination"
+                    value="getDestinationName(transferFund.FundsTransfer)"/>
+                  <MonetaryAmountCell
+                    currency="transferFund.Currency"
+                    enableSort="false"
+                    formatType="currency"
+                    id="Amount"
+                    label="displaykey.Web.NewTransferFundsReversal.Amount"
+                    value="transferFund.Amount"/>
+                  <Cell
+                    enableSort="false"
+                    id="Description"
+                    label="displaykey.Web.NewTransferFundsReversal.Description"
+                    value="transferFund.ShortDisplayName"/>
+                </Row>
+              </RowIterator>
+            </ListViewPanel>
+          </PanelRef>
+        </SearchPanel>
+      </Card>
+    </CardViewPanel>
+    <Code><![CDATA[function getSourceName(transfer : FundsTransfer) : String{
+    if (transfer.SourceUnapplied != null) {
+      return transfer.SourceUnapplied.TransactionSpecialDisplayName;
+    } else {
+      return transfer.SourceProducer.DisplayName
+    }
+  }
+  
+  
+  function getDestinationName(transfer : FundsTransfer) : String{
+    if (transfer.TargetUnapplied != null) {
+      return transfer.TargetUnapplied.TransactionSpecialDisplayName;
+    } else {
+      return transfer.TargetProducer.DisplayName
+    }
+  }]]></Code>
+  </Screen>
+</PCF>

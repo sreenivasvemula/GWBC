@@ -1,0 +1,38 @@
+<?xml version="1.0"?>
+<PCF
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:noNamespaceSchemaLocation="../../../../../pcf.xsd">
+  <Page
+    afterReturnFromPopup="if (popupCommitted) CurrentLocation.commit()"
+    canEdit="true"
+    canVisit="perm.System.accttabview and perm.System.acctdisbview"
+    id="AccountDetailDisbursements"
+    showUpLink="true"
+    title="displaykey.Web.AccountDetailDisbursements.Title">
+    <LocationEntryPoint
+      signature="AccountDetailDisbursements(account : Account)"/>
+    <LocationEntryPoint
+      signature="AccountDetailDisbursements(account : Account, initialSelectedDisbursement : Disbursement)"/>
+    <Variable
+      name="account"
+      type="Account"/>
+    <Variable
+      initialValue="new web.disbursement.DisbursementUtil()"
+      name="disbursementUtil"/>
+    <Variable
+      initialValue="disbursementUtil.getAccountAndCollateralDisbursements(account)"
+      name="disbursements"
+      recalculateOnRefresh="true"/>
+    <Variable
+      name="initialSelectedDisbursement"
+      recalculateOnRefresh="true"
+      type="Disbursement"/>
+    <Screen
+      id="AccountDetailDisbursementsScreen">
+      <PanelRef
+        def="DisbursementsLV(disbursements, initialSelectedDisbursement)">
+        <Toolbar/>
+      </PanelRef>
+    </Screen>
+  </Page>
+</PCF>

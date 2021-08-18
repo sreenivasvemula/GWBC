@@ -1,0 +1,44 @@
+<?xml version="1.0"?>
+<PCF
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:noNamespaceSchemaLocation="../../../../../pcf.xsd">
+  <Wizard
+    beforeCommit="validateTransferAmount(); fundsTransferUtil.createTransfers()"
+    canVisit="perm.Transaction.cashtx"
+    cancelWarning="displaykey.Web.NewTransferWizard.CancelConfirmation"
+    countsAsWork="false"
+    id="AccountNewTransferWizard">
+    <LocationEntryPoint
+      signature="AccountNewTransferWizard(account : Account)"/>
+    <Variable
+      name="account"
+      type="Account"/>
+    <Variable
+      initialValue="createNewFundsTransferUtil()"
+      name="fundsTransferUtil"
+      type="gw.api.web.transaction.FundsTransferUtil"/>
+    <WizardStep
+      id="Step1"
+      label="displaykey.Web.NewTransferWizard.TransferDetails.Label"
+      onExit="fundsTransferUtil.setSourcesAndApprovalActivitiesIfRequired()"
+      screen="TransferDetailsScreen(fundsTransferUtil)"
+      title="displaykey.Web.NewTransferWizard.TransferDetails.Title"/>
+    <WizardStep
+      id="Step2"
+      label="displaykey.Web.NewTransferWizard.TransferConfirmation.Label"
+      screen="TransferConfirmationScreen(fundsTransferUtil)"
+      title="displaykey.Web.NewTransferWizard.TransferConfirmation.Title"/>
+    <Code><![CDATA[function createNewFundsTransferUtil() : gw.api.web.transaction.FundsTransferUtil {
+  fundsTransferUtil = new gw.api.web.transaction.FundsTransferUtil();
+  fundsTransferUtil.addToTransfers(new FundsTransfer(account.Currency))
+  fundsTransferUtil.SourceOwner = account;
+  return fundsTransferUtil;
+}
+
+function validateTransferAmount() {
+  if (!fundsTransferUtil.validateAmounts()) {
+    throw new util.DisplayableException(displaykey.Web.NewTransferWizard.InsufficientUnappliedFundsForTransfer)
+  }
+}]]></Code>
+  </Wizard>
+</PCF>

@@ -1,0 +1,96 @@
+<?xml version="1.0"?>
+<entity
+  xmlns="http://guidewire.com/datamodel"
+  desc="Context for transactions involving a transfer between two entities."
+  entity="TransferTxContext"
+  ignoreForEvents="true"
+  overwrittenInStagingTable="true"
+  setterScriptability="hidden"
+  subpackage="accounting.transaction"
+  table="transfertxcontext"
+  type="editable">
+  <implementsEntity
+    name="TransactionContext"/>
+  <implementsEntity
+    name="InCurrencySilo"/>
+  <foreignkey
+    columnName="TransactionID"
+    desc="Reference to transaction"
+    fkentity="TransferTransaction"
+    getterScriptability="doesNotExist"
+    name="Transaction"
+    nullok="false"
+    setterScriptability="doesNotExist"/>
+  <foreignkey
+    columnName="SourceProducerID"
+    desc="The source producer"
+    fkentity="Producer"
+    getterScriptability="hidden"
+    ignoreforevents="true"
+    name="SourceProducer"
+    nullok="true"
+    setterScriptability="hidden"/>
+  <foreignkey
+    columnName="TargetProducerID"
+    desc="The target producer"
+    fkentity="Producer"
+    getterScriptability="hidden"
+    ignoreforevents="true"
+    name="TargetProducer"
+    nullok="true"
+    setterScriptability="hidden"/>
+  <foreignkey
+    columnName="SourceAccountID"
+    desc="The source account"
+    fkentity="Account"
+    getterScriptability="hidden"
+    ignoreforevents="true"
+    name="SourceAccount"
+    nullok="true"
+    setterScriptability="hidden"/>
+  <foreignkey
+    columnName="TargetAccountID"
+    desc="The target account"
+    fkentity="Account"
+    getterScriptability="hidden"
+    ignoreforevents="true"
+    name="TargetAccount"
+    nullok="true"
+    setterScriptability="hidden"/>
+  <foreignkey
+    columnName="SourceUnappliedTAccountID"
+    desc="The source unapplied t-account"
+    fkentity="TAccount"
+    getterScriptability="hidden"
+    ignoreforevents="true"
+    name="SourceUnappliedTAccount"
+    nullok="false"
+    setterScriptability="hidden"/>
+  <foreignkey
+    columnName="TargetUnappliedTAccountID"
+    desc="The target unapplied t-account"
+    fkentity="TAccount"
+    getterScriptability="hidden"
+    ignoreforevents="true"
+    name="TargetUnappliedTAccount"
+    nullok="false"
+    setterScriptability="hidden"/>
+  <foreignkey
+    columnName="FundsTransferID"
+    desc="Funds Transfer funds that created this transaction and context"
+    fkentity="FundsTransfer"
+    getterScriptability="hidden"
+    ignoreforevents="true"
+    name="FundsTransfer"
+    nullok="true"
+    setterScriptability="hidden"/>
+  <checkconstraint
+    applicabletostagingtable="false"
+    desc="TransferTxContext must have exactly one non-null SourceAccount or SourceProducer."
+    predicate="(SourceProducerID IS NOT NULL AND SourceAccountID IS NULL) OR (SourceProducerID IS NULL AND SourceAccountID IS NOT NULL)"/>
+  <checkconstraint
+    applicabletostagingtable="false"
+    desc="TransferTxContext must have exactly one non-null TargetAccount or TargetProducer."
+    predicate="(TargetProducerID IS NOT NULL AND TargetAccountID IS NULL) OR (TargetProducerID IS NULL AND TargetAccountID IS NOT NULL)"
+    stagingtablepredicate="(TargetProducerID IS NOT NULL AND TargetAccountID IS NULL) OR (TargetProducerID IS NULL AND TargetAccountID IS NOT NULL)"/>
+</entity>

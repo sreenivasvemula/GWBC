@@ -1,0 +1,408 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xml:lang="en" lang="en" xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+    <meta http-equiv="Content-Style-Type" content="text/css" />
+    <!-- MOTW-DISABLED saved from url=(0014)about:internet -->
+    <title>Implementing a Document Content Source for External DMS</title>
+    <link rel="StyleSheet" href="css/documentsforms.css" type="text/css" media="all" />
+    <link rel="StyleSheet" href="css/webworks.css" type="text/css" media="all" />
+    <link rel="StyleSheet" href="css/css-guidewire-extra.css" type="text/css" media="all" />
+    <script type="text/javascript" language="JavaScript1.2" src="wwhdata/common/context.js"></script>
+    <script type="text/javascript" language="JavaScript1.2" src="wwhdata/common/towwhdir.js"></script>
+    <script type="text/javascript" language="JavaScript1.2" src="wwhdata/common/wwhpagef.js"></script>
+    <script type="text/javascript" language="JavaScript1.2">
+      <!--
+        var  WebWorksRootPath = "";
+      // -->
+    </script>
+    <script type="text/javascript" language="JavaScript1.2">
+      <!--
+        // Set reference to top level help frame
+        //
+        var  WWHFrame = WWHGetWWHFrame("", true);
+      // -->
+    </script>
+    <script type="text/javascript" language="JavaScript1.2" src="scripts/expand.js"></script>
+    <!-- THE FOLLOWING IS A GUIDEWIRE STYLE DEFINITION FOR THE LINK TO THIS FEATURE -->
+    <link rel="StyleSheet" href="css/css-guidewire-extra.css" type="text/css" media="all" />
+    <!-- THE FOLLOWING IS A GUIDEWIRE GSCRIPT FUNCTION FOR THE LINK TO THIS FEATURE -->
+    <script type="text/javascript">
+function guidewire_selectall()
+{
+var text_val=eval("document.linktothisurlform.urlfield");
+text_val.focus();
+text_val.select();
+}
+</script>
+  </head>
+  <body onLoad="WWHUpdate();" onUnload="WWHUnload();" onKeyDown="WWHHandleKeyDown((document.all||document.getElementById||document.layers)?event:null);" onKeyPress="WWHHandleKeyPress((document.all||document.getElementById||document.layers)?event:null);" onKeyUp="WWHHandleKeyUp((document.all||document.getElementById||document.layers)?event:null);">
+    <!-- THE FOLLOWING IS A GUIDEWIRE DIV FOR THE 'LINK TO THIS' FEATURE -->
+    <div id="linkToThisPage" class="popup" style="display: none;">
+      <div class="popupTitle">Link Directly to This Page 
+           <a href="#" onclick="var thePopup = getElementById('linkToThisPage');thePopup.style.display='none';return false;"><img class="popupClosebox" src="wwhelp/wwhimpl/common/images/close.gif" /></a></div>
+      <div style="padding:6px;">
+        <div class="popupText" id="linkToThisPageBookmark">An error has occurred if you see this messsage.</div>
+        <form name="linktothisurlform" method="post" action="" style="width:275px;margin:0px">
+          <input type="text" class="popupURLText" id="linkToThisPageURL" name="urlfield" rows="1" cols="55" onClick="guidewire_selectall();" onFocus="guidewire_selectall();"></input>
+        </form>
+      </div>
+    </div>
+    <br />
+    <div class="WebWorks_Breadcrumbs" style="text-align: left;">
+      <span>BillingCenter Integration Guide</span> : 
+    <span class="WebWorks_Breadcrumbs" style="text-align: left;"><a class="WebWorks_Breadcrumb_Link" href="p-plugins.html#2365110">Plugins</a> : <a class="WebWorks_Breadcrumb_Link" href="documentsforms.15.01.html#2365110">Document Management</a> : Implementing a Document Content Source for External DMS</span></div>
+    <hr align="left" />
+    <blockquote>
+      <h3 class="H1_-_Heading_1"><a name="2365110">Implementing a Document Content Source for External DMS</a></h3>
+      <div class="B_-_Body"><a name="2365111">Document storage systems vary in how they transfer documents and how they display documents in the user interface. To support this variety, BillingCenter supports multiple document retrieval modes called </a><span class="e_-_emphasis">response types</span>. For the list of options, see <a href="javascript:WWHClickedPopup('integration', 'documentsforms.15.02.html#2364959', '');" title="Document Management Overview">“Document Retrieval Mode Overview”</a>.</div>
+      <div class="B_-_Body"><a name="2365118">To implement a new document content source, you must write a class that implements the </a><span class="cv_-_computer_voice">IDocumentContentSource</span> plugin interface. The following sections describe the methods that your class must implement.</div>
+      <h4 class="H2_-_Heading_2"><a name="2365119">Adding Documents and Metadata</a></h4>
+      <div class="B_-_Body"><a name="2365120">A new document content source plugin must fulfill a request to add a document by implementing the </a><span class="cv_-_computer_voice">addDocument</span> method. This method adds a new document object to the repository. </div>
+      <div class="NI_-_Note_Important">
+        <span class="n_-_note">IMPORTANT   </span><a name="2417348">If you enable and implement the </a><span class="cv_-_computer_voice">IDocumentMetadataSource</span> plugin, BillingCenter also calls this method to update an existing document. Write your code to accommodate being called with an existing document.</div>
+      <div class="B_-_Body"><a name="2365121">The method takes as arguments:</a></div>
+      <div class="BI_-_Bullet_Item_outer" style="margin-left: 57pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="BI_-_Bullet_Item_inner" style="width: 15pt; white-space: nowrap">
+                <span class="bu_-_bullet">•	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="BI_-_Bullet_Item_inner"><a name="2365122">the document metadata in a </a><span class="cv_-_computer_voice">Document</span> object</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="BI_-_Bullet_Item_outer" style="margin-left: 57pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="BI_-_Bullet_Item_inner" style="width: 15pt; white-space: nowrap">
+                <span class="bu_-_bullet">•	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="BI_-_Bullet_Item_inner"><a name="2365123">the document contents as an </a><span class="cv_-_computer_voice">InputStream</span> object</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="B_-_Body"><a name="2365124">The </a><span class="cv_-_computer_voice">addDocument</span> method also may copy some of the metadata contained in the <span class="cv_-_computer_voice">Document</span> entity into the external system. Independent of whether the document stores any metadata in the external system, the plugin must update certain metadata properties within the <span class="cv_-_computer_voice">Document</span> object:</div>
+      <div class="BI_-_Bullet_Item_outer" style="margin-left: 57pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="BI_-_Bullet_Item_inner" style="width: 15pt; white-space: nowrap">
+                <span class="bu_-_bullet">•	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="BI_-_Bullet_Item_inner"><a name="2365126">the method must set an implementation-specific document universal ID in the </a><span class="cv_-_computer_voice">Document.DocUID</span> property.</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="BI_-_Bullet_Item_outer" style="margin-left: 57pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="BI_-_Bullet_Item_inner" style="width: 15pt; white-space: nowrap">
+                <span class="bu_-_bullet">•	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="BI_-_Bullet_Item_inner"><a name="2365128">the method must set the modified date in the </a><span class="cv_-_computer_voice">Document.DateModified</span> property.</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="B_-_Body"><a name="2365132">The method must persist these changes the BillingCenter database.</a></div>
+      <div class="B_-_Body"><a name="2417205">The return value from the </a><span class="cv_-_computer_voice">addDocument</span> method is very important:</div>
+      <div class="BI_-_Bullet_Item_outer" style="margin-left: 57pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="BI_-_Bullet_Item_inner" style="width: 15pt; white-space: nowrap">
+                <span class="bu_-_bullet">•	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="BI_-_Bullet_Item_inner"><a name="2417206">If you do not enable and implement the </a><span class="cv_-_computer_voice">IDocumentMetadataSource</span> plugin, you must return <span class="cv_-_computer_voice">false</span>.</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="BI_-_Bullet_Item_outer" style="margin-left: 57pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="BI_-_Bullet_Item_inner" style="width: 15pt; white-space: nowrap">
+                <span class="bu_-_bullet">•	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="BI_-_Bullet_Item_inner"><a name="2417207">If you enable and implement the </a><span class="cv_-_computer_voice">IDocumentMetadataSource</span> plugin implementation:</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="BI2_-_Bullet_Item_002c_Level_2_outer" style="margin-left: 67pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="BI2_-_Bullet_Item_002c_Level_2_inner" style="width: 15pt; white-space: nowrap">
+                <span class="bu_-_bullet">•	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="BI2_-_Bullet_Item_002c_Level_2_inner"><a name="2365136">If you stored metadata from the </a><span class="cv_-_computer_voice">Document</span> object in addition to document content, return <span class="cv_-_computer_voice">true</span>. </div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="BI2_-_Bullet_Item_002c_Level_2_outer" style="margin-left: 67pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="BI2_-_Bullet_Item_002c_Level_2_inner" style="width: 15pt; white-space: nowrap">
+                <span class="bu_-_bullet">•	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="BI2_-_Bullet_Item_002c_Level_2_inner"><a name="2365140">Otherwise, return </a><span class="cv_-_computer_voice">false</span>. BillingCenter calls the registered <span class="cv_-_computer_voice">IDocumentMetadataSource</span> plugin implementation to store the metadata. </div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="B_-_Body"><a name="2365144">For related discussion, see </a><a href="javascript:WWHClickedPopup('integration', 'documentsforms.15.03.html#2365040', '');" title="Choices for Storing Document Content and Metadata">“Deciding Where to Store Document Content and Metadata”</a>.</div>
+      <h6 class="HS_-_Head_Sub"><a name="2365145">Error Handling</a></h6>
+      <div class="B_-_Body"><a name="2365146">If your plugin code encounters errors during storage before returning from this method, throw an exception from this method. If document storage errors are detected later, such as for a asynchronous document storage, the document content storage plugin must handle errors in an appropriate fashion. For example, send administrative e-mails or create new activities to investigate the problem. You could optionally persist the error information and design a system to track document creation errors and document management problems in a separate user interface for administrators. </a></div>
+      <h4 class="H2_-_Heading_2"><a name="2365148">Retrieving Documents</a></h4>
+      <div class="B_-_Body"><a name="2365149">A new document content source plugin must fulfill a request to retrieve a document. To fulfill this kind of request, implement the </a><span class="cv_-_computer_voice">getDocumentContentsInfo</span> method. This method takes a <span class="cv_-_computer_voice">Document</span> object as a parameter. Use the <span class="cv_-_computer_voice">Document.DocUID</span> property to identify the target document within the external repository. Your code could use additional data model extensions on <span class="cv_-_computer_voice">Document</span> as needed. </div>
+      <div class="B_-_Body"><a name="2365152">The </a><span class="cv_-_computer_voice">getDocumentContentsInfo</span> method can read the <span class="cv_-_computer_voice">Document</span> object but must not modify the <span class="cv_-_computer_voice">Document</span> object.</div>
+      <div class="B_-_Body"><a name="2365153">This plugin method must return an instance of </a><span class="cv_-_computer_voice">gw.document.DocumentContentsInfo</span>, which is a simple object with the following properties:</div>
+      <div class="BI_-_Bullet_Item_outer" style="margin-left: 57pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="BI_-_Bullet_Item_inner" style="width: 15pt; white-space: nowrap">
+                <span class="bu_-_bullet">•	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="BI_-_Bullet_Item_inner"><span class="ri_-_run_in_header"><a name="2417777">Response type</a></span> – An enumeration in the <span class="cv_-_computer_voice">ResponseType</span> property indicates the type of the data:</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="BI2_-_Bullet_Item_002c_Level_2_outer" style="margin-left: 67pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="BI2_-_Bullet_Item_002c_Level_2_inner" style="width: 15pt; white-space: nowrap">
+                <span class="bu_-_bullet">•	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="BI2_-_Bullet_Item_002c_Level_2_inner"><span class="cv_-_computer_voice"><a name="2417778">URL</a></span> – A URL to a local content store to display the content. For non-editable documents, the <span class="cv_-_computer_voice">URL</span> response type is the recommended response type if your DMS supports it. The <span class="cv_-_computer_voice">URL</span> response type permits the highest performance for BillingCenter. However, the <span class="cv_-_computer_voice">URL</span> response type is problematic for editing documents, and would require modification of PCF code to accommodate it.</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="BI2_-_Bullet_Item_002c_Level_2_outer" style="margin-left: 67pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="BI2_-_Bullet_Item_002c_Level_2_inner" style="width: 15pt; white-space: nowrap">
+                <span class="bu_-_bullet">•	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="BI2_-_Bullet_Item_002c_Level_2_inner"><span class="cv_-_computer_voice"><a name="2365160">DOCUMENT_CONTENTS</a></span> – An input stream that contains the raw document contents. You can enable web viewing of arbitrary input streams such as PDF data. See <a href="javascript:WWHClickedPopup('integration', 'documentsforms.15.10.html#2365664', '');" title="Retrieval and Rendering of PDF or Other Input Stream Data">“Retrieval and Rendering of PDF or Other Input Stream Data”</a></div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="BI_-_Bullet_Item_outer" style="margin-left: 57pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="BI_-_Bullet_Item_inner" style="width: 15pt; white-space: nowrap">
+                <span class="bu_-_bullet">•	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="BI_-_Bullet_Item_inner"><span class="ri_-_run_in_header"><a name="2365164">Hidden target frame as Boolean</a></span> – For response types other than <span class="cv_-_computer_voice">DOCUMENT_CONTENTS</span>, the Boolean property <span class="cv_-_computer_voice">TargetHiddenFrame</span><span style="font-size: 12.0pt"> </span>specifies whether BillingCenter opens the web page in a hidden frame within the user’s web browser. For example, if the document repository is naturally implemented as a small web page that contains JavaScript, set this property to <span class="cv_-_computer_voice">true</span>. JavaScript code from that page might open another web page as a popup window that displays the real document contents.</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="BI_-_Bullet_Item_outer" style="margin-left: 57pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="BI_-_Bullet_Item_inner" style="width: 15pt; white-space: nowrap">
+                <span class="bu_-_bullet">•	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="BI_-_Bullet_Item_inner"><span class="ri_-_run_in_header"><a name="2365168">Contents as input stream</a></span> – The <span class="cv_-_computer_voice">InputStream</span> property contains the document contents in the form of an input stream, which is raw bytes as an <span class="cv_-_computer_voice">InputStream</span> object. </div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <h6 class="HS_-_Head_Sub"><a name="2365169">The </a><span class="cvh_-_computer_voice_in_heading">includeContents</span> Boolean Parameter</h6>
+      <div class="B_-_Body"><a name="2365171">The </a><span class="cv_-_computer_voice">getDocumentContentsInfo</span> method has a Boolean parameter <span class="p_-_parameter">includeContents</span>.</div>
+      <div class="BI_-_Bullet_Item_outer" style="margin-left: 57pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="BI_-_Bullet_Item_inner" style="width: 15pt; white-space: nowrap">
+                <span class="bu_-_bullet">•	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="BI_-_Bullet_Item_inner"><a name="2365172">If this parameter is </a><span class="cv_-_computer_voice">true</span>, include an input stream with the contents of the document. Set only the properties, <span class="cv_-_computer_voice">ResultResponseType</span>, <span class="cv_-_computer_voice">TargetHiddenFrame, InputStream</span>.</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="BI_-_Bullet_Item_outer" style="margin-left: 57pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="BI_-_Bullet_Item_inner" style="width: 15pt; white-space: nowrap">
+                <span class="bu_-_bullet">•	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="BI_-_Bullet_Item_inner"><a name="2365173">If this parameter is </a><span class="cv_-_computer_voice">false</span>, only set the response type in the property <span class="cv_-_computer_voice">ResultResponseType</span>. Do not set any other properties.</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="B_-_Body"><a name="2365177">BillingCenter calls some methods in a </a><span class="cv_-_computer_voice">IDocumentContentSource</span> plugin twice for each document: <span class="cv_-_computer_voice">isDocument</span> and <span class="cv_-_computer_voice">getDocumentContentsInfo</span>. Your plugin implementation must support this design. For the <span class="cv_-_computer_voice">getDocumentContentsInfo</span> method, the <span class="p_-_parameter">includeContents</span> parameter is set to <span class="cv_-_computer_voice">false</span> on the first call and <span class="cv_-_computer_voice">true</span> on the second call. Your plugin must return a <span class="cv_-_computer_voice">DocumentContentsInfo</span> object with the same response type in response to both calls. Returning any other result is unsupported and results in undefined behavior.</div>
+      <h6 class="HS_-_Head_Sub"><a name="2365178">MIME Type</a></h6>
+      <div class="B_-_Body"><a name="2365179">The </a><span class="cv_-_computer_voice">DocumentContentsInfo.ResponseMimeType</span> property includes a MIME type. However, your <span class="cv_-_computer_voice">getDocumentContentsInfo</span> method must ignore this property. BillingCenter sets the MIME type based on the <span class="cv_-_computer_voice">Document</span> properties after calling the <span class="cv_-_computer_voice">getDocumentContentsInfo</span> method. However, it is unsupported to rely on its value at the time that BillingCenter calls <span class="cv_-_computer_voice">getDocumentContentsInfo</span>.</div>
+      <h4 class="H2_-_Heading_2"><a name="2365188">Checking for Document Existence</a></h4>
+      <div class="B_-_Body"><a name="2365189">A document content source plugin must fulfill requests to check for the exist of a document. To check document existence, BillingCenter calls the plugin implementation’s </a><span class="cv_-_computer_voice">isDocument</span> method. This method takes a <span class="cv_-_computer_voice">Document</span> object as a parameter. Use the <span class="cv_-_computer_voice">Document.DocUID</span> property to identify the target document within the repository. If the document with that document UID exists in the external DMS, return <span class="cv_-_computer_voice">true</span>. Otherwise return <span class="cv_-_computer_voice">false</span>.</div>
+      <div class="B_-_Body"><a name="2365194">The </a><span class="cv_-_computer_voice">isDocument</span> method must not modify the <span class="cv_-_computer_voice">Document</span> entity instance in any way.</div>
+      <div class="B_-_Body"><a name="2365198">BillingCenter calls some methods in a </a><span class="cv_-_computer_voice">IDocumentContentSource</span> plugin twice for each document: <span class="cv_-_computer_voice">isDocument</span> and <span class="cv_-_computer_voice">getDocumentContentsInfo</span>. Your plugin implementation must support this design.</div>
+      <h4 class="H2_-_Heading_2"><a name="2365199">Removing Documents</a></h4>
+      <div class="B_-_Body"><a name="2365200">A new document content source plugin must fulfill a request to remove a document. To remove a document, BillingCenter calls the plugin implementation’s </a><span class="cv_-_computer_voice">removeDocument</span> method. This method takes a <span class="cv_-_computer_voice">Document</span> object as a parameter. Use the <span class="cv_-_computer_voice">Document.DocUID</span> property to identify the target document within the repository.</div>
+      <div class="B_-_Body"><a name="2365208">BillingCenter calls this method to notify the document storage system that the document corresponding to the </a><span class="cv_-_computer_voice">Document</span> object will soon be removed from metadata storage. Your <span class="cv_-_computer_voice">IDocumentContentSource</span> plugin implementation can decide how to handle this notification. Choose carefully whether to delete the content, retire it, archive it, or another action that is appropriate for your company. Other <span class="cv_-_computer_voice">Document</span> entities may still refer to the same content with the same <span class="cv_-_computer_voice">Document.DocUID</span> value, so deletion may be inappropriate.</div>
+      <div class="B_-_Body"><a name="2365209">Be careful writing your document removal code. If the </a><span class="cv_-_computer_voice">removeDocument</span> implementation does not handle metadata storage, then a server problem might cause removal of the metadata to fail even after successful removing document contents.</div>
+      <div class="B_-_Body"><a name="2365211">If the </a><span class="cv_-_computer_voice">removeDocument</span> method removed document metadata from metadata storage and no further action is required by the application, return <span class="cv_-_computer_voice">true</span>. Otherwise, return <span class="cv_-_computer_voice">false</span>. If you do not enable and implement the <span class="cv_-_computer_voice">IDocumentMetadataSource</span> plugin, you must return <span class="cv_-_computer_voice">false</span>.</div>
+      <h4 class="H2_-_Heading_2"><a name="2365212">Updating Documents and Metadata</a></h4>
+      <div class="B_-_Body"><a name="2365216">A new document content source plugin must fulfill requests from BillingCenter to update documents. To update documents, implement the </a><span class="cv_-_computer_voice">updateDocument</span> method. This method takes two arguments:</div>
+      <div class="BI_-_Bullet_Item_outer" style="margin-left: 57pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="BI_-_Bullet_Item_inner" style="width: 15pt; white-space: nowrap">
+                <span class="bu_-_bullet">•	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="BI_-_Bullet_Item_inner"><a name="2365219">a replacement document, as a stream of bytes in an </a><span class="cv_-_computer_voice">InputStream</span> object.</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="BI_-_Bullet_Item_outer" style="margin-left: 57pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="BI_-_Bullet_Item_inner" style="width: 15pt; white-space: nowrap">
+                <span class="bu_-_bullet">•	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="BI_-_Bullet_Item_inner"><a name="2365220">a </a><span class="cv_-_computer_voice">Document</span> object, which contains document metadata. The <span class="cv_-_computer_voice">Document.DocUID</span> property identifies the document in the DMS.</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="B_-_Body"><a name="2365221">At a minimum, the DMS system must update any core properties in the DMS that represent the change itself, such the date modified, the update time, and the update user. If the document UID property implicitly changed because of the update, set the </a><span class="cv_-_computer_voice">DocUID</span> property on the <span class="cv_-_computer_voice">Document</span> argument. BillingCenter persists changes to the <span class="cv_-_computer_voice">Document</span> object to the database.</div>
+      <div class="B_-_Body"><a name="2365225">Optionally, your document content source plugin can update other metadata from </a><span class="cv_-_computer_voice">Document</span> properties. The DMS must update the same set of properties as in your document content source plugin <span class="cv_-_computer_voice">addDocument</span> method. If your DMS has a concept of versions, you can extend the base <span class="cv_-_computer_voice">Document</span> entity to contain a property for the version. If you extend the <span class="cv_-_computer_voice">Document</span> entity with version information, <span class="cv_-_computer_voice">updateDocument</span> method sets this information as appropriate. </div>
+      <div class="NI_-_Note_Important">
+        <span class="n_-_note">IMPORTANT   </span><a name="2365227">During document update, you can optionally set </a><span class="cv_-_computer_voice">Document.DocUID</span> and any extension properties that represent versions. However, do not change the <span class="cv_-_computer_voice">Document.PublicID</span> property. On a related note, never get or set the <span class="cv_-_computer_voice">Document.ID</span> property. See <a href="javascript:WWHClickedPopup('integration', 'documentsforms.15.02.html#2364910', '');" title="Document Management Overview">“Document Storage Overview”</a> for related discussion.</div>
+      <div class="B_-_Body"><a name="2365232">The return value from the </a><span class="cv_-_computer_voice">updateDocument</span> method is very important:</div>
+      <div class="BI_-_Bullet_Item_outer" style="margin-left: 57pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="BI_-_Bullet_Item_inner" style="width: 15pt; white-space: nowrap">
+                <span class="bu_-_bullet">•	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="BI_-_Bullet_Item_inner"><a name="2417219">If you do not enable and implement the </a><span class="cv_-_computer_voice">IDocumentMetadataSource</span> plugin, you must return <span class="cv_-_computer_voice">false</span>.</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="BI_-_Bullet_Item_outer" style="margin-left: 57pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="BI_-_Bullet_Item_inner" style="width: 15pt; white-space: nowrap">
+                <span class="bu_-_bullet">•	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="BI_-_Bullet_Item_inner"><a name="2365234">If you enable and implement the </a><span class="cv_-_computer_voice">IDocumentMetadataSource</span> plugin implementation:</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="BI2_-_Bullet_Item_002c_Level_2_outer" style="margin-left: 67pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="BI2_-_Bullet_Item_002c_Level_2_inner" style="width: 15pt; white-space: nowrap">
+                <span class="bu_-_bullet">•	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="BI2_-_Bullet_Item_002c_Level_2_inner"><a name="2365235">If you stored metadata from the </a><span class="cv_-_computer_voice">Document</span> object in addition to document content, return <span class="cv_-_computer_voice">true</span>. </div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="BI2_-_Bullet_Item_002c_Level_2_outer" style="margin-left: 67pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="BI2_-_Bullet_Item_002c_Level_2_inner" style="width: 15pt; white-space: nowrap">
+                <span class="bu_-_bullet">•	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="BI2_-_Bullet_Item_002c_Level_2_inner"><a name="2365239">Otherwise, return </a><span class="cv_-_computer_voice">false</span>. BillingCenter calls the registered <span class="cv_-_computer_voice">IDocumentMetadataSource</span> plugin implementation to store the metadata. </div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="B_-_Body"><a name="2365243">For related discussion, see </a><a href="javascript:WWHClickedPopup('integration', 'documentsforms.15.03.html#2365040', '');" title="Choices for Storing Document Content and Metadata">“Deciding Where to Store Document Content and Metadata”</a>.</div>
+      <script type="text/javascript" language="JavaScript1.2">
+        <!--
+          // Clear related topics
+          //
+          WWHClearRelatedTopics();
+
+          document.writeln(WWHRelatedTopicsInlineHTML());
+        // -->
+      </script>
+    </blockquote>
+    <script type="text/javascript" language="JavaScript1.2">
+      <!--
+        document.write(WWHRelatedTopicsDivTag() + WWHPopupDivTag() + WWHALinksDivTag());
+      // -->
+    </script>
+  </body>
+</html>

@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?><entity xmlns="http://guidewire.com/datamodel" desc="Creator of funds transfer transactions" entity="FundsTransfer" platform="false" setterScriptability="hidden" subpackage="accounting" table="fundstransfer" type="retireable">
+  <implementsEntity name="Approvable"/>
+  <implementsEntity name="InCurrencySilo"/>
+  <monetaryamount amountColumnName="Amount" amountRange="positive" desc="Amount to transfer" name="Amount" nullok="true" scaleToCurrency="true"/>
+  <column desc="Date to make funds transfer" name="TransferDate" nullok="true" type="datetime"/>
+  <typekey desc="the reason for the transfer" name="Reason" nullok="true" typelist="TransferReason"/>
+  <foreignkey desc="The t-account owner from which to transfer funds" fkentity="Producer" name="SourceProducer" nullok="true"/>
+  <foreignkey desc="The t-account owner to which to transfer funds" fkentity="Producer" name="TargetProducer" nullok="true"/>
+  <!-- TODO mark SourceUnapplied as nullok="false" when doing the staging story for BC-11515 -->
+  <foreignkey
+    name="SourceUnapplied"
+    desc="The unapplied fund from which to transfer funds"
+    columnName="SourceUnappliedFundID"
+    fkentity="UnappliedFund"
+    nullok="true"/>
+  <!-- TODO mark TargetUnapplied as nullok="false" when doing the staging story for BC-11515 -->
+  <foreignkey
+    name="TargetUnapplied"
+    desc="The unapplied fund to which to transfer funds"
+    columnName="TargetUnappliedFundID"
+    fkentity="UnappliedFund"
+    nullok="true"/>
+  <array
+    name="TransferTxContexts"
+    desc="The contexts for the transactions executed by this FundsTransfer entity."
+    arrayentity="TransferTxContext"
+    cascadeDelete="true"
+    getterScriptability="hidden"
+    setterScriptability="hidden"/>
+  <array
+    name="ActivitiesCreatedByAppr"
+    arrayentity="FundsXferApprActivity"
+    setterScriptability="doesNotExist">
+    <link-association>
+      <typelist-map field="Status"/>
+    </link-association>
+  </array>
+  <dbcheckbuilder className="com.guidewire.bc.system.database.dbchecks.accounting.FundsTransferDBCheckBuilder"/>
+</entity>

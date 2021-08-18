@@ -1,0 +1,67 @@
+<?xml version="1.0"?>
+<PCF
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:noNamespaceSchemaLocation="../../../../../../pcf.xsd">
+  <ListViewPanel
+    editable="true"
+    id="DelinquencyPlanReasonsLV">
+    <ExposeIterator
+      flags="checkedReasons"
+      valueType="entity.DelinquencyPlanReason"
+      widget="DelinquencyPlanReasonsLV"/>
+    <Require
+      name="dlnqPlan"
+      type="DelinquencyPlan"/>
+    <Require
+      name="planNotInUse"
+      type="boolean"/>
+    <RowIterator
+      autoAdd="!planNotInUse and (dlnqPlan.DelinquencyPlanReasons.length == 0)"
+      canPick="false"
+      checkBoxVisible="isFieldEditable(planReason)"
+      editable="true"
+      elementName="planReason"
+      hasCheckBoxes="true"
+      hideCheckBoxesIfReadOnly="true"
+      toAdd="dlnqPlan.addToDelinquencyPlanReasons(planReason)"
+      toRemove="dlnqPlan.removeFromDelinquencyPlanReasons(planReason)"
+      value="dlnqPlan.DelinquencyPlanReasons">
+      <ToolbarFlag
+        condition=""
+        name="checkedReasons"/>
+      <Row
+        editable="true">
+        <TypeKeyCell
+          id="DelinquencyReason"
+          label="displaykey.Web.DelinquencyPlanReasonsDV.DelinquencyReason"
+          required="true"
+          unique="true"
+          value="planReason.DelinquencyReason"/>
+        <RangeCell
+          id="WorkflowType"
+          label="displaykey.Web.DelinquencyPlanReasonsDV.WorkflowType"
+          required="true"
+          value="planReason.WorkflowType"
+          valueRange="web.delinquency.DelinquencyPlanUtil.getDelinquencyWorkflows()"/>
+        <Cell
+          flex="1"
+          id="DelinquencyPlanEvents"
+          label="displaykey.Web.DelinquencyPlanReasonsLV.DelinquencyPlanEvents"
+          value="listPlanEventsForReason(planReason)"/>
+      </Row>
+    </RowIterator>
+    <Code><![CDATA[function isFieldEditable(planReason: DelinquencyPlanReason): Boolean {
+  if (planReason.New) {
+    return true;
+  }
+  return planNotInUse;
+}
+
+function listPlanEventsForReason(planReason: DelinquencyPlanReason): String {
+  var delinquencyPlanEvents = planReason.OrderedEvents
+  return delinquencyPlanEvents == null ? "" : delinquencyPlanEvents.reduce(null as String,
+      \q, d -> ( q == null ? "" : q + ", " ) + d.EventName.DisplayName)
+}
+]]></Code>
+  </ListViewPanel>
+</PCF>

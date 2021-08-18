@@ -1,0 +1,35 @@
+<?xml version="1.0"?>
+<PCF
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:noNamespaceSchemaLocation="../../../../../../pcf.xsd">
+  <Page
+    canVisit="perm.System.alpmanage"
+    id="AuthorityLimitProfiles"
+    title="displaykey.Web.Admin.AuthorityLimitProfiles.Title">
+    <Variable
+      initialValue="AuthorityLimitProfile.finder.findAllNonCustomInstances()"
+      name="AllAuthorityLimitProfiles"
+      type="AuthorityLimitProfileQuery"/>
+    <Screen
+      id="AuthorityLimitProfileScreen">
+      <Toolbar>
+        <ToolbarButton
+          action="NewAuthorityLimitProfile.go()"
+          id="AuthorityLimitProfiles_AddButton"
+          label="displaykey.Web.Admin.AuthorityLimitProfiles.Toolbar.add"
+          shortcut="Y"
+          visible="perm.System.alpmanage"/>
+        <CheckedValuesToolbarButton
+          checkedRowAction="gw.api.web.admin.AdminUtil.deleteLimit(CheckedValue)"
+          flags="any AuthorityLimitProfile"
+          id="AuthorityLimitProfiles_DeleteButton"
+          iterator="AuthorityLimitProfilesLV.AuthorityLimitProfilesLV"
+          label="displaykey.Web.Admin.AuthorityLimitProfiles.Toolbar.Delete"
+          shortcut="R"
+          visible="perm.System.alpmanage"/>
+      </Toolbar>
+      <PanelRef
+        def="AuthorityLimitProfilesLV(AllAuthorityLimitProfiles)"/>
+    </Screen>
+  </Page>
+</PCF>

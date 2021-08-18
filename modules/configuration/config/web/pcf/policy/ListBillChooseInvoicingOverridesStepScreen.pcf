@@ -1,0 +1,56 @@
+<?xml version="1.0"?>
+<PCF
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:noNamespaceSchemaLocation="../../../../../pcf.xsd">
+  <Screen
+    id="ListBillChooseInvoicingOverridesStepScreen">
+    <Require
+      name="policyPeriod"
+      type="PolicyPeriod"/>
+    <Require
+      name="listBillHelper"
+      type="gw.api.web.policy.ListBillInvoicingOverridesHelper"/>
+    <Toolbar>
+      <WizardButtons/>
+    </Toolbar>
+    <DetailViewPanel>
+      <InputColumn>
+        <PickerInput
+          editable="true"
+          id="ListBillPayer"
+          inputConversion="(VALUE==null or VALUE ==&quot;&quot;) ?  null : gw.api.database.Query.make(Account).compare(&quot;AccountName&quot;, Equals, VALUE).select().AtMostOneRow "
+          label="displaykey.Web.ChangeBillingMethodToListBillOverridesStepScreen.ListBillPayer"
+          pickLocation="AccountSearchPopup.push()"
+          required="true"
+          validationExpression="gw.api.web.account.PolicyPeriods.checkListBillPolicyPeriodForOverridingPayerError(policyPeriod, listBillHelper.ListBillAccount, listBillHelper.PaymentPlan)"
+          value="listBillHelper.ListBillAccount">
+          <PostOnChange
+            onChange="clearOverridesOnListBillPayerChange()"/>
+        </PickerInput>
+        <RangeInput
+          editable="true"
+          id="PaymentPlan"
+          label="displaykey.Web.ChangeBillingMethodToListBillOverridesStepScreen.PaymentPlan"
+          required="true"
+          value="listBillHelper.PaymentPlan"
+          valueRange="listBillHelper.ListBillAccount.PaymentPlans">
+          <PostOnChange
+            onChange="if (!gw.api.domain.invoice.InvoiceStreams.getCompatibleInvoiceStreams(listBillHelper.ListBillAccount, listBillHelper.PaymentPlan).contains(listBillHelper.InvoiceStream)) {listBillHelper.InvoiceStream = null}"/>
+        </RangeInput>
+        <RangeInput
+          editable="true"
+          id="InvoiceStream"
+          label="displaykey.Web.ChangeBillingMethodToListBillOverridesStepScreen.InvoiceStream"
+          required="true"
+          value="listBillHelper.InvoiceStream"
+          valueRange="gw.api.domain.invoice.InvoiceStreams.getCompatibleInvoiceStreams(listBillHelper.ListBillAccount, listBillHelper.PaymentPlan)"/>
+      </InputColumn>
+    </DetailViewPanel>
+    <Code><![CDATA[function clearOverridesOnListBillPayerChange() {
+  if(listBillHelper.ListBillAccount != null and !listBillHelper.ListBillAccount.PaymentPlans.contains(listBillHelper.PaymentPlan)){
+     listBillHelper.PaymentPlan = null
+  }
+   listBillHelper.InvoiceStream = null
+}]]></Code>
+  </Screen>
+</PCF>

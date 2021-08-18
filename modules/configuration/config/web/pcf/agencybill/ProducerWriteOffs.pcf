@@ -1,0 +1,102 @@
+<?xml version="1.0"?>
+<PCF
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:noNamespaceSchemaLocation="../../../../../pcf.xsd">
+  <Page
+    canEdit="perm.System.prodwriteoffsedit"
+    canVisit="perm.System.prodtabview and perm.System.prodwriteoffsview"
+    id="ProducerWriteOffs"
+    title="displaykey.Web.ProducerWriteOffs.Title">
+    <LocationEntryPoint
+      signature="ProducerWriteOffs(producer : Producer)"/>
+    <Variable
+      name="producer"
+      type="Producer"/>
+    <Screen
+      id="ProducerWriteOffsScreen">
+      <Variable
+        initialValue="gw.producer.ProducerWriteOffAgeRestriction.ALL_OPTIONS.first()"
+        name="writeOffAgeRestriction"
+        type="gw.producer.ProducerWriteOffAgeRestriction"/>
+      <Toolbar
+        id="ProducerWriteOffsToolbar">
+        <ToolbarRangeInput
+          id="WriteOffAgeRestriction"
+          optionLabel="VALUE.getDisplayText()"
+          required="true"
+          sortValueRange="false"
+          value="writeOffAgeRestriction"
+          valueRange="gw.producer.ProducerWriteOffAgeRestriction.ALL_OPTIONS">
+          <PostOnChange
+            target="DATA_ONLY"/>
+        </ToolbarRangeInput>
+      </Toolbar>
+      <ListViewPanel
+        id="ProducerWriteOffsLV">
+        <RowIterator
+          editable="false"
+          elementName="writeOff"
+          id="ProducerWriteOffsIterator"
+          type="gw.api.domain.accounting.AbstractWriteOff"
+          value="gw.producer.ProducerWriteOffsHelper.findProducerWriteOffsConstrainedByAge(producer, writeOffAgeRestriction)">
+          <ToolbarFilter
+            label="displaykey.Web.ProducerWriteOffs.ProducerWriteOffsLV.StatusFilter"
+            name="StatusFilter">
+            <ToolbarFilterOption
+              filter="gw.api.util.CoreFilters.ALL"/>
+            <ToolbarFilterOption
+              filter="new filters.StandardBeanFilter(displaykey.Web.ProducerWriteOffs.ProducerWriteOffsLV.Status.Pending, \ x -&gt; (x as gw.api.domain.accounting.AbstractWriteOff).Pending == true)"/>
+            <ToolbarFilterOption
+              filter="new filters.StandardBeanFilter(displaykey.Web.ProducerWriteOffs.ProducerWriteOffsLV.Status.Executed, \ x -&gt; gw.producer.ProducerWriteOffsHelper.isExecuted(x as gw.api.domain.accounting.AbstractWriteOff))"
+              selectOnEnter="true"/>
+            <ToolbarFilterOption
+              filter="new filters.StandardBeanFilter(displaykey.Web.ProducerWriteOffs.ProducerWriteOffsLV.Status.ReversalPending, \ x -&gt; (x as gw.api.domain.accounting.AbstractWriteOff).PendingReversal == true)"/>
+            <ToolbarFilterOption
+              filter="new filters.StandardBeanFilter(displaykey.Web.ProducerWriteOffs.ProducerWriteOffsLV.Status.Reversed, \ x -&gt; (x as gw.api.domain.accounting.AbstractWriteOff).Reversed == true)"/>
+            <ToolbarFilterOption
+              filter="new filters.StandardBeanFilter(displaykey.Web.ProducerWriteOffs.ProducerWriteOffsLV.Status.Rejected, \ x -&gt; (x as gw.api.domain.accounting.AbstractWriteOff).Rejected == true)"/>
+          </ToolbarFilter>
+          <Row
+            editable="false">
+            <ButtonCell
+              action="gw.producer.ProducerWriteOffsHelper.reverse(writeOff, CurrentLocation)"
+              available="writeOff.Executed and !writeOff.Reversed"
+              id="Reverse"
+              value="displaykey.Web.ProducerWriteOffs.ProducerWriteOffsLV.Reverse"
+              visible="perm.System.prodwriteoffsedit"/>
+            <DateCell
+              id="CreationDate"
+              label="displaykey.Web.ProducerWriteOffs.ProducerWriteOffsLV.CreationDate"
+              sortDirection="descending"
+              sortOrder="2"
+              value="writeOff.CreateTime"/>
+            <DateCell
+              id="ExecutionDate"
+              label="displaykey.Web.ProducerWriteOffs.ProducerWriteOffsLV.ExecutionDate"
+              sortDirection="descending"
+              sortOrder="1"
+              value="writeOff.ExecutionDate"/>
+            <MonetaryAmountCell
+              currency="producer.Currency"
+              formatType="currency"
+              id="Amount"
+              label="displaykey.Web.ProducerWriteOffs.ProducerWriteOffsLV.Amount"
+              value="writeOff.DisplayAmount"/>
+            <TextCell
+              id="WriteOffType"
+              label="displaykey.Web.ProducerWriteOffs.ProducerWriteOffsLV.WriteOffType"
+              value="writeOff.WriteOffType"/>
+            <TextCell
+              id="WriteOffTarget"
+              label="displaykey.Web.ProducerWriteOffs.ProducerWriteOffsLV.WriteOffTarget"
+              value="writeOff.WriteOffTarget.DisplayName"/>
+            <Cell
+              id="ReversalStatus"
+              label="displaykey.Web.ProducerWriteOffs.ProducerWriteOffsLV.Status"
+              value="gw.producer.ProducerWriteOffsHelper.statusFor(writeOff)"/>
+          </Row>
+        </RowIterator>
+      </ListViewPanel>
+    </Screen>
+  </Page>
+</PCF>

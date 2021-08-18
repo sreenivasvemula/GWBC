@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xml:lang="en" lang="en" xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+    <meta http-equiv="Content-Style-Type" content="text/css" />
+    <!-- MOTW-DISABLED saved from url=(0014)about:internet -->
+    <title>Creating Your Custom Work Queue Class</title>
+    <link rel="StyleSheet" href="css/batchprocess.css" type="text/css" media="all" />
+    <link rel="StyleSheet" href="css/webworks.css" type="text/css" media="all" />
+    <link rel="StyleSheet" href="css/css-guidewire-extra.css" type="text/css" media="all" />
+    <script type="text/javascript" language="JavaScript1.2" src="wwhdata/common/context.js"></script>
+    <script type="text/javascript" language="JavaScript1.2" src="wwhdata/common/towwhdir.js"></script>
+    <script type="text/javascript" language="JavaScript1.2" src="wwhdata/common/wwhpagef.js"></script>
+    <script type="text/javascript" language="JavaScript1.2">
+      <!--
+        var  WebWorksRootPath = "";
+      // -->
+    </script>
+    <script type="text/javascript" language="JavaScript1.2">
+      <!--
+        // Set reference to top level help frame
+        //
+        var  WWHFrame = WWHGetWWHFrame("", true);
+      // -->
+    </script>
+    <script type="text/javascript" language="JavaScript1.2" src="scripts/expand.js"></script>
+    <!-- THE FOLLOWING IS A GUIDEWIRE STYLE DEFINITION FOR THE LINK TO THIS FEATURE -->
+    <link rel="StyleSheet" href="css/css-guidewire-extra.css" type="text/css" media="all" />
+    <!-- THE FOLLOWING IS A GUIDEWIRE GSCRIPT FUNCTION FOR THE LINK TO THIS FEATURE -->
+    <script type="text/javascript">
+function guidewire_selectall()
+{
+var text_val=eval("document.linktothisurlform.urlfield");
+text_val.focus();
+text_val.select();
+}
+</script>
+  </head>
+  <body onLoad="WWHUpdate();" onUnload="WWHUnload();" onKeyDown="WWHHandleKeyDown((document.all||document.getElementById||document.layers)?event:null);" onKeyPress="WWHHandleKeyPress((document.all||document.getElementById||document.layers)?event:null);" onKeyUp="WWHHandleKeyUp((document.all||document.getElementById||document.layers)?event:null);">
+    <!-- THE FOLLOWING IS A GUIDEWIRE DIV FOR THE 'LINK TO THIS' FEATURE -->
+    <div id="linkToThisPage" class="popup" style="display: none;">
+      <div class="popupTitle">Link Directly to This Page 
+           <a href="#" onclick="var thePopup = getElementById('linkToThisPage');thePopup.style.display='none';return false;"><img class="popupClosebox" src="wwhelp/wwhimpl/common/images/close.gif" /></a></div>
+      <div style="padding:6px;">
+        <div class="popupText" id="linkToThisPageBookmark">An error has occurred if you see this messsage.</div>
+        <form name="linktothisurlform" method="post" action="" style="width:275px;margin:0px">
+          <input type="text" class="popupURLText" id="linkToThisPageURL" name="urlfield" rows="1" cols="55" onClick="guidewire_selectall();" onFocus="guidewire_selectall();"></input>
+        </form>
+      </div>
+    </div>
+    <br />
+    <div class="WebWorks_Breadcrumbs" style="text-align: left;">
+      <span>BillingCenter Integration Guide</span> : 
+    <span class="WebWorks_Breadcrumbs" style="text-align: left;"><a class="WebWorks_Breadcrumb_Link" href="p-claims.html#2333393">Other Integration Topics</a> : <a class="WebWorks_Breadcrumb_Link" href="batchprocess.29.01.html#2333393">Custom Batch Processing</a> : <a class="WebWorks_Breadcrumb_Link" href="batchprocess.29.07.html#2333393">Developing Custom Work Queues</a> : Creating Your Custom Work Queue Class</span></div>
+    <hr align="left" />
+    <blockquote>
+      <h4 class="H2B_-_Heading_2_Break"><a name="2333393">Creating Your Custom Work Queue Class</a></h4>
+      <div class="B_-_Body"><a name="2334867">After you define a typecode for your custom work queue and possibly create a custom work item type for it, you are ready to create your custom work queue class. This class contains the programming logic for the writer and the workers of your work queue. You must derive your class from </a><span class="cv_-_computer_voice">WorkQueueBase</span>, and you generally must override the following two methods:</div>
+      <div class="BI_-_Bullet_Item_outer" style="margin-left: 57pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="BI_-_Bullet_Item_inner" style="width: 15pt; white-space: nowrap">
+                <span class="bu_-_bullet">•	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="BI_-_Bullet_Item_inner"><span class="cv_-_computer_voice"><a name="2335623">findTargets</a></span> – The logic for the writer, which selects units of work for a batch and returns an iterator for the result set</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="BI_-_Bullet_Item_outer" style="margin-left: 57pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="BI_-_Bullet_Item_inner" style="width: 15pt; white-space: nowrap">
+                <span class="bu_-_bullet">•	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="BI_-_Bullet_Item_inner"><span class="cv_-_computer_voice"><a name="2335624">processWorkItem</a></span> – The logic for the workers, which operates on a single unit of work selected by the writer</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="B_-_Body"><a name="2335630">The </a><span class="cv_-_computer_voice">WorkQueueBase</span> provides other methods that you override in certain circumstances, but generally you can develop a successful custom work queue by overriding the two required methods <span class="cv_-_computer_voice">findTargets</span> and <span class="cv_-_computer_voice">processWorkItem</span>. </div>
+      <div class="NW_-_Note_Warning">
+        <span class="w_-_warning">WARNING  </span><a name="2350250">Do not implement multi-threaded programming in custom work queues derived from </a><span class="cv_-_computer_voice">WorkQueueBase</span>. </div>
+      <div class="H3_-_Heading_3_outer" style="margin-left: 36pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <h5 class="H3_-_Heading_3_inner" style="width: 18pt; white-space: nowrap"></h5>
+            </td>
+            <td width="100%">
+              <h5 class="H3_-_Heading_3_inner"><a name="2335625">Work Queue Class Declaration</a></h5>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="B_-_Body"><a name="2335076">In the declaration of your custom work queue class, you must include the </a><span class="cv_-_computer_voice">extends</span> clause to derive your work queue class from <span class="cv_-_computer_voice">WorkQueueBase</span>. Because the base class is a template class, your class declaration must specify the entity types for the unit of works and for the work items in your work queue. </div>
+      <div class="B_-_Body"><a name="2336380">The following example code declares a custom work queue type that has </a><span class="cv_-_computer_voice">Activtiy</span> as the target, or unit of work, type. It also declares that <span class="cv_-_computer_voice">StandardWorkItem</span> as the work queue type. </div>
+      <div class="CS_-_Code_Single_Line"><a name="2336382">class MyWorkQueue extends WorkQueueBase &lt;Activity, StandardWorkItem&gt; {</a></div>
+      <div class="H3_-_Heading_3_outer" style="margin-left: 36pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <h5 class="H3_-_Heading_3_inner" style="width: 18pt; white-space: nowrap"></h5>
+            </td>
+            <td width="100%">
+              <h5 class="H3_-_Heading_3_inner"><a name="2333381">Work Queue Class Constructor</a></h5>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="B_-_Body"><a name="2352725">You must implement a constructor in your custom work queue class. The constructor that you implement calls the constructor in the </a><span class="cv_-_computer_voice">WorkQueueBase</span> class. Your constructor associates you custom work queue class at runtime with its typecode in the <span class="cv_-_computer_voice">BatchProcessType</span> typelist, its work queue item type, and its target type.</div>
+      <div class="B_-_Body"><a name="2352740">The following example code is the constructor for a custom work queue. It associates the class at runtime with its batch process typecode </a><span class="cv_-_computer_voice">MyWorkQueue</span>. The code associates the work queue with the <span class="cv_-_computer_voice">StandardWorkItem</span> entity type. So, the work queue shares its work queue table with many other work queues. The code associates the work queue with the <span class="cv_-_computer_voice">Activity</span> entity type as its target, or unit of work, type. So, the writer and the workers operate on <span class="cv_-_computer_voice">Activity</span> instances. </div>
+      <PRE class="CF_-_Code_First_Line"><a name="2344401">construct () {</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2344402">&nbsp;</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2344403">&nbsp;&nbsp;super (typekey.BatchProcessType.TC_MYWORKQUEUE, StandardWorkItem, Activity)</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2344404">&nbsp;</a></PRE>
+      <PRE class="CL_-_Code_Last_Line"><a name="2352596">}</a></PRE>
+      <div class="B_-_Body"><a name="2353493">Do not include any code in the constructor of your custom work queue other than calling the super class constructor. </a></div>
+      <script type="text/javascript" language="JavaScript1.2">
+        <!--
+          // Clear related topics
+          //
+          WWHClearRelatedTopics();
+
+          document.writeln(WWHRelatedTopicsInlineHTML());
+        // -->
+      </script>
+    </blockquote>
+    <script type="text/javascript" language="JavaScript1.2">
+      <!--
+        document.write(WWHRelatedTopicsDivTag() + WWHPopupDivTag() + WWHALinksDivTag());
+      // -->
+    </script>
+  </body>
+</html>

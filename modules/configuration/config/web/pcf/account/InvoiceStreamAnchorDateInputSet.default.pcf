@@ -1,0 +1,44 @@
+<?xml version="1.0"?>
+<PCF
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:noNamespaceSchemaLocation="../../../../../pcf.xsd">
+  <InputSet
+    id="InvoiceStreamAnchorDateInputSet"
+    mode="default">
+    <Require
+      name="invoiceStreamView"
+      type="gw.api.web.invoice.InvoiceStreamView"/>
+    <BooleanRadioInput
+      editable="invoiceStreamView.PayerDefaultAnchorDateViews.Count &gt; 0"
+      id="OverrideInvoiceAnchorDate"
+      label="displaykey.Web.AccountDetailInvoices.InvoiceStream.OverrideAccountInvoiceDate"
+      required="true"
+      value="invoiceStreamView.OverrideAnchorDates">
+      <PostOnChange/>
+    </BooleanRadioInput>
+    <DateInput
+      id="AccountInvoiceAnchorDate"
+      label="displaykey.Web.AccountDetailInvoices.InvoiceStream.AccountInvoiceDate"
+      value="invoiceStreamView.PayerDefaultAnchorDateViews[0].Date"
+      visible="invoiceStreamView.PayerDefaultAnchorDateViews.Count &gt; 0"/>
+    <DateInput
+      id="AccountSecondInvoiceAnchorDate"
+      label="displaykey.Web.AccountDetailInvoices.InvoiceStream.AccountSecondInvoiceDate"
+      value="invoiceStreamView.PayerDefaultAnchorDateViews[1].Date"
+      visible="invoiceStreamView.PayerDefaultAnchorDateViews.Count &gt; 1"/>
+    <DateInput
+      editable="invoiceStreamView.OverrideAnchorDates"
+      id="OverridingAnchorDate"
+      label="displaykey.Web.AccountDetailInvoices.InvoiceStream.OverridingAnchorDate"
+      required="true"
+      value="invoiceStreamView.OverridingAnchorDateViews[0].Date"
+      visible="invoiceStreamView.OverrideAnchorDates"/>
+    <DateInput
+      editable="invoiceStreamView.OverrideAnchorDates"
+      id="OverridingSecondAnchorDate"
+      label="displaykey.Web.AccountDetailInvoices.InvoiceStream.OverridingSecondAnchorDate"
+      required="true"
+      value="invoiceStreamView.OverridingAnchorDateViews[1].Date"
+      visible="invoiceStreamView.OverrideAnchorDates &amp;&amp; invoiceStreamView.OverridingAnchorDateViews.Count &gt; 1"/>
+  </InputSet>
+</PCF>

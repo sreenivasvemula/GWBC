@@ -1,0 +1,83 @@
+<?xml version="1.0"?>
+<entity
+  xmlns="http://guidewire.com/datamodel"
+  abstract="true"
+  desc="Money received from an external source."
+  entity="BaseMoneyReceived"
+  final="false"
+  setterScriptability="hidden"
+  subpackage="payment"
+  table="basemoneyreceived"
+  type="retireable">
+  <implementsEntity
+    name="Validatable"/>
+  <implementsEntity
+    name="InCurrencySilo"/>
+  <typekey
+    desc="Reason why the received money has been reversed, if any. NULL indicates that it has not been reversed."
+    exportable="false"
+    name="ReversalReason"
+    nullok="true"
+    setterScriptability="hidden"
+    typelist="PaymentReversalReason"/>
+  <foreignkey
+    columnName="BaseDistID"
+    desc="The associated base dist if it exists"
+    fkentity="BaseDist"
+    name="BaseDist"
+    nullok="true"
+    setterScriptability="hidden"/>
+  <foreignkey
+    columnName="ReportingGroupID"
+    desc="The reporting group assigned, if any"
+    exportasid="true"
+    fkentity="ReportingGroup"
+    name="ReportingGroup"
+    nullok="true"/>
+  <column
+    createhistogram="true"
+    desc="The date that this Money was executed (i.e., when a transaction was issued.) This field is set internally and should NOT be editable through the UI"
+    name="AppliedDate"
+    nullok="true"
+    setterScriptability="doesNotExist"
+    type="datetime"/>
+  <column
+    desc="The date that the funds associated with this AgencyMoneyReceived were physically received  (e.g., the date the check arrived in the mail).  This is not necessarily the date that the money was executed, but instead a customer supplied date about when they want to consider the money received.  This field should be editable through the UI"
+    name="ReceivedDate"
+    nullok="false"
+    type="datetime"/>
+  <column
+    desc="The date on which the payment was reversed, if any. Null if the payment has not been reversed."
+    name="ReversalDate"
+    nullok="true"
+    createhistogram="true"
+    setterScriptability="doesNotExist"
+    type="datetime"/>
+  <edgeForeignKey
+    desc="This is for modifications.  If not NULL, this points to the BaseMoneyReceived that this BaseMoneyReceived modifies."
+    edgeTableName="ModifiedFromPMR"
+    exportable="false"
+    fkentity="BaseMoneyReceived"
+    ignoreforevents="true"
+    name="MoneyBeingModified"
+    nullok="true"
+    setterScriptability="hidden"/>
+  <column
+    desc="Optional name to identify this money and (if it exists) its associated distribution.  May be useful for identifying promises or saved distributions."
+    name="Name"
+    nullok="true"
+    type="shorttext"/>
+  <checkconstraint
+    desc="The subtype must be one of AgencyBillMoneyRcvd, DirectBillMoneyRcvd, ZeroDollarAMR, ZeroDollarReversal or ZeroDollarDMR"
+    stagingtablepredicate="Subtype IN ('AgencyBillMoneyRcvd', 'DirectBillMoneyRcvd', 'ZeroDollarDMR', 'ZeroDollarAMR', 'ZeroDollarReversal')"/>
+  <checkconstraint
+    desc="We don't allow saved (un-executed) PaymentMoneyReceiveds, so AppliedDate should always be non-null for loaded PaymentMoneyReceiveds."
+    stagingtablepredicate="AppliedDate IS NOT NULL"/>
+  <checkconstraint
+    desc="If the Amount equals 0 the subtype type must be either ZeroDollarAMR, ZeroDollarReversal or ZeroDollarDMR"
+    stagingtablepredicate="Amount != 0 OR Subtype IN ('ZeroDollarDMR', 'ZeroDollarAMR', 'ZeroDollarReversal')"/>
+  <dbcheckbuilder
+    className="com.guidewire.bc.system.database.dbchecks.payment.MismatchSubtypeInEdgeTableDBCheckBuilder"/>
+  <dbcheckbuilder
+    className="com.guidewire.bc.system.database.dbchecks.payment.BaseMoneyReceivedDBCheckBuilder"/>
+</entity>

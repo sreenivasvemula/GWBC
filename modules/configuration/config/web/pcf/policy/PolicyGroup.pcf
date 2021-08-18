@@ -1,0 +1,48 @@
+<?xml version="1.0"?>
+<PCF
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:noNamespaceSchemaLocation="../../../../../pcf.xsd">
+  <!-- LocationGroup for the "Policy" tab pages -->
+  <LocationGroup
+    acceleratedMenuActions="PolicyDetailAcceleratedMenuActions(plcyPeriod)"
+    afterEnter="gw.api.web.policy.PolicyPeriodUtil.addToRecentlyViewedPolicyPeriods(plcyPeriod)"
+    canVisit="plcyPeriod.ViewableByCurrentUser"
+    id="PolicyGroup"
+    infoBar="PolicyInfoBar(plcyPeriod)"
+    menuActions="PolicyDetailMenuActions(plcyPeriod)"
+    menuLinks="PolicyDetailMenuLinks(plcyPeriod)"
+    parent="PolicyForward()"
+    title="&quot;&quot;">
+    <LocationEntryPoint
+      signature="PolicyGroup(plcyPeriod : PolicyPeriod)"/>
+    <Variable
+      name="plcyPeriod"
+      type="PolicyPeriod"/>
+    <LocationRef
+      location="PolicyDetailSummary(plcyPeriod)"/>
+    <LocationRef
+      location="PolicyDetailCommissions(plcyPeriod)"/>
+    <LocationRef
+      location="PolicyDetailContacts(plcyPeriod)"/>
+    <LocationRef
+      location="PolicyDetailDelinquencies(plcyPeriod)"/>
+    <LocationRef
+      location="PolicyDetailCharges(plcyPeriod)"/>
+    <LocationRef
+      location="PolicyDetailDocuments(plcyPeriod)"/>
+    <LocationRef
+      location="PolicyDetailHistory(plcyPeriod)"/>
+    <LocationRef
+      location="PolicyDetailJournal(plcyPeriod)"/>
+    <LocationRef
+      location="PolicyDetailLedger(plcyPeriod)"/>
+    <LocationRef
+      location="PolicyDetailNotes(plcyPeriod, true)"/>
+    <LocationRef
+      location="PolicyDetailPayments(plcyPeriod)"/>
+    <LocationRef
+      location="PolicyDetailTransactions(plcyPeriod)"/>
+    <LocationRef
+      location="PolicyDetailTroubleTickets(plcyPeriod, true, true)"/>
+  </LocationGroup>
+</PCF>

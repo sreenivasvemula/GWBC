@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?><entity xmlns="http://guidewire.com/datamodel" desc="Maps PolicyCommissions to the Charges with which their commission is calculated." entity="ChargeCommission" platform="false" setterScriptability="hidden" subpackage="account" table="chargecommission" type="retireable">
+  <implementsEntity name="TAccountOwner"/>
+  <typekey desc="The criteria by which this charge will earn direct bill commission." name="PayableCriteria" nullok="false" typelist="PayableCriteria"/>
+  <foreignkey columnName="ChargeID" fkentity="Charge" importableagainstexistingobject="false" name="Charge" nullok="false" setterScriptability="hidden"/>
+  <foreignkey columnName="HiddenTAccountContainerID" exportable="false" fkentity="ChargeCmsnTAcctContainer" getterScriptability="doesNotExist" importableagainstexistingobject="false" name="HiddenTAccountContainer" nullok="false" setterScriptability="doesNotExist"/>
+  <foreignkey columnName="PolicyCommissionID" fkentity="PolicyCommission" importableagainstexistingobject="false" name="PolicyCommission" nullok="false" setterScriptability="hidden"/>
+  <edgeForeignKey desc="If non-null, indicates that this ChargeCommission was created as part of a point-in-time transfer.                          The original ChargeCommission is referenced using this edge foreign key" edgeTableName="origchcmsn" exportable="false" fkentity="ChargeCommission" ignoreforevents="true" importableagainstexistingobject="false" loadable="true" name="OriginalChargeCmsn" nullok="true" setterScriptability="doesNotExist"/>
+  <index desc="Legacy" name="chargecmsn" unique="true">
+    <indexcol keyposition="1" name="PolicyCommissionID"/>
+    <indexcol keyposition="2" name="ChargeID"/>
+  </index>
+  <index desc="Legacy" name="taccountcontainer" unique="true">
+    <indexcol keyposition="1" name="HiddenTAccountContainerID"/>
+  </index>
+  <!-- NOTE pdalbora 27-Jul-2006: Intentionally leaving Retired off this index. Each new PolicyCommission
+mints a new TAccountContainer. -->
+  <index desc="Index for sum queries" name="policyCmsn">
+    <indexcol keyposition="1" name="PolicyCommissionID"/>
+    <indexcol keyposition="2" name="Retired"/>
+    <indexcol keyposition="3" name="HiddenTAccountContainerID"/>
+  </index>
+  <dbcheckbuilder className="com.guidewire.bc.system.database.dbchecks.account.ChargeCommissionChargeTypeDBCheckBuilder"/>
+  <dbcheckbuilder className="com.guidewire.bc.system.database.dbchecks.invoice.ItemCommissionDenormFieldsDBCheckBuilder"/>
+</entity>

@@ -1,0 +1,143 @@
+<?xml version="1.0"?>
+<PCF
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:noNamespaceSchemaLocation="../../../../../../pcf.xsd">
+  <PanelSet
+    id="CommissionPlanDetailPanelSet">
+    <Require
+      name="commissionPlan"
+      type="CommissionPlan"/>
+    <Variable
+      initialValue="not commissionPlan.InUse"
+      name="planNotInUse"
+      type="Boolean"/>
+    <Variable
+      initialValue="gw.api.util.LocaleUtil.getAllLanguages().Count &gt; 1"
+      name="hasMultipleLanguages"/>
+    <DetailViewPanel>
+      <InputColumn>
+        <Label
+          id="PlanDetails"
+          label="displaykey.Web.CommissionPlan.PlanDetails"/>
+        <Input
+          editable="planNotInUse"
+          id="Name"
+          label="displaykey.Web.CommissionPlan.Name"
+          required="true"
+          value="commissionPlan.Name"/>
+        <DateInput
+          editable="planNotInUse"
+          id="EffectiveDate"
+          label="displaykey.Web.CommissionPlan.EffectiveDate"
+          required="true"
+          value="commissionPlan.EffectiveDate"/>
+        <DateInput
+          editable="true"
+          id="ExpirationDate"
+          label="displaykey.Web.CommissionPlan.ExpirationDate"
+          validationExpression="commissionPlan.hasValidExpirationDate() ? null : displaykey.Web.Plan.ExpirationDate.ValidationError"
+          value="commissionPlan.ExpirationDate"/>
+        <TextInput
+          id="Currency"
+          label="displaykey.Web.CommissionPlan.Currency"
+          value="commissionPlan.Currency"/>
+      </InputColumn>
+      <InputColumn>
+        <Label
+          id="AllowedTiers"
+          label="displaykey.Web.CommissionPlan.AllowedTiers"/>
+        <InputIterator
+          elementName="producerTier"
+          id="Tiers"
+          validationExpression="commissionPlan.hasAllowedTier() ? null : displaykey.Web.CommissionPlan.NoAllowedTiersFound"
+          validationLabel="displaykey.Web.CommissionPlan.AllowedTiers"
+          value="commissionPlan.getProducerTiers()">
+          <CheckBoxInput
+            editable="true"
+            id="Tier"
+            label="producerTier"
+            value="producerTier.Allowed"/>
+        </InputIterator>
+      </InputColumn>
+      <InputFooterSection>
+        <InputDivider/>
+      </InputFooterSection>
+    </DetailViewPanel>
+    <PanelRef
+      def="LocalizedValuesDV(commissionPlan, { &quot;Name&quot;}, { displaykey.Web.CommissionPlan.Name })"
+      editable="not commissionPlan.InUse"/>
+    <PanelRef>
+      <TitleBar
+        title="displaykey.Web.CommissionPlan.SubPlans.Title"/>
+      <Toolbar>
+        <IteratorButtons
+          iterator="SubPlansLV"
+          removeFlags="all Removable"/>
+      </Toolbar>
+      <ListDetailPanel
+        selectionName="selectedSubPlan"
+        selectionType="CommissionSubPlan">
+        <ListViewPanel
+          id="SubPlansLV">
+          <RowIterator
+            editable="true"
+            elementName="commissionSubPlan"
+            hideCheckBoxesIfReadOnly="true"
+            toCreateAndAdd="addSubPlan()"
+            toRemove="commissionPlan.removeSubPlan(commissionSubPlan as CondCmsnSubPlan)"
+            value="commissionPlan.SubPlans">
+            <ToolbarFlag
+              condition="commissionSubPlan typeis CondCmsnSubPlan and (planNotInUse or commissionSubPlan.New)"
+              name="Removable"/>
+            <Row>
+              <Cell
+                id="SubPlansLV_Priority"
+                label="displaykey.Web.CommissionPlan.SubPlans.Priority"
+                sortOrder="1"
+                value="commissionSubPlan.Priority"/>
+              <Cell
+                id="SubPlansLV_SubplanName"
+                label="displaykey.Web.CommissionPlan.SubPlans.SubplanName"
+                value="commissionSubPlan.Name"/>
+              <LinkCell
+                id="MovePriority"
+                label="displaykey.Web.CommissionPlan.SubPlans.MovePriority">
+                <Link
+                  action="(commissionSubPlan as CondCmsnSubPlan).changePriority(-1)"
+                  hideIfReadOnly="true"
+                  icon="&quot;arrow_up.png&quot;"
+                  id="SubPlansLV_MoveUp"
+                  label="displaykey.Web.CommissionPlan.SubPlans.MoveUp"
+                  tooltip="displaykey.Web.CommissionPlan.SubPlans.MoveUp"
+                  visible="commissionSubPlan typeis CondCmsnSubPlan and commissionSubPlan.Priority &gt; 1"/>
+                <Link
+                  action="(commissionSubPlan as CondCmsnSubPlan).changePriority(1)"
+                  hideIfReadOnly="true"
+                  icon="&quot;arrow_down.png&quot;"
+                  id="SubPlansLV_MoveDown"
+                  label="displaykey.Web.CommissionPlan.SubPlans.MoveDown"
+                  tooltip="displaykey.Web.CommissionPlan.SubPlans.MoveUp"
+                  visible="commissionSubPlan typeis CondCmsnSubPlan and commissionSubPlan.Priority &lt; commissionPlan.SubPlans.length - 1"/>
+              </LinkCell>
+            </Row>
+          </RowIterator>
+        </ListViewPanel>
+        <PanelRef
+          def="CommissionSubPlanDetailCV(selectedSubPlan)"/>
+      </ListDetailPanel>
+    </PanelRef>
+    <Code><![CDATA[function addSubPlan() : CondCmsnSubPlan {
+        var subPlan = commissionPlan.addSubPlan()
+        // Init defaults
+        subPlan.AllLOBCodes = true
+        subPlan.AllTerms = true
+        subPlan.getRenewalRange(0, -1).Covered = true
+        subPlan.AssignedRisk = AssignedRiskRestriction.TC_ALL
+        subPlan.AllSegments = true
+        subPlan.AllEvaluations = true
+        subPlan.AllJurisdictions = true
+        subPlan.AllUWCompanies = true
+        return subPlan
+      }]]></Code>
+  </PanelSet>
+</PCF>

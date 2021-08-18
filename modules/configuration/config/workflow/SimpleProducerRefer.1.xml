@@ -1,0 +1,19 @@
+<Workflow subtype="SimpleProducerRefer" version="1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="workflow.xsd">
+  <Context>
+    <Symbol name="dlnqProcess" type="DelinquencyProcess" value="Workflow.DelinquencyProcess"/>
+    <Symbol name="acct" type="Account" value="Workflow.DelinquencyProcess.Account"/>
+  </Context>
+  <Start firstStep="Cancel"/>
+  <ManualStep id="Cancel" layoutid="2000223428">
+    <Trigger desc="" id="Cancel" layoutid="1097926217" nextStep="Cancellation"></Trigger>
+  </ManualStep>
+  <Outcome id="Cancellation" layoutid="1046144258"/>
+  <Layout>
+    <BoxUI height="4" layoutid="2000223428" width="13" x="-5"/>
+    <BoxUI height="4" layoutid="1046144258" width="13" x="-5" y="10"/>
+    <ArrowUI layoutid="1097926217" visible="true">
+      <PointUI x="1" y="4"/>
+      <PointUI x="1" y="10"/>
+    </ArrowUI>
+  </Layout>
+</Workflow>

@@ -1,0 +1,40 @@
+<?xml version="1.0"?>
+<PCF
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:noNamespaceSchemaLocation="../../../../../pcf.xsd">
+  <Wizard
+    beforeCommit="uiWriteoff.doWriteOff()"
+    canVisit="perm.System.agencywo"
+    id="ProducerNegativeWriteoffWizard">
+    <LocationEntryPoint
+      signature="ProducerNegativeWriteoffWizard(producer : Producer)"/>
+    <Variable
+      name="producer"
+      type="Producer"/>
+    <Variable
+      initialValue="createUIWriteoff()"
+      name="uiWriteoff"
+      type="web.accounting.UIWriteOffCreation"/>
+    <WizardStep
+      id="DetailsStep"
+      onExit="onExitFromDetailsStep()"
+      screen="NewNegativeWriteoffWizardDetailsStepScreen(uiWriteoff)"
+      title="displaykey.Web.ProducerNegativeWriteoffWizard.DetailsStep.Title"/>
+    <WizardStep
+      allowFinish="uiWriteoff != null &amp;&amp; uiWriteoff.Amount != null"
+      id="ConfirmationStep"
+      screen="NewNegativeWriteoffWizardConfirmationStepScreen(uiWriteoff)"
+      title="displaykey.Web.ProducerNegativeWriteoffWizard.ConfirmationStep.Title"/>
+    <Code><![CDATA[
+              function onExitFromDetailsStep() {
+                uiWriteoff.initiateApprovalActivityIfUserLacksAuthority()
+              }
+
+              function createUIWriteoff(): web.accounting.UIWriteOffCreation {
+                var factory = new web.accounting.WriteOffFactory(CurrentLocation)
+                var writeOff = factory.createProducerNegativeWriteOff(producer)
+                return new web.accounting.UIWriteOffCreation(writeOff)
+              }
+      ]]></Code>
+  </Wizard>
+</PCF>

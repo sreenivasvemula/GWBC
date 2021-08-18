@@ -1,0 +1,943 @@
+<?xml version="1.0"?>
+<PCF
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:noNamespaceSchemaLocation="../../../../../pcf.xsd">
+  <Screen
+    id="EditDBPaymentScreen">
+    <Require
+      name="paymentView"
+      type="gw.api.web.payment.DirectBillPaymentView"/>
+    <Variable
+      initialValue="false"
+      name="isInOverrideMode"
+      type="Boolean"/>
+    <Variable
+      initialValue="initializeShouldUseUnappliedFund()"
+      name="shouldUseUnappliedFund"
+      type="boolean"/>
+    <Variable
+      initialValue="paymentView.Groups"
+      name="itemGroups"
+      recalculateOnRefresh="true"
+      type="List&lt;gw.api.web.payment.DBPaymentDistItemGroup&gt;"/>
+    <Variable
+      initialValue="DirectBillPmntAcctRole.TC_PAYER"
+      name="accountRole"
+      type="DirectBillPmntAcctRole"/>
+    <Variable
+      initialValue="DirectBillPmntAccts.TC_ACCOUNT"
+      name="accountsSelected"
+      type="DirectBillPmntAccts"/>
+    <Variable
+      initialValue="new web.account.AccountSearchConverter()"
+      name="accountSearchConverter"
+      type="web.account.AccountSearchConverter"/>
+    <Variable
+      initialValue="new gw.payment.PaymentInstrumentRange((paymentView.TargetAccount.PaymentInstruments))"
+      name="paymentInstrumentRange"
+      type="gw.payment.PaymentInstrumentRange"/>
+    <Toolbar>
+      <EditButtons
+        updateLabel="displaykey.Web.NewDirectBillPayment.Execute"
+        updateVisible="(paymentView.Payment.DistItems.HasElements or paymentView.Payment.SuspDistItemsThatHaveNotBeenReleased.HasElements or paymentView.Payment.NonReversedCollateralItems.HasElements) and paymentView.TargetAccount != null"/>
+      <ToolbarButton
+        action="paymentView.setIsExecuteWithoutDistribution(); CurrentLocation.commit()"
+        confirmMessage="displaykey.Web.NewDirectBillPayment.ThrowOutOverridesWarning"
+        id="ExecuteWithoutDistribution"
+        label="displaykey.Web.NewDirectBillPayment.ExecuteWithoutDistribution"
+        showConfirmMessage="paymentView.OneOrMoreItemsHaveOverrides or paymentView.Payment.SuspDistItemsThatHaveNotBeenReleased.HasElements"
+        visible="paymentView.CanExecuteWithoutDistribution and paymentView.TargetAccount != null"/>
+    </Toolbar>
+    <DetailViewPanel
+      id="PaymentDetailsDV">
+      <InputColumn>
+        <Label
+          label="displaykey.Web.NewDirectBillPayment.Account"/>
+        <Input
+          id="OriginatingAccountName"
+          label="displaykey.Web.NewDirectBillPayment.OriginatingAccountNumber"
+          value="paymentView.OriginatingAccount"
+          visible="paymentView.isMove()"/>
+        <Input
+          id="OriginatingUnappliedFunds"
+          label="displaykey.Web.NewDirectBillPayment.OriginatingUnappliedFund"
+          value="paymentView.OriginatingUnappliedFund"
+          visible="paymentView.isMove() and paymentView.OriginatingUnappliedFund.Account.DesignatedUnappliedFundsOrdered.HasElements"/>
+        <Input
+          editable="paymentView.isMove()"
+          id="AccountNumber"
+          inputConversion="accountSearchConverter.getAccount(VALUE)"
+          label="displaykey.Web.NewDirectBillPayment.AccountNumber"
+          onPick="paymentView.IncludeOnlyCriteria = paymentView.TargetAccount.DistributionLimitTypeFromPlugin; invalidateDistItemsIterator(); recalculateDistribution();"
+          required="true"
+          validationExpression="return !paymentView.Payment.Account.DesignatedUnappliedFundsOrdered.HasElements ? validateAccountNumber() : null;"
+          value="paymentView.TargetAccount">
+          <MenuItem
+            action="AccountSearchPopup.push()"
+            icon="&quot;search.png&quot;"
+            id="AccountPicker"/>
+          <PostOnChange
+            onChange="paymentView.IncludeOnlyCriteria = paymentView.TargetAccount.DistributionLimitTypeFromPlugin; invalidateDistItemsIterator(); recalculateDistribution();"/>
+        </Input>
+        <Input
+          id="AccountName"
+          label="displaykey.Web.NewDirectBillPayment.AccountName"
+          value="paymentView.TargetAccount.AccountNameLocalized"/>
+        <Label
+          label=" (paymentView.isCreditDistribution()) ? displaykey.Web.NewDirectBillPayment.CreditDistributionData.Label : displaykey.Web.NewDirectBillPayment.PaymentData.Label"/>
+        <DateInput
+          id="PaymentDate"
+          label="displaykey.Web.NewDirectBillPayment.PaymentData.Date"
+          required="true"
+          value="paymentView.MoneyReceived.ReceivedDate"/>
+        <MonetaryAmountInput
+          currency="paymentView.TargetAccount.Currency"
+          editable="!paymentView.isMove()"
+          formatType="currency"
+          id="Amount"
+          label="displaykey.Web.NewDirectBillPayment.PaymentData.Amount"
+          required="true"
+          validationExpression="paymentView.MoneyReceived.Amount.IsZero &amp;&amp; !paymentView.isCreditDistribution() ?  displaykey.Web.NewDirectBillPayment.Error.InvalidAmount : null"
+          value="paymentView.MoneyReceived.Amount"
+          visible="!paymentView.isCreditDistribution()">
+          <PostOnChange
+            onChange="if (!paymentView.DoNotEditDistribution) { if (isInOverrideMode) recalculateDistribution() else reallocatePayment() }; "/>
+        </MonetaryAmountInput>
+        <RangeInput
+          editable="paymentView.CanChangeUnapplied"
+          id="UnappliedFunds"
+          label="displaykey.Web.NewDirectBillPayment.PaymentData.UnappliedFund"
+          required="true"
+          validationExpression="validateDesignatedUnapplied()"
+          value="paymentView.TargetUnappliedFund"
+          valueRange="paymentView.Payment.Account.UnappliedFundsOrdered"
+          visible="paymentView.Payment.Account.DesignatedUnappliedFundsOrdered.HasElements">
+          <PostOnChange
+            onChange="shouldUseUnappliedFund = false; recalculateDistribution();"/>
+        </RangeInput>
+        <CheckBoxInput
+          available="UnappliedAmountAvailable.IsPositive"
+          editable="true"
+          id="UseUnappliedFunds"
+          label="displaykey.Web.NewDirectBillPayment.PaymentData.UseUnappliedFundAmount(UnappliedAmountAvailable.render())"
+          value="shouldUseUnappliedFund"
+          visible="!paymentView.DoNotEditDistribution and !paymentView.isMove()">
+          <PostOnChange
+            onChange="if (isInOverrideMode) recalculateDistribution() else reallocatePayment()"/>
+        </CheckBoxInput>
+      </InputColumn>
+      <InputColumn>
+        <Label
+          label="(paymentView.isCreditDistribution()) ? displaykey.Web.NewDirectBillPayment.CreditDistributionDetails :displaykey.Web.NewDirectBillPayment.PaymentDetails"/>
+        <RangeInput
+          editable="!paymentView.isCreditDistribution() and !paymentView.isMove()"
+          id="PaymentInstrument"
+          label="displaykey.Web.NewDirectBillPayment.PaymentInstrument"
+          onPick="paymentInstrumentRange.addPaymentInstrument(paymentView.MoneyReceived.PaymentInstrument)"
+          required="true"
+          value="paymentView.MoneyReceived.PaymentInstrument"
+          valueRange="gw.payment.PaymentInstrumentFilters.applyFilter(paymentInstrumentRange, gw.payment.PaymentInstrumentFilters.directBillPaymentInstrumentFilter)">
+          <MenuItem
+            action="NewPaymentInstrumentPopup.push(gw.payment.PaymentInstrumentFilters.directBillPaymentInstrumentOptions, paymentView.TargetAccount,true)"
+            id="CreateNewPaymentInstrument"
+            label="displaykey.Web.NewPaymentInstrument.CreateNewPaymentInstrument"/>
+          <PostOnChange/>
+        </RangeInput>
+        <TextInput
+          editable="true"
+          id="Description"
+          label="displaykey.Web.NewDirectBillPayment.PaymentData.Description"
+          value="paymentView.MoneyReceived.Description"/>
+        <InputSetRef
+          def="PaymentReceiptInputSet(paymentView.MoneyReceived)"
+          editable="!paymentView.isCreditDistribution() and !paymentView.isMove()"
+          mode="paymentView.MoneyReceived.PaymentInstrument.PaymentMethod"/>
+      </InputColumn>
+      <InputColumn>
+        <Label
+          label="(paymentView.isCreditDistribution()) ? displaykey.Web.NewDirectBillPayment.ThisCreditDistribution.Label : displaykey.Web.NewDirectBillPayment.ThisPayment.Label "/>
+        <MonetaryAmountInput
+          currency="paymentView.TargetAccount.Currency"
+          formatType="currency"
+          id="AmountAvailableToDistribute"
+          label="displaykey.Web.NewDirectBillPayment.ThisPayment.Available"
+          value="AmountAvailableToDistribute"
+          visible="!paymentView.DoNotEditDistribution and !paymentView.isMove()"/>
+        <MonetaryAmountInput
+          currency="paymentView.TargetAccount.Currency"
+          formatType="currency"
+          id="DistributedAmount"
+          label="displaykey.Web.NewDirectBillPayment.ThisPayment.Distributed"
+          value="DistributedAmount"/>
+        <MonetaryAmountInput
+          currency="paymentView.TargetAccount.Currency"
+          formatType="currency"
+          id="SuspenseAmount"
+          label="displaykey.Web.NewDirectBillPayment.ThisPayment.Suspense"
+          value="SuspenseAmount"/>
+        <MonetaryAmountInput
+          currency="paymentView.TargetAccount.Currency"
+          formatType="currency"
+          id="CollateralAmount"
+          label="displaykey.Web.NewDirectBillPayment.ThisPayment.Collateral"
+          value="CollateralAmount"/>
+        <MonetaryAmountInput
+          currency="paymentView.TargetAccount.Currency"
+          formatType="currency"
+          id="RemainingAmount"
+          label="displaykey.Web.NewDirectBillPayment.ThisPayment.Remaining"
+          value="RemainingAmount"/>
+      </InputColumn>
+    </DetailViewPanel>
+    <PanelSet
+      visible="!paymentView.DoNotEditDistribution and paymentView.TargetAccount != null">
+      <PanelRef
+        id="DistributionOverridePanel">
+        <TitleBar
+          title="displaykey.Web.NewDirectBillPayment.PreviewDistributionTitle"/>
+        <Toolbar
+          id="OverrideToolbar"
+          visible="!paymentView.DoNotEditDistribution">
+          <ToolbarButton
+            action="isInOverrideMode = !isInOverrideMode"
+            id="OverrideModeButton"
+            label="displaykey.Web.NewDirectBillPayment.OverrideDistribution"
+            showConfirmMessage="false"
+            visible="!isInOverrideMode"/>
+        </Toolbar>
+        <DetailViewPanel>
+          <InputColumn/>
+        </DetailViewPanel>
+      </PanelRef>
+    </PanelSet>
+    <CardViewPanel>
+      <Card
+        id="distributionCard"
+        title="displaykey.Web.NewDirectBillPayment.DistributionCard">
+        <PanelRef
+          id="SelectItemsPanel"
+          visible="!paymentView.DoNotEditDistribution and paymentView.TargetAccount != null">
+          <Toolbar
+            visible="isInOverrideMode">
+            <ToolbarRangeInput
+              editable="true"
+              id="selectItemsWhere"
+              label="displaykey.Web.NewDirectBillPayment.SelectItemsWhereThe"
+              required="true"
+              value="accountRole"
+              valueRange="DirectBillPmntAcctRole.getTypeKeys(false)">
+              <PostOnChange
+                onChange="resetDistItemsWithNewCriteria()"/>
+            </ToolbarRangeInput>
+            <ToolbarRangeInput
+              editable="true"
+              id="selectItemsIs"
+              label="displaykey.Web.NewDirectBillPayment.Is"
+              required="true"
+              value="accountsSelected"
+              valueRange="DirectBillPmntAccts.getTypeKeys(false)">
+              <PostOnChange
+                onChange="resetDistItemsWithNewCriteria()"/>
+            </ToolbarRangeInput>
+            <ToolbarRangeInput
+              id="includeOnly"
+              label="displaykey.Web.NewDirectBillPayment.IncludeOnly"
+              required="true"
+              value="paymentView.IncludeOnlyCriteria"
+              valueRange="DistributionLimitType.getTypeKeys(false)">
+              <PostOnChange
+                onChange="resetDistItemsWithNewCriteria()"/>
+            </ToolbarRangeInput>
+            <ToolbarDivider/>
+            <ToolbarButton
+              action="DirectBillAddInvoiceItemsPopup.push( paymentView, AmountAvailableToDistributeLessNonReceivableAmount )"
+              id="AddItems"
+              label="displaykey.Web.NewDirectBillPayment.AddItems"/>
+          </Toolbar>
+          <DetailViewPanel
+            visible="false">
+            <InputColumn/>
+          </DetailViewPanel>
+        </PanelRef>
+        <PanelRef
+          id="DistributionItemsPanel"
+          visible="!paymentView.DoNotEditDistribution and paymentView.TargetAccount != null">
+          <Toolbar>
+            <ToolbarRangeInput
+              id="GroupBy"
+              label="displaykey.Web.NewDirectBillPayment.GroupBy"
+              required="true"
+              sortValueRange="false"
+              value="paymentView.GroupByOption"
+              valueRange="DBPmntGroupingCriteria.getTypeKeys(false)">
+              <PostOnChange
+                onChange="invalidateDistItemsIterator()"/>
+            </ToolbarRangeInput>
+            <ToolbarRangeInput
+              id="Aggregate"
+              label="displaykey.Web.NewDirectBillPayment.Aggregate"
+              required="true"
+              value="paymentView.AggregateOption"
+              valueRange="DBPmntAggregateCriteria.getTypeKeys(false)"
+              visible="!paymentView.GroupByCustom">
+              <PostOnChange/>
+            </ToolbarRangeInput>
+            <ToolbarRangeInput
+              id="InvoiceSortBy"
+              label="displaykey.Web.NewDirectBillPayment.SortBy"
+              required="true"
+              value="paymentView.InvoiceSortOption"
+              valueRange="typekey.DBPmntInvoiceSort.getTypeKeys(false)"
+              visible="paymentView.isAggregateByItem() &amp;&amp; paymentView.isGroupByInvoice()">
+              <PostOnChange/>
+            </ToolbarRangeInput>
+            <ToolbarRangeInput
+              id="TAccountOwnerSortBy"
+              label="displaykey.Web.NewDirectBillPayment.SortBy"
+              required="true"
+              value="paymentView.TAccountOwnerSortOption"
+              valueRange="typekey.TAccountOwnerSort.getTypeKeys(false)"
+              visible="paymentView.isAggregateByItem() &amp;&amp; paymentView.isGroupByTAccountOwner()">
+              <PostOnChange/>
+            </ToolbarRangeInput>
+            <ToolbarDivider/>
+            <ToolbarInput
+              editable="true"
+              id="GoTo"
+              label="displaykey.Web.NewDirectBillPayment.GoTo"
+              value="paymentView.GoToNumber"/>
+            <ToolbarButton
+              action="invalidateDistItemsIterator()"
+              id="GoButton"
+              label="displaykey.Web.NewDirectBillPayment.Go"/>
+            <ToolbarButton
+              action="paymentView.GoToNumber = null; invalidateDistItemsIterator();"
+              id="ClearButton"
+              label="displaykey.Web.NewDirectBillPayment.Clear"/>
+          </Toolbar>
+          <ListViewPanel
+            id="DistributionAmountsLV"
+            validationExpression="validateItems()">
+            <Row
+              renderAsSmartHeader="true"
+              visible="paymentView.isAggregateByItem()">
+              <Cell
+                id="manuallyAddedHeader"/>
+              <Cell
+                id="typeHeader"
+                value="displaykey.Web.NewDirectBillPayment.InvoiceItemTypeColumnLabel"/>
+              <Cell
+                id="invoiceItemPolicyNumberHeader"
+                value="displaykey.Web.NewDirectBillPayment.PolicyPeriodNumber"/>
+              <Cell
+                id="invoiceNumberHeader"
+                value="displaykey.Web.NewDirectBillPayment.InvoiceNumber"/>
+              <Cell
+                id="invoiceDateHeader"
+                value="displaykey.Web.NewDirectBillPayment.Invoice"/>
+              <Cell
+                id="invoiceDueDateHeader"
+                value="displaykey.Web.NewDirectBillPayment.DueDate"/>
+              <Cell
+                id="ownerHeader"
+                value="displaykey.Web.NewDirectBillPayment.Owner"/>
+              <Cell
+                id="payerHeader"
+                value="displaykey.Web.NewDirectBillPayment.Payer"/>
+              <Cell
+                id="amountHeader"
+                value="displaykey.Web.NewDirectBillPayment.ItemAmount"/>
+              <Cell
+                id="unpaidAmountHeader"
+                value="displaykey.Web.NewDirectBillPayment.UnPaidAmount"/>
+              <Cell
+                id="amountToApplyHeader"
+                value="displaykey.Web.NewDirectBillPayment.AmountToApply"/>
+              <Cell
+                id="overrideAmountHeader"
+                value="displaykey.Web.NewDirectBillPayment.OverrideAmount"
+                visible="isInOverrideMode"/>
+            </Row>
+            <RowIterator
+              editable="isInOverrideMode"
+              elementName="group"
+              id="groups"
+              pageSize="0"
+              type="gw.api.web.payment.DBPaymentDistItemGroup"
+              value="itemGroups"
+              visible="paymentView.isAggregateByItem()">
+              <Row>
+                <Cell
+                  align="left"
+                  colspan="12"
+                  id="invoiceDescription"
+                  value="group.DisplayName"/>
+              </Row>
+              <RowIterator
+                editable="true"
+                elementName="distItem"
+                id="distItems"
+                pageSize="0"
+                value="group.DistItems">
+                <Variable
+                  initialValue="distItem.InvoiceItem"
+                  name="invoiceItem"
+                  type="InvoiceItem"/>
+                <Variable
+                  initialValue="invoiceItem.Invoice"
+                  name="invoice"
+                  type="Invoice"/>
+                <Variable
+                  initialValue="paymentView.OverrideItemsAndAmount.get(distItem.InvoiceItem)"
+                  name="overrideAmount"
+                  recalculateOnRefresh="true"
+                  type="gw.pl.currency.MonetaryAmount"/>
+                <Variable
+                  initialValue="paymentView.isManuallyAddedItem(distItem.InvoiceItem)"
+                  name="isManuallyAddedItem"
+                  type="boolean"/>
+                <Row>
+                  <Cell
+                    icon="&quot;add.png&quot;"
+                    iconLabel="isManuallyAddedItem ? displaykey.DirectBillDistItem.ManuallyAdded : null"
+                    id="ManuallyAdded"
+                    showHeaderIcon="false"
+                    value="isManuallyAddedItem"/>
+                  <RangeCell
+                    footerLabel="displaykey.Web.NewDirectBillPayment.Subtotal"
+                    id="Description"
+                    value="invoiceItem.DisplayNameAsItemType"
+                    valueRange="web.invoice.InvoiceUtil.getUserVisibleInvoiceItemTypes()"/>
+                  <Cell
+                    action="PolicyDetailSummaryPopup.push(invoiceItem.PolicyPeriod)"
+                    id="InvoiceItemPolicyNumber"
+                    value="invoiceItem.PolicyPeriod"
+                    valueVisible="invoiceItem.PolicyPeriod != null"/>
+                  <Cell
+                    align="right"
+                    id="InstallmentNumber"
+                    value="invoiceItem.Invoice.InvoiceNumber"/>
+                  <Cell
+                    id="Invoice"
+                    sortOrder="1"
+                    value="invoiceItem.Invoice"/>
+                  <DateCell
+                    id="DueDate"
+                    value="invoiceItem.InvoiceDueDate"/>
+                  <Cell
+                    action="AccountDetailSummaryPopup.push(invoiceItem.Owner)"
+                    enableSort="false"
+                    id="itemOwner"
+                    value="invoiceItem.Owner"/>
+                  <Cell
+                    action="if ( invoiceItem.Payer typeis Account ) { AccountDetailSummaryPopup.push(invoiceItem.Payer) } else { ProducerDetailPopup.push(invoiceItem.Payer as Producer) }"
+                    enableSort="false"
+                    id="itemPayer"
+                    value="invoiceItem.Payer"/>
+                  <MonetaryAmountCell
+                    align="left"
+                    currency="distItem.Currency"
+                    footerSumValue="distItem.InvoiceItem.Amount"
+                    formatType="currency"
+                    id="Amount"
+                    required="true"
+                    value="invoiceItem.Amount">
+                    <PostOnChange/>
+                  </MonetaryAmountCell>
+                  <MonetaryAmountCell
+                    align="right"
+                    currency="distItem.Currency"
+                    footerSumValue="distItem.InvoiceItem.GrossUnsettledAmount"
+                    formatType="currency"
+                    id="UnpaidAmount"
+                    required="true"
+                    value="invoiceItem.GrossUnsettledAmount"/>
+                  <MonetaryAmountCell
+                    currency="distItem.Currency"
+                    footerSumValue="distItem.GrossAmountToApply"
+                    formatType="currency"
+                    id="DistributionAmount"
+                    value="distItem.GrossAmountToApply"/>
+                  <MonetaryAmountCell
+                    currency="distItem.Currency"
+                    editable="isInOverrideMode"
+                    enableSort="false"
+                    formatType="currency"
+                    id="OverrideAmount"
+                    value="overrideAmount"
+                    visible="isInOverrideMode">
+                    <PostOnChange
+                      onChange="paymentView.onOverrideChange(distItem, overrideAmount); recalculateDistribution();"/>
+                  </MonetaryAmountCell>
+                </Row>
+              </RowIterator>
+            </RowIterator>
+            <RowIterator
+              editable="isInOverrideMode"
+              elementName="group"
+              id="groupsAggInvoice"
+              pageSize="0"
+              value="itemGroups"
+              visible="paymentView.isAggregateBySummary() &amp;&amp; paymentView.isGroupByInvoice()">
+              <Variable
+                initialValue="paymentView.isGroupByInvoice() ? (group as gw.api.web.payment.DBPaymentDistItemsForInvoice).Invoice as AccountInvoice : null"
+                name="invoice"
+                type="AccountInvoice"/>
+              <Row
+                id="invoiceAggregation">
+                <Cell
+                  id="InvoiceNumber"
+                  label="displaykey.Web.NewDirectBillPayment.InvoiceNumber"
+                  value="invoice.InvoiceNumber"/>
+                <Cell
+                  action="AccountDetailSummary.push(invoice.Account)"
+                  footerLabel="displaykey.Web.NewDirectBillPayment.Subtotal"
+                  id="AccountNumber"
+                  label="displaykey.Web.NewDirectBillPayment.AccountNumber"
+                  value="invoice.Account"/>
+                <DateCell
+                  id="InvoiceDate"
+                  label="displaykey.Web.NewDirectBillPayment.EventDate"
+                  value="invoice.EventDate"/>
+                <DateCell
+                  id="InvoiceDueDate"
+                  label="displaykey.Web.NewDirectBillPayment.DueDate"
+                  value="invoice.DueDate"/>
+                <TypeKeyCell
+                  id="InvoiceStatus"
+                  label="displaykey.Web.NewDirectBillPayment.Status"
+                  value="invoice.Status"/>
+                <MonetaryAmountCell
+                  currency="invoice.Currency"
+                  footerSumValue="group.UnpaidAmount"
+                  formatType="currency"
+                  id="InvoiceUnpaidAmount"
+                  label="displaykey.Web.NewDirectBillPayment.UnPaidAmount"
+                  value="group.UnpaidAmount"/>
+                <MonetaryAmountCell
+                  currency="invoice.Currency"
+                  footerSumValue="group.Allocation"
+                  formatType="currency"
+                  id="DistributionAmount"
+                  label="displaykey.Web.NewDirectBillPayment.AmountToApply"
+                  value="group.Allocation"/>
+                <MonetaryAmountCell
+                  currency="invoice.Currency"
+                  editable="isInOverrideMode"
+                  enableSort="false"
+                  formatType="currency"
+                  id="OverrideAmount"
+                  label="displaykey.Web.NewDirectBillPayment.OverrideAmount"
+                  value="group.OverrideAmount"
+                  visible="isInOverrideMode">
+                  <PostOnChange
+                    onChange="recalculateDistribution()"
+                    target="DATA_ONLY"/>
+                </MonetaryAmountCell>
+                <Cell
+                  id="emptyCell"/>
+                <Cell
+                  id="emptyCell2"/>
+                <Cell
+                  id="emptyCell3"/>
+                <Cell
+                  id="emptyCell4"/>
+              </Row>
+            </RowIterator>
+            <RowIterator
+              editable="isInOverrideMode"
+              elementName="group"
+              id="groupsAggTAccountOwner"
+              pageSize="0"
+              value="itemGroups"
+              visible="paymentView.isAggregateBySummary() &amp;&amp; paymentView.isGroupByTAccountOwner()">
+              <Variable
+                initialValue="paymentView.isGroupByTAccountOwner() ? (group as gw.api.web.payment.DBPaymentDistItemsForTAccountOwner).TAccountOwner : null"
+                name="tAccountOwner"
+                type="TAccountOwner"/>
+              <Row
+                id="tAccountOwnerAggregation">
+                <Cell
+                  id="TAccountType"
+                  label="displaykey.Web.NewDirectBillPayment.Type"
+                  sortOrder="1"
+                  value="(group as gw.api.web.payment.DBPaymentDistItemsForTAccountOwner).TAccountOwnerType"/>
+                <Cell
+                  action="AccountDetailSummary.push(getAccount(tAccountOwner))"
+                  footerLabel="displaykey.Web.NewDirectBillPayment.Subtotal"
+                  id="AggAccountNumber"
+                  label="displaykey.Web.NewDirectBillPayment.AccountNumber"
+                  sortOrder="2"
+                  value="getAccount(tAccountOwner)"/>
+                <Cell
+                  action="PolicyDetailSummaryPopup.push(getPolicyPeriod(tAccountOwner))"
+                  id="AggPolicyNumber"
+                  label="displaykey.Web.NewDirectBillPayment.PolicyPeriodNumber"
+                  value="getPolicyPeriod(tAccountOwner)"
+                  valueVisible="getPolicyPeriod(tAccountOwner) != null"/>
+                <DateCell
+                  id="PolicyEffectiveDate"
+                  label="displaykey.Web.NewDirectBillPayment.EffectiveDate"
+                  sortOrder="3"
+                  value="tAccountOwner typeis PolicyPeriod ? tAccountOwner.PolicyPerEffDate : null"/>
+                <MonetaryAmountCell
+                  currency="tAccountOwner.Currency"
+                  footerSumValue="group.UnbilledAmount"
+                  formatType="currency"
+                  id="UnbilledBalance"
+                  label="displaykey.Web.NewDirectBillPayment.Unbilled"
+                  value="group.UnbilledAmount"/>
+                <MonetaryAmountCell
+                  currency="tAccountOwner.Currency"
+                  footerSumValue="group.BilledAmount"
+                  formatType="currency"
+                  id="CurrentBalance"
+                  label="displaykey.Web.NewDirectBillPayment.Billed"
+                  value="group.BilledAmount"/>
+                <MonetaryAmountCell
+                  currency="tAccountOwner.Currency"
+                  footerSumValue="group.DueAmount"
+                  formatType="currency"
+                  id="PastDueBalance"
+                  label="displaykey.Web.NewDirectBillPayment.PastDue"
+                  value="group.DueAmount"/>
+                <MonetaryAmountCell
+                  currency="tAccountOwner.Currency"
+                  footerSumValue="group.Amount"
+                  formatType="currency"
+                  id="TotalBalance"
+                  label="displaykey.Web.NewDirectBillPayment.Total"
+                  value="group.Amount"/>
+                <MonetaryAmountCell
+                  currency="tAccountOwner.Currency"
+                  footerSumValue="group.PaidAmount"
+                  formatType="currency"
+                  id="PaidBalance"
+                  label="displaykey.Web.NewDirectBillPayment.PaidAmount"
+                  value="group.PaidAmount"/>
+                <MonetaryAmountCell
+                  currency="tAccountOwner.Currency"
+                  footerSumValue="group.UnpaidAmount"
+                  formatType="currency"
+                  id="UnpaidBalance"
+                  label="displaykey.Web.NewDirectBillPayment.UnPaidAmount"
+                  value="group.UnpaidAmount"/>
+                <MonetaryAmountCell
+                  currency="tAccountOwner.Currency"
+                  footerSumValue="group.Allocation"
+                  formatType="currency"
+                  id="AggDistributionAmount"
+                  label="displaykey.Web.NewDirectBillPayment.AmountToApply"
+                  value="group.Allocation"/>
+                <MonetaryAmountCell
+                  currency="tAccountOwner.Currency"
+                  editable="isInOverrideMode"
+                  enableSort="false"
+                  formatType="currency"
+                  id="OverrideAmount"
+                  label="displaykey.Web.NewDirectBillPayment.OverrideAmount"
+                  onPick="recalculateDistribution()"
+                  value="group.OverrideAmount"
+                  visible="isInOverrideMode">
+                  <PostOnChange
+                    onChange="recalculateDistribution()"
+                    target="DATA_ONLY"/>
+                </MonetaryAmountCell>
+              </Row>
+            </RowIterator>
+          </ListViewPanel>
+        </PanelRef>
+      </Card>
+      <Card
+        id="SuspenseItemCard"
+        title="displaykey.Web.NewDirectBillPayment.SuspenseItemCard"
+        visible="isInOverrideMode or (paymentView.Modifying and paymentView.Payment.SuspDistItemsThatHaveNotBeenReleased.HasElements)">
+        <PanelRef
+          id="SuspenseItemPanel">
+          <Toolbar>
+            <IteratorButtons
+              id="suspenseButtons"
+              iterator="SuspenseItems"
+              removeLabel="displaykey.Web.NewDirectBillPayment.Release"/>
+          </Toolbar>
+          <ListViewPanel
+            id="SuspenseItemsLV">
+            <RowIterator
+              editable="isInOverrideMode"
+              elementName="item"
+              hideCheckBoxesIfReadOnly="true"
+              id="SuspenseItems"
+              pageSize="0"
+              toCreateAndAdd="var item = paymentView.MoneyReceived.BaseDist.createAndAddSuspDistItem(); recalculateDistribution(); return item;"
+              toRemove="item.release(); recalculateDistribution();"
+              type="BaseSuspDistItem"
+              value="paymentView.MoneyReceived.BaseDist.SuspDistItemsThatHaveNotBeenReleased">
+              <ToolbarFlag
+                name="SubRow"/>
+              <Row>
+                <Cell
+                  editable="!item.Executed"
+                  footerLabel="displaykey.Web.NewDirectBillPayment.Total"
+                  id="PolicyNumber"
+                  label="displaykey.Web.NewDirectBillPayment.PolicyNumber"
+                  required="true"
+                  value="item.PolicyNumber"/>
+                <MonetaryAmountCell
+                  currency="paymentView.OriginatingAccount.Currency"
+                  editable="!item.Executed"
+                  enableSort="false"
+                  footerSumValue="item.GrossAmountToApply"
+                  formatType="currency"
+                  id="GrossAmountToApply"
+                  label="displaykey.Web.NewDirectBillPayment.GrossAmount"
+                  numCols="10"
+                  required="true"
+                  validationExpression="!item.GrossAmountToApply.IsPositive ? displaykey.Web.NewDirectBillPayment.SuspenseGrossNegative : null"
+                  value="item.GrossAmountToApply">
+                  <PostOnChange
+                    onChange="recalculateDistribution()"/>
+                </MonetaryAmountCell>
+                <Cell
+                  editable="true"
+                  id="Comments"
+                  label="displaykey.Web.NewDirectBillPayment.Comments"
+                  value="item.PaymentComments"/>
+              </Row>
+            </RowIterator>
+          </ListViewPanel>
+        </PanelRef>
+      </Card>
+      <Card
+        id="CollateralItemCard"
+        title="displaykey.Web.NewDirectBillPayment.CollateralItemCard"
+        visible="(isInOverrideMode  or (paymentView.Modifying and paymentView.Payment.NonReversedCollateralItems.HasElements)) and !paymentView.TargetAccount.isListBill()">
+        <PanelRef
+          id="CollateralItemPanel">
+          <Toolbar>
+            <IteratorButtons
+              addVisible=" paymentView.Payment.NonReversedCollateralItems.Count &lt; 1"
+              id="collateralButtons"
+              iterator="CollateralItemLV"/>
+          </Toolbar>
+          <ListViewPanel
+            id="CollateralItemLV">
+            <RowIterator
+              editable="isInOverrideMode"
+              elementName="item"
+              hideCheckBoxesIfReadOnly="true"
+              id="CollateralItems"
+              pageSize="0"
+              toCreateAndAdd="var item =  paymentView.Payment.createAndAddCollateralPaymentItem(); recalculateDistribution(); return item;"
+              toRemove="item.removeFromPayment(); recalculateDistribution();"
+              type="CollateralPaymentItem"
+              value="(paymentView.MoneyReceived.BaseDist as DirectBillPayment).NonReversedCollateralItems">
+              <ToolbarFlag
+                name="SubRow"/>
+              <Row>
+                <Cell
+                  footerLabel="displaykey.Web.NewDirectBillPayment.Total"
+                  id="Collateral"
+                  label="displaykey.Web.NewDirectBillPayment.Collateral"
+                  required="true"
+                  value="paymentView.TargetAccount.Collateral"/>
+                <MonetaryAmountCell
+                  currency="paymentView.OriginatingAccount.Currency"
+                  editable="!item.Executed"
+                  enableSort="false"
+                  footerSumValue="item.GrossAmountToApply"
+                  formatType="currency"
+                  id="GrossAmountToApply"
+                  label="displaykey.Web.NewDirectBillPayment.GrossAmount"
+                  numCols="10"
+                  required="true"
+                  validationExpression="!item.GrossAmountToApply.IsPositive ? displaykey.Web.NewDirectBillPayment.CollateralGrossNegative : null"
+                  value="item.GrossAmountToApply">
+                  <PostOnChange
+                    onChange="recalculateDistribution()"/>
+                </MonetaryAmountCell>
+                <Cell
+                  editable="true"
+                  id="Comments"
+                  label="displaykey.Web.NewDirectBillPayment.Comments"
+                  value="item.PaymentComments"/>
+              </Row>
+            </RowIterator>
+          </ListViewPanel>
+        </PanelRef>
+      </Card>
+    </CardViewPanel>
+    <Code><![CDATA[function validateItems(): String {
+  if (!paymentView.isExecuteWithoutDistribution()){
+    if (!paymentView.Payment.DistItems.hasMatch(\b -> !b.GrossAmountToApply.IsZero)
+            and !paymentView.Payment.SuspDistItemsThatHaveNotBeenReleased.HasElements
+            and !paymentView.Payment.NonReversedCollateralItems.HasElements){
+      return displaykey.Web.NewDirectBillPayment.AtLeastOneItemMustHaveAnAllocation
+    }
+    if (isInOverrideMode){
+      if (paymentView.Payment.DistItems.sum(paymentView.Currency, \b -> b.GrossAmountToApply).add(paymentView.Payment.SuspDistItemsThatHaveNotBeenReleased.sum(paymentView.Currency, \b -> b.GrossAmountToApply)).add(paymentView.Payment.NonReversedCollateralItems.sum(paymentView.Currency, \b -> b.GrossAmountToApply))
+              > AmountAvailableToDistribute) {
+        return displaykey.Web.NewDirectBillPayment.SumOfPaymentItemsIsHigherThanAmountAvailable
+      }
+      var errorString: String
+      errorString = verifyNewlyAddedItems()
+      if (paymentView.isModifying()){
+          errorString = verifyModifiedItems()
+      }
+      return errorString
+    }
+  }
+  return null
+}
+
+function validateAccountNumber(): String {
+  if (paymentView.TargetAccount == null) {
+    return displaykey.Java.Error.InsufficientInformation
+  } else if (paymentView.MovedToSelf){
+    if (paymentView.TargetAccount.PolicyLevelBillingWithDesignatedUnapplied) {
+      return displaykey.Web.MoveDirectBillPayment.CannotMoveToSamePolicy
+    } else {
+      return displaykey.Web.NewDirectBillPayment.CannotMoveToSelf
+    }
+  }
+  return null
+}
+
+function validateDesignatedUnapplied(): String {
+  if (paymentView.MovedToSelf){
+    return displaykey.Web.MoveDirectBillPayment.CannotMoveToSamePolicy
+  }
+  return null
+}
+
+function verifyModifiedItems(): String {
+  var modifiedItems = (paymentView as gw.api.web.payment.ModifyingDirectBillPaymentView).PotentiallyModifiedItems
+  for (modifiedItem in modifiedItems) {
+    if (modifiedItem.DifferentFromModifiedItem){
+      if (modifiedItem.GrossAmountOwed < modifiedItem.GrossAmountToApply and modifiedItem.InvoiceItem.Amount.IsPositive){
+          return displaykey.Web.NewDirectBillPayment.AmountAllocatedIsTooHigh
+      }
+      if (modifiedItem.GrossAmountOwed > modifiedItem.GrossAmountToApply and modifiedItem.InvoiceItem.Amount.IsNegative){
+          return displaykey.Web.NewDirectBillPayment.NegativeItemAllocatedTooMuch
+      }
+    }
+  }
+  return null
+}
+
+function verifyNewlyAddedItems(): String {
+  var newlyAddedItems = paymentView.NewlyAddedItems
+  if (newlyAddedItems.hasMatch(\b -> b.GrossAmountToApply > b.InvoiceItem.GrossUnsettledAmount and b.InvoiceItem.GrossUnsettledAmount.IsPositive)){
+    return displaykey.Web.NewDirectBillPayment.AmountAllocatedIsTooHigh
+  }
+  if (newlyAddedItems.hasMatch(\b -> b.GrossAmountToApply < b.InvoiceItem.GrossUnsettledAmount and b.InvoiceItem.GrossUnsettledAmount.IsNegative)){
+    return displaykey.Web.NewDirectBillPayment.NegativeItemAllocatedTooMuch
+  }
+  if (paymentView.Payment.DistItems.hasMatch(\b -> not (
+          (b.InvoiceItem.GrossUnsettledAmount.Amount > 0 and b.GrossAmountToApply.Amount >= 0) or
+                  (b.InvoiceItem.GrossUnsettledAmount.Amount < 0 and b.GrossAmountToApply.Amount <= 0)))){
+      //correct if the unpaid amount is positive the gross amount to apply has to be zero or positive,  if the unpaid amount is negative the gross amount to apply has to be negative or zero (ie not positive)
+    return displaykey.Web.NewDirectBillPayment.DifferentSigns
+  }
+  return null
+}
+
+property get AmountAvailableToDistribute(): gw.pl.currency.MonetaryAmount {
+  if (paymentView.MoneyReceived.Amount == null) {
+    return 0bd.ofCurrency(paymentView.Currency)
+  }
+  return shouldUseUnappliedFund
+          ? paymentView.MoneyReceived.Amount.add(UnappliedAmountAvailable)
+          : paymentView.MoneyReceived.Amount
+}
+
+property get AmountAvailableToDistributeLessNonReceivableAmount(): gw.pl.currency.MonetaryAmount {
+  return AmountAvailableToDistribute.subtract(SuspenseAmount).subtract(CollateralAmount)
+}
+
+property get DistributedAmount(): gw.pl.currency.MonetaryAmount {
+  return itemGroups.sum(paymentView.Currency, \group -> group.DistItems.sum(paymentView.Currency, \distItem -> distItem.GrossAmountToApply))
+}
+
+property get SuspenseAmount(): gw.pl.currency.MonetaryAmount {
+  return paymentView.Payment.SuspDistItemsThatHaveNotBeenReleased.sum(paymentView.Currency, \b -> b.GrossAmountToApply)
+}
+
+property get CollateralAmount(): gw.pl.currency.MonetaryAmount {
+  return paymentView.Payment.NonReversedCollateralItems.sum(paymentView.Currency, \b -> b.GrossAmountToApply)
+}
+
+property get RemainingAmount(): gw.pl.currency.MonetaryAmount {
+  return AmountAvailableToDistribute.subtract(DistributedAmount).subtract(CollateralAmount).subtract(SuspenseAmount)
+}
+
+property get UnappliedAmountAvailable(): gw.pl.currency.MonetaryAmount {
+  if (!paymentView.Modifying) {
+    return paymentView.TargetUnappliedFund.Balance
+  }
+  var modifiedMoney = (paymentView as gw.api.web.payment.ModifyingDirectBillPaymentView).MoneyBeingModified
+  var maximumAmountAvailable = paymentView.TargetUnappliedFund.Balance - modifiedMoney.UndistributedAmount
+  if (modifiedMoney.DistributedDenorm){
+    maximumAmountAvailable = maximumAmountAvailable + modifiedMoney.AmountDistributedFromUnapplied
+  }
+  return maximumAmountAvailable.IsPositive ? maximumAmountAvailable : 0bd.ofCurrency(maximumAmountAvailable.Currency)
+}
+
+function initializeShouldUseUnappliedFund(): boolean {
+  //note: moneyReceived hasn't been initialized Yet when this is called so have to call through the payment view
+  return (paymentView typeis gw.api.web.payment.ModifyingDirectBillPaymentView )
+          and paymentView.MoneyBeingModified.AmountDistributedFromUnapplied.IsPositive
+}
+
+function invalidateDistItemsIterator() {
+  gw.api.web.PebblesUtil.invalidateIterators(CurrentLocation, BaseDistItem)
+}
+
+function getAccount(tAccountOwner: TAccountOwner): Account {
+  if (tAccountOwner typeis Account) {
+    return tAccountOwner
+  } else if (tAccountOwner typeis Collateral) {
+    return tAccountOwner.Account
+  } else if (tAccountOwner typeis CollateralRequirement) {
+    return tAccountOwner.Collateral.Account
+  } else if (tAccountOwner typeis PolicyPeriod) {
+    return tAccountOwner.Account
+  }
+  return null
+}
+
+function getPolicyPeriod(tAccountOwner: TAccountOwner): PolicyPeriod {
+  if (tAccountOwner typeis PolicyPeriod) {
+    return tAccountOwner
+  }
+  return null
+}
+
+function resetDistItemsWithNewCriteria() {
+  paymentView.repopulatePaymentItems(accountRole, accountsSelected, paymentView.IncludeOnlyCriteria)
+  invalidateDistItemsIterator()
+                    recalculateDistribution()
+}
+
+function reallocatePayment() {
+  resetNonOverriddenItems()
+  paymentView.Plugin.allocatePayment(paymentView.Payment, AmountAvailableToDistributeLessNonReceivableAmount)
+}
+
+function recalculateDistribution() {
+                    if (paymentView.MoneyReceived.Amount == null) return
+  resetNonOverriddenItems()
+  paymentView.recalculateDistribution(AmountAvailableToDistributeLessNonReceivableAmount)
+}
+
+function overrideDistribution() {
+  resetNonOverriddenItems()
+  paymentView.Plugin.allocatePayment(paymentView.Payment, AmountAvailableToDistributeLessNonReceivableAmount)
+}
+
+function resetNonOverriddenItems() {
+  var overrideInvoiceItems = paymentView.OverrideItemsAndAmount.keySet()
+  var notOverriddenItems = paymentView.Payment.DistItemsList.where(\ b -> !overrideInvoiceItems.contains(b.InvoiceItem))
+  notOverriddenItems.each( \ item -> { item.GrossAmountToApply = 0bd.ofCurrency(item.Currency) })
+                }]]></Code>
+  </Screen>
+</PCF>

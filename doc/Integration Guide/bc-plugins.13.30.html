@@ -1,0 +1,800 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xml:lang="en" lang="en" xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+    <meta http-equiv="Content-Style-Type" content="text/css" />
+    <!-- MOTW-DISABLED saved from url=(0014)about:internet -->
+    <title>Direct Bill Payment Plugin</title>
+    <link rel="StyleSheet" href="css/bc-plugins.css" type="text/css" media="all" />
+    <link rel="StyleSheet" href="css/webworks.css" type="text/css" media="all" />
+    <link rel="StyleSheet" href="css/css-guidewire-extra.css" type="text/css" media="all" />
+    <script type="text/javascript" language="JavaScript1.2" src="wwhdata/common/context.js"></script>
+    <script type="text/javascript" language="JavaScript1.2" src="wwhdata/common/towwhdir.js"></script>
+    <script type="text/javascript" language="JavaScript1.2" src="wwhdata/common/wwhpagef.js"></script>
+    <script type="text/javascript" language="JavaScript1.2">
+      <!--
+        var  WebWorksRootPath = "";
+      // -->
+    </script>
+    <script type="text/javascript" language="JavaScript1.2">
+      <!--
+        // Set reference to top level help frame
+        //
+        var  WWHFrame = WWHGetWWHFrame("", true);
+      // -->
+    </script>
+    <script type="text/javascript" language="JavaScript1.2" src="scripts/expand.js"></script>
+    <!-- THE FOLLOWING IS A GUIDEWIRE STYLE DEFINITION FOR THE LINK TO THIS FEATURE -->
+    <link rel="StyleSheet" href="css/css-guidewire-extra.css" type="text/css" media="all" />
+    <!-- THE FOLLOWING IS A GUIDEWIRE GSCRIPT FUNCTION FOR THE LINK TO THIS FEATURE -->
+    <script type="text/javascript">
+function guidewire_selectall()
+{
+var text_val=eval("document.linktothisurlform.urlfield");
+text_val.focus();
+text_val.select();
+}
+</script>
+  </head>
+  <body onLoad="WWHUpdate();" onUnload="WWHUnload();" onKeyDown="WWHHandleKeyDown((document.all||document.getElementById||document.layers)?event:null);" onKeyPress="WWHHandleKeyPress((document.all||document.getElementById||document.layers)?event:null);" onKeyUp="WWHHandleKeyUp((document.all||document.getElementById||document.layers)?event:null);">
+    <!-- THE FOLLOWING IS A GUIDEWIRE DIV FOR THE 'LINK TO THIS' FEATURE -->
+    <div id="linkToThisPage" class="popup" style="display: none;">
+      <div class="popupTitle">Link Directly to This Page 
+           <a href="#" onclick="var thePopup = getElementById('linkToThisPage');thePopup.style.display='none';return false;"><img class="popupClosebox" src="wwhelp/wwhimpl/common/images/close.gif" /></a></div>
+      <div style="padding:6px;">
+        <div class="popupText" id="linkToThisPageBookmark">An error has occurred if you see this messsage.</div>
+        <form name="linktothisurlform" method="post" action="" style="width:275px;margin:0px">
+          <input type="text" class="popupURLText" id="linkToThisPageURL" name="urlfield" rows="1" cols="55" onClick="guidewire_selectall();" onFocus="guidewire_selectall();"></input>
+        </form>
+      </div>
+    </div>
+    <br />
+    <div class="WebWorks_Breadcrumbs" style="text-align: left;">
+      <span>BillingCenter Integration Guide</span> : 
+    <span class="WebWorks_Breadcrumbs" style="text-align: left;"><a class="WebWorks_Breadcrumb_Link" href="p-plugins.html#3435318">Plugins</a> : <a class="WebWorks_Breadcrumb_Link" href="bc-plugins.13.01.html#3435318">Billing Plugins</a> : Direct Bill Payment Plugin</span></div>
+    <hr align="left" />
+    <blockquote>
+      <h3 class="H1_-_Heading_1"><a name="3435318">Direct Bill Payment Plugin</a></h3>
+      <div class="B_-_Body"><a name="3435319">The Direct Bill Payment plugin determines how BillingCenter allocates money to individual invoice items. The methods supported by the plugin are declared in the </a><span class="cv_-_computer_voice">IDirectBillPayment</span> interface. BillingCenter implements a base configuration of the interface in the <span class="cv_-_computer_voice">DirectBillPayment</span> class. The methods in the class can be modified to allocate money in a customized manner.</div>
+      <div class="B_-_Body"><a name="3618927">The following sections describe the methods implemented in the </a><span class="cv_-_computer_voice">DirectBillPayment</span> class.</div>
+      <h4 class="H2_-_Heading_2"><a name="3804890">Customize the Filter Criteria for Payment Allocations</a></h4>
+      <div class="B_-_Body"><a name="3804891">Before allocating a payment with the </a><span class="cv_-_computer_voice">allocatePayment</span> plugin method, BillingCenter filters invoice items to identify and select the items eligible to be paid.</div>
+      <div class="B_-_Body"><a name="3804892">The filter criteria are initialized in the </a><span class="cv_-_computer_voice">addInvoiceItemsDistributionCriteria</span> method. The criteria can be customized to meet unique allocation requirements.</div>
+      <PRE class="CF_-_Code_First_Line"><a name="3804893">function addInvoiceItemsDistributionCriteria( moneyRcvd : DirectBillMoneyRcvd ) :</a></PRE>
+      <PRE class="CL_-_Code_Last_Line"><a name="3804894">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;RestrictionBuilder&lt;InvoiceItem&gt;</a></PRE>
+      <div class="B_-_Body"><a name="3804895">The </a><span class="cv_-_computer_voice">moneyRcvd</span> argument specifies the payment to allocate.</div>
+      <div class="B_-_Body"><a name="3804896">The returned </a><span class="cv_-_computer_voice">RestrictionBuilder</span> object specifies the filter criteria to use to select eligible invoice items. In the base configuration, the following criteria restrictions are combined to create the <span class="cv_-_computer_voice">RestrictionBuilder</span> object.</div>
+      <div class="BI_-_Bullet_Item_outer" style="margin-left: 57pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="BI_-_Bullet_Item_inner" style="width: 15pt; white-space: nowrap">
+                <span class="bu_-_bullet">•	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="BI_-_Bullet_Item_inner"><a name="3804897">Unapplied fund restrictions</a></div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="BI_-_Bullet_Item_outer" style="margin-left: 57pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="BI_-_Bullet_Item_inner" style="width: 15pt; white-space: nowrap">
+                <span class="bu_-_bullet">•	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="BI_-_Bullet_Item_inner"><a name="3804898">Premium Report billing instruction restrictions that have no distribution limits</a></div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="BI_-_Bullet_Item_outer" style="margin-left: 57pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="BI_-_Bullet_Item_inner" style="width: 15pt; white-space: nowrap">
+                <span class="bu_-_bullet">•	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="BI_-_Bullet_Item_inner"><a name="3804899">Collateral item restrictions</a></div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="BI_-_Bullet_Item_outer" style="margin-left: 57pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="BI_-_Bullet_Item_inner" style="width: 15pt; white-space: nowrap">
+                <span class="bu_-_bullet">•	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="BI_-_Bullet_Item_inner"><a name="3804900">Collateral requirement item restrictions</a></div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="B_-_Body"><a name="3804901">To customize the filter criteria, assign the desired restrictions to the </a><span class="cv_-_computer_voice">RestrictionBuilder</span> object. For information about the <span class="cv_-_computer_voice">RestrictionBuilder</span> class, see <a href="javascript:WWHClickedPopup('gosu', 'querybuilder.10.42.html#3504688', '');" title="Paths and Restriction Builders">“Restriction Builder” in the </a><span class="bt_-_book_title"><a href="javascript:WWHClickedPopup('gosu', 'querybuilder.10.42.html#3504688', '');" title="Paths and Restriction Builders">Gosu Reference Guide</a></span>.</div>
+      <div class="B_-_Body"><a name="3804928">The </a><span class="cv_-_computer_voice">addInvoiceItemsDistributionCriteria </span>method can be called when any of the following events occur:</div>
+      <div class="BI_-_Bullet_Item_outer" style="margin-left: 57pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="BI_-_Bullet_Item_inner" style="width: 15pt; white-space: nowrap">
+                <span class="bu_-_bullet">•	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="BI_-_Bullet_Item_inner"><a name="3804929">A user manually enters a new payment or modifies an existing payment in the user interface and selects </a><span class="uis_-_UI_element_Studio">Execute</span>.</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="BI_-_Bullet_Item_outer" style="margin-left: 57pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="BI_-_Bullet_Item_inner" style="width: 15pt; white-space: nowrap">
+                <span class="bu_-_bullet">•	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="BI_-_Bullet_Item_inner"><a name="3804932">A batch process that distributes money is executed. The applicable batch processes are described in </a><a href="javascript:WWHClickedPopup('app', 'payments.53.06.html#1935701', '');" title="Distributing Direct Bill Payments">“Batch Processes That Distribute Payments” in the </a><span class="bt_-_book_title"><a href="javascript:WWHClickedPopup('app', 'payments.53.06.html#1935701', '');" title="Distributing Direct Bill Payments">Application Guide</a></span>.</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="BI_-_Bullet_Item_outer" style="margin-left: 57pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="BI_-_Bullet_Item_inner" style="width: 15pt; white-space: nowrap">
+                <span class="bu_-_bullet">•	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="BI_-_Bullet_Item_inner"><a name="3804934">The </a><span class="cv_-_computer_voice">DirectBillPaymentFactory</span> class <span class="cv_-_computer_voice">createAllocatedPayment</span> method is called.</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <h4 class="H2_-_Heading_2"><a name="3435325">Allocate a Payment</a></h4>
+      <div class="B_-_Body"><a name="3435326">BillingCenter usually receives payments from an external system. Payments can also be entered manually through the BillingCenter user interface. The received payment is not immediately distributed to invoice items. The payment is distributed by the </a><span class="cv_-_computer_voice">DirectBillPayment</span> plugin <span class="cv_-_computer_voice">allocatePayment</span> method. The money is allocated based on the settings of the applicable payment allocation plan.</div>
+      <div class="CS_-_Code_Single_Line"><a name="3785299">function allocatePayment( payment : DirectBillPayment, amount : MonetaryAmount )</a></div>
+      <div class="B_-_Body"><a name="3786389">The </a><span class="cv_-_computer_voice">payment</span> argument is used to determine the invoice items to receive the allocation. The <span class="cv_-_computer_voice">amount</span> argument specifies the monetary amount to allocate.</div>
+      <div class="B_-_Body"><a name="3804998">The </a><span class="cv_-_computer_voice">allocatePayment </span>method can be called in the same situations that call the <span class="cv_-_computer_voice">addInvoiceItemsDistributionCriteria </span>method. For details, refer to <a href="javascript:WWHClickedPopup('integration', 'bc-plugins.13.30.html#3804890', '');" title="Direct Bill Payment Plugin">“Customize the Filter Criteria for Payment Allocations”</a>.</div>
+      <h4 class="H2_-_Heading_2"><a name="3804815">Allocate Payment to a Policy Period</a></h4>
+      <div class="B_-_Body"><a name="3804816">After allocating a payment with the </a><span class="cv_-_computer_voice">allocatePayment</span> plugin method, some payment money may still remain unallocated. The unallocated portion of the payment can be distributed to invoice items from another payer on another policy period by the <span class="cv_-_computer_voice">allocatePolicyPeriod</span> method. The money is allocated based on the settings of the applicable payment allocation plan.</div>
+      <PRE class="CF_-_Code_First_Line"><a name="3804817">function allocatePolicyPeriod( payment : DirectBillPayment, amount : MonetaryAmount,</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="3804818">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;otherEligiblePayerInvoiceItems : Set&lt;InvoiceItem&gt; )</a></PRE>
+      <div class="B_-_Body"><a name="3804819">The </a><span class="cv_-_computer_voice">payment</span> argument references the payment processed by the <span class="cv_-_computer_voice">allocatePayment</span> method. The <span class="cv_-_computer_voice">amount</span> argument specifies the remaining monetary amount to distribute.</div>
+      <div class="B_-_Body"><a name="3805734">The </a><span class="cv_-_computer_voice">otherEligiblePayerInvoiceItems</span> argument specifies a set of additional invoice items from another payer that are eligible to be paid. This argument is not used by the method implemented in the base configuration, but it is available for use by customized versions.</div>
+      <div class="B_-_Body"><a name="3804822">The </a><span class="cv_-_computer_voice">allocatePolicyPeriod</span> method can be called when any of the following events occur:</div>
+      <div class="BI_-_Bullet_Item_outer" style="margin-left: 57pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="BI_-_Bullet_Item_inner" style="width: 15pt; white-space: nowrap">
+                <span class="bu_-_bullet">•	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="BI_-_Bullet_Item_inner"><a name="3804826">A batch process that distributes money is executed. The applicable batch processes are described in </a><a href="javascript:WWHClickedPopup('app', 'payments.53.06.html#1935701', '');" title="Distributing Direct Bill Payments">“Batch Processes That Distribute Payments” in the </a><span class="bt_-_book_title"><a href="javascript:WWHClickedPopup('app', 'payments.53.06.html#1935701', '');" title="Distributing Direct Bill Payments">Application Guide</a></span>.</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="BI_-_Bullet_Item_outer" style="margin-left: 57pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="BI_-_Bullet_Item_inner" style="width: 15pt; white-space: nowrap">
+                <span class="bu_-_bullet">•	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="BI_-_Bullet_Item_inner"><a name="3804828">The </a><span class="cv_-_computer_voice">DirectBillMoneyRcvd</span> class <span class="cv_-_computer_voice">distribute</span> method is called.</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <h4 class="H2_-_Heading_2"><a name="3806413">Customize the Filter Criteria for Credit Allocations</a></h4>
+      <div class="B_-_Body"><a name="3806414">Before allocating a policy or account credit with the </a><span class="cv_-_computer_voice">allocateCredit</span> plugin method, BillingCenter filters invoice items to identify and select the items eligible to be paid.</div>
+      <div class="H3_-_Heading_3_outer" style="margin-left: 36pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <h5 class="H3_-_Heading_3_inner" style="width: 18pt; white-space: nowrap"></h5>
+            </td>
+            <td width="100%">
+              <h5 class="H3_-_Heading_3_inner"><a name="3806415">Policy Credit Allocation</a></h5>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="B_-_Body"><a name="3806416">For a policy credit allocation, one filter criteria is specified by the </a><span class="cv_-_computer_voice">Positive Item Qualifier</span> property contained in the return premium plan. The base configuration provides several property settings that are described in the section <a href="javascript:WWHClickedPopup('app', 'credit_handling.32.5.html#1266821', '');" title="Return Premium Plan Properties">“Positive Item Qualifier” in the </a><span class="bt_-_book_title"><a href="javascript:WWHClickedPopup('app', 'credit_handling.32.5.html#1266821', '');" title="Return Premium Plan Properties">Application Guide</a></span>.</div>
+      <div class="B_-_Body"><a name="3806420">The filter criteria of the </a><span class="cv_-_computer_voice">Positive Item Qualifier</span> are initialized in the <span class="cv_-_computer_voice">addPositiveItemsDistributionCriteria</span> method. The criteria can be customized to meet unique requirements.</div>
+      <PRE class="CF_-_Code_First_Line"><a name="3806421">function addPositiveItemsDistributionCriteria( negativeInvoiceItems : Iterable&lt;InvoiceItem&gt; ) :</a></PRE>
+      <PRE class="CL_-_Code_Last_Line"><a name="3806422">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;RestrictionBuilder&lt;InvoiceItem&gt;</a></PRE>
+      <div class="B_-_Body"><a name="3806423">The </a><span class="cv_-_computer_voice">negativeInvoiceItems</span> argument specifies the credit invoice items to allocate. The items are used to retrieve the appropriate credit allocation settings, such as the value of the <span class="cv_-_computer_voice">Positive Item Qualifier</span> property and the relevant credit handling scheme.</div>
+      <div class="B_-_Body"><a name="3806424">The filter criteria of the </a><span class="cv_-_computer_voice">Positive Item Qualifier</span> are used to create the returned <span class="cv_-_computer_voice">RestrictionBuilder</span> object. The <span class="cv_-_computer_voice">RestrictionBuilder</span> is subsequently used by BillingCenter to select the invoice items eligible to receive the credit allocation.</div>
+      <div class="B_-_Body"><a name="3806425">To customize the filter criteria, assign the desired restrictions to the </a><span class="cv_-_computer_voice">RestrictionBuilder</span> object. For information about the <span class="cv_-_computer_voice">RestrictionBuilder</span> class, see <a href="javascript:WWHClickedPopup('gosu', 'querybuilder.10.42.html#3504688', '');" title="Paths and Restriction Builders">“Restriction Builder” in the </a><span class="bt_-_book_title"><a href="javascript:WWHClickedPopup('gosu', 'querybuilder.10.42.html#3504688', '');" title="Paths and Restriction Builders">Gosu Reference Guide</a></span>.</div>
+      <div class="B_-_Body"><a name="3806429">The </a><span class="cv_-_computer_voice">addPositiveItemsDistributionCriteria</span> method can be called when any of the following events occur:</div>
+      <div class="BI_-_Bullet_Item_outer" style="margin-left: 57pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="BI_-_Bullet_Item_inner" style="width: 15pt; white-space: nowrap">
+                <span class="bu_-_bullet">•	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="BI_-_Bullet_Item_inner"><a name="3806430">Allocating a policy credit, such as when processing a payment plan change that adds a credit item.</a></div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="BI_-_Bullet_Item_outer" style="margin-left: 57pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="BI_-_Bullet_Item_inner" style="width: 15pt; white-space: nowrap">
+                <span class="bu_-_bullet">•	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="BI_-_Bullet_Item_inner"><a name="3806431">Executing a </a><span class="cv_-_computer_voice">ChargeInstallmentChanger</span> object that adds a credit item.</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="BI_-_Bullet_Item_outer" style="margin-left: 57pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="BI_-_Bullet_Item_inner" style="width: 15pt; white-space: nowrap">
+                <span class="bu_-_bullet">•	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="BI_-_Bullet_Item_inner"><a name="3806432">The </a><span class="cv_-_computer_voice">Account</span> class <span class="cv_-_computer_voice">becomePayerOfInvoiceItems</span> method is called.</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="H3_-_Heading_3_outer" style="margin-left: 36pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <h5 class="H3_-_Heading_3_inner" style="width: 18pt; white-space: nowrap"></h5>
+            </td>
+            <td width="100%">
+              <h5 class="H3_-_Heading_3_inner"><a name="3806433">Account Credit Allocation</a></h5>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="B_-_Body"><a name="3806434">For an account credit allocation, the filter criteria are initialized in the </a><span class="cv_-_computer_voice">addInvoiceItemsDistributionCriteriaForAccountCredits</span> method. The criteria can be customized to meet unique requirements.</div>
+      <PRE class="CF_-_Code_First_Line"><a name="3806435">function addInvoiceItemsDistributionCriteriaForAccountCredits(</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="3806436">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;account : Account, negativeInvoiceItems : Iterable&lt;InvoiceItem&gt; ) :</a></PRE>
+      <PRE class="CL_-_Code_Last_Line"><a name="3806437">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;RestrictionBuilder&lt;InvoiceItem&gt;</a></PRE>
+      <div class="B_-_Body"><a name="3806438">The </a><span class="cv_-_computer_voice">account</span> argument specifies the applicable account. The <span class="cv_-_computer_voice">negativeInvoiceItems</span> argument specifies the credit invoice items to allocate.</div>
+      <div class="B_-_Body"><a name="3806439">The returned </a><span class="cv_-_computer_voice">RestrictionBuilder</span> object specifies the filter criteria to use to select eligible invoice items. In the base configuration, the following criteria restrictions are combined to create the <span class="cv_-_computer_voice">RestrictionBuilder</span> object.</div>
+      <div class="BI_-_Bullet_Item_outer" style="margin-left: 57pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="BI_-_Bullet_Item_inner" style="width: 15pt; white-space: nowrap">
+                <span class="bu_-_bullet">•	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="BI_-_Bullet_Item_inner"><a name="3806440">Restrictions applicable to the account’s payment allocation plan that have no distribution limits</a></div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="BI_-_Bullet_Item_outer" style="margin-left: 57pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="BI_-_Bullet_Item_inner" style="width: 15pt; white-space: nowrap">
+                <span class="bu_-_bullet">•	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="BI_-_Bullet_Item_inner"><a name="3806441">Past due restrictions</a></div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="BI_-_Bullet_Item_outer" style="margin-left: 57pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="BI_-_Bullet_Item_inner" style="width: 15pt; white-space: nowrap">
+                <span class="bu_-_bullet">•	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="BI_-_Bullet_Item_inner"><a name="3806442">Premium Report billing instruction restrictions</a></div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="BI_-_Bullet_Item_outer" style="margin-left: 57pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="BI_-_Bullet_Item_inner" style="width: 15pt; white-space: nowrap">
+                <span class="bu_-_bullet">•	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="BI_-_Bullet_Item_inner"><a name="3806443">Collateral item restrictions</a></div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="BI_-_Bullet_Item_outer" style="margin-left: 57pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="BI_-_Bullet_Item_inner" style="width: 15pt; white-space: nowrap">
+                <span class="bu_-_bullet">•	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="BI_-_Bullet_Item_inner"><a name="3806444">Collateral requirement item restrictions</a></div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="B_-_Body"><a name="3806445">To customize the filter criteria, assign the desired restrictions to the </a><span class="cv_-_computer_voice">RestrictionBuilder</span> object. For information about the <span class="cv_-_computer_voice">RestrictionBuilder</span> class, see <a href="javascript:WWHClickedPopup('gosu', 'querybuilder.10.42.html#3504688', '');" title="Paths and Restriction Builders">“Restriction Builder” in the </a><span class="bt_-_book_title"><a href="javascript:WWHClickedPopup('gosu', 'querybuilder.10.42.html#3504688', '');" title="Paths and Restriction Builders">Gosu Reference Guide</a></span>.</div>
+      <div class="B_-_Body"><a name="3806449">The </a><span class="cv_-_computer_voice">addInvoiceItemsDistributionCriteriaForAccountCredits</span> method can be called when any of the following events occur:</div>
+      <div class="BI_-_Bullet_Item_outer" style="margin-left: 57pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="BI_-_Bullet_Item_inner" style="width: 15pt; white-space: nowrap">
+                <span class="bu_-_bullet">•	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="BI_-_Bullet_Item_inner"><a name="3806450">Allocating an account credit.</a></div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="BI_-_Bullet_Item_outer" style="margin-left: 57pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="BI_-_Bullet_Item_inner" style="width: 15pt; white-space: nowrap">
+                <span class="bu_-_bullet">•	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="BI_-_Bullet_Item_inner"><a name="3806451">The </a><span class="cv_-_computer_voice">DirectBillPaymentFactory</span> class <span class="cv_-_computer_voice">payFromNegativeInvoiceItems</span> method is called.</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <h4 class="H2_-_Heading_2"><a name="3806453">Allocate Credits</a></h4>
+      <div class="B_-_Body"><a name="3806454">BillingCenter can allocate negative credit amounts to “pay” for positive invoice items. The process is described in </a><a href="javascript:WWHClickedPopup('app', 'credit_handling.32.1.html#1223608', '');" title="Credit Handling">“Credit Handling” in the </a><span class="bt_-_book_title"><a href="javascript:WWHClickedPopup('app', 'credit_handling.32.1.html#1223608', '');" title="Credit Handling">Application Guide</a></span>.</div>
+      <div class="B_-_Body"><a name="3806458">The </a><span class="cv_-_computer_voice">allocateCredits</span> method applies credit items to “pay” for positive invoice items.</div>
+      <div class="CS_-_Code_Single_Line"><a name="3806459">function allocateCredits( payment : DirectBillPayment )</a></div>
+      <div class="B_-_Body"><a name="3806460">The </a><span class="cv_-_computer_voice">payment</span> argument includes the credit items to allocate.</div>
+      <div class="B_-_Body"><a name="3806461">The method validates that a negative credit exists and that there are positive invoice items eligible to receive the payment. If either item does not exist, the allocation process is aborted.</a></div>
+      <div class="B_-_Body"><a name="3806462">The method determines the appropriate allocation method based on the type of credit being allocated. Account and collateral credits, such as account return fees or collateral charges, are always allocated using the </a><span class="cv_-_computer_voice">First&nbsp;to&nbsp;Last</span> allocation method. To process this type of credit, the <span class="cv_-_computer_voice">allocateCredits</span> method calls the applicable <span class="cv_-_computer_voice">allocate</span> method.</div>
+      <div class="B_-_Body"><a name="3806463">Policy credits, such as return premium credits, are allocated based on the relevant handling scheme for the type of credit being processed. Each handling scheme implements its own unique version of the </a><span class="cv_-_computer_voice">allocate</span> method. New handling schemes can be created to customize credit allocation for different types of credit. For detailed information and an example, see <a href="javascript:WWHClickedPopup('config', 'credit-handling-config_bc.48.5.html#1201949', '');" title="Configuring Credit Allocation">“Configuring Credit Allocation” in the </a><span class="bt_-_book_title"><a href="javascript:WWHClickedPopup('config', 'credit-handling-config_bc.48.5.html#1201949', '');" title="Configuring Credit Allocation">Configuration Guide</a></span>.</div>
+      <div class="B_-_Body"><a name="3806467">When processing policy credits, if all positive invoice items are paid and a credit balance remains, the base configuration places the remaining money in the </a><span class="cv_-_computer_voice">Unapplied</span> account. By customizing the credit allocation process, this remaining money can be handled in alternative manners. Examples that demonstrate disbursing the remaining credit or placing it in a suspense item are described in <a href="javascript:WWHClickedPopup('config', 'credit-handling-config_bc.48.3.html#1221717', '');" title="Defining New Excess Treatment Settings">“Defining New Excess Treatment Settings” in the </a><span class="bt_-_book_title"><a href="javascript:WWHClickedPopup('config', 'credit-handling-config_bc.48.3.html#1221717', '');" title="Defining New Excess Treatment Settings">Configuration Guide</a></span>.</div>
+      <div class="B_-_Body"><a name="3806471">The </a><span class="cv_-_computer_voice">allocateCredit</span> method can be called when any of the following events occur:</div>
+      <div class="BI_-_Bullet_Item_outer" style="margin-left: 57pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="BI_-_Bullet_Item_inner" style="width: 15pt; white-space: nowrap">
+                <span class="bu_-_bullet">•	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="BI_-_Bullet_Item_inner"><a name="3806472">A policy is changed that results in a credit.</a></div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="BI_-_Bullet_Item_outer" style="margin-left: 57pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="BI_-_Bullet_Item_inner" style="width: 15pt; white-space: nowrap">
+                <span class="bu_-_bullet">•	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="BI_-_Bullet_Item_inner"><a name="3806473">An invoice item’s amount is changed, the item is canceled, or the item’s account payer is changed.</a></div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="BI_-_Bullet_Item_outer" style="margin-left: 57pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="BI_-_Bullet_Item_inner" style="width: 15pt; white-space: nowrap">
+                <span class="bu_-_bullet">•	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="BI_-_Bullet_Item_inner"><a name="3806474">An invoice is billed or becomes due.</a></div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="BI_-_Bullet_Item_outer" style="margin-left: 57pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="BI_-_Bullet_Item_inner" style="width: 15pt; white-space: nowrap">
+                <span class="bu_-_bullet">•	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="BI_-_Bullet_Item_inner"><a name="3806475">The </a><span class="cv_-_computer_voice">DirectBillPaymentFactory</span> class <span class="cv_-_computer_voice">payFromNegativeInvoiceItems</span> method is called.</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <h4 class="H2_-_Heading_2"><a name="3806490">Customize the Filter Criteria for Unapplied Fund Allocations</a></h4>
+      <div class="B_-_Body"><a name="3806491">Before allocating money with the </a><span class="cv_-_computer_voice">allocateFromUnapplied</span> plugin method, BillingCenter filters invoice items to identify and select the items eligible to be paid.</div>
+      <div class="B_-_Body"><a name="3806492">The filter criteria are initialized in the </a><span class="cv_-_computer_voice">addInvoiceItemsDistributionCriteriaForUnappliedFunds</span> method. The criteria can be customized to meet unique requirements.</div>
+      <PRE class="CF_-_Code_First_Line"><a name="3806493">function addInvoiceItemsDistributionCriteriaForUnappliedFunds( zeroDollarDMR: ZeroDollarDMR ) :</a></PRE>
+      <PRE class="CL_-_Code_Last_Line"><a name="3806494">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;RestrictionBuilder&lt;InvoiceItem&gt;</a></PRE>
+      <div class="B_-_Body"><a name="3806495">The </a><span class="cv_-_computer_voice">zeroDollarDMR</span> argument contains the <span class="cv_-_computer_voice">Unapplied</span> fund to allocate money from.</div>
+      <div class="B_-_Body"><a name="3806496">The returned </a><span class="cv_-_computer_voice">RestrictionBuilder</span> object specifies the filter criteria to use to select eligible invoice items. In the base configuration, the following criteria restrictions are combined to create the <span class="cv_-_computer_voice">RestrictionBuilder</span> object.</div>
+      <div class="BI_-_Bullet_Item_outer" style="margin-left: 57pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="BI_-_Bullet_Item_inner" style="width: 15pt; white-space: nowrap">
+                <span class="bu_-_bullet">•	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="BI_-_Bullet_Item_inner"><a name="3806497">Restrictions applicable to zero-dollar “payments”</a></div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="BI_-_Bullet_Item_outer" style="margin-left: 57pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="BI_-_Bullet_Item_inner" style="width: 15pt; white-space: nowrap">
+                <span class="bu_-_bullet">•	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="BI_-_Bullet_Item_inner"><a name="3806498">Premium Report billing instruction restrictions that have no distribution limits</a></div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="BI_-_Bullet_Item_outer" style="margin-left: 57pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="BI_-_Bullet_Item_inner" style="width: 15pt; white-space: nowrap">
+                <span class="bu_-_bullet">•	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="BI_-_Bullet_Item_inner"><a name="3806499">Collateral item restrictions</a></div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="BI_-_Bullet_Item_outer" style="margin-left: 57pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="BI_-_Bullet_Item_inner" style="width: 15pt; white-space: nowrap">
+                <span class="bu_-_bullet">•	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="BI_-_Bullet_Item_inner"><a name="3806500">Collateral requirement item restrictions</a></div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="B_-_Body"><a name="3806501">To customize the filter criteria, assign the desired restrictions to the </a><span class="cv_-_computer_voice">RestrictionBuilder</span> object. For information about the <span class="cv_-_computer_voice">RestrictionBuilder</span> class, see <a href="javascript:WWHClickedPopup('gosu', 'querybuilder.10.42.html#3504688', '');" title="Paths and Restriction Builders">“Restriction Builder” in the </a><span class="bt_-_book_title"><a href="javascript:WWHClickedPopup('gosu', 'querybuilder.10.42.html#3504688', '');" title="Paths and Restriction Builders">Gosu Reference Guide</a></span>.</div>
+      <div class="B_-_Body"><a name="3806505">The </a><span class="cv_-_computer_voice">addInvoiceItemsDistributionCriteriaForUnappliedFunds</span> method can be called when any of the following events occur:</div>
+      <div class="BI_-_Bullet_Item_outer" style="margin-left: 57pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="BI_-_Bullet_Item_inner" style="width: 15pt; white-space: nowrap">
+                <span class="bu_-_bullet">•	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="BI_-_Bullet_Item_inner"><a name="3806506">Allocating or redistributing money from a default or designated </a><span class="cv_-_computer_voice">Unapplied</span> fund.</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="BI_-_Bullet_Item_outer" style="margin-left: 57pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="BI_-_Bullet_Item_inner" style="width: 15pt; white-space: nowrap">
+                <span class="bu_-_bullet">•	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="BI_-_Bullet_Item_inner"><a name="3806507">The Automatic Disbursement batch process is run and there is no distribution hold on the money.</a></div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="BI_-_Bullet_Item_outer" style="margin-left: 57pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="BI_-_Bullet_Item_inner" style="width: 15pt; white-space: nowrap">
+                <span class="bu_-_bullet">•	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="BI_-_Bullet_Item_inner"><a name="3806508">Any of the following </a><span class="cv_-_computer_voice">DirectBillPaymentFactory</span> static methods is called:</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="BI2_-_Bullet_Item_002c_Level_2_outer" style="margin-left: 67pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="BI2_-_Bullet_Item_002c_Level_2_inner" style="width: 15pt; white-space: nowrap">
+                <span class="bu_-_bullet">•	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="BI2_-_Bullet_Item_002c_Level_2_inner"><span class="cv_-_computer_voice"><a name="3806509">payFromDefaultUnapplied</a></span> </div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="BI2_-_Bullet_Item_002c_Level_2_outer" style="margin-left: 67pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="BI2_-_Bullet_Item_002c_Level_2_inner" style="width: 15pt; white-space: nowrap">
+                <span class="bu_-_bullet">•	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="BI2_-_Bullet_Item_002c_Level_2_inner"><span class="cv_-_computer_voice"><a name="3806510">payUsingUpToAmountOfDefaultUnapplied</a></span> </div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="BI2_-_Bullet_Item_002c_Level_2_outer" style="margin-left: 67pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="BI2_-_Bullet_Item_002c_Level_2_inner" style="width: 15pt; white-space: nowrap">
+                <span class="bu_-_bullet">•	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="BI2_-_Bullet_Item_002c_Level_2_inner"><span class="cv_-_computer_voice"><a name="3806511">payUsingUpToAmountOfDesignatedUnapplied</a></span> </div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <h4 class="H2_-_Heading_2"><a name="3806512">Allocate from Unapplied Fund</a></h4>
+      <div class="B_-_Body"><a name="3806513">The </a><span class="cv_-_computer_voice">allocateFromUnapplied</span> method allocates money stored in the <span class="cv_-_computer_voice">Unapplied</span> account. The money is allocated based on the settings of the applicable payment allocation plan.</div>
+      <div class="CS_-_Code_Single_Line"><a name="3806514">function allocateFromUnapplied( payment : DirectBillPayment, amount : MonetaryAmount )</a></div>
+      <div class="B_-_Body"><a name="3806515">The </a><span class="cv_-_computer_voice">payment</span> argument contains the list of invoice items eligible to receive the money. The <span class="cv_-_computer_voice">amount</span> argument specifies the amount of money to allocate.</div>
+      <div class="B_-_Body"><a name="3806516">The </a><span class="cv_-_computer_voice">allocateFromUnapplied </span>method can be called in the same situations that call the <span class="cv_-_computer_voice">addInvoiceItemsDistributionCriteriaForUnappliedFunds </span>method. For details, see <a href="javascript:WWHClickedPopup('integration', 'bc-plugins.13.30.html#3806490', '');" title="Direct Bill Payment Plugin">“Customize the Filter Criteria for Unapplied Fund Allocations”</a>.</div>
+      <h4 class="H2_-_Heading_2"><a name="3806533">Allocate for Redistribution</a></h4>
+      <div class="B_-_Body"><a name="3806534">The </a><span class="cv_-_computer_voice">allocateForRedistribution</span> method redistributes an executed payment. Redistribution can occur when a payment plan is changed or when a payment has been partially distributed, but some money still remains in an <span class="cv_-_computer_voice">Unapplied</span> fund. The method is implemented with the following signatures.</div>
+      <PRE class="CF_-_Code_First_Line"><a name="3806535">function allocateForRedistribution( payment : DirectBillPayment, amount : MonetaryAmount )</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="3806536">&nbsp;</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="3806537">function allocateForRedistribution( payment : DirectBillPayment,</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="3806538">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;amountToChargeMap : Map&lt;Charge, AllocationPool&gt; )</a></PRE>
+      <div class="B_-_Body"><a name="3806539">The </a><span class="cv_-_computer_voice">payment</span> argument includes payment information, including the list of invoice items to receive the redistributed money. The <span class="cv_-_computer_voice">amount</span> argument specifies the monetary amount to redistribute. The <span class="cv_-_computer_voice">amountToChargeMap</span> argument specifies a map of charges and associated amounts to distribute.</div>
+      <div class="B_-_Body"><a name="3806540">The </a><span class="cv_-_computer_voice">allocateForRedistribution( DirectBillPayment, MonetaryAmount )</span> method signature can be called when any of the following events occur:</div>
+      <div class="BI_-_Bullet_Item_outer" style="margin-left: 57pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="BI_-_Bullet_Item_inner" style="width: 15pt; white-space: nowrap">
+                <span class="bu_-_bullet">•	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="BI_-_Bullet_Item_inner"><a name="3806541">The payment plan is changed causing the invoice items to be redistributed.</a></div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="BI_-_Bullet_Item_outer" style="margin-left: 57pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="BI_-_Bullet_Item_inner" style="width: 15pt; white-space: nowrap">
+                <span class="bu_-_bullet">•	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="BI_-_Bullet_Item_inner"><a name="3806542">The </a><span class="cv_-_computer_voice">Automatic Disbursement</span> batch process is run. The batch process redistributes payments before issuing disbursements.</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="BI_-_Bullet_Item_outer" style="margin-left: 57pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="BI_-_Bullet_Item_inner" style="width: 15pt; white-space: nowrap">
+                <span class="bu_-_bullet">•	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="BI_-_Bullet_Item_inner"><a name="3806543">The </a><span class="cv_-_computer_voice">Account</span> class <span class="cv_-_computer_voice">redistributeAnyUnappliedFunds</span> method is called.</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="BI_-_Bullet_Item_outer" style="margin-left: 57pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="BI_-_Bullet_Item_inner" style="width: 15pt; white-space: nowrap">
+                <span class="bu_-_bullet">•	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="BI_-_Bullet_Item_inner"><a name="3806544">The </a><span class="cv_-_computer_voice">DirectBillPayment</span> class <span class="cv_-_computer_voice">redistribute</span> method is called.</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="B_-_Body"><a name="3806545">The </a><span class="cv_-_computer_voice">allocateForRedistribution( DirectBillPayment, Map&lt;Charge, AllocationPool&gt; )</span> method signature is called by the <span class="cv_-_computer_voice">BaseDist</span> class <span class="cv_-_computer_voice">redistributeWithAmounts</span> method.</div>
+      <h4 class="H2_-_Heading_2"><a name="3435330">Allocate Collateral</a></h4>
+      <div class="B_-_Body"><a name="3435331">The </a><span class="cv_-_computer_voice">allocateCollateral</span> method allocates a specified monetary amount from an <span class="cv_-_computer_voice">Unapplied</span> fund to collateral items. The money is allocated based on the settings of the applicable payment allocation plan.</div>
+      <div class="CS_-_Code_Single_Line"><a name="3785985">function allocateCollateral( payment : DirectBillPayment, amount : MonetaryAmount )</a></div>
+      <div class="B_-_Body"><a name="3786073">The </a><span class="cv_-_computer_voice">payment</span> argument contains the collateral items to receive the <span class="cv_-_computer_voice">Unapplied</span> funds. The <span class="cv_-_computer_voice">amount</span> argument specifies the monetary amount to allocate.</div>
+      <div class="B_-_Body"><a name="3785221">The </a><span class="cv_-_computer_voice">allocateCollateral</span> method is called by the <span class="cv_-_computer_voice">Collateral</span> class <span class="cv_-_computer_voice">transferAccountUnappliedToCollateral</span> and <span class="cv_-_computer_voice">transferDefaultUnappliedToCollateral</span> methods. The base configuration does not call these methods, but they are available to be called by configuration code.</div>
+      <h4 class="H2_-_Heading_2"><a name="3809555">Performance Improvement if Not Using Collateral</a></h4>
+      <div class="B_-_Body"><a name="3809613">If collateral is not being used, the performance of payment distribution can be improved. To achieve the performance gain, edit the </a><span class="cv_-_computer_voice">DirectBillPayment</span> class by commenting out all calls to the following methods. The methods themselves can also be commented out.</div>
+      <div class="BI_-_Bullet_Item_outer" style="margin-left: 57pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="BI_-_Bullet_Item_inner" style="width: 15pt; white-space: nowrap">
+                <span class="bu_-_bullet">•	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="BI_-_Bullet_Item_inner"><span class="cv_-_computer_voice"><a name="3809850">makeCollateralItemsRestrictionBuilder</a></span> </div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="BI_-_Bullet_Item_outer" style="margin-left: 57pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="BI_-_Bullet_Item_inner" style="width: 15pt; white-space: nowrap">
+                <span class="bu_-_bullet">•	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="BI_-_Bullet_Item_inner"><span class="cv_-_computer_voice"><a name="3809971">makeCollateralRequirementItemsRestrictionBuilder</a></span> </div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="B_-_Body"><a name="3810090">This modification removes the unions for </a><span class="cv_-_computer_voice">CollateralItems</span> and <span class="cv_-_computer_voice">CollateralRequirementItems</span> from the queries that determine the invoice items to be paid.</div>
+      <h4 class="H2_-_Heading_2"><a name="3435334">Allocate with Overrides</a></h4>
+      <div class="B_-_Body"><a name="3435336">The </a><span class="cv_-_computer_voice">allocateWithOverrides</span> method allocates payments to invoice items that can have overrides associated with them. The money is allocated based on the settings of the applicable payment allocation plan. The method is implemented with the following signatures.</div>
+      <PRE class="CF_-_Code_First_Line"><a name="3786712">function allocateWithOverrides( payment : DirectBillPayment, amount : MonetaryAmount,</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="3786807">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;overrideItemsAndAmounts : Map&lt;InvoiceItem, MonetaryAmount&gt; )</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="3786901">&nbsp;</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="3786903">function allocateWithOverrides( payment : DirectBillPayment, amount : MonetaryAmount,</a></PRE>
+      <PRE class="CL_-_Code_Last_Line"><a name="3787055">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;groupsToDistribute : List&lt;DBPaymentDistItemGroup&gt; )</a></PRE>
+      <div class="B_-_Body"><a name="3788408">The </a><span class="cv_-_computer_voice">payment</span> argument contains the invoice items to receive the allocation. The <span class="cv_-_computer_voice">amount</span> argument specifies the monetary amount to allocate. The argument’s value can be larger than the payment amount if the argument includes money stored in the <span class="cv_-_computer_voice">Unapplied</span> T‑account. A customized version of the method can choose to allocate only the <span class="cv_-_computer_voice">payment</span> amount or the potentially larger value specified in the <span class="cv_-_computer_voice">amount</span> argument. The method must never allocate more than the value specified in the <span class="cv_-_computer_voice">amount</span> argument.</div>
+      <div class="B_-_Body"><a name="3786563">The </a><span class="cv_-_computer_voice">overrideItemsAndAmounts</span> argument specifies a map of individual override invoice items and their monetary amounts.</div>
+      <div class="B_-_Body"><a name="3787567">The </a><span class="cv_-_computer_voice">groupsToDistribute</span> argument specifies the overrides in a list of direct bill payment distribution item groups. Each group includes:</div>
+      <div class="BI_-_Bullet_Item_outer" style="margin-left: 57pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="BI_-_Bullet_Item_inner" style="width: 15pt; white-space: nowrap">
+                <span class="bu_-_bullet">•	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="BI_-_Bullet_Item_inner"><a name="3787564">A list of the individual invoice items</a></div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="BI_-_Bullet_Item_outer" style="margin-left: 57pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="BI_-_Bullet_Item_inner" style="width: 15pt; white-space: nowrap">
+                <span class="bu_-_bullet">•	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="BI_-_Bullet_Item_inner"><a name="3787625">Group information, such as the total unbilled amount of the group</a></div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="B_-_Body"><a name="3435345">The </a><span class="cv_-_computer_voice">allocateWithOverrides</span> method is called by the <span class="cv_-_computer_voice">DirectBillPaymentView</span> class <span class="cv_-_computer_voice">recalculateDistribution</span> method. If the <span class="cv_-_computer_voice">DirectBillPaymentView</span> object is aggregated by items, the method calls the signature version of <span class="cv_-_computer_voice">allocateWithOverrides</span> that accepts a map of individual invoice items. If the object is aggregated by summary, it calls the method signature version that accepts a list of groups. In the base configuration, the <span class="cv_-_computer_voice">recalculateDistribution</span> method is called from the <span class="cv_-_computer_voice">DirectBillAddInvoiceItemsPopup.pcf</span> user interface file, which is shown when moving a payment from one account to another.</div>
+      <h4 class="H2_-_Heading_2"><a name="3707375">Allocate Write‑offs</a></h4>
+      <div class="B_-_Body"><a name="3707402">The </a><span class="cv_-_computer_voice">allocateWriteoffs</span> method processes invoice items that have been written off.</div>
+      <div class="CS_-_Code_Single_Line"><a name="3794252">function allocateWriteoffs( writeoff : ChargeGrossWriteoff ) : List&lt;InvoiceItemAllocation&gt;</a></div>
+      <div class="B_-_Body"><a name="3794348">The </a><span class="cv_-_computer_voice">writeoff</span> argument contains the eligible invoice items to write off. The method returns a list of invoice items that were processed.</div>
+      <div class="B_-_Body"><a name="3794526">The invoice items are written off based on the applicable </a><span class="cv_-_computer_voice">proRataAllocation</span> method.</div>
+      <div class="B_-_Body"><a name="3794832">The </a><span class="cv_-_computer_voice">allocateWriteoffs</span> method can be called when any of the following events occur:</div>
+      <div class="BI_-_Bullet_Item_outer" style="margin-left: 57pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="BI_-_Bullet_Item_inner" style="width: 15pt; white-space: nowrap">
+                <span class="bu_-_bullet">•	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="BI_-_Bullet_Item_inner"><a name="3794716">A charge is written off using the user interface.</a></div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="BI_-_Bullet_Item_outer" style="margin-left: 57pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="BI_-_Bullet_Item_inner" style="width: 15pt; white-space: nowrap">
+                <span class="bu_-_bullet">•	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="BI_-_Bullet_Item_inner"><a name="3794776">The </a><span class="cv_-_computer_voice">Writeoff Staging</span> batch process is run.</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <script type="text/javascript" language="JavaScript1.2">
+        <!--
+          // Clear related topics
+          //
+          WWHClearRelatedTopics();
+
+          document.writeln(WWHRelatedTopicsInlineHTML());
+        // -->
+      </script>
+    </blockquote>
+    <script type="text/javascript" language="JavaScript1.2">
+      <!--
+        document.write(WWHRelatedTopicsDivTag() + WWHPopupDivTag() + WWHALinksDivTag());
+      // -->
+    </script>
+  </body>
+</html>

@@ -1,0 +1,30 @@
+<?xml version="1.0"?>
+<PCF
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:noNamespaceSchemaLocation="../../../../../pcf.xsd">
+  <Page
+    afterReturnFromPopup="invalidateDistItemsIterator()"
+    beforeCommit="paymentView.execute( CurrentLocation )"
+    canEdit="true"
+    canVisit="perm.DirectBillMoneyRcvd.pmntmanproc"
+    id="NewDirectBillPayment"
+    parent="AccountGroup(account)"
+    startInEditMode="true"
+    title="displaykey.Web.NewDirectBillPayment.Title">
+    <LocationEntryPoint
+      signature="NewDirectBillPayment(account : Account)"/>
+    <Variable
+      name="account"
+      type="Account"/>
+    <Variable
+      initialValue="gw.api.web.payment.DirectBillPaymentView.createView(account,false)"
+      name="paymentView"
+      type="gw.api.web.payment.DirectBillPaymentView"/>
+    <ScreenRef
+      def="EditDBPaymentScreen(paymentView)"/>
+    <Code><![CDATA[function invalidateDistItemsIterator(){
+  gw.api.web.PebblesUtil.invalidateIterators(CurrentLocation, BaseDistItem)
+}
+]]></Code>
+  </Page>
+</PCF>

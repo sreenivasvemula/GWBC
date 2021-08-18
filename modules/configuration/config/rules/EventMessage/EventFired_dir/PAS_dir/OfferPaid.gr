@@ -1,0 +1,20 @@
+package rules.EventMessage.EventFired_dir.PAS_dir
+
+@gw.rules.RuleName("OfferPaid")
+internal class OfferPaid {
+  static function doCondition(messageContext : entity.MessageContext) : boolean {
+    
+/*start00rule*/
+return messageContext.EventName == gw.plugin.pas.PASMessageTransport.EVENT_OFFER_PAID
+/*end00rule*/
+
+  }
+
+  static function doAction(messageContext : entity.MessageContext, actions : gw.rules.Action) {
+
+/*start00rule*/
+messageContext.createMessage(messageContext.Root.toString())
+/*end00rule*/
+
+  }
+}

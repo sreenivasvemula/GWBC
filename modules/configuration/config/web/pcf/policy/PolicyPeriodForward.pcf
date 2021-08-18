@@ -1,0 +1,31 @@
+<?xml version="1.0"?>
+<PCF
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:noNamespaceSchemaLocation="../../../../../pcf.xsd">
+  <Forward
+    id="PolicyPeriodForward">
+    <LocationEntryPoint
+      signature="PolicyPeriodForward(policyNumber : String, termNumber : int)"/>
+    <Variable
+      name="policyNumber"
+      type="String"/>
+    <Variable
+      name="termNumber"
+      type="int"/>
+    <Variable
+      initialValue="findPolicyPeriod()"
+      name="policyPeriod"/>
+    <ForwardCondition
+      action="PolicyDetailSummary.go(policyPeriod)"
+      condition="policyPeriod != null"/>
+    <ForwardCondition
+      action="PolicySearch.go()"
+      condition="policyPeriod == null"/>
+    <Code><![CDATA[function findPolicyPeriod() : PolicyPeriod{
+  var q = gw.api.database.Query.make(entity.PolicyPeriod)
+  q.compare("PolicyNumber", Equals, policyNumber)
+  q.compare("TermNumber", Equals, termNumber)
+  return q.select().FirstResult
+}]]></Code>
+  </Forward>
+</PCF>

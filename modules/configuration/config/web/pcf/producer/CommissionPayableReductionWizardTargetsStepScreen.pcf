@@ -1,0 +1,119 @@
+<?xml version="1.0"?>
+<PCF
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:noNamespaceSchemaLocation="../../../../../pcf.xsd">
+  <Screen
+    id="CommissionPayableReductionWizardTargetsStepScreen">
+    <Require
+      name="chargeCommissions"
+      type="ChargeCommission[]"/>
+    <Require
+      name="approvalRequiredForWriteoff"
+      type="List&lt;Boolean&gt;"/>
+    <Toolbar
+      id="WizardToolbar">
+      <ToolbarButton
+        action="(CurrentLocation as pcf.api.Wizard).cancel()"
+        id="Cancel"
+        label="displaykey.Button.Cancel"/>
+      <ToolbarButton
+        action="reduceCommissionPayable()"
+        available="perm.Producer.edit"
+        id="ReduceCommissionPayable"
+        label="displaykey.Web.CommissionPayableReductionWizardTargetsStepScreen.ReduceCommissionPayable"
+        showConfirmMessage="false"/>
+    </Toolbar>
+    <DetailViewPanel
+      id="PayableReductionDV">
+      <InputColumn>
+        <ListViewInput
+          boldLabel="true"
+          label="displaykey.Web.CommissionPayableReductionWizardTargetsStepScreen.SelectTargets"
+          labelAbove="true">
+          <Toolbar/>
+          <ListViewPanel
+            id="PolicyCommissionsLV">
+            <RowIterator
+              editable="true"
+              elementName="chargeCommission"
+              value="chargeCommissions">
+              <Row
+                highlighted="chargeCommission.SelectedForWriteoff">
+                <CheckBoxCell
+                  editable="true"
+                  id="ChargeCommissionSelected"
+                  value="chargeCommission.SelectedForWriteoff">
+                  <PostOnChange/>
+                </CheckBoxCell>
+                <Cell
+                  id="ProducerCode"
+                  label="displaykey.Web.PolicyCommissionsLV.ProducerCode"
+                  sortBy="chargeCommission.PolicyCommission.ProducerCode.Code"
+                  sortOrder="1"
+                  value="chargeCommission.PolicyCommission.ProducerCode.Code"/>
+                <Cell
+                  id="PolicyNumber"
+                  label="displaykey.Web.PolicyCommissionsLV.PolicyNumber"
+                  sortBy="chargeCommission.PolicyCommission.PolicyPeriod.PolicyNumber"
+                  sortOrder="2"
+                  value="chargeCommission.PolicyCommission.PolicyPeriod.PolicyNumber"/>
+                <Cell
+                  id="Charge"
+                  label="displaykey.Web.PolicyCommissionsLV.Charge"
+                  sortBy="chargeCommission.Charge"
+                  sortOrder="3"
+                  value="chargeCommission.Charge"/>
+                <Cell
+                  id="Context"
+                  label="displaykey.Web.PolicyCommissionsLV.Context"
+                  sortBy="chargeCommission.Charge.BillingInstruction"
+                  sortOrder="4"
+                  value="chargeCommission.Charge.BillingInstruction"/>
+                <MonetaryAmountCell
+                  currency="chargeCommission.Charge.Currency"
+                  formatType="currency"
+                  id="CommissionReserve"
+                  label="displaykey.Web.PolicyCommissionsLV.CommissionReserve"
+                  value="chargeCommission.CommissionReserveBalance"/>
+                <MonetaryAmountCell
+                  currency="chargeCommission.Charge.Currency"
+                  formatType="currency"
+                  id="CommissionExpense"
+                  label="displaykey.Web.PolicyCommissionsLV.CommissionExpenseNetOfAdjustment"
+                  value="chargeCommission.getCommissionExpenseNetOfAdjustment()"/>
+                <MonetaryAmountCell
+                  available="chargeCommission.SelectedForWriteoff"
+                  currency="chargeCommission.Charge.Currency"
+                  editable="chargeCommission.AmountWrittenOff.IsZero"
+                  formatType="currency"
+                  id="AmountToWriteOff"
+                  label="displaykey.Web.PolicyCommissionsLV.AmountToWriteOff"
+                  value="chargeCommission.AmountToWriteOff"/>
+              </Row>
+            </RowIterator>
+          </ListViewPanel>
+        </ListViewInput>
+      </InputColumn>
+    </DetailViewPanel>
+    <Code><![CDATA[function validateReductionAmount() {
+  for (var chargeCommission in chargeCommissions) {
+    if (chargeCommission.SelectedForWriteoff) {
+      /*if (chargeCommission.AmountToWriteOff > chargeCommission.getCommissionExpenseNetOfAdjustment()) {
+        throw new util.DisplayableException(displaykey.Web.PolicyCommissionsLV.WriteoffTooLarge)
+      } else*/ if (!chargeCommission.AmountToWriteOff.IsPositive) {
+        throw new util.DisplayableException(displaykey.Web.PolicyCommissionsLV.WriteoffZeroOrNegative)
+      }
+    }
+  }
+}
+
+function reduceCommissionPayable() {
+  validateReductionAmount();
+  var chargeCommissionWriteoffs = web.producer.ProducerUtil.writeOffCommission(chargeCommissions);
+  if (chargeCommissionWriteoffs.hasMatch(\ writeOff -> writeOff.ApprovalStatus == typekey.ApprovalStatus.TC_UNAPPROVED)) {
+    approvalRequiredForWriteoff[0] = true
+  }
+  (CurrentLocation as pcf.api.Wizard).next()
+}]]></Code>
+  </Screen>
+</PCF>

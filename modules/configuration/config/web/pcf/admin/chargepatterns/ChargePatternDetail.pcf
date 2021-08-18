@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PCF
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:noNamespaceSchemaLocation="../../../../../../pcf.xsd">
+  <Page
+    canEdit="perm.System.chargepatternedit"
+    canVisit="perm.System.admintabview and perm.System.chargepatternview"
+    id="ChargePatternDetail"
+    parent="ChargePatterns()"
+    showUpLink="true"
+    title="displaykey.Web.ChargePatternDetail.Title(chargePattern.ChargeName, chargePattern.ChargeCode)">
+    <LocationEntryPoint
+      signature="ChargePatternDetail(chargePattern : ChargePattern)"/>
+    <Variable
+      name="chargePattern"
+      type="ChargePattern"/>
+    <Screen
+      id="ChargePatternsScreen">
+      <Toolbar>
+        <EditButtons/>
+      </Toolbar>
+      <PanelRef
+        def="ChargePatternDetailDV(chargePattern)"/>
+      <PanelRef
+        def="LocalizedValuesDV(chargePattern, { &quot;ChargeName&quot;}, { displaykey.Web.ChargePatternDetailDV.ChargeName })"/>
+    </Screen>
+  </Page>
+</PCF>

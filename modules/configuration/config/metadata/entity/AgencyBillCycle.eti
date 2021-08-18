@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?><entity xmlns="http://guidewire.com/datamodel" desc="A single agency bill cycle" entity="AgencyBillCycle" final="false" platform="false" setterScriptability="hidden" subpackage="producer.agencybill" table="agencybillcycle" type="retireable">
+  <implementsEntity name="Validatable"/>
+  <implementsEntity name="InCurrencySilo"/>
+  <foreignkey columnName="ProducerID" fkentity="Producer" importableagainstexistingobject="true" name="Producer" nullok="false" setterScriptability="doesNotExist"/>
+  <foreignkey columnName="StatementInvoiceID" desc="The statement invoice that defines this cycle" fkentity="StatementInvoice" importableagainstexistingobject="false" name="StatementInvoice" nullok="false"/>
+  <onetoone desc="The workflow that handles agency bill plan processing for this cycle" fkentity="AgencyCycleProcess" linkField="AgencyBillCycle" name="AgencyCycleProcess" nullok="true" setterScriptability="doesNotExist"/>
+  <index desc="An index representing the one to one relationship between statements and cycles" name="producerstatement" unique="true">
+    <indexcol keyposition="1" name="ProducerID"/>
+    <indexcol keyposition="2" name="Retired"/>
+    <indexcol keyposition="3" name="ID"/>
+    <indexcol keyposition="4" name="StatementInvoiceID"/>
+  </index>
+</entity>

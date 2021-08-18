@@ -1,0 +1,141 @@
+<?xml version="1.0"?>
+<Schedule xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="scheduler-config.xsd">
+  <!-- Platform-level batch processes -->
+  <!-- Activity Escalation happens every 30 minutes -->
+  <ProcessSchedule process="ActivityEsc">
+    <CronSchedule minutes="0,30"/>
+  </ProcessSchedule>
+  <ProcessSchedule process="ProcessCompletionMonitor">
+    <!-- Every five minutes -->
+    <CronSchedule minutes="*/5"/>
+  </ProcessSchedule>
+  <!-- BillingCenter-specific batch processes run once per day,
+      with start times staggered every 5 minutes starting at 2:05AM.
+      We start after 2AM to avoid skipping a day during the annual daylight savings change. -->
+  <!-- Batches recommended to be run upfront -->
+  <ProcessSchedule process="ReleaseTtktHoldTypes">
+    <CronSchedule hours="2" minutes="5"/>
+  </ProcessSchedule>
+  <ProcessSchedule process="ReleaseChargeHolds">
+    <CronSchedule hours="2" minutes="10"/>
+  </ProcessSchedule>
+  <!-- Batches can be run at any point in the batch window -->
+  <ProcessSchedule process="AdvanceExpiration">
+    <CronSchedule hours="2" minutes="15"/>
+  </ProcessSchedule>
+  <ProcessSchedule process="ChargeProRataTx">
+    <CronSchedule hours="2" minutes="20"/>
+  </ProcessSchedule>
+  <ProcessSchedule process="TroubleTicketEsc">
+    <CronSchedule hours="2" minutes="25"/>
+  </ProcessSchedule>
+  <ProcessSchedule process="CommissionPmt">
+    <CronSchedule hours="2" minutes="30"/>
+  </ProcessSchedule>
+  <ProcessSchedule process="AccountInactivity">
+    <CronSchedule hours="2" minutes="35"/>
+  </ProcessSchedule>
+  <!-- Collateral related Batches -->
+  <ProcessSchedule process="LetterOfCredit">
+    <CronSchedule hours="2" minutes="40"/>
+  </ProcessSchedule>
+  <ProcessSchedule process="CollEffective">
+    <CronSchedule hours="2" minutes="45"/>
+  </ProcessSchedule>
+  <ProcessSchedule process="CollExpiration">
+    <CronSchedule hours="2" minutes="50"/>
+  </ProcessSchedule>
+  <!-- Collateral related Batches -->
+  <ProcessSchedule process="PremiumReportReportDue">
+    <CronSchedule hours="2" minutes="55"/>
+  </ProcessSchedule>
+  <ProcessSchedule process="FullPayDiscount">
+    <CronSchedule hours="3" minutes="0"/>
+  </ProcessSchedule>
+  <!-- DirectBill related Batches -->
+  <ProcessSchedule process="SuspensePayment">
+    <CronSchedule hours="3" minutes="5"/>
+  </ProcessSchedule>
+  <ProcessSchedule process="NewPayment">
+    <CronSchedule hours="3" minutes="10"/>
+  </ProcessSchedule>
+  <ProcessSchedule process="InvoiceDue">
+    <CronSchedule hours="3" minutes="15"/>
+  </ProcessSchedule>
+  <ProcessSchedule process="Invoice">
+    <CronSchedule hours="3" minutes="20"/>
+  </ProcessSchedule>
+  <ProcessSchedule process="PaymentRequest">
+    <CronSchedule hours="3" minutes="25"/>
+  </ProcessSchedule>
+  <!-- AgencyBill related Batches -->
+  <ProcessSchedule process="AgencySuspensePayment">
+    <CronSchedule hours="3" minutes="30"/>
+  </ProcessSchedule>
+  <ProcessSchedule process="StatementBilled">
+    <CronSchedule hours="3" minutes="35"/>
+  </ProcessSchedule>
+  <ProcessSchedule process="StatementDue">
+    <CronSchedule hours="3" minutes="40"/>
+  </ProcessSchedule>
+  <!-- Workflow process executes every ten minutes unless any WorkflowType is mapped
+       to the "fastinternal" handler, in which case the workflow process will execute
+       once every ten seconds.  Workflow cannot advance any faster in the background
+       than this schedule. -->
+  <ProcessSchedule process="Workflow">
+    <CronSchedule hours="3" minutes="45"/>
+  </ProcessSchedule>
+  <!-- Commission (DirectBill) related Batches -->
+  <ProcessSchedule process="CmsnPayable">
+    <CronSchedule hours="3" minutes="50"/>
+  </ProcessSchedule>
+  <ProcessSchedule process="ProducerPayment">
+    <CronSchedule hours="3" minutes="55"/>
+  </ProcessSchedule>
+  <!-- Disbursement related Batches -->
+  <ProcessSchedule process="AutomaticDisbursement">
+    <CronSchedule hours="4" minutes="0"/>
+  </ProcessSchedule>
+  <ProcessSchedule process="Disbursement">
+    <CronSchedule hours="4" minutes="5"/>
+  </ProcessSchedule>
+  <ProcessSchedule process="FundsAllotment">
+    <CronSchedule hours="4" minutes="10"/>
+  </ProcessSchedule>
+  <!-- Batches recommended to be run at the end of the batch window -->
+  <ProcessSchedule process="PolicyClosure">
+    <CronSchedule hours="4" minutes="15"/>
+  </ProcessSchedule>
+
+  <ProcessSchedule process="PurgeFailedWorkItems">
+    <CronSchedule dayofweek="Sat" hours="1" dayofmonth="?"/>
+  </ProcessSchedule>
+
+  <ProcessSchedule process="PurgeClusterMembers">
+    <CronSchedule dayofmonth="1" hours="2"/>
+  </ProcessSchedule>
+
+  <!-- Purges completed workflows once a month. -->
+  <ProcessSchedule process="PurgeWorkflows">
+    <CronSchedule dayofmonth="1" hours="1" minutes="30"/>
+  </ProcessSchedule>
+
+  <!-- Purges logs from completed workflows once a month. -->
+  <ProcessSchedule process="PurgeWorkflowLogs">
+    <CronSchedule dayofmonth="1" hours="2" minutes="30"/>
+  </ProcessSchedule>
+
+  <!-- Purges old WorkItemSets -->
+  <ProcessSchedule process="WorkItemSetPurge">
+    <CronSchedule dayofmonth="2" hours="1" minutes="30"/>
+  </ProcessSchedule>
+  <ProcessSchedule process="WorkQueueInstrumentationPurge">
+    <CronSchedule dayofmonth="2" hours="2" minutes="30"/>
+  </ProcessSchedule>
+
+  <!-- Purges the batch process history on the 2nd day of every month -->
+  <ProcessSchedule process="ProcessHistoryPurge">
+    <CronSchedule dayofmonth="3" hours="1" minutes="30"/>
+  </ProcessSchedule>
+
+</Schedule>

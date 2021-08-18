@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?><nonPersistentEntity xmlns="http://guidewire.com/datamodel" desc="Search criteria for outgoing producer payments" entity="OutgoingProducerPmntSearchCriteria" extendable="true" subpackage="search">
+  <implementsEntity name="NotInCurrencySilo"/>
+  <column desc="The check or EFT identifier" name="CheckNumber" nullok="true" type="shorttext"/>
+  <typekey desc="The currency unit to restrict the search to" name="Currency" nullok="true" typelist="Currency"/>
+  <column desc="Earliest outgoingpayment issue date to search" name="EarliestIssueDate" nullok="true" type="datetime"/>
+  <column desc="Latest outgoingpayment issue date to search" name="LatestIssueDate" nullok="true" type="datetime"/>
+  <monetaryamount amountColumnName="MinAmount"
+    amountRange="nonnegative" desc="The minimum amount to search for" name="MinAmount" nullok="true" scaleToCurrency="true"/>
+  <monetaryamount amountColumnName="MaxAmount"
+    amountRange="nonnegative" desc="The maximum amount to search for" name="MaxAmount" nullok="true" scaleToCurrency="true"/>
+  <typekey desc="Method of payment" name="Method" nullok="true" typelist="PaymentMethod"/>
+  <column desc="The Token associated with the PaymentInstrument that was used to make the PaymentRequest" name="Token" nullok="true" type="shorttext"/>
+  <column desc="The recipient of the outgoing producer payment" name="Payee" nullok="true" type="shorttext"/>
+  <typekey desc="The status of the outgoing producer payment" name="Status" nullok="true" typelist="OutgoingPaymentStatus"/>
+</nonPersistentEntity>

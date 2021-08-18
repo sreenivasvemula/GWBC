@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?><nonPersistentEntity xmlns="http://guidewire.com/datamodel" entity="PaymentEntry" subpackage="payment">
+    <implementsEntity name="NotInCurrencySilo"/>
+    <implementsEntity name="PaymentReceipt"/>
+    <column name="Description" nullok="true" type="mediumtext"/>
+    <column desc="The date of the payment" name="PaymentDate" nullok="false" type="datetime"/>
+    <foreignkey columnName="AccountID" desc="The related account" fkentity="Account" name="Account" nullok="true"/>
+    <foreignkey columnName="InvoiceID" desc="The related invoice" fkentity="Invoice" name="Invoice" nullok="true"/>
+    <typekey default="Payment" desc="Is this payment entry a normal or suspense payment?" name="SuspensePayment" nullok="false" typelist="MultiPaymentType"/>
+    <column desc="Future account number for suspense payment" name="AccountNumber" nullok="true" type="shorttext"/>
+    <column desc="Future policy number for suspense payment" name="PolicyNumber" nullok="true" type="shorttext"/>
+    <foreignkey columnName="NewMultiPaymentID" desc="The related multi-payment" fkentity="NewMultiPayment" name="NewMultiPayment" nullok="true"/>
+    <foreignkey columnName="PolicyPeriodID" desc="The related policy period" fkentity="PolicyPeriod" name="PolicyPeriod" nullok="true"/>
+    <foreignkey columnName="ProducerID" desc="The producer that the payment is coming from." fkentity="Producer" name="Producer" nullok="true"/>
+    <foreignkey
+            name="UnappliedFund"
+            desc="The Unapplied T-Account associated with this payment"
+            columnName="UnappliedFundID"
+            fkentity="UnappliedFund"
+            exportable="false"
+            importableagainstexistingobject="false"
+            loadable="false"
+            nullok="true"/>
+</nonPersistentEntity>

@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?><entity xmlns="http://guidewire.com/datamodel" desc="A trouble ticket" entity="TroubleTicket" loadable="false" platform="false" subpackage="troubleticket" table="troubleticket" type="retireable">
+  <implementsEntity name="Validatable"/>
+  <implementsEntity name="Assignable"/>
+  <implementsEntity name="BCAssignable"/>
+  <implementsEntity name="NoteContainer"/>
+  <implementsEntity name="NotInCurrencySilo"/>
+  <column desc="The detailed description of this trouble ticket" name="DetailedDescription" nullok="false" type="mediumtext"/>
+  <column default="false" desc="True if the trouble ticket has been escalated." exportable="false" name="Escalated" nullok="false" type="bit"/>
+  <column desc="When the ticket will be escalated if not yet completed; null if ticket is never escalated." name="EscalationDate" nullok="true" type="datetime"/>
+  <column desc="Date by which this trouble ticket should be closed." name="TargetDate" nullok="true" type="datetime"/>
+  <column desc="The short summary title of this trouble ticket" name="Title" nullok="false" supportsLinguisticSearch="true" type="shorttext"/>
+  <column desc="The human-readable number for this trouble ticket" name="TroubleTicketNumber" nullok="false" setterScriptability="hidden" soapnullok="true" supportsLinguisticSearch="true" type="shorttext"/>
+  <typekey desc="Priority of the trouble ticket with respect to other trouble tickets." name="Priority" nullok="true" typelist="Priority"/>
+  <typekey desc="The type of this trouble ticket" name="TicketType" nullok="true" typelist="TroubleTicketType"/>
+  <foreignkey columnName="CloseUserID" desc="The user who closed this trouble ticket." exportable="true" exportasid="true" fkentity="User" name="CloseUser" nullok="true"/>
+  <array arrayentity="Activity" desc="Activities that have been defined on this trouble ticket" name="Activities"/>
+  <array arrayentity="UserRoleAssignment" desc="Role Assignments for this Trouble Ticket" exportable="false" name="RoleAssignments"/>
+  <array arrayentity="TroubleTicketJoinEntity" desc="Join entity that provides relationship between this trouble ticket and policies, accounts, producers" exportable="false" name="TroubleTicketJoinEntities"/>
+  <onetoone desc="Hold applied to late fees, disbursements etc of accounts, policies, producers associated with this trouble ticket" fkentity="Hold" name="Hold" nullok="true" setterScriptability="doesNotExist"/>
+  <index desc="Legacy" name="ttktnumdenorm">
+    <indexcol keyposition="1" name="TroubleTicketNumberDenorm"/>
+    <indexcol keyposition="2" name="Retired"/>
+  </index>
+  <index desc="Legacy" name="titledenorm">
+    <indexcol keyposition="1" name="TitleDenorm"/>
+    <indexcol keyposition="2" name="Retired"/>
+  </index>
+  <dbcheckbuilder className="com.guidewire.bc.system.database.dbchecks.troubleticket.TroubleTicketHoldDBCheckBuilder"/>
+</entity>

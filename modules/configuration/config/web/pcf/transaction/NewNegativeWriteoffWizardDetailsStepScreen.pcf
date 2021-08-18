@@ -1,0 +1,78 @@
+<?xml version="1.0"?>
+<PCF
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:noNamespaceSchemaLocation="../../../../../pcf.xsd">
+  <Screen
+    id="NewNegativeWriteoffWizardDetailsStepScreen">
+    <Require
+      name="uiWriteoff"
+      type="web.accounting.UIWriteOffCreation"/>
+    <Variable
+      initialValue="util.DateUtil.currentDate()"
+      name="today"
+      type="DateTime"/>
+    <Variable
+      initialValue="(uiWriteoff.WriteOff typeis AcctNegativeWriteoff) ? uiWriteoff.WriteOff.UnappliedFund : null "
+      name="unappliedFund"
+      type="UnappliedFund"/>
+    <Variable
+      initialValue="uiWriteoff.WriteOff.TAccountOwner"
+      name="taccountOwner"
+      type="TAccountOwner"/>
+    <Toolbar>
+      <WizardButtons/>
+    </Toolbar>
+    <DetailViewPanel
+      visible="uiWriteoff.WriteOff.TAccountOwner typeis Account and uiWriteoff.WriteOff.TAccountOwner.DesignatedUnappliedFundsOrdered.HasElements">
+      <InputColumn>
+        <InputSet
+          id="AccountDesignatedUnappliedInputs">
+          <RangeInput
+            editable="true"
+            id="UnappliedFund"
+            label="displaykey.Web.NewNegativeWriteoffWizardDetailsStepScreen.UnappliedFund"
+            required="true"
+            value="unappliedFund"
+            valueRange="(taccountOwner as Account).UnappliedFundsOrdered"
+            visible="taccountOwner typeis Account and taccountOwner.DesignatedUnappliedFundsOrdered.HasElements">
+            <PostOnChange
+              onChange="updateTargetUnapplied()"/>
+          </RangeInput>
+        </InputSet>
+      </InputColumn>
+    </DetailViewPanel>
+    <PanelRef
+      def="MinimalTAccountOwnerDetailsDV(taccountOwner, unappliedFund)"
+      mode="getTAccountOwnerDetailsMode()"/>
+    <PanelRef
+      def="NewNegativeWriteoffDetailsDV(uiWriteoff)"/>
+    <Code><![CDATA[uses gw.api.web.accounting.UIWriteOffCreation
+uses org.apache.velocity.util.introspection.UberspectImpl
+
+function getTAccountOwnerDetailsMode() : String {
+  if (taccountOwner typeis Producer) {
+    return "producer"
+  } else if (taccountOwner typeis Account) {
+    if (unappliedFund.DefaultForAccount) {
+      return "accountdefault"
+    } else {
+      return "accountdesignated"
+    }
+  } else {
+    throw new java.lang.UnsupportedOperationException("This t-account owner is unsupported for negative write-offs.")
+  }  
+}
+
+function updateTargetUnapplied() {
+    if (taccountOwner typeis Account and unappliedFund == null) {
+      unappliedFund = taccountOwner.DefaultUnappliedFund
+    } 
+    uiWriteoff.setUnappliedFund(unappliedFund)
+  
+  uiWriteoff.UseFullAmount = uiWriteoff.FullAmount.IsPositive
+  if (not uiWriteoff.UseFullAmount) {
+    uiWriteoff.Amount = null
+  }
+}]]></Code>
+  </Screen>
+</PCF>

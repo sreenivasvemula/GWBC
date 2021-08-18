@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PCF
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:noNamespaceSchemaLocation="../../../../../pcf.xsd">
+  <Screen
+    id="TransferPolicyConfirmationScreen">
+    <Require
+      name="policyTransfer"
+      type="PolicyTransfer"/>
+    <Toolbar>
+      <WizardButtons/>
+    </Toolbar>
+    <DetailViewPanel
+      id="TransferPolicyConfirmationDV">
+      <InputColumn>
+        <Label
+          label="displaykey.Web.TransferPolicyConfirmation.Execute"/>
+        <Label
+          label="displaykey.Web.TransferPolicyConfirmation.SourceProducerInformation"/>
+        <Input
+          id="sourceproducer"
+          label="displaykey.Web.TransferPolicyConfirmation.Producer"
+          value="getValueOrNone(policyTransfer.SourceProducerCode.Producer)"/>
+        <Input
+          id="sourceproducerCode"
+          label="displaykey.Web.TransferPolicyConfirmation.ProducerCode"
+          value="getValueOrNone(policyTransfer.SourceProducerCode.Code)"/>
+        <Label
+          label="displaykey.Web.TransferPolicyConfirmation.DestinationProducerInformation"/>
+        <Input
+          id="destproducer"
+          label="displaykey.Web.TransferPolicyConfirmation.Producer"
+          value="getValueOrNone(policyTransfer.DestinationProducerCode.Producer)"/>
+        <Input
+          id="destproducerCode"
+          label="displaykey.Web.TransferPolicyConfirmation.ProducerCode"
+          value="getValueOrNone(policyTransfer.DestinationProducerCode.Code)"/>
+        <Label
+          label="displaykey.Web.TransferPolicyConfirmation.CommissionOptions"/>
+        <Input
+          id="producer"
+          label="displaykey.Web.TransferPolicyConfirmation.Commissions"
+          value="policyTransfer.CommissionTransferOption.Description"/>
+        <ListViewInput
+          boldLabel="true"
+          def="TransferPolicyConfirmationLV(policyTransfer)"
+          label="displaykey.Web.TransferPolicyConfirmation.Policies"
+          labelAbove="true">
+          <Toolbar/>
+        </ListViewInput>
+      </InputColumn>
+    </DetailViewPanel>
+    <Code>
+function getValueOrNone(value : Bean) : Bean {
+        return value == null ? displaykey.Web.TransferPolicyConfirmation.None : value.toString();
+      }
+    </Code>
+  </Screen>
+</PCF>

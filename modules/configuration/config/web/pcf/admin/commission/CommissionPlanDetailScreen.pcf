@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PCF
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:noNamespaceSchemaLocation="../../../../../../pcf.xsd">
+  <Screen
+    id="CommissionPlanDetailScreen">
+    <Require
+      name="commissionPlan"
+      type="CommissionPlan"/>
+    <Toolbar>
+      <EditButtons/>
+      <ToolbarButton
+        action="CloneCommissionPlan.go(commissionPlan)"
+        hideIfEditable="true"
+        id="Clone"
+        label="displaykey.Web.CommissionPlan.Clone"
+        visible="perm.System.commplancreate"/>
+    </Toolbar>
+    <PanelRef
+      def="CommissionPlanDetailPanelSet(commissionPlan)"/>
+  </Screen>
+</PCF>

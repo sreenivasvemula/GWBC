@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PCF
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:noNamespaceSchemaLocation="../../../../../pcf.xsd">
+  <MenuItemSet
+    id="NewActivityMenuItemSet">
+    <Require
+      name="isShared"
+      type="Boolean"/>
+    <Require
+      name="troubleTicket"
+      type="TroubleTicket"/>
+    <Variable
+      initialValue="web.admin.ActivityPatternsUtil.getAllActivityPatternsExcludingApproval()"
+      name="activityPatterns"/>
+    <MenuItemIterator
+      elementName="categoryMenuItem"
+      value="gw.api.activity.NewActivityMenuUtil.createMenuItems(activityPatterns)">
+      <MenuItem
+        id="NewActivityMenuItemSet_Category"
+        label="categoryMenuItem.Category == null ? displaykey.Java.NewActivity.NoCategory : categoryMenuItem.Category.DisplayName">
+        <MenuItemIterator
+          elementName="pattern"
+          value="categoryMenuItem.Patterns">
+          <MenuItem
+            action="NewActivityPopup.push(pattern, isShared, troubleTicket)"
+            id="item"
+            label="pattern.Subject == null ? displaykey.Java.NewActivity.NoSubject : pattern.Subject"/>
+        </MenuItemIterator>
+      </MenuItem>
+    </MenuItemIterator>
+  </MenuItemSet>
+</PCF>

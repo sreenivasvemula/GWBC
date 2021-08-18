@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PCF
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:noNamespaceSchemaLocation="../../../../../../pcf.xsd">
+  <Page
+    afterCancel="CollectionAgencies.go()"
+    afterCommit="CollectionAgencies.go()"
+    autosaveable="true"
+    canEdit="true"
+    canVisit="perm.System.admintabview and perm.System.colagencycreate"
+    countsAsWork="true"
+    id="NewCollectionAgency"
+    parent="CollectionAgencies()"
+    showUpLink="true"
+    startInEditMode="true"
+    title="displaykey.Web.NewCollectionAgency.Title"
+    validateOnBundleCommit="true">
+    <LocationEntryPoint
+      signature="NewCollectionAgency()"/>
+    <Variable
+      initialValue="initCollectionAgency()"
+      name="collectionAgency"
+      recalculateOnRefresh="false"
+      type="CollectionAgency"/>
+    <Screen
+      id="NewCollectionAgencyScreen">
+      <Toolbar>
+        <EditButtons
+          cancelShortcut="L"
+          editShortcut="E"
+          showUpdateConfirmMessage="true"
+          updateShortcut="U"/>
+      </Toolbar>
+      <PanelRef
+        def="CollectionAgencyDetailDV(collectionAgency)"/>
+    </Screen>
+    <Code>
+function initCollectionAgency() : CollectionAgency {
+        var newCollectionAgency = new CollectionAgency();
+        newCollectionAgency.Name = "";
+        return newCollectionAgency;
+      }
+    </Code>
+  </Page>
+</PCF>

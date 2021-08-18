@@ -1,0 +1,48 @@
+<?xml version="1.0"?>
+<PCF
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:noNamespaceSchemaLocation="../../../../../pcf.xsd">
+  <!-- This screen is the final step in the Create Trouble Ticket wizard.  It is where the user will finish creating
+       the trouble ticket and will exit the wizard. -->
+  <Screen
+    id="CreateTroubleTicketConfirmationScreen">
+    <Require
+      name="troubleTicket"
+      type="TroubleTicket"/>
+    <Require
+      name="assigneeHolder"
+      type="assignment.Assignee[]"/>
+    <Require
+      name="createTroubleTicketHelper"
+      type="CreateTroubleTicketHelper"/>
+    <Toolbar>
+      <WizardButtons/>
+    </Toolbar>
+    <!-- Display a warning message if the trouble ticket being created has one or more hold types enabled but no hold targets -->
+    <AlertBar
+      id="CreateTroubleTicketConfirmationScreen_HoldsButNoTargetAlertBar"
+      label="displaykey.Web.CreateTroubleTicketConfirmationScreen.WarningHasHoldsButNoTargets"
+      visible="troubleTicket.hasHoldWithNoTargets()"/>
+    <DetailViewPanel
+      id="CreateTroubleTicketConfirmationScreenDV">
+      <InputColumn>
+        <Label
+          label="displaykey.Web.CreateTroubleTicketConfirmationScreenDV.ClickFinishToCreateTheTicket"/>
+        <Input
+          id="whitespace01"
+          value="&quot;&quot;"/>
+        <Label
+          label="displaykey.Web.CreateTroubleTicketConfirmationScreenDV.Assignment"/>
+        <AssigneeInput
+          assignable="troubleTicket"
+          editable="true"
+          id="AssignTicketOwner"
+          label="displaykey.Web.TroubleTicketInfoDV.AssignedTo"
+          required="true"
+          sortValueRange="false"
+          value="assigneeHolder[0]"
+          valueRange="troubleTicket.SuggestedAssignees"/>
+      </InputColumn>
+    </DetailViewPanel>
+  </Screen>
+</PCF>

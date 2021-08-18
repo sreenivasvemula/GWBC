@@ -1,0 +1,39 @@
+<?xml version="1.0"?>
+<Entity
+  name="DirectBillMoneyRcvd">
+  <Columns>
+    <Column
+      beanPath="DirectBillMoneyRcvd.Account"
+      name="Account"
+      sortOrder="0"/>
+    <Column
+      beanPath="DirectBillMoneyRcvd.Amount"
+      name="Amount"
+      sortOrder="1"/>
+    <Column
+      beanPath="DirectBillMoneyRcvd.ReceivedDate"
+      name="ReceivedDate"
+      sortOrder="2"/>
+    <Column
+      beanPath="DirectBillMoneyRcvd.AppliedDate"
+      name="AppliedDate"
+      sortOrder="3"/>
+    <Column
+      beanPath="DirectBillMoneyRcvd.ReversalDate"
+      name="ReversalDate"
+      sortOrder="4"/>
+  </Columns>
+  <DisplayName><![CDATA[
+displaykey.DisplayName.DirectBillMoneyRcvd(Account, Amount?.render(), ReceivedDate?.format("short"), AppliedDate?.format("short"))
+  ]]></DisplayName>
+  <DisplayName
+    type="FundsSource"><![CDATA[if(ReversalDate == null){
+  return displaykey.DisplayName.DirectBillMoneyRcvd.FundsSource
+} else {
+  return displaykey.DisplayName.DirectBillMoneyRcvd.FundsSource.Reversed
+}]]></DisplayName>
+  <DisplayName
+    type="FundsSourceReversal"><![CDATA[displaykey.DisplayName.DirectBillMoneyRcvd.FundsSourceReversal]]></DisplayName>
+  <DisplayName
+    type="FundsSourcePredatesFundsTracking"><![CDATA[displaykey.DisplayName.DirectBillMoneyRcvd.FundsSource.PredatesFundsTracking]]></DisplayName>
+</Entity>

@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xml:lang="en" lang="en" xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+    <meta http-equiv="Content-Style-Type" content="text/css" />
+    <!-- MOTW-DISABLED saved from url=(0014)about:internet -->
+    <title>Name Owners</title>
+    <link rel="StyleSheet" href="css/name_config.css" type="text/css" media="all" />
+    <link rel="StyleSheet" href="css/webworks.css" type="text/css" media="all" />
+    <link rel="StyleSheet" href="css/css-guidewire-extra.css" type="text/css" media="all" />
+    <script type="text/javascript" language="JavaScript1.2" src="wwhdata/common/context.js"></script>
+    <script type="text/javascript" language="JavaScript1.2" src="wwhdata/common/towwhdir.js"></script>
+    <script type="text/javascript" language="JavaScript1.2" src="wwhdata/common/wwhpagef.js"></script>
+    <script type="text/javascript" language="JavaScript1.2">
+      <!--
+        var  WebWorksRootPath = "";
+      // -->
+    </script>
+    <script type="text/javascript" language="JavaScript1.2">
+      <!--
+        // Set reference to top level help frame
+        //
+        var  WWHFrame = WWHGetWWHFrame("", true);
+      // -->
+    </script>
+    <script type="text/javascript" language="JavaScript1.2" src="scripts/expand.js"></script>
+    <!-- THE FOLLOWING IS A GUIDEWIRE STYLE DEFINITION FOR THE LINK TO THIS FEATURE -->
+    <link rel="StyleSheet" href="css/css-guidewire-extra.css" type="text/css" media="all" />
+    <!-- THE FOLLOWING IS A GUIDEWIRE GSCRIPT FUNCTION FOR THE LINK TO THIS FEATURE -->
+    <script type="text/javascript">
+function guidewire_selectall()
+{
+var text_val=eval("document.linktothisurlform.urlfield");
+text_val.focus();
+text_val.select();
+}
+</script>
+  </head>
+  <body onLoad="WWHUpdate();" onUnload="WWHUnload();" onKeyDown="WWHHandleKeyDown((document.all||document.getElementById||document.layers)?event:null);" onKeyPress="WWHHandleKeyPress((document.all||document.getElementById||document.layers)?event:null);" onKeyUp="WWHHandleKeyUp((document.all||document.getElementById||document.layers)?event:null);">
+    <!-- THE FOLLOWING IS A GUIDEWIRE DIV FOR THE 'LINK TO THIS' FEATURE -->
+    <div id="linkToThisPage" class="popup" style="display: none;">
+      <div class="popupTitle">Link Directly to This Page 
+           <a href="#" onclick="var thePopup = getElementById('linkToThisPage');thePopup.style.display='none';return false;"><img class="popupClosebox" src="wwhelp/wwhimpl/common/images/close.gif" /></a></div>
+      <div style="padding:6px;">
+        <div class="popupText" id="linkToThisPageBookmark">An error has occurred if you see this messsage.</div>
+        <form name="linktothisurlform" method="post" action="" style="width:275px;margin:0px">
+          <input type="text" class="popupURLText" id="linkToThisPageURL" name="urlfield" rows="1" cols="55" onClick="guidewire_selectall();" onFocus="guidewire_selectall();"></input>
+        </form>
+      </div>
+    </div>
+    <br />
+    <div class="WebWorks_Breadcrumbs" style="text-align: left;">
+      <span>BillingCenter Globalization Guide</span> : 
+    <span class="WebWorks_Breadcrumbs" style="text-align: left;"><a class="WebWorks_Breadcrumb_Link" href="p-locale.html#2434159">Regional Format Configuration </a> : <a class="WebWorks_Breadcrumb_Link" href="name_config.16.1.html#2434159">Configuring Name Information</a> : Name Owners </span></div>
+    <hr align="left" />
+    <blockquote>
+      <h3 class="H1_-_Heading_1"><a name="2434159">Name Owners </a></h3>
+      <div class="B_-_Body"><span class="cv_-_computer_voice"><a name="2434166">NameOwner</a></span> is the interface for a helper object that is passed to the modal PCF files <span class="cv_-_computer_voice">GlobalPersonNameInputSet</span> and <span class="cv_-_computer_voice">GlobalContactNameInputSet</span>. The helper object provides a way to set and get a single name on the enclosing entity. Typically you extend <span class="cv_-_computer_voice">NameOwnerBase</span>, which implements <span class="cv_-_computer_voice">NameOwner</span>.</div>
+      <div class="B_-_Body"><a name="2473889">While </a><span class="cv_-_computer_voice">NameOwner</span> provides methods for setting a field to be required or visible, generally it is better not to modify or override methods such as <span class="cv_-_computer_voice">isVisible</span> in <span class="cv_-_computer_voice">NameOwnerBase</span>. For most purposes, specifying the set, required, or hidden fields is more easily controlled by overriding property getters such as <span class="cv_-_computer_voice">RequiredFields</span> and <span class="cv_-_computer_voice">HiddenFields</span> declared in <span class="cv_-_computer_voice">NameOwner</span>. You override these property getters with values such as <span class="cv_-_computer_voice">NameOwnerFieldId.REQUIRED_NAME_FIELDS</span> or <span class="cv_-_computer_voice">NameOwnerFieldId.NO_FIELDS</span>.</div>
+      <div class="B_-_Body"><a name="2473898">Following are some properties on </a><span class="cv_-_computer_voice">NameOwner</span>:</div>
+      <div class="T_-_Table"><a name="2434415">&nbsp;</a></div>
+      <table class="withHeading" style="text-align: left" border="0" cellpadding="10" cellspacing="0" summary="">
+        <caption></caption>
+        <tr>
+          <td style="border-bottom-color: #000000; border-bottom-style: solid; border-bottom-width: 0.5pt; border-top-color: #000000; border-top-style: solid; border-top-width: 0.5pt; padding-bottom: 4pt; padding-left: 2pt; padding-right: 8pt; padding-top: 0pt; vertical-align: bottom">
+            <div class="TH_-_Table_Heading"><a name="2434399">Property</a></div>
+          </td>
+          <td style="border-bottom-color: #000000; border-bottom-style: solid; border-bottom-width: 0.5pt; border-top-color: #000000; border-top-style: solid; border-top-width: 0.5pt; padding-bottom: 4pt; padding-left: 2pt; padding-right: 8pt; padding-top: 0pt; vertical-align: bottom">
+            <div class="TH_-_Table_Heading"><a name="2434401">Description</a></div>
+          </td>
+        </tr>
+        <tr>
+          <td style="border-bottom-color: #c0d1d1; border-bottom-style: solid; border-bottom-width: 0.15pt; border-top-color: #000000; border-top-style: solid; border-top-width: 0.5pt; padding-bottom: 4pt; padding-left: 2pt; padding-right: 8pt; padding-top: 0pt; vertical-align: top">
+            <div class="TT_-_Table_Text" style="color: #000000; font-family: &quot;Lucida Sans Typewriter&quot;; font-style: normal; font-variant: normal; font-weight: normal; margin-top: 3.0pt; text-transform: none; vertical-align: baseline"><span class="cvt_-_computer_voice_table"><a name="2434403">ContactName</a></span></div>
+          </td>
+          <td style="border-bottom-color: #c0d1d1; border-bottom-style: solid; border-bottom-width: 0.15pt; border-top-color: #000000; border-top-style: solid; border-top-width: 0.5pt; padding-bottom: 4pt; padding-left: 2pt; padding-right: 8pt; padding-top: 0pt; vertical-align: top">
+            <div class="TT_-_Table_Text"><a name="2434405">Sets (or retrieves) a single contact name on the enclosing entity, </a><span class="cvt_-_computer_voice_table">Contact</span>. For example, the Name field of <span class="cvt_-_computer_voice_table">GlobalContactNameInputSet.default</span> has the following value:</div>
+            <div class="TT_-_Table_Text" style="color: #000000; font-family: &quot;Lucida Sans Typewriter&quot;; font-style: normal; font-variant: normal; font-weight: normal; margin-top: 3.0pt; text-transform: none; vertical-align: baseline"><span class="cvt_-_computer_voice_table"><a name="2434406">&nbsp;&nbsp;nameOwner.ContactName.Name</a></span></div>
+          </td>
+        </tr>
+        <tr>
+          <td style="border-bottom-color: #c0d1d1; border-bottom-style: solid; border-bottom-width: 0.15pt; border-top-color: #c0d1d1; border-top-style: solid; border-top-width: 0.15pt; padding-bottom: 4pt; padding-left: 2pt; padding-right: 8pt; padding-top: 0pt; vertical-align: top">
+            <div class="TT_-_Table_Text" style="color: #000000; font-family: &quot;Lucida Sans Typewriter&quot;; font-style: normal; font-variant: normal; font-weight: normal; margin-top: 3.0pt; text-transform: none; vertical-align: baseline"><span class="cvt_-_computer_voice_table"><a name="2454005">PersonName</a></span></div>
+          </td>
+          <td style="border-bottom-color: #c0d1d1; border-bottom-style: solid; border-bottom-width: 0.15pt; border-top-color: #c0d1d1; border-top-style: solid; border-top-width: 0.15pt; padding-bottom: 4pt; padding-left: 2pt; padding-right: 8pt; padding-top: 0pt; vertical-align: top">
+            <div class="TT_-_Table_Text"><a name="2454007">Sets (or retrieves) a single person name on the enclosing entity, </a><span class="cvt_-_computer_voice_table">Person</span>. For example, the First Name field of <span class="cvt_-_computer_voice_table">GlobalPersonNameInputSet.default</span> has the following value:</div>
+            <div class="TT_-_Table_Text" style="color: #000000; font-family: &quot;Lucida Sans Typewriter&quot;; font-style: normal; font-variant: normal; font-weight: normal; margin-top: 3.0pt; text-transform: none; vertical-align: baseline"><span class="cvt_-_computer_voice_table"><a name="2454008">&nbsp;&nbsp;nameOwner.PersonName.FirstName</a></span></div>
+          </td>
+        </tr>
+        <tr>
+          <td style="border-bottom-color: #c0d1d1; border-bottom-style: solid; border-bottom-width: 0.15pt; border-top-color: #c0d1d1; border-top-style: solid; border-top-width: 0.15pt; padding-bottom: 4pt; padding-left: 2pt; padding-right: 8pt; padding-top: 0pt; vertical-align: top">
+            <div class="TT_-_Table_Text" style="color: #000000; font-family: &quot;Lucida Sans Typewriter&quot;; font-style: normal; font-variant: normal; font-weight: normal; margin-top: 3.0pt; text-transform: none; vertical-align: baseline"><span class="cvt_-_computer_voice_table"><a name="2434408">HiddenFields</a></span></div>
+          </td>
+          <td style="border-bottom-color: #c0d1d1; border-bottom-style: solid; border-bottom-width: 0.15pt; border-top-color: #c0d1d1; border-top-style: solid; border-top-width: 0.15pt; padding-bottom: 4pt; padding-left: 2pt; padding-right: 8pt; padding-top: 0pt; vertical-align: top">
+            <div class="TT_-_Table_Text"><a name="2434410">Set of name fields that ClaimCenter hides (does not show) in the application interface.</a></div>
+          </td>
+        </tr>
+        <tr>
+          <td style="border-bottom-color: #000000; border-bottom-style: solid; border-bottom-width: 0.5pt; border-top-color: #c0d1d1; border-top-style: solid; border-top-width: 0.15pt; padding-bottom: 4pt; padding-left: 2pt; padding-right: 8pt; padding-top: 0pt; vertical-align: top">
+            <div class="TT_-_Table_Text" style="color: #000000; font-family: &quot;Lucida Sans Typewriter&quot;; font-style: normal; font-variant: normal; font-weight: normal; margin-top: 3.0pt; text-transform: none; vertical-align: baseline"><span class="cvt_-_computer_voice_table"><a name="2434412">RequiredFields</a></span></div>
+          </td>
+          <td style="border-bottom-color: #000000; border-bottom-style: solid; border-bottom-width: 0.5pt; border-top-color: #c0d1d1; border-top-style: solid; border-top-width: 0.15pt; padding-bottom: 4pt; padding-left: 2pt; padding-right: 8pt; padding-top: 0pt; vertical-align: top">
+            <div class="TT_-_Table_Text"><a name="2434414">Set of name fields for which the user must supply a value.</a></div>
+          </td>
+        </tr>
+      </table>
+      <div class="B_-_Body"><a name="2492828">In the base configuration, BillingCenter provides the following classes that implement </a><span class="cv_-_computer_voice">NameOwner</span> or extend a class that implements <span class="cv_-_computer_voice">NameOwner</span>:</div>
+      <PRE class="CF_-_Code_First_Line"><a name="2492829">NameOwnerBase</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2492830">BCNameOwner</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2492831">ContactNameOwner</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2492832">PLPersonNameOwner</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2492833">SearchNameOwner</a></PRE>
+      <PRE class="CL_-_Code_Last_Line"><a name="2492834">UserSearchNameOwner</a></PRE>
+      <div class="B_-_Body"><a name="2474139">In the base configuration, ContactManager provides the following classes that implement </a><span class="cv_-_computer_voice">NameOwner</span> or extend a class that implements <span class="cv_-_computer_voice">NameOwner</span>:</div>
+      <PRE class="CF_-_Code_First_Line"><a name="2474140">NameOwnerBase</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2474141">ABUserNameOwner</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2474142">ContactNameOwner</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2474143">PLPersonNameSearchOwner</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2474144">SearchNameOwner</a></PRE>
+      <PRE class="CL_-_Code_Last_Line"><a name="2474145">UserSearchNameOwner</a></PRE>
+      <script type="text/javascript" language="JavaScript1.2">
+        <!--
+          // Clear related topics
+          //
+          WWHClearRelatedTopics();
+
+          document.writeln(WWHRelatedTopicsInlineHTML());
+        // -->
+      </script>
+    </blockquote>
+    <script type="text/javascript" language="JavaScript1.2">
+      <!--
+        document.write(WWHRelatedTopicsDivTag() + WWHPopupDivTag() + WWHALinksDivTag());
+      // -->
+    </script>
+  </body>
+</html>

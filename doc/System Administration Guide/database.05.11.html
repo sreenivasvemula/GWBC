@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xml:lang="en" lang="en" xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+    <meta http-equiv="Content-Style-Type" content="text/css" />
+    <!-- MOTW-DISABLED saved from url=(0014)about:internet -->
+    <title>Configuring Number of Threads for Statistics Generation</title>
+    <link rel="StyleSheet" href="css/database.css" type="text/css" media="all" />
+    <link rel="StyleSheet" href="css/webworks.css" type="text/css" media="all" />
+    <link rel="StyleSheet" href="css/css-guidewire-extra.css" type="text/css" media="all" />
+    <script type="text/javascript" language="JavaScript1.2" src="wwhdata/common/context.js"></script>
+    <script type="text/javascript" language="JavaScript1.2" src="wwhdata/common/towwhdir.js"></script>
+    <script type="text/javascript" language="JavaScript1.2" src="wwhdata/common/wwhpagef.js"></script>
+    <script type="text/javascript" language="JavaScript1.2">
+      <!--
+        var  WebWorksRootPath = "";
+      // -->
+    </script>
+    <script type="text/javascript" language="JavaScript1.2">
+      <!--
+        // Set reference to top level help frame
+        //
+        var  WWHFrame = WWHGetWWHFrame("", true);
+      // -->
+    </script>
+    <script type="text/javascript" language="JavaScript1.2" src="scripts/expand.js"></script>
+    <!-- THE FOLLOWING IS A GUIDEWIRE STYLE DEFINITION FOR THE LINK TO THIS FEATURE -->
+    <link rel="StyleSheet" href="css/css-guidewire-extra.css" type="text/css" media="all" />
+    <!-- THE FOLLOWING IS A GUIDEWIRE GSCRIPT FUNCTION FOR THE LINK TO THIS FEATURE -->
+    <script type="text/javascript">
+function guidewire_selectall()
+{
+var text_val=eval("document.linktothisurlform.urlfield");
+text_val.focus();
+text_val.select();
+}
+</script>
+  </head>
+  <body onLoad="WWHUpdate();" onUnload="WWHUnload();" onKeyDown="WWHHandleKeyDown((document.all||document.getElementById||document.layers)?event:null);" onKeyPress="WWHHandleKeyPress((document.all||document.getElementById||document.layers)?event:null);" onKeyUp="WWHHandleKeyUp((document.all||document.getElementById||document.layers)?event:null);">
+    <!-- THE FOLLOWING IS A GUIDEWIRE DIV FOR THE 'LINK TO THIS' FEATURE -->
+    <div id="linkToThisPage" class="popup" style="display: none;">
+      <div class="popupTitle">Link Directly to This Page 
+           <a href="#" onclick="var thePopup = getElementById('linkToThisPage');thePopup.style.display='none';return false;"><img class="popupClosebox" src="wwhelp/wwhimpl/common/images/close.gif" /></a></div>
+      <div style="padding:6px;">
+        <div class="popupText" id="linkToThisPageBookmark">An error has occurred if you see this messsage.</div>
+        <form name="linktothisurlform" method="post" action="" style="width:275px;margin:0px">
+          <input type="text" class="popupURLText" id="linkToThisPageURL" name="urlfield" rows="1" cols="55" onClick="guidewire_selectall();" onFocus="guidewire_selectall();"></input>
+        </form>
+      </div>
+    </div>
+    <br />
+    <div class="WebWorks_Breadcrumbs" style="text-align: left;">
+      <span>BillingCenter System Administration Guide</span> : 
+    <span class="WebWorks_Breadcrumbs" style="text-align: left;"><a class="WebWorks_Breadcrumb_Link" href="database.05.01.html#1284447">Configuring and Maintaining the BillingCenter Database</a> : <a class="WebWorks_Breadcrumb_Link" href="database.05.08.html#1284447">Configuring Database Statistics</a> : Configuring Number of Threads for Statistics Generation</span></div>
+    <hr align="left" />
+    <blockquote>
+      <h4 class="H2B_-_Heading_2_Break"><a name="1284447">Configuring Number of Threads for Statistics Generation</a></h4>
+      <div class="B_-_Body"><a name="1284508">BillingCenter uses the work queue mechanism for statistics generation. You can therefore configure work queue and worker attributes for statistics generation in the </a><span class="cv_-_computer_voice">work-queue.xml</span> file. Access this file in Guidewire Studio at <span class="uis_-_UI_element_Studio">configuration</span> → <span class="uis_-_UI_element_Studio">config </span><span class="ui_-_UI_element">→</span><span class="uis_-_UI_element_Studio"> workqueue</span>. Set parameters for the work queue with <span class="cv_-_computer_voice">workQueueClass</span> set to <span class="cv_-_computer_voice">com.guidewire.pl.system.database.dbstatistics.DBStatisticsWorkItemWorkQueue</span>. For example:</div>
+      <PRE class="CF_-_Code_First_Line"><a name="1284711">&lt;work-queue</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="1284712">&nbsp;&nbsp;&nbsp;workQueueClass="com.guidewire.pl.system.database.dbstatistics.DBStatisticsWorkItemWorkQueue" </a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="1284713">&nbsp;&nbsp;&nbsp;progressinterval="86400000"&gt;</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="1284714">&nbsp;&nbsp;&nbsp;&lt;worker instances="5" batchsize="10"/&gt;</a></PRE>
+      <PRE class="CL_-_Code_Last_Line"><a name="1284715">&lt;/work-queue&gt;</a></PRE>
+      <div class="B_-_Body"><a name="1284582">In this example, the statistics generation work queue is configured to use five worker threads and for each worker to check out ten work items at a time.</a></div>
+      <div class="B_-_Body"><a name="1284878">After you edit </a><span class="cv_-_computer_voice">work-queue.xml</span>, you must rebuild and redeploy BillingCenter.</div>
+      <div class="B_-_Body"><a name="1284515">For more information about work queue configuration, see </a><a href="javascript:WWHClickedPopup('admin', 'batch.11.06.html#2166105', '');" title="Scheduling Work Queue Writers and Batch Processes">“Scheduling Work Queue Writers and Batch Processes”</a>.</div>
+      <script type="text/javascript" language="JavaScript1.2">
+        <!--
+          // Clear related topics
+          //
+          WWHClearRelatedTopics();
+
+          document.writeln(WWHRelatedTopicsInlineHTML());
+        // -->
+      </script>
+    </blockquote>
+    <script type="text/javascript" language="JavaScript1.2">
+      <!--
+        document.write(WWHRelatedTopicsDivTag() + WWHPopupDivTag() + WWHALinksDivTag());
+      // -->
+    </script>
+  </body>
+</html>

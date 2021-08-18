@@ -1,0 +1,105 @@
+<?xml version="1.0"?>
+<PCF
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:noNamespaceSchemaLocation="../../../../../pcf.xsd">
+  <DetailViewPanel
+          id="ActivityDetailDV"
+    mode="disbappractivity">
+    <Require
+      name="activity"
+      type="Activity"/>
+    <Require
+      name="AssigneeHolder"
+      type="assignment.Assignee[]"/>
+    <InputColumn>
+      <Label
+        label="displaykey.Web.ActivityDetail.ActivityInfo"/>
+      <Input
+        action="gotoDisbursementsScreenBasedOnDisbursementSubtype(activity as DisbApprActivity)"
+        id="ActivityDetailDV_Disbursement"
+        label="displaykey.Web.ActivityDetail.Disbursement"
+        value="(activity as DisbApprActivity).Disbursement"/>
+      <Input
+        editable="true"
+        id="ActivityDetailDV_Subject"
+        label="displaykey.Web.ActivityDetail.Subject"
+        required="true"
+        value="activity.Subject"/>
+      <TextAreaInput
+        editable="true"
+        id="ActivityDetailDV_Description"
+        label="displaykey.Web.ActivityDetail.Description"
+        numCols="80"
+        numRows="4"
+        value="activity.Description"/>
+      <TypeKeyInput
+        editable="true"
+        id="ActivityDetailDV_Priority"
+        label="displaykey.Web.ActivityDetail.Priority"
+        value="activity.Priority"/>
+      <DateInput
+        editable="true"
+        id="ActivityDetailDV_TargetDate"
+        label="displaykey.Web.ActivityDetail.TargetDate"
+        validationExpression="gw.activity.ActivityMethods.validateTargetDate(activity)"
+        value="activity.TargetDate"/>
+      <DateInput
+        editable="true"
+        id="ActivityDetailDV_EscalationDate"
+        label="displaykey.Web.ActivityDetail.EscalationDate"
+        validationExpression="gw.activity.ActivityMethods.validateEscalationDate(activity)"
+        value="activity.EscalationDate"/>
+      <AssigneeInput
+        assignable="activity"
+        editable="activity.canAssign()"
+        id="ActivityDetailDV_AssignActivity"
+        label="displaykey.Web.ActivityDetail.AssignedTo"
+        required="true"
+        sortValueRange="false"
+        value="AssigneeHolder[0]"
+        valueRange="activity.SuggestedAssignees"
+        visible="!web.activity.ActivityUtil.isShared(activity)"/>
+      <RangeInput
+        id="ActivityDetailDV_Status"
+        label="displaykey.Web.ActivityDetail.Status"
+        value="activity.Status"
+        valueRange="activity.BCStatusRange"/>
+      <DocumentTemplateInput
+        conversionExpression="PickedValue.TemplateId"
+        freeInputEnabled="false"
+        id="DocumentTemplate"
+        label="displaykey.Web.ActivityDetail.DocumentTemplate"
+        pickLocation="DocumentTemplateSearchPopup.push( { &quot;activity&quot; } )"
+        value="activity.DocumentTemplate"/>
+      <PickerInput
+        conversionExpression="PickedValue.Filename"
+        freeInputEnabled="false"
+        id="EmailTemplate"
+        label="displaykey.Web.ActivityDetail.EmailTemplate"
+        outputConversion="getDisplayName(VALUE)"
+        pickLocation="PickEmailTemplatePopup.push(new gw.api.email.EmailTemplateSearchCriteria({&quot;activity&quot;}))"
+        value="activity.EmailTemplate"/>
+    </InputColumn>
+    <Code><![CDATA[
+function getDisplayName(templateFilename : String) : String {
+  if (templateFilename == null) {
+    return null
+  }
+  var ets = gw.plugin.Plugins.get(gw.plugin.email.IEmailTemplateSource)
+  return ets.getEmailTemplate(templateFilename).getName();
+}
+function gotoDisbursementsScreenBasedOnDisbursementSubtype(disbursementActivity : DisbApprActivity) {
+  if (disbursementActivity.Disbursement typeis AccountDisbursement) {
+    pcf.AccountDetailDisbursements.goInMain(disbursementActivity.Disbursement.Account)
+  } else if (disbursementActivity.Disbursement typeis CollateralDisbursement) {
+    pcf.AccountDetailDisbursements.goInMain(disbursementActivity.Disbursement.Collateral.Account)
+  } else if (disbursementActivity.Disbursement typeis SuspenseDisbursement) {
+    pcf.DesktopDisbursements.goInMain()
+  } else if (disbursementActivity.Disbursement typeis AgencyDisbursement) {
+    pcf.ProducerDisbursements.goInMain(disbursementActivity.Disbursement.Producer)
+  }
+}
+      
+    ]]></Code>
+  </DetailViewPanel>
+</PCF>

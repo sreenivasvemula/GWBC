@@ -1,0 +1,33 @@
+<?xml version="1.0"?>
+<PCF
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:noNamespaceSchemaLocation="../../../../../pcf.xsd">
+  <Popup
+    afterReturnFromPopup="invalidateDistItemsIterator()"
+    beforeCommit="paymentView.execute( CurrentLocation )"
+    canEdit="true"
+    canVisit="perm.DirectBillMoneyRcvd.pmntmanproc"
+    id="ModifyDirectBillPaymentPopup"
+    startInEditMode="true"
+    title="displaykey.Web.ModifyDirectBillPayment.Title">
+    <LocationEntryPoint
+      signature="ModifyDirectBillPaymentPopup( account : Account, originalMoney : DirectBillMoneyRcvd, whenModifyingDirectBillMoney : gw.api.web.payment.WhenModifyingDirectBillMoney)"/>
+    <Variable
+      name="account"
+      type="Account"/>
+    <Variable
+      name="originalMoney"
+      type="DirectBillMoneyRcvd"/>
+    <Variable
+      name="whenModifyingDirectBillMoney"
+      type="gw.api.web.payment.WhenModifyingDirectBillMoney"/>
+    <Variable
+      initialValue="new gw.api.web.payment.ModifyingDirectBillPaymentView(originalMoney, DBPmntGroupingCriteria.TC_INVOICE, DBPmntAggregateCriteria.TC_ITEM, whenModifyingDirectBillMoney)"
+      name="paymentView"/>
+    <ScreenRef
+      def="EditDBPaymentScreen(paymentView) "/>
+      <Code><![CDATA[function invalidateDistItemsIterator(){
+    gw.api.web.PebblesUtil.invalidateIterators(CurrentLocation, BaseDistItem)
+  }]]></Code>
+  </Popup>
+</PCF>

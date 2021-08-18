@@ -1,0 +1,58 @@
+<?xml version="1.0"?>
+<PCF
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:noNamespaceSchemaLocation="../../../../../pcf.xsd">
+  <Worksheet
+    canEdit="true"
+    id="NewNoteWorksheet"
+    startInEditMode="true"
+    tabLabel="displaykey.Web.NewNote.Tab(noteContainer.DisplayName, srcBean.DisplayName)"
+    title="displaykey.Web.NewNote.Title">
+    <LocationEntryPoint
+      signature="NewNoteWorksheet(srcBean : KeyableBean, noteContainer : NoteContainer)"/>
+    <LocationEntryPoint
+      signature="NewNoteWorksheet(srcBean : KeyableBean, noteContainer : NoteContainer, noteTemplateStr : String)"/>
+    <Scope
+      location="*"/>
+    <Variable
+      name="srcBean"
+      type="KeyableBean"/>
+    <Variable
+      name="noteContainer"
+      type="NoteContainer"/>
+    <Variable
+      name="noteTemplateStr"
+      type="String"/>
+    <Variable
+      initialValue="gw.api.util.LocaleUtil.getDefaultLocale()"
+      name="locale"/>
+    <Variable
+      initialValue="gw.api.util.SymbolTableUtil.populateBeans( srcBean )"
+      name="symbolTable"
+      type="java.util.Map&lt;String,Object&gt;"/>
+    <Variable
+      initialValue="createNote()"
+      name="Note"
+      type="Note"/>
+    <ScreenRef
+      def="NewNoteScreen(srcBean, Note)"/>
+    <Code><![CDATA[
+function createNote() : Note {
+  var rtn = new Note()
+  noteContainer.addNote( rtn )
+  if (noteTemplateStr != null) {
+     var templatePlugin = gw.plugin.Plugins.get(gw.plugin.note.INoteTemplateSource)
+     var template = templatePlugin.getNoteTemplate(locale, noteTemplateStr)
+     if (template == null) {
+       gw.api.util.Logger.DOCUMENT.warn("Could not find " + noteTemplateStr + " in " + locale.Code)
+     }
+     else {
+       rtn.useTemplate(template, symbolTable)
+     }
+  }
+  return rtn
+}
+      
+    ]]></Code>
+  </Worksheet>
+</PCF>

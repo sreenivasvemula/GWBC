@@ -1,0 +1,25 @@
+<?xml version="1.0"?>
+<nonPersistentEntity
+  xmlns="http://guidewire.com/datamodel"
+  entity="CommissionSubPlanRateEntry"
+  desc="Represents an entry in a commission sub-plan's rates table."
+  subpackage="commission">
+  <implementsEntity
+     name="NotInCurrencySilo"/>
+  <foreignkey
+    name="CommissionSubPlan"
+    columnName="CommissionSubPlanID"
+    fkentity="CommissionSubPlan"
+    getterScriptability="hidden"
+    nullok="false"
+    setterScriptability="hidden"/>
+  <column
+    name="Rate"
+    type="percentagedec"
+    nullok="false"/>
+  <typekey
+    name="Role"
+    typelist="PolicyRole"
+    nullok="false"
+    setterScriptability="hidden"/>
+</nonPersistentEntity>

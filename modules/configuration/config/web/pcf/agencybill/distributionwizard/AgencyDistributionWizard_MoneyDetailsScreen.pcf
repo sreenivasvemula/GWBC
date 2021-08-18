@@ -1,0 +1,387 @@
+<?xml version="1.0"?>
+<PCF
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:noNamespaceSchemaLocation="../../../../../../pcf.xsd">
+  <Screen
+    id="AgencyDistributionWizard_MoneyDetailsScreen">
+    <Require
+      name="wizardState"
+      type="gw.agencybill.AgencyDistributionWizardHelper"/>
+    <Variable
+      initialValue="wizardState.MoneySetup"
+      name="moneySetup"
+      type="gw.api.web.producer.agencybill.AgencyBillMoneyReceivedSetup"/>
+    <Variable
+      initialValue="moneySetup.Money"
+      name="money"
+      type="BaseMoneyReceived"/>
+    <Toolbar>
+      <WizardButtons/>
+    </Toolbar>
+    <DetailViewPanel>
+      <Variable
+        initialValue="new gw.payment.PaymentInstrumentRange(moneySetup.Producer.PaymentInstruments) "
+        name="paymentInstrumentRange"/>
+      <Variable
+        initialValue="gw.payment.PaymentInstrumentFilters.agencyPaymentInstrumentFilter"
+        name="paymentInstrumentFilter"/>
+      <Variable
+        initialValue="wizardState.PaymentMoneySetup.Money"
+        name="paymentMoney"/>
+      <InputColumn>
+        <Label
+          label="displaykey.Web.AgencyDistributionWizard.Step.MoneyDetails.ProducerHeader"/>
+        <Input
+          id="Producer"
+          label="displaykey.Web.AgencyDistributionWizard.Step.MoneyDetails.Producer"
+          value="moneySetup.Producer"/>
+        <MonetaryAmountInput
+          currency="moneySetup.Producer.Currency"
+          formatType="currency"
+          id="UnappliedBalance"
+          label="displaykey.Web.AgencyDistributionWizard.Step.MoneyDetails.UnappliedBalance"
+          value="moneySetup.Producer.UnappliedAmount"/>
+        <Label
+          label="displaykey.Web.AgencyDistributionWizard.Step.MoneyDetails.DistributionHeader(moneySetup.DistributionTypeName)"/>
+        <DateInput
+          editable="!wizardState.IsCreditDistribution"
+          focusOnStartEditing="true"
+          id="ReceivedDate"
+          label="displaykey.Web.AgencyDistributionWizard.Step.MoneyDetails.ReceivedDate"
+          required="true"
+          value="money.ReceivedDate"/>
+        <MonetaryAmountInput
+          currency="moneySetup.Producer.Currency"
+          editable="true"
+          formatType="currency"
+          id="Amount"
+          label="AmountLabel"
+          required="true"
+          validationExpression="return !money.Amount.IsPositive ? displaykey.Web.AgencyDistributionWizard.Step.MoneyDetails.Error.InvalidAmount  : null"
+          value="money.Amount"
+          visible="!wizardState.IsCreditDistribution"/>
+      </InputColumn>
+      <InputColumn>
+        <Label
+          label="Header"/>
+        <InputSet
+          visible="paymentMoney != null">
+          <RangeInput
+            editable="true"
+            id="PaymentInstrument"
+            label="displaykey.Web.AgencyDistributionWizard.Step.MoneyDetails.PaymentInstrument"
+            onPick="paymentInstrumentRange.addPaymentInstrument(paymentMoney.PaymentInstrument)"
+            required="true"
+            value="paymentMoney.PaymentInstrument"
+            valueRange="gw.payment.PaymentInstrumentFilters.applyFilter(paymentInstrumentRange, paymentInstrumentFilter)  "
+            visible="!wizardState.IsCreditDistribution">
+            <MenuItem
+              action="NewPaymentInstrumentPopup.push(gw.payment.PaymentInstrumentFilters.agencyPaymentInstrumentOptions,moneySetup.Producer,true)"
+              id="CreateNewPaymentInstrument"
+              label="displaykey.Web.NewPaymentInstrument.CreateNewPaymentInstrument"/>
+          </RangeInput>
+          <Input
+            editable="true"
+            id="RefNumber"
+            label="displaykey.Web.AgencyDistributionWizard.Step.MoneyDetails.RefNumber"
+            value="paymentMoney.RefNumber"
+            visible="!wizardState.IsCreditDistribution"/>
+        </InputSet>
+        <Input
+          editable="true"
+          id="Name"
+          label="displaykey.Web.AgencyDistributionWizard.Step.MoneyDetails.Name"
+          value="money.Name"
+          visible="true"/>
+        <Input
+          editable="true"
+          id="Description"
+          label="DistributionDescription"
+          value="paymentMoney.Description"
+          visible="paymentMoney != null"/>
+      </InputColumn>
+    </DetailViewPanel>
+    <AlertBar
+      id="CannotChangeDistributionAlert"
+      label="displaykey.Web.AgencyDistributionWizard.Step.MoneyDetails.CannotChangeDistributionAlert"
+      visible="!wizardState.AllowChangeOfDistribution"/>
+    <PanelRef>
+      <TitleBar
+        id="DistributionInstructionsHeader"
+        title="displaykey.Web.AgencyDistributionWizard.Step.MoneyDetails.DistributionInstructions"/>
+      <DetailViewPanel
+        editable="wizardState.AllowChangeOfDistribution"
+        id="DistributionDetailsDV">
+        <InputColumn>
+          <RangeRadioInput
+            editable="true"
+            id="DistributeTo"
+            label="displaykey.Web.AgencyDistributionWizard.Step.MoneyDetails.DistributeTo"
+            required="true"
+            stacked="true"
+            value="wizardState.DistributeTo"
+            valueRange="wizardState.DistributeToValues"
+            visible="true">
+            <PostOnChange/>
+          </RangeRadioInput>
+        </InputColumn>
+        <InputColumn
+          id="DistributeColumn">
+          <InputSet
+            visible="wizardState.DistributeToStatementsAndPolicies || wizardState.DistributeToPromise">
+            <RangeRadioInput
+              editable="true"
+              id="DistributeAmounts"
+              label="displaykey.Web.AgencyDistributionWizard.Step.MoneyDetails.DistributeAmounts"
+              required="true"
+              stacked="true"
+              value="wizardState.DistributeAmounts"
+              valueRange="wizardState.DistributeAmountsValues"
+              visible="(wizardState.DistributeToStatementsAndPolicies || wizardState.DistributeToPromise)">
+              <PostOnChange/>
+            </RangeRadioInput>
+            <RangeRadioInput
+              editable="true"
+              id="DistributeBy"
+              label="displaykey.Web.AgencyDistributionWizard.Step.MoneyDetails.DistributeBy"
+              required="true"
+              stacked="true"
+              value="wizardState.DistributeBy"
+              valueRange="wizardState.DistributeByValues"
+              visible="(wizardState.DistributeToStatementsAndPolicies or wizardState.DistributeToPromise) and wizardState.SelectedEditDistribution "/>
+            <TypeKeyRadioInput
+              editable="true"
+              id="Prefill"
+              label="displaykey.Web.AgencyDistributionWizard.Step.MoneyDetails.Prefill"
+              required="true"
+              stacked="true"
+              value="moneySetup.Prefill"
+              visible="wizardState.DistributeToStatementsAndPolicies and wizardState.SelectedEditDistribution"/>
+          </InputSet>
+        </InputColumn>
+        <InputFooterSection>
+          <InputSet
+            id="Statements"
+            visible="wizardState.DistributeToStatementsAndPolicies">
+            <Label
+              label="displaykey.Web.AgencyDistributionWizard.Step.MoneyDetails.StatementsLV"/>
+            <ListViewInput
+              id="StatementsLV"
+              labelAbove="true">
+              <Toolbar>
+                <PickerToolbarButton
+                  action="AgencyDistributionWizard_AddStatementsPopup.push(wizardState)"
+                  hideIfReadOnly="true"
+                  id="AddStatements"
+                  label="displaykey.Web.AgencyDistributionWizard.Step.MoneyDetails.StatementsLV.Add"
+                  onPick="moneySetup.addDistributeToStatements(PickedValue)"
+                  shortcut="A"/>
+                <RemoveButton
+                  flags="any Row"
+                  hideIfReadOnly="true"
+                  id="RemoveStatements"
+                  iterator="StatementsIterator"
+                  label="displaykey.Web.AgencyDistributionWizard.Step.MoneyDetails.StatementsLV.Remove"
+                  shortcut="e"/>
+              </Toolbar>
+              <ListViewPanel>
+                <RowIterator
+                  checkBoxVisible="wizardState.AllowChangeOfDistribution"
+                  editable="true"
+                  elementName="statement"
+                  hasCheckBoxes="true"
+                  id="StatementsIterator"
+                  toRemove="moneySetup.removeDistributeToStatements({statement})"
+                  value="moneySetup.DistributeToStatements">
+                  <ToolbarFlag
+                    name="Row"/>
+                  <Row>
+                    <Cell
+                      action="AgencyBillStatementDetailPopup.push(statement)"
+                      id="StatementNumber"
+                      label="displaykey.Web.AgencyDistributionWizard.Step.MoneyDetails.StatementsLV.StatementNumber"
+                      value="statement.InvoiceNumber"/>
+                    <Cell
+                      id="Status"
+                      label="displaykey.Web.AgencyDistributionWizard.Step.MoneyDetails.StatementsLV.Status"
+                      value="statement.DisplayStatus"/>
+                    <MonetaryAmountCell
+                      currency="moneySetup.Producer.Currency"
+                      formatType="currency"
+                      id="NetOwed"
+                      label="displaykey.Web.AgencyDistributionWizard.Step.MoneyDetails.StatementsLV.NetOwed"
+                      value="statement.NetAmountDue"/>
+                    <DateCell
+                      id="BillDate"
+                      label="displaykey.Web.AgencyDistributionWizard.Step.MoneyDetails.StatementsLV.BillDate"
+                      sortOrder="1"
+                      value="statement.EventDate"/>
+                    <DateCell
+                      id="DueDate"
+                      label="displaykey.Web.AgencyDistributionWizard.Step.MoneyDetails.StatementsLV.DueDate"
+                      value="statement.DueDate"/>
+                  </Row>
+                </RowIterator>
+              </ListViewPanel>
+            </ListViewInput>
+          </InputSet>
+          <InputSet
+            id="Policies"
+            visible="wizardState.DistributeToStatementsAndPolicies &amp;&amp; !moneySetup.DistributeToStatements.IsEmpty">
+            <Label
+              label="displaykey.Web.AgencyDistributionWizard.Step.MoneyDetails.PolicyFilterHeader"/>
+            <RangeInput
+              editable="true"
+              id="PolicyFilter"
+              label="displaykey.Web.AgencyDistributionWizard.Step.MoneyDetails.PolicyFilter"
+              required="true"
+              value="wizardState.PolicyFilter"
+              valueRange="wizardState.PolicyFilterValues">
+              <PostOnChange
+                target="Policies"/>
+            </RangeInput>
+            <ListViewInput
+              id="SpecificPoliciesLV"
+              labelAbove="true"
+              visible="wizardState.ShowSpecificPolicies">
+              <Toolbar>
+                <PickerToolbarButton
+                  action="AgencyDistributionWizard_AddPoliciesPopup.push(wizardState)"
+                  hideIfReadOnly="true"
+                  id="AddSpecificPolicies"
+                  label="displaykey.Web.AgencyDistributionWizard.Step.MoneyDetails.PoliciesLV.Add"
+                  onPick="moneySetup.addPolicies(PickedValue)"
+                  shortcut="i"/>
+                <RemoveButton
+                  flags="any Row"
+                  hideIfReadOnly="true"
+                  id="RemoveSpecificPolicies"
+                  iterator="PoliciesIterator"
+                  label="displaykey.Web.AgencyDistributionWizard.Step.MoneyDetails.PoliciesLV.Remove"
+                  shortcut="m"/>
+              </Toolbar>
+              <ListViewPanel>
+                <RowIterator
+                  checkBoxVisible="wizardState.AllowChangeOfDistribution"
+                  editable="false"
+                  elementName="policy"
+                  hasCheckBoxes="true"
+                  id="PoliciesIterator"
+                  numEntriesRequired="1"
+                  toRemove="moneySetup.removePolicies(new PolicyPeriod[]{policy})"
+                  validationLabel="displaykey.Web.AgencyDistributionWizard.Step.MoneyDetails.MustPickAPolicyAlert"
+                  value="moneySetup.PoliciesToInclude">
+                  <ToolbarFlag
+                    name="Row"/>
+                  <Row>
+                    <Cell
+                      action="PolicyDetailSummaryPopup.push(policy)"
+                      id="PolicyNumber"
+                      label="displaykey.Web.AgencyDistributionWizard.Step.MoneyDetails.PoliciesLV.PolicyNumber"
+                      sortOrder="1"
+                      value="policy.PolicyNumberLong"/>
+                    <Cell
+                      action="AccountDetailSummaryPopup.push(policy.Policy.Account)"
+                      id="AccountNumber"
+                      label="displaykey.Web.AgencyDistributionWizard.Step.MoneyDetails.PoliciesLV.AccountNumber"
+                      value="policy.Policy.Account.AccountNumber"/>
+                    <TypeKeyCell
+                      id="Product"
+                      label="displaykey.Web.AgencyDistributionWizard.Step.MoneyDetails.PoliciesLV.Product"
+                      value="policy.Policy.LOBCode"/>
+                    <TypeKeyCell
+                      id="PaymentStatus"
+                      label="displaykey.Web.AgencyDistributionWizard.Step.MoneyDetails.PoliciesLV.PaymentStatus"
+                      value="policy.Policy.Account.DelinquencyStatus"/>
+                    <DateCell
+                      enableSort="false"
+                      id="EffectiveDate"
+                      label="displaykey.Web.AgencyDistributionWizard.Step.MoneyDetails.PoliciesLV.EffectiveDate"
+                      value="policy.EffectiveDate"/>
+                    <Cell
+                      enableSort="false"
+                      id="ExpirationDate"
+                      label="displaykey.Web.AgencyDistributionWizard.Step.MoneyDetails.PoliciesLV.ExpirationDate"
+                      value="policy.ExpirationDate">
+                      <PostOnChange/>
+                    </Cell>
+                    <Cell
+                      id="Producer"
+                      label="displaykey.Web.AgencyDistributionWizard.Step.MoneyDetails.PoliciesLV.Producer"
+                      value="policy.PrimaryPolicyCommission.ProducerCode.Producer"/>
+                    <Cell
+                      id="ProducerCode"
+                      label="displaykey.Web.AgencyDistributionWizard.Step.MoneyDetails.PoliciesLV.ProducerCode"
+                      value="policy.PrimaryPolicyCommission.ProducerCode.Code"/>
+                  </Row>
+                </RowIterator>
+              </ListViewPanel>
+            </ListViewInput>
+          </InputSet>
+          <InputSet
+            id="Promises"
+            visible="wizardState.DistributeToPromise">
+            <RangeInput
+              editable="true"
+              id="SelectPromise"
+              label="displaykey.Web.AgencyDistributionWizard.Step.MoneyDetails.Promise"
+              required="true"
+              value="wizardState.PaymentMoneySetup.AppliedFromPromise"
+              valueRange="moneySetup.Producer.findActivePromises()"
+              visible="wizardState.PaymentMoneySetup != null">
+              <PostOnChange
+                target="DATA_ONLY"/>
+            </RangeInput>
+          </InputSet>
+          <InputSet
+            id="SavedDistribution"
+            visible="wizardState.DistributeToSaved">
+            <Input
+              id="SelectSavedDistribution"
+              label="displaykey.Web.AgencyDistributionWizard.Step.MoneyDetails.SavedDistribution(moneySetup.DistributionTypeName)"
+              required="true"
+              value="moneySetup.SavedDistribution"/>
+          </InputSet>
+          <InputSet
+            id="ModifyingDistribution"
+            visible="moneySetup.EditingExecutedDistribution">
+            <Input
+              id="ModifyingDistribution"
+              label="displaykey.Web.AgencyDistributionWizard.Step.MoneyDetails.ModifyingDistribution(moneySetup.DistributionTypeName)"
+              required="true"
+              value="moneySetup.PreviouslyExecutedDistribution"/>
+          </InputSet>
+        </InputFooterSection>
+      </DetailViewPanel>
+    </PanelRef>
+    <Code><![CDATA[property get Header() : String {
+  if (wizardState.IsCreditDistribution) {
+    return displaykey.Web.AgencyDistributionWizard.Step.MoneyDetails.DistributionDetailsHeader.CreditDistribution
+  } else if (wizardState.IsPayment) {
+    return displaykey.Web.AgencyDistributionWizard.Step.MoneyDetails.DistributionDetailsHeader.Payment
+  } else {
+    return displaykey.Web.AgencyDistributionWizard.Step.MoneyDetails.DistributionDetailsHeader.Promise
+  }
+}
+
+property get DistributionDescription() : String {
+  if (wizardState.IsCreditDistribution) {
+    return displaykey.Web.AgencyDistributionWizard.Step.MoneyDetails.DistributionDescription.CreditDistribution
+  } else if (wizardState.IsPayment) {
+    return displaykey.Web.AgencyDistributionWizard.Step.MoneyDetails.DistributionDescription.Payment
+  } else {
+    return displaykey.Web.AgencyDistributionWizard.Step.MoneyDetails.DistributionDescription.Promise
+  }
+}
+
+property get AmountLabel() : String {
+if (wizardState.IsPayment) {
+    return displaykey.Web.AgencyDistributionWizard.Step.MoneyDetails.Amount.Payment
+  } else if (wizardState.IsPromise) {
+    return displaykey.Web.AgencyDistributionWizard.Step.MoneyDetails.Amount.Promise
+  } else {
+    return ""
+  }
+}]]></Code>
+  </Screen>
+</PCF>

@@ -1,0 +1,58 @@
+<?xml version="1.0"?>
+<PCF
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:noNamespaceSchemaLocation="../../../../../pcf.xsd">
+  <Popup
+    beforeCommit="collateralRequirement.releaseFromSegregated( amount )"
+    canEdit="true"
+    id="CollateralRequirementUnSegregatePopup"
+    startInEditMode="true"
+    title="displaykey.Web.CollateralRequirementUnSegregate.Title">
+    <LocationEntryPoint
+      signature="CollateralRequirementUnSegregatePopup(collateralRequirement : CollateralRequirement)"/>
+    <Variable
+      name="collateralRequirement"
+      type="CollateralRequirement"/>
+    <Variable
+      initialValue="0bd.ofCurrency(collateralRequirement.Currency)"
+      name="amount"
+      type="gw.pl.currency.MonetaryAmount"/>
+    <Screen
+      editable="true"
+      id="CollateralRequirementUnSegregateScreen">
+      <Toolbar>
+        <EditButtons/>
+      </Toolbar>
+      <DetailViewPanel>
+        <InputColumn>
+          <MonetaryAmountInput
+            currency="collateralRequirement.Currency"
+            formatType="currency"
+            id="amountonCollateral"
+            label="displaykey.Web.CollateralRequirementUnSegregate.AmountOnCollateral"
+            value="collateralRequirement.Collateral.TotalCashValue"/>
+          <MonetaryAmountInput
+            currency="collateralRequirement.Currency"
+            formatType="currency"
+            id="amountSegregated"
+            label="displaykey.Web.CollateralRequirementUnSegregate.AmountSegregated"
+            value="collateralRequirement.TotalCashValue"/>
+          <MonetaryAmountInput
+            currency="collateralRequirement.Currency"
+            editable="true"
+            formatType="currency"
+            id="amountInput"
+            label="displaykey.Web.CollateralRequirementUnSegregate.UnSegregateAmount"
+            required="true"
+            validationExpression="amount &gt; collateralRequirement.TotalCashValue or amount.IsNegative ?  displaykey.Web.CollateralRequirementUnSegregate.AmountError : null"
+            value="amount">
+            <PostOnChange/>
+          </MonetaryAmountInput>
+        </InputColumn>
+      </DetailViewPanel>
+      <PanelRef
+        def="CollateralRequirementDV(collateralRequirement, false)"
+        editable="false"/>
+    </Screen>
+  </Popup>
+</PCF>

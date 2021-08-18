@@ -1,0 +1,37 @@
+<?xml version="1.0"?>
+<PCF
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:noNamespaceSchemaLocation="../../../../../pcf.xsd">
+  <InputSet
+    id="AgencyBillPromises_PromiseApplicationInputSet">
+    <Require
+      name="selectedPromise"
+      type="AgencyCyclePromise"/>
+    <Label
+      label="displaykey.Web.AgencyBillPromises.PromiseApplication.Header"/>
+    <MonetaryAmountInput
+      currency="selectedPromise.Currency"
+      formatType="currency"
+      id="Amount"
+      label="displaykey.Web.AgencyBillPromises.PromiseApplication.Amount"
+      value="selectedPromise.BaseMoneyReceived.TotalAmount"/>
+    <MonetaryAmountInput
+      currency="selectedPromise.Currency"
+      formatType="currency"
+      id="Distributed"
+      label="displaykey.Web.AgencyBillPromises.PromiseApplication.Distributed"
+      value="selectedPromise.NetDistributedAmountForSavedOrExecuted"/>
+    <MonetaryAmountInput
+      currency="selectedPromise.Currency"
+      formatType="currency"
+      id="InSuspense"
+      label="displaykey.Web.AgencyBillPromises.PromiseApplication.InSuspense"
+      value="selectedPromise.NetSuspenseAmountForSavedOrExecuted"/>
+    <MonetaryAmountInput
+      currency="selectedPromise.Currency"
+      formatType="currency"
+      id="Remaining"
+      label="displaykey.Web.AgencyBillPromises.PromiseApplication.Remaining"
+      value="selectedPromise.RemainingAmount"/>
+  </InputSet>
+</PCF>

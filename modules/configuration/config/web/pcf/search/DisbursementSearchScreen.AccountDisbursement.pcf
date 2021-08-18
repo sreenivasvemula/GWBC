@@ -1,0 +1,82 @@
+<?xml version="1.0"?>
+<PCF
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:noNamespaceSchemaLocation="../../../../../pcf.xsd">
+  <Screen
+    id="DisbursementSearchScreen"
+    mode="AccountDisbursement">
+    <Require
+      name="disbursementSubtypeHolder"
+      type="gw.bc.disbursement.typekey.Disbursement[]"/>
+    <SearchPanel
+      criteriaName="searchCriteria"
+      maxSearchResults="gw.api.system.BCConfigParameters.MaxSearchResults.Value"
+      resultsName="disbursementSearchViews"
+      search="gw.search.SearchMethods.validateAndSearch(searchCriteria)"
+      searchCriteria="new AcctDisbSearchCriteria()"
+      searchResultsType="AcctDisbSearchViewQuery">
+      <PanelRef
+        def="DisbursementSearchDV(searchCriteria, disbursementSubtypeHolder)"
+        mode="disbursementSubtypeHolder[0]">
+        <Toolbar/>
+      </PanelRef>
+      <PanelRef
+        mode="disbursementSubtypeHolder[0]">
+        <Toolbar/>
+        <ListViewPanel
+          editable="false"
+          id="DisbursementSearchResultsLV">
+          <RowIterator
+            editable="false"
+            elementName="disbursementSearchView"
+            value="disbursementSearchViews">
+            <Row>
+              <DateCell
+                id="CloseDate"
+                label="displaykey.Web.DisbursementSearchResultsLV.CloseDate"
+                sortOrder="1"
+                value="disbursementSearchView.CloseDate"/>
+              <Cell
+                id="CheckNumber"
+                label="displaykey.Web.DisbursementSearchResultsLV.CheckNumber"
+                value="disbursementSearchView.CheckNumber"/>
+              <TypeKeyCell
+                action="DisbursementDetail.go(disbursementSearchView.Disbursement, false)"
+                id="Reason"
+                label="displaykey.Web.DisbursementSearchResultsLV.Reason"
+                value="disbursementSearchView.Reason"/>
+              <Cell
+                id="Payee"
+                label="displaykey.Web.DisbursementSearchResultsLV.Payee"
+                value="disbursementSearchView.PayTo"/>
+              <MonetaryAmountCell
+                currency="disbursementSearchView.Currency"
+                id="Amount"
+                label="displaykey.Web.DisbursementSearchResultsLV.Amount"
+                sortBy="disbursementSearchView.Currency, disbursementSearchView.Amount"
+                value="disbursementSearchView.Amount.ofCurrency(disbursementSearchView.Currency)"/>
+              <TypeKeyCell
+                id="PaymentMethod"
+                label="displaykey.Web.OutgoingProducerPaymentSearchResultsLV.PaymentMethod"
+                value="disbursementSearchView.PaymentMethod"/>
+              <TypeKeyCell
+                id="Status"
+                label="displaykey.Web.DisbursementSearchResultsLV.Status"
+                value="disbursementSearchView.Status"/>
+              <Cell
+                action="AccountDetailSummary.go(disbursementSearchView.Account)"
+                id="AccountNumber"
+                label="displaykey.Web.DisbursementSearchResultsLV.AccountNumber"
+                value="disbursementSearchView.AccountNumber"/>
+              <Cell
+                enableSort="false"
+                id="UnappliedFund"
+                label="displaykey.Web.DisbursementSearchResultsLV.UnappliedFund"
+                value="disbursementSearchView.Disbursement typeis AccountDisbursement ? disbursementSearchView.Disbursement.UnappliedFund : null"/>
+            </Row>
+          </RowIterator>
+        </ListViewPanel>
+      </PanelRef>
+    </SearchPanel>
+  </Screen>
+</PCF>

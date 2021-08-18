@@ -1,0 +1,223 @@
+<?xml version="1.0"?>
+<PCF
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:noNamespaceSchemaLocation="../../../../../pcf.xsd">
+  <DetailViewPanel
+    id="ProducerDetailDV">
+    <Require
+      name="producer"
+      type="Producer"/>
+    <Variable
+      initialValue="producer.TotalCommissionPayable"
+      name="totalCommissionPayable"
+      recalculateOnRefresh="true"/>
+    <Variable
+      initialValue="producer.PrimaryContact"
+      name="primaryContact"
+      recalculateOnRefresh="true"/>
+    <Variable
+      initialValue="primaryContact.Contact.PrimaryAddress"
+      name="primaryAddress"
+      recalculateOnRefresh="true"/>
+    <Variable
+      initialValue="util.DateUtil.currentDate()"
+      name="today"
+      recalculateOnRefresh="true"/>
+    <Variable
+      initialValue="producer.AccountRep.DisplayName"
+      name="accountRepDisplayName"
+      type="String"/>
+    <Variable
+      initialValue="gw.api.database.Query.make(SecurityZone).select()"
+      name="allSecurityZones"
+      type="SecurityZoneQuery"/>
+    <Variable
+      initialValue="producer.RawCommissionPayable"
+      name="rawCommissionPayable"
+      recalculateOnRefresh="true"/>
+    <Variable
+      initialValue="new gw.payment.PaymentInstrumentRange(producer.PaymentInstruments)"
+      name="paymentInstrumentRange"
+      type="gw.payment.PaymentInstrumentRange"/>
+    <InputColumn>
+      <Label
+        label="displaykey.Web.ProducerDetail.Basics"/>
+      <Input
+        id="Name"
+        label="displaykey.Web.ProducerDetail.Basics.Name"
+        value="producer"/>
+      <TypeKeyInput
+        editable="perm.Producer.prodtieredit"
+        id="Tier"
+        label="displaykey.Web.ProducerDetail.Basics.Tier"
+        value="producer.Tier">
+        <PostOnChange/>
+      </TypeKeyInput>
+      <TypeKeyInput
+        id="Currency"
+        label="displaykey.Web.ProducerDetail.Basics.Currency"
+        required="true"
+        value="producer.Currency"/>
+      <RangeInput
+        action="SecurityZoneDetail.go(producer.SecurityZone)"
+        editable="true"
+        id="SecurityZone"
+        label="displaykey.Web.AccountDetailDV.SecurityZone"
+        value="producer.SecurityZone"
+        valueRange="allSecurityZones"/>
+      <Label
+        label="displaykey.Web.ProducerDetail.ContactInformation"/>
+      <Input
+        id="PrimaryContact"
+        label="displaykey.Web.AccountDetailDV.PrimaryContact"
+        value="primaryContact.Contact"/>
+      <Input
+        id="Address"
+        label="displaykey.Web.NewProducerDV.PrimaryContact.Address"
+        value="new gw.api.address.AddressFormatter().format(primaryAddress, &quot;\n&quot;)"/>
+      <Input
+        id="Email"
+        label="displaykey.Web.ProducerDetail.Email"
+        value="primaryContact.Contact.EmailAddress1"/>
+      <Input
+        id="Phone"
+        label="displaykey.Web.ProducerDetail.Phone"
+        value="primaryContact.Contact.WorkPhoneValue"/>
+    </InputColumn>
+    <InputColumn>
+      <Label
+        label="displaykey.Web.ProducerDetail.Status.CommissionPayable"/>
+      <MonetaryAmountInput
+        align="right"
+        currency="producer.Currency"
+        formatType="currency"
+        id="producerLevelPayable"
+        label="displaykey.Web.ProducerDetail.Status.PayableAtProducerLevel"
+        value="rawCommissionPayable"/>
+      <MonetaryAmountInput
+        align="right"
+        currency="producer.Currency"
+        formatType="currency"
+        id="nonProducerLevelPayable"
+        label="displaykey.Web.ProducerDetail.Status.PayableAtNonProducerLevel"
+        value="totalCommissionPayable.subtract(rawCommissionPayable)"/>
+      <MonetaryAmountInput
+        align="right"
+        currency="producer.Currency"
+        formatType="currency"
+        id="payable"
+        label="totalCommissionPayable.IsNegative ? displaykey.Web.ProducerDetail.Status.Due : displaykey.Web.ProducerDetail.Status.Payable"
+        value="totalCommissionPayable"/>
+      <Label
+        label="displaykey.Web.ProducerDetail.Status"/>
+      <Input
+        editable="true"
+        id="CommissionDayOfMonth"
+        label="displaykey.Web.ProducerDetail.Status.CommissionDayOfMonth"
+        requestValidationExpression="VALUE != null and VALUE &gt; 0 and VALUE &lt;= 31 ? null : displaykey.Java.Account.InvoiceDayOfMonth.ValidationError"
+        value="producer.ProducerPaymentRecurrable.DayOfMonth"/>
+      <MonetaryAmountInput
+        align="right"
+        currency="producer.Currency"
+        formatType="currency"
+        id="CommissionPaidYearToDate"
+        label="displaykey.Web.ProducerDetail.Status.CommissionPaidYearToDate"
+        value="producer.getCommissionPaid((&quot;01/01/&quot; + util.DateUtil.getYear(today)) as java.util.Date, today)"/>
+      <MonetaryAmountInput
+        align="right"
+        currency="producer.Currency"
+        formatType="currency"
+        id="CommissionReserve"
+        label="displaykey.Web.ProducerDetail.Status.CommissionReserve"
+        value="producer.TotalCommissionReserve"/>
+      <MonetaryAmountInput
+        align="right"
+        currency="producer.Currency"
+        formatType="currency"
+        id="AdvanceBalance"
+        label="displaykey.Web.ProducerDetail.Status.AdvanceBalance"
+        value="producer.AdvanceBalance"/>
+      <MonetaryAmountInput
+        align="right"
+        currency="producer.Currency"
+        formatType="currency"
+        id="UnappliedAmount"
+        label="displaykey.Web.ProducerDetail.Status.UnappliedAmount"
+        value="producer.UnappliedAmount"/>
+      <MonetaryAmountInput
+        align="right"
+        currency="producer.Currency"
+        formatType="currency"
+        id="SuspenseAmount"
+        label="displaykey.Web.ProducerDetail.Status.SuspenseAmount"
+        value="producer.SuspenseAmount"/>
+      <MonetaryAmountInput
+        align="right"
+        currency="producer.Currency"
+        formatType="currency"
+        id="WriteoffExpense"
+        label="displaykey.Web.ProducerDetail.Status.WriteoffExpense"
+        value="producer.WriteoffExpenseBalance"/>
+    </InputColumn>
+    <InputColumn>
+      <Label
+        label="displaykey.Web.ProducerDetail.DirectBill"/>
+      <TypeKeyInput
+        editable="true"
+        id="Periodicity"
+        label="displaykey.Web.ProducerDetail.DirectBill.PaymentPeriodicity"
+        value="producer.ProducerPaymentRecurrable.Periodicity"/>
+      <BooleanRadioInput
+        editable="true"
+        id="SuspendNegativeAmounts"
+        label="displaykey.Web.ProducerDetail.DirectBill.SuspendNegativeAmounts"
+        value="producer.SuspendNegativeAmounts"/>
+      <RangeInput
+        editable="true"
+        id="DefaultPaymentInstrument"
+        label="displaykey.Web.ProducerDetail.Basics.PaymentInstrument"
+        onPick="paymentInstrumentRange.addPaymentInstrument(producer.DefaultPaymentInstrument)"
+        required="true"
+        value="producer.DefaultPaymentInstrument"
+        valueRange="gw.payment.PaymentInstrumentFilters.applyFilter(paymentInstrumentRange,gw.payment.PaymentInstrumentFilters.producerDetailsPaymentInstrumentFilter)">
+        <MenuItem
+          action="NewPaymentInstrumentPopup.push(gw.payment.PaymentInstrumentFilters.producerDetailsPaymentInstrumentOptions,producer, false)"
+          id="CreateNewPaymentInstrument"
+          label="displaykey.Web.NewPaymentInstrument.CreateNewPaymentInstrument"/>
+      </RangeInput>
+      <Label
+        label="displaykey.Web.ProducerDetail.AgencyBill"/>
+      <RangeInput
+        action="AgencyBillPlanDetailPopup.push(producer.AgencyBillPlan)"
+        editable="true"
+        id="AgencyBillPlan"
+        label="displaykey.Web.ProducerDetail.AgencyBill.Plan"
+        required="false"
+        value="producer.AgencyBillPlan"
+        valueRange="Plan.finder.findAllAvailablePlans(AgencyBillPlan, producer.Currency)"/>
+      <PickerInput
+        conversionExpression="PickedValue.DisplayName"
+        editable="true"
+        id="AccountRep"
+        label="displaykey.Web.ProducerDetail.AccountRep"
+        pickLocation="UserSearchPopup.push()"
+        validationExpression="validateAndSetAccountRep()"
+        value="accountRepDisplayName"/>
+    </InputColumn>
+    <Code><![CDATA[function validateAndSetAccountRep() : String {
+  if (accountRepDisplayName == null) {
+    producer.AccountRep = null
+    return null
+  }
+  
+  var allUsers = gw.api.database.Query.make(User).select().toList()
+  var user = allUsers.firstWhere( \ user -> user.DisplayName == accountRepDisplayName )
+  if (user == null) {
+    return displaykey.Web.ProducerDetail.InvalidAccountRep  
+  } else {
+    producer.AccountRep = user
+    return null
+  }
+}]]></Code>
+  </DetailViewPanel>
+</PCF>

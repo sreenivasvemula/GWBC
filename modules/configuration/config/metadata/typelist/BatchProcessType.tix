@@ -1,0 +1,130 @@
+<?xml version="1.0"?>
+<internaltypelistextension
+  xmlns="http://guidewire.com/typelists"
+  desc="Types of batch processes"
+  name="BatchProcessType">
+  <typecode
+    code="TroubleTicketEsc"
+    desc="Trouble Ticket escalation monitor"
+    name="Trouble Ticket Escalation"/>
+  <typecode
+    code="AccountInactivity"
+    desc="Checks for accounts that have been inactive for many days and creates notification activities for those accounts."
+    name="Account Inactivity"/>
+  <typecode
+    code="AdvanceExpiration"
+    desc="Checks for commission advances whose &quot;maintain until&quot; dates have passed and expires them. Results in any remaining advance balance becoming owed by the producer."
+    name="Advance Expiration"/>
+  <typecode
+    code="AgencySuspensePayment"
+    desc="Process agency cycle payments and promises that match policy periods"
+    name="Agency Suspense Payment"/>
+  <typecode
+    code="AutomaticDisbursement"
+    desc="Checks for accounts whose unapplied funds' amounts less the (amount under contract + amount slated for disbursement) is greater than billing-plan defined &quot;Disbursement Over&quot; amount and creates a disbursement for such accounts' unapplied funds."
+    name="Automatic Disbursement"/>
+  <typecode
+    code="ChargeProRataTx"
+    desc="Moves part of the total charge amount from the pro-rata charge's unearned T-Account (liability) to its revenue T-Account (income)."
+    name="Charge ProRata Tx"/>
+  <typecode
+    code="CmsnPayable"
+    desc="Checks for commissions that need to be made payable."
+    name="Commission Payable Calculations"/>
+  <typecode
+    code="CollEffective"
+    desc="Checks for Pending Collateral Requirements whose effective dates have passed"
+    name="Collateral Requirement Effective"/>
+  <typecode
+    code="CollExpiration"
+    desc="Checks for Active Collateral Requirements whose expiration dates have passed"
+    name="Collateral Requirement Expiration"/>
+  <typecode
+    code="CommissionPmt"
+    desc="Checks for manual commission payments that have been scheduled to occur on a future date. Any commission payment whose scheduled date has passed is executed by this process."
+    name="Commission Payment"/>
+  <typecode
+    code="Disbursement"
+    desc="Checks for disbursements whose due dates have passed and are approved and pays that amount to the account."
+    name="Disbursement"/>
+  <typecode
+    code="FullPayDiscount"
+    desc="Evaluates whether a policy is eligable for a full pay discount"
+    name="Full Pay Discount"/>
+  <typecode
+    code="Invoice"
+    desc="Changes the status of planned invoices whose billing date has passed to &quot;billed&quot;. As a consequence of this change, the invoices are sent to the account."
+    name="Invoice"/>
+  <typecode
+    code="InvoiceDue"
+    desc="Changes the status of billed invoices whose due date has passed to &quot;due&quot;. Delinquency will be triggered for any policies with past due amounts."
+    name="Invoice Due"/>
+  <typecode
+    code="LetterOfCredit"
+    desc="Changes the status of Current LOCs to Expired when their expiration date has passed"
+    name="Letter Of Credit"/>
+  <typecode
+    code="LegacyAgencyBill"
+    desc="Starts workflow on staging table imported active agency bill cycle"
+    name="Legacy Agency Bill"/>
+  <typecode
+    code="LegacyDelinquency"
+    desc="Starts workflow on staging table imported active delinquency processes"
+    name="Legacy Delinquency"/>
+  <typecode
+    code="NewPayment"
+    desc="Distributes a payment, moving funds from the account's unapplied T-Account to the account's policies."
+    name="New Payment"/>
+  <typecode
+    code="PaymentRequest"
+    desc="Checks for need to change payment request status"
+    name="Payment Request"/>
+  <typecode
+    code="PolicyClosure"
+    desc="Checks for policies that are not locked and that have been fully paid. Any such policy is closed by this process."
+    name="Policy Closure"/>
+  <typecode
+    code="PremiumReportReportDue"
+    desc="Checks to see if any premium reports are past due, kicks off delinquency if they are."
+    name="Premium Reporting Report Due"/>
+  <typecode
+    code="ProducerPayment"
+    desc="Pays producers whose next scheduled auto-payment date has passed. Payment includes the amount currently payable to the producer, plus any manual commission payments that have been scheduled to occur with next payment."
+    name="Producer Payment"/>
+  <typecode
+    code="ReleaseTtktHoldTypes"
+    desc="Checks for hold types on trouble tickets whose released dates have passed and removes those hold types from their holds."
+    name="Release Trouble Ticket Hold Types"/>
+  <typecode
+    code="ReleaseChargeHolds"
+    desc="Checks for charge holds whose released dates have passed and release them."
+    name="Release Charge Holds"/>
+  <typecode
+    code="StatementBilled"
+    desc="Changes the status of &quot;Planned&quot; Agency Bill Statements whose Bill Date has passed to &quot;Billed&quot;."
+    name="Statement Billed"/>
+  <typecode
+    code="StatementDue"
+    desc="Changes the status of &quot;Billed&quot; Agency Bill Statements whose Due Date has passed to &quot;Due&quot;."
+    name="Statement Due"/>
+  <typecode
+    code="SuspensePayment"
+    desc="Process the suspense payments who match accounts"
+    name="Suspense Payment"/>
+  <typecode
+    code="WriteoffStaging"
+    desc="Distributes any undistributed imported writeoffs, to be used after staging table loading."
+    name="Writeoff Staging"/>
+  <typecode
+    code="LegacyLetterOfCredit"
+    desc="Runs allocate on Collateral with LOCs but no cash"
+    name="Legacy Letter Of Credit"/>
+  <typecode
+    code="UpgradeBillingInstructionPaymentPlan"
+    desc="Initializes policy billing instructions' payment plans after upgrade"
+    name="Upgrade Billing Instruction Payment Plan"/>
+  <typecode
+    code="FundsAllotment"
+    desc="Allots funds from fund sources to fund uses for funds tracking.  Allots funds for all accounts that have unallotted or partially unallotted funds."
+    name="Funds Allotment"/>
+</internaltypelistextension>

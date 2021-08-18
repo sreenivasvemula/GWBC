@@ -1,0 +1,22 @@
+package rules.Assignment.DefaultGroupTroubleTicketAssignmentRules_dir
+
+@gw.rules.RuleName("Assign Round Robin")
+internal class AssignRoundRobin {
+  static function doCondition(troubleTicket : entity.TroubleTicket) : boolean {
+    
+/*start00rule*/
+return true
+/*end00rule*/
+
+  }
+
+  static function doAction(troubleTicket : entity.TroubleTicket, actions : gw.rules.Action) {
+
+/*start00rule*/
+if (troubleTicket.CurrentAssignment.assignUserByRoundRobin(false, troubleTicket.AssignedGroup)) {
+  actions.exit()
+}
+/*end00rule*/
+
+  }
+}

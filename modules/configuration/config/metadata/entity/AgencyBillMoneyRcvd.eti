@@ -1,0 +1,39 @@
+<?xml version="1.0"?>
+<!-- ====================================================================  PaymentMoneyReceived  ==================================================================== -->
+<subtype
+  xmlns="http://guidewire.com/datamodel"
+  entity="AgencyBillMoneyRcvd"
+  desc="Money received from an external source as a payment."
+  final="false"
+  subpackage="payment"
+  supertype="PaymentMoneyReceived">
+  <foreignkey
+    name="Producer"
+    desc="Reference to the paying Agency."
+    columnName="ProducerID"
+    fkentity="Producer"
+    importableagainstexistingobject="true"
+    nullok="false"
+    setterScriptability="doesNotExist"/>
+   <index
+    name="producerretired"
+    desc="covering index to improve perf of desktop agency items"
+    expectedtobecovering="true"
+    unique="true">
+    <indexcol
+      name="producerid"
+      keyposition="1"/>
+    <indexcol
+      name="retired"
+      keyposition="2"/>
+    <indexcol
+      name="basedistid"
+      keyposition="3"/>
+    <indexcol
+      name="id"
+      keyposition="4"/>
+    <indexcol
+      name="subtype"
+      keyposition="5"/>
+  </index>
+</subtype>

@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xml:lang="en" lang="en" xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+    <meta http-equiv="Content-Style-Type" content="text/css" />
+    <!-- MOTW-DISABLED saved from url=(0014)about:internet -->
+    <title>Implementing the Processes Plugin</title>
+    <link rel="StyleSheet" href="css/batchprocess.css" type="text/css" media="all" />
+    <link rel="StyleSheet" href="css/webworks.css" type="text/css" media="all" />
+    <link rel="StyleSheet" href="css/css-guidewire-extra.css" type="text/css" media="all" />
+    <script type="text/javascript" language="JavaScript1.2" src="wwhdata/common/context.js"></script>
+    <script type="text/javascript" language="JavaScript1.2" src="wwhdata/common/towwhdir.js"></script>
+    <script type="text/javascript" language="JavaScript1.2" src="wwhdata/common/wwhpagef.js"></script>
+    <script type="text/javascript" language="JavaScript1.2">
+      <!--
+        var  WebWorksRootPath = "";
+      // -->
+    </script>
+    <script type="text/javascript" language="JavaScript1.2">
+      <!--
+        // Set reference to top level help frame
+        //
+        var  WWHFrame = WWHGetWWHFrame("", true);
+      // -->
+    </script>
+    <script type="text/javascript" language="JavaScript1.2" src="scripts/expand.js"></script>
+    <!-- THE FOLLOWING IS A GUIDEWIRE STYLE DEFINITION FOR THE LINK TO THIS FEATURE -->
+    <link rel="StyleSheet" href="css/css-guidewire-extra.css" type="text/css" media="all" />
+    <!-- THE FOLLOWING IS A GUIDEWIRE GSCRIPT FUNCTION FOR THE LINK TO THIS FEATURE -->
+    <script type="text/javascript">
+function guidewire_selectall()
+{
+var text_val=eval("document.linktothisurlform.urlfield");
+text_val.focus();
+text_val.select();
+}
+</script>
+  </head>
+  <body onLoad="WWHUpdate();" onUnload="WWHUnload();" onKeyDown="WWHHandleKeyDown((document.all||document.getElementById||document.layers)?event:null);" onKeyPress="WWHHandleKeyPress((document.all||document.getElementById||document.layers)?event:null);" onKeyUp="WWHHandleKeyUp((document.all||document.getElementById||document.layers)?event:null);">
+    <!-- THE FOLLOWING IS A GUIDEWIRE DIV FOR THE 'LINK TO THIS' FEATURE -->
+    <div id="linkToThisPage" class="popup" style="display: none;">
+      <div class="popupTitle">Link Directly to This Page 
+           <a href="#" onclick="var thePopup = getElementById('linkToThisPage');thePopup.style.display='none';return false;"><img class="popupClosebox" src="wwhelp/wwhimpl/common/images/close.gif" /></a></div>
+      <div style="padding:6px;">
+        <div class="popupText" id="linkToThisPageBookmark">An error has occurred if you see this messsage.</div>
+        <form name="linktothisurlform" method="post" action="" style="width:275px;margin:0px">
+          <input type="text" class="popupURLText" id="linkToThisPageURL" name="urlfield" rows="1" cols="55" onClick="guidewire_selectall();" onFocus="guidewire_selectall();"></input>
+        </form>
+      </div>
+    </div>
+    <br />
+    <div class="WebWorks_Breadcrumbs" style="text-align: left;">
+      <span>BillingCenter Integration Guide</span> : 
+    <span class="WebWorks_Breadcrumbs" style="text-align: left;"><a class="WebWorks_Breadcrumb_Link" href="p-claims.html#2311861">Other Integration Topics</a> : <a class="WebWorks_Breadcrumb_Link" href="batchprocess.29.01.html#2311861">Custom Batch Processing</a> : <a class="WebWorks_Breadcrumb_Link" href="batchprocess.29.25.html#2311861">Enabling Custom Batch Processing to Run</a> : Implementing the Processes Plugin</span></div>
+    <hr align="left" />
+    <blockquote>
+      <h4 class="H2B_-_Heading_2_Break"><a name="2311861">Implementing the Processes Plugin</a></h4>
+      <div class="B_-_Body"><a name="2311868">BillingCenter instantiates custom batch processes that derive from </a><span class="cv_-_computer_voice">BatchProcessBass</span> at server startup. For BillingCenter to instantiate your custom batch process, you must implement the Processes plugin (<span class="cv_-_computer_voice">IProcessesPlugin)</span>. The <span class="cv_-_computer_voice">IProcessesPlugin</span> plugin relies on the typecode in <span class="cv_-_computer_voice">BatchProcessType</span> typelist for your type of batch processing. </div>
+      <div class="B_-_Body"><a name="2311872">For each typecode in the </a><span class="cv_-_computer_voice">BatchProcessType</span> that represents a custom batch process, BillingCenter calls the <span class="cv_-_computer_voice">createBatchProcess</span> method of the Processes plugin. The method takes a typecode from the <span class="cv_-_computer_voice">BatchProcessType</span> as a parameter. Implement the <span class="cv_-_computer_voice">createBatchProcess</span> method with a switch statement and a case clause for each type of custom batch process that you develop. </div>
+      <div class="B_-_Body"><a name="2311873">The following example code demonstrates how to implement the </a><span class="cv_-_computer_voice">IProcessesPlugin</span> plugin. The example instantiates two custom batch process. </div>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2311874">uses gw.plugin.processing.IProcessesPlugin</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2311875">uses gw.processes.BatchProcess</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2311876">@Export</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2311877">&nbsp;</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2311878">class ProcessesPlugin implements IProcessesPlugin {</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2311879">&nbsp;</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2311880">&nbsp;&nbsp;construct() {</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2311881">&nbsp;&nbsp;}</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2311882">&nbsp;</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2311883">&nbsp;&nbsp;override function createBatchProcess(type : BatchProcessType, arguments : Object[]) : BatchProcess {</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2311884">&nbsp;&nbsp;&nbsp;&nbsp;switch(type) {</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2311885">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;case BatchProcessType.TC_CLAIMHEALTHCALC:</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2311886">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return new ClaimHealthCalculatorBatch();</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2311887">&nbsp;</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2311888">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;case BatchProcessType.TC_PURGEMESSAGEHISTORY:</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2311889">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return new PurgeMessageHistory(arguments);</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2311890">&nbsp;</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2311891">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;default:</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2311892">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return null</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2311893">&nbsp;&nbsp;&nbsp;&nbsp;}</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2311894">&nbsp;&nbsp;}</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2311895">&nbsp;</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2311896">}</a></PRE>
+      <script type="text/javascript" language="JavaScript1.2">
+        <!--
+          // Clear related topics
+          //
+          WWHClearRelatedTopics();
+
+          document.writeln(WWHRelatedTopicsInlineHTML());
+        // -->
+      </script>
+    </blockquote>
+    <script type="text/javascript" language="JavaScript1.2">
+      <!--
+        document.write(WWHRelatedTopicsDivTag() + WWHPopupDivTag() + WWHALinksDivTag());
+      // -->
+    </script>
+  </body>
+</html>

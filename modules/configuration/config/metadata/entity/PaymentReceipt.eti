@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?><delegate xmlns="http://guidewire.com/datamodel" extendable="true" name="PaymentReceipt" subpackage="payment">
+  <fulldescription>
+    Represents the basic information for a payment received or made by BillingCenter.
+  </fulldescription>
+  <monetaryamount amountColumnName="Amount"
+          amountRange="nonnegative" desc="The total amount of the payment" name="Amount" nullok="false" scaleToCurrency="true"/>
+  <column desc="The reference number for this payment." name="RefNumber" nullok="true" supportsLinguisticSearch="true" type="shorttext"/>
+  <foreignkey columnName="PaymentInstrumentID" desc="The PaymentInstrument associated with this payment receipt." fkentity="PaymentInstrument" loadable="true" name="PaymentInstrument" nullok="false"/>
+  <index desc="Legacy" name="refnumberdenorm">
+    <indexcol keyposition="1" name="RefNumberDenorm"/>
+    <indexcol keyposition="2" name="Retired"/>
+  </index>
+</delegate>

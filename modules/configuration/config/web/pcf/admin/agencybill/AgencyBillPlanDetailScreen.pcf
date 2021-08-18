@@ -1,0 +1,30 @@
+<?xml version="1.0"?>
+<PCF
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:noNamespaceSchemaLocation="../../../../../../pcf.xsd">
+  <Screen
+    id="AgencyBillPlanDetailScreen">
+    <Require
+      name="agencyBillPlan"
+      type="AgencyBillPlan"/>
+    <Toolbar>
+      <EditButtons
+        cancelShortcut="L"
+        editShortcut="E"
+        showUpdateConfirmMessage="true"
+        updateShortcut="U"/>
+      <ToolbarButton
+        action="CloneAgencyBillPlan.go(agencyBillPlan)"
+        hideIfEditable="true"
+        id="Clone"
+        label="displaykey.Web.AgencyBillPlanDetailScreen.Clone"
+        showConfirmMessage="true"
+        visible="perm.System.agencybillplancreate"/>
+    </Toolbar>
+    <PanelRef
+      def="AgencyBillPlanDetailDV(agencyBillPlan)"/>
+    <PanelRef
+      def="LocalizedValuesDV(agencyBillPlan, { &quot;Name&quot;}, { displaykey.Web.AgencyBillPlanDetailDV.Name })"
+      editable="not agencyBillPlan.InUse"/>
+  </Screen>
+</PCF>

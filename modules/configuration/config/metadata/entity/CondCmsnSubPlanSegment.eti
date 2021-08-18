@@ -1,0 +1,40 @@
+<?xml version="1.0"?>
+<entity
+  xmlns="http://guidewire.com/datamodel"
+  entity="CondCmsnSubPlanSegment"
+  type="versionable"
+  desc="Represents an entry in the CondCmsnSubPlan's ExcludedSegments table. Each entry represents a segment                 excluded by the sub-plan."
+  admin="true"
+  subpackage="commission"
+  loadable="false"
+  platform="false"
+  table="condcmsnsubplansegment">
+  <implementsEntity
+    name="NotInCurrencySilo"/>
+  <foreignkey
+    name="CondCmsnSubPlan"
+    desc="FK to container."
+    columnName="CondCmsnSubPlanID"
+    fkentity="CondCmsnSubPlan"
+    getterScriptability="doesNotExist"
+    nullok="false"
+    setterScriptability="doesNotExist"/>
+  <typekey
+    name="Segment"
+    typelist="AccountSegment"
+    desc="The segment."
+    getterScriptability="doesNotExist"
+    nullok="false"
+    setterScriptability="doesNotExist"/>
+  <index
+    desc="Legacy"
+    name="commsubplanseg"
+    unique="true">
+    <indexcol
+      name="CondCmsnSubPlanID"
+      keyposition="1"/>
+    <indexcol
+      name="Segment"
+      keyposition="2"/>
+  </index>
+</entity>

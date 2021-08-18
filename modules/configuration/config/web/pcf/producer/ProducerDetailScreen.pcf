@@ -1,0 +1,32 @@
+<?xml version="1.0"?>
+<PCF
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:noNamespaceSchemaLocation="../../../../../pcf.xsd">
+  <Screen
+    id="ProducerDetailScreen">
+    <Require
+      name="producer"
+      type="Producer"/>
+    <Toolbar>
+      <EditButtons/>
+    </Toolbar>
+    <AlertBar
+      action="TroubleTicketAlertForward.push(producer)"
+      available="perm.System.prodttktview"
+      id="ProducerDetail_TroubleTicketAlertAlertBar"
+      label="producer.AlertBarDisplayText"
+      visible="producer.HasActiveTroubleTickets"/>
+    <PanelRef
+      def="ProducerDetailDV(producer)"/>
+    <PanelRef
+      def="ProducerCodesLV(producer, false)">
+      <TitleBar
+        title="displaykey.Web.ProducerDetail.ProducerCodes"/>
+      <Toolbar>
+        <IteratorButtons
+          iterator="ProducerCodesLV.ProducerCodesLV"
+          removeFlags="all NewProducerCode"/>
+      </Toolbar>
+    </PanelRef>
+  </Screen>
+</PCF>

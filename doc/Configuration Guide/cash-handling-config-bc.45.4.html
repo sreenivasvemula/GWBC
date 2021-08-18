@@ -1,0 +1,392 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xml:lang="en" lang="en" xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+    <meta http-equiv="Content-Style-Type" content="text/css" />
+    <!-- MOTW-DISABLED saved from url=(0014)about:internet -->
+    <title>Ordering of Invoice Items</title>
+    <link rel="StyleSheet" href="css/cash-handling-config-bc.css" type="text/css" media="all" />
+    <link rel="StyleSheet" href="css/webworks.css" type="text/css" media="all" />
+    <link rel="StyleSheet" href="css/css-guidewire-extra.css" type="text/css" media="all" />
+    <script type="text/javascript" language="JavaScript1.2" src="wwhdata/common/context.js"></script>
+    <script type="text/javascript" language="JavaScript1.2" src="wwhdata/common/towwhdir.js"></script>
+    <script type="text/javascript" language="JavaScript1.2" src="wwhdata/common/wwhpagef.js"></script>
+    <script type="text/javascript" language="JavaScript1.2">
+      <!--
+        var  WebWorksRootPath = "";
+      // -->
+    </script>
+    <script type="text/javascript" language="JavaScript1.2">
+      <!--
+        // Set reference to top level help frame
+        //
+        var  WWHFrame = WWHGetWWHFrame("", true);
+      // -->
+    </script>
+    <script type="text/javascript" language="JavaScript1.2" src="scripts/expand.js"></script>
+    <!-- THE FOLLOWING IS A GUIDEWIRE STYLE DEFINITION FOR THE LINK TO THIS FEATURE -->
+    <link rel="StyleSheet" href="css/css-guidewire-extra.css" type="text/css" media="all" />
+    <!-- THE FOLLOWING IS A GUIDEWIRE GSCRIPT FUNCTION FOR THE LINK TO THIS FEATURE -->
+    <script type="text/javascript">
+function guidewire_selectall()
+{
+var text_val=eval("document.linktothisurlform.urlfield");
+text_val.focus();
+text_val.select();
+}
+</script>
+  </head>
+  <body onLoad="WWHUpdate();" onUnload="WWHUnload();" onKeyDown="WWHHandleKeyDown((document.all||document.getElementById||document.layers)?event:null);" onKeyPress="WWHHandleKeyPress((document.all||document.getElementById||document.layers)?event:null);" onKeyUp="WWHHandleKeyUp((document.all||document.getElementById||document.layers)?event:null);">
+    <!-- THE FOLLOWING IS A GUIDEWIRE DIV FOR THE 'LINK TO THIS' FEATURE -->
+    <div id="linkToThisPage" class="popup" style="display: none;">
+      <div class="popupTitle">Link Directly to This Page 
+           <a href="#" onclick="var thePopup = getElementById('linkToThisPage');thePopup.style.display='none';return false;"><img class="popupClosebox" src="wwhelp/wwhimpl/common/images/close.gif" /></a></div>
+      <div style="padding:6px;">
+        <div class="popupText" id="linkToThisPageBookmark">An error has occurred if you see this messsage.</div>
+        <form name="linktothisurlform" method="post" action="" style="width:275px;margin:0px">
+          <input type="text" class="popupURLText" id="linkToThisPageURL" name="urlfield" rows="1" cols="55" onClick="guidewire_selectall();" onFocus="guidewire_selectall();"></input>
+        </form>
+      </div>
+    </div>
+    <br />
+    <div class="WebWorks_Breadcrumbs" style="text-align: left;">
+      <span>BillingCenter Configuration Guide</span> : 
+    <span class="WebWorks_Breadcrumbs" style="text-align: left;"><a class="WebWorks_Breadcrumb_Link" href="p-BillingCenter.html#1183275">Guidewire BillingCenter Configuration</a> : <a class="WebWorks_Breadcrumb_Link" href="cash-handling-config-bc.45.1.html#1183275">Configuring Payment Allocation Plans</a> : Ordering of Invoice Items</span></div>
+    <hr align="left" />
+    <blockquote>
+      <h3 class="H1_-_Heading_1"><a name="1183275">Ordering of Invoice Items</a></h3>
+      <div class="B_-_Body"><a name="1174543">Invoice items eligible for payment are grouped and ordered based on the priority in which they will be paid. Items with a higher priority are paid before items having a lower priority. This section describes the programming tasks necessary to create a special grouping and ordering of eligible invoice items. A sample implementation written in Gosu is also provided.</a></div>
+      <h4 class="H2_-_Heading_2"><a name="1184582">Programming Tasks</a></h4>
+      <div class="B_-_Body"><a name="1184050">The following tasks outline the steps necessary to write a special grouping and ordering of eligible invoice items for a payment allocation plan:</a></div>
+      <div class="LS_-_List_Start_outer" style="margin-left: 57pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="LS_-_List_Start_inner" style="width: 15pt; white-space: nowrap">
+                <span class="ri_-_run_in_header">	1.	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="LS_-_List_Start_inner"><a name="1174544">Define a new typecode in the </a><span class="cv_-_computer_voice">InvoiceItemOrderingType</span> typelist.</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="LI_-_List_Item_outer" style="margin-left: 57pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="LI_-_List_Item_inner" style="width: 15pt; white-space: nowrap">
+                <span class="ri_-_run_in_header">	2.	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="LI_-_List_Item_inner"><a name="1174545">Create a thread‑safe class that extends </a><span class="cv_-_computer_voice">DirectInvoiceItemAllocationOrdering</span>.</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="LI_-_List_Item_outer" style="margin-left: 57pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="LI_-_List_Item_inner" style="width: 15pt; white-space: nowrap">
+                <span class="ri_-_run_in_header">	3.	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="LI_-_List_Item_inner"><a name="1174715">Implement the new class. This entails writing (a)&nbsp;the </a><span class="cv_-_computer_voice">TypeKey</span> property to return the newly-defined typecode and (b)&nbsp;the <span class="cv_-_computer_voice">compare</span> method which accepts two invoice items and returns the result of comparing them.</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="LI_-_List_Item_outer" style="margin-left: 57pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="LI_-_List_Item_inner" style="width: 15pt; white-space: nowrap">
+                <span class="ri_-_run_in_header">	4.	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="LI_-_List_Item_inner"><a name="1174696">Register the class in the </a><span class="cv_-_computer_voice">LinkedImplementationLoaderImpl.returnPaymentAllocationOrderings</span> method.</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <h4 class="H2_-_Heading_2"><a name="1184791">Sample Ordering of Invoice Items in Gosu</a></h4>
+      <div class="B_-_Body"><a name="1184792">This section describes the implementation of a sample ordering of eligible invoice items using the Gosu programming language. The sample prioritizes items based on their charge type. </a><span class="cv_-_computer_voice">Premium</span> charges have the highest priority and are paid first. <span class="cv_-_computer_voice">Tax</span> charges are paid second. <span class="cv_-_computer_voice">Fee</span> charges have the lowest priority.</div>
+      <div class="H3_-_Heading_3_outer" style="margin-left: 36pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <h5 class="H3_-_Heading_3_inner" style="width: 18pt; white-space: nowrap"></h5>
+            </td>
+            <td width="100%">
+              <h5 class="H3_-_Heading_3_inner"><a name="1184793">Define the Ordering Typecode</a></h5>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="B_-_Body"><a name="1184794">A new typecode for the ordering must be added to the </a><span class="cv_-_computer_voice">InvoiceItemOrderingType</span> typelist.</div>
+      <div class="LS_-_List_Start_outer" style="margin-left: 57pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="LS_-_List_Start_inner" style="width: 15pt; white-space: nowrap">
+                <span class="ri_-_run_in_header">	1.	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="LS_-_List_Start_inner"><a name="1184801">If the </a><span class="cv_-_computer_voice">InvoiceItemOrderingType</span> typelist has not already been extended, right‑click <span class="ui_-_UI_element">configuration</span>&nbsp;→ <span class="ui_-_UI_element">config</span>&nbsp;→ <span class="ui_-_UI_element">Metadata</span>&nbsp;→ <span class="ui_-_UI_element">Typelist</span>&nbsp;→ <span class="ui_-_UI_element">InvoiceItemOrderingType.tti</span> and select <span class="ui_-_UI_element">New</span>&nbsp;→ <span class="ui_-_UI_element">Typelist Extension</span>.</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="LI_-_List_Item_outer" style="margin-left: 57pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="LI_-_List_Item_inner" style="width: 15pt; white-space: nowrap">
+                <span class="ri_-_run_in_header">	2.	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="LI_-_List_Item_inner"><a name="1184820">If the </a><span class="cv_-_computer_voice">DistributionFilterType</span> typelist has already been extended, select <span class="ui_-_UI_element">configuration</span>&nbsp;→ <span class="ui_-_UI_element">config</span>&nbsp;→ <span class="ui_-_UI_element">Extensions</span>&nbsp;→ <span class="ui_-_UI_element">Typelist</span>&nbsp;→ <span class="ui_-_UI_element">InvoiceItemOrderingType.ttx</span>.</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="LI_-_List_Item_outer" style="margin-left: 57pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="LI_-_List_Item_inner" style="width: 15pt; white-space: nowrap">
+                <span class="ri_-_run_in_header">	3.	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="LI_-_List_Item_inner"><a name="1184824">Define a new typecode to the extended typelist. For the sample filter, set the typecode fields as shown below.</a></div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="BI2_-_Bullet_Item_002c_Level_2_outer" style="margin-left: 67pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="BI2_-_Bullet_Item_002c_Level_2_inner" style="width: 15pt; white-space: nowrap">
+                <span class="bu_-_bullet">•	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="BI2_-_Bullet_Item_002c_Level_2_inner"><span class="ui_-_UI_element"><a name="1184825">code</a></span>: ChargeType</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="BI2_-_Bullet_Item_002c_Level_2_outer" style="margin-left: 67pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="BI2_-_Bullet_Item_002c_Level_2_inner" style="width: 15pt; white-space: nowrap">
+                <span class="bu_-_bullet">•	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="BI2_-_Bullet_Item_002c_Level_2_inner"><span class="ui_-_UI_element"><a name="1184826">name</a></span>: Charge Type</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="BI2_-_Bullet_Item_002c_Level_2_outer" style="margin-left: 67pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="BI2_-_Bullet_Item_002c_Level_2_inner" style="width: 15pt; white-space: nowrap">
+                <span class="bu_-_bullet">•	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="BI2_-_Bullet_Item_002c_Level_2_inner"><span class="ui_-_UI_element"><a name="1185244">desc</a></span>: Order eligible invoice items based on the Charge Type (Premium, Tax, Fee)</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="H3_-_Heading_3_outer" style="margin-left: 36pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <h5 class="H3_-_Heading_3_inner" style="width: 18pt; white-space: nowrap"></h5>
+            </td>
+            <td width="100%">
+              <h5 class="H3_-_Heading_3_inner"><a name="1185337">Define the Ordering Class</a></h5>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="B_-_Body"><a name="1185338">A new class for the ordering must be defined. The class must extend </a><span class="cv_-_computer_voice">DirectInvoiceItemAllocationOrdering</span>, and the class implementation must be thread-safe.</div>
+      <div class="LS_-_List_Start_outer" style="margin-left: 57pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="LS_-_List_Start_inner" style="width: 15pt; white-space: nowrap">
+                <span class="ri_-_run_in_header">	1.	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="LS_-_List_Start_inner"><a name="1185339">A recommended best practice places configuration code in your own packages. The sample ordering is written for an imaginary company called Acme. Accordingly, its payment allocation configuration code is placed in a package named </a><span class="cv_-_computer_voice">acme.payment</span>. To create the package, right‑click <span class="ui_-_UI_element">configuration</span>&nbsp;→ <span class="ui_-_UI_element">gsrc</span> and select <span class="ui_-_UI_element">New</span>&nbsp;→ <span class="ui_-_UI_element">Package</span>. Name the package <span class="cv_-_computer_voice">acme.payment</span>.</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="LI_-_List_Item_outer" style="margin-left: 57pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="LI_-_List_Item_inner" style="width: 15pt; white-space: nowrap">
+                <span class="ri_-_run_in_header">	2.	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="LI_-_List_Item_inner"><a name="1185355">Define the new ordering class. Right‑click </a><span class="ui_-_UI_element">configuration</span>&nbsp;→ <span class="ui_-_UI_element">gsrc</span>&nbsp;→ <span class="ui_-_UI_element">acme.payment</span> and select <span class="ui_-_UI_element">New</span>&nbsp;→ <span class="ui_-_UI_element">Gosu class</span>. Name the class <span class="cv_-_computer_voice">ChargeTypeOrdering</span>.</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="LI_-_List_Item_outer" style="margin-left: 57pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="LI_-_List_Item_inner" style="width: 15pt; white-space: nowrap">
+                <span class="ri_-_run_in_header">	3.	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="LI_-_List_Item_inner"><a name="1185356">The new ordering class must extend </a><span class="cv_-_computer_voice">DirectInvoiceItemAllocationOrdering</span>. The empty skeleton definition for the filter class is shown below.</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <PRE class="CF_-_Code_First_Line"><a name="1185357">package acme.payment</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="1185358">&nbsp;</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="1185359">uses gw.payment.DirectInvoiceItemAllocationOrdering</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="1185360">&nbsp;</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="1185361">class ChargeTypeOrdering extends DirectInvoiceItemAllocationOrdering {</a></PRE>
+      <PRE class="CL_-_Code_Last_Line"><a name="1184028">}</a></PRE>
+      <div class="H3_-_Heading_3_outer" style="margin-left: 36pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <h5 class="H3_-_Heading_3_inner" style="width: 18pt; white-space: nowrap"></h5>
+            </td>
+            <td width="100%">
+              <h5 class="H3_-_Heading_3_inner"><a name="1185752">Implement the </a><span class="cvh_-_computer_voice_in_heading">TypeKey</span> Method</h5>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="B_-_Body"><a name="1185753">The ordering class must implement a getter method for the </a><span class="cv_-_computer_voice">TypeKey</span> property. The method must return the ordering’s typecode added to the <span class="cv_-_computer_voice">InvoiceItemOrderingType</span> typelist in an earlier step.</div>
+      <div class="B_-_Body"><a name="1185754">The </a><span class="cv_-_computer_voice">TypeKey</span> method for the sample ordering is shown below.</div>
+      <PRE class="CF_-_Code_First_Line"><a name="1185755">override property get</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="1185756">TypeKey() : InvoiceItemOrderingType {</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="1185757">&nbsp;&nbsp;return TC_CHARGETYPE</a></PRE>
+      <PRE class="CL_-_Code_Last_Line"><a name="1185748">}</a></PRE>
+      <div class="H3_-_Heading_3_outer" style="margin-left: 36pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <h5 class="H3_-_Heading_3_inner" style="width: 18pt; white-space: nowrap"></h5>
+            </td>
+            <td width="100%">
+              <h5 class="H3_-_Heading_3_inner"><a name="1185892">Implement the </a><span class="cvh_-_computer_voice_in_heading">compare</span> Method</h5>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="B_-_Body"><a name="1185893">The ordering class must implement the </a><span class="cv_-_computer_voice">compare</span> method which examines the charge types of two invoice items and returns a value indicating the priority relationship of the two items. If the first invoice item has a higher priority than the second item, the method returns a value greater than zero. If the first item has a lower priority than the second item, the method returns a value less than zero. If the two items have the same priority, the method returns zero. The <span class="cv_-_computer_voice">compare</span> method must be thread‑safe.</div>
+      <div class="B_-_Body"><a name="1185881">The sample implementation of the </a><span class="cv_-_computer_voice">compare</span> method is shown below.</div>
+      <PRE class="CF_-_Code_First_Line"><a name="1186470">uses java.lang.Integer</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="1186557">&nbsp;</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="1186559">override function</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="1186578">compare( left : InvoiceItem, right : InvoiceItem ) : int {</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="1186643">&nbsp;&nbsp;var listByPriority = {</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="1186670">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ChargeCategory.TC_PREMIUM,</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="1186716">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ChargeCategory.TC_TAX,</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="1186753">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ChargeCategory.TC_FEE</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="1186792">&nbsp;&nbsp;}</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="1186797">&nbsp;&nbsp;var leftPriority&nbsp;&nbsp;= listByPriority.indexOf( left.Charge.ChargePattern.Category )</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="1186881">&nbsp;&nbsp;var rightPriority = listByPriority.indexOf( right.Charge.ChargePattern.Category )</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="1186979">&nbsp;&nbsp;return Integer.compare( rightPriority, leftPriority )</a></PRE>
+      <PRE class="CL_-_Code_Last_Line"><a name="1187037">}</a></PRE>
+      <div class="H3_-_Heading_3_outer" style="margin-left: 36pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <h5 class="H3_-_Heading_3_inner" style="width: 18pt; white-space: nowrap"></h5>
+            </td>
+            <td width="100%">
+              <h5 class="H3_-_Heading_3_inner"><a name="1187048">Register the Ordering Class</a></h5>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="B_-_Body"><a name="1187049">The ordering class must be registered in the </a><span class="cv_-_computer_voice">LinkedImplementationLoaderImpl.returnPaymentAllocationOrderings</span> method. This entails adding a code statement to the <span class="cv_-_computer_voice">returnPaymentAllocationOrderings</span> method. The code statement must construct a new instance of the ordering class. The following steps register the sample ordering class.</div>
+      <div class="LS_-_List_Start_outer" style="margin-left: 57pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="LS_-_List_Start_inner" style="width: 15pt; white-space: nowrap">
+                <span class="ri_-_run_in_header">	1.	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="LS_-_List_Start_inner"><a name="1187053">Select </a><span class="ui_-_UI_element">Navigate</span> → <span class="ui_-_UI_element">Class...</span> and enter <span class="cv_-_computer_voice">LinkedImplementationLoaderImpl</span> to load the class’s implementation file.</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="LI_-_List_Item_outer" style="margin-left: 57pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="LI_-_List_Item_inner" style="width: 15pt; white-space: nowrap">
+                <span class="ri_-_run_in_header">	2.	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="LI_-_List_Item_inner"><a name="1187054">Register the sample ordering class in the </a><span class="cv_-_computer_voice">returnPaymentAllocationOrderings</span> method. The code is shown below.</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <PRE class="CF_-_Code_First_Line"><a name="1187055">uses acme.payment.ChargeTypeOrdering&nbsp;&nbsp;&nbsp;&nbsp;// Sample ordering class</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="1187056">&nbsp;</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="1187057">override function</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="1187058">returnPaymentAllocationOrderings() : Collection&lt;InvoiceItemAllocationOrderings&gt; {</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="1187059">&nbsp;&nbsp;return {</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="1187060">&nbsp;&nbsp;&nbsp;&nbsp;new BilledDateOrdering(),</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="1187061">&nbsp;&nbsp;&nbsp;&nbsp;// ... other ordering registrations ...</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="1187062">&nbsp;&nbsp;&nbsp;&nbsp;new RecaptureFirstOrdering(),</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="1187063">&nbsp;&nbsp;&nbsp;&nbsp;// Register sample ordering</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="1187064">&nbsp;&nbsp;&nbsp;&nbsp;new ChargeTypeOrdering()</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="1187065">&nbsp;&nbsp;}</a></PRE>
+      <PRE class="CL_-_Code_Last_Line"><a name="1187044">}</a></PRE>
+      <script type="text/javascript" language="JavaScript1.2">
+        <!--
+          // Clear related topics
+          //
+          WWHClearRelatedTopics();
+
+          document.writeln(WWHRelatedTopicsInlineHTML());
+        // -->
+      </script>
+    </blockquote>
+    <script type="text/javascript" language="JavaScript1.2">
+      <!--
+        document.write(WWHRelatedTopicsDivTag() + WWHPopupDivTag() + WWHALinksDivTag());
+      // -->
+    </script>
+  </body>
+</html>

@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xml:lang="en" lang="en" xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+    <meta http-equiv="Content-Style-Type" content="text/css" />
+    <!-- MOTW-DISABLED saved from url=(0014)about:internet -->
+    <title>Creating a Custom Batch Process</title>
+    <link rel="StyleSheet" href="css/batchprocess.css" type="text/css" media="all" />
+    <link rel="StyleSheet" href="css/webworks.css" type="text/css" media="all" />
+    <link rel="StyleSheet" href="css/css-guidewire-extra.css" type="text/css" media="all" />
+    <script type="text/javascript" language="JavaScript1.2" src="wwhdata/common/context.js"></script>
+    <script type="text/javascript" language="JavaScript1.2" src="wwhdata/common/towwhdir.js"></script>
+    <script type="text/javascript" language="JavaScript1.2" src="wwhdata/common/wwhpagef.js"></script>
+    <script type="text/javascript" language="JavaScript1.2">
+      <!--
+        var  WebWorksRootPath = "";
+      // -->
+    </script>
+    <script type="text/javascript" language="JavaScript1.2">
+      <!--
+        // Set reference to top level help frame
+        //
+        var  WWHFrame = WWHGetWWHFrame("", true);
+      // -->
+    </script>
+    <script type="text/javascript" language="JavaScript1.2" src="scripts/expand.js"></script>
+    <!-- THE FOLLOWING IS A GUIDEWIRE STYLE DEFINITION FOR THE LINK TO THIS FEATURE -->
+    <link rel="StyleSheet" href="css/css-guidewire-extra.css" type="text/css" media="all" />
+    <!-- THE FOLLOWING IS A GUIDEWIRE GSCRIPT FUNCTION FOR THE LINK TO THIS FEATURE -->
+    <script type="text/javascript">
+function guidewire_selectall()
+{
+var text_val=eval("document.linktothisurlform.urlfield");
+text_val.focus();
+text_val.select();
+}
+</script>
+  </head>
+  <body onLoad="WWHUpdate();" onUnload="WWHUnload();" onKeyDown="WWHHandleKeyDown((document.all||document.getElementById||document.layers)?event:null);" onKeyPress="WWHHandleKeyPress((document.all||document.getElementById||document.layers)?event:null);" onKeyUp="WWHHandleKeyUp((document.all||document.getElementById||document.layers)?event:null);">
+    <!-- THE FOLLOWING IS A GUIDEWIRE DIV FOR THE 'LINK TO THIS' FEATURE -->
+    <div id="linkToThisPage" class="popup" style="display: none;">
+      <div class="popupTitle">Link Directly to This Page 
+           <a href="#" onclick="var thePopup = getElementById('linkToThisPage');thePopup.style.display='none';return false;"><img class="popupClosebox" src="wwhelp/wwhimpl/common/images/close.gif" /></a></div>
+      <div style="padding:6px;">
+        <div class="popupText" id="linkToThisPageBookmark">An error has occurred if you see this messsage.</div>
+        <form name="linktothisurlform" method="post" action="" style="width:275px;margin:0px">
+          <input type="text" class="popupURLText" id="linkToThisPageURL" name="urlfield" rows="1" cols="55" onClick="guidewire_selectall();" onFocus="guidewire_selectall();"></input>
+        </form>
+      </div>
+    </div>
+    <br />
+    <div class="WebWorks_Breadcrumbs" style="text-align: left;">
+      <span>BillingCenter Integration Guide</span> : 
+    <span class="WebWorks_Breadcrumbs" style="text-align: left;"><a class="WebWorks_Breadcrumb_Link" href="p-claims.html#2366741">Other Integration Topics</a> : <a class="WebWorks_Breadcrumb_Link" href="batchprocess.29.01.html#2366741">Custom Batch Processing</a> : <a class="WebWorks_Breadcrumb_Link" href="batchprocess.29.18.html#2366741">Developing Custom Batch Processes</a> : Creating a Custom Batch Process</span></div>
+    <hr align="left" />
+    <blockquote>
+      <h4 class="H2B_-_Heading_2_Break"><a name="2366741">Creating a Custom Batch Process</a></h4>
+      <h6 class="HS_-_Head_Sub"><a name="2366742">To create a custom batch process</a></h6>
+      <div class="LS_-_List_Start_outer" style="margin-left: 57pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="LS_-_List_Start_inner" style="width: 15pt; white-space: nowrap">
+                <span class="ri_-_run_in_header">	1.	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="LS_-_List_Start_inner"><a name="2228441">In Studio, edit the </a><span class="cv_-_computer_voice">BatchProcessType</span> typecode. </div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="LS2A_-_List_Start_002c_Level_2_Alpha_outer" style="margin-left: 67pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="LS2A_-_List_Start_002c_Level_2_Alpha_inner" style="width: 15pt; white-space: nowrap">
+                <span class="ri_-_run_in_header">a.	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="LS2A_-_List_Start_002c_Level_2_Alpha_inner"><a name="2228442">Add an element to represent your own batch process. </a></div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="LI2A_-_List_Item_002c_Level_2_Alpha_outer" style="margin-left: 67pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="LI2A_-_List_Item_002c_Level_2_Alpha_inner" style="width: 15pt; white-space: nowrap">
+                <span class="ri_-_run_in_header">b.	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="LI2A_-_List_Item_002c_Level_2_Alpha_inner"><a name="2228443">In the typecode editor, for the new typecode, add one or more categories as they apply for your batch process. Use the </a><span class="cv_-_computer_voice">BatchProcessTypeUsage</span> typelist with following values:</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="LP2_-_List_Para_002c_Level_2"><span class="cv_-_computer_voice"><a name="2228444">UIRunnable</a></span> - the process is runnable both from the user interface and from the web service APIs.</div>
+      <div class="LP2_-_List_Para_002c_Level_2"><span class="cv_-_computer_voice"><a name="2228445">APIRunnable</a></span> - the process is only runnable from web service APIs.</div>
+      <div class="LP2_-_List_Para_002c_Level_2"><span class="cv_-_computer_voice"><a name="2228446">Schedulable</a></span> - the process can be scheduled.</div>
+      <div class="LP2_-_List_Para_002c_Level_2"><span class="cv_-_computer_voice"><a name="2228447">MaintenanceOnly</a></span> - only run the process if the system is at maintenance run level.</div>
+      <div class="LP_-_List_Para"><a name="2228450">You must add at least one category or else your batch process cannot run. </a></div>
+      <div class="N_-_Note">
+        <span class="n_-_note">Note: </span><a name="2228452">Creating this new typecode adds support for the new batch process within </a><span class="cv_-_computer_voice">BatchProcessInfo.pcf</span> and <span class="cv_-_computer_voice">IMaintenanceToolAPI</span>.</div>
+      <div class="LI_-_List_Item_outer" style="margin-left: 57pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="LI_-_List_Item_inner" style="width: 15pt; white-space: nowrap">
+                <span class="ri_-_run_in_header">	2.	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="LI_-_List_Item_inner"><a name="2228453">Create a class that extends the </a><span class="cv_-_computer_voice">BatchProcessBase</span> class (<span class="cv_-_computer_voice">gw.processes.BatchProcessBase</span><span style="font-family: &quot;Trebuchet MS&quot;; font-size: 9.1pt; font-weight: bold">)</span>. The only method you must override is the <span class="cv_-_computer_voice">doWork</span> method, which takes no arguments. Do your batch processes work in this method. For more information about this class, including some optional methods to override, see <a href="javascript:WWHClickedPopup('integration', 'batchprocess.29.21.html#2228504', '');" title="Batch Process Implementation Using the Batch Process Base Class">“Batch Process Implementation Using the Batch Process Base Class”</a>.</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="LI_-_List_Item_outer" style="margin-left: 57pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="LI_-_List_Item_inner" style="width: 15pt; white-space: nowrap">
+                <span class="ri_-_run_in_header">	3.	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="LI_-_List_Item_inner"><a name="2228492">In Studio, in the Plugins editor, register your new plugin for the </a><span class="cv_-_computer_voice">IProcessesPlugin</span><span style="font-family: &quot;Lucida Sans Typewriter&quot;; font-size: 7.0pt"> </span>plugin interface. For more information, see <a href="javascript:WWHClickedPopup('integration', 'batchprocess.29.28.html#2311861', '');" title="Implementing the Processes Plugin">“Implementing the Processes Plugin”</a>. </div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="LI_-_List_Item_outer" style="margin-left: 57pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="LI_-_List_Item_inner" style="width: 15pt; white-space: nowrap">
+                <span class="ri_-_run_in_header">	4.	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="LI_-_List_Item_inner"><a name="2228493">If you want your custom batch process to run regularly on a schedule instead of on demand, add the entry to the XML file </a><span class="cv_-_computer_voice">scheduler-config.xml</span>. For more information, see <a href="javascript:WWHClickedPopup('admin', 'batch.11.06.html#2166105', '');" title="Scheduling Work Queue Writers and Batch Processes">“Scheduling Work Queue Writers and Batch Processes” in the </a><span class="bt_-_book_title"><a href="javascript:WWHClickedPopup('admin', 'batch.11.06.html#2166105', '');" title="Scheduling Work Queue Writers and Batch Processes">System Administration Guide</a></span>.</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <script type="text/javascript" language="JavaScript1.2">
+        <!--
+          // Clear related topics
+          //
+          WWHClearRelatedTopics();
+
+          document.writeln(WWHRelatedTopicsInlineHTML());
+        // -->
+      </script>
+    </blockquote>
+    <script type="text/javascript" language="JavaScript1.2">
+      <!--
+        document.write(WWHRelatedTopicsDivTag() + WWHPopupDivTag() + WWHALinksDivTag());
+      // -->
+    </script>
+  </body>
+</html>

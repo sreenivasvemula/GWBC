@@ -1,0 +1,177 @@
+<?xml version="1.0"?>
+<PCF
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:noNamespaceSchemaLocation="../../../../../pcf.xsd">
+  <Screen
+    id="CreditReversalCreditSearchScreen">
+    <Require
+      name="account"
+      type="Account"/>
+    <Require
+      name="creditReversal"
+      type="CreditReversal"/>
+    <Variable
+      initialValue="new web.account.AccountSearchConverter()"
+      name="accountSearchConverter"
+      type="web.account.AccountSearchConverter"/>
+    <Variable
+      initialValue="account == null"
+      name="accountEditable"
+      type="Boolean"/>
+    <Toolbar>
+      <WizardButtons/>
+    </Toolbar>
+    <DetailViewPanel
+      id="CreditSourceDV">
+      <InputColumn>
+        <Input
+          boldLabel="true"
+          id="Credit"
+          label="displaykey.Web.CreditReversalCreditSearchScreen.Credit"
+          value="creditReversal.Credit"/>
+      </InputColumn>
+    </DetailViewPanel>
+    <CardViewPanel>
+      <Card
+        id="Credit"
+        title="displaykey.Web.NewCreditReversalCreditSearchScreen.CreditCard">
+        <SearchPanel
+          criteriaName="searchCriteria"
+          resultsName="credits"
+          search="gw.search.SearchMethods.validateAndSearch(searchCriteria)"
+          searchCriteria="initializeSearchCriteria()"
+          searchResultsType="CreditQuery">
+          <DetailViewPanel
+            id="CreditSearchDV">
+            <InputColumn>
+              <Label
+                id="CreditBasics"
+                label="displaykey.Web.CreditSearchDV.CreditBasics"/>
+              <TypeKeyInput
+                editable="true"
+                id="ReasonCriterion"
+                label="displaykey.Web.CreditSearchDV.Reason"
+                required="false"
+                value="searchCriteria.Reason"/>
+              <TypeKeyInput
+                editable="gw.api.util.CurrencyUtil.isMultiCurrencyMode() &amp;&amp; accountEditable"
+                id="CurrencyCriterion"
+                label="displaykey.Web.CreditSearchDV.Currency"
+                value="searchCriteria.Currency"
+                visible="gw.api.util.CurrencyUtil.isMultiCurrencyMode()">
+                <PostOnChange
+                  onChange="blankMinimumAndMaximumFields(searchCriteria)"/>
+              </TypeKeyInput>
+              <MonetaryAmountInput
+                available="searchCriteria.Currency != null || !accountEditable"
+                currency="gw.search.SearchHelper.getDefaultCurrencyIfNull(searchCriteria.Currency)"
+                editable="true"
+                id="MinAmountCriterion"
+                label="displaykey.Web.CreditSearchDV.MinAmount"
+                value="searchCriteria.MinAmount"/>
+              <MonetaryAmountInput
+                available="searchCriteria.Currency != null || !accountEditable"
+                currency="gw.search.SearchHelper.getDefaultCurrencyIfNull(searchCriteria.Currency)"
+                editable="true"
+                id="MaxAmountCriterion"
+                label="displaykey.Web.CreditSearchDV.MaxAmount"
+                value="searchCriteria.MaxAmount"/>
+              <Label
+                id="CreditDatesCriterion"
+                label="displaykey.Web.CreditSearchDV.Dates"/>
+              <DateInput
+                editable="true"
+                id="EarliestDateCriterion"
+                label="displaykey.Web.CreditSearchDV.EarliestDate"
+                value="searchCriteria.EarliestDate"/>
+              <DateInput
+                editable="true"
+                id="LatestDateCriterion"
+                label="displaykey.Web.CreditSearchDV.LatestDate"
+                value="searchCriteria.LatestDate"/>
+            </InputColumn>
+            <InputColumn>
+              <Label
+                id="RelatedItems"
+                label="displaykey.Web.CreditSearchDV.RelatedItems"/>
+              <Input
+                editable="accountEditable"
+                id="AccountCriterion"
+                inputConversion="accountSearchConverter.getAccount(VALUE)"
+                label="displaykey.Web.CreditSearchDV.Account"
+                value="searchCriteria.Account">
+                <MenuItem
+                  action="AccountSearchPopup.push()"
+                  icon="&quot;search.png&quot;"
+                  id="AccountPicker"/>
+              </Input>
+            </InputColumn>
+            <InputFooterSection>
+              <InputSetRef
+                def="SearchAndResetInputSet()"/>
+            </InputFooterSection>
+          </DetailViewPanel>
+          <PanelRef>
+            <Toolbar/>
+            <ListViewPanel
+              id="CreditReversalCreditLV">
+              <RowIterator
+                editable="true"
+                elementName="credit"
+                pageSize="0"
+                value="credits">
+                <Row>
+                  <LinkCell
+                    id="SelectCell"
+                    label="displaykey.Web.NewCreditReversalCreditsLV.Select">
+                    <Link
+                      action="creditReversal.setCreditAndAddToBundle( credit ); (CurrentLocation as pcf.api.Wizard).next();"
+                      id="Select"
+                      label="displaykey.Web.NewCreditReversalCreditsLV.Select"
+                      styleClass="miniButton"
+                      visible="credit.canReverse()"/>
+                  </LinkCell>
+                  <DateCell
+                    enableSort="false"
+                    id="CreditDate"
+                    label="displaykey.Web.NewCreditReversalCreditsLV.CreditDate"
+                    value="credit.CreateTime"/>
+                  <Cell
+                    enableSort="false"
+                    id="Description"
+                    label="displaykey.Web.NewCreditReversalCreditsLV.Description"
+                    value="credit"/>
+                  <MonetaryAmountCell
+                    currency="credit.Currency"
+                    enableSort="false"
+                    formatType="currency"
+                    id="Amount"
+                    label="displaykey.Web.NewCreditReversalCreditsLV.Amount"
+                    value="credit.Amount"/>
+                  <Cell
+                    id="unappliedFund"
+                    label="displaykey.Web.NewCreditReversalCreditsLV.UnappliedFund"
+                    value="credit.UnappliedFund"/>
+                </Row>
+              </RowIterator>
+            </ListViewPanel>
+          </PanelRef>
+        </SearchPanel>
+      </Card>
+    </CardViewPanel>
+    <Code><![CDATA[function initializeSearchCriteria() : CreditSearchCriteria {
+  var criteria = new CreditSearchCriteria();
+  
+  if (!accountEditable) {
+    criteria.Account = account;
+    criteria.Currency = account.Currency
+  }
+  return criteria;
+}
+
+function blankMinimumAndMaximumFields(searchCriteria : CreditSearchCriteria) {
+  searchCriteria.MinAmount = null
+  searchCriteria.MaxAmount = null
+}]]></Code>
+  </Screen>
+</PCF>

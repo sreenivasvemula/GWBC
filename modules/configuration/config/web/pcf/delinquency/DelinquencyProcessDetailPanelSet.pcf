@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PCF
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:noNamespaceSchemaLocation="../../../../../pcf.xsd">
+  <!-- This is a panel set that can be reused among various screens that display the details of a delinquency process -->
+  <PanelSet
+    id="DelinquencyProcessDetailPanelSet">
+    <Require
+      name="delinquencyProcess"
+      type="DelinquencyProcess"/>
+    <PanelRef
+      def="DelinquencyProcessDetailsDV(delinquencyProcess)"
+      editable="false"/>
+    <DetailViewPanel
+      border="false"
+      editable="false"
+      inline="false">
+      <InputColumn>
+        <ListViewInput
+          boldLabel="true"
+          def="DelinquencyProcessActivitiesLV(delinquencyProcess)"
+          label="displaykey.Web.DelinquencyProcessDetailPanelSet.Activities"
+          labelAbove="true"
+          width="100%">
+          <Toolbar/>
+        </ListViewInput>
+      </InputColumn>
+    </DetailViewPanel>
+    <PanelRef
+      def="DelinquencyProcessEventsLV(delinquencyProcess)"
+      editable="false">
+      <TitleBar
+        appendListViewPaging="false"
+        title="displaykey.Web.DelinquencyProcessDetailPanelSet.Events"
+        visible="true"/>
+    </PanelRef>
+  </PanelSet>
+</PCF>

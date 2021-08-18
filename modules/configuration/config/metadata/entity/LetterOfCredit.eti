@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?><entity xmlns="http://guidewire.com/datamodel" desc="A letter of Credit" entity="LetterOfCredit" platform="false" setterScriptability="hidden" subpackage="account" table="letterofcredit" type="retireable">
+  <implementsEntity name="InCurrencySilo"/>
+  <monetaryamount amountColumnName="Amount"
+    amountRange="nonnegative" desc="The amount of the LOC" name="Amount" nullok="false" scaleToCurrency="true"/>
+  <column desc="The Bank holding the LOC" name="BankName" nullok="false" type="shorttext"/>
+  <column desc="When the LOC expires" name="ExpirationDate" nullok="true" type="dateonly"/>
+  <column desc="The ID of the LOC" name="LOCID" nullok="false" type="shorttext"/>
+  <foreignkey columnName="CollateralID" desc="The collateral the LOC is associated with" fkentity="Collateral" name="Collateral" nullok="false" setterScriptability="doesNotExist"/>
+  <typekey default="current" desc="The status of the LOC" name="Status" nullok="false" typelist="LetterOfCreditStatus"/>
+  <dbcheckbuilder className="com.guidewire.bc.system.database.dbchecks.account.LetterOfCreditDBCheckBuilder"/>
+</entity>

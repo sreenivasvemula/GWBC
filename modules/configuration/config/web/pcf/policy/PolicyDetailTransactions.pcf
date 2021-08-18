@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PCF
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:noNamespaceSchemaLocation="../../../../../pcf.xsd">
+  <Page
+    canVisit="perm.System.plcytabview and perm.System.plcytxnview"
+    id="PolicyDetailTransactions"
+    showUpLink="true"
+    title="displaykey.Web.PolicyDetailTransactions.Title">
+    <LocationEntryPoint
+      signature="PolicyDetailTransactions(plcyPeriod : PolicyPeriod)"/>
+    <Variable
+      name="plcyPeriod"
+      type="PolicyPeriod"/>
+    <Screen
+      id="PolicyDetailJournalScreen">
+      <Toolbar/>
+      <PanelRef
+        def="TransactionDetailsLV(plcyPeriod)">
+        <Toolbar/>
+      </PanelRef>
+    </Screen>
+  </Page>
+</PCF>

@@ -1,0 +1,43 @@
+<?xml version="1.0"?>
+<entity
+  xmlns="http://guidewire.com/datamodel"
+  entity="AgencyDisbPaidContext"
+  type="editable"
+  desc="Context for AgencyDisbursementPaid-level transactions."
+  ignoreForEvents="true"
+  subpackage="accounting.transaction"
+  overwrittenInStagingTable="true"
+  platform="false"
+  table="agencydisbpaidcontext"
+  setterScriptability="hidden">
+  <implementsEntity
+    name="TransactionContext"/>
+  <implementsEntity
+    name="InCurrencySilo"/>
+  <foreignkey
+    name="Producer"
+    desc="Producer to whom the disbursement is being made"
+    columnName="ProducerID"
+    fkentity="Producer"
+    getterScriptability="hidden"
+    ignoreforevents="true"
+    nullok="false"
+    setterScriptability="hidden"/>
+  <foreignkey
+    name="AgencyDisbursement"
+    desc="Disbursement associated with this transaction"
+    columnName="AgencyDisbursementID"
+    fkentity="AgencyDisbursement"
+    getterScriptability="hidden"
+    ignoreforevents="true"
+    nullok="false"
+    setterScriptability="hidden"/>
+  <foreignkey
+    name="Transaction"
+    desc="Reference to AgencyDisbursementPaid transaction"
+    columnName="TransactionID"
+    fkentity="AgencyDisbursementPaid"
+    getterScriptability="doesNotExist"
+    nullok="false"
+    setterScriptability="doesNotExist"/>
+</entity>

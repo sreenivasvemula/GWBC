@@ -1,0 +1,62 @@
+<?xml version="1.0"?>
+<Entity
+  name="PaymentItemGroup">
+  <Columns>
+    <Column
+      beanPath="PaymentItemGroup.UnappliedFund"
+      name="UnappliedFund"
+      sortOrder="0"/>
+    <Column
+      beanPath="PaymentItemGroup.TotalAmountDenorm"
+      name="Amount"
+      sortOrder="1"/>
+    <Column
+      beanPath="PaymentItemGroup.Reason"
+      name="Reason"
+      sortOrder="2"/>
+    <Column
+      beanPath="PaymentItemGroup.EventDate"
+      name="EventDate"
+      sortOrder="3"/>
+    <Column
+      beanPath="PaymentItemGroup.PolicyPeriod.PolicyNumberLong"
+      displayName="false"
+      name="PolicyNumber"
+      sortOrder="4"/>
+  </Columns>
+  <DisplayName><![CDATA[displaykey.DisplayName.PaymentItemGroup(
+  UnappliedFund,
+  gw.api.financials.MonetaryAmounts.render(Amount),
+  EventDate?.format("short"), 
+  Reason)
+]]></DisplayName>
+  <DisplayName
+    type="FundsUse"><![CDATA[if(Reason == PaymentItemGroupReason.TC_POLICYPERIODPAID){
+  if(PolicyNumber == null){
+    return displaykey.DisplayName.PaymentItemGroup.PoliciesPaidFundsUse
+  } else {
+    return displaykey.DisplayName.PaymentItemGroup.PolicyPaidFundsUse(PolicyNumber)
+  }
+} else if(Reason == PaymentItemGroupReason.TC_ACCOUNTPAID){
+  return displaykey.DisplayName.PaymentItemGroup.AccountPaidFundsUse
+} else if(Reason == PaymentItemGroupReason.TC_COLLATERALPAID){
+  return displaykey.DisplayName.PaymentItemGroup.CollateralPaidFundsUse
+}
+return Reason.DisplayName]]></DisplayName>
+  <DisplayName
+    type="FundsSource"><![CDATA[if (Reason == PaymentItemGroupReason.TC_POLICYPERIODPAID) {
+  return PolicyNumber == null ? displaykey.DisplayName.PaymentItemGroup.PoliciesCreditedFundsSource
+                              : displaykey.DisplayName.PaymentItemGroup.PoliciesCreditedFundsSourceWithNumber(PolicyNumber)
+} else if (Reason == PaymentItemGroupReason.TC_POLICYPERIODPAIDRETURNPREMIUM) {
+   return PolicyNumber == null ? displaykey.DisplayName.PaymentItemGroup.ReturnedPremiumFundsSource
+                               : displaykey.DisplayName.PaymentItemGroup.ReturnedPremiumFundsSourceWithNumber(PolicyNumber)
+}  else if (Reason == PaymentItemGroupReason.TC_POLICYPERIODPAIDPAYMENTREVERSED) {
+  return PolicyNumber == null ? displaykey.DisplayName.PaymentItemGroup.PolicyPaymentReversedFundsSource
+                              : displaykey.DisplayName.PaymentItemGroup.PolicyPaymentReversedFundsSourceWithNumber(PolicyNumber)
+} else if (Reason == PaymentItemGroupReason.TC_ACCOUNTPAID) {
+  return displaykey.DisplayName.PaymentItemGroup.AccountCreditedFundsSource
+} else if (Reason == PaymentItemGroupReason.TC_COLLATERALPAID) {
+  return displaykey.DisplayName.PaymentItemGroup.CollateralCreditedFundsSource
+}
+return Reason.DisplayName]]></DisplayName>
+</Entity>

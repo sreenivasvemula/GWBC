@@ -1,0 +1,25 @@
+<?xml version="1.0"?>
+<PCF
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:noNamespaceSchemaLocation="../../../../../pcf.xsd">
+  <!-- Display an input field with a Browse... button next to it.  This allows the user to choose a file on their
+       local machine to upload into the system -->
+  <DetailViewPanel
+    id="DocumentAttachmentDV">
+    <Require
+      name="DocumentCreationInfo"
+      type="gw.document.DocumentCreationInfo"/>
+    <InputColumn>
+      <Label
+        label="displaykey.Web.DocumentAttachmentDV.DocumentContents"/>
+      <Input
+        editable="true"
+        id="Attachment"
+        label="displaykey.Web.DocumentAttachmentDV.Attachment"
+        required="true"
+        value="DocumentCreationInfo.File">
+        <PostOnChange/>
+      </Input>
+    </InputColumn>
+  </DetailViewPanel>
+</PCF>

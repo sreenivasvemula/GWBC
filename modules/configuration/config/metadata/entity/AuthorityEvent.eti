@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<entity
+  xmlns="http://guidewire.com/datamodel"
+  entity="AuthorityEvent"
+  type="retireable"
+  desc="A record of when a user tries to perform an action that draws down on that user's authority limit. Useful for the implementation of aggregate authority limits by user."
+  admin="true"
+  final="false"
+  subpackage="community"
+  loadable="false"
+  platform="false"
+  table="authorityevent">
+  <implementsEntity
+    name="NotInCurrencySilo"/>
+  <foreignkey
+    name="User"
+    desc="The user attempting to perform this action."
+    columnName="UserID"
+    fkentity="User"
+    nullok="false"/>
+</entity>

@@ -1,0 +1,57 @@
+<?xml version="1.0"?>
+<PCF
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:noNamespaceSchemaLocation="../../../../../pcf.xsd">
+  <Screen
+    id="NewPaymentRequestAccountSearchScreen">
+    <Require
+      name="tAccountOwnerReference"
+      type="web.accounting.TAccountOwnerReference"/>
+    <SearchPanel
+      criteriaName="searchCriteria"
+      resultsName="accountSearchViews"
+      search="gw.search.SearchMethods.validateAndSearch(searchCriteria, StringCriterionMode.TC_STARTSWITH)"
+      searchCriteria="new gw.search.AccountSearchCriteria()"
+      searchResultsType="AccountSearchViewQuery">
+      <PanelRef
+        def="AccountSearchDV(searchCriteria)">
+        <Toolbar>
+          <WizardButtons/>
+        </Toolbar>
+      </PanelRef>
+      <PanelRef>
+        <Toolbar/>
+        <ListViewPanel
+          id="AccountSearchResultsLV">
+          <RowIterator
+            editable="false"
+            elementName="accountSearchView"
+            value="accountSearchViews">
+            <Row>
+              <Cell
+                action="setAccountOnRequest(accountSearchView);(CurrentLocation as pcf.api.Wizard).next()"
+                id="Number"
+                label="displaykey.Web.AccountSearchResultsLV.AccountNumber"
+                sortOrder="1"
+                value="accountSearchView.AccountNumber"/>
+              <TypeKeyCell
+                id="Segment"
+                label="displaykey.Web.AccountSearchResultsLV.Segment"
+                sortOrder="3"
+                value="accountSearchView.Segment"/>
+              <DateCell
+                id="CreationDate"
+                label="displaykey.Web.AccountSearchResultsLV.CreationDate"
+                sortBy="accountSearchView.CreateTime"
+                sortOrder="2"
+                value="accountSearchView.CreateTime"/>
+            </Row>
+          </RowIterator>
+        </ListViewPanel>
+      </PanelRef>
+    </SearchPanel>
+    <Code><![CDATA[function setAccountOnRequest(accountSearchView : AccountSearchView){
+   tAccountOwnerReference.TAccountOwner = accountSearchView.Account
+}]]></Code>
+  </Screen>
+</PCF>

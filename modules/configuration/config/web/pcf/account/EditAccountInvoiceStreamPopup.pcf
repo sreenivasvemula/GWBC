@@ -1,0 +1,45 @@
+<?xml version="1.0"?>
+<PCF
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:noNamespaceSchemaLocation="../../../../../pcf.xsd">
+  <Popup
+    canEdit="perm.System.invcstrmedit"
+    canVisit="perm.System.accttabview and perm.System.acctinvcview"
+    id="EditAccountInvoiceStreamPopup"
+    startInEditMode="true"
+    title="displaykey.Web.EditAccountInvoiceStream.Title">
+    <LocationEntryPoint
+      signature="EditAccountInvoiceStreamPopup( account : Account, invoiceStream : InvoiceStream)"/>
+    <Variable
+      name="account"
+      type="Account"/>
+    <Variable
+      name="invoiceStream"
+      type="InvoiceStream"/>
+    <Variable
+      initialValue="new gw.api.web.invoice.InvoiceStreamView(invoiceStream)"
+      name="invoiceStreamView"
+      type="gw.api.web.invoice.InvoiceStreamView"/>
+    <Screen>
+      <Toolbar>
+        <ToolbarButton
+          action="CurrentLocation.startEditing()"
+          id="EditButton"
+          label="displaykey.Web.AccountDetailInvoices.InvoiceStream.Edit"
+          visible="!CurrentLocation.InEditMode &amp;&amp; perm.System.invcstrmedit"/>
+        <ToolbarButton
+          action="CurrentLocation.commit()"
+          id="UpdateButton"
+          label="displaykey.Web.AccountDetailInvoices.InvoiceStream.Update"
+          visible="CurrentLocation.InEditMode &amp;&amp; perm.System.invcstrmedit"/>
+        <ToolbarButton
+          action="CurrentLocation.cancel()"
+          id="CancelButton"
+          label="displaykey.Web.AccountDetailInvoices.InvoiceStream.Cancel"
+          visible="CurrentLocation.InEditMode &amp;&amp; perm.System.invcstrmedit"/>
+      </Toolbar>
+      <PanelRef
+        def="AccountInvoiceStreamDetailDV(account, invoiceStreamView)"/>
+    </Screen>
+  </Popup>
+</PCF>

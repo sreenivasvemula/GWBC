@@ -1,0 +1,47 @@
+<?xml version="1.0"?>
+<PCF
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:noNamespaceSchemaLocation="../../../../../pcf.xsd">
+  <DetailViewPanel
+    id="UserSearchDV">
+    <Require
+      name="SearchCriteria"
+      type="UserSearchCriteria"/>
+    <InputColumn>
+      <Input
+        editable="true"
+        id="UsernameCriterion"
+        label="displaykey.Web.UserSearch.Username"
+        value="SearchCriteria.Username"/>
+      <InputSetRef
+        def="GlobalPersonNameInputSet( new gw.api.name.SearchNameOwner (SearchCriteria.Contact)) "
+        mode="gw.api.name.NameLocaleSettings.PCFMode"/>
+      <Input
+        editable="true"
+        id="GroupNameCriterion"
+        label="(gw.api.util.LocaleUtil.CurrentLocaleType == LocaleType.TC_JA_JP) ? displaykey.Web.UserSearch.GroupNamePhonetic : displaykey.Web.UserSearch.GroupName"
+        value="SearchCriteria.GroupName"/>
+      <Input
+        editable="true"
+        id="GroupNameCriterionKanji"
+        label="displaykey.Web.UserSearch.GroupName"
+        value="SearchCriteria.GroupNameKanji"
+        visible="gw.api.util.LocaleUtil.CurrentLocaleType == LocaleType.TC_JA_JP"/>
+      <BooleanRadioInput
+        editable="true"
+        id="NotInAnyGroupCriterion"
+        label="displaykey.Web.UserSearch.NotInAnyGroup"
+        value="SearchCriteria.NotInAnyGroup"/>
+      <RangeInput
+        editable="true"
+        id="Role"
+        label="displaykey.Web.UserSearch.Role"
+        value="SearchCriteria.Role"
+        valueRange="SearchCriteria.getAllRoles()"/>
+    </InputColumn>
+    <InputFooterSection>
+      <InputSetRef
+        def="SearchAndResetInputSet()"/>
+    </InputFooterSection>
+  </DetailViewPanel>
+</PCF>

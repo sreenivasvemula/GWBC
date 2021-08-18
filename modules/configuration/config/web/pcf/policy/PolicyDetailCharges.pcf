@@ -1,0 +1,84 @@
+<?xml version="1.0"?>
+<PCF
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:noNamespaceSchemaLocation="../../../../../pcf.xsd">
+  <Page
+    beforeCommit="validateAndExecute()"
+    canEdit="perm.System.plcytabview and perm.System.plcychargesview"
+    canVisit="perm.System.plcytabview and perm.System.plcychargesview"
+    id="PolicyDetailCharges"
+    title="displaykey.Web.PolicyDetailCharges.Title">
+    <LocationEntryPoint
+      signature="PolicyDetailCharges(plcyPeriod : PolicyPeriod)"/>
+    <Variable
+      name="plcyPeriod"
+      type="PolicyPeriod"/>
+    <Variable
+      initialValue="plcyPeriod.Charges"
+      name="charges"/>
+    <Variable
+      name="targetInvoice"
+      type="Invoice"/>
+    <Screen
+      id="PolicyDetailChargesScreen">
+      <Toolbar>
+        <ToolbarDivider/>
+        <CheckedValuesToolbarButton
+          allCheckedRowsAction="ChargeHoldsPopup.push(CheckedValues)"
+          id="editHold"
+          iterator="ChargesLV.ChargesLV"
+          label="displaykey.Web.AccountDetailCharges.EditHoldsButton"
+          visible="perm.Transaction.chargeholdcreate and perm.Transaction.chargeholdrelease"/>
+        <CheckedValuesToolbarButton
+          allCheckedRowsAction="CommissionRatesPopup.push(CheckedValues)"
+          flags="any hasPrimaryProducerCode"
+          id="editCommissionRates"
+          iterator="ChargesLV.ChargesLV"
+          label="displaykey.Web.AccountDetailCharges.OverrideCommissionButton"/>
+      </Toolbar>
+      <ListDetailPanel
+        id="PolicyDetailChargesListDetailPanel"
+        selectionName="charge"
+        selectionType="Charge">
+        <PanelRef
+          def="ChargesLV(charges as entity.Charge[], true, 0, false, true, true)"/>
+        <CardViewPanel>
+          <Variable
+            initialValue="getFutureInvoices()"
+            name="futureInvoices"
+            recalculateOnRefresh="true"
+            type="Invoice[]"/>
+          <Card
+            id="InvoiceItems"
+            title="displaykey.Web.AccountDetailCharges.InvoiceItems">
+            <PanelRef
+              def="InvoiceItemsLV(charge.AllInvoiceItems, charge, true)">
+              <Toolbar>
+                <ToolbarButton
+                  action="EditInvoiceItemsPopup.push(charge)"
+                  id="EditInvoiceItems"
+                  label="displaykey.Web.AccountDetailCharges.ModifyInvoiceItems"/>
+                <CheckedValuesToolbarButton
+                  allCheckedRowsAction="web.invoice.InvoiceUtil.validateItemsForMove(CheckedValues); MoveInvoiceItemsPopup.push(CheckedValues, CheckedValues[0].Payer)"
+                  id="MoveInvoiceItems"
+                  iterator="InvoiceItemsLV.InvoiceItemsLV"
+                  label="displaykey.Web.AccountDetailCharges.MoveInvoiceItems"/>
+              </Toolbar>
+            </PanelRef>
+          </Card>
+        </CardViewPanel>
+      </ListDetailPanel>
+    </Screen>
+    <Code><![CDATA[
+                function validateAndExecute() {
+                    gw.api.web.policy.PolicyPeriodUtil.validateInvoiceItems(plcyPeriod);
+                }
+
+                function getFutureInvoices() : Invoice[] {
+                    return plcyPeriod.AgencyBill ?
+                            plcyPeriod.PrimaryPolicyCommission.ProducerCode.Producer.getFutureStatementsSortedByDate()
+                            : plcyPeriod.Account.FutureInvoicesSortedByDate
+                }
+        ]]></Code>
+  </Page>
+</PCF>

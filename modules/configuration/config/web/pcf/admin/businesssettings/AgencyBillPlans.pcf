@@ -1,0 +1,75 @@
+<?xml version="1.0"?>
+<PCF
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:noNamespaceSchemaLocation="../../../../../../pcf.xsd">
+  <Page
+    canVisit="perm.System.admintabview and perm.System.agencybillplanview"
+    id="AgencyBillPlans"
+    title="displaykey.Web.AgencyBillPlans.Title">
+    <Variable
+      initialValue="new web.plan.PlanHelper()"
+      name="PlanHelper"/>
+    <Screen
+      id="AgencyBillPlansScreen">
+      <Toolbar/>
+      <ListViewPanel
+        id="AgencyBillPlansLV">
+        <RowIterator
+          editable="false"
+          elementName="agencyBillPlan"
+          value="gw.api.database.Query.make(AgencyBillPlan).select()">
+          <ToolbarFilter
+            label="displaykey.Web.AgencyBillPlansLV.Show"
+            name="Filter">
+            <ToolbarFilterOptionGroup
+              filters="new web.plan.PlanListFilterSet().FilterOptions"/>
+          </ToolbarFilter>
+          <Row>
+            <Cell
+              align="left"
+              id="PlanOrder"
+              label="displaykey.Web.AgencyBillPlanLV.PlanOrder"
+              sortOrder="1"
+              value="agencyBillPlan.PlanOrder"/>
+            <Cell
+              action="AgencyBillPlanDetail.go(agencyBillPlan)"
+              id="Name"
+              label="displaykey.Web.AgencyBillPlanLV.Name"
+              value="agencyBillPlan.Name"/>
+            <Cell
+              id="Description"
+              label="displaykey.Web.BillingPlansLV.Description"
+              value="agencyBillPlan.Description"/>
+            <DateCell
+              id="EffectiveDate"
+              label="displaykey.Web.AgencyBillPlanLV.EffectiveDate"
+              value="agencyBillPlan.EffectiveDate"/>
+            <DateCell
+              id="ExpirationDate"
+              label="displaykey.Web.AgencyBillPlanLV.ExpirationDate"
+              value="agencyBillPlan.ExpirationDate"/>
+            <LinkCell
+              align="center"
+              id="MovePriority"
+              label="displaykey.Web.AgencyBillPlanLV.PlanOrder.MovePriority">
+              <Link
+                action="PlanHelper.moveUp(agencyBillPlan);"
+                available="perm.System.agencybillplanedit"
+                icon="&quot;arrow_up.png&quot;"
+                id="MoveUp"
+                tooltip="displaykey.Web.AgencyBillPlansLV.PlanOrder.MoveUp"
+                visible="agencyBillPlan.PlanOrder &gt; 1"/>
+              <Link
+                action="PlanHelper.moveDown(agencyBillPlan);"
+                available="perm.System.agencybillplanedit"
+                icon="&quot;arrow_down.png&quot;"
+                id="MoveDown"
+                tooltip="displaykey.Web.AgencyBillPlansLV.PlanOrder.MoveDown"
+                visible="!agencyBillPlan.hasHighestPlanOrder()"/>
+            </LinkCell>
+          </Row>
+        </RowIterator>
+      </ListViewPanel>
+    </Screen>
+  </Page>
+</PCF>

@@ -1,0 +1,170 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xml:lang="en" lang="en" xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+    <meta http-equiv="Content-Style-Type" content="text/css" />
+    <!-- MOTW-DISABLED saved from url=(0014)about:internet -->
+    <title>Reversing Direct Bill Payments</title>
+    <link rel="StyleSheet" href="css/payments.css" type="text/css" media="all" />
+    <link rel="StyleSheet" href="css/webworks.css" type="text/css" media="all" />
+    <link rel="StyleSheet" href="css/css-guidewire-extra.css" type="text/css" media="all" />
+    <script type="text/javascript" language="JavaScript1.2" src="wwhdata/common/context.js"></script>
+    <script type="text/javascript" language="JavaScript1.2" src="wwhdata/common/towwhdir.js"></script>
+    <script type="text/javascript" language="JavaScript1.2" src="wwhdata/common/wwhpagef.js"></script>
+    <script type="text/javascript" language="JavaScript1.2">
+      <!--
+        var  WebWorksRootPath = "";
+      // -->
+    </script>
+    <script type="text/javascript" language="JavaScript1.2">
+      <!--
+        // Set reference to top level help frame
+        //
+        var  WWHFrame = WWHGetWWHFrame("", true);
+      // -->
+    </script>
+    <script type="text/javascript" language="JavaScript1.2" src="scripts/expand.js"></script>
+    <!-- THE FOLLOWING IS A GUIDEWIRE STYLE DEFINITION FOR THE LINK TO THIS FEATURE -->
+    <link rel="StyleSheet" href="css/css-guidewire-extra.css" type="text/css" media="all" />
+    <!-- THE FOLLOWING IS A GUIDEWIRE GSCRIPT FUNCTION FOR THE LINK TO THIS FEATURE -->
+    <script type="text/javascript">
+function guidewire_selectall()
+{
+var text_val=eval("document.linktothisurlform.urlfield");
+text_val.focus();
+text_val.select();
+}
+</script>
+  </head>
+  <body onLoad="WWHUpdate();" onUnload="WWHUnload();" onKeyDown="WWHHandleKeyDown((document.all||document.getElementById||document.layers)?event:null);" onKeyPress="WWHHandleKeyPress((document.all||document.getElementById||document.layers)?event:null);" onKeyUp="WWHHandleKeyUp((document.all||document.getElementById||document.layers)?event:null);">
+    <!-- THE FOLLOWING IS A GUIDEWIRE DIV FOR THE 'LINK TO THIS' FEATURE -->
+    <div id="linkToThisPage" class="popup" style="display: none;">
+      <div class="popupTitle">Link Directly to This Page 
+           <a href="#" onclick="var thePopup = getElementById('linkToThisPage');thePopup.style.display='none';return false;"><img class="popupClosebox" src="wwhelp/wwhimpl/common/images/close.gif" /></a></div>
+      <div style="padding:6px;">
+        <div class="popupText" id="linkToThisPageBookmark">An error has occurred if you see this messsage.</div>
+        <form name="linktothisurlform" method="post" action="" style="width:275px;margin:0px">
+          <input type="text" class="popupURLText" id="linkToThisPageURL" name="urlfield" rows="1" cols="55" onClick="guidewire_selectall();" onFocus="guidewire_selectall();"></input>
+        </form>
+      </div>
+    </div>
+    <br />
+    <div class="WebWorks_Breadcrumbs" style="text-align: left;">
+      <span>BillingCenter Application&nbsp;Guide</span> : 
+    <span class="WebWorks_Breadcrumbs" style="text-align: left;"><a class="WebWorks_Breadcrumb_Link" href="p_direct_bill.html#2027812">Direct Bill Processing</a> : <a class="WebWorks_Breadcrumb_Link" href="payments.53.01.html#2027812">Payment and Distribution</a> : Reversing Direct Bill Payments</span></div>
+    <hr align="left" />
+    <blockquote>
+      <h3 class="H1_-_Heading_1"><a name="2027812">Reversing Direct Bill Payments</a></h3>
+      <div class="B_-_Body"><a name="2027814">In BillingCenter, you can make payment reversals using the BillingCenter reversal transaction. This allows you to reverse or rollback a payment already entered into BillingCenter. For example, if there is a problem with an incoming payment where the account to be drawn from has non‑sufficient funds (NSF). </a></div>
+      <div class="B_-_Body"><a name="1896685">If you do a reversal, you also need to make sure that the billing plan associated with the account has an NFS Fee setting. This allows you to charge the insured a fee if their electronically debited account has insufficient funds.</a></div>
+      <div class="B_-_Body"><a name="1896686">Payments come into BillingCenter from an external system or through manual entry.</a></div>
+      <div class="B_-_Body"><a name="1896276">An external system can call the </a><span class="cv_-_computer_voice">PaymentAPI</span> web service method <span class="cv_-_computer_voice">reverseDirectBillPayment</span> to reverse a payment.</div>
+      <div class="B_-_Body"><a name="1896277">If the reversal is in response to a payment that requires modification or reversal, then you can  enter the reversal using the</a><span class="ui_-_UI_element"> New Reversal Wizard</span> screen. Otherwise, make the modification to an existing payment on the <span class="ui_-_UI_element">Payment</span> screen. </div>
+      <h6 class="HS_-_Head_Sub"><a name="1896278">To reverse a payment</a></h6>
+      <div class="B_-_Body"><a name="1896279">You can reverse a recent payment using the </a><span class="ui_-_UI_element">Reverse</span> button on the <span class="ui_-_UI_element">Account Summary</span> screen. </div>
+      <div class="LS_-_List_Start_outer" style="margin-left: 57pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="LS_-_List_Start_inner" style="width: 15pt; white-space: nowrap">
+                <span class="ri_-_run_in_header">	1.	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="LS_-_List_Start_inner"><a name="2028139">Go to the </a><span class="ui_-_UI_element">Account</span> → <span class="ui_-_UI_element">Payments</span> page or to the list of payments under <span class="ui_-_UI_element">Recent Payments Received</span> on the account <span class="ui_-_UI_element">Summary</span> page.</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="LI_-_List_Item_outer" style="margin-left: 57pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="LI_-_List_Item_inner" style="width: 15pt; white-space: nowrap">
+                <span class="ri_-_run_in_header">	2.	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="LI_-_List_Item_inner"><a name="1897806">Find the payment you want to reverse, click</a><span class="ui_-_UI_element"> Actions,</span> and choose <span class="ui_-_UI_element">Reverse</span>.</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="LI_-_List_Item_outer" style="margin-left: 57pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="LI_-_List_Item_inner" style="width: 15pt; white-space: nowrap">
+                <span class="ri_-_run_in_header">	3.	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="LI_-_List_Item_inner"><a name="1897819">From the </a><span class="ui_-_UI_element">Confirmed Payment Reversal</span> screen, select a reason for the reversal from the list of options and click <span class="ui_-_UI_element">OK</span> to confirm the process.</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="LP_-_List_Para"><a name="2038958">For example, if the payment is automatic, usually an ACH/EFT, electronic debit or some sort of automatic process. The insured’s account is debited for the due amount, and BillingCenter is notified that payment has been received. If the automatically debited account has NSF (non‑sufficient funds), BillingCenter does a reversal to reverse the credit to the account.</a></div>
+      <h6 class="HS_-_Head_Sub"><a name="2069717">To reverse a suspense payment</a></h6>
+      <div class="B_-_Body"><a name="2069751">A suspense payment can be reversed, even if it has been disbursed. Perform the following steps:</a></div>
+      <div class="LS_-_List_Start_outer" style="margin-left: 57pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="LS_-_List_Start_inner" style="width: 15pt; white-space: nowrap">
+                <span class="ri_-_run_in_header">	1.	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="LS_-_List_Start_inner"><a name="2069858">Select </a><span class="ui_-_UI_element">Desktop</span>&nbsp;→ <span class="ui_-_UI_element">Suspense Payments</span>. Set the filter to an appropriate setting so the desired suspense payment is shown in the list.</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="LI_-_List_Item_outer" style="margin-left: 57pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="LI_-_List_Item_inner" style="width: 15pt; white-space: nowrap">
+                <span class="ri_-_run_in_header">	2.	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="LI_-_List_Item_inner"><a name="2070029">Check the box on the row of the suspense payment to reverse.</a></div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="LI_-_List_Item_outer" style="margin-left: 57pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="LI_-_List_Item_inner" style="width: 15pt; white-space: nowrap">
+                <span class="ri_-_run_in_header">	3.	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="LI_-_List_Item_inner"><a name="2070100">Click </a><span class="ui_-_UI_element">Reverse</span>, and then click <span class="ui_-_UI_element">OK</span> to reverse the suspense payment.</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="B_-_Body"><a name="2070175">Verify the suspense payment has been reversed by selecting </a><span class="ui_-_UI_element">Desktop</span>&nbsp;→ <span class="ui_-_UI_element">Suspense Payments</span>. Notice the <span class="ui_-_UI_element">Status</span> of the suspense payment is <span class="ui_-_UI_element">Reversed</span>.</div>
+      <script type="text/javascript" language="JavaScript1.2">
+        <!--
+          // Clear related topics
+          //
+          WWHClearRelatedTopics();
+
+          document.writeln(WWHRelatedTopicsInlineHTML());
+        // -->
+      </script>
+    </blockquote>
+    <script type="text/javascript" language="JavaScript1.2">
+      <!--
+        document.write(WWHRelatedTopicsDivTag() + WWHPopupDivTag() + WWHALinksDivTag());
+      // -->
+    </script>
+  </body>
+</html>

@@ -1,0 +1,63 @@
+<?xml version="1.0"?>
+<PCF
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:noNamespaceSchemaLocation="../../../../../pcf.xsd">
+  <ListViewPanel
+    id="PolicyActivityLV"
+    mode="policylevel">
+    <Require
+      name="agencyBillStatementView"
+      type="web.invoice.AgencyBillStatementView"/>
+    <Require
+      name="viewOption"
+      type="InvoiceItemViewOption"/>
+    <RowIterator
+      editable="false"
+      elementName="policyPeriodInfo"
+      value="agencyBillStatementView.getPolicyPeriodInvoiceItemsFilteredAsArray(viewOption)">
+      <Variable
+        initialValue="policyPeriodInfo.TAccountOwner typeis PolicyPeriod ? policyPeriodInfo.TAccountOwner : null"
+        name="policyPeriod"
+        type="PolicyPeriod"/>
+      <Variable
+        initialValue="policyPeriodInfo.TAccountOwner"
+        name="tAccountOwner"/>
+      <Row>
+        <Cell
+          id="PolicyNumber"
+          label="displaykey.Web.ProducerPolicies.Summary.PolicyNumber"
+          value="tAccountOwner.DisplayName"/>
+        <DateCell
+          footerLabel="displaykey.Web.AgencyBillStatementDetail.PolicyActivityLV.Total"
+          id="EffectiveDate"
+          label="displaykey.Web.ProducerPolicies.Summary.EffectiveDate"
+          value="policyPeriod.PolicyPerEffDate"/>
+        <DateCell
+          id="ExpirationDate"
+          label="displaykey.Web.ProducerPolicies.Summary.ExpirationDate"
+          value="policyPeriod.PolicyPerExpirDate"/>
+        <MonetaryAmountCell
+          currency="tAccountOwner.Currency"
+          footerSumValue="policyPeriodInfo.FilteredInvoiceItemViewsArray.sum( agencyBillStatementView.Producer.Currency, \ b -&gt; b.getGross( viewOption ))"
+          formatType="currency"
+          id="Gross"
+          label="displaykey.Web.AgencyBillStatementDetail.PolicyActivityLV.GrossAmount"
+          value="policyPeriodInfo.FilteredInvoiceItemViewsArray.sum( agencyBillStatementView.Producer.Currency, \ b -&gt; b.getGross( viewOption ))"/>
+        <MonetaryAmountCell
+          currency="tAccountOwner.Currency"
+          footerSumValue="policyPeriodInfo.FilteredInvoiceItemViewsArray.sum( agencyBillStatementView.Producer.Currency, \ b -&gt; b.getCommission( viewOption ))"
+          formatType="currency"
+          id="Commission"
+          label="displaykey.Web.AgencyBillStatementDetail.PolicyActivityLV.CommissionAmount"
+          value="policyPeriodInfo.FilteredInvoiceItemViewsArray.sum( agencyBillStatementView.Producer.Currency, \ b -&gt; b.getCommission( viewOption ))"/>
+        <MonetaryAmountCell
+          currency="tAccountOwner.Currency"
+          footerSumValue="policyPeriodInfo.FilteredInvoiceItemViewsArray.sum( agencyBillStatementView.Producer.Currency, \ b -&gt; b.getNet( viewOption ))"
+          formatType="currency"
+          id="Net"
+          label="displaykey.Web.AgencyBillStatementDetail.PolicyActivityLV.NetAmount"
+          value="policyPeriodInfo.FilteredInvoiceItemViewsArray.sum( agencyBillStatementView.Producer.Currency, \ b -&gt; b.getNet( viewOption ))"/>
+      </Row>
+    </RowIterator>
+  </ListViewPanel>
+</PCF>

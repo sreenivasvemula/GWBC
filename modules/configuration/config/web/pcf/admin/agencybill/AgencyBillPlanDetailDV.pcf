@@ -1,0 +1,313 @@
+<?xml version="1.0"?>
+<PCF
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:noNamespaceSchemaLocation="../../../../../../pcf.xsd">
+  <DetailViewPanel
+    editable="not agencyBillPlan.InUse"
+    id="AgencyBillPlanDetailDV">
+    <Require
+      name="agencyBillPlan"
+      type="AgencyBillPlan"/>
+    <Variable
+      initialValue="not agencyBillPlan.InUse"
+      name="planNotInUse"
+      type="Boolean"/>
+    <Variable
+      initialValue="gw.api.util.LocaleUtil.getAllLanguages().Count &gt; 1"
+      name="hasMultipleLanguages"/>
+    <InputColumn>
+      <Label
+        label="displaykey.Web.AgencyBillPlanDetailDV.PlanInfo"/>
+      <Input
+        editable="planNotInUse"
+        id="Name"
+        label="displaykey.Web.AgencyBillPlanDetailDV.Name"
+        required="true"
+        value="agencyBillPlan.Name">
+        <PostOnChange/>
+      </Input>
+      <RangeInput
+        editable="planNotInUse"
+        id="WorkflowType"
+        label="displaykey.Web.AgencyBillPlanDetailDV.WorkflowType"
+        required="true"
+        value="agencyBillPlan.WorkflowPlan"
+        valueRange="web.producer.agencybill.AgencyBillPlanUtil.getAgencyBillWorkflows()"/>
+      <DateInput
+        editable="planNotInUse"
+        id="EffectiveDate"
+        label="displaykey.Web.AgencyBillPlanDetailDV.EffectiveDate"
+        required="true"
+        value="agencyBillPlan.EffectiveDate"/>
+      <DateInput
+        editable="planNotInUse"
+        id="ExpirationDate"
+        label="displaykey.Web.AgencyBillPlanDetailDV.ExpirationDate"
+        validationExpression="agencyBillPlan.hasValidExpirationDate() ? null : displaykey.Web.Plan.ExpirationDate.ValidationError"
+        value="agencyBillPlan.ExpirationDate"/>
+      <TextInput
+        id="Currency"
+        label="displaykey.Web.AgencyBillPlanDetailDV.Currency"
+        value="agencyBillPlan.Currency"/>
+      <InputDivider/>
+      <Label
+        label="displaykey.Web.AgencyBillPlanDetailDV.CycleCloseDOM"/>
+      <TypeKeyInput
+        editable="planNotInUse"
+        id="CycleCloseDOMLogic"
+        label="displaykey.Web.AgencyBillPlanDetailDV.CycleCloseDOMLogic"
+        required="true"
+        value="agencyBillPlan.CycleCloseDayOfMonthLogic">
+        <PostOnChange/>
+      </TypeKeyInput>
+      <Input
+        editable="planNotInUse"
+        id="CycleCloseDOM"
+        label="displaykey.Web.AgencyBillPlanDetailDV.DOM"
+        required="requireDayOfMonth(agencyBillPlan.CycleCloseDayOfMonthLogic)"
+        validationExpression="isValidDayOfMonth(agencyBillPlan.CycleCloseDayOfMonth) ? null : displaykey.Web.AgencyBillPlanDetailDV.DayOfMonthError"
+        value="agencyBillPlan.CycleCloseDayOfMonth"
+        visible="requireDayOfMonth(agencyBillPlan.CycleCloseDayOfMonthLogic)"/>
+      <InputDivider/>
+      <Label
+        label="displaykey.Web.AgencyBillPlanDetailDV.Terms"/>
+      <Input
+        editable="planNotInUse"
+        id="PaymentTermsDays"
+        label="displaykey.Web.AgencyBillPlanDetailDV.PaymentTermsDays"
+        required="true"
+        validationExpression="(agencyBillPlan.PaymentTermsInDays &gt; 0) ? null : displaykey.Web.AgencyBillPlanDetailDV.GreaterThanZeroError"
+        value="agencyBillPlan.PaymentTermsInDays"/>
+      <BooleanRadioInput
+        editable="planNotInUse"
+        id="GeneratePastDueException"
+        label="displaykey.Web.AgencyBillPlanDetailDV.GeneratePastDueException"
+        required="false"
+        value="agencyBillPlan.ExceptionForPastDueStatement"/>
+      <InputDivider/>
+      <Label
+        label="displaykey.Web.AgencyBillPlanDetailDV.Statements"/>
+      <BooleanRadioInput
+        editable="planNotInUse"
+        id="SendStatement"
+        label="displaykey.Web.AgencyBillPlanDetailDV.SendStatement"
+        required="false"
+        value="agencyBillPlan.StatementSentAfterCycleClose">
+        <PostOnChange/>
+      </BooleanRadioInput>
+      <Input
+        editable="planNotInUse"
+        id="SendStatementDays"
+        label="displaykey.Web.AgencyBillPlanDetailDV.SendStatementDays"
+        required="agencyBillPlan.StatementSentAfterCycleClose"
+        validationExpression="(agencyBillPlan.DaysAfterCycleCloseToSendStmnt &gt;= 0) ? null : displaykey.Web.AgencyBillPlanDetailDV.PositiveNumberError"
+        value="agencyBillPlan.DaysAfterCycleCloseToSendStmnt"
+        visible="agencyBillPlan.StatementSentAfterCycleClose"/>
+      <BooleanRadioInput
+        editable="planNotInUse"
+        id="SnapshotNonPastDueItems"
+        label="displaykey.Web.AgencyBillPlanDetailDV.ShowPreviousNonPastDueAmounts"
+        required="false"
+        value="agencyBillPlan.SnapshotNonPastDueItems"
+        visible="agencyBillPlan.StatementSentAfterCycleClose">
+        <PostOnChange/>
+      </BooleanRadioInput>
+      <BooleanRadioInput
+        editable="planNotInUse"
+        id="SupressStatement"
+        label="displaykey.Web.AgencyBillPlanDetailDV.SuppressStatement"
+        required="false"
+        value="agencyBillPlan.StatementsWithLowNetSuppressed"
+        visible="agencyBillPlan.StatementSentAfterCycleClose">
+        <PostOnChange/>
+      </BooleanRadioInput>
+      <MonetaryAmountInput
+        currency="agencyBillPlan.Currency"
+        editable="planNotInUse"
+        id="SupressStatementThreshold"
+        label="displaykey.Web.AgencyBillPlanDetailDV.SuppressStatementThreshold"
+        required="agencyBillPlan.StatementsWithLowNetSuppressed"
+        validationExpression="(agencyBillPlan.NetThresholdForSuppressingStmt.IsNegative) ? displaykey.Web.AgencyBillPlanDetailDV.PositiveNumberError : null"
+        value="agencyBillPlan.NetThresholdForSuppressingStmt"
+        visible="agencyBillPlan.StatementSentAfterCycleClose &amp;&amp; agencyBillPlan.StatementsWithLowNetSuppressed"/>
+      <InputDivider/>
+      <Label
+        label="displaykey.Web.AgencyBillPlanDetailDV.AccountCurrent"/>
+      <BooleanRadioInput
+        editable="planNotInUse"
+        id="SendReminder"
+        label="displaykey.Web.AgencyBillPlanDetailDV.SendReminder"
+        required="false"
+        value="agencyBillPlan.ReminderSentIfPromiseNotRcvd">
+        <PostOnChange/>
+      </BooleanRadioInput>
+      <Input
+        editable="planNotInUse"
+        id="SendReminderDays"
+        label="displaykey.Web.AgencyBillPlanDetailDV.SendReminderDays"
+        required="agencyBillPlan.ReminderSentIfPromiseNotRcvd"
+        validationExpression="(agencyBillPlan.DaysUntilPromiseReminderSent &gt;= 0) ? null : displaykey.Web.AgencyBillPlanDetailDV.PositiveNumberError"
+        value="agencyBillPlan.DaysUntilPromiseReminderSent"
+        visible="agencyBillPlan.ReminderSentIfPromiseNotRcvd"/>
+      <Input
+        editable="planNotInUse"
+        id="PromiseDueDays"
+        label="displaykey.Web.AgencyBillPlanDetailDV.PromiseDueDays"
+        required="true"
+        validationExpression="(agencyBillPlan.PromiseDueInDays &gt;= 0) ? null : displaykey.Web.AgencyBillPlanDetailDV.PositiveNumberError"
+        value="agencyBillPlan.PromiseDueInDays"/>
+      <BooleanRadioInput
+        editable="planNotInUse"
+        id="GeneratePromisePastDueException"
+        label="displaykey.Web.AgencyBillPlanDetailDV.GeneratePromisePastDueException"
+        required="false"
+        value="agencyBillPlan.ExceptionIfPromiseNotReceived">
+        <PostOnChange/>
+      </BooleanRadioInput>
+      <BooleanRadioInput
+        editable="planNotInUse"
+        id="SendPromiseExceptions"
+        label="displaykey.Web.AgencyBillPlanDetailDV.SendPromiseExceptions"
+        required="false"
+        value="agencyBillPlan.PromiseExceptionsSent"/>
+    </InputColumn>
+    <InputColumn>
+      <Label
+        label="displaykey.Web.AgencyBillPlanDetailDV.Payment"/>
+      <BooleanRadioInput
+        editable="planNotInUse"
+        id="AutoProcess"
+        label="displaykey.Web.AgencyBillPlanDetailDV.AutoProcess"
+        required="false"
+        value="agencyBillPlan.AutoProcessWhenPaymentMatches"/>
+      <BooleanRadioInput
+        editable="planNotInUse"
+        id="SendPaymentExceptions"
+        label="displaykey.Web.AgencyBillPlanDetailDV.SendPaymentExceptions"
+        required="false"
+        value="agencyBillPlan.PaymentExceptionsSent"/>
+      <BooleanRadioInput
+        editable="planNotInUse"
+        id="SendDunningOne"
+        label="displaykey.Web.AgencyBillPlanDetailDV.SendDunningOne"
+        required="false"
+        value="agencyBillPlan.FirstDunningSentIfNotPaid">
+        <PostOnChange/>
+      </BooleanRadioInput>
+      <Input
+        editable="planNotInUse"
+        id="SendDunningOneDays"
+        label="displaykey.Web.AgencyBillPlanDetailDV.SendDunningOneDays"
+        required="agencyBillPlan.FirstDunningSentIfNotPaid"
+        validationExpression="(agencyBillPlan.DaysUntilFirstDunningSent &gt;= 0) ? null : displaykey.Web.AgencyBillPlanDetailDV.PositiveNumberError"
+        value="agencyBillPlan.DaysUntilFirstDunningSent"
+        visible="agencyBillPlan.FirstDunningSentIfNotPaid"/>
+      <BooleanRadioInput
+        editable="planNotInUse"
+        id="SendDunningTwo"
+        label="displaykey.Web.AgencyBillPlanDetailDV.SendDunningTwo"
+        required="false"
+        validationExpression="(agencyBillPlan.FirstDunningSentIfNotPaid) ? null : displaykey.Web.AgencyBillPlanDetailDV.SecondDunningCannotBeTrueWithoutFirstDunning"
+        value="agencyBillPlan.SecondDunningSentIfNotPaid"
+        visible="agencyBillPlan.FirstDunningSentIfNotPaid">
+        <PostOnChange/>
+      </BooleanRadioInput>
+      <Input
+        editable="planNotInUse"
+        id="SendDunningTwoDays"
+        label="displaykey.Web.AgencyBillPlanDetailDV.SendDunningTwoDays"
+        required="agencyBillPlan.SecondDunningSentIfNotPaid"
+        validationExpression="validateSendDunningTwoDays()"
+        value="agencyBillPlan.DaysUntilSecondDunningSent"
+        visible="agencyBillPlan.FirstDunningSentIfNotPaid &amp;&amp; agencyBillPlan.SecondDunningSentIfNotPaid"/>
+      <MonetaryAmountInput
+        currency="agencyBillPlan.Currency"
+        editable="planNotInUse"
+        id="ProducerWriteoffThreshold"
+        label="displaykey.Web.AgencyBillPlanDetailDV.ProducerWriteoffThreshold"
+        required="true"
+        value="agencyBillPlan.ProducerWriteoffThreshold"/>
+      <InputDivider/>
+      <Label
+        label="displaykey.Web.AgencyBillPlanDetailDV.ClearingLogic"/>
+      <BooleanRadioInput
+        editable="planNotInUse"
+        id="CommissionCleared"
+        label="displaykey.Web.AgencyBillPlanDetailDV.CommissionCleared"
+        required="false"
+        value="agencyBillPlan.LowCommissionCleared">
+        <PostOnChange/>
+      </BooleanRadioInput>
+      <MonetaryAmountInput
+        currency="agencyBillPlan.Currency"
+        editable="planNotInUse"
+        id="CommissionClearedThreshold"
+        label="displaykey.Web.AgencyBillPlanDetailDV.CommissionClearedThreshold"
+        required="agencyBillPlan.LowCommissionCleared"
+        validationExpression="(agencyBillPlan.ClearCommisionThreshold.IsNegative) ? displaykey.Web.AgencyBillPlanDetailDV.PositiveNumberError : null"
+        value="agencyBillPlan.ClearCommisionThreshold"
+        visible="agencyBillPlan.LowCommissionCleared"/>
+      <BooleanRadioInput
+        editable="planNotInUse"
+        id="GrossCleared"
+        label="displaykey.Web.AgencyBillPlanDetailDV.GrossCleared"
+        required="false"
+        value="agencyBillPlan.LowGrossCleared">
+        <PostOnChange/>
+      </BooleanRadioInput>
+      <MonetaryAmountInput
+        currency="agencyBillPlan.Currency"
+        editable="planNotInUse"
+        id="GrossClearedThreshold"
+        label="displaykey.Web.AgencyBillPlanDetailDV.GrossClearedThreshold"
+        required="agencyBillPlan.LowGrossCleared"
+        validationExpression="(agencyBillPlan.ClearGrossThreshold.IsNegative) ? displaykey.Web.AgencyBillPlanDetailDV.PositiveNumberError : null"
+        value="agencyBillPlan.ClearGrossThreshold"
+        visible="agencyBillPlan.LowGrossCleared"/>
+      <TypeKeyInput
+        editable="planNotInUse"
+        id="ClearingLogicTarget"
+        label="displaykey.Web.AgencyBillPlanDetailDV.ClearingLogicTarget"
+        value="agencyBillPlan.ClearingLogicTarget"/>
+      <InputDivider/>
+      <Label
+        label="displaykey.Web.AgencyBillPlanDetailDV.AffectBilledStatements"/>
+      <BooleanRadioInput
+        editable="planNotInUse"
+        id="OnItemMoved"
+        label="displaykey.Web.AgencyBillPlanDetailDV.OnItemMoved"
+        required="false"
+        value="agencyBillPlan.CreateOffsetsOnBilledInvoices">
+        <PostOnChange/>
+      </BooleanRadioInput>
+      <BooleanRadioInput
+        editable="planNotInUse"
+        id="OnPaymentScheduleChange"
+        label="displaykey.Web.AgencyBillPlanDetailDV.OnPaymentScheduleChange"
+        required="false"
+        value="agencyBillPlan.PmntSchdChngOffsetsOnBilled">
+        <PostOnChange/>
+      </BooleanRadioInput>
+    </InputColumn>
+    <InputFooterSection>
+      <InputDivider/>
+    </InputFooterSection>
+    <Code><![CDATA[function validateSendDunningTwoDays() : String {
+  if (!agencyBillPlan.FirstDunningSentIfNotPaid) {
+    return displaykey.Web.AgencyBillPlanDetailDV.SecondDunningCannotBeTrueWithoutFirstDunning;
+  } else if (agencyBillPlan.DaysUntilSecondDunningSent < agencyBillPlan.DaysUntilFirstDunningSent) {
+    return displaykey.Web.AgencyBillPlanDetailDV.SecondDunningMustBeGreaterThanFirstDunning;
+  } else {
+    return null;
+  }
+}
+
+public static function isValidDayOfMonth(x : Number) : boolean {
+  return x > 0 and x < 32
+}
+
+function requireDayOfMonth(x : DayOfMonthLogic) : boolean {
+  return x != DayOfMonthLogic.TC_LASTBUSINESSDAY and x != DayOfMonthLogic.TC_FIRSTBUSINESSDAY
+}]]></Code>
+  </DetailViewPanel>
+</PCF>

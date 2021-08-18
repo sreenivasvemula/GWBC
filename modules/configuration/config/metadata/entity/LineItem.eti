@@ -1,0 +1,52 @@
+<?xml version="1.0"?>
+<entity
+  xmlns="http://guidewire.com/datamodel"
+  desc="A specific amount of money, contained with a transaction and belonging to a t-account"
+  entity="LineItem"
+  overwrittenInStagingTable="true"
+  setterScriptability="hidden"
+  subpackage="accounting"
+  table="lineitem"
+  type="editable">
+  <implementsEntity
+    name="InCurrencySilo"/>
+  <monetaryamount
+    amountColumnName="Amount"
+    amountRange="nonnegative"
+    desc="The amount of money in this line item"
+    name="Amount"
+    nullok="false"
+    scaleToCurrency="true"
+    setterScriptability="doesNotExist"/>
+  <typekey
+    desc="The type of line item: Credit or Debit"
+    name="Type"
+    nullok="false"
+    setterScriptability="doesNotExist"
+    typelist="LedgerSide"/>
+  <foreignkey
+    columnName="TAccountID"
+    desc="The related t-account"
+    fkentity="TAccount"
+    name="TAccount"
+    nullok="false"
+    setterScriptability="doesNotExist"/>
+  <foreignkey
+    columnName="TransactionID"
+    desc="The related transaction"
+    fkentity="Transaction"
+    name="Transaction"
+    nullok="false"
+    setterScriptability="doesNotExist"/>
+  <events/>
+  <index
+    desc="Speeds up the lookup of transactions corresponding to a particular TAccount"
+    name="accounttrans1">
+    <indexcol
+      keyposition="1"
+      name="TAccountID"/>
+    <indexcol
+      keyposition="2"
+      name="TransactionID"/>
+  </index>
+</entity>

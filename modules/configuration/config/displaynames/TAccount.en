@@ -1,0 +1,24 @@
+<?xml version="1.0"?>
+<Entity
+  name="TAccount">
+  <Columns>
+    <DisplayNameColumn
+      beanPath="TAccount.TAccountPattern"
+      displayName="true"
+      name="TAccountPattern"/>
+    <Column
+      beanPath="TAccount.Owner.IntrinsicType"
+      displayName="false"
+      name="TAccountOwnerType"/>
+    <Column
+      beanPath="TAccount.TAccountPattern.TAccountName"
+      displayName="false"
+      name="TAccountName"/>
+  </Columns>
+  <DisplayName><![CDATA[if(TAccountOwnerType.equals(Account.Type) && TAccountName.equals("Unapplied")){
+  return displaykey.Java.TAccount.DefaultUnapplied
+}
+
+return TAccountPattern
+]]></DisplayName>
+</Entity>

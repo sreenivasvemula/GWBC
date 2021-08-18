@@ -1,0 +1,16 @@
+<?xml version="1.0"?><nonPersistentEntity xmlns="http://guidewire.com/datamodel" desc="AccountInfo has been superseded by Data Transfer Object (&quot;DTO&quot;) AccountInfoDTO"  entity="AccountInfo" subpackage="account">
+  <implementsEntity name="NotInCurrencySilo"/>
+  <monetaryamount amountColumnName="AmountBilled" desc="The amount billed on this account (includes all of account's policies)" name="AmountBilled" nullok="true" scaleToCurrency="true"/>
+  <monetaryamount amountColumnName="AmountDue" desc="The amount due on this account (includes all of account's policies)" name="AmountDue" nullok="true" scaleToCurrency="true"/>
+  <monetaryamount amountColumnName="AmountPaid" desc="The amount paid on this account (includes all of account's policies)" name="AmountPaid" nullok="true" scaleToCurrency="true"/>
+  <monetaryamount amountColumnName="AmountUnbilled" desc="The unbilled amount on this account (includes all of account's policies)" name="AmountUnbilled" nullok="true" scaleToCurrency="true"/>
+  <column desc="Whether or not the account is delinquent on the date of this request" name="Delinquent" nullok="true" type="bit"/>
+  <column desc="Whether or not the account has open policies" name="HasOpenPolicies" nullok="true" type="bit"/>
+  <monetaryamount amountColumnName="LastInvoiceAmount" desc="The amount of the last billed invoice" name="LastInvoiceAmount" nullok="true" scaleToCurrency="true"/>
+  <monetaryamount amountColumnName="NextInvoiceAmount" desc="The amount of the next planned invoice" name="NextInvoiceAmount" nullok="true" scaleToCurrency="true"/>
+  <column desc="The date and time that this snapshot of the Account Info was taken." name="InfoDate" nullok="true" type="datetime"/>
+  <foreignkey columnName="AccountID" desc="Account from which status information is collection" exportasid="true" fkentity="Account" name="Account" nullok="false"/>
+  <foreignkey columnName="LastInvoiceID" desc="The last billed invoice" exportasid="true" fkentity="Invoice" name="LastInvoice" nullok="true"/>
+  <foreignkey columnName="LastPaymentID" desc="The last payment made on this account" exportasid="true" fkentity="DirectBillMoneyRcvd" name="LastPayment" nullok="true"/>
+  <foreignkey columnName="NextInvoiceID" desc="The next planned invoice" exportasid="true" fkentity="Invoice" name="NextInvoice" nullok="true"/>
+</nonPersistentEntity>

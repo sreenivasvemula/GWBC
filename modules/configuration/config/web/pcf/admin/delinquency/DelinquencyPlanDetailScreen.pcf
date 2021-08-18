@@ -1,0 +1,46 @@
+<?xml version="1.0"?>
+<PCF
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:noNamespaceSchemaLocation="../../../../../../pcf.xsd">
+  <Screen
+    id="DelinquencyPlanDetailScreen">
+    <Require
+      name="dlnqPlan"
+      type="DelinquencyPlan"/>
+    <Variable
+      initialValue="not dlnqPlan.InUse"
+      name="planNotInUse"
+      recalculateOnRefresh="true"/>
+    <Toolbar>
+      <EditButtons/>
+      <ToolbarButton
+        action="CloneDelinquencyPlan.go(dlnqPlan)"
+        hideIfEditable="true"
+        id="Clone"
+        label="displaykey.Web.DelinquencyPlanDetailScreen.Clone"
+        visible="perm.System.delplancreate"/>
+    </Toolbar>
+    <AlertBar
+      hideIfReadOnly="true"
+      id="DelinquencyPlanDetailScreen_DelinquencyPlanInUse"
+      label="displaykey.Web.DelinquencyPlanDetailScreen.DelinquencyPlanInUse(dlnqPlan.Name)"
+      visible="! planNotInUse"/>
+    <CardViewPanel>
+      <Card
+        id="GeneralDetails"
+        title="displaykey.Web.NewDelinquencyPlan.General">
+        <PanelRef
+          def="DelinquencyPlanDetailDV(dlnqPlan)"/>
+        <PanelRef
+          def="LocalizedValuesDV(dlnqPlan, { &quot;Name&quot;}, { displaykey.Java.DelinquencyPlan.Field.Name })"
+          editable="not dlnqPlan.InUse"/>
+      </Card>
+      <Card
+        id="PlanReasons"
+        title="displaykey.Web.NewDelinquencyPlan.DelinquencyPlanReasons">
+        <PanelRef
+          def="DelinquencyPlanReasonsDV(dlnqPlan)"/>
+      </Card>
+    </CardViewPanel>
+  </Screen>
+</PCF>

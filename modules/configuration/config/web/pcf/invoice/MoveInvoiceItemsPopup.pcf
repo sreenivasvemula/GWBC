@@ -1,0 +1,49 @@
+<?xml version="1.0"?>
+<PCF
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:noNamespaceSchemaLocation="../../../../../pcf.xsd">
+  <Popup
+    alwaysInEditMode="true"
+    beforeCommit="web.invoice.InvoiceUtil.validateItemsForMove(invoiceItems); web.invoice.InvoiceUtil.moveInvoiceItems(pickedValue, invoiceItems)"
+    canEdit="true"
+    id="MoveInvoiceItemsPopup"
+    returnType="Invoice"
+    startInEditMode="true"
+    title="displaykey.Web.MoveInvoiceItemsPopup.Title">
+    <LocationEntryPoint
+      signature="MoveInvoiceItemsPopup(invoiceItems : InvoiceItem[],  payer : gw.api.domain.invoice.InvoicePayer)"/>
+    <Variable
+      name="invoiceItems"
+      type="InvoiceItem[]"/>
+    <Variable
+      name="payer"
+      type="gw.api.domain.invoice.InvoicePayer"/>
+    <Variable
+      name="targetInvoice"
+      type="Invoice"/>
+    <Screen>
+      <Toolbar/>
+      <DetailViewPanel>
+        <InputColumn>
+          <ListViewInput
+            boldLabel="true"
+            def="InvoiceItemsLV(invoiceItems, null, false)"
+            editable="false"
+            id="InvoiceItems"
+            label="displaykey.Web.MoveInvoiceItemsPopup.InvoiceItemsToBeMoved"
+            labelAbove="true">
+            <Toolbar/>
+          </ListViewInput>
+          <ListViewInput
+            boldLabel="true"
+            def="InvoiceSelectorSimpleLV(payer)"
+            id="targetInvoicesLV"
+            label="displaykey.Web.MoveInvoiceItemsPopup.ChooseDestination"
+            labelAbove="true">
+            <Toolbar/>
+          </ListViewInput>
+        </InputColumn>
+      </DetailViewPanel>
+    </Screen>
+  </Popup>
+</PCF>

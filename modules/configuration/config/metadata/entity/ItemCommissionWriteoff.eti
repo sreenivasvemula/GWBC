@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?><subtype xmlns="http://guidewire.com/datamodel" desc="Entity that manages authority limit checking and approval of Commission Writeoffs against a single Invoice Item" entity="ItemCommissionWriteoff" subpackage="accounting" supertype="CommissionWriteoff">
+    <foreignkey columnName="ItemCommissionID" desc="The Item Commission targeted for this writeoff" fkentity="ItemCommission" getterScriptability="hidden" name="ItemCommission" nullok="false" setterScriptability="doesNotExist"/>
+    <foreignkey columnName="CmsnAgencyPmntItemID" desc="This writeoff may be associated with an agency payment item, and if it is, it will be reversed along with the payment item" fkentity="AgencyPaymentItem" getterScriptability="hidden" ignoreforevents="true" name="CmsnAgencyPmntItem" nullok="true" setterScriptability="doesNotExist"/>
+</subtype>

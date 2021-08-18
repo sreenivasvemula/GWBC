@@ -1,0 +1,183 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xml:lang="en" lang="en" xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+    <meta http-equiv="Content-Style-Type" content="text/css" />
+    <!-- MOTW-DISABLED saved from url=(0014)about:internet -->
+    <title>Delinquency Processing Customization Plugin</title>
+    <link rel="StyleSheet" href="css/bc-plugins.css" type="text/css" media="all" />
+    <link rel="StyleSheet" href="css/webworks.css" type="text/css" media="all" />
+    <link rel="StyleSheet" href="css/css-guidewire-extra.css" type="text/css" media="all" />
+    <script type="text/javascript" language="JavaScript1.2" src="wwhdata/common/context.js"></script>
+    <script type="text/javascript" language="JavaScript1.2" src="wwhdata/common/towwhdir.js"></script>
+    <script type="text/javascript" language="JavaScript1.2" src="wwhdata/common/wwhpagef.js"></script>
+    <script type="text/javascript" language="JavaScript1.2">
+      <!--
+        var  WebWorksRootPath = "";
+      // -->
+    </script>
+    <script type="text/javascript" language="JavaScript1.2">
+      <!--
+        // Set reference to top level help frame
+        //
+        var  WWHFrame = WWHGetWWHFrame("", true);
+      // -->
+    </script>
+    <script type="text/javascript" language="JavaScript1.2" src="scripts/expand.js"></script>
+    <!-- THE FOLLOWING IS A GUIDEWIRE STYLE DEFINITION FOR THE LINK TO THIS FEATURE -->
+    <link rel="StyleSheet" href="css/css-guidewire-extra.css" type="text/css" media="all" />
+    <!-- THE FOLLOWING IS A GUIDEWIRE GSCRIPT FUNCTION FOR THE LINK TO THIS FEATURE -->
+    <script type="text/javascript">
+function guidewire_selectall()
+{
+var text_val=eval("document.linktothisurlform.urlfield");
+text_val.focus();
+text_val.select();
+}
+</script>
+  </head>
+  <body onLoad="WWHUpdate();" onUnload="WWHUnload();" onKeyDown="WWHHandleKeyDown((document.all||document.getElementById||document.layers)?event:null);" onKeyPress="WWHHandleKeyPress((document.all||document.getElementById||document.layers)?event:null);" onKeyUp="WWHHandleKeyUp((document.all||document.getElementById||document.layers)?event:null);">
+    <!-- THE FOLLOWING IS A GUIDEWIRE DIV FOR THE 'LINK TO THIS' FEATURE -->
+    <div id="linkToThisPage" class="popup" style="display: none;">
+      <div class="popupTitle">Link Directly to This Page 
+           <a href="#" onclick="var thePopup = getElementById('linkToThisPage');thePopup.style.display='none';return false;"><img class="popupClosebox" src="wwhelp/wwhimpl/common/images/close.gif" /></a></div>
+      <div style="padding:6px;">
+        <div class="popupText" id="linkToThisPageBookmark">An error has occurred if you see this messsage.</div>
+        <form name="linktothisurlform" method="post" action="" style="width:275px;margin:0px">
+          <input type="text" class="popupURLText" id="linkToThisPageURL" name="urlfield" rows="1" cols="55" onClick="guidewire_selectall();" onFocus="guidewire_selectall();"></input>
+        </form>
+      </div>
+    </div>
+    <br />
+    <div class="WebWorks_Breadcrumbs" style="text-align: left;">
+      <span>BillingCenter Integration Guide</span> : 
+    <span class="WebWorks_Breadcrumbs" style="text-align: left;"><a class="WebWorks_Breadcrumb_Link" href="p-plugins.html#3434775">Plugins</a> : <a class="WebWorks_Breadcrumb_Link" href="bc-plugins.13.01.html#3434775">Billing Plugins</a> : Delinquency Processing Customization Plugin</span></div>
+    <hr align="left" />
+    <blockquote>
+      <h3 class="H1_-_Heading_1"><a name="3434775">Delinquency Processing Customization Plugin</a></h3>
+      <div class="B_-_Body"><a name="3612199">You can customize BillingCenter delinquency processing by implementing the delinquency processing plugin </a><span class="cv_-_computer_voice">IDelinquencyProcessExtensions</span> plugin. This plugin performs two tasks:</div>
+      <div class="BI_-_Bullet_Item_outer" style="margin-left: 57pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="BI_-_Bullet_Item_inner" style="width: 15pt; white-space: nowrap">
+                <span class="bu_-_bullet">•	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="BI_-_Bullet_Item_inner"><a name="3612201">Exiting delinquency if charges are paid</a></div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="BI_-_Bullet_Item_outer" style="margin-left: 57pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="BI_-_Bullet_Item_inner" style="width: 15pt; white-space: nowrap">
+                <span class="bu_-_bullet">•	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="BI_-_Bullet_Item_inner"><a name="3434781">Pushing forward held events</a></div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="B_-_Body"><a name="3434782">BillingCenter includes a built-in implementation that represents the base configuration behavior. In Studio refer to the Gosu class:</a></div>
+      <div class="CS_-_Code_Single_Line"><a name="3612353">gw.plugin.delinquency.impl.DelinquencyProcessExtensions</a></div>
+      <div class="B_-_Body"><a name="3612280">This plugin implementation calls similarly-named methods on the appropriate objects. For example, the </a><span class="cv_-_computer_voice">onCompliance</span> plugin method calls <span class="cv_-_computer_voice">collateral.onCompliance()</span>. You can add code before or after this code, or modify the code in other ways.</div>
+      <div class="B_-_Body"><a name="3434798">If you want to do something before or after the built-in behavior, base your plugin on the pattern of that Gosu class. To customize the behavior further, refer to the following subsections for details of each process.</a></div>
+      <h4 class="H2_-_Heading_2"><a name="3614150">Exiting Delinquency If Appropriate Charges Are Paid</a></h4>
+      <div class="B_-_Body"><a name="3614152">BillingCenter calls the </a><span class="cv_-_computer_voice">IDelinquencyProcessExtensions</span> plugin method <span class="cv_-_computer_voice">onChargesPaid</span> to determine whether to end delinquency based on custom criteria. </div>
+      <div class="B_-_Body"><a name="3614665">If you do not register an implementation of the delinquency process extensions plugin, BillingCenter calls </a><span class="cv_-_computer_voice">DelinquencyProcess.onChargesPaid(chargesPaid)</span>. The default implementation triggers the delinquency process workflow to stop if the delinquent amount is below the threshold for exiting delinquency. </div>
+      <div class="B_-_Body"><a name="3614675">BillingCenter default behavior in the </a><span class="cv_-_computer_voice">DelinquencyProcess</span> method <span class="cv_-_computer_voice">onChargesPaid</span> is implemented by an enhancement method. You can edit this enhancement in Studio. Refer to the Gosu enhancement <span class="cv_-_computer_voice">libraries.DelinquencyProcessExt</span>. The reference implementation of this method gets the target due amount. If the current delinquency amount is below <span class="cv_-_computer_voice">DelinquencyPlan.ExitDelinquencyThreshold</span> and the delinquency reason is <span class="cv_-_computer_voice">TC_PASTDUE</span>, the method triggers the process to stop.</div>
+      <div class="B_-_Body"><a name="3614666">However, you might want to define the criteria differently. For example, you can make the amount due threshold to be five percent of the total policy premium due, rather than a fixed amount of money. This plugin lets you dynamically evaluate whether to end delinquency.</a></div>
+      <div class="B_-_Body"><a name="3614062">To support custom behavior if charges are paid, the plugin </a><span class="cv_-_computer_voice">onChargesPaid</span> method takes:</div>
+      <div class="BI_-_Bullet_Item_outer" style="margin-left: 57pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="BI_-_Bullet_Item_inner" style="width: 15pt; white-space: nowrap">
+                <span class="bu_-_bullet">•	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="BI_-_Bullet_Item_inner"><a name="3614460">a </a><span class="cv_-_computer_voice">DelinquencyProcess</span> entity instance</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="BI_-_Bullet_Item_outer" style="margin-left: 57pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="BI_-_Bullet_Item_inner" style="width: 15pt; white-space: nowrap">
+                <span class="bu_-_bullet">•	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="BI_-_Bullet_Item_inner"><a name="3614461">a list of </a><span class="cv_-_computer_voice">Charge</span> entity instances (<span class="cv_-_computer_voice">List&lt;Charge&gt;</span>)</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="B_-_Body"><a name="3614555">Your implementation of this method must stop the delinquency process in the right circumstances or the delinquency will never stop through other means.</a></div>
+      <div class="B_-_Body"><a name="3614564">The method returns nothing.</a></div>
+      <h6 class="HS_-_Head_Sub"><a name="3601957">See also</a></h6>
+      <div class="BI_-_Bullet_Item_outer" style="margin-left: 57pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="BI_-_Bullet_Item_inner" style="width: 15pt; white-space: nowrap">
+                <span class="bu_-_bullet">•	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="BI_-_Bullet_Item_inner"><a name="3602035">For additional information about the </a><span class="cv_-_computer_voice">DelinquencyProcess</span> entity, see <a href="javascript:WWHClickedPopup('rules', 'bc_rulesets.09.1.html#15624042', '');" title="Rule Set Categories">“Rule Set Categories” in the </a><span class="bt_-_book_title"><a href="javascript:WWHClickedPopup('rules', 'bc_rulesets.09.1.html#15624042', '');" title="Rule Set Categories">Rules Guide</a></span>.</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <h4 class="H2_-_Heading_2"><a name="3434832">Pushing Forward Held Events</a></h4>
+      <div class="B_-_Body"><a name="3434836">Pushing held events forward advances the date of delinquency process events if a delinquency process is held. In the reference implementation, BillingCenter uses the following rule. If no plugin is defined, BillingCenter pushes forward all uncompleted events that have a target date defined in terms of number of days after inception. </a></div>
+      <div class="B_-_Body"><a name="3434837">In the reference implementation, this means that the value for the number of days after inception is advanced by the number of days for which the hold was applied. To customize this behavior, this plugin’s </a><span class="cv_-_computer_voice">pushForwardHeldEvents</span> method takes a <span class="cv_-_computer_voice">DelinquencyProcess</span> entity and a date. The date represents the calendar data that the event was held. The plugin method can do whatever it wants in this case. It returns nothing.</div>
+      <div class="B_-_Body"><a name="3434840">As described earlier for the </a><span class="cv_-_computer_voice">onChargesPaid</span> entity method, the default behavior for pushing forward held events uses an entity extension method that you can edit. </div>
+      <div class="B_-_Body"><a name="3434841">The default method looks similar to the following:</a></div>
+      <PRE class="CF_-_Code_First_Line"><a name="3434842">/**</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="3434843"> * Example method for pushing forward events if a delinquency process is held.</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="3434844"> * This implementation advances all events by the number of days for which the delinquency process</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="3434845"> * was on hold. It does not advance events set with an exact target date (instead of days after </a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="3434846">&nbsp;*&nbsp;inception).</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="3434847"> *        </a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="3434848"> */</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="3434849">function pushForwardHeldEvents(heldSince : java.util.Date) {      </a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="3434850">  var today = DateUtil.currentDate();</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="3434851">&nbsp;</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="3434852">  var numDaysHeld = DateUtil.daysBetween(heldSince, today);</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="3434853">&nbsp;</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="3434854">  for (event in this.OrderedEvents as DelinquencyProcessEvent[]) {</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="3434855">    if (not event.Completed and event.ExactTargetDate == null) {</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="3434856">      event.DaysAfterInception = event.DaysAfterInception + numDaysHeld;</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="3434857">    }</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="3434858">  }</a></PRE>
+      <PRE class="CL_-_Code_Last_Line"><a name="3434859">}</a></PRE>
+      <div class="B_-_Body"><a name="3434860">If you want to do something different entirely from this approach, your plugin method must do whatever is appropriate instead of calling </a><span class="cv_-_computer_voice">delinquencyProcess.pushForwardHeldEvents(</span><span class="ps_-_parameter_in_code_snippets">heldSince</span><span class="cv_-_computer_voice">)</span>.</div>
+      <script type="text/javascript" language="JavaScript1.2">
+        <!--
+          // Clear related topics
+          //
+          WWHClearRelatedTopics();
+
+          document.writeln(WWHRelatedTopicsInlineHTML());
+        // -->
+      </script>
+    </blockquote>
+    <script type="text/javascript" language="JavaScript1.2">
+      <!--
+        document.write(WWHRelatedTopicsDivTag() + WWHPopupDivTag() + WWHALinksDivTag());
+      // -->
+    </script>
+  </body>
+</html>

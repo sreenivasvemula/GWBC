@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+<subtype
+  xmlns="http://guidewire.com/datamodel"
+  entity="AcctNegativeWriteoff"
+  desc="A negative writeoff against an account"
+  subpackage="accounting"
+  supertype="NegativeWriteoff">
+  <foreignkey
+    name="Account"
+    desc="The Account with which the negative writeoff is associated (to which the UnappliedFund belongs)."
+    columnName="AccountID"
+    fkentity="Account"
+    nullok="false"
+    setterScriptability="doesNotExist"/>
+  <foreignkey
+    name="UnappliedFund"
+    desc="The UnappliedFund against which the negative writeoff is made."
+    columnName="UnappliedFundID"
+    fkentity="UnappliedFund"
+    nullok="false"/>
+  <dbcheckbuilder className="com.guidewire.bc.system.database.dbchecks.accounting.AcctNegativeWriteoffDBCheckBuilder"/>
+</subtype>

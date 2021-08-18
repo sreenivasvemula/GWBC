@@ -1,0 +1,154 @@
+<?xml version="1.0"?>
+<entity
+  xmlns="http://guidewire.com/datamodel"
+  desc="Join entity between InvoiceItem and PolicyCommission, for storing Commission denormalized amounts on the item level"
+  entity="ItemCommission"
+  setterScriptability="hidden"
+  subpackage="invoice"
+  table="itemcommission"
+  type="retireable">
+  <implementsEntity
+    name="Reversible"/>
+  <implementsEntity
+    name="InCurrencySilo"/>
+  <column
+    default="true"
+    desc="An invoice item can have at most one active ItemCommission per PolicyRole.  If an ItemCommission is active, it is for one of the item's current producers"
+    exportable="false"
+    name="Active"
+    nullok="false"
+    setterScriptability="doesNotExist"
+    type="bit"/>
+  <foreignkey
+    columnName="InvoiceItemID"
+    desc="The invoice item which is linked to a PolicyCommission"
+    exportable="false"
+    fkentity="InvoiceItem"
+    importableagainstexistingobject="false"
+    name="InvoiceItem"
+    nullok="false"
+    setterScriptability="hidden"/>
+  <edgeForeignKey
+    desc="If non-null, refers to the ItemCommission which this ItemCommission reversed."
+    edgeTableName="revitemcmsn"
+    exportable="false"
+    fkentity="ItemCommission"
+    ignoreforevents="true"
+    name="ReversedItemCommission"
+    nullok="true"
+    setterScriptability="doesNotExist"/>
+  <array
+    arrayentity="ZeroCmsnEarnedMarker"
+    desc="Array of joins to PaymentItems that tried to earn commission, but there was no reserve."
+    name="ZeroCmsnEarnedMarkers"
+    owner="true"
+    setterScriptability="hidden"/>
+  <array
+    arrayentity="ItemCommissionWriteoff"
+    desc="Array of the commission writeoffs against this item commissions"
+    name="CommissionWriteoffApprovables"/>
+  <typekey
+    desc="The criteria by which the item commission will earn direct bill commission. Note that if this is null, the system will use the PayableCriteria from the charge commission instead"
+    name="PayableCriteria"
+    nullok="false"
+    typelist="PayableCriteria"/>
+  <dbcheckbuilder
+    className="com.guidewire.bc.system.database.dbchecks.invoice.ItemCommissionPolicyPeriodDBCheckBuilder"/>
+  <!-- merged from ItemCommissionState.eti -->
+  <fulldescription><![CDATA[Contains information about an {invoice item, policy producer code} pair, including the commission
+        amount of the invoice item (which can change when there is a commission override) and the current amount of
+        commission paid on the invoice item (which changes whenever there is a payment against the invoice item)
+    ]]></fulldescription>
+  <monetaryamount
+    amountColumnName="PaidCommission"
+    desc="Denormalization of the total commission paid on this ItemCommission"
+    name="PaidCommission"
+    nullok="false"
+    overwrittenInStagingTable="true"
+    scaleToCurrency="true"
+    setterScriptability="hidden"
+    soapnullok="true">
+    <tag
+      name="DefaultValueZero"/>
+  </monetaryamount>
+  <monetaryamount
+    amountColumnName="CmsnPayableAmount"
+    desc="The amount of commission that has been made payable on this ItemCommission."
+    name="CmsnPayableAmount"
+    nullok="false"
+    overwrittenInStagingTable="true"
+    scaleToCurrency="true"
+    setterScriptability="hidden"
+    soapnullok="true">
+    <tag
+      name="DefaultValueZero"/>
+  </monetaryamount>
+  <monetaryamount
+    amountColumnName="CommissionAmount"
+    desc="Denormalization of the total commission amount that was submitted for this ItemCommission"
+    name="CommissionAmount"
+    nullok="false"
+    overwrittenInStagingTable="true"
+    scaleToCurrency="true"
+    setterScriptability="hidden"
+    soapnullok="true">
+    <tag
+      name="DefaultValueZero"/>
+  </monetaryamount>
+  <monetaryamount
+    amountColumnName="WrittenOffCommission"
+    desc="Denormalization of the amount of commission that was written off for this ItemCommission"
+    name="WrittenOffCommission"
+    nullok="false"
+    overwrittenInStagingTable="true"
+    scaleToCurrency="true"
+    setterScriptability="hidden"
+    soapnullok="true">
+    <tag
+      name="DefaultValueZero"/>
+  </monetaryamount>
+  <typekey
+    createhistogram="true"
+    desc="Denorm of the PolicyRole from the PolicyCommission table"
+    getterScriptability="hidden"
+    name="PolicyRole"
+    nullok="false"
+    setterScriptability="hidden"
+    typelist="PolicyRole"/>
+  <foreignkey
+    columnName="PolicyCommissionID"
+    desc="The PolicyCommission which earns commission for this InvoiceItem, role combination"
+    exportable="false"
+    fkentity="PolicyCommission"
+    importableagainstexistingobject="false"
+    name="PolicyCommission"
+    nullok="false"
+    setterScriptability="hidden"/>
+  <index
+    desc="Index to help with invoice item refactoring"
+    name="InvItemRefactorIdx"
+    unique="true">
+    <indexcol
+      keyposition="1"
+      name="InvoiceItemID"/>
+    <indexcol
+      keyposition="2"
+      name="Retired"/>
+    <indexcol
+      keyposition="3"
+      name="ID"/>
+    <indexcol
+      keyposition="4"
+      name="PayableCriteria"/>
+  </index>
+  <index
+    desc="Index on payable criteria to help with commission calc writer query"
+    name="PayableCriteriaIdx">
+    <indexcol
+      keyposition="1"
+      name="PayableCriteria"/>
+    <indexcol
+      keyposition="2"
+      name="Retired"/>
+  </index>
+</entity>

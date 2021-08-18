@@ -1,0 +1,23 @@
+package rules.Preupdate.ContactPreupdate_dir
+
+@gw.rules.RuleName("Add default tags")
+internal class Adddefaulttags {
+  static function doCondition(contact : entity.Contact) : boolean {
+    
+/*start00rule*/
+return contact.Tags.Count == 0
+/*end00rule*/
+
+  }
+
+  static function doAction(contact : entity.Contact, actions : gw.rules.Action) {
+
+/*start00rule*/
+// Contact Manager requires that every contact have at least one ContactTag
+var contactTag = new ContactTag(contact.Bundle)
+contactTag.Type = ContactTagType.TC_CLIENT
+contact.addToTags(contactTag)
+/*end00rule*/
+
+  }
+}

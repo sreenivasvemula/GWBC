@@ -1,0 +1,46 @@
+<?xml version="1.0"?>
+<PCF
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:noNamespaceSchemaLocation="../../../../../pcf.xsd">
+  <Popup
+    canEdit="true"
+    canVisit="perm.ProducerContact.create"
+    id="NewProducerContactPopup"
+    returnType="ProducerContact"
+    startInEditMode="true"
+    title="displaykey.Web.NewProducerContact.Title">
+    <LocationEntryPoint
+      signature="NewProducerContactPopup(producer : Producer,  contactSubtype : Type&lt;Contact&gt;)"/>
+    <Variable
+      name="producer"
+      type="Producer"/>
+    <Variable
+      initialValue="initNewProducerContact()"
+      name="contact"
+      type="ProducerContact"/>
+    <Variable
+      name="contactSubtype"
+      type="Type&lt;Contact&gt;"/>
+    <Screen
+      id="NewProducerContactScreen">
+      <Toolbar>
+        <EditButtons
+          pickValue="contact"/>
+      </Toolbar>
+      <PanelRef
+        def="ProducerContactDetailDV(contact, true)"/>
+    </Screen>
+    <Code><![CDATA[function initNewProducerContact() : ProducerContact {
+  var newProducerContact = new ProducerContact();
+  var newContact = instantiateContactSubtype()
+  newProducerContact.Contact = newContact
+  producer.addToContacts(newProducerContact);
+  return newProducerContact;
+}
+
+private function instantiateContactSubtype() : Contact {
+  // Instantiate the appropriate contact subtype (e.g. a Person or a Company)
+  return contactSubtype.TypeInfo.getConstructor(null).Constructor.newInstance(null) as Contact  
+}]]></Code>
+  </Popup>
+</PCF>

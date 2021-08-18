@@ -1,0 +1,115 @@
+<?xml version="1.0"?>
+<PCF
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:noNamespaceSchemaLocation="../../../../../pcf.xsd">
+  <DetailViewPanel
+    id="ChargeSearchDV">
+    <Require
+      name="chargeSearch"
+      type="ReversibleChargeSearchCriteria"/>
+    <Require
+      name="accountEditable"
+      type="Boolean"/>
+    <Variable
+      initialValue="new web.account.AccountSearchConverter()"
+      name="accountSearchConverter"
+      type="web.account.AccountSearchConverter"/>
+    <Variable
+      initialValue="new web.policy.PolicySearchConverter()"
+      name="policySearchConverter"
+      type="web.policy.PolicySearchConverter"/>
+    <InputColumn>
+      <Label
+        id="ChargeBasics"
+        label="displaykey.Web.ChargeSearchDV.ChargeBasics"/>
+      <RangeInput
+        editable="true"
+        id="ChargePatternCriterion"
+        label="displaykey.Web.ChargeSearchDV.ChargePattern"
+        noneSelectedLabel="displaykey.Web.ChargeSearchDV.ChargePattern.NonSelectedLabel"
+        value="chargeSearch.ChargePattern"
+        valueRange="web.accounting.ChargePatternHelper.getReversableChargePatterns()"/>
+      <TypeKeyInput
+        editable="accountEditable &amp;&amp; gw.api.util.CurrencyUtil.isMultiCurrencyMode()"
+        id="CurrencyCriterion"
+        label="displaykey.Web.ChargeSearchDV.Currency"
+        value="chargeSearch.Currency"
+        visible="gw.api.util.CurrencyUtil.isMultiCurrencyMode()">
+        <PostOnChange
+          onChange="blankMinimumAndMaximumFields()"/>
+      </TypeKeyInput>
+      <MonetaryAmountInput
+        available="chargeSearch.Currency != null || accountEditable == false"
+        currency="getAmountFieldCurrency()"
+        editable="true"
+        id="MinAmountCriterion"
+        label="displaykey.Web.ChargeSearchDV.MinAmount"
+        value="chargeSearch.MinAmount"/>
+      <MonetaryAmountInput
+        available="chargeSearch.Currency != null || accountEditable == false"
+        currency="getAmountFieldCurrency()"
+        editable="true"
+        id="MaxAmountCriterion"
+        label="displaykey.Web.ChargeSearchDV.MaxAmount"
+        value="chargeSearch.MaxAmount"/>
+      <Label
+        id="ChargeDatesCriterion"
+        label="displaykey.Web.ChargeSearchDV.Dates"/>
+      <DateInput
+        editable="true"
+        id="EarliestDateCriterion"
+        label="displaykey.Web.ChargeSearchDV.EarliestDate"
+        value="chargeSearch.EarliestDate"/>
+      <DateInput
+        editable="true"
+        id="LatestDateCriterion"
+        label="displaykey.Web.ChargeSearchDV.LatestDate"
+        value="chargeSearch.LatestDate"/>
+    </InputColumn>
+    <InputColumn>
+      <Label
+        id="RelatedItems"
+        label="displaykey.Web.ChargeSearchDV.RelatedItems"/>
+      <Input
+        editable="accountEditable"
+        id="AccountCriterion"
+        inputConversion="accountSearchConverter.getAccount(VALUE)"
+        label="displaykey.Web.ChargeSearchDV.Account"
+        value="chargeSearch.Account">
+        <MenuItem
+          action="AccountSearchPopup.push()"
+          icon="&quot;search.png&quot;"
+          id="AccountPicker"/>
+      </Input>
+      <Input
+        editable="true"
+        id="PolicyPeriodCriterion"
+        inputConversion="policySearchConverter.getPolicyPeriod(VALUE)"
+        label="displaykey.Web.ChargeSearchDV.Policy"
+        value="chargeSearch.PolicyPeriod">
+        <MenuItem
+          action="PolicySearchPopup.push()"
+          icon="&quot;search.png&quot;"
+          id="PolicyPicker"/>
+      </Input>
+    </InputColumn>
+    <InputFooterSection>
+      <InputSetRef
+        def="SearchAndResetInputSet()"/>
+    </InputFooterSection>
+    <Code><![CDATA[function getAmountFieldCurrency() : Currency
+{
+  if (accountEditable) {
+    return gw.search.SearchHelper.getDefaultCurrencyIfNull(chargeSearch.Currency)
+  }
+  else {
+    return chargeSearch.Account.Currency
+  }
+}
+
+function blankMinimumAndMaximumFields() {
+  chargeSearch.MinAmount = null
+  chargeSearch.MaxAmount = null
+}]]></Code>
+  </DetailViewPanel>
+</PCF>

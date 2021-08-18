@@ -1,0 +1,31 @@
+<?xml version="1.0"?>
+<PCF
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:noNamespaceSchemaLocation="../../../../../pcf.xsd">
+  <Screen
+    id="AccountSearchScreen">
+    <!-- If showHyperlinks is false, the account numbers on this page will be rendered WITHOUT clickable hyperlinks -->
+    <Require
+      name="showHyperlinks"
+      type="Boolean"/>
+    <Require
+      name="isClearBundle"
+      type="Boolean"/>
+    <SearchPanel
+      criteriaName="searchCriteria"
+      maxSearchResults="gw.api.system.BCConfigParameters.MaxSearchResults.Value"
+      resultsName="accountSearchViews"
+      search="gw.search.SearchMethods.validateAndSearch(searchCriteria, StringCriterionMode.TC_STARTSWITH)"
+      searchCriteria="new gw.search.AccountSearchCriteria()"
+      searchResultsType="AccountSearchViewQuery">
+      <PanelRef
+        def="AccountSearchDV(searchCriteria)">
+        <Toolbar/>
+      </PanelRef>
+      <PanelRef
+        def="AccountSearchResultsLV(accountSearchViews, null, false, showHyperlinks, false)">
+        <Toolbar/>
+      </PanelRef>
+    </SearchPanel>
+  </Screen>
+</PCF>

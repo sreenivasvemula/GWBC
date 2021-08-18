@@ -1,0 +1,107 @@
+<?xml version="1.0"?>
+<entity
+  xmlns="http://guidewire.com/datamodel"
+  desc="The single entry in the schedule of payments for a given policy or account"
+  entity="ItemEvent"
+  setterScriptability="hidden"
+  subpackage="history"
+  table="itemevent"
+  type="editable">
+  <implementsEntity
+    name="InCurrencySilo"/>
+  <column
+    desc="Date of the event"
+    name="EventDate"
+    nullok="true"
+    type="datetime"/>
+  <monetaryamount
+    amountColumnName="GrossAmountChanged"
+    desc="Gross Amount changed on the item"
+    name="GrossAmountChanged"
+    nullok="true"
+    scaleToCurrency="true"/>
+  <monetaryamount
+    amountColumnName="CmsnReserveChanged"
+    desc="Commission Reserve changed on the item"
+    name="CmsnReserveChanged"
+    nullok="true"
+    scaleToCurrency="true"/>
+  <typekey
+    desc="The type of item event"
+    name="EventType"
+    nullok="true"
+    typelist="ItemEventType"/>
+  <typekey
+    desc="The Role for a commission transfer event."
+    name="TransferRole"
+    nullok="true"
+    typelist="PolicyRole"/>
+  <foreignkey
+    columnName="TransactionID"
+    desc="The transaction associated with this event, if any."
+    exportable="false"
+    fkentity="Transaction"
+    importableagainstexistingobject="false"
+    name="Transaction"
+    nullok="true"
+    setterScriptability="hidden"/>
+  <foreignkey
+    columnName="InvoiceItemID"
+    desc="The InvoiceItem for which this event occurred."
+    exportable="false"
+    fkentity="InvoiceItem"
+    importableagainstexistingobject="false"
+    name="InvoiceItem"
+    nullok="false"
+    setterScriptability="hidden"/>
+  <foreignkey
+    columnName="PolicyCommissionID"
+    desc="The policy commission for which this event earned commission."
+    exportable="false"
+    fkentity="PolicyCommission"
+    ignoreforevents="true"
+    importableagainstexistingobject="false"
+    name="PolicyCommission"
+    nullok="true"
+    setterScriptability="hidden"/>
+  <foreignkey
+    columnName="FromPolicyCommissionID"
+    desc="The policy commission from which this InvoiceItem's commission was transferred."
+    exportable="false"
+    fkentity="PolicyCommission"
+    ignoreforevents="true"
+    importableagainstexistingobject="false"
+    name="FromPolicyCommission"
+    nullok="true"
+    setterScriptability="hidden"/>
+  <foreignkey
+    columnName="ToPolicyCommissionID"
+    desc="The policy commission to which this InvoiceItem's commission was transferred."
+    exportable="false"
+    fkentity="PolicyCommission"
+    ignoreforevents="true"
+    importableagainstexistingobject="false"
+    name="ToPolicyCommission"
+    nullok="true"
+    setterScriptability="hidden"/>
+  <foreignkey
+    columnName="FromInvoiceID"
+    desc="The invoice from which this InvoiceItem was moved."
+    exportable="false"
+    fkentity="Invoice"
+    importableagainstexistingobject="false"
+    name="FromInvoice"
+    nullok="true"
+    setterScriptability="hidden"/>
+  <foreignkey
+    columnName="ToInvoiceID"
+    desc="The invoice to which this InvoiceItem was moved."
+    exportable="false"
+    fkentity="Invoice"
+    importableagainstexistingobject="false"
+    name="ToInvoice"
+    nullok="true"
+    setterScriptability="hidden"/>
+  <dbcheckbuilder
+    className="com.guidewire.bc.system.database.dbchecks.history.ItemEventDBCheckBuilder"/>
+</entity>

@@ -1,0 +1,58 @@
+<?xml version="1.0"?>
+<Entity
+  name="SuspPymtTransaction">
+  <Columns>
+    <Column
+      beanPath="Transaction.Subtype"
+      name="Subtype"/>
+    <Column
+      beanPath="Transaction.ReversedTransaction.TransactionNumber"
+      name="ReversedTransactionNumber"/>
+    <Column
+      beanPath="Transaction.Amount"
+      name="Amount"/>
+    <Column
+      beanPath="SuspPymtTransaction.SuspPymtContext.SuspensePayment.AccountNumber"
+      name="AccountNumber"/>
+    <Column
+      beanPath="SuspPymtTransaction.SuspPymtContext.SuspensePayment.PolicyNumber"
+      name="PolicyNumber"/>
+    <Column
+      beanPath="SuspPymtTransaction.SuspPymtContext.SuspensePayment.DisbursementAppliedTo.DisbursementNumber"
+      name="DisbursementNumber"/>
+    <DisplayNameColumn
+      beanPath="SuspPymtTransaction.SuspPymtContext.SuspensePayment"
+      displayName="true"
+      name="SuspensePayment"/>
+  </Columns>
+  <DisplayName><![CDATA[gw.api.domain.accounting.ReversibleUtil.formatReversibleDisplayName(gw.api.util.TypeKeyUtil.toDisplayName(Subtype), ReversedTransactionNumber)]]></DisplayName>
+  <DisplayName
+    type="Short"><![CDATA[gw.api.domain.accounting.ReversibleUtil.formatReversibleDisplayName(displaykey.DisplayName.SuspPymtTransaction.Short, ReversedTransactionNumber)]]></DisplayName>
+  <DisplayName
+    type="Long"><![CDATA[
+    var assignedTo : String;
+    if (DisbursementNumber != null) {
+      assignedTo = "Disbursement";
+    } else if (AccountNumber != null) {
+      assignedTo = "Account";
+    } else if (PolicyNumber != null) {
+      assignedTo = "Policy";
+    }
+
+    if (assignedTo != null) {
+      return gw.api.domain.accounting.ReversibleUtil.formatReversibleDisplayName
+      (
+        displaykey.DisplayName.SuspPymtTransaction.Long(Amount?.render(),
+          assignedTo,
+          SuspensePayment
+        ),
+        ReversedTransactionNumber
+      );
+    } else {
+      return gw.api.domain.accounting.ReversibleUtil.formatReversibleDisplayName(
+        displaykey.DisplayName.SuspPymtTransaction.Empty.Long(Amount?.render()),
+        ReversedTransactionNumber
+      );
+    }
+  ]]></DisplayName>
+</Entity>

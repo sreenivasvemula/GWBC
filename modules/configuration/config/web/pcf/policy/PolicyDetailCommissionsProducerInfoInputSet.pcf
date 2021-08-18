@@ -1,0 +1,117 @@
+<?xml version="1.0"?>
+<PCF
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:noNamespaceSchemaLocation="../../../../../pcf.xsd">
+  <InputSet
+    id="PolicyDetailCommissionsProducerInfoInputSet">
+    <Require
+      name="policyPeriod"
+      type="PolicyPeriod"/>
+    <Require
+      name="role"
+      type="PolicyRole"/>
+    <Variable
+      initialValue="policyPeriod.getPolicyCommissionHistoryForRole(role)"
+      name="history"
+      recalculateOnRefresh="true"/>
+    <Variable
+      initialValue="history.length == 0 ? null : history[0]"
+      name="current"
+      recalculateOnRefresh="true"/>
+    <Variable
+      initialValue="util.ArrayUtil.subArray(history, 1, history.length) as domain.account.PolicyCommissionHistoryEntry[]"
+      name="previousEntries"
+      recalculateOnRefresh="true"/>
+    <Label
+      label="role.DisplayName"/>
+    <Input
+      action="ProducerDetailPopup.push(current.PolicyCommission.ProducerCode.Producer)"
+      available="current.PolicyCommission != null"
+      id="ProducerName"
+      label="displaykey.Web.PolicyDetailCommissions.ProducerName"
+      value="current.PolicyCommission == null ? displaykey.Web.PolicyDetailCommissions.ProducerName.None : current.PolicyCommission.ProducerCode.Producer"/>
+    <Input
+      id="ProducerCode"
+      label="displaykey.Web.PolicyDetailCommissions.ProducerCode"
+      value="current.PolicyCommission.ProducerCode.Code"
+      visible="current.PolicyCommission != null"/>
+    <Input
+      id="DateRange"
+      label="displaykey.Web.PolicyDetailCommissions.Dates"
+      value="formatDateRange(current)"
+      visible="previousEntries.length &gt; 0"/>
+    <Input
+      action="CommissionPlanDetailPopup.push(current.PolicyCommission.CommissionSubPlan.CommissionPlan)"
+      id="CommissionPlan"
+      label="displaykey.Web.PolicyDetailCommissions.CommissionPlan"
+      value="current.PolicyCommission.CommissionSubPlan.CommissionPlan"
+      visible="current.PolicyCommission != null"/>
+    <TextInput
+      align="right"
+      format="displaykey.Web.AgencyBill.CommissionPercentFormat"
+      id="CommissionRate"
+      label="displaykey.Web.PolicyDetailCommissions.CommissionRate"
+      value="current.PolicyCommission.getCommissionRateAsBigDecimal( null )"
+      visible="current.PolicyCommission != null"/>
+    <MonetaryAmountInput
+      align="right"
+      currency="policyPeriod.Currency"
+      formatType="currency"
+      id="CommissionReserved"
+      label="displaykey.Web.PolicyDetailCommissions.CommissionReserved"
+      value="current.PolicyCommission.CommissionReserveBalance"
+      visible="current.PolicyCommission != null"/>
+    <ListViewInput
+      label="displaykey.Web.PolicyDetailCommissions.PriorProducerCodes"
+      visible="previousEntries.length &gt; 0">
+      <Toolbar/>
+      <ListViewPanel
+        id="PriorPolicyCommissionsLV">
+        <RowIterator
+          editable="false"
+          elementName="historyEntry"
+          value="previousEntries">
+          <Row>
+            <Cell
+              action="ProducerDetailPopup.push(historyEntry.PolicyCommission.ProducerCode.Producer)"
+              available="historyEntry.PolicyCommission != null"
+              id="PriorPolicyCommissionsLV_ProducerCode"
+              label="displaykey.Web.PolicyDetailCommissions.PriorProducerCodes.ProducerCode"
+              value="historyEntry.PolicyCommission == null ? displaykey.Web.PolicyDetailCommissions.ProducerName.None : historyEntry.PolicyCommission.ProducerCode.DisplayName"/>
+            <Cell
+              id="PriorPolicyCommissionsLV_Dates"
+              label="displaykey.Web.PolicyDetailCommissions.PriorProducerCodes.Dates"
+              sortBy="historyEntry.StartDate"
+              value="formatDateRange(historyEntry)"/>
+            <Cell
+              action="CommissionPlanDetailPopup.push(historyEntry.PolicyCommission.CommissionSubPlan.CommissionPlan)"
+              id="PriorPolicyCommissionsLV_CommissionPlan"
+              label="displaykey.Web.PolicyDetailCommissions.PriorProducerCodes.CommissionPlan"
+              value="historyEntry.PolicyCommission.CommissionSubPlan.CommissionPlan"/>
+            <TextCell
+              enableSort="false"
+              format="displaykey.Web.AgencyBill.CommissionPercentFormat"
+              id="PriorPolicyCommissionsLV_CommissionRate"
+              label="displaykey.Web.PolicyDetailCommissions.PriorProducerCodes.CommissionRate"
+              value="historyEntry.PolicyCommission != null ? historyEntry.PolicyCommission.getCommissionRateAsBigDecimal(null) : null"/>
+            <MonetaryAmountCell
+              currency="policyPeriod.Currency"
+              formatType="currency"
+              id="PriorPolicyCommissionsLV_CommissionReserved"
+              label="displaykey.Web.PolicyDetailCommissions.PriorProducerCodes.CommissionReserved"
+              value="historyEntry.PolicyCommission == null ? null : historyEntry.PolicyCommission.CommissionReserveBalance"/>
+          </Row>
+        </RowIterator>
+      </ListViewPanel>
+    </ListViewInput>
+    <Code><![CDATA[function formatDateRange(historyEntry : domain.account.PolicyCommissionHistoryEntry) : String {
+        var startDate = historyEntry.StartDate == null ?
+                displaykey.Web.PolicyDetailCommissions.CurrentProducerDateRange.Original :
+                util.StringUtil.formatDate(historyEntry.StartDate, "short");
+        var endDate = historyEntry.EndDate == null ?
+                displaykey.Web.PolicyDetailCommissions.CurrentProducerDateRange.Current :
+                util.StringUtil.formatDate(historyEntry.EndDate, "short");
+        return displaykey.Web.PolicyDetailCommissions.CurrentProducerDateRange(startDate, endDate);
+      }]]></Code>
+  </InputSet>
+</PCF>

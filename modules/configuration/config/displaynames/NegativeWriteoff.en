@@ -1,0 +1,26 @@
+<?xml version="1.0"?>
+<Entity
+  name="NegativeWriteoff">
+  <Columns>
+    <Column
+      beanPath="NegativeWriteoff.Subtype"
+      name="Subtype"/>
+    <Column
+      beanPath="AcctNegativeWriteoff.DisplayName"
+      name="AcctNegWriteoff"/>
+    <Column
+      beanPath="NegativeWriteoff.ReversedLink.DisplayName"
+      name="Reversed"/>
+    <Column
+      beanPath="NegativeWriteoff.Amount"
+      name="Amount"/>
+  </Columns>
+  <DisplayName><![CDATA[
+if (Subtype != null &&
+    AcctNegativeWriteoff.isAssignableFrom(Type.forName( "entity." + Subtype ))) {
+  return AcctNegWriteoff
+} else {
+  return gw.api.domain.accounting.ReversibleUtil.formatReversibleDisplayName(displaykey.DisplayName.NegativeWriteoff( Amount?.render() ), Reversed)
+}
+  ]]></DisplayName>
+</Entity>

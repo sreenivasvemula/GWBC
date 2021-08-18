@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<entity xmlns="http://guidewire.com/datamodel" desc="A payment made against an account or policy that does not exist"
+        entity="SuspensePayment" loadable="false" platform="false" setterScriptability="hidden" subpackage="payment"
+        table="suspensepayment" type="retireable">
+    <implementsEntity name="Validatable"/>
+    <implementsEntity name="TAccountOwner"/>
+    <implementsEntity name="PaymentReceipt"/>
+    <column desc="The Account that the user intends the payment to later be applied to."
+            name="AccountNumber" nullok="true" supportsLinguisticSearch="true" type="shorttext"/>
+    <column name="Description" nullok="true" type="mediumtext"/>
+    <column desc="The related invoice" name="InvoiceNumber" nullok="true" type="shorttext"/>
+    <column desc="The date of the payment" name="PaymentDate" nullok="false" type="datetime"/>
+    <column desc="The Policy that the user intends the payment to later be applied to."
+            name="PolicyNumber" nullok="true" supportsLinguisticSearch="true" type="shorttext"/>
+    <column desc="The Produer that the user intends the payment to later be applied to."
+            name="ProducerName" nullok="true" supportsLinguisticSearch="true" type="shorttext"/>
+    <column name="OfferNumber" nullok="true" type="shorttext"/>
+    <column name="OfferOption" nullok="true" type="shorttext"/>
+    <typekey default="open" desc="Status" exportable="false" name="Status" nullok="false"
+             typelist="SuspensePaymentStatus"/>
+    <foreignkey columnName="AccountAppliedToID"
+                desc="Actual account that payment was applied to.  Null until payment is applied." exportable="false"
+                fkentity="Account" name="AccountAppliedTo" nullok="true" setterScriptability="doesNotExist"/>
+    <foreignkey columnName="PolicyPeriodAppliedToID"
+                desc="Actual policy period that payment was applied to.  Null until payment is applied."
+                exportable="false" fkentity="PolicyPeriod" name="PolicyPeriodAppliedTo" nullok="true"
+                setterScriptability="doesNotExist"/>
+    <foreignkey columnName="ProducerAppliedToID"
+                desc="Actual producer that the payment was applied to.  Null until payment is applied."
+                exportable="false" fkentity="Producer" name="ProducerAppliedTo" nullok="true"
+                setterScriptability="doesNotExist"/>
+    <array arrayentity="SuspenseDisbursement"
+           desc="Actual disbursement that payment was built from.  Null until payment is disbursed." exportable="false"
+           name="Disbursements" setterScriptability="doesNotExist"/>
+    <foreignkey columnName="AppliedByUserID" desc="User who applied the payment.  Null until payment is applied"
+                exportable="false" fkentity="User" name="AppliedByUser" nullok="true" setterScriptability="all"/>
+    <foreignkey columnName="HiddenTAccountContainerID" exportable="false" fkentity="SuspPymtTAcctContainer"
+                getterScriptability="doesNotExist" name="HiddenTAccountContainer" nullok="false"
+                setterScriptability="doesNotExist"/>
+    <foreignkey columnName="PaymentMoneyReceivedID"
+                desc="Reference to the PaymentMoneyReceived that is applied.  This will be null until the suspense payment is actually applied."
+                exportable="false" fkentity="PaymentMoneyReceived" name="PaymentMoneyReceived" nullok="true"
+                setterScriptability="doesNotExist"/>
+    <foreignkey columnName="ReversedByUserID"
+                desc="User who reversed the suspense payment.  Null unless and until payment is reversed."
+                exportable="false" fkentity="User" name="ReversedByUser" nullok="true"
+                setterScriptability="doesNotExist"/>
+    <foreignkey columnName="ReportingGroupID" desc="The reporting group assigned, if any" exportasid="true"
+                fkentity="ReportingGroup" name="ReportingGroup" nullok="true"/>
+    <events/>
+    <index desc="Index for new renewals with offer number from policy system" name="offernumber">
+        <indexcol keyposition="1" name="Status"/>
+        <indexcol keyposition="2" name="OfferNumber"/>
+        <indexcol keyposition="3" name="Retired"/>
+    </index>
+    <index desc="Legacy" name="taccountcontainer" unique="true">
+        <indexcol keyposition="1" name="HiddenTAccountContainerID"/>
+    </index>
+    <index desc="Legacy" name="accountnumdenorm">
+        <indexcol keyposition="1" name="AccountNumberDenorm"/>
+        <indexcol keyposition="2" name="Retired"/>
+    </index>
+    <index desc="Legacy" name="policynumdenorm">
+        <indexcol keyposition="1" name="PolicyNumberDenorm"/>
+        <indexcol keyposition="2" name="Retired"/>
+    </index>
+    <checkconstraint
+            desc="At most one of AccountAppliedToID, PolicyPeriodAppliedToID, and ProducerAppliedToID can be non-null"
+            predicate="                      (AccountAppliedToID IS NULL AND PolicyPeriodAppliedToID IS NULL AND ProducerAppliedToID IS NULL)                      OR                      (AccountAppliedToID IS NOT NULL AND PolicyPeriodAppliedToID IS NULL AND ProducerAppliedToID IS NULL)                      OR                      (AccountAppliedToID IS NULL AND PolicyPeriodAppliedToID IS NOT NULL AND ProducerAppliedToID IS NULL)                      OR                      (AccountAppliedToID IS NULL AND PolicyPeriodAppliedToID IS NULL AND ProducerAppliedToID IS NOT NULL)                      "/>
+    <checkconstraint desc="At most one of AccountNumber and PolicyNumber can be non-null"
+                     predicate="                      (AccountNumber IS NULL AND PolicyNumber IS NULL)                      OR                      (AccountNumber IS NOT NULL AND PolicyNumber IS NULL)                      OR                      (AccountNumber IS NULL AND PolicyNumber IS NOT NULL)                      "/>
+</entity>

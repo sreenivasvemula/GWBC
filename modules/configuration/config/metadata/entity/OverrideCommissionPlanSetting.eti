@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?><nonPersistentEntity xmlns="http://guidewire.com/datamodel" entity="OverrideCommissionPlanSetting" subpackage="commission">
+  <implementsEntity name="NotInCurrencySilo"/>
+  <foreignkey columnName="AlternateCommissionPlanID" desc="The commission plan with which to override the existing plan. Only valid when                       OverrideMethod == &quot;alternate&quot;." fkentity="CommissionPlan" name="AlternateCommissionPlan" nullok="true"/>
+  <foreignkey columnName="ContainerID" fkentity="OverrideCommissionPlanSettingSet" name="Container" nullok="true"/>
+  <typekey desc="The method by which the commission plan will be overridden." name="OverrideMethod" nullok="true" typelist="CmsnPlanOverrideMethod"/>
+  <column desc="The new base percentage to use for the overridden plan. Only valid when                   OverrideMethod == &quot;percentage&quot;." name="Percentage" nullok="true" type="percentagedec"/>
+  <foreignkey columnName="PolicyCommissionID" desc="The PolicyCommission to which this override setting applies." fkentity="PolicyCommission" name="PolicyCommission" nullok="true"/>
+</nonPersistentEntity>

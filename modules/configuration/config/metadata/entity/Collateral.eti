@@ -1,0 +1,86 @@
+<?xml version="1.0"?>
+<entity
+  xmlns="http://guidewire.com/datamodel"
+  entity="Collateral"
+  type="retireable"
+  desc="A collateral bucket"
+  subpackage="account"
+  platform="false"
+  table="collateral"
+  setterScriptability="hidden">
+  <implementsEntity
+    name="TAccountOwner"/>
+  <array
+    name="Requirements"
+    desc="Requirements on this collateral"
+    arrayentity="CollateralRequirement"
+    owner="true"/>
+  <array
+    name="LetterOfCredits"
+    desc="LOCs on this collateral"
+    arrayentity="LetterOfCredit"
+    owner="true"/>
+  <column
+    name="ChargeHeld"
+    type="bit"
+    desc="Denormalized field. True if at least one charge on this collateral is currently held. Only valid for database queries"
+    default="false"
+    nullok="false"
+    setterScriptability="doesNotExist"/>
+  <typekey
+    name="Compliance"
+    typelist="ComplianceStatus"
+    desc="Whether the Collateral is compliant"
+    default="compliant"
+    nullok="false"
+    setterScriptability="hidden"
+    typefilter="Collateral"/>
+  <foreignkey
+    name="Account"
+    desc="The account the collateral is on"
+    columnName="AccountID"
+    fkentity="Account"
+    importableagainstexistingobject="false"
+    nullok="false"/>
+  <foreignkey
+    name="HiddenTAccountContainer"
+    columnName="HiddenTAccountContainerID"
+    exportable="false"
+    fkentity="CollTAcctContainer"
+    getterScriptability="doesNotExist"
+    importableagainstexistingobject="false"
+    nullok="false"
+    setterScriptability="doesNotExist"/>
+  <monetaryamount
+    name="TotalLOCValue"
+    amountColumnName="TotalLOCValue"
+    amountRange="nonnegative"
+    desc="the total value of the current LOCs on file"
+    scaleToCurrency="true"
+    nullok="false"
+    soapnullok="true"
+    setterScriptability="doesNotExist">
+    <tag name="DefaultValueZero"/>
+  </monetaryamount>
+  <monetaryamount
+    name="TotalCashValueAtRequirements"
+    amountColumnName="TotalCashValueAtRequirements"
+    currencyColumnName="TotalCashValueAtRequirmnts_cur"
+    desc="the denormalized value of the total cash held in segregated requirements"
+    scaleToCurrency="true"
+    nullok="false"
+    soapnullok="true"
+    setterScriptability="doesNotExist">
+    <tag name="DefaultValueZero"/>
+  </monetaryamount>
+  <index
+    desc="Legacy"
+    name="taccountcontainer"
+    unique="true">
+    <indexcol
+      name="HiddenTAccountContainerID"
+      keyposition="1"/>
+  </index>
+  <dbcheckbuilder
+    className="com.guidewire.bc.system.database.dbchecks.account.CollateralDBCheckBuilder"/>
+</entity>

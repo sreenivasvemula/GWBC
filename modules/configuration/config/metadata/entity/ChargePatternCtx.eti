@@ -1,0 +1,42 @@
+<?xml version="1.0"?>
+<entity
+  xmlns="http://guidewire.com/datamodel"
+  entity="ChargePatternCtx"
+  type="editable"
+  desc="Context for charge pattern transactions."
+  ignoreForEvents="true"
+  subpackage="accounting.transaction"
+  overwrittenInStagingTable="true"
+  platform="false"
+  table="chargepatterncontext"
+  setterScriptability="hidden">
+  <implementsEntity
+    name="TransactionContext"/>
+  <implementsEntity
+    name="InCurrencySilo"/>
+  <foreignkey
+    name="ChargePattern"
+    columnName="ChargePatternID"
+    fkentity="ChargePattern"
+    getterScriptability="hidden"
+    ignoreforevents="true"
+    nullok="false"
+    setterScriptability="hidden"/>
+  <foreignkey
+    name="Transaction"
+    desc="Reference to ChargePatternTxn"
+    columnName="TransactionID"
+    fkentity="ChargePatternTxn"
+    getterScriptability="doesNotExist"
+    nullok="false"
+    setterScriptability="doesNotExist"/>
+  <foreignkey
+    name="TAccountContainer"
+    desc="Link to related T-Account"
+    columnName="TAccountContainerID"
+    fkentity="TAccountContainer"
+    getterScriptability="hidden"
+    ignoreforevents="true"
+    nullok="false"
+    setterScriptability="hidden"/>
+</entity>

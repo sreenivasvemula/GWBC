@@ -1,0 +1,39 @@
+<?xml version="1.0"?>
+<entity
+  xmlns="http://guidewire.com/datamodel"
+  entity="CommissionableChargeItem"
+  type="versionable"
+  desc="Represents an entry in the CommissionSubPlan's CommissionableChargeItems array."
+  admin="true"
+  subpackage="commission"
+  loadable="false"
+  platform="false"
+  table="commissionablechargeitem">
+  <implementsEntity
+    name="NotInCurrencySilo"/>
+  <foreignkey
+    name="ChargePattern"
+    desc="The name of the charge."
+    columnName="ChargePatternID"
+    fkentity="ChargePattern"
+    nullok="false"/>
+  <foreignkey
+    name="CommissionSubPlan"
+    desc="FK to container."
+    columnName="CommissionSubPlanID"
+    fkentity="CommissionSubPlan"
+    getterScriptability="doesNotExist"
+    nullok="false"
+    setterScriptability="doesNotExist"/>
+  <index
+    desc="Legacy"
+    name="cmsnablechargeitem"
+    unique="true">
+    <indexcol
+      name="CommissionSubPlanID"
+      keyposition="1"/>
+    <indexcol
+      name="ChargePatternID"
+      keyposition="2"/>
+  </index>
+</entity>

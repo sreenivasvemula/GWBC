@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PCF
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:noNamespaceSchemaLocation="../../../../../pcf.xsd">
+  <ToolbarButtonSet
+          id="ActivityDetailToolbarButtonSet"
+    mode="default">
+    <Require
+      name="activity"
+      type="Activity"/>
+    <Require
+      name="assigneeHolder"
+      type="assignment.Assignee[]"/>
+    <ToolbarButton
+      action="assigneeHolder[0].assignToThis(activity); CurrentLocation.commit()"
+      hideIfReadOnly="true"
+      id="ActivityDetailToolbarButtons_UpdateButton"
+      label="displaykey.Web.ActivityDetail.Button.Update"/>
+    <ToolbarButton
+      action="web.activity.ActivityUtil.completeActivity(activity); CurrentLocation.commit();"
+      hideIfReadOnly="true"
+      id="ActivityDetailToolbarButtons_CompleteButton"
+      label="displaykey.Web.ActivityDetail.Button.Complete"
+      visible="(activity.canComplete()) and (activity.canRecur() == false)"/>
+    <ToolbarButton
+      action="CurrentLocation.cancel()"
+      id="ActivityDetailToolbarButtons_CancelButton"
+      label="displaykey.Web.ActivityDetail.Button.Cancel"/>
+  </ToolbarButtonSet>
+</PCF>

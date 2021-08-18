@@ -1,0 +1,44 @@
+<?xml version="1.0"?>
+<PCF
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:noNamespaceSchemaLocation="../../../../../pcf.xsd">
+  <Popup
+    afterEnter="web.producer.agencybill.ExceptionItemUtil.writeoffInvoiceItems(exceptionItemViews, writeOffType, CurrentLocation)"
+    canEdit="true"
+    id="AgencyBillExceptionsConfirmationPopup"
+    startInEditMode="true"
+    title="displaykey.Web.AgencyBillExceptionsConfirmation.Title">
+    <LocationEntryPoint
+      signature="AgencyBillExceptionsConfirmationPopup(exceptionItemViews : web.invoice.ExceptionItemView[], writeOffType : AgencyWriteoffType)"/>
+    <Variable
+      name="exceptionItemViews"
+      type="web.invoice.ExceptionItemView[]"/>
+    <Variable
+      name="writeOffType"
+      type="AgencyWriteoffType"/>
+    <Screen>
+      <Toolbar>
+        <EditButtons
+          showUpdateConfirmMessage="false"
+          updateLabel="displaykey.Web.AgencyBillExceptionsConfirmation.Button.Update"
+          updateShortcut="O"/>
+      </Toolbar>
+      <AlertBar
+        id="ApprovalActivityAlertBar"
+        label="displaykey.Web.AgencyBillExceptionsConfirmation.AgencyBillExceptionWriteoffRequiresApproval"
+        visible="isApprovalRequiredToWriteoff()"/>
+      <DetailViewPanel>
+        <InputColumn>
+          <Label
+            label="displaykey.Web.AgencyBillExceptionsConfirmation.ConfirmExceptions(writeOffType)"/>
+        </InputColumn>
+      </DetailViewPanel>
+      <PanelRef
+        def="AgencyBillExceptionsLV(exceptionItemViews, false, true)"/>
+    </Screen>
+    <Code><![CDATA[function isApprovalRequiredToWriteoff() : Boolean {
+  
+  return exceptionItemViews.hasMatch( \ eachExceptionItemView -> eachExceptionItemView.ApprovalRequiredToWriteoff)
+}]]></Code>
+  </Popup>
+</PCF>

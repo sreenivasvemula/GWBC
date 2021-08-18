@@ -1,0 +1,274 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xml:lang="en" lang="en" xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+    <meta http-equiv="Content-Style-Type" content="text/css" />
+    <!-- MOTW-DISABLED saved from url=(0014)about:internet -->
+    <title>Importing Zone Data</title>
+    <link rel="StyleSheet" href="css/importdata.css" type="text/css" media="all" />
+    <link rel="StyleSheet" href="css/webworks.css" type="text/css" media="all" />
+    <link rel="StyleSheet" href="css/css-guidewire-extra.css" type="text/css" media="all" />
+    <script type="text/javascript" language="JavaScript1.2" src="wwhdata/common/context.js"></script>
+    <script type="text/javascript" language="JavaScript1.2" src="wwhdata/common/towwhdir.js"></script>
+    <script type="text/javascript" language="JavaScript1.2" src="wwhdata/common/wwhpagef.js"></script>
+    <script type="text/javascript" language="JavaScript1.2">
+      <!--
+        var  WebWorksRootPath = "";
+      // -->
+    </script>
+    <script type="text/javascript" language="JavaScript1.2">
+      <!--
+        // Set reference to top level help frame
+        //
+        var  WWHFrame = WWHGetWWHFrame("", true);
+      // -->
+    </script>
+    <script type="text/javascript" language="JavaScript1.2" src="scripts/expand.js"></script>
+    <!-- THE FOLLOWING IS A GUIDEWIRE STYLE DEFINITION FOR THE LINK TO THIS FEATURE -->
+    <link rel="StyleSheet" href="css/css-guidewire-extra.css" type="text/css" media="all" />
+    <!-- THE FOLLOWING IS A GUIDEWIRE GSCRIPT FUNCTION FOR THE LINK TO THIS FEATURE -->
+    <script type="text/javascript">
+function guidewire_selectall()
+{
+var text_val=eval("document.linktothisurlform.urlfield");
+text_val.focus();
+text_val.select();
+}
+</script>
+  </head>
+  <body onLoad="WWHUpdate();" onUnload="WWHUnload();" onKeyDown="WWHHandleKeyDown((document.all||document.getElementById||document.layers)?event:null);" onKeyPress="WWHHandleKeyPress((document.all||document.getElementById||document.layers)?event:null);" onKeyUp="WWHHandleKeyUp((document.all||document.getElementById||document.layers)?event:null);">
+    <!-- THE FOLLOWING IS A GUIDEWIRE DIV FOR THE 'LINK TO THIS' FEATURE -->
+    <div id="linkToThisPage" class="popup" style="display: none;">
+      <div class="popupTitle">Link Directly to This Page 
+           <a href="#" onclick="var thePopup = getElementById('linkToThisPage');thePopup.style.display='none';return false;"><img class="popupClosebox" src="wwhelp/wwhimpl/common/images/close.gif" /></a></div>
+      <div style="padding:6px;">
+        <div class="popupText" id="linkToThisPageBookmark">An error has occurred if you see this messsage.</div>
+        <form name="linktothisurlform" method="post" action="" style="width:275px;margin:0px">
+          <input type="text" class="popupURLText" id="linkToThisPageURL" name="urlfield" rows="1" cols="55" onClick="guidewire_selectall();" onFocus="guidewire_selectall();"></input>
+        </form>
+      </div>
+    </div>
+    <br />
+    <div class="WebWorks_Breadcrumbs" style="text-align: left;">
+      <span>BillingCenter System Administration Guide</span> : 
+    <span class="WebWorks_Breadcrumbs" style="text-align: left;"><a class="WebWorks_Breadcrumb_Link" href="importdata.10.01.html#1855727">Importing and Exporting Administrative Data</a> : Importing Zone Data</span></div>
+    <hr align="left" />
+    <blockquote>
+      <h3 class="H1_-_Heading_1"><a name="1855727">Importing Zone Data</a></h3>
+      <div class="B_-_Body"><a name="2041575">BillingCenter provides a collection of zone data files for various localities with small sets of zone data that you can load for development and testing purposes. The zone data files are in the following location in the Studio </a><span class="uis_-_UI_element_Studio">Project</span> window:</div>
+      <div class="LP_-_List_Para"><span class="uis_-_UI_element_Studio"><a name="2041582">configuration</a></span> → <span class="uis_-_UI_element_Studio">config</span> → <span class="uis_-_UI_element_Studio">geodata</span></div>
+      <div class="B_-_Body"><a name="2041586">Within the </a><span class="uis_-_UI_element_Studio">geodata</span> folder, BillingCenter stores the zone information in country-specific <span class="cv_-_computer_voice">zone-config.xml</span> files, with each file in its own specific country folder. For example, the <span class="cv_-_computer_voice">zone-config.xml</span> file that configures address-related information in Australia is in the following location in the Studio <span class="uis_-_UI_element_Studio">Project</span> window:</div>
+      <div class="LP_-_List_Para"><span class="uis_-_UI_element_Studio"><a name="2041596">configuration</a></span> → <span class="uis_-_UI_element_Studio">config</span> → <span class="uis_-_UI_element_Studio">geodata</span><span class="ui_-_UI_element"> → </span><span class="uis_-_UI_element_Studio">AU</span></div>
+      <div class="B_-_Body"><a name="2041597">Guidewire provides the </a><span class="cv_-_computer_voice">US-Locations.txt</span> and similar files for testing purposes to support autofill and autocomplete when users enter addresses. This data is provided on an as-is basis regarding data content. For example, the provided zone data files are not complete and may not include recent changes. </div>
+      <div class="B_-_Body"><a name="2041598">Also, the formatting of individual data items in these files might not conform to your internal standards or the standards of third-party vendors that you use. For example, the names of streets and cities are formatted with mixed case letters but your standards may require all upper case letters. </a></div>
+      <div class="B_-_Body"><a name="2041599">The </a><span class="cv_-_computer_voice">US-Locations.txt</span> file contains information that does not conform to United States Postal Service (USPS) standards for bulk mailings. You can edit the <span class="cv_-_computer_voice">US-Locations.txt</span> file to conform to your particular address standards, and then import that version of the file.</div>
+      <h4 class="H2_-_Heading_2"><a name="1859481">Importing a Zone Data File</a></h4>
+      <div class="B_-_Body"><a name="1859503">To import zone data, use the </a><span class="cv_-_computer_voice">zone_import</span> command. The <span class="cv_-_computer_voice">zone_import</span> command imports data in CSV format from specified files into database staging tables for zone data. It is only possible to import zone data for a single country at a time. The zone data files that you import must contain zone data for a single country only. To load zone data for multiple countries, use the command multiple times with different, country-specific zone data files each time. </div>
+      <div class="B_-_Body"><a name="1859482">Before you use the </a><span class="cv_-_computer_voice">zone_import</span> command, set the BillingCenter server run level to <span class="cv_-_computer_voice">MAINTENANCE</span>. After you use the command to import zone date, move the data from the staging tables to the production tables by using the <span class="cv_-_computer_voice">table_import</span> command. See <a href="javascript:WWHClickedPopup('admin', 'commandsref.15.09.html#1782787', '');" title="Table Import Command">“Table Import Command”</a> for more information on the <span class="cv_-_computer_voice">table_import</span> command. </div>
+      <div class="B_-_Body"><a name="1859535">Guidewire expects that you import address zone data upon first installing BillingCenter, and then at infrequent intervals thereafter as you receive data updates. </a></div>
+      <h6 class="HS_-_Head_Sub"><a name="1855881">To import a zone data file</a></h6>
+      <div class="LS_-_List_Start_outer" style="margin-left: 57pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="LS_-_List_Start_inner" style="width: 15pt; white-space: nowrap">
+                <span class="ri_-_run_in_header">	1.	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="LS_-_List_Start_inner"><a name="1855885">Start the BillingCenter server.</a></div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="LI_-_List_Item_outer" style="margin-left: 57pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="LI_-_List_Item_inner" style="width: 15pt; white-space: nowrap">
+                <span class="ri_-_run_in_header">	2.	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="LI_-_List_Item_inner"><a name="1855889">Set the BillingCenter server run level to </a><span class="cv_-_computer_voice">MAINTENANCE</span>:</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="CS_-_Code_Single_Line"><a name="1855890">system_tools -password </a><span class="pc_-_parameter_in_code">password</span> -maintenance</div>
+      <div class="LI_-_List_Item_outer" style="margin-left: 57pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="LI_-_List_Item_inner" style="width: 15pt; white-space: nowrap">
+                <span class="ri_-_run_in_header">	3.	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="LI_-_List_Item_inner"><a name="1855891">Clear the zone data staging tables. If you have multiple countries defined, you can include the </a><span class="cv_-_computer_voice">-country countryCode</span> option to clear staging zone data only for the country you will be loading:</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="CS_-_Code_Single_Line"><a name="1855892">zone_import -password </a><span class="pc_-_parameter_in_code">password</span> -clearstaging [-country <span class="pc_-_parameter_in_code">countrycode</span>]</div>
+      <div class="LI_-_List_Item_outer" style="margin-left: 57pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="LI_-_List_Item_inner" style="width: 15pt; white-space: nowrap">
+                <span class="ri_-_run_in_header">	4.	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="LI_-_List_Item_inner"><a name="1855893">Load the zone data file into the staging tables:</a></div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="CS_-_Code_Single_Line"><a name="1855894">zone_import -password </a><span class="pc_-_parameter_in_code">password</span> -country <span class="pc_-_parameter_in_code">countrycode</span> -import <span class="pc_-_parameter_in_code">filename</span></div>
+      <div class="LI_-_List_Item_outer" style="margin-left: 57pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="LI_-_List_Item_inner" style="width: 15pt; white-space: nowrap">
+                <span class="ri_-_run_in_header">	5.	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="LI_-_List_Item_inner"><a name="1855895">Clear existing zone data in production. This is useful if there is already zone data for the particular country that you are loading:</a></div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="CS_-_Code_Single_Line"><a name="1855896">zone_import -password </a><span class="pc_-_parameter_in_code">password</span> -country <span class="pc_-_parameter_in_code">countrycode</span> -clearproduction</div>
+      <div class="LI_-_List_Item_outer" style="margin-left: 57pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="LI_-_List_Item_inner" style="width: 15pt; white-space: nowrap">
+                <span class="ri_-_run_in_header">	6.	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="LI_-_List_Item_inner"><a name="1855897">Load zone data from the staging tables into production:</a></div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="CS_-_Code_Single_Line"><a name="1855898">table_import -password </a><span class="pc_-_parameter_in_code">password</span> -integritycheckandload -zonedataonly</div>
+      <div class="LI_-_List_Item_outer" style="margin-left: 57pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="LI_-_List_Item_inner" style="width: 15pt; white-space: nowrap">
+                <span class="ri_-_run_in_header">	7.	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="LI_-_List_Item_inner"><a name="1855899">Set the server run level back to </a><span class="cv_-_computer_voice">MULTIUSER</span>:</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="CS_-_Code_Single_Line"><a name="1855900">system_tools -password </a><span class="pc_-_parameter_in_code">password</span> -multiuser</div>
+      <h6 class="HS_-_Head_Sub"><a name="1863411">See also</a></h6>
+      <div class="BI_-_Bullet_Item_outer" style="margin-left: 57pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="BI_-_Bullet_Item_inner" style="width: 15pt; white-space: nowrap">
+                <span class="bu_-_bullet">•	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="BI_-_Bullet_Item_inner"><a name="1863415">For information on using the </a><span class="cv_-_computer_voice">zone_import</span> command, see <a href="javascript:WWHClickedPopup('admin', 'commandsref.15.11.html#1775858', '');" title="Zone Import Command">“Zone Import Command”</a>.</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="BI_-_Bullet_Item_outer" style="margin-left: 57pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="BI_-_Bullet_Item_inner" style="width: 15pt; white-space: nowrap">
+                <span class="bu_-_bullet">•	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="BI_-_Bullet_Item_inner"><a name="1865692">For information on using the </a><span class="cv_-_computer_voice">table_import</span> command, see <a href="javascript:WWHClickedPopup('admin', 'commandsref.15.09.html#1782787', '');" title="Table Import Command">“Table Import Command”</a>.</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="BI_-_Bullet_Item_outer" style="margin-left: 57pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="BI_-_Bullet_Item_inner" style="width: 15pt; white-space: nowrap">
+                <span class="bu_-_bullet">•	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="BI_-_Bullet_Item_inner"><a name="2009932">For more information on database staging tables, see </a><a href="javascript:WWHClickedPopup('integration', 'databaseimport.25.01.html#1896426', '');" title="Importing from Database Staging Tables">“Importing from Database Staging Tables” in the </a><span class="bt_-_book_title"><a href="javascript:WWHClickedPopup('integration', 'databaseimport.25.01.html#1896426', '');" title="Importing from Database Staging Tables">Integration Guide</a></span>.</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="BI_-_Bullet_Item_outer" style="margin-left: 57pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="BI_-_Bullet_Item_inner" style="width: 15pt; white-space: nowrap">
+                <span class="bu_-_bullet">•	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="BI_-_Bullet_Item_inner"><a name="1863426">For information on the web service </a><span class="cv_-_computer_voice">ZoneImportAPI</span> that also imports zone data, see <a href="javascript:WWHClickedPopup('integration', 'databaseimport.25.02.html#1603698', '');" title="Introduction to Database Staging Table Import">“Introduction to Database Staging Table Import” in the </a><span class="bt_-_book_title"><a href="javascript:WWHClickedPopup('integration', 'databaseimport.25.02.html#1603698', '');" title="Introduction to Database Staging Table Import">Integration Guide</a></span>.</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <h4 class="H2_-_Heading_2"><a name="1855956">Importing Custom Zone Data Files</a></h4>
+      <div class="B_-_Body"><a name="1855957">You can create your own zone data files, in CSV format. The import tool uses configuration information from </a><span class="cv_-_computer_voice">zone-config.xml</span> files for specific countries to determine which data fields to import and what each field represents for each country. The <span class="cv_-_computer_voice">zone-config.xml</span> files for specific countries are located in folders for specific countries. Navigate in the Studio <span class="uis_-_UI_element_Studio">Project</span> window to <span class="uis_-_UI_element_Studio">configuration</span> → <span class="uis_-_UI_element_Studio">config</span> → <span class="uis_-_UI_element_Studio">geodata</span>.</div>
+      <div class="B_-_Body"><a name="1855964">The following example is the zone configuration file for zone data for France.</a></div>
+      <div class="CS_-_Code_Single_Line"><span class="uis_-_UI_element_Studio"><a name="1855977">configuration</a></span><span style="font-family: &quot;Times New Roman&quot;; font-size: 10.0pt"> → </span><span class="uis_-_UI_element_Studio">config</span><span style="font-family: &quot;Times New Roman&quot;; font-size: 10.0pt"> → </span><span class="uis_-_UI_element_Studio">geodata</span> → <span class="uis_-_UI_element_Studio">FR</span> → <span class="cv_-_computer_voice">zone-config.xml</span></div>
+      <div class="B_-_Body"><a name="1855978">Each </a><span class="cv_-_computer_voice">zone-config.xml</span> files must have one <span class="cv_-_computer_voice">Zones</span> element for a specific country. The <span class="cv_-_computer_voice">Zone</span> element defines the fields in zone data files for a country. For each field, the <span class="cv_-_computer_voice">fileColumn</span> attribute indicates the position of the field within lines of the files. </div>
+      <div class="B_-_Body"><a name="1855979">The following example XML code from a </a><span class="cv_-_computer_voice">zone-config.xml</span> file defines the fields to import from zone data files for the United States. The example code specifies for United States zone data files that the third field in the comma-separated values of each line of corresponds to a city.</div>
+      <PRE class="CF_-_Code_First_Line"><a name="1855980">&lt;</a><span class="s_-_strong">Zones</span> countryCode="<span class="s_-_strong">US</span>"&gt;</PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="1855981">&nbsp;&nbsp;...</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="1855982">&nbsp;&nbsp;&lt;</a><span class="s_-_strong">Zone</span> code="<span class="s_-_strong">city</span>" fileColumn="<span class="s_-_strong">3</span>" granularity="2"&gt;</PRE>
+      <PRE class="CL_-_Code_Last_Line"><a name="1855983">&nbsp;&nbsp;...</a></PRE>
+      <h6 class="HS_-_Head_Sub"><a name="1855984">See also</a></h6>
+      <div class="BI_-_Bullet_Item_outer" style="margin-left: 57pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="BI_-_Bullet_Item_inner" style="width: 15pt; white-space: nowrap">
+                <span class="bu_-_bullet">•	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="BI_-_Bullet_Item_inner"><a name="1855985">For complete information about </a><span class="cv_-_computer_voice">zone-config.xml</span>, including a description of its XML elements and attributes, see <a href="javascript:WWHClickedPopup('global', 'localization_jurisdictions.21.7.html#2314282', '');" title="Configuring Zone Information">“Configuring Zone Information” in the </a><span class="bt_-_book_title"><a href="javascript:WWHClickedPopup('global', 'localization_jurisdictions.21.7.html#2314282', '');" title="Configuring Zone Information">Globalization Guide</a></span>.</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="B_-_Body"><a name="1855773">&nbsp;</a></div>
+      <script type="text/javascript" language="JavaScript1.2">
+        <!--
+          // Clear related topics
+          //
+          WWHClearRelatedTopics();
+
+          document.writeln(WWHRelatedTopicsInlineHTML());
+        // -->
+      </script>
+    </blockquote>
+    <script type="text/javascript" language="JavaScript1.2">
+      <!--
+        document.write(WWHRelatedTopicsDivTag() + WWHPopupDivTag() + WWHALinksDivTag());
+      // -->
+    </script>
+  </body>
+</html>

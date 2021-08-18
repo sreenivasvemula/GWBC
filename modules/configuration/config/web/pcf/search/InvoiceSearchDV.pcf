@@ -1,0 +1,73 @@
+<?xml version="1.0"?>
+<PCF
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:noNamespaceSchemaLocation="../../../../../pcf.xsd">
+  <DetailViewPanel
+    id="InvoiceSearchDV">
+    <Require
+      name="searchCriteria"
+      type="gw.search.InvoiceSearchCriteria"/>
+    <InputColumn>
+      <Label
+        id="SearchCriteria"
+        label="displaykey.Web.InvoiceSearchDV.SearchCriteria"/>
+      <Input
+        editable="true"
+        id="InvoiceNumberCriterion"
+        label="displaykey.Web.InvoiceSearchDV.InvoiceNumber"
+        value="searchCriteria.InvoiceNumber"/>
+      <DateInput
+        editable="true"
+        id="EarliestDateCriterion"
+        label="displaykey.Web.InvoiceSearchDV.EarliestDate"
+        value="searchCriteria.EarliestDate"/>
+      <DateInput
+        editable="true"
+        id="LatestDateCriterion"
+        label="displaykey.Web.InvoiceSearchDV.LatestDate"
+        value="searchCriteria.LatestDate"/>
+      <TypeKeyInput
+        editable="true"
+        id="CurrencyCriterion"
+        label="displaykey.Web.AccountSearchDV.Currency"
+        value="searchCriteria.CurrencyCriterion"
+        visible="gw.api.util.CurrencyUtil.isMultiCurrencyMode()">
+        <PostOnChange
+          onChange="blankMinimumAndMaximumFields()"/>
+      </TypeKeyInput>
+      <MonetaryAmountInput
+        available="(searchCriteria.CurrencyCriterion != null or gw.api.util.CurrencyUtil.isSingleCurrencyMode())"
+        currency="gw.search.SearchHelper.getDefaultCurrencyIfNull(searchCriteria.CurrencyCriterion)"
+        editable="true"
+        id="MinAmountCriterion"
+        label="displaykey.Web.InvoiceSearchDV.MinAmount"
+        value="searchCriteria.MinAmount"/>
+      <MonetaryAmountInput
+        available="(searchCriteria.CurrencyCriterion != null or gw.api.util.CurrencyUtil.isSingleCurrencyMode())"
+        currency="gw.search.SearchHelper.getDefaultCurrencyIfNull(searchCriteria.CurrencyCriterion)"
+        editable="true"
+        id="MaxAmountCriterion"
+        label="displaykey.Web.InvoiceSearchDV.MaxAmount"
+        value="searchCriteria.MaxAmount"/>
+      <PickerInput
+        conversionExpression="PickedValue.DisplayName"
+        editable="true"
+        id="AccountNumberCriterion"
+        label="displaykey.Web.InvoiceSearchDV.AccountNumber"
+        pickLocation="AccountSearchPopup.push()"
+        value="searchCriteria.AccountNumber"/>
+    </InputColumn>
+    <InputColumn>
+      <InputSetRef
+        def="ContactCriteriaInputSet(searchCriteria.ContactCriteria)"/>
+    </InputColumn>
+    <InputFooterSection>
+      <InputSetRef
+        def="SearchAndResetInputSet()"/>
+    </InputFooterSection>
+    <Code><![CDATA[function blankMinimumAndMaximumFields() {
+  searchCriteria.MinAmount = null
+  searchCriteria.MaxAmount = null
+}]]></Code>
+  </DetailViewPanel>
+</PCF>

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?><entity xmlns="http://guidewire.com/datamodel" desc="Represents a payment request for non-responsive payments" entity="PaymentRequest" platform="false" setterScriptability="hidden" subpackage="payment" table="paymentrequest" type="retireable">
+  <implementsEntity name="Validatable"/>
+  <implementsEntity name="InCurrencySilo"/>
+  <foreignkey columnName="PaymentInstrumentID" desc="The PaymentInstrument associated with this payment request." fkentity="PaymentInstrument" loadable="true" name="PaymentInstrument" nullok="false"/>
+  <monetaryamount amountColumnName="Amount"
+    amountRange="nonnegative" desc="The amount to be charged" name="Amount" nullok="false" scaleToCurrency="true"/>
+  <column desc="The date a Payment is drafted" name="DraftDate" nullok="false" type="dateonly"/>
+  <column desc="The date a Payment gets requested" name="RequestDate" nullok="false" type="dateonly"/>
+  <column desc="The next date a PaymentRequest should change status" name="StatusDate" nullok="false" type="dateonly"/>
+  <foreignkey columnName="AccountID" desc="The account associated with this payment request" fkentity="Account" name="Account" nullok="false"/>
+  <foreignkey columnName="InvoiceID" desc="The invoice associated with this payment request" fkentity="AccountInvoice" name="Invoice" nullok="true"/>
+  <typekey desc="Status of the payment request." name="Status" nullok="false" typelist="PaymentRequestStatus"/>
+  <events/>
+</entity>

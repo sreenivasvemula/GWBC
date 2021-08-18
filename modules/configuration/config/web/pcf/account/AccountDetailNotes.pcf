@@ -1,0 +1,96 @@
+<?xml version="1.0"?>
+<PCF
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:noNamespaceSchemaLocation="../../../../../pcf.xsd">
+  <Page
+    afterReturnFromPopup="if (popupCommitted)     {account.addHistoryFromGosu( DateTime.CurrentDate, HistoryEventType.TC_NOTESUPDATED, displaykey.Java.AccountHistory.NotesUpdated, null as Transaction, null, true );     account.Bundle.commit()}"
+    canEdit="false"
+    canVisit="perm.System.accttabview and perm.System.acctnoteview"
+    id="AccountDetailNotes"
+    parent="AccountGroup(account)"
+    showUpLink="true"
+    title="displaykey.Web.AccountDetailNotes.Title">
+    <LocationEntryPoint
+      signature="AccountDetailNotes(account : Account, isClearBundle : Boolean)"/>
+    <Variable
+      name="account"
+      type="Account"/>
+    <Variable
+      name="isClearBundle"
+      type="Boolean"/>
+    <Screen
+      id="AccountDetailNotesScreen">
+      <Toolbar/>
+      <SearchPanel
+        criteriaName="NoteSearchCriteria"
+        resultsName="notes"
+        search="return NoteSearchCriteria.performSearch(isClearBundle)"
+        searchCriteria="var c = new NoteSearchCriteria(); c.Account = account; return c;"
+        searchResultsType="NoteQuery">
+        <DetailViewPanel
+          id="NoteSearchDV">
+          <InputColumn>
+            <Input
+              editable="true"
+              id="TextSearch"
+              label="displaykey.Web.AccountDetailNotes.NotesSearch.Text"
+              value="NoteSearchCriteria.Text"/>
+            <RangeInput
+              editable="true"
+              id="Author"
+              label="displaykey.Web.AccountDetailNotes.NotesSearch.Author"
+              noneSelectedLabel="displaykey.Web.AccountDetailNotes.NotesSearch.Any"
+              value="NoteSearchCriteria.Author"
+              valueRange="account.NoteAuthors"/>
+            <TypeKeyInput
+              editable="true"
+              id="RelatedToSearch"
+              label="displaykey.Web.AccountDetailNotes.NotesSearch.RelatedTo"
+              noneSelectedLabel="displaykey.Web.AccountDetailNotes.NotesSearch.Any"
+              value="NoteSearchCriteria.RelatedToEntity"/>
+          </InputColumn>
+          <InputColumn>
+            <DateCriterionChoiceInput
+              editable="true"
+              id="DateSearch2"
+              label="displaykey.Web.AccountDetailNotes.NotesSearch.DateRange"
+              value="NoteSearchCriteria.DateCriterionChoice"/>
+            <TypeKeyInput
+              editable="true"
+              id="Language"
+              label="displaykey.Web.AccountDetailNotes.NotesSearch.Language"
+              noneSelectedLabel="displaykey.Web.AccountDetailNotes.NotesSearch.Any"
+              value="NoteSearchCriteria.Language"
+              visible="LanguageType.getTypeKeys( false ).Count &gt; 1"/>
+          </InputColumn>
+          <InputColumn>
+            <TypeKeyInput
+              editable="true"
+              id="SortByOption"
+              label="displaykey.Web.AccountDetailNotes.NotesSearch.SortBy"
+              required="true"
+              value="NoteSearchCriteria.SortBy"/>
+            <BooleanRadioInput
+              editable="true"
+              falseLabel="displaykey.Web.AccountDetailNotes.NotesSearch.SortDescending"
+              id="SortAscending"
+              label="displaykey.Web.AccountDetailNotes.NotesSearch.SortOrder"
+              trueLabel="displaykey.Web.AccountDetailNotes.NotesSearch.SortAscending"
+              value="NoteSearchCriteria.SortAscending"/>
+          </InputColumn>
+          <InputFooterSection>
+            <InputSetRef
+              def="SearchAndResetInputSet()"/>
+          </InputFooterSection>
+        </DetailViewPanel>
+        <PanelRef
+          def="NotesLV(notes)">
+          <TitleBar
+            appendListViewPaging="true"
+            title="displaykey.Web.AccountDetailNotes.Results"/>
+          <Toolbar/>
+        </PanelRef>
+      </SearchPanel>
+    </Screen>
+  </Page>
+</PCF>

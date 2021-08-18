@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xml:lang="en" lang="en" xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+    <meta http-equiv="Content-Style-Type" content="text/css" />
+    <!-- MOTW-DISABLED saved from url=(0014)about:internet -->
+    <title>Common Exception Resolutions</title>
+    <link rel="StyleSheet" href="css/agenbill_excep_mgt.css" type="text/css" media="all" />
+    <link rel="StyleSheet" href="css/webworks.css" type="text/css" media="all" />
+    <link rel="StyleSheet" href="css/css-guidewire-extra.css" type="text/css" media="all" />
+    <script type="text/javascript" language="JavaScript1.2" src="wwhdata/common/context.js"></script>
+    <script type="text/javascript" language="JavaScript1.2" src="wwhdata/common/towwhdir.js"></script>
+    <script type="text/javascript" language="JavaScript1.2" src="wwhdata/common/wwhpagef.js"></script>
+    <script type="text/javascript" language="JavaScript1.2">
+      <!--
+        var  WebWorksRootPath = "";
+      // -->
+    </script>
+    <script type="text/javascript" language="JavaScript1.2">
+      <!--
+        // Set reference to top level help frame
+        //
+        var  WWHFrame = WWHGetWWHFrame("", true);
+      // -->
+    </script>
+    <script type="text/javascript" language="JavaScript1.2" src="scripts/expand.js"></script>
+    <!-- THE FOLLOWING IS A GUIDEWIRE STYLE DEFINITION FOR THE LINK TO THIS FEATURE -->
+    <link rel="StyleSheet" href="css/css-guidewire-extra.css" type="text/css" media="all" />
+    <!-- THE FOLLOWING IS A GUIDEWIRE GSCRIPT FUNCTION FOR THE LINK TO THIS FEATURE -->
+    <script type="text/javascript">
+function guidewire_selectall()
+{
+var text_val=eval("document.linktothisurlform.urlfield");
+text_val.focus();
+text_val.select();
+}
+</script>
+  </head>
+  <body onLoad="WWHUpdate();" onUnload="WWHUnload();" onKeyDown="WWHHandleKeyDown((document.all||document.getElementById||document.layers)?event:null);" onKeyPress="WWHHandleKeyPress((document.all||document.getElementById||document.layers)?event:null);" onKeyUp="WWHHandleKeyUp((document.all||document.getElementById||document.layers)?event:null);">
+    <!-- THE FOLLOWING IS A GUIDEWIRE DIV FOR THE 'LINK TO THIS' FEATURE -->
+    <div id="linkToThisPage" class="popup" style="display: none;">
+      <div class="popupTitle">Link Directly to This Page 
+           <a href="#" onclick="var thePopup = getElementById('linkToThisPage');thePopup.style.display='none';return false;"><img class="popupClosebox" src="wwhelp/wwhimpl/common/images/close.gif" /></a></div>
+      <div style="padding:6px;">
+        <div class="popupText" id="linkToThisPageBookmark">An error has occurred if you see this messsage.</div>
+        <form name="linktothisurlform" method="post" action="" style="width:275px;margin:0px">
+          <input type="text" class="popupURLText" id="linkToThisPageURL" name="urlfield" rows="1" cols="55" onClick="guidewire_selectall();" onFocus="guidewire_selectall();"></input>
+        </form>
+      </div>
+    </div>
+    <br />
+    <div class="WebWorks_Breadcrumbs" style="text-align: left;">
+      <span>BillingCenter Application&nbsp;Guide</span> : 
+    <span class="WebWorks_Breadcrumbs" style="text-align: left;"><a class="WebWorks_Breadcrumb_Link" href="p_agency_bill.html#1030429">Agency Bill Processing</a> : <a class="WebWorks_Breadcrumb_Link" href="agenbill_excep_mgt.66.1.html#1030429">Agency Bill Exceptions</a> : Common Exception Resolutions </span></div>
+    <hr align="left" />
+    <blockquote>
+      <h3 class="H1_-_Heading_1"><a name="1030429">Common Exception Resolutions </a></h3>
+      <div class="B_-_Body"><a name="1030636">You can use one of the disposition choices from the </a><span class="ui_-_UI_element">Agency Payment Wizard</span> to resolve exceptions in BillingCenter. </div>
+      <div class="B_-_Body"><a name="1145848">From the </a><span class="ui_-_UI_element">Agency Payment Wizard</span>, view the invoice item in the <span class="ui_-_UI_element">Policy Activity</span> section of the screen that will become exceptions if the payment is executed. To prevent this, you can choose a disposition option from the <span class="ui_-_UI_element">Disposition</span> column that specifies how to handle the item. BillingCenter uses the <span class="cv_-_computer_voice">IAgencyDistributionDisposition</span> interface of the Agency Distribution Disposition plugin, which accesses the clearing logic specified on the producer’s agency bill plan. You can choose <span class="ui_-_UI_element">Carry Forward</span>, <span class="ui_-_UI_element">Write Off</span>, or <span class="ui_-_UI_element">Exception</span>.</div>
+      <h4 class="H2_-_Heading_2"><a name="1145849">Carry Forward</a></h4>
+      <div class="B_-_Body"><a name="1030174">If you choose the </a><span class="ui_-_UI_element">Carry Forward</span> option, BillingCenter sets the <span class="ui_-_UI_element">Eligible for Exception</span> flag on the item to <span class="cv_-_computer_voice">False</span> so that it not marked as an exception. The item does not appear on the Agency Bill Exception screen and will not be treated as an exception. </div>
+      <h4 class="H2_-_Heading_2"><a name="1030175">Write Off</a></h4>
+      <div class="B_-_Body"><a name="1030176">If you choose the </a><span class="ui_-_UI_element">Write Off</span> option, BillingCenter resolves the exception by writing off the unpaid amount. Depending on whether the exception is a gross mismatch or a commission mismatch, BillingCenter automatically creates and executes a write-off. The write-off results in either a Charge Written Off (<span class="cv_-_computer_voice">ChargeWrittenOff)</span> or a Commission Reduction Transaction (<span class="cv_-_computer_voice">CmsnPayableReduction</span> or <span class="cv_-_computer_voice">CmsnRcvableReduction</span>) transaction to handle the mismatch exception. The item will not show up on the Agency Bill Exception screen because the applied amounts and the written off amounts make the item equal to zero.</div>
+      <h4 class="H2_-_Heading_2"><a name="1030661">Exception</a></h4>
+      <div class="B_-_Body"><a name="1030662">If you choose the </a><span class="ui_-_UI_element">Exception</span> option, BillingCenter performs no special exception processing on the item and the applies the specified gross and commission values against the item. The item will show up as an exception on the <span class="ui_-_UI_element">Agency Bill Exception</span> screen.</div>
+      <script type="text/javascript" language="JavaScript1.2">
+        <!--
+          // Clear related topics
+          //
+          WWHClearRelatedTopics();
+
+          document.writeln(WWHRelatedTopicsInlineHTML());
+        // -->
+      </script>
+    </blockquote>
+    <script type="text/javascript" language="JavaScript1.2">
+      <!--
+        document.write(WWHRelatedTopicsDivTag() + WWHPopupDivTag() + WWHALinksDivTag());
+      // -->
+    </script>
+  </body>
+</html>

@@ -1,0 +1,26 @@
+<?xml version="1.0"?>
+<entity
+  xmlns="http://guidewire.com/datamodel"
+  entity="CommissionRateOverride"
+  type="retireable"
+  desc="Override of commission rate for a particular PolicyRole"
+  abstract="true"
+  final="false"
+  subpackage="accounting"
+  platform="false"
+  table="commissionrateoverride">
+  <implementsEntity
+    name="NotInCurrencySilo"/>
+  <typekey
+    name="Role"
+    typelist="PolicyRole"
+    desc="The producer code's role on the policy period associated with the charge"
+    nullok="false"
+    setterScriptability="hidden"/>
+  <column
+    name="Rate"
+    type="percentagedec"
+    desc="The commission rate to use for this individual charge and PolicyRole instead of commission plan defaults"
+    nullok="false"
+    setterScriptability="hidden"/>
+</entity>

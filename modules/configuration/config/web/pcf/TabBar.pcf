@@ -1,0 +1,170 @@
+<?xml version="1.0"?>
+<PCF
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:noNamespaceSchemaLocation="../../../../pcf.xsd">
+  <TabBar
+    id="TabBar">
+    <Tab
+      action="DesktopGroup.go()"
+      id="DesktopTab"
+      label="displaykey.Web.TabBar.Desktop"
+      shortcut="K"
+      visible="perm.System.viewdesktop"/>
+    <Tab
+      action="AccountForward.go()"
+      id="AccountsTab"
+      label="displaykey.Web.TabBar.Accounts"
+      shortcut="C"
+      visible="perm.System.accttabview">
+      <SearchItem
+        afterFailure="(searchCriteria as gw.search.AccountSearchCriteria).AccountNumber = searchText"
+        id="AccountNumberSearchItem"
+        label="displaykey.Web.TabBar.Accounts.AccountNumberSearch"
+        onFailure="Accounts.go()"
+        onResult="AccountDetailForward.go(web.search.SearchPopupUtil.getAccount(result as AccountSearchView))"
+        search="gw.search.AccountSearchCriteria.searchAccountsByNumber(searchText)"
+        validationError="displaykey.Java.TabBar.Account.AccountNumberSearch.Error(searchText)"/>
+      <MenuItemIterator
+        elementName="accountSessionItem"
+        id="RecentlyViewedAccountsId"
+        value="gw.api.web.account.AccountUtil.getRecentlyViewedAccounts()">
+        <MenuItem
+          action="accountSessionItem.getDestination().go()"
+          id="AccountSessionItemId"
+          label="displaykey.Java.AccountSessionItem.Label(accountSessionItem.Entity.AccountNumber, accountSessionItem.Entity.AccountNameLocalized)"/>
+      </MenuItemIterator>
+    </Tab>
+    <Tab
+      action="PolicyForward.go()"
+      id="PoliciesTab"
+      label="displaykey.Web.TabBar.Policies"
+      shortcut="P"
+      visible="perm.System.plcytabview">
+      <SearchItem
+        afterFailure="(searchCriteria as gw.search.PolicySearchCriteria).PolicyNumber = searchText"
+        id="PolicyNumberSearchItem"
+        label="displaykey.Web.TabBar.Policies.PolicyNumberSearch"
+        onFailure="Policies.go()"
+        onResult="PolicyDetailForward.go(web.search.SearchPopupUtil.getPolicyPeriod(result as PolicySearchView))"
+        search="gw.search.PolicySearchCriteria.searchPoliciesByNumber(searchText)"
+        validationError="displaykey.Java.TabBar.Policy.PolicyNumberSearch.Error(searchText)"/>
+      <MenuItemIterator
+        elementName="policyPeriodSessionItem"
+        id="RecentlyViewedPoliciesId"
+        value="gw.api.web.policy.PolicyPeriodUtil.getRecentlyViewedPolicyPeriods()">
+        <MenuItem
+          action="policyPeriodSessionItem.getDestination().go()"
+          id="PolicyPeriodSessionItemId"
+          label="displaykey.Java.PolicyPeriodSessionItem.Label(policyPeriodSessionItem.Entity.PolicyNumberLong)"/>
+      </MenuItemIterator>
+    </Tab>
+    <Tab
+      action="ProducerForward.go()"
+      id="ProducersTab"
+      label="displaykey.Web.TabBar.Producers"
+      shortcut="R"
+      visible="perm.System.prodtabview">
+      <SearchItem
+        afterFailure="(searchCriteria as gw.search.ProducerSearchCriteria).ProducerName = searchText"
+        id="ProducerNameSearchItem"
+        label="displaykey.Web.TabBar.Producers.ProducerNameSearch"
+        onFailure="Producers.go()"
+        onResult="ProducerDetailForward.go(web.search.SearchPopupUtil.getProducer(result as ProducerSearchView))"
+        search="gw.search.ProducerSearchCriteria.searchProducersByName(searchText)"
+        validationError="displaykey.Java.TabBar.Producer.ProducerNameSearch.Error(searchText)"/>
+      <MenuItemIterator
+        elementName="producerSessionItem"
+        id="RecentlyViewedProducersId"
+        value="gw.api.web.producer.ProducerUtil.getRecentlyViewedProducers()">
+        <MenuItem
+          action="producerSessionItem.getDestination().go()"
+          id="ProducerSessionItemId"
+          label="displaykey.Java.ProducerSessionItem.Label(producerSessionItem.Entity.DisplayName)"/>
+      </MenuItemIterator>
+    </Tab>
+    <Tab
+      action="Reports.go()"
+      id="ReportTab"
+      label="displaykey.Web.TabBar.Reporting"
+      shortcut="T"
+      visible="perm.System.reporting_view and com.guidewire.pl.system.dependency.PLDependencies.getPluginConfig().isStartablePluginStarted(gw.plugin.cognos.CognosPlugin)"/>
+    <Tab
+      action="SearchGroup.go()"
+      id="SearchTab"
+      label="displaykey.Web.TabBar.Search"
+      shortcut="S"
+      visible="perm.System.viewsearch"/>
+    <Tab
+      action="Admin.go()"
+      id="AdministrationTab"
+      label="displaykey.Web.TabBar.Administration"
+      shortcut="M"
+      visible="perm.System.admintabview"/>
+    <TabBarUnsavedWork
+      id="UnsavedWorkTabBarLink"/>
+    <TabBarLink
+      id="LanguageTabBarLink"
+      label="displaykey.Regional.RegionalSettings"
+      visible="util.LocaleUtil.canSwitchLanguage() || util.LocaleUtil.canSwitchLocale()">
+      <MenuItem
+        id="languageSwitcher"
+        label="displaykey.Regional.Languages"
+        visible="util.LocaleUtil.canSwitchLanguage()">
+        <MenuItemIterator
+          elementName="lang"
+          value="util.LocaleUtil.getAllLanguages() as LanguageType[]">
+          <MenuItem
+            action="gw.api.admin.BaseAdminUtil.setCurrentUsersLanguage(lang)"
+            available="util.LocaleUtil.getCurrentUserLanguage() != lang"
+            checked="util.LocaleUtil.getCurrentLanguageType() == lang"
+            hideIfDisabled="false"
+            id="langs"
+            label="util.LocaleUtil.getLanguageLabel(lang)"
+            visible="true"/>
+        </MenuItemIterator>
+      </MenuItem>
+      <MenuItem
+        id="localeSwitcher"
+        label="displaykey.Regional.Locales"
+        visible="util.LocaleUtil.canSwitchLocale()">
+        <MenuItemIterator
+          elementName="locale"
+          value="util.LocaleUtil.getAllLocales() as LocaleType[]">
+          <MenuItem
+            action="gw.api.admin.BaseAdminUtil.setCurrentUsersLocale(locale)"
+            available="util.LocaleUtil.getCurrentUserLocale() != locale"
+            checked="util.LocaleUtil.getCurrentLocaleType() == locale"
+            hideIfDisabled="false"
+            id="locales"
+            label="util.LocaleUtil.getLocaleLabel(locale)"
+            visible="true"/>
+        </MenuItemIterator>
+      </MenuItem>
+    </TabBarLink>
+    <TabBarLink
+      action="Help.push()"
+      id="HelpTabBarLink"
+      label="displaykey.Web.TabBar.Help"/>
+    <TabBarLink
+      action="javascript:gw.app.popupAboutWindow();"
+      id="AboutTabBarLink"
+      label="displaykey.Web.TabBar.About"/>
+    <TabBarLink
+      action="javascript:gw.app.clearBrowserState()"
+      id="ClearBrowserStateTabBarLink"
+      label="displaykey.Web.TabBar.ClearBrowserState"/>
+    <TabBarLogout
+      action="logout:*"
+      id="LogoutTabBarLink"
+      label="displaykey.Web.TabBar.Logout(entity.User.util.CurrentUser)"
+      shortcut="Z"/>
+    <HiddenLink
+      action="ProfilerPopup.push()"
+      id="ProfilerHiddenLink"
+      shortcut="ShiftP"/>
+    <HiddenLink
+      action="InternalTools.go()"
+      id="InternalToolsHiddenLink"
+      shortcut="ShiftT"/>
+  </TabBar>
+</PCF>

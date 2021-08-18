@@ -1,0 +1,92 @@
+<?xml version="1.0"?>
+<PCF
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:noNamespaceSchemaLocation="../../../../../pcf.xsd">
+  <Screen
+    id="NewWriteoffWizardDetailsStepScreen">
+    <Require
+      name="uiWriteoff"
+      type="web.accounting.UIWriteOffCreation"/>
+    <Variable
+      initialValue="util.DateUtil.currentDate()"
+      name="today"
+      type="DateTime"/>
+    <Variable
+      initialValue="uiWriteoff.WriteOff.MaxPotentialWriteOffAmount"
+      name="maximumAmount"/>
+    <Toolbar>
+      <WizardButtons/>
+    </Toolbar>
+    <PanelRef
+      def="MinimalTAccountOwnerDetailsDV(uiWriteoff.WriteOff.TAccountOwner, null)"
+      mode="TAccountOwnerDetailsMode"/>
+    <DetailViewPanel
+      id="WriteoffDetailsDV">
+      <InputColumn>
+        <Label
+          label="displaykey.Web.NewWriteoffWizardDetailsStepScreen.WriteOffDetails"/>
+        <RangeInput
+          editable="true"
+          id="ChargePattern"
+          label="displaykey.Web.NewWriteoffWizardDetailsStepScreen.ChargePattern"
+          value="uiWriteoff.ChargePattern"
+          valueRange="uiWriteoff.WriteOff.TAccountOwner.ChargePatterns as ChargePattern[]"
+          visible="TAccountOwnerDetailsMode != &quot;producer&quot;">
+          <PostOnChange
+            onChange="if (uiWriteoff.UseFullAmount) {uiWriteoff.Amount = uiWriteoff.FullAmount}"/>
+        </RangeInput>
+        <CheckBoxInput
+          editable="maximumAmount.IsPositive"
+          id="UseFullAmount"
+          label="displaykey.Web.NewWriteoffWizardDetailsStepScreen.FullAmount(uiWriteoff.WriteOff.MaxPotentialWriteOffAmount.render())"
+          validationExpression="uiWriteoff.UseFullAmount ? validateWriteoffAmount() : null"
+          value="uiWriteoff.UseFullAmount">
+          <PostOnChange/>
+        </CheckBoxInput>
+        <MonetaryAmountInput
+          available="!uiWriteoff.UseFullAmount"
+          currency="uiWriteoff.WriteOff.TAccountOwner.Currency"
+          editable="true"
+          id="Amount"
+          label="displaykey.Web.NewWriteoffWizardDetailsStepScreen.Amount"
+          required="true"
+          validationExpression="validateWriteoffAmount()"
+          value="uiWriteoff.Amount">
+          <PostOnChange/>
+        </MonetaryAmountInput>
+        <TypeKeyInput
+          editable="true"
+          id="Reason"
+          label="displaykey.Web.NewWriteoffWizardDetailsStepScreen.Reason"
+          required="true"
+          value="uiWriteoff.Reason"/>
+      </InputColumn>
+    </DetailViewPanel>
+    <Code><![CDATA[// todo EDF unify this with validation in NegativeWriteoff wizard
+function validateWriteoffAmount() : String {     
+  var amount = uiWriteoff.Amount;
+  if (!amount.IsPositive) {
+    return displaykey.Web.NewWriteoffWizard.NonPositiveWriteoffAmount
+  }
+  if (amount > uiWriteoff.WriteOff.MaxPotentialWriteOffAmount) {
+    return displaykey.Web.NewWriteoffWizard.OverFullWriteoffAmount(uiWriteoff.WriteOff.MaxPotentialWriteOffAmount.render());
+  }
+  return null;
+}
+
+property get TAccountOwnerDetailsMode() : String {
+  if (uiWriteoff.WriteOff.TAccountOwner typeis Account) {
+    return "accountdefault";
+  }
+  else if (uiWriteoff.WriteOff.TAccountOwner typeis PolicyPeriod) {
+    return "policy";
+  }
+  else if (uiWriteoff.WriteOff.TAccountOwner typeis Producer) {
+    return "producer";
+  }
+  else {
+    throw new java.lang.UnsupportedOperationException("This t-account owner is unsupported for write-offs.");
+  }  
+}]]></Code>
+  </Screen>
+</PCF>

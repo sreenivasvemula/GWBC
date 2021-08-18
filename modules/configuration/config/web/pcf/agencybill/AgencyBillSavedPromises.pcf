@@ -1,0 +1,178 @@
+<?xml version="1.0"?>
+<PCF
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:noNamespaceSchemaLocation="../../../../../pcf.xsd">
+  <Page
+    canEdit="perm.System.prodpromedit"
+    canVisit="perm.System.prodtabview and perm.System.prodpromview"
+    id="AgencyBillSavedPromises"
+    title="displaykey.Web.AgencyBillPromises.Saved.Title">
+    <LocationEntryPoint
+      signature="AgencyBillSavedPromises(producer : Producer)"/>
+    <Variable
+      name="producer"
+      type="Producer"/>
+    <Screen>
+      <ListDetailPanel
+        selectionName="selectedPromise"
+        selectionType="AgencyCyclePromise">
+        <PanelRef>
+          <Toolbar>
+            <ToolbarFilter
+              iterator="PromisesIterator"
+              label="displaykey.Web.AgencyBillPromises.Saved.PromisesLV.PromiseReceivedFilter.Label"
+              name="PromiseReceivedFilter">
+              <ToolbarFilterOption
+                filter="new gw.payment.BaseDistReceivedDateFilter(30)"
+                label="displaykey.Web.AgencyBillPromises.Saved.PromisesLV.PromiseReceivedFilter.Last30Days"/>
+              <ToolbarFilterOption
+                filter="new gw.payment.BaseDistReceivedDateFilter(60)"
+                label="displaykey.Web.AgencyBillPromises.Saved.PromisesLV.PromiseReceivedFilter.Last60Days"/>
+              <ToolbarFilterOption
+                filter="new gw.payment.BaseDistReceivedDateFilter(90)"
+                label="displaykey.Web.AgencyBillPromises.Saved.PromisesLV.PromiseReceivedFilter.Last90Days"/>
+              <ToolbarFilterOption
+                filter="new filters.StandardQueryFilter(&quot;All&quot;, \ qf -&gt; {})"
+                label="displaykey.Web.AgencyBillPromises.Saved.PromisesLV.PromiseReceivedFilter.All"/>
+            </ToolbarFilter>
+            <ToolbarDivider/>
+            <CheckedValuesToolbarButton
+              checkedRowAction="AgencyDistributionWizard.go(producer, CheckedValue.BaseMoneyReceived)"
+              flags="one Promise"
+              id="EditSaved"
+              iterator="PromisesIterator"
+              label="displaykey.Web.AgencyBillPromises.Saved.PromisesLV.EditSaved"/>
+            <ToolbarDivider/>
+            <CheckedValuesToolbarButton
+              checkedRowAction="AgencySuspenseItemsPopup.push(CheckedValue, false)"
+              flags="one Promise, all HaveSuspItems"
+              id="ViewSuspenseItems"
+              iterator="PromisesIterator"
+              label="displaykey.Web.AgencyBillPromises.Saved.PromisesLV.ViewSuspenseItems"
+              shortcut="U"/>
+            <ToolbarDivider/>
+            <CheckedValuesToolbarButton
+              allCheckedRowsAction="discardPromises(CheckedValues)"
+              flags="any Promise"
+              id="Discard"
+              iterator="PromisesIterator"
+              label="displaykey.Web.AgencyBillPromises.Saved.PromisesLV.Discard"
+              visible="perm.System.prodpromedit"/>
+          </Toolbar>
+          <ListViewPanel
+            id="PromisesLV">
+            <RowIterator
+              checkBoxVisible="true"
+              editable="false"
+              elementName="promise"
+              hasCheckBoxes="true"
+              id="PromisesIterator"
+              type="AgencyCyclePromise"
+              value="producer.SavedPromises">
+              <Variable
+                initialValue="promise.BaseMoneyReceived"
+                name="money"/>
+              <ToolbarFlag
+                name="Promise"/>
+              <ToolbarFlag
+                condition="promise.SuspDistItemsThatHaveNotBeenReleased.HasElements"
+                name="HaveSuspItems"/>
+              <Row>
+                <DateCell
+                  id="PromiseReceived"
+                  label="displaykey.Web.AgencyBillPromises.Saved.PromisesLV.PromiseReceived"
+                  sortBy="promise.BaseMoneyReceived.ReceivedDate"
+                  sortOrder="1"
+                  value="money.ReceivedDate"/>
+                <Cell
+                  enableSort="false"
+                  id="SavedBy"
+                  label="displaykey.Web.AgencyBillPromises.Saved.PromisesLV.SavedBy"
+                  value="promise.UpdateUser"/>
+                <Cell
+                  id="Name"
+                  label="displaykey.Web.AgencyBillPromises.Saved.PromisesLV.Name"
+                  sortBy="promise.BaseMoneyReceived.Name"
+                  value="money.Name"/>
+                <MonetaryAmountCell
+                  currency="producer.Currency"
+                  enableSort="false"
+                  formatType="currency"
+                  id="Amount"
+                  label="displaykey.Web.AgencyBillPromises.Saved.PromisesLV.Amount"
+                  value="money.Amount"/>
+                <MonetaryAmountCell
+                  currency="producer.Currency"
+                  enableSort="false"
+                  formatType="currency"
+                  id="Distributed"
+                  label="displaykey.Web.AgencyBillPromises.Saved.PromisesLV.Distributed"
+                  value="promise.DistributedAmountForUnexecutedDist"/>
+                <MonetaryAmountCell
+                  currency="producer.Currency"
+                  enableSort="false"
+                  formatType="currency"
+                  id="InSuspense"
+                  label="displaykey.Web.AgencyBillPromises.Saved.PromisesLV.InSuspense"
+                  value="promise.SuspenseAmountForUnexecutedDist"/>
+                <MonetaryAmountCell
+                  currency="producer.Currency"
+                  enableSort="false"
+                  formatType="currency"
+                  id="Remaining"
+                  label="displaykey.Web.AgencyBillPromises.Saved.PromisesLV.Remaining"
+                  value="promise.RemainingAmount"/>
+              </Row>
+            </RowIterator>
+          </ListViewPanel>
+        </PanelRef>
+        <CardViewPanel>
+          <Card
+            id="PromiseDetail"
+            title="displaykey.Web.AgencyBillPromises.Saved.PromiseDetail(selectedPromise.BaseMoneyReceived.ReceivedDate.format(&quot;short&quot;))">
+            <DetailViewPanel>
+              <InputColumn>
+                <Label
+                  label="displaykey.Web.AgencyBillPromises.Saved.PromiseDetails.Header"/>
+                <DateInput
+                  id="PromiseReceived"
+                  label="displaykey.Web.AgencyBillPromises.Saved.PromiseDetails.PromiseReceived"
+                  value="selectedPromise.BaseMoneyReceived.ReceivedDate"/>
+                <Input
+                  id="SavedBy"
+                  label="displaykey.Web.AgencyBillPromises.Saved.PromiseDetails.SavedBy"
+                  value="selectedPromise.UpdateUser"/>
+                <Input
+                  id="Name"
+                  label="displaykey.Web.AgencyBillPromises.Saved.PromiseDetails.Name"
+                  value="selectedPromise.BaseMoneyReceived.Name"/>
+              </InputColumn>
+              <InputColumn>
+                <InputSetRef
+                  def="AgencyBillPromises_PromiseApplicationInputSet(selectedPromise)"/>
+              </InputColumn>
+            </DetailViewPanel>
+            <PanelRef
+              def="AgencyDistItemsReadOnlyCV(selectedPromise)">
+              <TitleBar
+                id="DistributionHeader"
+                title="displaykey.Web.AgencyBillPromises.Saved.AgencyDistItemsLV"/>
+              <Toolbar/>
+            </PanelRef>
+          </Card>
+        </CardViewPanel>
+      </ListDetailPanel>
+    </Screen>
+    <Code><![CDATA[function discardPromises(promises : AgencyCyclePromise[]) {
+  gw.transaction.Transaction.runWithNewBundle(\ bundle -> {
+    promises.each( \ promise -> {
+      if (promise.Executed) {
+        throw new gw.api.util.DisplayableException(displaykey.Web.BaseDistEnhancement.Error.CalledOnExecutedDist.Discard)
+      }
+      promise = bundle.add(promise)
+      promise.remove()
+    })
+  })
+}]]></Code>
+  </Page>
+</PCF>

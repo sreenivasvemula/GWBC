@@ -1,0 +1,96 @@
+<?xml version="1.0"?>
+<entity
+  xmlns="http://guidewire.com/datamodel"
+  entity="ChargePattern"
+  type="retireable"
+  desc="A pattern for a charge."
+  abstract="true"
+  admin="true"
+  final="false"
+  ignoreForEvents="true"
+  subpackage="accounting.config"
+  loadable="false"
+  platform="false"
+  table="chargepattern">
+  <implementsEntity
+    name="NotInCurrencySilo"/>
+  <column
+    name="ChargeCode"
+    type="shorttext"
+    desc="The unique code of this charge pattern"
+    nullok="false"/>
+  <column
+    name="ChargeName"
+    type="shorttext"
+    desc="The non-unique name of this charge pattern"
+    nullok="false">
+    <localization nullok="false" tableName="chargept_nm_l10n"/>
+  </column>
+  <column
+    name="InUse"
+    type="bit"
+    desc="Internal flag used to determine whether or not this charge pattern is used by a charge"
+    default="false"
+    nullok="false"
+    setterScriptability="hidden"/>
+  <column
+    name="InternalCharge"
+    type="bit"
+    desc="Flag used to determine whether or not this charge pattern is internal, and therefore cannot be removed/changed"
+    default="false"
+    nullok="false"
+    setterScriptability="hidden"/>
+  <column
+    name="Reversible"
+    type="bit"
+    desc="Used to determine whether or not charges using this charge pattern can be reversed"
+    default="true"
+    nullok="false"
+    setterScriptability="doesNotExist"/>
+  <column
+    name="TAccountsLazyLoaded"
+    type="bit"
+    desc="Whether or not the T-accounts required for this charge are added lazily to T-account owners"
+    default="true"
+    nullok="false"/>
+  <column
+    name="IncludedInEquityDating"
+    type="bit"
+    desc="Whether charges of this charge pattern are considered in equity dating calculations"
+    default="false"
+    nullok="false"/>
+  <typekey
+    name="Category"
+    typelist="ChargeCategory"
+    default="general"
+    nullok="false"/>
+  <typekey
+    name="InvoiceTreatment"
+    typelist="InvoiceTreatment"
+    desc="How to invoice this charge."
+    default="depositandinstallments"
+    nullok="false"/>
+  <typekey
+    name="Priority"
+    typelist="ChargePriority"
+    default="medium"
+    nullok="false"/>
+  <foreignkey
+    name="TAccountOwnerPattern"
+    desc="The t-account owner pattern that will use this type of charge"
+    columnName="TAccountOwnerPatternID"
+    fkentity="TAccountOwnerPattern"
+    ignoreforevents="true"
+    nullok="false"/>
+  <index
+    desc="Legacy"
+    name="chargepattern"
+    unique="true">
+    <indexcol
+      name="ChargeCode"
+      keyposition="1"/>
+    <indexcol
+      name="Retired"
+      keyposition="2"/>
+  </index>
+</entity>

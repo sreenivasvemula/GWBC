@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?><entity xmlns="http://guidewire.com/datamodel" abstract="true" desc="Abstract base type for writeoffs" entity="Writeoff" final="false" platform="false" setterScriptability="hidden" subpackage="accounting" table="writeoff" type="retireable">
+  <implementsEntity name="Validatable"/>
+  <implementsEntity name="Approvable"/>
+  <implementsEntity name="Reversible"/>
+  <implementsEntity name="InCurrencySilo"/>
+  <foreignkey columnName="TAccountContainerID" fkentity="TAccountContainer" getterScriptability="doesNotExist" ignoreforevents="true" importableagainstexistingobject="false" name="TAccountContainer" nullok="true" setterScriptability="doesNotExist"/>
+  <typekey name="Reason" nullok="true" typelist="WriteoffReason"/>
+  <monetaryamount amountColumnName="Amount"
+    name="Amount" nullok="false" scaleToCurrency="true" setterScriptability="doesNotExist"/>
+  <column desc="The date that the write-off was actually executed.  If the user that created this write-off did not have the authority to execute it, then the execution date may be different from its creation time." name="ExecutionDate" nullok="true" setterScriptability="doesNotExist" type="datetime"/>
+  <monetaryamount amountColumnName="ReversedAmount"
+    desc="Denormalized sum of all reversed ChargeWrittenOff transactions associated with this Writeoff." name="ReversedAmount" nullok="false" overwrittenInStagingTable="true" scaleToCurrency="true" setterScriptability="doesNotExist" soapnullok="true">
+    <tag name="DefaultValueZero"/>
+  </monetaryamount>
+  <onetoone fkentity="WriteoffReversal" ignoreforevents="true" name="WriteoffReversal" nullok="true" setterScriptability="doesNotExist"/>
+  <array arrayentity="WriteoffApprActivity" name="ActivitiesCreatedByAppr" setterScriptability="doesNotExist">
+    <link-association>
+      <typelist-map field="Status"/>
+    </link-association>
+  </array>
+  <edgeForeignKey desc="If non-null, this write-off is a reversal, and this link points to the original write-off which this reversal reverses." edgeTableName="revwriteoff" exportable="false" fkentity="Writeoff" ignoreforevents="true" importableagainstexistingobject="false" loadable="true" name="ReversedLink" nullok="true" overwrittenInStagingTable="true" setterScriptability="doesNotExist"/>
+  <checkconstraint desc="Found ChargeGrossWriteoff with no TAccountContainerID in staging table.  ChargeGrossWriteoffs must have a TAccountContainerID to be loaded." stagingtablepredicate="TAccountContainerID IS NOT NULL OR Subtype &lt;&gt; 'ChargeGrossWriteoff'"/>
+  <dbcheckbuilder className="com.guidewire.bc.system.database.dbchecks.accounting.WriteoffReversalDBCheckBuilder"/>
+  <dbcheckbuilder className="com.guidewire.bc.system.database.dbchecks.accounting.ChargeWriteoffDBCheckBuilder"/>
+  <dbcheckbuilder className="com.guidewire.bc.system.database.dbchecks.accounting.WriteoffReversalAmountsDBCheckBuilder"/>
+    <dbcheckbuilder className="com.guidewire.bc.system.database.dbchecks.accounting.WriteoffDBCheckBuilder"/>
+</entity>

@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?><entity xmlns="http://guidewire.com/datamodel" desc="Simple funds entity used to support modifying the producer codes by policy role"
+  entity="ProducerCodeRoleEntry" platform="false" setterScriptability="hidden" subpackage="account" table="prodcoderoleentry" type="retireable">
+  <implementsEntity name="InCurrencySilo"/>
+  <typekey desc="The role the producer code plays on the policy" name="Role" nullok="false" setterScriptability="hidden" typelist="PolicyRole"/>
+  <foreignkey columnName="BillingInstructionID" desc="The related billing instruction" fkentity="BillingInstruction" name="BillingInstruction" nullok="true"/>
+  <foreignkey columnName="ProducerCodeID" desc="The related producer code" fkentity="ProducerCode" importableagainstexistingobject="true" name="ProducerCode" nullok="true"/>
+  <foreignkey columnName="ProducerID" desc="The related producer, used for defining the range of available producer codes." fkentity="Producer" importableagainstexistingobject="true" name="Producer" nullok="true"/>
+</entity>

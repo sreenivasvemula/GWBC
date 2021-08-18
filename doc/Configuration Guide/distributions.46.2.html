@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xml:lang="en" lang="en" xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+    <meta http-equiv="Content-Style-Type" content="text/css" />
+    <!-- MOTW-DISABLED saved from url=(0014)about:internet -->
+    <title>Modifying Direct Bill Payment and Credit Distributions</title>
+    <link rel="StyleSheet" href="css/distributions.css" type="text/css" media="all" />
+    <link rel="StyleSheet" href="css/webworks.css" type="text/css" media="all" />
+    <link rel="StyleSheet" href="css/css-guidewire-extra.css" type="text/css" media="all" />
+    <script type="text/javascript" language="JavaScript1.2" src="wwhdata/common/context.js"></script>
+    <script type="text/javascript" language="JavaScript1.2" src="wwhdata/common/towwhdir.js"></script>
+    <script type="text/javascript" language="JavaScript1.2" src="wwhdata/common/wwhpagef.js"></script>
+    <script type="text/javascript" language="JavaScript1.2">
+      <!--
+        var  WebWorksRootPath = "";
+      // -->
+    </script>
+    <script type="text/javascript" language="JavaScript1.2">
+      <!--
+        // Set reference to top level help frame
+        //
+        var  WWHFrame = WWHGetWWHFrame("", true);
+      // -->
+    </script>
+    <script type="text/javascript" language="JavaScript1.2" src="scripts/expand.js"></script>
+    <!-- THE FOLLOWING IS A GUIDEWIRE STYLE DEFINITION FOR THE LINK TO THIS FEATURE -->
+    <link rel="StyleSheet" href="css/css-guidewire-extra.css" type="text/css" media="all" />
+    <!-- THE FOLLOWING IS A GUIDEWIRE GSCRIPT FUNCTION FOR THE LINK TO THIS FEATURE -->
+    <script type="text/javascript">
+function guidewire_selectall()
+{
+var text_val=eval("document.linktothisurlform.urlfield");
+text_val.focus();
+text_val.select();
+}
+</script>
+  </head>
+  <body onLoad="WWHUpdate();" onUnload="WWHUnload();" onKeyDown="WWHHandleKeyDown((document.all||document.getElementById||document.layers)?event:null);" onKeyPress="WWHHandleKeyPress((document.all||document.getElementById||document.layers)?event:null);" onKeyUp="WWHHandleKeyUp((document.all||document.getElementById||document.layers)?event:null);">
+    <!-- THE FOLLOWING IS A GUIDEWIRE DIV FOR THE 'LINK TO THIS' FEATURE -->
+    <div id="linkToThisPage" class="popup" style="display: none;">
+      <div class="popupTitle">Link Directly to This Page 
+           <a href="#" onclick="var thePopup = getElementById('linkToThisPage');thePopup.style.display='none';return false;"><img class="popupClosebox" src="wwhelp/wwhimpl/common/images/close.gif" /></a></div>
+      <div style="padding:6px;">
+        <div class="popupText" id="linkToThisPageBookmark">An error has occurred if you see this messsage.</div>
+        <form name="linktothisurlform" method="post" action="" style="width:275px;margin:0px">
+          <input type="text" class="popupURLText" id="linkToThisPageURL" name="urlfield" rows="1" cols="55" onClick="guidewire_selectall();" onFocus="guidewire_selectall();"></input>
+        </form>
+      </div>
+    </div>
+    <br />
+    <div class="WebWorks_Breadcrumbs" style="text-align: left;">
+      <span>BillingCenter Configuration Guide</span> : 
+    <span class="WebWorks_Breadcrumbs" style="text-align: left;"><a class="WebWorks_Breadcrumb_Link" href="p-BillingCenter.html#1245864">Guidewire BillingCenter Configuration</a> : <a class="WebWorks_Breadcrumb_Link" href="distributions.46.1.html#1245864">Configuring Distributions</a> : Modifying Direct Bill Payment and Credit Distributions</span></div>
+    <hr align="left" />
+    <blockquote>
+      <h3 class="H1_-_Heading_1"><a name="1245864">Modifying Direct Bill Payment and Credit Distributions</a></h3>
+      <h4 class="H2_-_Heading_2"><a name="1245846">Direct Bill Payment Object Model</a></h4>
+      <div class="B_-_Body"><a name="1245995">BillingCenter has a unified object model for direct bill and agency bill payments and payment distribution. The following graphic focuses on direct bill payments. The object model for agency bill payments follows a similar structure.</a></div>
+      <div class="F_-_Figure"><a name="1245996"><img class="Default" src="images/distributions.46.2.1.png" style="display: block; float: none; left: 0.0; top: 0.0" alt="" /></a></div>
+      <div class="B_-_Body"><a name="1245820">Payments made to the carrier are tracked in BillingCenter as </a><span class="e_-_emphasis">direct bill money received</span>. The insured remits the gross amount to the carrier. This is the amount used to make a payment. The carrier then makes commission payments to any producers associated with the account.</div>
+      <div class="B_-_Body"><a name="1245821">The </a><span class="cv_-_computer_voice">DirectBillMoneyRcvd </span>entity holds details about the payment, including the account that made the payment. The <span class="cv_-_computer_voice">DirectBillPayment</span> entity tracks the amount of money that has been distributed (if any) and the amount available to distribute. It has an array of distribution items represented as <span class="cv_-_computer_voice">DirectBillPaymentItem</span> entities. Each <span class="cv_-_computer_voice">DirectBillPaymentItem</span> contains details of distribution amounts for the invoice item and points to the invoice item that is being paid by this item. Distribution amounts include gross amounts owed, gross amounts to apply, commission amount owed, and commission amount to apply.</div>
+      <div class="B_-_Body"><a name="1245822">In summary, for each payment there is a payment item that targets an invoice item and indicates how much gross and commission money to apply to the invoice item. </a></div>
+      <h4 class="H2_-_Heading_2"><a name="1193917">Example Modification of a Direct Bill Payment and Credit Distribution</a></h4>
+      <div class="B_-_Body"><a name="1245840">Payment and credit distributions can be modified using the Gosu programming language or the BillingCenter user interface. For information about utilizing the user interface for payment distributions, see </a><a href="javascript:WWHClickedPopup('app', 'payments.53.10.html#2038963', '');" title="Modifying Direct Bill Payments">“Modifying Direct Bill Payments” in the </a><span class="bt_-_book_title"><a href="javascript:WWHClickedPopup('app', 'payments.53.10.html#2038963', '');" title="Modifying Direct Bill Payments">Application Guide</a></span>. To modify a credit distribution with the user interface, see <a href="javascript:WWHClickedPopup('app', 'payments.53.07.html#1897559', '');" title="Creating and Editing Direct Bill Credit Distributions">“Creating and Editing Direct Bill Credit Distributions” in the </a><span class="bt_-_book_title"><a href="javascript:WWHClickedPopup('app', 'payments.53.07.html#1897559', '');" title="Creating and Editing Direct Bill Credit Distributions">Application Guide</a></span>.</div>
+      <div class="B_-_Body"><a name="1209630">When modifying a direct bill payment or credit distribution in Gosu, the elements of the executed distribution must not be altered directly. Instead, a copy of the distribution must be created. All modifications are then performed upon the copy. After completing the desired modifications, the copy can be executed and committed. The newly‑committed distribution becomes the payment or credit of record, replacing the original distribution. The original distribution is accordingly reversed.</a></div>
+      <div class="B_-_Body"><a name="1211758">The sample code below demonstrates the operations performed to modify a direct bill payment or credit distribution. Notice that the identical procedure is performed whether the distribution is a payment or a credit. The classes and methods used in the sample are described in the</a><span class="e_-_emphasis"> Gosu API Reference</span>.</div>
+      <PRE class="CF_-_Code_First_Line"><a name="1210200">/* Variables */</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="1210279">DirectBillPayment&nbsp;&nbsp;&nbsp;&nbsp;executedDist&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;// An executed payment or credit distribution</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="1210244">BaseDistItem&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;distItem&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;// An invoice item in executedDist</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="1210469">DirectBillPayment&nbsp;&nbsp;&nbsp;&nbsp;modifiedDist&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;// A copy of executedDist</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="1210556">&nbsp;</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="1210558">/* Here is what NOT to do: Do NOT directly modify fields in the executed distribution. */</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="1211615">distItem = executedDist.getDistItemFor( /* Some invoice item */ )</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="1210663">distItem.setGrossAmountToApply( $100 )&nbsp;// Do NOT do this!!!</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="1210731">&nbsp;</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="1210733">/* Instead, do this: Create a copy of the executed distribution and modify the copy */</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="1210804">modifiedDist = DirectBillPaymentFactory.createModifyingDirectPayment( executedDist )</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="1210985">&nbsp;</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="1210987">/* Grab an invoice item you want to modify from the copied distribution */</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="1210896">distItem = modifiedDist.getDistItemFor( /* Some invoice item */ )</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="1210982">&nbsp;</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="1211066">/* Change the amount allocated to this invoice item */</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="1211097">distItem.setGrossAmountToApply( $100 )</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="1211142">&nbsp;</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="1211144">/* Execute and commit the modified distribution, making it the payment or credit of record */</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="1211196">modifiedDist.execute()</a></PRE>
+      <PRE class="CL_-_Code_Last_Line"><a name="1211223">modifiedDist.getBundle().commit()</a></PRE>
+      <script type="text/javascript" language="JavaScript1.2">
+        <!--
+          // Clear related topics
+          //
+          WWHClearRelatedTopics();
+
+          document.writeln(WWHRelatedTopicsInlineHTML());
+        // -->
+      </script>
+    </blockquote>
+    <script type="text/javascript" language="JavaScript1.2">
+      <!--
+        document.write(WWHRelatedTopicsDivTag() + WWHPopupDivTag() + WWHALinksDivTag());
+      // -->
+    </script>
+  </body>
+</html>

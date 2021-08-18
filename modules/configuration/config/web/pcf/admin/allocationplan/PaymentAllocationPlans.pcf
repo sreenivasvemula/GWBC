@@ -1,0 +1,75 @@
+<?xml version="1.0"?>
+<PCF
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:noNamespaceSchemaLocation="pcf.xsd">
+  <Page
+    canEdit="true"
+    canVisit="perm.System.admintabview and perm.System.payallocplanview"
+    id="PaymentAllocationPlans"
+    title="displaykey.Web.PaymentAllocationPlans.Title">
+    <Variable
+      initialValue="new web.plan.PlanHelper()"
+      name="PlanHelper"/>
+    <Screen
+      id="PaymentAllocationPlansScreen">
+      <Toolbar/>
+      <ListViewPanel
+        id="PaymentAllocationPlansLV">
+        <RowIterator
+          editable="false"
+          elementName="paymentAllocationPlan"
+          value="gw.api.database.Query.make(PaymentAllocationPlan).select()">
+          <ToolbarFilter
+            label="displaykey.Web.PaymentAllocationPlansLV.Show"
+            name="Filter">
+            <ToolbarFilterOptionGroup
+              filters="new web.plan.PlanListFilterSet().FilterOptions"/>
+          </ToolbarFilter>
+          <Row>
+            <Cell
+              align="left"
+              id="PlanOrder"
+              label="displaykey.Web.PaymentAllocationPlansLV.PlanOrder"
+              sortOrder="1"
+              value="paymentAllocationPlan.PlanOrder"/>
+            <Cell
+              action="PaymentAllocationPlanDetail.go(paymentAllocationPlan)"
+              id="Name"
+              label="displaykey.Web.PaymentAllocationPlansLV.Name"
+              value="paymentAllocationPlan.Name"/>
+            <Cell
+              id="Description"
+              label="displaykey.Web.PaymentAllocationPlansLV.Description"
+              value="paymentAllocationPlan.Description"/>
+            <DateCell
+              id="EffectiveDate"
+              label="displaykey.Web.PaymentAllocationPlansLV.EffectiveDate"
+              value="paymentAllocationPlan.EffectiveDate"/>
+            <DateCell
+              id="ExpirationDate"
+              label="displaykey.Web.PaymentAllocationPlansLV.ExpirationDate"
+              value="paymentAllocationPlan.ExpirationDate"/>
+            <LinkCell
+              id="MovePriority"
+              label="displaykey.Web.PaymentAllocationPlansLV.PlanOrder.MovePriority">
+              <Link
+                action="PlanHelper.moveUp(paymentAllocationPlan)"
+                available="perm.System.payallocplanedit"
+                icon="&quot;arrow_up.png&quot;"
+                id="MoveUp"
+                tooltip="displaykey.Web.PaymentAllocationPlansLV.PlanOrder.MoveUp"
+                visible="paymentAllocationPlan.PlanOrder &gt; 1"/>
+              <Link
+                action="PlanHelper.moveDown(paymentAllocationPlan)"
+                available="perm.System.payallocplanedit"
+                icon="&quot;arrow_down.png&quot;"
+                id="MoveDown"
+                tooltip="displaykey.Web.PaymentAllocationPlansLV.PlanOrder.MoveDown"
+                visible="!paymentAllocationPlan.hasHighestPlanOrder()"/>
+            </LinkCell>
+          </Row>
+        </RowIterator>
+      </ListViewPanel>
+    </Screen>
+  </Page>
+</PCF>

@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xml:lang="en" lang="en" xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+    <meta http-equiv="Content-Style-Type" content="text/css" />
+    <!-- MOTW-DISABLED saved from url=(0014)about:internet -->
+    <title>Example Batch Process for a Background Task</title>
+    <link rel="StyleSheet" href="css/batchprocess.css" type="text/css" media="all" />
+    <link rel="StyleSheet" href="css/webworks.css" type="text/css" media="all" />
+    <link rel="StyleSheet" href="css/css-guidewire-extra.css" type="text/css" media="all" />
+    <script type="text/javascript" language="JavaScript1.2" src="wwhdata/common/context.js"></script>
+    <script type="text/javascript" language="JavaScript1.2" src="wwhdata/common/towwhdir.js"></script>
+    <script type="text/javascript" language="JavaScript1.2" src="wwhdata/common/wwhpagef.js"></script>
+    <script type="text/javascript" language="JavaScript1.2">
+      <!--
+        var  WebWorksRootPath = "";
+      // -->
+    </script>
+    <script type="text/javascript" language="JavaScript1.2">
+      <!--
+        // Set reference to top level help frame
+        //
+        var  WWHFrame = WWHGetWWHFrame("", true);
+      // -->
+    </script>
+    <script type="text/javascript" language="JavaScript1.2" src="scripts/expand.js"></script>
+    <!-- THE FOLLOWING IS A GUIDEWIRE STYLE DEFINITION FOR THE LINK TO THIS FEATURE -->
+    <link rel="StyleSheet" href="css/css-guidewire-extra.css" type="text/css" media="all" />
+    <!-- THE FOLLOWING IS A GUIDEWIRE GSCRIPT FUNCTION FOR THE LINK TO THIS FEATURE -->
+    <script type="text/javascript">
+function guidewire_selectall()
+{
+var text_val=eval("document.linktothisurlform.urlfield");
+text_val.focus();
+text_val.select();
+}
+</script>
+  </head>
+  <body onLoad="WWHUpdate();" onUnload="WWHUnload();" onKeyDown="WWHHandleKeyDown((document.all||document.getElementById||document.layers)?event:null);" onKeyPress="WWHHandleKeyPress((document.all||document.getElementById||document.layers)?event:null);" onKeyUp="WWHHandleKeyUp((document.all||document.getElementById||document.layers)?event:null);">
+    <!-- THE FOLLOWING IS A GUIDEWIRE DIV FOR THE 'LINK TO THIS' FEATURE -->
+    <div id="linkToThisPage" class="popup" style="display: none;">
+      <div class="popupTitle">Link Directly to This Page 
+           <a href="#" onclick="var thePopup = getElementById('linkToThisPage');thePopup.style.display='none';return false;"><img class="popupClosebox" src="wwhelp/wwhimpl/common/images/close.gif" /></a></div>
+      <div style="padding:6px;">
+        <div class="popupText" id="linkToThisPageBookmark">An error has occurred if you see this messsage.</div>
+        <form name="linktothisurlform" method="post" action="" style="width:275px;margin:0px">
+          <input type="text" class="popupURLText" id="linkToThisPageURL" name="urlfield" rows="1" cols="55" onClick="guidewire_selectall();" onFocus="guidewire_selectall();"></input>
+        </form>
+      </div>
+    </div>
+    <br />
+    <div class="WebWorks_Breadcrumbs" style="text-align: left;">
+      <span>BillingCenter Integration Guide</span> : 
+    <span class="WebWorks_Breadcrumbs" style="text-align: left;"><a class="WebWorks_Breadcrumb_Link" href="p-claims.html#2349312">Other Integration Topics</a> : <a class="WebWorks_Breadcrumb_Link" href="batchprocess.29.01.html#2349312">Custom Batch Processing</a> : <a class="WebWorks_Breadcrumb_Link" href="batchprocess.29.22.html#2349312">Example Batch Processes</a> : Example Batch Process for a Background Task</span></div>
+    <hr align="left" />
+    <blockquote>
+      <h4 class="H2B_-_Heading_2_Break"><a name="2349312">Example Batch Process for a Background Task</a></h4>
+      <div class="B_-_Body"><a name="2349313">The following Gosu code is an example of a custom batch process that operates as a background task instead of one that operates on a batch of units of work. Its process history does not does not track the number of items that processed successfully or that failed, because it has no formal units of work. </a></div>
+      <div class="B_-_Body"><a name="2349818">The following Gosu batch process purges old workflows. It takes one parameter that indicates the number of days for successful processes. Pass this parameter in the constructor to this batch process class. In other words, your implementation of </a><span class="cv_-_computer_voice">IProcessesPlugin</span> must pass this parameter such as the <span class="cv_-_computer_voice">new&nbsp;MyClass(myParameter)</span> when it instantiates the batch process. If the parameter is missing or <span class="cv_-_computer_voice">null</span>, it uses a default system setting. </div>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2349314">package gw.processes</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2349315">&nbsp;</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2349316">uses gw.processes.BatchProcessBase</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2349317">uses java.lang.Integer</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2349318">uses gw.api.system.PLConfigParameters</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2349319">uses gw.api.admin.WorkflowUtil</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2349320">&nbsp;</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2349321">class PurgeWorkflows extends BatchProcessBase</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2349322">{</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2349323">  var _succDays = PLConfigParameters.WorkflowPurgeDaysOld.Value</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2349324">&nbsp;</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2349325">  construct() {</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2349326">    this(null)</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2349327">  }</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2349328">  </a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2349329">  construct(arguments : Object[]) {</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2349330">    super("PurgeWorkflows")</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2349331">    if (arguments != null) {</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2349332">      _succDays = arguments[0] != null ? (arguments[0] as Integer) : _succDays</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2349333">    }</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2349334">  }</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2349335">&nbsp;</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2349336">  override function doWork() : void {</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2349337">    WorkflowUtil.deleteOldWorkflowsFromDatabase( _succDays )</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2349338">  }</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2349339">}</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2349340">&nbsp;</a></PRE>
+      <div class="NI_-_Note_Important">
+        <span class="n_-_note">IMPORTANT   </span><a name="2349341">You must use the </a><span class="cv_-_computer_voice">runWithNewBundle</span> API if want to modify entity data in your custom batch process. For more information, see <a href="javascript:WWHClickedPopup('gosu', 'transactions.22.11.html#1634152', '');" title="Running Code in an Entirely New Bundle">“Running Code in an Entirely New Bundle” in the </a><span class="bt_-_book_title"><a href="javascript:WWHClickedPopup('gosu', 'transactions.22.11.html#1634152', '');" title="Running Code in an Entirely New Bundle">Gosu Reference Guide</a></span>.</div>
+      <script type="text/javascript" language="JavaScript1.2">
+        <!--
+          // Clear related topics
+          //
+          WWHClearRelatedTopics();
+
+          document.writeln(WWHRelatedTopicsInlineHTML());
+        // -->
+      </script>
+    </blockquote>
+    <script type="text/javascript" language="JavaScript1.2">
+      <!--
+        document.write(WWHRelatedTopicsDivTag() + WWHPopupDivTag() + WWHALinksDivTag());
+      // -->
+    </script>
+  </body>
+</html>

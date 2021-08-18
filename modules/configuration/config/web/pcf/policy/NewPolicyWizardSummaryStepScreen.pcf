@@ -1,0 +1,273 @@
+<?xml version="1.0"?>
+<PCF
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:noNamespaceSchemaLocation="../../../../../pcf.xsd">
+  <Screen
+    id="NewPolicyWizardSummaryStepScreen">
+    <Require
+      name="account"
+      type="Account"/>
+    <Require
+      name="policyPeriod"
+      type="PolicyPeriod"/>
+    <Require
+      name="producerCodeRoleEntries"
+      type="ProducerCodeRoleEntry[]"/>
+    <Require
+      name="invoicingOverridesView"
+      type="gw.invoice.InvoicingOverridesView"/>
+    <Require
+      name="issuance"
+      type="Issuance"/>
+    <Variable
+      initialValue="new web.producer.ProducerSearchConverter()"
+      name="producerSearchConverter"
+      type="web.producer.ProducerSearchConverter"/>
+    <Variable
+      initialValue="gw.api.database.Query.make(SecurityZone).select()"
+      name="allSecurityZones"
+      type="SecurityZoneQuery"/>
+    <Variable
+      initialValue="new web.account.AccountSearchConverter()"
+      name="accountSearchConverter"
+      type="web.account.AccountSearchConverter"/>
+    <Toolbar>
+      <WizardButtons/>
+    </Toolbar>
+    <DetailViewPanel
+      id="NewPolicyDV">
+      <InputColumn>
+        <Label
+          label="displaykey.Web.AccountDetailNewPolicy.PolicyInfo"/>
+        <Input
+          editable="true"
+          id="PolicyNumber"
+          label="displaykey.Web.NewPolicyDV.PolicyNumber"
+          required="true"
+          value="policyPeriod.PolicyNumber"/>
+        <Input
+          editable="true"
+          id="DBA"
+          label="displaykey.Web.NewPolicyDV.DBA"
+          value="policyPeriod.DBA"/>
+        <DateInput
+          editable="true"
+          id="PolicyPerEffDate"
+          label="displaykey.Web.NewPolicyDV.PolicyPerEffDate"
+          required="true"
+          value="policyPeriod.PolicyPerEffDate"/>
+        <DateInput
+          editable="true"
+          id="PolicyPerExpirDate"
+          label="displaykey.Web.NewPolicyDV.PolicyPerExpirDate"
+          required="true"
+          validationExpression="policyPeriod.PolicyPerExpirDate &gt;= policyPeriod.PolicyPerEffDate ? null : displaykey.Web.NewPolicyDV.ExpirationDateError"
+          value="policyPeriod.PolicyPerExpirDate"/>
+        <TypeKeyInput
+          editable="true"
+          id="PolicyLOB"
+          label="displaykey.Web.NewPolicyDV.LOBCode"
+          value="policyPeriod.Policy.LOBCode"/>
+        <BooleanRadioInput
+          editable="true"
+          id="AssignedRisk"
+          label="displaykey.Web.NewPolicyDV.AssignedRisk"
+          value="policyPeriod.AssignedRisk"/>
+        <TypeKeyInput
+          editable="true"
+          id="RiskJurisdiction"
+          label="displaykey.Web.NewPolicyDV.RiskJurisdiction"
+          value="policyPeriod.RiskJurisdiction"/>
+        <TypeKeyInput
+          editable="true"
+          id="UWCompany"
+          label="displaykey.Web.NewPolicyDV.UWCompany"
+          value="policyPeriod.UWCompany"/>
+        <RangeInput
+          editable="true"
+          id="SecurityZone"
+          label="displaykey.Web.PolicyDetailDV.SecurityZone"
+          value="policyPeriod.SecurityZone"
+          valueRange="allSecurityZones"/>
+        <Input
+          editable="true"
+          id="Underwriter"
+          label="displaykey.Web.NewPolicyDV.Underwriter"
+          value="policyPeriod.Underwriter"/>
+        <BooleanRadioInput
+          available="!policyPeriod.AgencyBill"
+          editable="true"
+          id="EligibleForFullPayDiscount"
+          label="displaykey.Web.NewPolicyDV.EligibleForFullPayDiscount"
+          value="policyPeriod.EligibleForFullPayDiscount"
+          visible="!policyPeriod.AgencyBill"/>
+        <BooleanRadioInput
+          editable="true"
+          id="RequireFinalAudit"
+          label="displaykey.Web.NewPolicyDV.RequireFinalAudit"
+          required="true"
+          value="policyPeriod.RequireFinalAudit"/>
+        <Label
+          label="displaykey.Web.AccountDetailNewPolicy.DefaultPayer"/>
+        <RangeInput
+          editable="true"
+          id="BillingMethod"
+          label="displaykey.Web.AccountDetailNewPolicy.Producers.BillingMethod"
+          required="true"
+          value="policyPeriod.BillingMethod"
+          valueRange="PolicyPeriodBillingMethod.getTypeKeys(false)">
+          <PostOnChange
+            onChange="if (policyPeriod.AgencyBill) {policyPeriod.EligibleForFullPayDiscount = false; invoicingOverridesView.OverridingPayerAccount =null; invoicingOverridesView.OverridingInvoiceStream =null}"/>
+        </RangeInput>
+        <PickerInput
+          editable="true"
+          id="OverridingPayerAccount"
+          inputConversion="accountSearchConverter.getAccount(VALUE)"
+          label="displaykey.Web.AccountDetailNewPolicy.DefaultPayer.OverridingPayerAccount"
+          pickLocation="AccountSearchPopup.push()"
+          required="policyPeriod.isListBill()"
+          validationExpression="policyPeriod.isListBill() and invoicingOverridesView.OverridingPayerAccount.isListBill() and policyPeriod.PaymentPlan == null ? null : gw.api.web.account.PolicyPeriods.checkForOverridingPayerAccountError(policyPeriod, invoicingOverridesView.OverridingPayerAccount)"
+          value="invoicingOverridesView.OverridingPayerAccount"
+          visible="!policyPeriod.AgencyBill">
+          <PostOnChange
+            onChange="maybeResetPaymentPlan()"/>
+        </PickerInput>
+        <Label
+          label="displaykey.Web.AccountDetailNewPolicy.Plans"/>
+        <RangeInput
+          editable="true"
+          id="PaymentPlan"
+          label="displaykey.Web.NewPolicyDV.PaymentPlan"
+          required="true"
+          value="issuance.PolicyPaymentPlan"
+          valueRange="invoicingOverridesView.RelatedPaymentPlans">
+          <PostOnChange
+            onChange="invoicingOverridesView.clearOverridingInvoiceStreamIfIncompatibleWithPaymentPlan(issuance.PolicyPaymentPlan)"/>
+        </RangeInput>
+        <RangeInput
+          editable="true"
+          id="OverridingInvoiceStream"
+          label="displaykey.Web.NewPolicyDV.OverridingInvoiceStream"
+          required="policyPeriod.isListBill()"
+          value="invoicingOverridesView.OverridingInvoiceStream"
+          valueRange="policyPeriod.AgencyBill ? {} : gw.api.domain.invoice.InvoiceStreams.getCompatibleInvoiceStreams(invoicingOverridesView.DefaultPayer, issuance.PolicyPaymentPlan)"
+          visible="!policyPeriod.AgencyBill"/>
+        <RangeInput
+          editable="true"
+          id="DelinquencyPlan"
+          label="displaykey.Web.NewAccountDV.DelinquencyPlan"
+          required="false"
+          value="policyPeriod.PolicyPeriodDelinquencyPlan"
+          valueRange="policyPeriod.getApplicableDelinquencyPlans()"/>
+        <Label
+          label="displaykey.Web.AccountDetailNewPolicy.Producers"/>
+        <InputIterator
+          elementName="producerCodeRoleEntry"
+          value="producerCodeRoleEntries">
+          <Input
+            editable="true"
+            id="Producer"
+            inputConversion="producerSearchConverter.getProducer(VALUE)"
+            label="producerCodeRoleEntry.Role"
+            onPick="autoSelectSoleProducerCode(producerCodeRoleEntry)"
+            requestValidationExpression="producerCodeRoleEntry.Role == PolicyRole.TC_PRIMARY ? validatePrimaryProducer(VALUE) : null"
+            required="policyPeriod.AgencyBill and producerCodeRoleEntry.Role == PolicyRole.TC_PRIMARY"
+            value="producerCodeRoleEntry.Producer">
+            <MenuItem
+              action="ProducerSearchPopup.push()"
+              icon="&quot;search.png&quot;"
+              id="ProducerPicker"/>
+            <PostOnChange
+              onChange="autoSelectSoleProducerCode(producerCodeRoleEntry)"/>
+          </Input>
+          <RangeInput
+            editable="true"
+            id="ProducerCode"
+            label="displaykey.Web.NewPolicyDV.Code"
+            optionLabel="VALUE.Code"
+            required="policyPeriod.AgencyBill and producerCodeRoleEntry.Role == PolicyRole.TC_PRIMARY"
+            value="producerCodeRoleEntry.ProducerCode"
+            valueRange="producerCodeRoleEntry.Producer.ActiveProducerCodes"/>
+        </InputIterator>
+      </InputColumn>
+      <InputFooterSection>
+        <ListViewInput
+          boldLabel="true"
+          label="displaykey.Web.NewPolicyDV.Contacts"
+          labelAbove="true">
+          <Toolbar>
+            <ToolbarButton
+              hideIfReadOnly="true"
+              id="addNewContact"
+              label="displaykey.Button.Add">
+              <MenuItem
+                action="NewPolicyContactPopup.push(policyPeriod, Company)"
+                id="addNewCompany"
+                label="displaykey.Web.PolicyDetailContacts.AddNewCompany"/>
+              <MenuItem
+                action="NewPolicyContactPopup.push(policyPeriod, Person)"
+                hideIfReadOnly="true"
+                id="addNewPerson"
+                label="displaykey.Web.PolicyDetailContacts.AddNewPerson"/>
+            </ToolbarButton>
+            <IteratorButtons
+              addVisible="false"
+              iterator="NewPolicyContactsLV"/>
+            <PickerToolbarButton
+              action="ContactSearchPopup.push(false)"
+              available="true"
+              hideIfReadOnly="true"
+              id="addExistingContact"
+              label="displaykey.Web.PolicyDetailContacts.AddExistingContact"
+              onPick="gw.contact.ContactConnection.connectContactToPolicy(PickedValue, policyPeriod)"/>
+          </Toolbar>
+          <ListViewPanel
+            id="NewPolicyContactsLV">
+            <RowIterator
+              editable="true"
+              elementName="policyContact"
+              id="policyContactIterator"
+              toRemove="policyPeriod.removeFromContacts(policyContact)"
+              value="policyPeriod.Contacts">
+              <Row>
+                <Cell
+                  id="ContactName"
+                  label="displaykey.Web.NewPolicyContactsLV.Name"
+                  value="policyContact"/>
+                <Cell
+                  id="ContactAddress"
+                  label="displaykey.Web.NewPolicyContactsLV.Address"
+                  value="policyContact.Contact.PrimaryAddress"/>
+                <Cell
+                  id="ContactRoles"
+                  label="displaykey.Web.NewPolicyContactsLV.Roles"
+                  value="gw.api.web.policy.PolicyPeriodUtil.getRolesForDisplay(policyContact)"/>
+              </Row>
+            </RowIterator>
+          </ListViewPanel>
+        </ListViewInput>
+      </InputFooterSection>
+    </DetailViewPanel>
+    <Code><![CDATA[function autoSelectSoleProducerCode(producerCodeRoleEntry : ProducerCodeRoleEntry) {
+        var activeProducerCodes = producerCodeRoleEntry.Producer.ActiveProducerCodes;
+        if (activeProducerCodes.length == 1) {
+          producerCodeRoleEntry.ProducerCode = activeProducerCodes[0];
+        }
+      }
+function validatePrimaryProducer(producer : Producer) : String{
+  if(not policyPeriod.AgencyBill){
+    return null
+  }
+  return producer.AgencyBillPlan == null ? displaykey.Web.NewPolicyDV.InvalidPrimaryProducer : null
+}
+
+function maybeResetPaymentPlan() {
+  var overridingPayerAccount = invoicingOverridesView.OverridingPayerAccount
+  if (policyPeriod.ListBill && 
+      overridingPayerAccount != null &&
+      !overridingPayerAccount.PaymentPlans.contains(issuance.PolicyPaymentPlan)) {
+    issuance.PolicyPaymentPlan = null
+  }
+}]]></Code>
+  </Screen>
+</PCF>

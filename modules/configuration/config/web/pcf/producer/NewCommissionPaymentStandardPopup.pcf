@@ -1,0 +1,43 @@
+<?xml version="1.0"?>
+<PCF
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:noNamespaceSchemaLocation="../../../../../pcf.xsd">
+  <Popup
+    beforeCommit="standardPayment.makePayment()"
+    canEdit="true"
+    id="NewCommissionPaymentStandardPopup"
+    startInEditMode="true"
+    title="displaykey.Web.NewCommissionPayment.StandardTitle">
+    <LocationEntryPoint
+      signature="NewCommissionPaymentStandardPopup(producer : Producer)"/>
+    <Variable
+      name="producer"
+      type="Producer"/>
+    <Variable
+      initialValue="newStandardPayment()"
+      name="standardPayment"/>
+    <Screen
+      id="NewCommissionPaymentStandardScreen">
+      <Toolbar>
+        <ToolbarRangeInput
+          id="producercode"
+          label="displaykey.Web.NewCommissionPayment.ProducerCode"
+          required="true"
+          value="standardPayment.StandardProducerCode"
+          valueRange="producer.ProducerCodes">
+          <PostOnChange/>
+        </ToolbarRangeInput>
+        <EditButtons
+          updateLabel="displaykey.Web.NewCommissionPayment.Execute"/>
+      </Toolbar>
+      <PanelRef
+        def="NewCommissionPaymentDV(standardPayment)"/>
+    </Screen>
+    <Code><![CDATA[function newStandardPayment() : StandardCmsnPayment {
+        var scp = new StandardCmsnPayment(producer.Currency)
+        scp.StandardProducerCode = producer.ActiveProducerCodes[0];
+        scp.PaymentType = "allcurrent";
+        return scp;
+      }]]></Code>
+  </Popup>
+</PCF>

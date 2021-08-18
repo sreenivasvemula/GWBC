@@ -1,0 +1,32 @@
+<?xml version="1.0"?>
+<PCF
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:noNamespaceSchemaLocation="../../../../../pcf.xsd">
+  <Page
+    afterReturnFromPopup="if (popupCommitted) CurrentLocation.commit()"
+    canEdit="true"
+    canVisit="perm.System.accttabview and perm.System.acctdisbview"
+    id="ProducerDisbursements"
+    showUpLink="true"
+    title="displaykey.Web.ProducerDisbursements.Title">
+    <LocationEntryPoint
+      signature="ProducerDisbursements(producer : Producer)"/>
+    <Variable
+      name="producer"
+      type="Producer"/>
+    <Variable
+      initialValue="new web.disbursement.DisbursementUtil()"
+      name="disbursementUtil"/>
+    <Variable
+      initialValue="disbursementUtil.getProducerDisbursements(producer)"
+      name="disbursements"
+      recalculateOnRefresh="true"/>
+    <Screen
+      id="ProducerDisbursementsScreen">
+      <PanelRef
+        def="DisbursementsLV(disbursements, null)">
+        <Toolbar/>
+      </PanelRef>
+    </Screen>
+  </Page>
+</PCF>

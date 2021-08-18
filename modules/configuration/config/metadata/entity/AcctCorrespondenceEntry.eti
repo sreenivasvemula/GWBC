@@ -1,0 +1,25 @@
+<?xml version="1.0"?>
+<entity
+  xmlns="http://guidewire.com/datamodel"
+  entity="AcctCorrespondenceEntry"
+  type="retireable"
+  desc="Represents an entry in an AccountContact's CorrespondenceTypes array."
+  subpackage="account"
+  platform="false"
+  table="acctcorrespondenceentry">
+  <implementsEntity
+    name="NotInCurrencySilo"/>
+  <foreignkey
+    name="AccountContact"
+    desc="FK to container"
+    columnName="AccountContactID"
+    fkentity="AccountContact"
+    getterScriptability="hidden"
+    nullok="false"
+    setterScriptability="hidden"/>
+  <typekey
+    name="AcctCorrespondenceType"
+    typelist="AcctCorrespondenceType"
+    nullok="false"
+    setterScriptability="hidden"/>
+</entity>

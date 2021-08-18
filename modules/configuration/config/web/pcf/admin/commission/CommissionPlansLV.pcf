@@ -1,0 +1,75 @@
+<?xml version="1.0"?>
+<PCF
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:noNamespaceSchemaLocation="../../../../../../pcf.xsd">
+  <ListViewPanel
+    id="CommissionPlansLV">
+    <Require
+      name="commissionPlans"
+      type="CommissionPlanQuery"/>
+    <Variable
+      initialValue="new web.plan.PlanHelper()"
+      name="PlanHelper"/>
+    <RowIterator
+      editable="false"
+      elementName="CommissionPlan"
+      value="commissionPlans">
+      <ToolbarFilter
+        label="displaykey.Web.CommissionPlansLV.Show"
+        name="Filter">
+        <ToolbarFilterOptionGroup
+          filters="new web.plan.PlanListFilterSet().FilterOptions"/>
+      </ToolbarFilter>
+      <Row>
+        <Cell
+          align="left"
+          id="PlanOrder"
+          label="displaykey.Web.CommissionPlansLV.PlanOrder"
+          sortOrder="1"
+          value="CommissionPlan.PlanOrder"/>
+        <Cell
+          action="CommissionPlanDetail.go(CommissionPlan)"
+          id="Name"
+          label="displaykey.Web.CommissionPlansLV.Name"
+          value="CommissionPlan.Name"/>
+        <TextCell
+          enableSort="false"
+          format="displaykey.Web.AgencyBill.CommissionPercentFormat"
+          id="BasePercentage"
+          label="displaykey.Web.CommissionPlansLV.BasePercentage"
+          value="CommissionPlan.DefaultSubPlan.getBaseRate(&quot;primary&quot;)"/>
+        <Cell
+          enableSort="false"
+          id="IncludesIncentives"
+          label="displaykey.Web.CommissionPlansLV.IncludesIncentives"
+          value="CommissionPlan.DefaultSubPlan.Incentives.length &gt; 0"/>
+        <DateCell
+          id="EffectiveDate"
+          label="displaykey.Web.CommissionPlansLV.EffectiveDate"
+          value="CommissionPlan.EffectiveDate"/>
+        <DateCell
+          id="ExpirationDate"
+          label="displaykey.Web.CommissionPlansLV.ExpirationDate"
+          value="CommissionPlan.ExpirationDate"/>
+        <LinkCell
+          id="MovePriority"
+          label="displaykey.Web.CommissionPlansLV.PlanOrder.MovePriority">
+          <Link
+            action="PlanHelper.moveUp(CommissionPlan);"
+            available="perm.System.commplanedit"
+            icon="&quot;arrow_up.png&quot;"
+            id="MoveUp"
+            tooltip="displaykey.Web.CommissionPlansLV.PlanOrder.MoveUp"
+            visible="CommissionPlan.PlanOrder &gt; 1"/>
+          <Link
+            action="PlanHelper.moveDown(CommissionPlan);"
+            available="perm.System.commplanedit"
+            icon="&quot;arrow_down.png&quot;"
+            id="MoveDown"
+            tooltip="displaykey.Web.CommissionPlansLV.PlanOrder.MoveDown"
+            visible="!CommissionPlan.hasHighestPlanOrder()"/>
+        </LinkCell>
+      </Row>
+    </RowIterator>
+  </ListViewPanel>
+</PCF>

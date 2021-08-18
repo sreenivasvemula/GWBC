@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PCF
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:noNamespaceSchemaLocation="../../../../../pcf.xsd">
+  <Popup
+    canEdit="true"
+    id="TroubleTicketDetailsPopup"
+    title="displaykey.Web.TroubleTicketDetails.Title">
+    <LocationEntryPoint
+      signature="TroubleTicketDetailsPopup(troubleTicket : TroubleTicket)"/>
+    <Variable
+      name="troubleTicket"
+      type="TroubleTicket"/>
+    <Variable
+      initialValue="new CreateTroubleTicketHelper()"
+      name="createTroubleTicketHelper"
+      type="CreateTroubleTicketHelper"/>
+    <Variable
+      initialValue="troubleTicket.InitialAssigneeForPicker"
+      name="assigneeHolder"
+      type="assignment.Assignee[]"/>
+    <Screen
+      id="TroubleTicketDetailsScreen">
+      <Toolbar>
+        <ToolbarButton
+          action="TroubleTicketInfoPopup.push(troubleTicket, assigneeHolder)"
+          id="TroubleTicketDetailsPopup_EditDetailsButton"
+          label="displaykey.Web.TroubleTicketDetailsPopup.EditDetails"/>
+        <ToolbarButton
+          action="closeTicket()"
+          confirmMessage="web.troubleticket.TroubleTicketUtil.getCloseTicketConfirmationMessage(troubleTicket)"
+          hideIfEditable="true"
+          id="TroubleTicketDetailsPopup_CloseButton"
+          label="displaykey.Button.Close"
+          visible="!troubleTicket.IsClosed"/>
+      </Toolbar>
+      <PanelRef
+        def="TroubleTicketInfoDV(troubleTicket, assigneeHolder)"/>
+      <PanelRef
+        def="TroubleTicketTabbedDetailDV(troubleTicket, createTroubleTicketHelper)"/>
+    </Screen>
+    <Code>
+function closeTicket(){
+        CurrentLocation.startEditing();
+        // TODO : Put some exception handling here to display a user-readable message in the UI if the next line throws an exception
+        troubleTicket.close();
+        CurrentLocation.commit();
+      }
+    </Code>
+  </Popup>
+</PCF>

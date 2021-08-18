@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xml:lang="en" lang="en" xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+    <meta http-equiv="Content-Style-Type" content="text/css" />
+    <!-- MOTW-DISABLED saved from url=(0014)about:internet -->
+    <title>Developing the Writer for Your Custom Work Queue</title>
+    <link rel="StyleSheet" href="css/batchprocess.css" type="text/css" media="all" />
+    <link rel="StyleSheet" href="css/webworks.css" type="text/css" media="all" />
+    <link rel="StyleSheet" href="css/css-guidewire-extra.css" type="text/css" media="all" />
+    <script type="text/javascript" language="JavaScript1.2" src="wwhdata/common/context.js"></script>
+    <script type="text/javascript" language="JavaScript1.2" src="wwhdata/common/towwhdir.js"></script>
+    <script type="text/javascript" language="JavaScript1.2" src="wwhdata/common/wwhpagef.js"></script>
+    <script type="text/javascript" language="JavaScript1.2">
+      <!--
+        var  WebWorksRootPath = "";
+      // -->
+    </script>
+    <script type="text/javascript" language="JavaScript1.2">
+      <!--
+        // Set reference to top level help frame
+        //
+        var  WWHFrame = WWHGetWWHFrame("", true);
+      // -->
+    </script>
+    <script type="text/javascript" language="JavaScript1.2" src="scripts/expand.js"></script>
+    <!-- THE FOLLOWING IS A GUIDEWIRE STYLE DEFINITION FOR THE LINK TO THIS FEATURE -->
+    <link rel="StyleSheet" href="css/css-guidewire-extra.css" type="text/css" media="all" />
+    <!-- THE FOLLOWING IS A GUIDEWIRE GSCRIPT FUNCTION FOR THE LINK TO THIS FEATURE -->
+    <script type="text/javascript">
+function guidewire_selectall()
+{
+var text_val=eval("document.linktothisurlform.urlfield");
+text_val.focus();
+text_val.select();
+}
+</script>
+  </head>
+  <body onLoad="WWHUpdate();" onUnload="WWHUnload();" onKeyDown="WWHHandleKeyDown((document.all||document.getElementById||document.layers)?event:null);" onKeyPress="WWHHandleKeyPress((document.all||document.getElementById||document.layers)?event:null);" onKeyUp="WWHHandleKeyUp((document.all||document.getElementById||document.layers)?event:null);">
+    <!-- THE FOLLOWING IS A GUIDEWIRE DIV FOR THE 'LINK TO THIS' FEATURE -->
+    <div id="linkToThisPage" class="popup" style="display: none;">
+      <div class="popupTitle">Link Directly to This Page 
+           <a href="#" onclick="var thePopup = getElementById('linkToThisPage');thePopup.style.display='none';return false;"><img class="popupClosebox" src="wwhelp/wwhimpl/common/images/close.gif" /></a></div>
+      <div style="padding:6px;">
+        <div class="popupText" id="linkToThisPageBookmark">An error has occurred if you see this messsage.</div>
+        <form name="linktothisurlform" method="post" action="" style="width:275px;margin:0px">
+          <input type="text" class="popupURLText" id="linkToThisPageURL" name="urlfield" rows="1" cols="55" onClick="guidewire_selectall();" onFocus="guidewire_selectall();"></input>
+        </form>
+      </div>
+    </div>
+    <br />
+    <div class="WebWorks_Breadcrumbs" style="text-align: left;">
+      <span>BillingCenter Integration Guide</span> : 
+    <span class="WebWorks_Breadcrumbs" style="text-align: left;"><a class="WebWorks_Breadcrumb_Link" href="p-claims.html#2333371">Other Integration Topics</a> : <a class="WebWorks_Breadcrumb_Link" href="batchprocess.29.01.html#2333371">Custom Batch Processing</a> : <a class="WebWorks_Breadcrumb_Link" href="batchprocess.29.07.html#2333371">Developing Custom Work Queues</a> : Developing the Writer for Your Custom Work Queue</span></div>
+    <hr align="left" />
+    <blockquote>
+      <h4 class="H2B_-_Heading_2_Break"><a name="2333371">Developing the Writer for Your Custom Work Queue</a></h4>
+      <div class="B_-_Body"><a name="2333372">You provide the programming logic for a writer thread by overriding the </a><span class="cv_-_computer_voice">findTargets</span> method that your custom work queue class inherits from <span class="cv_-_computer_voice">WorkQueueBase</span>. </div>
+      <div class="NI_-_Note_Important">
+        <span class="n_-_note">IMPORTANT   </span><a name="2340177">Do not operate on any of the units of work in a batch within your writer logic. Otherwise, process history statistics for the batch will be incorrect. </a></div>
+      <div class="B_-_Body"><a name="2353660">You return a query builder iterator with the results you want as targets for the work items in a batch. BillingCenter uses the iterator to write the work items to the work queue. The </a><span class="cv_-_computer_voice">findTargets</span> method is a template method for which you specify the target entity type, the same type for which you make a query builder object. </div>
+      <div class="B_-_Body"><a name="2353898">The following example code is a writer for a work queue that operates on </a><span class="cv_-_computer_voice">Activity</span> instances. The query selects activities that have not been viewed for five days or more and returns the iterator. </div>
+      <PRE class="CF_-_Code_First_Line"><a name="2353943">override function findTargets (): Iterator  &lt;Activity&gt; {</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2366682">&nbsp;</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2366683">&nbsp;&nbsp;// Query the target type and apply conditions: activities not viewed for 5 days or more</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2366684">&nbsp;&nbsp;var targetsQuery = Query.make(</a><span class="s_-_strong">Activity</span>)</PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2353947">&nbsp;&nbsp;targetsQuery.compare(Activity#LastViewedDate.ProperyInfo.Name, LessThanOrEquals,</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2409085">&nbsp;&nbsp;&nbsp;&nbsp;java.util.Date.Today.addBusinessDays(-5))</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2353954">&nbsp;</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2353978">&nbsp;&nbsp;</a><span class="s_-_strong">return</span> targetsQuery.select().<span class="s_-_strong">iterator()</span></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2354388">&nbsp;</a></PRE>
+      <PRE class="CL_-_Code_Last_Line"><a name="2353955">}</a></PRE>
+      <div class="H3_-_Heading_3_outer" style="margin-left: 36pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <h5 class="H3_-_Heading_3_inner" style="width: 18pt; white-space: nowrap"></h5>
+            </td>
+            <td width="100%">
+              <h5 class="H3_-_Heading_3_inner"><a name="2361661">Returning an Empty Iterator</a></h5>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="B_-_Body"><a name="2362960">Generally, if your writer returns an iterator with items found by the query, BillingCenter creates a </a><span class="cv_-_computer_voice">ProcessHistory</span> instance for the batch run. Sometimes the query in your writer finds no qualifying items. If your writer returns an empty iterator, BillingCenter does not create a process history for that batch processing run. </div>
+      <div class="H3_-_Heading_3_outer" style="margin-left: 36pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <h5 class="H3_-_Heading_3_inner" style="width: 18pt; white-space: nowrap"></h5>
+            </td>
+            <td width="100%">
+              <h5 class="H3_-_Heading_3_inner"><a name="2362931">Writing Custom Work Item Types</a></h5>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="B_-_Body"><a name="2361662">If you defined a custom work item type instead of using </a><span class="cv_-_computer_voice">StandardWorkItem</span>, you must override the <span class="cv_-_computer_voice">createWorkItem</span> method to write new work items to your custom work queue table. The method has two parameters. </div>
+      <div class="BI_-_Bullet_Item_outer" style="margin-left: 57pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="BI_-_Bullet_Item_inner" style="width: 15pt; white-space: nowrap">
+                <span class="bu_-_bullet">•	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="BI_-_Bullet_Item_inner"><span class="cv_-_computer_voice"><a name="2398254">target</a></span> – An object reference to an entity instance in the iterator returned from the <span class="cv_-_computer_voice">findTargets</span> method</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="BI_-_Bullet_Item_outer" style="margin-left: 57pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="BI_-_Bullet_Item_inner" style="width: 15pt; white-space: nowrap">
+                <span class="bu_-_bullet">•	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="BI_-_Bullet_Item_inner"><span class="cv_-_computer_voice"><a name="2398392">safeBundle</a></span> – A transaction bundle provided by BillingCenter to manage updates to the work queue table</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="B_-_Body"><a name="2398523">Your method implementation must create a new work item of the custom work item type that you defined. Pass the </a><span class="cv_-_computer_voice">safeBundle</span> parameter in the new work item statement. Then, assign the <span class="cv_-_computer_voice">target</span> parameter to the target unit-of-work field that you defined for you custom work item type. If you defined additional fields, assign values to them, too. </div>
+      <div class="B_-_Body"><a name="2399043">The return type for the </a><span class="cv_-_computer_voice">createWorkItem</span> method is any entity type that implements the <span class="cv_-_computer_voice">WorkItem</span> delegate. Return your new custom work item type. </div>
+      <div class="B_-_Body"><a name="2399221">The following Gosu example code creates a new custom work item that has a single custom field, an </a><span class="cv_-_computer_voice">Activity</span> instance. The implementation gives the target field in the parameter list the name <span class="cv_-_computer_voice">activity</span> to clarify the code. The custom work item type is <span class="cv_-_computer_voice">MyWorkItem</span>. </div>
+      <PRE class="CF_-_Code_First_Line"><a name="2400106">	override function createWorkItem (</a><span class="s_-_strong">activity</span> : Activity, safeBundle : Bundle) : WorkItem {</PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2400107">&nbsp;</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2400108">&nbsp;&nbsp;var customWorkItem = new </a><span class="s_-_strong">myWorkItem</span>(safeBundle)</PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2400109">&nbsp;&nbsp;customWorkItem.Activity = activity</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2400110">&nbsp;</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2400111">&nbsp;&nbsp;return workItem</a></PRE>
+      <PRE class="CL_-_Code_Last_Line"><a name="2407538">}</a></PRE>
+      <script type="text/javascript" language="JavaScript1.2">
+        <!--
+          // Clear related topics
+          //
+          WWHClearRelatedTopics();
+
+          document.writeln(WWHRelatedTopicsInlineHTML());
+        // -->
+      </script>
+    </blockquote>
+    <script type="text/javascript" language="JavaScript1.2">
+      <!--
+        document.write(WWHRelatedTopicsDivTag() + WWHPopupDivTag() + WWHALinksDivTag());
+      // -->
+    </script>
+  </body>
+</html>

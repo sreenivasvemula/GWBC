@@ -1,0 +1,77 @@
+<?xml version="1.0"?>
+<PCF
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="../../../../../pcf.xsd">
+  <Wizard
+          beforeCommit="uiWriteOff.doWriteOff()"
+          cancelWarning="displaykey.Web.NewNegativeWriteoffWizard.CancelConfirmation"
+          id="NewNegativeWriteoffWizard">
+    <LocationEntryPoint
+            signature="NewNegativeWriteoffWizard()"/>
+    <LocationEntryPoint
+            signature="NewNegativeWriteoffWizard(passedInTarget : entity.TAccountOwner)"/>
+    <Variable
+            initialValue="new web.accounting.TAccountOwnerReference()"
+            name="targetOfWriteOff"
+            type="web.accounting.TAccountOwnerReference"/>
+    <Variable
+            initialValue="createNewUIWriteOff( )"
+            name="uiWriteOff"
+            type="web.accounting.UIWriteOffCreation"/>
+    <Variable
+            initialValue="uiWriteOff != null ? uiWriteOff.WriteOff.TAccountOwner : null"
+            name="passedInTarget"
+            recalculateOnRefresh="true"/>
+    <WizardStep
+            allowNext="targetOfWriteOff.TAccountOwner != null"
+            id="TargetStep"
+            label="displaykey.Web.NewNegativeWriteoffWizard.Target.Label"
+            onExit="onTargetStepExit()"
+            screen="NewNegativeWriteoffWizardAccountSelectStepScreen(targetOfWriteOff)"
+            title="displaykey.Web.NewNegativeWriteoffWizard.Target.Title"/>
+    <WizardStep
+            id="DetailsStep"
+            label="displaykey.Web.NewNegativeWriteoffWizard.Details.Label"
+            onExit="onDetailsStepExit()"
+            screen="NewNegativeWriteoffWizardDetailsStepScreen(uiWriteOff)"
+            title="displaykey.Web.NewNegativeWriteoffWizard.Details.Title"/>
+    <WizardStep
+            allowFinish="uiWriteOff != null &amp;&amp; uiWriteOff.Amount != null"
+            id="ConfirmationStep"
+            label="displaykey.Web.NewNegativeWriteoffWizard.Confirmation.Label"
+            screen="NewNegativeWriteoffWizardConfirmationStepScreen(uiWriteOff)"
+            title="displaykey.Web.NewNegativeWriteoffWizard.Confirmation.Title"/>
+    <Code><![CDATA[
+              function createNewUIWriteOff(): web.accounting.UIWriteOffCreation {
+                discardOldWriteOff();
+                if (targetOfWriteOff.TAccountOwner typeis Account) {
+                  var factory = new web.accounting.WriteOffFactory(CurrentLocation)
+                  var writeOff = factory.createAccountNegativeWriteOff(targetOfWriteOff.TAccountOwner)
+                  return new web.accounting.UIWriteOffCreation(writeOff);
+                } else {
+                  return null;
+                }
+              }
+
+              public function onTargetStepExit() {
+                if (targetOfWriteOff == null) {
+                  discardOldWriteOff();
+                  uiWriteOff = null;
+                }
+                else if (uiWriteOff == null || uiWriteOff.WriteOff.TAccountOwner != targetOfWriteOff.TAccountOwner) {
+                  uiWriteOff = createNewUIWriteOff()
+                }
+              }
+
+              public function onDetailsStepExit() {
+                uiWriteOff.initiateApprovalActivityIfUserLacksAuthority()
+              }
+
+              private function discardOldWriteOff() {
+                if (uiWriteOff != null) {
+                  uiWriteOff.cleanupBeforeDiscard();
+                }
+              }
+      ]]></Code>
+  </Wizard>
+</PCF>

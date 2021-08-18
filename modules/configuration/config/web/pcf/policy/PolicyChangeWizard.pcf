@@ -1,0 +1,58 @@
+<?xml version="1.0"?>
+<PCF
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:noNamespaceSchemaLocation="../../../../../pcf.xsd">
+  <Wizard
+    beforeCommit="executePolicyChange()"
+    id="PolicyChangeWizard">
+    <LocationEntryPoint
+      signature="PolicyChangeWizard(policyPeriod: PolicyPeriod)"/>
+    <Variable
+      name="policyPeriod"
+      type="PolicyPeriod"/>
+    <Variable
+      initialValue="initializePolicyChange()"
+      name="policyChange"
+      type="PolicyChange"/>
+    <Variable
+      initialValue="com.google.common.collect.Maps.newHashMap&lt;gw.api.domain.charge.ChargeInitializer, gw.invoice.InvoicingOverridesView&gt;()"
+      name="chargeToInvoicingOverridesViewMap"/>
+    <WizardStep
+      id="BasicsStep"
+      label="displaykey.Web.PolicyDetail.PolicyChangeWizard.Basics.Label"
+      screen="PolicyChangeWizardBasicsStepScreen(policyChange)"
+      title="displaykey.Web.PolicyDetail.PolicyChangeWizard.Basics.Title"/>
+    <WizardStep
+      allowFinish="true"
+      id="ChargeStep"
+      label="displaykey.Web.PolicyDetail.PolicyChangeWizard.Charges.Label"
+      screen="PolicyChangeWizardChargesStepScreen(policyPeriod, policyChange, chargeToInvoicingOverridesViewMap)"
+      title="displaykey.Web.PolicyDetail.PolicyChangeWizard.Charges.Title"/>
+    <Code><![CDATA[function initializePolicyChange() : PolicyChange {
+  var newPolicyChange = new entity.PolicyChange(policyPeriod.Currency)
+  newPolicyChange.AssociatedPolicyPeriod = policyPeriod
+  newPolicyChange.ModificationDate = util.DateUtil.currentDate()
+  return newPolicyChange
+}
+
+function executePolicyChange() {
+  policyChange.ModificationDate = policyChange.ModificationDate.trimToMidnight()
+  
+  addModifiersBeforeExecute()
+  policyChange.execute()
+  policyPeriod.addHistoryFromGosu( util.DateUtil.currentDate(), HistoryEventType.TC_POLICYCHANGED, 
+      displaykey.Java.PolicyHistory.PolicyChanged(policyPeriod.PolicyNumberLong), null as Transaction, null, true )
+}
+
+function addModifiersBeforeExecute() {
+  if (policyChange.ModificationDate == policyPeriod.EffectiveDate) {
+    var paymentPlan = policyChange.AssociatedPolicyPeriod.PaymentPlan
+    if (paymentPlan.PolicyChange.ChargeSlicingOverrides.DownPaymentPercent == 0) {
+      var paymentPlanOverride = new DownPaymentOverride()
+      paymentPlanOverride.DownPaymentPercent = paymentPlan.DownPaymentPercent
+      policyChange.addToPaymentPlanModifiers(paymentPlanOverride)
+    }
+  }
+}]]></Code>
+  </Wizard>
+</PCF>

@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<DocumentTemplateDescriptor
+  id="CheckNotSigned.gosu.rtf"
+  name="Missing Signature Letter"
+  description="The letter that is sent when we receive a check missing a signature."
+  type="other"
+  scope="all"
+  lob=""
+  state="NM"
+  mime-type="application/rtf"
+  date-effective="Mar 15, 2003"
+  date-expires="Mar 15, 2020"
+  keywords="sample, test"
+  required-symbols="policy"> <!-- this required symbol make the template only searchable in policy context and make
+  sure that policy variable is in the context and can be used like below -->
+
+  <ContextObject name="To" type="Account">
+	  <DefaultObjectValue>policy.Account</DefaultObjectValue>
+  </ContextObject>
+
+  <ContextObject name="PrimaryAddress" type="AddressBase">
+	  <DefaultObjectValue>policy.Account.Insured.Contact.PrimaryAddress</DefaultObjectValue>
+  </ContextObject>
+
+  <ContextObject name="PolicyPeriod" type="PolicyPeriod">
+	  <DefaultObjectValue>policy.LatestPolicyPeriod</DefaultObjectValue>
+  </ContextObject>
+
+  <FormFieldGroup name="default">
+    <DisplayValues>
+      <DateFormat>MMM dd, yyyy</DateFormat>
+    </DisplayValues>
+    <FormField name="InsuredName">To.AccountName</FormField>
+    <FormField name="InsuredAddress1">PrimaryAddress.AddressLine1</FormField>
+    <FormField name="InsuredCity">PrimaryAddress.City</FormField>
+    <FormField name="InsuredState">PrimaryAddress.State</FormField>
+    <FormField name="InsuredZip">PrimaryAddress.PostalCode</FormField>
+    <FormField name="PolicyNumber">PolicyPeriod.PolicyNumberLong</FormField>
+    <FormField name="IssuingCompany">PolicyPeriod.UWCompany</FormField>
+    <FormField name="CurrentDate">gw.api.util.DateUtil.currentDate()</FormField>
+  </FormFieldGroup>
+
+</DocumentTemplateDescriptor>

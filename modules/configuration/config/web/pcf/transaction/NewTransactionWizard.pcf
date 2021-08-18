@@ -1,0 +1,35 @@
+<?xml version="1.0"?>
+<PCF
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:noNamespaceSchemaLocation="../../../../../pcf.xsd">
+  <Wizard
+    afterCancel="DesktopGroup.go()"
+    afterFinish="DesktopGroup.go()"
+    beforeCommit="helper.BillingInstruction.execute()"
+    canVisit="perm.Transaction.gentxn"
+    cancelWarning="displaykey.Web.NewTransactionWizard.CancelConfirmation"
+    countsAsWork="false"
+    id="NewTransactionWizard">
+    <LocationEntryPoint
+      signature="NewTransactionWizard()"/>
+    <Variable
+      initialValue="new web.accounting.TAccountOwnerReference()"
+      name="tAccountOwnerReference"
+      type="web.accounting.TAccountOwnerReference"/>
+    <Variable
+      initialValue="new gw.accounting.NewGeneralSingleChargeHelper(gw.transaction.UserTransactionType.FEE_OR_GENERAL)"
+      name="helper"/>
+    <WizardStep
+      allowNext="tAccountOwnerReference.TAccountOwner != null"
+      id="Step1"
+      label="displaykey.Web.NewTransactionWizard.AccountPolicySearch.Label"
+      onExit="helper.TAccountOwner = tAccountOwnerReference.TAccountOwner"
+      screen="WizardsStep1AccountPolicySearchScreen(tAccountOwnerReference, null, false, true)"
+      title="displaykey.Web.NewTransactionWizard.AccountPolicySearch.Title"/>
+    <WizardStep
+      id="Step2"
+      label="displaykey.Web.NewTransactionWizard.Charges.Label"
+      screen="ChargeDetailsScreen(helper)"
+      title="displaykey.Web.NewTransactionWizard.Charges.Title"/>
+  </Wizard>
+</PCF>

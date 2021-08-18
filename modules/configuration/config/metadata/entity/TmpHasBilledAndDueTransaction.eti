@@ -1,0 +1,33 @@
+<?xml version="1.0"?>
+<!-- ********************************************************************************************************************
+    Temp table used during load of ChargePaidFromAccountCtx, BaseDistItem, and DistItem tables.
+    This is used during upgrade from BC 2.1 to 3.0.3.
+  ******************************************************************************************************************** -->
+<entity
+  xmlns="http://guidewire.com/datamodel"
+  entity="TmpHasBilledAndDueTransaction"
+  type="nonkeyable"
+  desc="Temp table used during update of InvoiceItem table."
+  exportable="false"
+  subpackage="invoice"
+  loadable="false"
+  platform="false"
+  table="TmpHasChargeBilledAndDue"
+  temporary="true">
+  <implementsEntity name="NotInCurrencySilo"/>
+  <column
+    name="HasChargeBilledTransaction"
+    type="bit"
+    nullok="false"
+    desc="The associated invoice item has a charge billed transaction"/>
+    <column
+      name="HasChargeDueTransaction"
+      type="bit"
+      nullok="false"
+      desc="The associated invoice item has a charge due transaction"/>
+  <column
+    name="InvoiceItemId"
+    type="softentityreference"
+    nullok="false"
+    desc="InvoiceItemId"/>
+</entity>

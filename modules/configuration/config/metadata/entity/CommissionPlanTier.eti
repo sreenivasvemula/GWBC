@@ -1,0 +1,39 @@
+<?xml version="1.0"?>
+<entity
+  xmlns="http://guidewire.com/datamodel"
+  entity="CommissionPlanTier"
+  type="versionable"
+  desc="Represents an entry in a CommissionPlan's ExcludedTiers array."
+  admin="true"
+  subpackage="commission"
+  loadable="false"
+  platform="false"
+  table="commissionplantier">
+  <implementsEntity
+    name="NotInCurrencySilo"/>
+  <foreignkey
+    name="CommissionPlan"
+    desc="FK to container."
+    columnName="CommissionPlanID"
+    fkentity="CommissionPlan"
+    getterScriptability="doesNotExist"
+    nullok="false"
+    setterScriptability="doesNotExist"/>
+  <typekey
+    name="Tier"
+    typelist="ProducerTier"
+    getterScriptability="doesNotExist"
+    nullok="false"
+    setterScriptability="doesNotExist"/>
+  <index
+    desc="Legacy"
+    name="commissionplantier"
+    unique="true">
+    <indexcol
+      name="CommissionPlanID"
+      keyposition="1"/>
+    <indexcol
+      name="Tier"
+      keyposition="2"/>
+  </index>
+</entity>

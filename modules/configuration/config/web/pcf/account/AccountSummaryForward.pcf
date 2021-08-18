@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+<PCF
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:noNamespaceSchemaLocation="../../../../../pcf.xsd">
+  <Forward
+    id="AccountSummaryForward">
+    <LocationEntryPoint
+      signature="AccountSummaryForward(accountNumber : String)"/>
+    <Variable
+      name="accountNumber"
+      type="String"/>
+    <Variable
+      initialValue="gw.api.database.Query.make(entity.Account).compare(&quot;AccountNumber&quot;, Equals, accountNumber).select().getFirstResult()"
+      name="account"/>
+    <ForwardCondition
+      action="AccountDetailSummary.go(account)"
+      condition="account != null"/>
+    <ForwardCondition
+      action="AccountSearch.go()"
+      condition="account == null"/>
+  </Forward>
+</PCF>

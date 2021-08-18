@@ -1,0 +1,174 @@
+<?xml version="1.0"?>
+<PCF
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:noNamespaceSchemaLocation="../../../../../pcf.xsd">
+  <Popup
+    beforeCommit="applySuspensePaymentToTarget()"
+    canEdit="true"
+    id="ApplySuspensePaymentPopup"
+    startInEditMode="true"
+    title="displaykey.Web.ApplySuspensePaymentPopup.Title">
+    <LocationEntryPoint
+      signature="ApplySuspensePaymentPopup(suspensePayment : SuspensePayment)"/>
+    <Variable
+      name="suspensePayment"
+      type="SuspensePayment"/>
+    <Variable
+      initialValue="new web.payment.SuspensePaymentUtil()"
+      name="suspensePaymentUtil"/>
+    <Variable
+      initialValue="com.guidewire.pl.system.dependency.PLDependencies.getPluginConfig().getPlugin(gw.plugin.payment.ISuspensePayment)"
+      name="suspensePaymentPlugin"
+      type="gw.plugin.payment.ISuspensePayment"/>
+    <Variable
+      initialValue="suspensePayment.CurrentApplyTo"
+      name="applyTo"
+      type="SuspensePaymentApplyTo"/>
+    <Variable
+      initialValue="suspensePayment.AccountNumber "
+      name="accountNumber"/>
+    <Variable
+      initialValue="suspensePayment.PolicyNumber"
+      name="policyNumber"/>
+    <Variable
+      initialValue="suspensePayment.ProducerName"
+      name="producerName"/>
+    <Variable
+      name="targetAccount"
+      type="Account"/>
+    <Variable
+      name="targetPolicyPeriod"
+      type="PolicyPeriod"/>
+    <Variable
+      name="targetProducer"
+      type="Producer"/>
+    <Screen
+      id="ApplySuspensePaymentScreen">
+      <Toolbar>
+        <ToolbarButton
+          action="CurrentLocation.commit();AgencyBillExecutedPayments.push(targetProducer);"
+          id="ProducerUpdate"
+          label="displaykey.Button.Update"
+          shortcut="S"
+          visible="applyTo == SuspensePaymentApplyTo.TC_PRODUCER"/>
+        <EditButtons
+          updateVisible="applyTo != SuspensePaymentApplyTo.TC_PRODUCER"/>
+      </Toolbar>
+      <DetailViewPanel
+        id="ApplySuspensePaymentDV">
+        <InputColumn>
+          <Label
+            label="displaykey.Web.ApplySuspensePaymentPopup.Target"/>
+          <Choice
+            id="AccountChoice"
+            option="SuspensePaymentApplyTo.TC_ACCOUNT.Code"
+            value="applyTo">
+            <Input
+              conversionExpression="(PickedValue as Account).AccountNumber"
+              editable="true"
+              id="AccountNumber"
+              label="displaykey.Web.ApplySuspensePaymentPopup.AccountNumber"
+              validationExpression="updateAndValidateAccount()"
+              value="accountNumber">
+              <MenuItem
+                action="AccountSearchPopup.push()"
+                icon="&quot;search.png&quot;"
+                id="AccountPicker"/>
+            </Input>
+          </Choice>
+          <Choice
+            id="PolicyChoice"
+            option="SuspensePaymentApplyTo.TC_POLICY.Code"
+            value="applyTo">
+            <Input
+              conversionExpression="(PickedValue as PolicyPeriod).PolicyNumber"
+              editable="true"
+              id="PolicyNumber"
+              label="displaykey.Web.ApplySuspensePaymentPopup.PolicyNumber"
+              validationExpression="updateAndValidatePolicy()"
+              value="policyNumber">
+              <MenuItem
+                action="PolicySearchPopup.push()"
+                icon="&quot;search.png&quot;"
+                id="PolicyPicker"/>
+            </Input>
+          </Choice>
+          <Choice
+            id="ProducerChoice"
+            option="SuspensePaymentApplyTo.TC_PRODUCER.Code"
+            value="applyTo">
+            <Input
+              conversionExpression="(PickedValue as Producer).Name"
+              editable="true"
+              id="ProducerName"
+              label="displaykey.Web.ApplySuspensePaymentPopup.ProducerName"
+              validationExpression="updateAndValidateProducer()"
+              value="producerName">
+              <MenuItem
+                action="ProducerSearchPopup.push()"
+                icon="&quot;search.png&quot;"
+                id="ProducerPicker"/>
+              <PostOnChange/>
+            </Input>
+          </Choice>
+        </InputColumn>
+      </DetailViewPanel>
+      <DetailViewPanel>
+        <InputColumn>
+          <ListViewInput
+            def="SuspensePaymentTransactionsLV(suspensePayment)"
+            id="suspensePaymentTransactions">
+            <Toolbar/>
+          </ListViewInput>
+        </InputColumn>
+      </DetailViewPanel>
+    </Screen>
+    <Code><![CDATA[uses com.guidewire.pl.web.controller.UserDisplayableException
+
+// validationExpression expects an error string or null for success
+function updateAndValidateAccount() : String {
+  targetAccount = suspensePaymentPlugin.findAccountToApply(accountNumber)
+  if (applyTo == SuspensePaymentApplyTo.TC_ACCOUNT and (targetAccount == null)) {
+    return displaykey.Web.ApplySuspensePaymentPopup.Error.AccountNotFound
+  } else {
+    return null
+  }
+}
+
+function updateAndValidatePolicy() : String {
+  targetPolicyPeriod = suspensePaymentPlugin.findPolicyPeriodToApply(policyNumber)
+  if (applyTo == SuspensePaymentApplyTo.TC_POLICY and (targetPolicyPeriod == null)) {
+    return displaykey.Web.ApplySuspensePaymentPopup.Error.PolicyNotFound
+  } else {
+    return null
+  }
+}
+
+function updateAndValidateProducer() : String {
+  targetProducer = suspensePaymentPlugin.findProducerToApply(producerName)
+  if (applyTo == SuspensePaymentApplyTo.TC_PRODUCER and (targetProducer == null)) {
+    return displaykey.Web.ApplySuspensePaymentPopup.Error.ProducerNotFound
+  } else {
+    return null
+  }
+}
+
+function applySuspensePaymentToTarget() {
+  switch(applyTo) {
+    case SuspensePaymentApplyTo.TC_ACCOUNT:
+        suspensePayment.applyTo(targetAccount)
+        break
+    case SuspensePaymentApplyTo.TC_POLICY:
+        suspensePayment.applyTo(targetPolicyPeriod)
+        break
+    case SuspensePaymentApplyTo.TC_PRODUCER:
+        suspensePayment.applyTo(targetProducer)
+        break
+    default:
+        throw new UserDisplayableException(displaykey.Java.Validation.MissingRequired(displaykey.Web.ApplySuspensePaymentPopup.AccountNumber
+            + ", " + displaykey.Web.ApplySuspensePaymentPopup.PolicyNumber
+            + ", " + displaykey.Web.ApplySuspensePaymentPopup.ProducerName))
+  }
+}]]></Code>
+  </Popup>
+</PCF>

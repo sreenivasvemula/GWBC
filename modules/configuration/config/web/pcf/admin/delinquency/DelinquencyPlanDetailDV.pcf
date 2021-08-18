@@ -1,0 +1,153 @@
+<?xml version="1.0"?>
+<PCF
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:noNamespaceSchemaLocation="../../../../../../pcf.xsd">
+  <DetailViewPanel
+    editable="true"
+    id="DelinquencyPlanDetailDV">
+    <Require
+      name="delinquencyPlan"
+      type="DelinquencyPlan"/>
+    <Variable
+      initialValue="not delinquencyPlan.InUse"
+      name="planNotInUse"
+      recalculateOnRefresh="true"/>
+    <Variable
+      initialValue="gw.api.util.LocaleUtil.getAllLanguages().Count &gt; 1"
+      name="hasMultipleLanguages"/>
+    <InputColumn>
+      <Label
+        id="PlanDetails"
+        label="displaykey.Web.DelinquencyPlanDetailDV.PlanDetails"/>
+      <Input
+        editable="planNotInUse"
+        id="Name"
+        label="displaykey.Java.DelinquencyPlan.Field.Name"
+        required="true"
+        value="delinquencyPlan.Name">
+        <PostOnChange/>
+      </Input>
+      <DateInput
+        editable="planNotInUse"
+        id="EffectiveDate"
+        label="displaykey.Java.DelinquencyPlan.Field.EffectiveDate"
+        required="true"
+        value="delinquencyPlan.EffectiveDate"/>
+      <DateInput
+        editable="true"
+        id="ExpirationDate"
+        label="displaykey.Java.DelinquencyPlan.Field.ExpirationDate"
+        validationExpression="delinquencyPlan.hasValidExpirationDate() ? null : displaykey.Web.Plan.ExpirationDate.ValidationError"
+        value="delinquencyPlan.ExpirationDate"/>
+      <TextInput
+        id="Currency"
+        label="displaykey.Java.DelinquencyPlan.Field.Currency"
+        value="delinquencyPlan.Currency"/>
+      <InputDivider/>
+      <Label
+        label="displaykey.Java.DelinquencyPlan.Field.CancellationTarget"/>
+      <RangeRadioInput
+        editable="planNotInUse"
+        id="CancellationTarget"
+        label="displaykey.Java.DelinquencyPlan.Field.CancellationTarget"
+        value="delinquencyPlan.CancellationTarget"
+        valueRange="typekey.CancellationTarget.getTypeKeys(false)"/>
+      <BooleanRadioInput
+        editable="planNotInUse"
+        id="HoldInvoicing"
+        label="displaykey.Java.DelinquencyPlan.Field.HoldInvoicingOnDlnqPolicies"
+        value="delinquencyPlan.HoldInvoicingOnDlnqPolicies"/>
+      <Label
+        label="displaykey.Web.DelinquencyPlanDetailDV.GracePeriod"/>
+      <Input
+        editable="planNotInUse"
+        id="GracePeriodDays"
+        label="displaykey.Java.DelinquencyPlan.Field.GracePeriodDays"
+        validationExpression="web.delinquency.DelinquencyPlanUtil.validateGracePeriod( delinquencyPlan )"
+        value="delinquencyPlan.GracePeriodDays"/>
+      <InputDivider/>
+      <Label
+        label="displaykey.Web.DelinquencyPlanDetailDV.Fees"/>
+      <MonetaryAmountInput
+        currency="delinquencyPlan.Currency"
+        editable="planNotInUse"
+        id="LateFeeAmount"
+        label="displaykey.Java.DelinquencyPlan.Field.LateFeeAmount"
+        value="delinquencyPlan.LateFeeAmount"/>
+      <MonetaryAmountInput
+        currency="delinquencyPlan.Currency"
+        editable="planNotInUse"
+        id="ReinstatementFeeAmount"
+        label="displaykey.Java.DelinquencyPlan.Field.ReinstatementFeeAmount"
+        value="delinquencyPlan.ReinstatementFeeAmount"/>
+    </InputColumn>
+    <InputColumn>
+      <Label
+        label="displaykey.Web.DelinquencyPlanDetailDV.AmountThresholds"/>
+      <MonetaryAmountInput
+        currency="delinquencyPlan.Currency"
+        editable="planNotInUse"
+        id="WriteoffThreshold"
+        label="displaykey.Java.DelinquencyPlan.Field.WriteoffThreshold"
+        validationExpression="web.delinquency.DelinquencyPlanUtil.validateWriteoffThreshold( delinquencyPlan )"
+        value="delinquencyPlan.WriteoffThreshold"/>
+      <MonetaryAmountInput
+        currency="delinquencyPlan.Currency"
+        editable="planNotInUse"
+        id="AcctEnterDelinquencyThreshold"
+        label="displaykey.Java.DelinquencyPlan.Field.AcctEnterDelinquencyThreshold"
+        validationExpression="web.delinquency.DelinquencyPlanUtil.validateAcctEnterDelinquencyThreshold( delinquencyPlan )"
+        value="delinquencyPlan.AcctEnterDelinquencyThreshold"/>
+      <MonetaryAmountInput
+        currency="delinquencyPlan.Currency"
+        editable="planNotInUse"
+        id="PolEnterDelinquencyThreshold"
+        label="displaykey.Java.DelinquencyPlan.Field.PolEnterDelinquencyThreshold"
+        validationExpression="web.delinquency.DelinquencyPlanUtil.validatePolEnterDelinquencyThreshold( delinquencyPlan )"
+        value="delinquencyPlan.PolEnterDelinquencyThreshold"/>
+      <MonetaryAmountInput
+        currency="delinquencyPlan.Currency"
+        editable="planNotInUse"
+        id="CancellationThreshold"
+        label="displaykey.Java.DelinquencyPlan.Field.CancellationThreshold"
+        validationExpression="web.delinquency.DelinquencyPlanUtil.validateCancellationThreshold( delinquencyPlan )"
+        value="delinquencyPlan.CancellationThreshold"/>
+      <MonetaryAmountInput
+        currency="delinquencyPlan.Currency"
+        editable="planNotInUse"
+        id="ExitDelinquencyThreshold"
+        label="displaykey.Java.DelinquencyPlan.Field.ExitDelinquencyThreshold"
+        validationExpression="web.delinquency.DelinquencyPlanUtil.validateExitDelinquencyThreshold( delinquencyPlan )"
+        value="delinquencyPlan.ExitDelinquencyThreshold"/>
+      <Label
+        label="displaykey.Web.DelinquencyPlanDetailDV.Availability"/>
+      <TypeKeyInput
+        editable="planNotInUse"
+        id="ApplicableSegments"
+        label="displaykey.Java.DelinquencyPlan.Field.ApplicableSegments"
+        required="true"
+        value="delinquencyPlan.ApplicableSegments"/>
+    </InputColumn>
+    <InputFooterSection>
+      <InputDivider/>
+    </InputFooterSection>
+    <Code><![CDATA[function validateThresholdAmounts() : String {
+        if (delinquencyPlan.AcctEnterDelinquencyThreshold < delinquencyPlan.WriteoffThreshold) {
+          return displaykey.Web.DelinquencyPlanDetailDV.ThresholdValidationError("Account Enter Delinquency Threshold", "Writeoff Threshold");
+        }
+        if (delinquencyPlan.PolEnterDelinquencyThreshold < delinquencyPlan.WriteoffThreshold) {
+          return displaykey.Web.DelinquencyPlanDetailDV.ThresholdValidationError("Policy Enter Delinquency Threshold", "Writeoff Threshold");
+        }
+        if (delinquencyPlan.AcctEnterDelinquencyThreshold < delinquencyPlan.ExitDelinquencyThreshold) {
+          return displaykey.Web.DelinquencyPlanDetailDV.ThresholdValidationError("Account Enter Delinquency Threshold", "Exit Delinquency Threshold");
+        }
+        if (delinquencyPlan.PolEnterDelinquencyThreshold < delinquencyPlan.ExitDelinquencyThreshold) {
+          return displaykey.Web.DelinquencyPlanDetailDV.ThresholdValidationError("Policy Enter Delinquency Threshold", "Exit Delinquency Threshold");
+        }
+        if (delinquencyPlan.AcctEnterDelinquencyThreshold < delinquencyPlan.PolEnterDelinquencyThreshold) {
+          return displaykey.Web.DelinquencyPlanDetailDV.ThresholdValidationError("Account Enter Delinquency Threshold", "Policy Enter Delinquency Threshold");
+        }
+        return null;
+      }]]></Code>
+  </DetailViewPanel>
+</PCF>

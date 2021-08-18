@@ -1,0 +1,86 @@
+<?xml version="1.0"?>
+<entity
+  xmlns="http://guidewire.com/datamodel"
+  entity="TAccount"
+  type="editable"
+  desc="Logical bucket for a set of financial transactions"
+  subpackage="accounting"
+  overwrittenInStagingTable="true"
+  final="false"
+  platform="false"
+  table="taccount"
+  setterScriptability="hidden">
+  <implementsEntity
+    name="InCurrencySilo"/>
+  <monetaryamount
+    name="BalanceDenorm"
+    amountColumnName="BalanceDenorm"
+    createAmountHistogram="true"
+    desc="Denormalized current balance of the T-Account. Only valid for database queries. At all times, this balance should be equal to the sum of all &quot;normal&quot; line item amounts less the sum of all &quot;opposite normal&quot; line item amounts. For example, on a T-Account with a normal balance of debit, this column should equal the sum of all debit line items less the sum of all credit line items."
+    scaleToCurrency="true"
+    getterScriptability="doesNotExist"
+    nullok="false"
+    soapnullok="true"
+    setterScriptability="doesNotExist">
+    <tag name="DefaultValueZero"/>
+  </monetaryamount>
+  <foreignkey
+    name="TAccountContainer"
+    desc="The container of this t-account"
+    columnName="TAccountContainerID"
+    fkentity="TAccountContainer"
+    importableagainstexistingobject="false"
+    nullok="false"
+    setterScriptability="doesNotExist"/>
+  <foreignkey
+    name="TAccountPattern"
+    desc="The pattern for this t-account"
+    columnName="TAccountPatternID"
+    fkentity="TAccountPattern"
+    ignoreforevents="true"
+    nullok="false"
+    setterScriptability="doesNotExist"/>
+  <array
+    name="LineItems"
+    desc="Set of line items associated with this t-account"
+    arrayentity="LineItem"
+    exportable="false"
+    setterScriptability="doesNotExist"/>
+  <events/>
+  <index
+    name="taccountcover"
+    desc="Covers the most commonly accessed columns and also speeds up search by container and pattern"
+    unique="true">
+    <indexcol
+      name="TAccountContainerID"
+      keyposition="1"/>
+    <indexcol
+      name="TAccountPatternID"
+      keyposition="2"/>
+    <indexcol
+      name="BalanceDenorm"
+      keyposition="3"/>
+    <indexcol
+      name="ID"
+      keyposition="4"/>
+  </index>
+  <index
+    name="taccountwriter"
+    desc="Speeds up the new payment and automatic disbursement writer queries">
+    <indexcol
+      name="TAccountPatternID"
+      keyposition="1"/>
+    <indexcol
+      name="BalanceDenorm"
+      keyposition="2"/>
+    <indexcol
+      name="TAccountContainerID"
+      keyposition="3"/>
+  </index>
+  <dbcheckbuilder
+    className="com.guidewire.bc.system.database.dbchecks.accounting.TAccountBalanceDBCheckBuilder"/>
+  <dbcheckbuilder
+    className="com.guidewire.bc.system.database.dbchecks.accounting.TAccountsMatchTAccountPatternDBCheckBuilder"/>
+  <dbcheckbuilder
+    className="com.guidewire.bc.system.database.dbchecks.accounting.TAccountsUniqueByFieldsDBCheckBuilder"/>
+</entity>

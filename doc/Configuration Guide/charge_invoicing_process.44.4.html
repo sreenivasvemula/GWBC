@@ -1,0 +1,191 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xml:lang="en" lang="en" xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+    <meta http-equiv="Content-Style-Type" content="text/css" />
+    <!-- MOTW-DISABLED saved from url=(0014)about:internet -->
+    <title>Modifying an Existing Charge</title>
+    <link rel="StyleSheet" href="css/charge_invoicing_process.css" type="text/css" media="all" />
+    <link rel="StyleSheet" href="css/webworks.css" type="text/css" media="all" />
+    <link rel="StyleSheet" href="css/css-guidewire-extra.css" type="text/css" media="all" />
+    <script type="text/javascript" language="JavaScript1.2" src="wwhdata/common/context.js"></script>
+    <script type="text/javascript" language="JavaScript1.2" src="wwhdata/common/towwhdir.js"></script>
+    <script type="text/javascript" language="JavaScript1.2" src="wwhdata/common/wwhpagef.js"></script>
+    <script type="text/javascript" language="JavaScript1.2">
+      <!--
+        var  WebWorksRootPath = "";
+      // -->
+    </script>
+    <script type="text/javascript" language="JavaScript1.2">
+      <!--
+        // Set reference to top level help frame
+        //
+        var  WWHFrame = WWHGetWWHFrame("", true);
+      // -->
+    </script>
+    <script type="text/javascript" language="JavaScript1.2" src="scripts/expand.js"></script>
+    <!-- THE FOLLOWING IS A GUIDEWIRE STYLE DEFINITION FOR THE LINK TO THIS FEATURE -->
+    <link rel="StyleSheet" href="css/css-guidewire-extra.css" type="text/css" media="all" />
+    <!-- THE FOLLOWING IS A GUIDEWIRE GSCRIPT FUNCTION FOR THE LINK TO THIS FEATURE -->
+    <script type="text/javascript">
+function guidewire_selectall()
+{
+var text_val=eval("document.linktothisurlform.urlfield");
+text_val.focus();
+text_val.select();
+}
+</script>
+  </head>
+  <body onLoad="WWHUpdate();" onUnload="WWHUnload();" onKeyDown="WWHHandleKeyDown((document.all||document.getElementById||document.layers)?event:null);" onKeyPress="WWHHandleKeyPress((document.all||document.getElementById||document.layers)?event:null);" onKeyUp="WWHHandleKeyUp((document.all||document.getElementById||document.layers)?event:null);">
+    <!-- THE FOLLOWING IS A GUIDEWIRE DIV FOR THE 'LINK TO THIS' FEATURE -->
+    <div id="linkToThisPage" class="popup" style="display: none;">
+      <div class="popupTitle">Link Directly to This Page 
+           <a href="#" onclick="var thePopup = getElementById('linkToThisPage');thePopup.style.display='none';return false;"><img class="popupClosebox" src="wwhelp/wwhimpl/common/images/close.gif" /></a></div>
+      <div style="padding:6px;">
+        <div class="popupText" id="linkToThisPageBookmark">An error has occurred if you see this messsage.</div>
+        <form name="linktothisurlform" method="post" action="" style="width:275px;margin:0px">
+          <input type="text" class="popupURLText" id="linkToThisPageURL" name="urlfield" rows="1" cols="55" onClick="guidewire_selectall();" onFocus="guidewire_selectall();"></input>
+        </form>
+      </div>
+    </div>
+    <br />
+    <div class="WebWorks_Breadcrumbs" style="text-align: left;">
+      <span>BillingCenter Configuration Guide</span> : 
+    <span class="WebWorks_Breadcrumbs" style="text-align: left;"><a class="WebWorks_Breadcrumb_Link" href="p-BillingCenter.html#2249465">Guidewire BillingCenter Configuration</a> : <a class="WebWorks_Breadcrumb_Link" href="charge_invoicing_process.44.1.html#2249465">Configuring the Charge Invoicing Process</a> : Modifying an Existing Charge</span></div>
+    <hr align="left" />
+    <blockquote>
+      <h3 class="H1_-_Heading_1"><a name="2249465">Modifying an Existing Charge</a></h3>
+      <h4 class="H2_-_Heading_2"><a name="2255490">The </a><span class="cvh_-_computer_voice_in_heading">ChargeInstallmentChanger</span> Class</h4>
+      <div class="B_-_Body"><a name="2249466">Existing charges that have been executed and assigned to invoices can be modified with some restrictions. One restriction is that the original amount of the charge cannot be modified. The amounts of individual invoice items can be modified, new items created and existing items deleted or reversed. However, at the completion of all modifications, the sum of all the invoice items must still equal the original charge amount.</a></div>
+      <div class="B_-_Body"><a name="2249467">A second restriction is that multiple charges cannot be modified simultaneously or in tandem. Each individual charge must be performed and finished before beginning to modify another charge.</a></div>
+      <div class="B_-_Body"><a name="2249468">An existing charge is modified by using the </a><span class="cv_-_computer_voice">ChargeInstallmentChanger</span> class. The constructor for the class accepts an existing charge of the class type <span class="cv_-_computer_voice">Charge</span>.</div>
+      <div class="B_-_Body"><a name="2249469">The </a><span class="cv_-_computer_voice">ChargeInstallmentChanger</span> converts the invoice items into editable objects of the class type <span class="cv_-_computer_voice">Entry</span>. All modifications must be performed upon these <span class="cv_-_computer_voice">Entry</span> objects. New <span class="cv_-_computer_voice">Entry</span> objects can be created by calling the <span class="cv_-_computer_voice">ChargeInstallmentChanger.addEntry</span> method.</div>
+      <div class="B_-_Body"><a name="2249470">After completing all the desired modifications, the </a><span class="cv_-_computer_voice">ChargeInstallmentChanger.execute</span> method must be called to make the modifications permanent. Each <span class="cv_-_computer_voice">Entry</span> object of the <span class="cv_-_computer_voice">ChargeInstallmentChanger</span> is converted back to an invoice item assigned to a particular invoice. The modified charge becomes the charge of record and replaces the original invoicing arrangement.</div>
+      <div class="B_-_Body"><a name="2249471">To comply with the restriction against simultaneous charge modifications, a new </a><span class="cv_-_computer_voice">ChargeInstallmentChanger</span> instance must be finished by calling its <span class="cv_-_computer_voice">execute</span> method before creating another instance of the class. The required order of execution is demonstrated below.</div>
+      <PRE class="CF_-_Code_First_Line"><a name="2249472">/* Create changer1, perform the desired modifications, and finish by calling execute() */</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2249473">ChargeInstallmentChanger changer1 = new ChargeInstallmentChanger( existingCharge )</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2249474">/* ... Perform modifications to changer1 ... */</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2249475">changer1.execute()</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2249476">&nbsp;</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2249477">/* Now you can create changer2 and perform another modification */</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2249478">ChargeInstallmentChanger changer2 = new ChargeInstallmentChanger( anotherExistingCharge )</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2249479">/* ... Modifications to changer2 ... */</a></PRE>
+      <PRE class="CL_-_Code_Last_Line"><a name="2249480">changer2.execute()</a></PRE>
+      <div class="B_-_Body"><a name="2249481">The following sample code provides examples on how to modify an existing charge using the </a><span class="cv_-_computer_voice">ChargeInstallmentChanger</span> class. Included are techniques for modifying the <span class="cv_-_computer_voice">Entry</span> objects. For details about the methods and properties used in the code sample, refer to the<span class="e_-_emphasis"> Gosu API Reference</span>.</div>
+      <PRE class="CF_-_Code_First_Line"><a name="2249482">/*** Modify an existing charge using ChargeInstallmentChanger ***/</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2249483">&nbsp;</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2249484">/* Create a ChargeInstallmentChanger instance using an existing Charge object */</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2249485">ChargeInstallmentChanger changer = new ChargeInstallmentChanger( existingCharge )</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2249486">&nbsp;</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2249487">/* Retrieve the charge’s invoice items in the form of a List of editable Entry objects */</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2249488">List&lt;ChargeInstallmentChanger.Entry&gt; existingEntries = changer.getEntries()</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2249489">&nbsp;</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2249490">/* Alternatively, given an InvoiceItem object, we can retrieve its editable Entry object */</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2249491">ChangeInstallmentChanger.Entry entry = changer.getEntryFor( existingInvoiceItem )</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2249492">&nbsp;</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2249493">/* With the ChargeInstallmentChanger object created, its Entry objects can be modified, removed,</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2249494">&nbsp;* or reversed, and new Entry objects can be created and added. The following code segments</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2249495">&nbsp;* demonstrate some of these operations.</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2249496">&nbsp;*/</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2249497">&nbsp;</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2249498">/* Add a new Entry to the ChargeInstallmentChanger object */</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2249499">ChargeInstallmentChanger.Entry newEntry = changer.addEntry( $5,</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2249500">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;InvoiceItemType.TC_INSTALLMENT.get(),</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2249501">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;DateTimeUtil.getTodaysDate() )</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2249502">&nbsp;</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2249503">/* Modify an Entry’s amount */</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2249504">newEntry.setAmount( $10 )</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2249505">&nbsp;</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2249506">/* Before performing an Entry operation, such as removing or reversing it, methods are</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2249507">&nbsp;* provided to check whether the operation is valid on the Entry at the given moment.</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2249508">&nbsp;*/</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2249509">if( newEntry.canRemove() ){</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2249510">&nbsp;&nbsp;&nbsp;&nbsp;newEntry.remove()</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2249511">}</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2249512">&nbsp;</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2249513">/* Customer-defined extension properties for the InvoiceItem object can be set and retrieved from</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2255328">&nbsp;* the Entry object. The extension property values will be carried over to the InvoiceItem when the</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2255348">&nbsp;* Entry is converted.</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2249515">&nbsp;*/</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2249516">newEntry.setExtensionProperty( InvoiceItem#MyCommentProperty, “Special fee” )</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2249517">String description = newEntry.getExtensionProperty( InvoiceItem#MyCommentProperty )</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2249518">&nbsp;</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2249519">/* After modifications are complete, the ChargeInstallmentChanger object is executed, which</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2249520">&nbsp;* converts the Entry objects to InvoiceItem objects. InvoiceItem properties set on the Entry</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2249521">&nbsp;* object (such as the MyCommentProperty extension property set above) are carried over to the</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2255402">&nbsp;* InvoiceItem.</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2249522">&nbsp;*/</a></PRE>
+      <PRE class="CL_-_Code_Last_Line"><a name="2249523">changer.execute()</a></PRE>
+      <h4 class="H2_-_Heading_2"><a name="2255533">Removing an </a><span class="cvh_-_computer_voice_in_heading">Entry</span> Object</h4>
+      <div class="B_-_Body"><a name="2255568">When modifying an existing charge with </a><span class="cv_-_computer_voice">ChargeInstallmentChanger</span>, the <span class="cv_-_computer_voice">Entry</span> objects are associated with existing invoice items. The <span class="cv_-_computer_voice">Entry</span> class supports a <span class="cv_-_computer_voice">remove</span> method which will ultimately remove its associated invoice item. However, removing certain invoice items can cause data corruption. An invoice item cannot be removed if any of the following conditions exists.</div>
+      <div class="BI_-_Bullet_Item_outer" style="margin-left: 57pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="BI_-_Bullet_Item_inner" style="width: 15pt; white-space: nowrap">
+                <span class="bu_-_bullet">•	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="BI_-_Bullet_Item_inner"><a name="2255821">The invoice item has been billed.</a></div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="BI_-_Bullet_Item_outer" style="margin-left: 57pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="BI_-_Bullet_Item_inner" style="width: 15pt; white-space: nowrap">
+                <span class="bu_-_bullet">•	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="BI_-_Bullet_Item_inner"><a name="2255858">The charge associated with the invoice item has been reversed.</a></div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="BI_-_Bullet_Item_outer" style="margin-left: 57pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="BI_-_Bullet_Item_inner" style="width: 15pt; white-space: nowrap">
+                <span class="bu_-_bullet">•	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="BI_-_Bullet_Item_inner"><a name="2255922">Commission has been earned or written off for the invoice item.</a></div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="B_-_Body"><a name="2256011">These conditions are evaluated in the </a><span class="cv_-_computer_voice">Entry</span> class <span class="cv_-_computer_voice">canRemove</span> method. If any of the conditions exists, the method returns <span class="cv_-_computer_voice">false</span>. Before removing an <span class="cv_-_computer_voice">Entry</span> object, configuration code must first call <span class="cv_-_computer_voice">canRemove</span> to verify that the object and its associated invoice item can be safely removed. To prevent data corruption, the <span class="cv_-_computer_voice">remove</span> method itself verifies that the associated invoice item can be removed and throws an <span class="cv_-_computer_voice">IllegalStateException</span> if the item cannot be removed.</div>
+      <div class="B_-_Body"><a name="2256343">An </a><span class="cv_-_computer_voice">Entry</span> object that cannot be removed can still be reversed provided it has no pending modifications. The recommended code pattern is shown below.</div>
+      <PRE class="CF_-_Code_First_Line"><a name="2256816">ChargeInstallmentChanger.Entry&nbsp;&nbsp;&nbsp;&nbsp;anEntry;&nbsp;&nbsp;// Sample ChargeInstallmentChanger.Entry object to remove</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2256892">&nbsp;</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2256894">if (anEntry.canRemove()) {</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2256924">&nbsp;&nbsp;&nbsp;&nbsp;anEntry.remove();</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2256949">} else {</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2257960">&nbsp;&nbsp;&nbsp;&nbsp;if( anEntry.canReverse()) {</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2258104">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;anEntry.reverse();</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2258132">&nbsp;&nbsp;&nbsp;&nbsp;}</a></PRE>
+      <PRE class="CL_-_Code_Last_Line"><a name="2256997">}</a></PRE>
+      <script type="text/javascript" language="JavaScript1.2">
+        <!--
+          // Clear related topics
+          //
+          WWHClearRelatedTopics();
+
+          document.writeln(WWHRelatedTopicsInlineHTML());
+        // -->
+      </script>
+    </blockquote>
+    <script type="text/javascript" language="JavaScript1.2">
+      <!--
+        document.write(WWHRelatedTopicsDivTag() + WWHPopupDivTag() + WWHALinksDivTag());
+      // -->
+    </script>
+  </body>
+</html>

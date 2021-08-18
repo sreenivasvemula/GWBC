@@ -1,0 +1,791 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xml:lang="en" lang="en" xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+    <meta http-equiv="Content-Style-Type" content="text/css" />
+    <!-- MOTW-DISABLED saved from url=(0014)about:internet -->
+    <title>Suspense Payments and Items</title>
+    <link rel="StyleSheet" href="css/payments.css" type="text/css" media="all" />
+    <link rel="StyleSheet" href="css/webworks.css" type="text/css" media="all" />
+    <link rel="StyleSheet" href="css/css-guidewire-extra.css" type="text/css" media="all" />
+    <script type="text/javascript" language="JavaScript1.2" src="wwhdata/common/context.js"></script>
+    <script type="text/javascript" language="JavaScript1.2" src="wwhdata/common/towwhdir.js"></script>
+    <script type="text/javascript" language="JavaScript1.2" src="wwhdata/common/wwhpagef.js"></script>
+    <script type="text/javascript" language="JavaScript1.2">
+      <!--
+        var  WebWorksRootPath = "";
+      // -->
+    </script>
+    <script type="text/javascript" language="JavaScript1.2">
+      <!--
+        // Set reference to top level help frame
+        //
+        var  WWHFrame = WWHGetWWHFrame("", true);
+      // -->
+    </script>
+    <script type="text/javascript" language="JavaScript1.2" src="scripts/expand.js"></script>
+    <!-- THE FOLLOWING IS A GUIDEWIRE STYLE DEFINITION FOR THE LINK TO THIS FEATURE -->
+    <link rel="StyleSheet" href="css/css-guidewire-extra.css" type="text/css" media="all" />
+    <!-- THE FOLLOWING IS A GUIDEWIRE GSCRIPT FUNCTION FOR THE LINK TO THIS FEATURE -->
+    <script type="text/javascript">
+function guidewire_selectall()
+{
+var text_val=eval("document.linktothisurlform.urlfield");
+text_val.focus();
+text_val.select();
+}
+</script>
+  </head>
+  <body onLoad="WWHUpdate();" onUnload="WWHUnload();" onKeyDown="WWHHandleKeyDown((document.all||document.getElementById||document.layers)?event:null);" onKeyPress="WWHHandleKeyPress((document.all||document.getElementById||document.layers)?event:null);" onKeyUp="WWHHandleKeyUp((document.all||document.getElementById||document.layers)?event:null);">
+    <!-- THE FOLLOWING IS A GUIDEWIRE DIV FOR THE 'LINK TO THIS' FEATURE -->
+    <div id="linkToThisPage" class="popup" style="display: none;">
+      <div class="popupTitle">Link Directly to This Page 
+           <a href="#" onclick="var thePopup = getElementById('linkToThisPage');thePopup.style.display='none';return false;"><img class="popupClosebox" src="wwhelp/wwhimpl/common/images/close.gif" /></a></div>
+      <div style="padding:6px;">
+        <div class="popupText" id="linkToThisPageBookmark">An error has occurred if you see this messsage.</div>
+        <form name="linktothisurlform" method="post" action="" style="width:275px;margin:0px">
+          <input type="text" class="popupURLText" id="linkToThisPageURL" name="urlfield" rows="1" cols="55" onClick="guidewire_selectall();" onFocus="guidewire_selectall();"></input>
+        </form>
+      </div>
+    </div>
+    <br />
+    <div class="WebWorks_Breadcrumbs" style="text-align: left;">
+      <span>BillingCenter Application&nbsp;Guide</span> : 
+    <span class="WebWorks_Breadcrumbs" style="text-align: left;"><a class="WebWorks_Breadcrumb_Link" href="p_direct_bill.html#1936787">Direct Bill Processing</a> : <a class="WebWorks_Breadcrumb_Link" href="payments.53.01.html#1936787">Payment and Distribution</a> : Suspense Payments and Items</span></div>
+    <hr align="left" />
+    <blockquote>
+      <h3 class="H1_-_Heading_1"><a name="1936787">Suspense Payments and Items</a></h3>
+      <div class="B_-_Body"><a name="1936797">When BillingCenter receives a payment, it is not always clear to which account, producer, policy, or charge to apply it. For example, an external payment system may send a payment instruction to BillingCenter for an account that BillingCenter has not yet been informed of. Similarly, a payment may arrive for the Smith account, but the Smith account includes three policies, and it is unclear to which policy to apply the payment. When BillingCenter receives a payment with an uncertain destination, the payment is stored in a temporary</a><span class="e_-_emphasis"> suspense</span> destination. Later, when it becomes clear how to apply the payment, the payment can be moved from the suspense destination to its appropriate destination.</div>
+      <div class="B_-_Body"><a name="2060389">BillingCenter provides two types of suspense destinations:</a><span class="e_-_emphasis"> suspense payments</span> and<span class="e_-_emphasis"> suspense items</span>.</div>
+      <div class="B_-_Body"><a name="2063939">A</a><span class="e_-_emphasis"> suspense payment</span> is a payment in which the payer is unknown. The payer can be either an account, a producer, or a policy period that is associated with an account or producer. The payer might be unknown because BillingCenter is not yet aware of the specified account or producer. Another possible scenario occurs when a payment specifies a policy, but the policy is not yet bound to an account or producer, making the payer unknown. Without a known payer, it is not possible to apply the payment to any charges, so the payment is temporarily stored as a suspense payment.</div>
+      <div class="B_-_Body"><a name="2071470">A suspense payment is placed in an </a><span class="cv_-_computer_voice">Unapplied</span> T‑account of type <span class="cv_-_computer_voice">SuspensePayment</span>. Each suspense payment is placed in its own, separate <span class="cv_-_computer_voice">Unapplied</span> T‑account. Thus, if ten payments with unknown payers arrive then ten <span class="cv_-_computer_voice">Unapplied</span> <span class="cv_-_computer_voice">SuspensePayment</span> T‑accounts are created.</div>
+      <div class="B_-_Body"><a name="2098617">Later, when the payer becomes known, the suspense payment is moved to an </a><span class="cv_-_computer_voice">Unapplied</span> T‑account of the appropriate account or producer. This movement of suspense payments is performed either by running the Suspense Payment or Agency Suspense Payment batch process or by transferring the payment through the BillingCenter user interface.</div>
+      <div class="B_-_Body"><a name="2101699">A</a><span class="e_-_emphasis"> suspense item</span> is a payment for which BillingCenter knows the applicable payer, but does not know either the policy or all of the applicable charges. If some of the charges are known, it is possible to divide the payment into paid items for the known charges and a suspense item to store the remainder.</div>
+      <div class="B_-_Body"><a name="2072561">Suspense items are temporarily placed in the </a><span class="cv_-_computer_voice">Suspense</span> T‑account owned by the relevant account or producer. When the applicable charges become known, suspense items can be released and then distributed.</div>
+      <div class="B_-_Body"><a name="2065316">In summary, a suspense item differs from a suspense payment in that the suspense item knows the payer—the account or producer—while a suspense payment does not. By knowing the payer, BillingCenter can store a suspense item in an </a><span class="cv_-_computer_voice">Unapplied</span> T‑account of the relevant account or producer. A suspense payment must be placed in an <span class="cv_-_computer_voice">Unapplied</span> T‑account of type <span class="cv_-_computer_voice">SuspensePayment</span>.</div>
+      <h6 class="HS_-_Head_Sub"><a name="2098843">See also</a></h6>
+      <div class="BI_-_Bullet_Item_outer" style="margin-left: 57pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="BI_-_Bullet_Item_inner" style="width: 15pt; white-space: nowrap">
+                <span class="bu_-_bullet">•	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="BI_-_Bullet_Item_inner"><a name="2098854">For more information about </a><span class="cv_-_computer_voice">Unapplied</span> T‑accounts, see <a href="javascript:WWHClickedPopup('app', 'billing_levels.54.3.html#2122595', '');" title="Billing Levels and Unapplied T‑Accounts">Billing Levels and Unapplied T‑Accounts</a>.</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <h4 class="H2_-_Heading_2"><a name="2061856">Using Suspense Payments</a></h4>
+      <div class="B_-_Body"><a name="2061895">Payments typically arrive in BillingCenter from an external system, such as through a web service call or an electronic funds transfer&nbsp;(EFT). Such payments are placed in an </a><span class="cv_-_computer_voice">Unapplied</span> T‑account of the relevant account or producer or, if the account/producer is unknown, to an <span class="cv_-_computer_voice">Unapplied</span> T‑account of type <span class="cv_-_computer_voice">SuspensePayment</span>. An example of an unknown destination would be a payment for an account number that does not exist yet in BillingCenter.</div>
+      <div class="B_-_Body"><a name="2075510">The remainder of this section describes common operations with suspense payments.</a></div>
+      <h6 class="HS_-_Head_Sub"><a name="2070501">See also</a></h6>
+      <div class="BI_-_Bullet_Item_outer" style="margin-left: 57pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="BI_-_Bullet_Item_inner" style="width: 15pt; white-space: nowrap">
+                <span class="bu_-_bullet">•	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="BI_-_Bullet_Item_inner"><a href="javascript:WWHClickedPopup('app', 'disbursements.57.4.html#2743697', '');" title="Disbursing Suspense Payments" name="2068687">Disbursing Suspense Payments</a>.</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="BI_-_Bullet_Item_outer" style="margin-left: 57pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="BI_-_Bullet_Item_inner" style="width: 15pt; white-space: nowrap">
+                <span class="bu_-_bullet">•	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="BI_-_Bullet_Item_inner"><a href="javascript:WWHClickedPopup('app', 'payments.53.09.html#2069717', '');" title="Reversing Direct Bill Payments" name="2070578">To reverse a suspense payment</a>.</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="BI_-_Bullet_Item_outer" style="margin-left: 57pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="BI_-_Bullet_Item_inner" style="width: 15pt; white-space: nowrap">
+                <span class="bu_-_bullet">•	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="BI_-_Bullet_Item_inner"><a name="2069415">To move a payment from an account to an </a><span class="cv_-_computer_voice">Unapplied</span> T‑account of type <span class="cv_-_computer_voice">SuspensePayment</span> (making it a suspense payment), see <a href="javascript:WWHClickedPopup('app', 'payments.53.08.html#2027789', '');" title="Moving Direct Bill Payments">To move a payment to Unapplied of SuspensePayment</a>.</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="BI_-_Bullet_Item_outer" style="margin-left: 57pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="BI_-_Bullet_Item_inner" style="width: 15pt; white-space: nowrap">
+                <span class="bu_-_bullet">•	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="BI_-_Bullet_Item_inner"><a name="2061890">The behavior of suspense payment handling can be modified by configuring the </a><span class="cv_-_computer_voice">SuspensePayment</span> plugin. For further information, see <a href="javascript:WWHClickedPopup('integration', 'bc-plugins.13.31.html#3602978', '');" title="Suspense Payment Plugin">“Suspense Payment Plugin” in the </a><span class="bt_-_book_title"><a href="javascript:WWHClickedPopup('integration', 'bc-plugins.13.31.html#3602978', '');" title="Suspense Payment Plugin">Integration Guide</a></span>.</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="H3_-_Heading_3_outer" style="margin-left: 36pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <h5 class="H3_-_Heading_3_inner" style="width: 18pt; white-space: nowrap"></h5>
+            </td>
+            <td width="100%">
+              <h5 class="H3_-_Heading_3_inner"><a name="2074954">To create a suspense payment</a></h5>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="B_-_Body"><a name="2075007">Suspense payments are created in the </a><span class="ui_-_UI_element">New Suspense Payment</span> screen. To view the screen, enter either of the following commands:</div>
+      <div class="BI_-_Bullet_Item_outer" style="margin-left: 57pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="BI_-_Bullet_Item_inner" style="width: 15pt; white-space: nowrap">
+                <span class="bu_-_bullet">•	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="BI_-_Bullet_Item_inner"><span class="ui_-_UI_element"><a name="2075011">Desktop</a></span>&nbsp;→ <span class="ui_-_UI_element">Suspense Payments</span>, and click <span class="ui_-_UI_element">New</span>.</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="BI_-_Bullet_Item_outer" style="margin-left: 57pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="BI_-_Bullet_Item_inner" style="width: 15pt; white-space: nowrap">
+                <span class="bu_-_bullet">•	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="BI_-_Bullet_Item_inner"><span class="ui_-_UI_element"><a name="2077464">Desktop</a></span>&nbsp;→ <span class="ui_-_UI_element">Actions</span>&nbsp;→ <span class="ui_-_UI_element">New Payment</span>&nbsp;→ <span class="ui_-_UI_element">Suspense Payment</span></div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="B_-_Body"><a name="2077465">When creating the suspense payment, it is possible to enter either an account number, a policy number, or a producer code. These IDs are not validated, and they do not need to exist in BillingCenter when you create the suspense payment. When the Suspense Payment or Agency Suspense Payment batch process runs or you move the suspense payment, the ID is used to link the payment to the appropriate entity. Entering an account, policy or producer ID is optional when creating a suspense payment.</a></div>
+      <div class="B_-_Body"><span class="n_-_note"><a name="2077587">Note:</a></span> If a policy number is entered, the suspense payment is<span class="e_-_emphasis"> not</span> restricted to the specified policy. The payment can be subsequently distributed to any policy in the associated account/producer. The policy number is used only to link the suspense payment to the appropriate account or producer, not to a policy. To restrict the payment to a specific policy, use a suspense item, instead.</div>
+      <div class="B_-_Body"><a name="2076692">Suspense payments can also be created through the </a><span class="ui_-_UI_element">Multiple Payment Entry Wizard</span>. View the wizard by entering the command shown below. In the wizard, set the <span class="ui_-_UI_element">Type</span> field for the suspense payment to <span class="ui_-_UI_element">Suspense</span>.</div>
+      <div class="B_-_Body"><span class="ui_-_UI_element"><a name="2074995">Desktop</a></span>&nbsp;→ <span class="ui_-_UI_element">Actions</span>&nbsp;→ <span class="ui_-_UI_element">New Payment</span>&nbsp;→ <span class="ui_-_UI_element">Multiple Payment Entry</span></div>
+      <div class="B_-_Body"><a name="2075075">Finally, suspense payments can be created by calling a web service. For information, see </a><a href="javascript:WWHClickedPopup('integration', 'bc-webservices.09.18.html#3724820', '');" title="Make a Suspense Payment">“Make a Suspense Payment” in the </a><span class="bt_-_book_title"><a href="javascript:WWHClickedPopup('integration', 'bc-webservices.09.18.html#3724820', '');" title="Make a Suspense Payment">Integration Guide</a></span>.</div>
+      <div class="H3_-_Heading_3_outer" style="margin-left: 36pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <h5 class="H3_-_Heading_3_inner" style="width: 18pt; white-space: nowrap"></h5>
+            </td>
+            <td width="100%">
+              <h5 class="H3_-_Heading_3_inner"><a name="2073887">To edit a suspense payment</a></h5>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="LS_-_List_Start_outer" style="margin-left: 57pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="LS_-_List_Start_inner" style="width: 15pt; white-space: nowrap">
+                <span class="ri_-_run_in_header">	1.	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="LS_-_List_Start_inner"><a name="2073965">Select </a><span class="ui_-_UI_element">Desktop</span>&nbsp;→ <span class="ui_-_UI_element">Suspense Payments</span>. Set the filter to an appropriate setting so the desired suspense payment is shown in the list.</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="LI_-_List_Item_outer" style="margin-left: 57pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="LI_-_List_Item_inner" style="width: 15pt; white-space: nowrap">
+                <span class="ri_-_run_in_header">	2.	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="LI_-_List_Item_inner"><a name="2074119">Click the </a><span class="ui_-_UI_element">Edit</span> link of the suspense payment to edit. The <span class="ui_-_UI_element">Edit Suspense Payment</span> screen is shown.</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="LI_-_List_Item_outer" style="margin-left: 57pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="LI_-_List_Item_inner" style="width: 15pt; white-space: nowrap">
+                <span class="ri_-_run_in_header">	3.	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="LI_-_List_Item_inner"><a name="2074253">Edit the suspense payment fields as desired, and then click </a><span class="ui_-_UI_element">Update</span>.</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="H3_-_Heading_3_outer" style="margin-left: 36pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <h5 class="H3_-_Heading_3_inner" style="width: 18pt; white-space: nowrap"></h5>
+            </td>
+            <td width="100%">
+              <h5 class="H3_-_Heading_3_inner"><a name="2074339">To apply a suspense payment</a></h5>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="LS_-_List_Start_outer" style="margin-left: 57pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="LS_-_List_Start_inner" style="width: 15pt; white-space: nowrap">
+                <span class="ri_-_run_in_header">	1.	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="LS_-_List_Start_inner"><a name="2074372">Select </a><span class="ui_-_UI_element">Desktop</span>&nbsp;→ <span class="ui_-_UI_element">Suspense Payments</span>. Set the drop‑down list filter to an appropriate setting so the desired suspense payment is shown in the list.</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="LI_-_List_Item_outer" style="margin-left: 57pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="LI_-_List_Item_inner" style="width: 15pt; white-space: nowrap">
+                <span class="ri_-_run_in_header">	2.	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="LI_-_List_Item_inner"><a name="2074553">Click the </a><span class="ui_-_UI_element">Apply</span> link of the suspense payment to apply. The <span class="ui_-_UI_element">Apply Suspense Payment</span> screen is shown.</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="LI_-_List_Item_outer" style="margin-left: 57pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="LI_-_List_Item_inner" style="width: 15pt; white-space: nowrap">
+                <span class="ri_-_run_in_header">	3.	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="LI_-_List_Item_inner"><a name="2074697">Verify or specify the applicable account, producer, or policy, and then click </a><span class="ui_-_UI_element">Update</span>. The suspense payment is moved to an <span class="cv_-_computer_voice">Unapplied</span> T‑account of the appropriate account, producer, or policy.</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="B_-_Body"><a name="2074806">Suspense payments are also applied by the Suspense Payment and Agency Suspense Payment batch processes. See </a><a href="javascript:WWHClickedPopup('admin', 'batch.11.52.html#3899833', '');" title="Suspense Payment Batch Processing">“Suspense Payment Batch Processing” in the </a><span class="bt_-_book_title"><a href="javascript:WWHClickedPopup('admin', 'batch.11.52.html#3899833', '');" title="Suspense Payment Batch Processing">System Administration Guide</a></span> and <a href="javascript:WWHClickedPopup('admin', 'batch.11.14.html#3897389', '');" title="Agency Suspense Payment Batch Processing">“Agency Suspense Payment Batch Processing” in the </a><span class="bt_-_book_title"><a href="javascript:WWHClickedPopup('admin', 'batch.11.14.html#3897389', '');" title="Agency Suspense Payment Batch Processing">System Administration Guide</a></span>.</div>
+      <div class="T_-_Table"><a name="1936974">&nbsp;</a></div>
+      <h4 class="H2_-_Heading_2"><a name="1937009">Using Suspense Items</a></h4>
+      <div class="B_-_Body"><a name="1937010">A payment for which the payer is known, but the policy or charges are unknown can be specified as a suspense item. Before a suspense item can be distributed and applied to a particular charge, it must be manually “released.”</a></div>
+      <div class="B_-_Body"><a name="2065942">The remainder of this section describes common operations with suspense items.</a></div>
+      <div class="H3_-_Heading_3_outer" style="margin-left: 36pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <h5 class="H3_-_Heading_3_inner" style="width: 18pt; white-space: nowrap"></h5>
+            </td>
+            <td width="100%">
+              <h5 class="H3_-_Heading_3_inner"><a name="1937013">To divide a payment into paid and suspense items</a></h5>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="LS_-_List_Start_outer" style="margin-left: 57pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="LS_-_List_Start_inner" style="width: 15pt; white-space: nowrap">
+                <span class="ri_-_run_in_header">	1.	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="LS_-_List_Start_inner"><a name="1937014">With the appropriate account active from the </a><span class="ui_-_UI_element">Accounts </span>tab, select <span class="ui_-_UI_element">Actions</span> → <span class="ui_-_UI_element">New</span> <span class="ui_-_UI_element">Payment</span> → <span class="ui_-_UI_element">New</span> <span class="ui_-_UI_element">Direct Bill Payment.</span></div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="LI_-_List_Item_outer" style="margin-left: 57pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="LI_-_List_Item_inner" style="width: 15pt; white-space: nowrap">
+                <span class="ri_-_run_in_header">	2.	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="LI_-_List_Item_inner"><a name="1937022">Enter the total paid amount in the </a><span class="ui_-_UI_element">Amount</span> field.</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="LI_-_List_Item_outer" style="margin-left: 57pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="LI_-_List_Item_inner" style="width: 15pt; white-space: nowrap">
+                <span class="ri_-_run_in_header">	3.	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="LI_-_List_Item_inner"><a name="1937024">Click </a><span class="ui_-_UI_element">Override Distribution</span>, and then click the <span class="ui_-_UI_element">Suspense Items </span>tab.</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="LI_-_List_Item_outer" style="margin-left: 57pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="LI_-_List_Item_inner" style="width: 15pt; white-space: nowrap">
+                <span class="ri_-_run_in_header">	4.	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="LI_-_List_Item_inner"><a name="1937026">To create a suspense item, click </a><span class="ui_-_UI_element">Add</span>.</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="LI_-_List_Item_outer" style="margin-left: 57pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="LI_-_List_Item_inner" style="width: 15pt; white-space: nowrap">
+                <span class="ri_-_run_in_header">	5.	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="LI_-_List_Item_inner"><a name="1937027">Enter a policy number in the </a><span class="ui_-_UI_element">Policy Number</span> field. The policy does not need to exist.</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="LI_-_List_Item_outer" style="margin-left: 57pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="LI_-_List_Item_inner" style="width: 15pt; white-space: nowrap">
+                <span class="ri_-_run_in_header">	6.	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="LI_-_List_Item_inner"><a name="1937028">Enter the suspense amount in the </a><span class="ui_-_UI_element">Gross</span> field. The suspense amount can be all or part of the total paid amount.</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="LI_-_List_Item_outer" style="margin-left: 57pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="LI_-_List_Item_inner" style="width: 15pt; white-space: nowrap">
+                <span class="ri_-_run_in_header">	7.	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="LI_-_List_Item_inner"><a name="2066399">Optionally, click the </a><span class="ui_-_UI_element">Distribution</span> tab to see how the remaining payment will be distributed. The distribution can be overridden at this point, if you wish.</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="LI_-_List_Item_outer" style="margin-left: 57pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="LI_-_List_Item_inner" style="width: 15pt; white-space: nowrap">
+                <span class="ri_-_run_in_header">	8.	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="LI_-_List_Item_inner"><a name="1937029">Click </a><span class="ui_-_UI_element">Execute</span> or <span class="ui_-_UI_element">Execute Without Distribution</span>.</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="B_-_Body"><a name="1937031">The total amount stored as suspense items is shown on the account’s </a><span class="ui_-_UI_element">Summary</span> screen in the <span class="ui_-_UI_element">Unapplied Funds</span> section as <span class="ui_-_UI_element">Suspense Amount</span>.</div>
+      <div class="H3_-_Heading_3_outer" style="margin-left: 36pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <h5 class="H3_-_Heading_3_inner" style="width: 18pt; white-space: nowrap"></h5>
+            </td>
+            <td width="100%">
+              <h5 class="H3_-_Heading_3_inner"><a name="1937033">To release a Direct Bill suspense item for distribution</a></h5>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="B_-_Body"><a name="1937034">A Direct Bill suspense item must be released before it can be distributed. Either of the following two procedures releases Direct Bill suspense items.</a></div>
+      <h6 class="HS_-_Head_Sub"><a name="2101735">Releasing from the Account’s Summary screen</a></h6>
+      <div class="LS_-_List_Start_outer" style="margin-left: 57pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="LS_-_List_Start_inner" style="width: 15pt; white-space: nowrap">
+                <span class="ri_-_run_in_header">	1.	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="LS_-_List_Start_inner"><a name="2101736">In the account </a><span class="ui_-_UI_element">Summary</span> screen’s <span class="ui_-_UI_element">Recent Payments Received</span> section for the payment with the suspense amount, select the payment’s <span class="ui_-_UI_element">Actions</span> → <span class="ui_-_UI_element">Modify Distribution</span> to show the <span class="ui_-_UI_element">Modify Payment</span> screen.</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="LI_-_List_Item_outer" style="margin-left: 57pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="LI_-_List_Item_inner" style="width: 15pt; white-space: nowrap">
+                <span class="ri_-_run_in_header">	2.	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="LI_-_List_Item_inner"><a name="2067181">Click </a><span class="ui_-_UI_element">Override Distribution</span>, and select the <span class="ui_-_UI_element">Suspense Items</span> tab.</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="LI_-_List_Item_outer" style="margin-left: 57pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="LI_-_List_Item_inner" style="width: 15pt; white-space: nowrap">
+                <span class="ri_-_run_in_header">	3.	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="LI_-_List_Item_inner"><a name="2067185">Check the box alongside the suspense items to release.</a></div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="LI_-_List_Item_outer" style="margin-left: 57pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="LI_-_List_Item_inner" style="width: 15pt; white-space: nowrap">
+                <span class="ri_-_run_in_header">	4.	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="LI_-_List_Item_inner"><a name="2067188">Click </a><span class="ui_-_UI_element">Release</span>, and then click <span class="ui_-_UI_element">Execute</span>.</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <h6 class="HS_-_Head_Sub"><a name="2067399">Releasing from the Search screen</a></h6>
+      <div class="LS_-_List_Start_outer" style="margin-left: 57pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="LS_-_List_Start_inner" style="width: 15pt; white-space: nowrap">
+                <span class="ri_-_run_in_header">	1.	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="LS_-_List_Start_inner"><a name="2067401">On the Tab bar, select </a><span class="ui_-_UI_element">Search</span> → <span class="ui_-_UI_element">Direct Bill Suspense Items</span>.</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="LI_-_List_Item_outer" style="margin-left: 57pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="LI_-_List_Item_inner" style="width: 15pt; white-space: nowrap">
+                <span class="ri_-_run_in_header">	2.	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="LI_-_List_Item_inner"><a name="1937039">Optionally, enter search criteria. To find all suspense items, leave all the search criteria fields empty.</a></div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="LI_-_List_Item_outer" style="margin-left: 57pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="LI_-_List_Item_inner" style="width: 15pt; white-space: nowrap">
+                <span class="ri_-_run_in_header">	3.	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="LI_-_List_Item_inner"><a name="2067720">Click </a><span class="ui_-_UI_element">Search</span> to display the matching suspense items.</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="LI_-_List_Item_outer" style="margin-left: 57pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="LI_-_List_Item_inner" style="width: 15pt; white-space: nowrap">
+                <span class="ri_-_run_in_header">	4.	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="LI_-_List_Item_inner"><a name="2067723">For each suspense item to release, click the </a><span class="ui_-_UI_element">Release</span> field on the item’s row. The <span class="ui_-_UI_element">Modify Payment</span> screen displays.</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="LI_-_List_Item_outer" style="margin-left: 57pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="LI_-_List_Item_inner" style="width: 15pt; white-space: nowrap">
+                <span class="ri_-_run_in_header">	5.	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="LI_-_List_Item_inner"><a name="2067902">Click </a><span class="ui_-_UI_element">Override Distribution</span>, and select the <span class="ui_-_UI_element">Suspense Items</span> tab.</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="LI_-_List_Item_outer" style="margin-left: 57pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="LI_-_List_Item_inner" style="width: 15pt; white-space: nowrap">
+                <span class="ri_-_run_in_header">	6.	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="LI_-_List_Item_inner"><a name="2067968">Check the box alongside the suspense items to release.</a></div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="LI_-_List_Item_outer" style="margin-left: 57pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="LI_-_List_Item_inner" style="width: 15pt; white-space: nowrap">
+                <span class="ri_-_run_in_header">	7.	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="LI_-_List_Item_inner"><a name="2068028">Click </a><span class="ui_-_UI_element">Release</span>, and then click <span class="ui_-_UI_element">Execute</span>.</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="H3_-_Heading_3_outer" style="margin-left: 36pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <h5 class="H3_-_Heading_3_inner" style="width: 18pt; white-space: nowrap"></h5>
+            </td>
+            <td width="100%">
+              <h5 class="H3_-_Heading_3_inner"><a name="2076023">To release an Agency Bill suspense item for distribution</a></h5>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="B_-_Body"><a name="2076227">An Agency Bill suspense item must be released before it can be distributed. To release an Agency Bill suspense item, perform the steps described below. To resolve an Agency Bill suspense item, see </a><a href="javascript:WWHClickedPopup('app', 'my_agency_items.67.7.html#1002780', '');" title="Working with Suspense Items">Resolving Suspense Items</a>.</div>
+      <div class="LS_-_List_Start_outer" style="margin-left: 57pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="LS_-_List_Start_inner" style="width: 15pt; white-space: nowrap">
+                <span class="ri_-_run_in_header">	1.	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="LS_-_List_Start_inner"><a name="2076129">Go to </a><span class="ui_-_UI_element">Producer </span>→ <span class="ui_-_UI_element">Agency Bill Suspense Items</span>.</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="LI_-_List_Item_outer" style="margin-left: 57pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="LI_-_List_Item_inner" style="width: 15pt; white-space: nowrap">
+                <span class="ri_-_run_in_header">	2.	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="LI_-_List_Item_inner"><a name="2076130">Select the </a><span class="ui_-_UI_element">Payment Items</span> tab.</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="LI_-_List_Item_outer" style="margin-left: 57pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="LI_-_List_Item_inner" style="width: 15pt; white-space: nowrap">
+                <span class="ri_-_run_in_header">	3.	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="LI_-_List_Item_inner"><a name="2076131">Check the box for each item you want to release.</a></div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="LI_-_List_Item_outer" style="margin-left: 57pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="LI_-_List_Item_inner" style="width: 15pt; white-space: nowrap">
+                <span class="ri_-_run_in_header">	4.	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="LI_-_List_Item_inner"><a name="2076121">Click </a><span class="ui_-_UI_element">Release.</span> The funds are released.</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="H3_-_Heading_3_outer" style="margin-left: 36pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <h5 class="H3_-_Heading_3_inner" style="width: 18pt; white-space: nowrap"></h5>
+            </td>
+            <td width="100%">
+              <h5 class="H3_-_Heading_3_inner"><a name="2070627">To search for a Direct Bill suspense item</a></h5>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="B_-_Body"><a name="2075660">To search for a Direct Bill suspense item, perform the following steps:</a></div>
+      <div class="LS_-_List_Start_outer" style="margin-left: 57pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="LS_-_List_Start_inner" style="width: 15pt; white-space: nowrap">
+                <span class="ri_-_run_in_header">	1.	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="LS_-_List_Start_inner"><a name="2070670">On the Tab bar, select </a><span class="ui_-_UI_element">Search → Direct Bill Suspense Items</span>. </div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="LI_-_List_Item_outer" style="margin-left: 57pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="LI_-_List_Item_inner" style="width: 15pt; white-space: nowrap">
+                <span class="ri_-_run_in_header">	2.	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="LI_-_List_Item_inner"><a name="2070671">Optionally, enter search criteria. To find all suspense items, leave all the search criteria fields empty.</a></div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="LI_-_List_Item_outer" style="margin-left: 57pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="LI_-_List_Item_inner" style="width: 15pt; white-space: nowrap">
+                <span class="ri_-_run_in_header">	3.	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="LI_-_List_Item_inner"><a name="2070661">Click </a><span class="ui_-_UI_element">Search</span> to display the matching suspense items.</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="H3_-_Heading_3_outer" style="margin-left: 36pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <h5 class="H3_-_Heading_3_inner" style="width: 18pt; white-space: nowrap"></h5>
+            </td>
+            <td width="100%">
+              <h5 class="H3_-_Heading_3_inner"><a name="2075734">To search for an Agency Bill suspense item</a></h5>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="B_-_Body"><a name="2076383">To search for an Agency Bill suspense item, perform the following steps:</a></div>
+      <div class="LS_-_List_Start_outer" style="margin-left: 57pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="LS_-_List_Start_inner" style="width: 15pt; white-space: nowrap">
+                <span class="ri_-_run_in_header">	1.	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="LS_-_List_Start_inner"><a name="2076480">From the </a><span class="ui_-_UI_element">Producer</span> → <span class="ui_-_UI_element">Agency Bill Suspense Items </span>screen.</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="LI_-_List_Item_outer" style="margin-left: 57pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="LI_-_List_Item_inner" style="width: 15pt; white-space: nowrap">
+                <span class="ri_-_run_in_header">	2.	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="LI_-_List_Item_inner"><a name="2076586">Click the </a><span class="ui_-_UI_element">Payment Items </span>tab to view a list of suspense items. To view a list of promise suspense items, click the <span class="ui_-_UI_element">Promise Items</span> tab.</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="LI_-_List_Item_outer" style="margin-left: 57pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="LI_-_List_Item_inner" style="width: 15pt; white-space: nowrap">
+                <span class="ri_-_run_in_header">	3.	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="LI_-_List_Item_inner"><a name="2076662">Set the </a><span class="ui_-_UI_element">Filter By Status</span> drop-down list to view the desired item.</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="B_-_Body"><a name="2076467">Suspense items can also be viewed from the </a><span class="ui_-_UI_element">My Agency Items</span> screen. See <a href="javascript:WWHClickedPopup('app', 'my_agency_items.67.7.html#1002098', '');" title="Working with Suspense Items">“Working with Suspense Items”</a>.</div>
+      <script type="text/javascript" language="JavaScript1.2">
+        <!--
+          // Clear related topics
+          //
+          WWHClearRelatedTopics();
+
+          document.writeln(WWHRelatedTopicsInlineHTML());
+        // -->
+      </script>
+    </blockquote>
+    <script type="text/javascript" language="JavaScript1.2">
+      <!--
+        document.write(WWHRelatedTopicsDivTag() + WWHPopupDivTag() + WWHALinksDivTag());
+      // -->
+    </script>
+  </body>
+</html>

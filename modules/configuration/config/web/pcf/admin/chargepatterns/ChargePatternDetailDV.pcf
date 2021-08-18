@@ -1,0 +1,80 @@
+<?xml version="1.0"?>
+<PCF
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:noNamespaceSchemaLocation="../../../../../../pcf.xsd">
+  <DetailViewPanel
+    editable="true"
+    id="ChargePatternDetailDV">
+    <Require
+      name="chargePattern"
+      type="ChargePattern"/>
+    <InputColumn>
+      <Input
+        editable="!chargePattern.InternalCharge"
+        id="ChargeCode"
+        label="displaykey.Web.ChargePatternDetailDV.ChargeCode"
+        required="true"
+        value="chargePattern.ChargeCode"/>
+      <Input
+        editable="true"
+        id="ChargeName"
+        label="displaykey.Web.ChargePatternDetailDV.ChargeName"
+        required="true"
+        value="chargePattern.ChargeName"/>
+      <TypeKeyInput
+        id="Subtype"
+        label="displaykey.Web.ChargePatternDetailDV.Subtype"
+        value="chargePattern.Subtype"/>
+      <TypeKeyInput
+        available="chargePattern.Subtype != &quot;RecaptureCharge&quot;"
+        editable="!chargePattern.InternalCharge"
+        filter="filterChargeCategories( VALUES )"
+        id="Category"
+        label="displaykey.Web.ChargePatternDetailDV.Category"
+        value="chargePattern.Category"/>
+      <RangeInput
+        available="chargePattern.Subtype != &quot;ProRataCharge&quot; &amp;&amp; chargePattern.Subtype != &quot;RecaptureCharge&quot;"
+        editable="!chargePattern.InternalCharge"
+        id="TAccountOwner"
+        label="displaykey.Web.ChargePatternDetailDV.TAccountOwner"
+        value="chargePattern.TAccountOwnerPattern"
+        valueRange="chargePattern.getValidTAccountOwners()">
+        <PostOnChange/>
+      </RangeInput>
+      <RangeInput
+        editable="true"
+        id="InvoiceTreatment"
+        label="displaykey.Web.ChargePatternDetailDV.InvoiceTreatment"
+        required="true"
+        value="chargePattern.InvoiceTreatment"
+        valueRange="web.accounting.ChargePatternHelper.getAvailableInvoiceTreatments(chargePattern)"/>
+      <TypeKeyInput
+        editable="true"
+        id="Periodicity"
+        label="displaykey.Web.ChargePatternDetailDV.ProRataChargeTransactionPeriodicity"
+        required="chargePattern.Subtype ==&quot;ProRataCharge&quot;"
+        value="(chargePattern as ProRataCharge).Periodicity"
+        visible="chargePattern.Subtype ==&quot;ProRataCharge&quot;"/>
+      <TypeKeyInput
+        editable="true"
+        id="Priority"
+        label="displaykey.Web.ChargePatternDetailDV.Priority"
+        value="chargePattern.Priority"/>
+      <BooleanRadioInput
+        editable="true"
+        id="IncludedInEquityDating"
+        label="displaykey.Web.ChargePatternDetailDV.IncludedInEquityDating"
+        value="chargePattern.IncludedInEquityDating"/>
+    </InputColumn>
+    <Code><![CDATA[
+function filterChargeCategories(categories : ChargeCategory[]) : List<ChargeCategory> {
+  if (chargePattern.Subtype == "RecaptureCharge") {
+    return categories.where( \ c -> c == ChargeCategory.TC_RECAPTURE).toList()
+  } else {
+    return categories.where( \ c -> c != ChargeCategory.TC_RECAPTURE).toList()
+  }
+}
+      
+    ]]></Code>
+  </DetailViewPanel>
+</PCF>

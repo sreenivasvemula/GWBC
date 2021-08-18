@@ -1,0 +1,31 @@
+<?xml version="1.0"?>
+<subtype
+  xmlns="http://guidewire.com/datamodel"
+  entity="AdvanceCmsnPayment"
+  subpackage="commission"
+  supertype="DelayedCmsnPayment">
+  <column
+    name="Expired"
+    type="bit"
+    desc="Indicates whether or not the advance has been expired."
+    default="false"
+    getterScriptability="hidden"
+    nullok="false"
+    setterScriptability="hidden"/>
+  <column
+    name="MaintainUntil"
+    type="datetime"
+    desc="The date on which the advance expires."
+    nullok="false"/>
+  <array
+    name="ActivitiesCreatedByAppr"
+    arrayentity="AdvcCmsnApprActivity"
+    setterScriptability="doesNotExist">
+    <link-association>
+      <typelist-map
+        field="Status"/>
+    </link-association>
+  </array>
+  <dbcheckbuilder
+    className="com.guidewire.bc.system.database.dbchecks.commission.AdvanceCmsnPaymentDBCheckBuilder"/>
+</subtype>

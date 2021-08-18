@@ -1,0 +1,170 @@
+<?xml version="1.0"?>
+<PCF
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:noNamespaceSchemaLocation="../../../../../pcf.xsd">
+  <Screen
+    id="NewNegativeWriteoffReversalSearchScreen">
+    <Require
+      name="negativeWriteoffToReverse"
+      type="NegativeWriteoffRev"/>
+    <Require
+      name="account"
+      type="Account"/>
+    <Variable
+      initialValue="new web.account.AccountSearchConverter()"
+      name="accountSearchConverter"
+      type="web.account.AccountSearchConverter"/>
+    <Variable
+      initialValue="new web.policy.PolicySearchConverter()"
+      name="policySearchConverter"
+      type="web.policy.PolicySearchConverter"/>
+    <Variable
+      initialValue="account == null"
+      name="accountEditable"
+      type="boolean"/>
+    <Toolbar>
+      <WizardButtons/>
+    </Toolbar>
+    <CardViewPanel>
+      <Card
+        id="Writeoff"
+        title="displaykey.Web.NewNegativeWriteoffReversalSearchScreen.NegativeWriteoffCard">
+        <SearchPanel
+          criteriaName="searchCriteria"
+          resultsName="negativeWriteoffs"
+          search="gw.search.SearchMethods.validateAndSearch(searchCriteria)"
+          searchCriteria="initializeSearchCriteria()"
+          searchResultsType="AcctNegativeWriteoffQuery">
+          <DetailViewPanel
+            id="NegativeWriteoffSearchDV">
+            <InputColumn>
+              <Label
+                id="WriteoffBasics"
+                label="displaykey.Web.WriteoffSearchDV.WriteoffBasics"/>
+              <TypeKeyInput
+                editable="gw.api.util.CurrencyUtil.isMultiCurrencyMode() &amp;&amp; accountEditable"
+                id="CurrencyCriterion"
+                label="displaykey.Web.WriteoffSearchDV.Currency"
+                value="searchCriteria.Currency"
+                visible="gw.api.util.CurrencyUtil.isMultiCurrencyMode()">
+                <PostOnChange
+                  onChange="blankMinimumAndMaximumFields(searchCriteria)"/>
+              </TypeKeyInput>
+              <MonetaryAmountInput
+                available="searchCriteria.Currency != null || gw.api.util.CurrencyUtil.isSingleCurrencyMode()"
+                currency="gw.search.SearchHelper.getDefaultCurrencyIfNull(searchCriteria.Currency) "
+                editable="true"
+                id="MinAmountCriterion"
+                label="displaykey.Web.WriteoffSearchDV.MinAmount"
+                value="searchCriteria.MinAmount"/>
+              <MonetaryAmountInput
+                available="searchCriteria.Currency != null || gw.api.util.CurrencyUtil.isSingleCurrencyMode()"
+                currency="gw.search.SearchHelper.getDefaultCurrencyIfNull(searchCriteria.Currency)"
+                editable="true"
+                id="MaxAmountCriterion"
+                label="displaykey.Web.WriteoffSearchDV.MaxAmount"
+                value="searchCriteria.MaxAmount"/>
+              <Label
+                id="WriteoffDatesCriterion"
+                label="displaykey.Web.WriteoffSearchDV.Dates"/>
+              <DateInput
+                editable="true"
+                id="EarliestDateCriterion"
+                label="displaykey.Web.WriteoffSearchDV.EarliestDate"
+                value="searchCriteria.EarliestDate"/>
+              <DateInput
+                editable="true"
+                id="LatestDateCriterion"
+                label="displaykey.Web.WriteoffSearchDV.LatestDate"
+                value="searchCriteria.LatestDate"/>
+            </InputColumn>
+            <InputColumn>
+              <Label
+                id="RelatedItems"
+                label="displaykey.Web.WriteoffSearchDV.RelatedItems"/>
+              <TypeKeyInput
+                editable="true"
+                id="WriteoffChannelCriteria"
+                label="displaykey.Web.NegativeWriteoffSearchDV.Channel"
+                value="searchCriteria.Channel"/>
+              <Input
+                editable="accountEditable"
+                id="AccountCriterion"
+                inputConversion="accountSearchConverter.getAccount(VALUE)"
+                label="displaykey.Web.WriteoffSearchDV.Account"
+                value="searchCriteria.Account">
+                <MenuItem
+                  action="AccountSearchPopup.push()"
+                  icon="&quot;search.png&quot;"
+                  id="AccountPicker"/>
+              </Input>
+            </InputColumn>
+            <InputFooterSection>
+              <InputSetRef
+                def="SearchAndResetInputSet()"/>
+            </InputFooterSection>
+          </DetailViewPanel>
+          <PanelRef>
+            <Toolbar/>
+            <ListViewPanel
+              id="NegativeWriteoffsLV">
+              <RowIterator
+                editable="false"
+                elementName="negativeWriteoff"
+                value="negativeWriteoffs">
+                <Row>
+                  <LinkCell
+                    id="SelectCell"
+                    label="displaykey.Web.NewNegativeWriteoffReversalWriteoffsLV.Select">
+                    <Link
+                      action="negativeWriteoffToReverse.setNegativeWriteoffAndAddToBundle(negativeWriteoff); (CurrentLocation as pcf.api.Wizard).next();"
+                      id="Select"
+                      label="displaykey.Web.NewNegativeWriteoffReversalWriteoffsLV.Select"
+                      styleClass="miniButton"
+                      visible="negativeWriteoff.canReverse()"/>
+                  </LinkCell>
+                  <DateCell
+                    enableSort="false"
+                    id="WriteoffDate"
+                    label="displaykey.Web.NewNegativeWriteoffReversalWriteoffsLV.WriteoffDate"
+                    value="negativeWriteoff.CreateTime"/>
+                  <Cell
+                    enableSort="false"
+                    id="Description"
+                    label="displaykey.Web.NewNegativeWriteoffReversalWriteoffsLV.Description"
+                    value="negativeWriteoff"/>
+                  <Cell
+                    enableSort="false"
+                    formatType="currency"
+                    id="Amount"
+                    label="displaykey.Web.NewNegativeWriteoffReversalWriteoffsLV.Amount"
+                    value="negativeWriteoff.Amount"/>
+                  <Cell
+                    enableSort="false"
+                    id="UnappliedFund"
+                    label="displaykey.Web.NewNegativeWriteoffReversalWriteoffsLV.UnappliedFund"
+                    value="negativeWriteoff.UnappliedFund"/>
+                </Row>
+              </RowIterator>
+            </ListViewPanel>
+          </PanelRef>
+        </SearchPanel>
+      </Card>
+    </CardViewPanel>
+    <Code><![CDATA[function initializeSearchCriteria() : NegWriteoffSearchCrit {
+  var criteria = new NegWriteoffSearchCrit();
+  
+  if (!accountEditable) {
+    criteria.Account = account;
+    criteria.Currency = account.Currency;
+  }
+  
+  return criteria;
+}
+
+function blankMinimumAndMaximumFields(searchCriteria : NegWriteoffSearchCrit) {
+  searchCriteria.MinAmount = null
+  searchCriteria.MaxAmount = null
+}]]></Code>
+  </Screen>
+</PCF>

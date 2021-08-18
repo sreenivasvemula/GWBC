@@ -1,0 +1,65 @@
+<?xml version="1.0"?>
+<PCF
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:noNamespaceSchemaLocation="../../../../../pcf.xsd">
+  <!-- LocationGroup for the "Account" tab pages -->
+  <LocationGroup
+    afterEnter="gw.api.web.account.AccountUtil.addToRecentlyViewedAccounts(account)"
+    canVisit="account.ViewableByCurrentUser"
+    id="AccountGroup"
+    infoBar="AccountInfoBar(account)"
+    menuActions="AccountDetailMenuActions(account)"
+    parent="AccountForward()"
+    title="account.AccountNumber">
+    <LocationEntryPoint
+      signature="AccountGroup(account : Account)"/>
+    <Variable
+      name="account"
+      type="Account"/>
+    <LocationRef
+      location="AccountDetailSummary(account)"/>
+    <LocationRef
+      location="AccountDetailContacts(account)"/>
+    <LocationRef
+      location="AccountDetailFundsTracking(account)"/>
+    <!-- <PageRefDivider/> -->
+    <LocationRef
+      location="AccountDetailPayments(account)"/>
+    <LocationRef
+      location="AccountDetailCharges(account)"/>
+    <LocationRef
+      location="AccountDetailDisbursements(account)"/>
+    <LocationRef
+      location="AccountDetailTransactions(account)"/>
+    <!-- <PageRefDivider/> -->
+    <LocationRef
+      location="AccountCollateral(account)"/>
+    <!-- <PageRefDivider/> -->
+    <LocationRef
+      location="AccountDetailPolicies(account)"/>
+    <LocationRef
+      location="AccountDetailHistory(account)"/>
+    <LocationRef
+      location="AccountDetailEvaluation(account)"/>
+    <!-- <PageRefDivider/> -->
+    <LocationRef
+      location="AccountDetailInvoices(account)"/>
+    <!-- <PageRefDivider/> -->
+    <LocationRef
+      location="AccountDetailInvoiceStreams(account)"/>
+    <!-- <PageRefDivider/> -->
+    <LocationRef
+      location="AccountDetailTroubleTickets(account)"/>
+    <LocationRef
+      location="AccountDetailDocuments(account)"/>
+    <LocationRef
+      location="AccountDetailNotes(account, true)"/>
+    <!-- <PageRefDivider/> -->
+    <LocationRef
+      location="AccountDetailLedger(account)"/>
+    <LocationRef
+      location="AccountDetailJournal(account)"/>
+    <LocationRef
+      location="AccountDetailDelinquencies(account)"/>
+  </LocationGroup>
+</PCF>

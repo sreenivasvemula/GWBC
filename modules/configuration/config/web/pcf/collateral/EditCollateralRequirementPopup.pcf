@@ -1,0 +1,80 @@
+<?xml version="1.0"?>
+<PCF
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:noNamespaceSchemaLocation="../../../../../pcf.xsd">
+  <Popup
+    afterCommit="AccountCollateral.go(requirement.Collateral.Account)"
+    beforeCommit="collateralUtil.allocateRequirementIfNewEffectiveDateIsToday(requirement)"
+    canEdit="true"
+    canVisit="perm.Account.collateralreqedit"
+    id="EditCollateralRequirementPopup"
+    startInEditMode="true"
+    title="displaykey.Web.EditCollateralRequirement.Title">
+    <LocationEntryPoint
+      signature="EditCollateralRequirementPopup(requirement:CollateralRequirement)"/>
+    <Variable
+      name="requirement"
+      type="CollateralRequirement"/>
+    <Variable
+      initialValue="new web.account.CollateralUtil()"
+      name="collateralUtil"/>
+    <Screen
+      id="EditCollateralRequirementScreen">
+      <Toolbar>
+        <EditButtons/>
+      </Toolbar>
+      <AlertBar
+        id="amountWarning"
+        label="displaykey.Web.EditCollateralRequirement.AmountWarning"
+        visible="(requirement.OriginalVersion as CollateralRequirement).Required &lt; requirement.Required and requirement.RequirementType == &quot;cash&quot;"/>
+      <AlertBar
+        id="dateWarning"
+        label="displaykey.Web.EditCollateralRequirement.DateWarning"
+        visible="util.DateUtil.compareIgnoreTime ( (requirement.OriginalVersion as CollateralRequirement).EffectiveDate, requirement.EffectiveDate) &gt; 0 and requirement.RequirementType == &quot;cash&quot;"/>
+      <PanelRef>
+        <DetailViewPanel>
+          <InputColumn>
+            <Label
+              label="displaykey.Web.EditCollateralRequirement.Details"/>
+            <MonetaryAmountInput
+              currency="requirement.Currency"
+              formatType="currency"
+              id="cash"
+              label="displaykey.Web.EditCollateralRequirement.Cash"
+              value="requirement.CashAllocated"/>
+            <MonetaryAmountInput
+              currency="requirement.Currency"
+              formatType="currency"
+              id="loc"
+              label="displaykey.Web.EditCollateralRequirement.LOC"
+              value="requirement.LOCAllocated">
+              <PostOnChange/>
+            </MonetaryAmountInput>
+            <MonetaryAmountInput
+              boldLabel="true"
+              currency="requirement.Currency"
+              formatType="currency"
+              id="total"
+              label="displaykey.Web.EditCollateralRequirement.Total"
+              value="collateralUtil.getTotalRequirementHeld( requirement )"/>
+            <MonetaryAmountInput
+              boldLabel="true"
+              currency="requirement.Currency"
+              formatType="currency"
+              id="surplus"
+              label="displaykey.Web.EditCollateralRequirement.Surplus"
+              value="collateralUtil.getSurplus( requirement )"/>
+            <InputDivider/>
+          </InputColumn>
+        </DetailViewPanel>
+      </PanelRef>
+      <PanelRef
+        def="CollateralRequirementDV(requirement, isEffectiveDateEditable())"/>
+    </Screen>
+    <Code><![CDATA[
+function isEffectiveDateEditable() : Boolean{
+        return (requirement.Compliance == "pending")
+      }
+    ]]></Code>
+  </Popup>
+</PCF>

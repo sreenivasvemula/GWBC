@@ -1,0 +1,37 @@
+<?xml version="1.0"?>
+<!-- ====================================================================  OutgoingProducerPmntSearchView  ==================================================================== -->
+<viewEntity
+  xmlns="http://guidewire.com/datamodel"
+  entity="OutgoingProducerPmntSearchView"
+  desc="Supports the efficient creation of OutgoingProducerPmnt lists in BillingCenter's views."
+  exportable="false"
+  subpackage="search.view"
+  primaryEntity="OutgoingProducerPmnt">
+  <viewEntityLink
+    name="OutgoingPayment"
+    path="ID"/>
+  <viewEntityLink
+    name="Producer"
+    path="ProducerPayment.Producer"/>
+  <viewEntityColumn
+    name="IssueDate"
+    path="IssueDate"/>
+  <viewEntityColumn
+    name="Amount"
+    path="Amount_amt"/>
+  <viewEntityColumn
+    name="PayTo"
+    path="PayTo"/>
+  <viewEntityTypekey
+    name="Status"
+    path="Status"/>
+  <viewEntityTypekey
+    name="PaymentMethod"
+    path="PaymentInstrument.PaymentMethod"/>
+  <viewEntityColumn
+    name="CheckNumber"
+    path="RefNumber"/>
+  <viewEntityTypekey
+    name="Currency"
+    path="ProducerPayment.Producer.Currency"/>
+</viewEntity>

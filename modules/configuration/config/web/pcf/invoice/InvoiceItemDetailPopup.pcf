@@ -1,0 +1,57 @@
+<?xml version="1.0"?>
+<PCF
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:noNamespaceSchemaLocation="../../../../../pcf.xsd">
+  <Popup
+    canEdit="false"
+    id="InvoiceItemDetailPopup"
+    title="displaykey.Web.InvoiceItemDetailPopup.Title">
+    <LocationEntryPoint
+      signature="InvoiceItemDetailPopup(invoiceItem : InvoiceItem)"/>
+    <Variable
+      name="invoiceItem"
+      type="InvoiceItem"/>
+    <Screen
+      id="ItemEventDetailScreen">
+      <DetailViewPanel>
+        <InputColumn>
+          <DateInput
+            id="eventDate"
+            label="displaykey.Web.InvoiceItemDetailPopup.EventDate"
+            value="invoiceItem.EventDate"/>
+          <MonetaryAmountInput
+            currency="invoiceItem.Currency"
+            formatType="currency"
+            id="amount"
+            label="displaykey.Web.InvoiceItemDetailPopup.Amount"
+            value="invoiceItem.Amount"/>
+          <Input
+            id="invoice"
+            label="displaykey.Web.InvoiceItemDetailPopup.InvoiceLabel"
+            value="displaykey.Web.InvoiceItemDetailPopup.Invoice(invoiceItem.Invoice.Subtype, invoiceItem.Invoice.InvoiceNumber,  invoiceItem.Invoice.Status, gw.api.util.StringUtil.formatDate(invoiceItem.Invoice.DUEDATE, &quot;short&quot;))"/>
+          <TextInput
+            action="AccountDetailSummary.push(invoiceItem.Owner)"
+            id="owner"
+            label="displaykey.Web.InvoiceItemDetailPopup.Owner"
+            value="invoiceItem.Owner"/>
+          <TextInput
+            action="goToPayer()"
+            id="payer"
+            label="displaykey.Web.InvoiceItemDetailPopup.Payer"
+            value="invoiceItem.Payer"/>
+        </InputColumn>
+      </DetailViewPanel>
+      <PanelRef
+        def="ItemEventPanelSet(invoiceItem)"
+        id="itemEvents"/>
+    </Screen>
+    <Code><![CDATA[function goToPayer( ) {
+  var payer = invoiceItem.getPayer() 
+  if ( payer typeis Producer ) {
+    ProducerDetail.push(payer)
+  } else {
+    AccountDetailSummary.push(payer as Account)
+  }
+}]]></Code>
+  </Popup>
+</PCF>

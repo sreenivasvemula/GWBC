@@ -1,0 +1,40 @@
+<?xml version="1.0"?>
+<PCF
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:noNamespaceSchemaLocation="../../../../../pcf.xsd">
+  <Popup
+    beforeCommit="payment.IncomingPayment.handlePaymentReversal(payment, reason)"
+    canEdit="true"
+    id="ProducerPaymentReversalConfirmationPopup"
+    startInEditMode="true"
+    title="displaykey.Web.PaymentReversalConfirmation.Title">
+    <LocationEntryPoint
+      signature="ProducerPaymentReversalConfirmationPopup(payment : ProducerPaymentRecd)"/>
+    <Variable
+      name="payment"
+      type="ProducerPaymentRecd"/>
+    <Variable
+      name="reason"
+      type="PaymentReversalReason"/>
+    <Screen
+      id="NSFConfirmationScreen">
+      <Toolbar>
+        <EditButtons
+          updateLabel="displaykey.Button.OK"/>
+      </Toolbar>
+      <DetailViewPanel>
+        <InputColumn>
+          <Label
+            id="Confirmation"
+            label="displaykey.Web.PaymentReversalConfirmation.Confirmation(payment.Amount.render())"/>
+          <TypeKeyInput
+            editable="true"
+            id="Reason"
+            label="displaykey.Web.PaymentReversalConfirmation.Reason"
+            required="true"
+            value="reason"/>
+        </InputColumn>
+      </DetailViewPanel>
+    </Screen>
+  </Popup>
+</PCF>

@@ -1,0 +1,106 @@
+<?xml version="1.0"?>
+<PCF
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:noNamespaceSchemaLocation="../../../../../pcf.xsd">
+  <Popup
+    beforeCommit="applyOverrideSettings();"
+    canEdit="true"
+    id="OverrideCommissionPlanPopup"
+    startInEditMode="true"
+    title="displaykey.Web.OverrideCommissionPlanPopup.Title">
+    <LocationEntryPoint
+      signature="OverrideCommissionPlanPopup(PolicyPeriod: PolicyPeriod)"/>
+    <Variable
+      name="PolicyPeriod"
+      type="PolicyPeriod"/>
+    <Variable
+      initialValue="initOverrideSettings()"
+      name="overrideSettings"/>
+    <Screen
+      id="OverrideCommissionPlanPopupScreen">
+      <Toolbar>
+        <EditButtons/>
+      </Toolbar>
+      <DetailViewPanel>
+        <InputColumn>
+          <InputIterator
+            elementName="overrideSetting"
+            value="overrideSettings.OrderedSettings">
+            <Input
+              id="OverrideSetting"
+              labelAbove="true"
+              value="overrideSetting"/>
+            <TypeKeyInput
+              editable="true"
+              id="OverrideMethod"
+              labelAbove="true"
+              required="true"
+              value="overrideSetting.OverrideMethod">
+              <PostOnChange/>
+            </TypeKeyInput>
+            <Input
+              editable="perm.Producer.commplanoride"
+              id="Alternate"
+              inputConversion="web.plan.commission.CommissionPlanUtil.getActiveCommissionPlan(VALUE)"
+              labelAbove="true"
+              required="true"
+              value="overrideSetting.AlternateCommissionPlan"
+              visible="overrideSetting.OverrideMethod == &quot;alternate&quot;">
+              <MenuItem
+                action="CommissionPlanSearchPopup.push()"
+                icon="&quot;search.png&quot;"
+                id="AlternatePicker"/>
+            </Input>
+            <Input
+              editable="perm.Producer.commpercoride"
+              id="Percentage"
+              labelAbove="true"
+              required="true"
+              value="overrideSetting.Percentage"
+              visible="overrideSetting.OverrideMethod == &quot;percentage&quot;"/>
+          </InputIterator>
+        </InputColumn>
+      </DetailViewPanel>
+    </Screen>
+    <Code><![CDATA[function initOverrideSettings() : OverrideCommissionPlanSettingSet {
+  var result = PolicyPeriod.OverrideCommissionPlanSettings;
+  for (setting in result.Settings) {
+    // Initialize defaults
+    setting.OverrideMethod = "nochange";
+    var policyCommission = setting.PolicyCommission;
+    setting.AlternateCommissionPlan = policyCommission.CommissionSubPlan.CommissionPlan;
+    setting.Percentage = policyCommission.getCommissionRate(null).Points.resolve( 0,
+    java.math.RoundingMode.HALF_EVEN );
+  }
+  return result;
+}
+
+function applyOverrideSettings() {
+  for (setting in overrideSettings.OrderedSettings) {
+    setting.apply()
+    applyToCharges(setting)
+  }
+}
+
+function applyToCharges(setting : OverrideCommissionPlanSetting) {
+  for (chargeCommission in setting.PolicyCommission.CommissionableCharges) { 
+    var role = chargeCommission.PolicyCommission.Role
+    if (isCommissionable(chargeCommission)) {
+      if (setting.OverrideMethod == typekey.CmsnPlanOverrideMethod.TC_ALTERNATE) {
+        var subplan = setting.AlternateCommissionPlan.getApplicableSubPlan(chargeCommission.PolicyCommission.PolicyPeriod)
+        var newRate = subplan.getBaseRate(chargeCommission.PolicyCommission.Role)
+        chargeCommission.Charge.overrideCommissionRate(role, newRate)
+      } else if (setting.OverrideMethod == typekey.CmsnPlanOverrideMethod.TC_PERCENTAGE) {
+        chargeCommission.Charge.overrideCommissionRate(role, setting.Percentage)
+      }
+    }
+  }
+}
+
+function isCommissionable(chargeCommission : ChargeCommission) : boolean {
+  var policyCommission = chargeCommission.PolicyCommission
+  return com.guidewire.pl.system.dependency.PLDependencies.getPluginConfig().getPlugin(gw.plugin.commission.ICommission)
+      .isCommissionable(policyCommission.CommissionSubPlan, chargeCommission.Charge, policyCommission.Role)
+}]]></Code>
+  </Popup>
+</PCF>

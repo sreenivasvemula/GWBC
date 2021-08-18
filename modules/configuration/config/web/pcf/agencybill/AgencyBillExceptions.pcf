@@ -1,0 +1,210 @@
+<?xml version="1.0"?>
+<PCF
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:noNamespaceSchemaLocation="../../../../../pcf.xsd">
+  <Page
+    canVisit="perm.System.prodtabview and perm.System.prodabexceptionsview"
+    id="AgencyBillExceptions"
+    title="displaykey.Web.AgencyBillExceptions.Title(producer)">
+    <LocationEntryPoint
+      signature="AgencyBillExceptions(producer : Producer)"/>
+    <LocationEntryPoint
+      signature="AgencyBillExceptions(producer : Producer, tabToSelect : int)"/>
+    <Variable
+      name="producer"
+      type="Producer"/>
+    <Variable
+      name="tabToSelect"
+      type="int"/>
+    <Variable
+      initialValue="findPaymentExceptions()"
+      name="paymentExceptions"
+      recalculateOnRefresh="true"/>
+    <Variable
+      initialValue="findPromiseExceptions()"
+      name="promiseExceptions"
+      recalculateOnRefresh="true"/>
+    <Variable
+      initialValue="producer.findAgencyCyclesWithLatePaymentException()"
+      name="agencyCyclesWithLatePaymentException"
+      recalculateOnRefresh="true"
+      type="AgencyCycleProcess[]"/>
+    <Variable
+      initialValue="producer.findAgencyCyclesWithLatePromiseException()"
+      name="agencyCyclesWithLatePromiseException"
+      recalculateOnRefresh="true"
+      type="AgencyCycleProcess[]"/>
+    <Screen
+      editable="false"
+      id="AgencyBillExceptionsScreen">
+      <CardViewPanel>
+        <Card
+          id="PaymentMismatchExceptions"
+          selectOnEnter="tabToSelect == 0"
+          title="displaykey.Web.AgencyBillExceptions.PaymentExceptions(paymentExceptions.length)">
+          <PanelRef
+            def="AgencyBillExceptionsLV(paymentExceptions, true, false)"
+            id="PaymentExceptionsPanel">
+            <Toolbar>
+              <CheckedValuesToolbarButton
+                checkedRowAction="InvoiceItemHistoryPopup.push(CheckedValue.ExceptionItem.InvoiceItem)"
+                flags="one Row"
+                id="EditItem"
+                iterator="PaymentExceptionsPanel.AgencyBillExceptionsLV"
+                label="displaykey.Web.AgencyBillExceptions.Toolbar.EditItem"/>
+              <ToolbarDivider/>
+              <CheckedValuesToolbarButton
+                id="Writeoff"
+                iterator="PaymentExceptionsPanel.AgencyBillExceptionsLV"
+                label="displaykey.Web.AgencyBillExceptions.Toolbar.WriteOff">
+                <CheckedValuesMenuItem
+                  allCheckedRowsAction="writeOffExceptions(CheckedValues, AgencyWriteoffType.TC_BOTH)"
+                  id="Both"
+                  label="AgencyWriteoffType.TC_BOTH"/>
+                <CheckedValuesMenuItem
+                  allCheckedRowsAction="writeOffExceptions(CheckedValues, AgencyWriteoffType.TC_GROSS)"
+                  id="Gross"
+                  label="AgencyWriteoffType.TC_GROSS"/>
+                <CheckedValuesMenuItem
+                  allCheckedRowsAction="writeOffExceptions(CheckedValues, AgencyWriteoffType.TC_COMMISSION)"
+                  id="Commission"
+                  label="AgencyWriteoffType.TC_COMMISSION"/>
+              </CheckedValuesToolbarButton>
+              <ToolbarDivider/>
+              <CheckedValuesToolbarButton
+                allCheckedRowsAction="StartDelinquencyProcessPopup.push(web.producer.agencybill.ExceptionItemUtil.getPolicyPeriodsAssociatedWithSelectedExceptionItemViews( CheckedValues*.ExceptionItem ))"
+                id="StartDelinquency"
+                iterator="PaymentExceptionsPanel.AgencyBillExceptionsLV"
+                label="displaykey.Web.AgencyBillExceptions.Toolbar.StartDelinquency"/>
+              <ToolbarDivider/>
+              <CheckedValuesToolbarButton
+                allCheckedRowsAction="web.producer.agencybill.ExceptionItemUtil.carryForwardPaymentExceptions( CheckedValues, CurrentLocation )"
+                id="CarryForward"
+                iterator="PaymentExceptionsPanel.AgencyBillExceptionsLV"
+                label="displaykey.Web.AgencyBillExceptions.Toolbar.CarryForward"/>
+              <ToolbarDivider/>
+              <CheckedValuesToolbarButton
+                checkedRowAction="CommissionRatesPopup.push(domain.accounting.ChargeUtil.createChargeArray(CheckedValue.ExceptionItem, CurrentLocation));"
+                flags="one Row"
+                id="OverrideCommission"
+                iterator="PaymentExceptionsPanel.AgencyBillExceptionsLV"
+                label="displaykey.Web.AccountDetailCharges.OverrideCommissionButton"/>
+              <CheckedValuesToolbarButton
+                allCheckedRowsAction="AgencyExceptionItemCommentsPopup.push(CheckedValues)"
+                id="EditComments"
+                iterator="PaymentExceptionsPanel.AgencyBillExceptionsLV"
+                label="displaykey.Web.AgencyBillExceptions.Toolbar.EditComments"/>
+            </Toolbar>
+          </PanelRef>
+        </Card>
+        <Card
+          id="PromiseMismatchExceptions"
+          selectOnEnter="tabToSelect == 1"
+          title="displaykey.Web.AgencyBillExceptions.PromiseExceptions(promiseExceptions.length)">
+          <PanelRef
+            def="AgencyBillExceptionsLV(promiseExceptions, true, false )"
+            id="PromiseExceptionsPanel">
+            <Toolbar>
+              <CheckedValuesToolbarButton
+                checkedRowAction="InvoiceItemHistoryPopup.push(CheckedValue.ExceptionItem.InvoiceItem)"
+                flags="one Row"
+                id="EditItem"
+                iterator="PromiseExceptionsPanel.AgencyBillExceptionsLV"
+                label="displaykey.Web.AgencyBillExceptions.Toolbar.EditItem"/>
+              <ToolbarDivider/>
+              <CheckedValuesToolbarButton
+                allCheckedRowsAction="web.producer.agencybill.ExceptionItemUtil.carryForwardPromiseExceptions( CheckedValues, CurrentLocation )"
+                id="CarryForward"
+                iterator="PromiseExceptionsPanel.AgencyBillExceptionsLV"
+                label="displaykey.Web.AgencyBillExceptions.Toolbar.CarryForward"/>
+              <ToolbarDivider/>
+              <CheckedValuesToolbarButton
+                checkedRowAction="CommissionRatesPopup.push(domain.accounting.ChargeUtil.createChargeArray(CheckedValue.ExceptionItem, CurrentLocation));"
+                flags="one Row"
+                id="OverrideCommission"
+                iterator="PromiseExceptionsPanel.AgencyBillExceptionsLV"
+                label="displaykey.Web.AccountDetailCharges.OverrideCommissionButton"/>
+              <CheckedValuesToolbarButton
+                allCheckedRowsAction="AgencyExceptionItemCommentsPopup.push(CheckedValues)"
+                id="EditComments"
+                iterator="PromiseExceptionsPanel.AgencyBillExceptionsLV"
+                label="displaykey.Web.AgencyBillExceptions.Toolbar.EditComments"/>
+            </Toolbar>
+          </PanelRef>
+        </Card>
+        <Card
+          id="LatePayments"
+          selectOnEnter="tabToSelect == 2"
+          title="displaykey.Web.AgencyBillExceptions.LatePayments(agencyCyclesWithLatePaymentException.Count)">
+          <PanelRef
+            def="CycleExceptionsLV(agencyCyclesWithLatePaymentException, true)"
+            id="MissingPaymentsPanel">
+            <Toolbar>
+              <CheckedValuesToolbarButton
+                allCheckedRowsAction="dismissExceptions(CheckedValues, true)"
+                flags="all CycleException"
+                id="Dismiss"
+                iterator="MissingPaymentsPanel.CycleExceptionsLV"
+                label="displaykey.Web.AgencyBillExceptions.OtherExceptions.Toolbar.Dismiss"/>
+              <ToolbarDivider/>
+              <CheckedValuesToolbarButton
+                allCheckedRowsAction="AgencyCycleExceptionCommentsPopup.push(CheckedValues, true)"
+                id="EditComments"
+                iterator="MissingPaymentsPanel.CycleExceptionsLV"
+                label="displaykey.Web.AgencyBillExceptions.OtherExceptions.Toolbar.EditComments"/>
+            </Toolbar>
+          </PanelRef>
+        </Card>
+        <Card
+          id="LatePromises"
+          selectOnEnter="tabToSelect == 3"
+          title="displaykey.Web.AgencyBillExceptions.LatePromises(agencyCyclesWithLatePromiseException.Count)">
+          <PanelRef
+            def="CycleExceptionsLV(agencyCyclesWithLatePromiseException, false)"
+            id="MissingPromisesPanel">
+            <Toolbar>
+              <CheckedValuesToolbarButton
+                allCheckedRowsAction="dismissExceptions(CheckedValues, false)"
+                flags="all CycleException"
+                id="Dismiss"
+                iterator="MissingPromisesPanel.CycleExceptionsLV"
+                label="displaykey.Web.AgencyBillExceptions.OtherExceptions.Toolbar.Dismiss"/>
+              <ToolbarDivider/>
+              <CheckedValuesToolbarButton
+                allCheckedRowsAction="AgencyCycleExceptionCommentsPopup.push(CheckedValues, false)"
+                id="EditComments"
+                iterator="MissingPromisesPanel.CycleExceptionsLV"
+                label="displaykey.Web.AgencyBillExceptions.OtherExceptions.Toolbar.EditComments"/>
+            </Toolbar>
+          </PanelRef>
+        </Card>
+      </CardViewPanel>
+    </Screen>
+    <Code><![CDATA[function dismissExceptions(exceptionProcesses : AgencyCycleProcess[], isLatePayments : boolean ) {
+  gw.transaction.Transaction.runWithNewBundle(\ bundle -> {
+    for (process in exceptionProcesses) {
+      process = bundle.add(process)
+      if (isLatePayments) {
+        process.PastDueExceptionDismissed = true
+      } else {
+        process.PromiseExceptionDismissed = true
+      }
+    }
+  })
+}
+
+function findPaymentExceptions() : web.invoice.ExceptionItemView[]{
+  var exceptionItems = producer.findPaymentsExceptionItems()
+  return web.producer.agencybill.ExceptionItemUtil.createExceptionItemViews( exceptionItems )
+}
+
+function findPromiseExceptions() : web.invoice.ExceptionItemView[]{
+  var exceptionItems = producer.findPromisesExceptionItems()
+  return web.producer.agencybill.ExceptionItemUtil.createExceptionItemViews( exceptionItems )
+}
+
+function writeOffExceptions(exceptionItemViews : web.invoice.ExceptionItemView[], writeOffType : AgencyWriteoffType ){
+   AgencyBillExceptionsConfirmationPopup.push(exceptionItemViews, writeOffType )
+ }]]></Code>
+  </Page>
+</PCF>

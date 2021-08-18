@@ -1,0 +1,51 @@
+<?xml version="1.0"?>
+<PCF
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:noNamespaceSchemaLocation="../../../../../pcf.xsd">
+  <Screen
+    id="ListBillInvoicingOverridesInvoiceItemsStepScreen">
+    <Require
+      name="policyPeriod"
+      type="PolicyPeriod"/>
+    <Require
+      name="listBillHelper"
+      type="gw.api.web.policy.ListBillInvoicingOverridesHelper"/>
+    <Toolbar>
+      <WizardButtons/>
+    </Toolbar>
+    <DetailViewPanel>
+      <InputColumn>
+        <BooleanRadioInput
+          editable="true"
+          falseLabel="displaykey.Web.ChangeBillingMethodToListBillInvoiceItemsStepScreen.PlannedInvoiceItemsOnly"
+          id="PaymentPlanChangeOption"
+          label="displaykey.Web.ChangeBillingMethodToListBillInvoiceItemsStepScreen.MoveInvoiceItemsOption"
+          required="true"
+          trueLabel="displaykey.Web.ChangeBillingMethodToListBillInvoiceItemsStepScreen.AllInvoiceItems"
+          value="listBillHelper.RefactorAllInvoiceItems"/>
+        <BooleanRadioInput
+          editable="true"
+          hideIfReadOnly="true"
+          id="Redistribute"
+          label="displaykey.Web.ChangeBillingMethodToListBillInvoiceItemsStepScreen.RedistributePaymentsOption"
+          required="policyPeriod.isPaymentHasBeenApplied() and policyPeriod.PaymentPlan != listBillHelper.PaymentPlan"
+          value="listBillHelper.RedistributePaymentsWhenChangingPaymentPlan"
+          visible="policyPeriod.isPaymentHasBeenApplied() and policyPeriod.PaymentPlan != listBillHelper.PaymentPlan"/>
+        <RangeInput
+          editable="true"
+          id="reversePayments"
+          label="displaykey.Web.ChangeBillingMethodToListBillInvoiceItemsStepScreen.ReversePayments"
+          required="policyPeriod.isPaymentHasBeenApplied() and policyPeriod.PaymentPlan == listBillHelper.PaymentPlan"
+          value="listBillHelper.ReversePaymentsWhenMovingInvoiceItems"
+          valueRange="gw.api.domain.invoice.ReversePaymentsWhenMovingInvoiceItem.values()"
+          visible="policyPeriod.isPaymentHasBeenApplied() and policyPeriod.PaymentPlan == listBillHelper.PaymentPlan"/>
+      </InputColumn>
+    </DetailViewPanel>
+    <Code><![CDATA[function clearOverridesOnListBillPayerChange() {
+  if(!listBillHelper.ListBillAccount.PaymentPlans.contains(listBillHelper.PaymentPlan)){
+    listBillHelper.PaymentPlan = null
+  }
+   listBillHelper.InvoiceStream = null
+}]]></Code>
+  </Screen>
+</PCF>

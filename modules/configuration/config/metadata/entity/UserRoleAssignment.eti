@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?><entity xmlns="http://guidewire.com/datamodel" admin="true" desc="Represents the assignment of a role to a user on an assignable object." entity="UserRoleAssignment" extendable="true" loadable="true" platform="false" subpackage="assignment" table="userroleassign" type="retireable">
+  <implementsEntity name="UserRoleAssignmentDelegate"/>
+  <implementsEntity name="NotInCurrencySilo"/>
+  <foreignkey columnName="WorkflowID" desc="Associated workflow" exportable="false" fkentity="BCWorkflow" name="Workflow" nullok="true"/>
+  <foreignkey columnName="TroubleTicketID" desc="Associated trouble ticket" exportable="false" fkentity="TroubleTicket" name="TroubleTicket" nullok="true"/>
+  <foreignkey columnName="DisbursementID" desc="Associated disbursement" exportable="false" fkentity="Disbursement" name="Disbursement" nullok="true"/>
+  <events/>
+  <index desc="Legacy" name="assignmentu1" unique="true">
+    <indexcol keyposition="1" name="Role"/>
+    <indexcol keyposition="2" name="WorkflowID"/>
+    <indexcol keyposition="3" name="TroubleTicketID"/>
+    <indexcol keyposition="4" name="DisbursementID"/>
+  </index>
+</entity>

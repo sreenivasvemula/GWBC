@@ -1,0 +1,47 @@
+<?xml version="1.0"?>
+<entity
+        xmlns="http://guidewire.com/datamodel"
+        entity="AccountPaymentPlanJoinEntity"
+        type="retireable"
+        desc="A relationship (join entity) between an Account and a PaymentPlan."
+        exportable="false"
+        subpackage="account"
+        loadable="true"
+        platform="false"
+        table="accountpaymentplan"
+        setterScriptability="hidden">
+  <implementsEntity
+      name="InCurrencySilo"/>
+
+  <foreignkey
+            name="Account"
+            desc="The account with related payment plans"
+            columnName="AccountID"
+            fkentity="Account"
+            nullok="false"
+            importableagainstexistingobject="false"/>
+
+    <foreignkey
+            name="PaymentPlan"
+            desc="The payment plan supported by this account"
+            columnName="PaymentPlanID"
+            fkentity="PaymentPlan"
+            exportasid="true"
+            nullok="false"/>
+
+    <index
+            desc="Legacy"
+            name="AccountPaymentPlan"
+            unique="true">
+        <indexcol
+                name="AccountID"
+                keyposition="1"/>
+        <indexcol
+                name="PaymentPlanID"
+                keyposition="2"/>
+        <indexcol
+                name="Retired"
+                keyposition="3"/>
+    </index>
+
+</entity>

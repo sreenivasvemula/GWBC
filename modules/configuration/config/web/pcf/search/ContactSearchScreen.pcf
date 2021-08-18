@@ -1,0 +1,95 @@
+<?xml version="1.0"?>
+<PCF
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:noNamespaceSchemaLocation="../../../../../pcf.xsd">
+  <Screen
+    editable="true"
+    id="ContactSearchScreen">
+    <Require
+      name="isProducerContact"
+      type="boolean"/>
+    <Variable
+      initialValue="createSearchCriteria()"
+      name="searchCriteria"
+      type="ContactSearchCriteria"/>
+    <SearchPanel
+      cachingEnabled="false"
+      criteriaName="searchCriteria"
+      resultsName="contactSearchResult"
+      search="isProducerContact? doProducerContactInternalSearch(searchCriteria) : doSearch(searchCriteria)"
+      searchCriteria="createSearchCriteria()"
+      searchResultsType="gw.plugin.contact.impl.ContactResultWrapper">
+      <PanelRef
+        def="ContactSearchDV(searchCriteria)">
+        <Toolbar/>
+      </PanelRef>
+      <PanelRef>
+        <ListViewPanel
+          id="ContactSearchResultsLV">
+          <RowIterator
+            editable="false"
+            elementName="contactSearchResultEntry"
+            pickValue="contactSearchResultEntry"
+            value="contactSearchResult.contactResults">
+            <Row>
+              <Cell
+                id="Name"
+                label="displaykey.Web.ContactSearchResultLV.Name"
+                sortBy="contactSearchResultEntry.SortByName"
+                value="contactSearchResultEntry.DisplayName"/>
+              <Cell
+                id="Address"
+                label="displaykey.Web.ContactSearchResultLV.Address"
+                value="contactSearchResultEntry.DisplayAddress"/>
+              <Cell
+                id="Phone"
+                label="displaykey.Web.ContactSearchResultLV.Phone"
+                value="contactSearchResultEntry.PrimaryPhoneValue"/>
+              <Cell
+                id="Email"
+                label="displaykey.Web.ContactSearchResultLV.Email"
+                value="contactSearchResultEntry.EmailAddress1"/>
+              <Cell
+                id="External"
+                label="displaykey.Web.ContactSearchResultLV.External"
+                value="contactSearchResultEntry.External"/>
+              <Cell
+                id="ContactType"
+                label="displaykey.Web.ContactSearchResultLV.ContactType"
+                value="contactSearchResultEntry.ContactType"/>
+            </Row>
+          </RowIterator>
+        </ListViewPanel>
+      </PanelRef>
+    </SearchPanel>
+    <Code><![CDATA[function createSearchCriteria() : ContactSearchCriteria{
+  var c = new ContactSearchCriteria()
+  c.ContactSubtype = "company"
+  return c
+}
+
+function doSearch(criteria : ContactSearchCriteria) : gw.plugin.contact.impl.ContactResultWrapper {
+  var result = criteria.performSearch()
+  if (result.warningMessage.HasContent ) {
+    util.LocationUtil.addRequestScopedWarningMessage(result.warningMessage)
+  } else if (result.contactResults == null or result.contactResults.IsEmpty) {
+    util.LocationUtil.addRequestScopedWarningMessage(displaykey.Java.Search.NoResults)
+  }
+  return result
+}
+
+/*Read: if you are implementing external ProducerContact from CM. Simply do 2 steps: 
+ 1. take this function out.
+ 2. remove the isProducerContact boolean from: ContactSearchScreen, ContactSearchPopup, AccountDetailContacts, PolicyDetailContacts
+    and ProducerContacts pcfs.
+  This temp function is added only to in-line with PC since they are not implementing external ProducerContact for 7.x version now.
+*/
+function doProducerContactInternalSearch(criteria : ContactSearchCriteria) : gw.plugin.contact.impl.ContactResultWrapper {
+  var result = criteria.performProducerContactInternalSearch()
+  if (result.contactResults == null or result.contactResults.IsEmpty) {
+    util.LocationUtil.addRequestScopedWarningMessage(displaykey.Java.Search.NoResults)
+  }
+  return result
+}]]></Code>
+  </Screen>
+</PCF>

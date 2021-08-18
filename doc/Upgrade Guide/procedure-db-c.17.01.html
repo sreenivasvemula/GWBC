@@ -1,0 +1,428 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xml:lang="en" lang="en" xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+    <meta http-equiv="Content-Style-Type" content="text/css" />
+    <!-- MOTW-DISABLED saved from url=(0014)about:internet -->
+    <title>Upgrading the BillingCenter 3.0.x Database</title>
+    <link rel="StyleSheet" href="css/procedure-db-c.css" type="text/css" media="all" />
+    <link rel="StyleSheet" href="css/webworks.css" type="text/css" media="all" />
+    <link rel="StyleSheet" href="css/css-guidewire-extra.css" type="text/css" media="all" />
+    <script type="text/javascript" language="JavaScript1.2" src="wwhdata/common/context.js"></script>
+    <script type="text/javascript" language="JavaScript1.2" src="wwhdata/common/towwhdir.js"></script>
+    <script type="text/javascript" language="JavaScript1.2" src="wwhdata/common/wwhpagef.js"></script>
+    <script type="text/javascript" language="JavaScript1.2">
+      <!--
+        var  WebWorksRootPath = "";
+      // -->
+    </script>
+    <script type="text/javascript" language="JavaScript1.2">
+      <!--
+        // Set reference to top level help frame
+        //
+        var  WWHFrame = WWHGetWWHFrame("", true);
+      // -->
+    </script>
+    <script type="text/javascript" language="JavaScript1.2" src="scripts/expand.js"></script>
+    <!-- THE FOLLOWING IS A GUIDEWIRE STYLE DEFINITION FOR THE LINK TO THIS FEATURE -->
+    <link rel="StyleSheet" href="css/css-guidewire-extra.css" type="text/css" media="all" />
+    <!-- THE FOLLOWING IS A GUIDEWIRE GSCRIPT FUNCTION FOR THE LINK TO THIS FEATURE -->
+    <script type="text/javascript">
+function guidewire_selectall()
+{
+var text_val=eval("document.linktothisurlform.urlfield");
+text_val.focus();
+text_val.select();
+}
+</script>
+  </head>
+  <body onLoad="WWHUpdate();" onUnload="WWHUnload();" onKeyDown="WWHHandleKeyDown((document.all||document.getElementById||document.layers)?event:null);" onKeyPress="WWHHandleKeyPress((document.all||document.getElementById||document.layers)?event:null);" onKeyUp="WWHHandleKeyUp((document.all||document.getElementById||document.layers)?event:null);">
+    <!-- THE FOLLOWING IS A GUIDEWIRE DIV FOR THE 'LINK TO THIS' FEATURE -->
+    <div id="linkToThisPage" class="popup" style="display: none;">
+      <div class="popupTitle">Link Directly to This Page 
+           <a href="#" onclick="var thePopup = getElementById('linkToThisPage');thePopup.style.display='none';return false;"><img class="popupClosebox" src="wwhelp/wwhimpl/common/images/close.gif" /></a></div>
+      <div style="padding:6px;">
+        <div class="popupText" id="linkToThisPageBookmark">An error has occurred if you see this messsage.</div>
+        <form name="linktothisurlform" method="post" action="" style="width:275px;margin:0px">
+          <input type="text" class="popupURLText" id="linkToThisPageURL" name="urlfield" rows="1" cols="55" onClick="guidewire_selectall();" onFocus="guidewire_selectall();"></input>
+        </form>
+      </div>
+    </div>
+    <br />
+    <div class="WebWorks_Breadcrumbs" style="text-align: left;">
+      <span>BillingCenter Upgrade Guide</span> : 
+    <span class="WebWorks_Breadcrumbs" style="text-align: left;"><a class="WebWorks_Breadcrumb_Link" href="part-basicupgrade_2.html#1864667">Upgrading from 3.0.x</a> : Upgrading the BillingCenter 3.0.x Database</span></div>
+    <hr align="left" />
+    <blockquote>
+      <h2 class="CT_-_Chapter_Title"><a name="1864667">Upgrading the BillingCenter 3.0.x Database</a></h2>
+      <div class="B_-_Body"><a name="1716227">This topic provides instructions for upgrading the BillingCenter database to BillingCenter 8.0.4. </a></div>
+      <div class="B_-_Body"><a name="1914630">If you are upgrading from a 7.0.x version, see </a><a href="javascript:WWHClickedPopup('upgrade', 'procedure-db-d.12.01.html#1859632', '');" title="Upgrading the BillingCenter 7.0.x Database">“Upgrading the BillingCenter 7.0.x Database”</a> instead.</div>
+      <div class="zChapterTopics">This topic includes:<a name="1673721">&nbsp;</a></div>
+      <div class="zChapterTopic_outer" style="margin-left: 57.6pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="zChapterTopic_inner" style="width: 9.899999999999998pt; white-space: nowrap">
+                <span class="bu_-_bullet">•	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="zChapterTopic_inner"><a href="javascript:WWHClickedPopup('upgrade', 'procedure-db-c.17.02.html#1839649', '');" title="Upgrading Administration Data for Testing" name="1968021">Upgrading Administration Data for Testing</a></div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="zChapterTopic_outer" style="margin-left: 57.6pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="zChapterTopic_inner" style="width: 9.899999999999998pt; white-space: nowrap">
+                <span class="bu_-_bullet">•	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="zChapterTopic_inner"><a href="javascript:WWHClickedPopup('upgrade', 'procedure-db-c.17.03.html#1839636', '');" title="Identifying Data Model Issues" name="1968026">Identifying Data Model Issues</a></div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="zChapterTopic_outer" style="margin-left: 57.6pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="zChapterTopic_inner" style="width: 9.899999999999998pt; white-space: nowrap">
+                <span class="bu_-_bullet">•	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="zChapterTopic_inner"><a href="javascript:WWHClickedPopup('upgrade', 'procedure-db-c.17.04.html#1993587', '');" title="Verifying Batch Process and Work Queue Completion" name="1968031">Verifying Batch Process and Work Queue Completion</a></div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="zChapterTopic_outer" style="margin-left: 57.6pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="zChapterTopic_inner" style="width: 9.899999999999998pt; white-space: nowrap">
+                <span class="bu_-_bullet">•	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="zChapterTopic_inner"><a href="javascript:WWHClickedPopup('upgrade', 'procedure-db-c.17.05.html#1993660', '');" title="Purging Data Prior to Upgrade" name="1968036">Purging Data Prior to Upgrade</a></div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="zChapterTopic_outer" style="margin-left: 57.6pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="zChapterTopic_inner" style="width: 9.899999999999998pt; white-space: nowrap">
+                <span class="bu_-_bullet">•	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="zChapterTopic_inner"><a href="javascript:WWHClickedPopup('upgrade', 'procedure-db-c.17.06.html#1993608', '');" title="Validating the Database Schema" name="1968046">Validating the Database Schema</a></div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="zChapterTopic_outer" style="margin-left: 57.6pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="zChapterTopic_inner" style="width: 9.899999999999998pt; white-space: nowrap">
+                <span class="bu_-_bullet">•	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="zChapterTopic_inner"><a href="javascript:WWHClickedPopup('upgrade', 'procedure-db-c.17.07.html#1993619', '');" title="Checking Database Consistency" name="1968051">Checking Database Consistency</a></div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="zChapterTopic_outer" style="margin-left: 57.6pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="zChapterTopic_inner" style="width: 9.899999999999998pt; white-space: nowrap">
+                <span class="bu_-_bullet">•	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="zChapterTopic_inner"><a href="javascript:WWHClickedPopup('upgrade', 'procedure-db-c.17.08.html#1994544', '');" title="Creating a Data Distribution Report" name="1968056">Creating a Data Distribution Report</a></div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="zChapterTopic_outer" style="margin-left: 57.6pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="zChapterTopic_inner" style="width: 9.899999999999998pt; white-space: nowrap">
+                <span class="bu_-_bullet">•	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="zChapterTopic_inner"><a href="javascript:WWHClickedPopup('upgrade', 'procedure-db-c.17.09.html#1993805', '');" title="Generating Database Statistics" name="1968061">Generating Database Statistics</a></div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="zChapterTopic_outer" style="margin-left: 57.6pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="zChapterTopic_inner" style="width: 9.899999999999998pt; white-space: nowrap">
+                <span class="bu_-_bullet">•	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="zChapterTopic_inner"><a href="javascript:WWHClickedPopup('upgrade', 'procedure-db-c.17.10.html#1993840', '');" title="Creating a Database Backup" name="1968066">Creating a Database Backup</a></div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="zChapterTopic_outer" style="margin-left: 57.6pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="zChapterTopic_inner" style="width: 9.899999999999998pt; white-space: nowrap">
+                <span class="bu_-_bullet">•	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="zChapterTopic_inner"><a href="javascript:WWHClickedPopup('upgrade', 'procedure-db-c.17.11.html#1993853', '');" title="Updating Database Infrastructure" name="1968071">Updating Database Infrastructure</a></div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="zChapterTopic_outer" style="margin-left: 57.6pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="zChapterTopic_inner" style="width: 9.899999999999998pt; white-space: nowrap">
+                <span class="bu_-_bullet">•	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="zChapterTopic_inner"><a href="javascript:WWHClickedPopup('upgrade', 'procedure-db-c.17.12.html#1994578', '');" title="Preparing the Database for Upgrade" name="1968076">Preparing the Database for Upgrade</a></div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="zChapterTopic_outer" style="margin-left: 57.6pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="zChapterTopic_inner" style="width: 9.899999999999998pt; white-space: nowrap">
+                <span class="bu_-_bullet">•	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="zChapterTopic_inner"><a href="javascript:WWHClickedPopup('upgrade', 'procedure-db-c.17.13.html#1997147', '');" title="Setting Linguistic Search Collation" name="1968091">Setting Linguistic Search Collation</a></div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="zChapterTopic_outer" style="margin-left: 57.6pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="zChapterTopic_inner" style="width: 9.899999999999998pt; white-space: nowrap">
+                <span class="bu_-_bullet">•	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="zChapterTopic_inner"><a href="javascript:WWHClickedPopup('upgrade', 'procedure-db-c.17.14.html#1995081', '');" title="Field Encryption and the Upgraded Database" name="1968096">Field Encryption and the Upgraded Database</a></div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="zChapterTopic_outer" style="margin-left: 57.6pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="zChapterTopic_inner" style="width: 9.899999999999998pt; white-space: nowrap">
+                <span class="bu_-_bullet">•	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="zChapterTopic_inner"><a href="javascript:WWHClickedPopup('upgrade', 'procedure-db-c.17.15.html#1993895', '');" title="Customizing the Upgrade" name="1968101">Customizing the Upgrade</a></div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="zChapterTopic_outer" style="margin-left: 57.6pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="zChapterTopic_inner" style="width: 9.899999999999998pt; white-space: nowrap">
+                <span class="bu_-_bullet">•	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="zChapterTopic_inner"><a href="javascript:WWHClickedPopup('upgrade', 'procedure-db-c.17.16.html#1993868', '');" title="Running the Commission Payable Calculations Process" name="1968106">Running the Commission Payable Calculations Process</a></div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="zChapterTopic_outer" style="margin-left: 57.6pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="zChapterTopic_inner" style="width: 9.899999999999998pt; white-space: nowrap">
+                <span class="bu_-_bullet">•	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="zChapterTopic_inner"><a href="javascript:WWHClickedPopup('upgrade', 'procedure-db-c.17.17.html#1994596', '');" title="Configuring the Database Upgrade" name="1968111">Configuring the Database Upgrade</a></div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="zChapterTopic_outer" style="margin-left: 57.6pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="zChapterTopic_inner" style="width: 9.899999999999998pt; white-space: nowrap">
+                <span class="bu_-_bullet">•	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="zChapterTopic_inner"><a href="javascript:WWHClickedPopup('upgrade', 'procedure-db-c.17.18.html#1999431', '');" title="Checking the Database Before Upgrade" name="1968116">Checking the Database Before Upgrade</a></div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="zChapterTopic_outer" style="margin-left: 57.6pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="zChapterTopic_inner" style="width: 9.899999999999998pt; white-space: nowrap">
+                <span class="bu_-_bullet">•	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="zChapterTopic_inner"><a href="javascript:WWHClickedPopup('upgrade', 'procedure-db-c.17.19.html#1994524', '');" title="Disabling the Scheduler" name="1968121">Disabling the Scheduler</a></div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="zChapterTopic_outer" style="margin-left: 57.6pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="zChapterTopic_inner" style="width: 9.899999999999998pt; white-space: nowrap">
+                <span class="bu_-_bullet">•	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="zChapterTopic_inner"><a href="javascript:WWHClickedPopup('upgrade', 'procedure-db-c.17.20.html#1999349', '');" title="Suspending Message Destinations" name="1968126">Suspending Message Destinations</a></div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="zChapterTopic_outer" style="margin-left: 57.6pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="zChapterTopic_inner" style="width: 9.899999999999998pt; white-space: nowrap">
+                <span class="bu_-_bullet">•	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="zChapterTopic_inner"><a href="javascript:WWHClickedPopup('upgrade', 'procedure-db-c.17.21.html#1994887', '');" title="Starting the Server to Begin Automatic Database Upgrade" name="1968131">Starting the Server to Begin Automatic Database Upgrade</a></div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="zChapterTopic_outer" style="margin-left: 57.6pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="zChapterTopic_inner" style="width: 9.899999999999998pt; white-space: nowrap">
+                <span class="bu_-_bullet">•	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="zChapterTopic_inner"><a href="javascript:WWHClickedPopup('upgrade', 'procedure-db-c.17.22.html#1857954', '');" title="Viewing Detailed Database Upgrade Information" name="1968136">Viewing Detailed Database Upgrade Information</a></div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="zChapterTopic_outer" style="margin-left: 57.6pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="zChapterTopic_inner" style="width: 9.899999999999998pt; white-space: nowrap">
+                <span class="bu_-_bullet">•	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="zChapterTopic_inner"><a href="javascript:WWHClickedPopup('upgrade', 'procedure-db-c.17.23.html#1997027', '');" title="Dropping Unused Columns on Oracle" name="1968141">Dropping Unused Columns on Oracle</a></div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="zChapterTopic_outer" style="margin-left: 57.6pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="zChapterTopic_inner" style="width: 9.899999999999998pt; white-space: nowrap">
+                <span class="bu_-_bullet">•	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="zChapterTopic_inner"><a href="javascript:WWHClickedPopup('upgrade', 'procedure-db-c.17.24.html#1903321', '');" title="Exporting Administration Data for Testing" name="1968151">Exporting Administration Data for Testing</a></div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="zChapterTopic_outer" style="margin-left: 57.6pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="zChapterTopic_inner" style="width: 9.899999999999998pt; white-space: nowrap">
+                <span class="bu_-_bullet">•	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="zChapterTopic_inner"><a href="javascript:WWHClickedPopup('upgrade', 'procedure-db-c.17.25.html#1997065', '');" title="Upgrading Phone Numbers" name="1968156">Upgrading Phone Numbers</a></div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="zChapterTopic_outer" style="margin-left: 57.6pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="zChapterTopic_inner" style="width: 9.899999999999998pt; white-space: nowrap">
+                <span class="bu_-_bullet">•	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="zChapterTopic_inner"><a href="javascript:WWHClickedPopup('upgrade', 'procedure-db-c.17.26.html#1840102', '');" title="Final Steps After The Database Upgrade is Complete" name="1968161">Final Steps After The Database Upgrade is Complete</a></div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <script type="text/javascript" language="JavaScript1.2">
+        <!--
+          // Clear related topics
+          //
+          WWHClearRelatedTopics();
+
+          document.writeln(WWHRelatedTopicsInlineHTML());
+        // -->
+      </script>
+    </blockquote>
+    <script type="text/javascript" language="JavaScript1.2">
+      <!--
+        document.write(WWHRelatedTopicsDivTag() + WWHPopupDivTag() + WWHALinksDivTag());
+      // -->
+    </script>
+  </body>
+</html>

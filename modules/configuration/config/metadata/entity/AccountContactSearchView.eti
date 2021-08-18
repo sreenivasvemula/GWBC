@@ -1,0 +1,40 @@
+<?xml version="1.0"?>
+<!-- Note: Please see the ViewEntityHowTo and ViewEntityConventions wiki topics.  ====================================================================  AccountContactSearchView  ==================================================================== -->
+<viewEntity
+  xmlns="http://guidewire.com/datamodel"
+  entity="AccountContactSearchView"
+  desc="Supports the efficient creation of AccountContact lists in BillingCenter's views."
+  exportable="false"
+  subpackage="search.view"
+  primaryEntity="AccountContact">
+  <viewEntityLink
+    name="AccountContact"
+    path="ID"/>
+  <viewEntityLink
+    name="Account"
+    path="Account"/>
+  <viewEntityColumn
+    name="ContactName"
+    path="Contact.Name"/>
+  <viewEntityColumn
+    name="ContactWorkPhone"
+    path="Contact.WorkPhone"/>
+  <viewEntityLink
+    name="PrimaryAddress"
+    path="Contact.PrimaryAddress"/>
+  <viewEntityColumn
+    name="AccountNumber"
+    path="Account.AccountNumber"/>
+  <viewEntityColumn
+    name="AccountName"
+    path="Account.AccountName"/>
+  <viewEntityTypekey
+    name="Segment"
+    path="Account.Segment"/>
+  <viewEntityColumn
+    name="CreateTime"
+    path="Account.CreateTime"/>
+  <viewEntityTypekey
+    name="DelinquencyStatus"
+    path="Account.DelinquencyStatus"/>
+</viewEntity>

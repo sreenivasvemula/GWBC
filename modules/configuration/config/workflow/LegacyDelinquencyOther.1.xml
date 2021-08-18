@@ -1,0 +1,121 @@
+<?xml version="1.0"?>
+<Workflow subtype="LegacyDelinquencyOther" version="1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="workflow.xsd">
+  <Context>
+    <Symbol name="dlnqProcess" type="DelinquencyProcess" value="Workflow.DelinquencyProcess"/>
+    <Symbol name="acct" type="Account" value="Workflow.DelinquencyProcess.Account"/>
+  </Context>
+  <Start firstStep="Inception"/>
+  <ManualStep id="Inception" layoutid="1638460516">
+    <Enter>// inception processing
+      if ( dlnqProcess.InceptionDate == null ) {
+        dlnqProcess.onInception()
+      }</Enter>
+    <Trigger desc="Exit if customer paid their balance" id="ExitDelinquency" layoutid="221429860" nextStep="ExitDelinquencyBeforeCancellation"/>
+    <Timeout desc="Send first dunning letter only when scheduled" id="FirstDunningLetter" layoutid="2129980416" nextStep="FirstDunningLetter" timeAbsolute="dlnqProcess.getTargetDate(DelinquencyEventName.TC_DUNNINGLETTER1)"/>
+  </ManualStep>
+  <!-- ====================================================================
+       First Dunning Letter
+       ==================================================================== -->
+  <ManualStep desc="send first dunning letter if legacy system has not already completed the event" id="FirstDunningLetter" layoutid="1749246038">
+    <Enter>// send first dunning letter if legacy system has not already completed the event
+      var eventName = DelinquencyEventName.TC_DUNNINGLETTER1
+      var event = dlnqProcess.getProcessEventById(eventName)
+      if ( ! event.Completed ) {
+        dlnqProcess.sendDunningLetterFromTarget()
+        event.flagCompleted()
+      } else {
+        event.flagCurrent()
+      }</Enter>
+    <Trigger desc="Exit if customer paid their balance" id="ExitDelinquency" layoutid="28456222" nextStep="ExitDelinquencyBeforeCancellation"/>
+    <Timeout desc="" id="Cancellation" layoutid="21288971" nextStep="Cancellation" timeAbsolute="dlnqProcess.getTargetDate(DelinquencyEventName.TC_CANCELLATION)"/>
+  </ManualStep>
+  <!-- ====================================================================
+       Cancellation
+       ==================================================================== -->
+  <ManualStep id="Cancellation" layoutid="471248927">
+    <Enter>// cancel policy if legacy system has not already completed the event
+      var eventName = DelinquencyEventName.TC_CANCELLATION
+      var event = dlnqProcess.getProcessEventById(eventName)
+      if ( ! event.Completed ) {
+        dlnqProcess.cancelTarget()
+        event.flagCompleted()
+      } else {
+        event.flagCurrent()
+      }</Enter>
+    <Trigger desc="" id="ExitDelinquency" layoutid="1178356682" nextStep="ExitDelinquencyAfterCancellation"/>
+    <Timeout desc="" id="CancellationFinished" layoutid="546561740" nextStep="CancellationFinished" timeAbsolute="dlnqProcess.getProcessEventById(DelinquencyEventName.TC_CANCELLATION).CompletionTime"/>
+  </ManualStep>
+  <!-- ====================================================================
+       End Delinquency Process
+       ==================================================================== -->
+  <Outcome desc="Outcome after the policy goes through cancellation, collections, and writeoff" id="CancellationFinished" layoutid="1115332406">
+    <Enter>dlnqProcess.Account.Collecting = false</Enter>
+  </Outcome>
+  <Outcome desc="Outcome when the policy returns to good standing before cancellation" id="ExitDelinquencyBeforeCancellation" layoutid="6992979">
+    <Enter>dlnqProcess.Account.Collecting = false</Enter>
+  </Outcome>
+  <Outcome desc="Outcome when the policy returns to good standing after cancellation" id="ExitDelinquencyAfterCancellation" layoutid="1566881115">
+    <Enter>dlnqProcess.rescindOrReinstateTarget()
+      dlnqProcess.Account.Collecting = false
+      dlnqProcess.flagEventCompleted(DelinquencyEventName.TC_RESCINDREINSTATE)</Enter>
+  </Outcome>
+  <Finish>// Reset account back to standard delinquency plan, as long as there aren't any loaded, 
+// active delinquencies that haven't had their workflows started yet.
+dlnqProcess.resetStagingDelinquencyPlanIfPossible()
+
+
+</Finish>
+  <Layout>
+    <BoxUI height="4" layoutid="1249619837" width="8" x="0" y="0"/>
+    <BoxUI height="4" layoutid="2130871815" width="8" x="0" y="0"/>
+    <BoxUI height="4" layoutid="1749246038" width="20" x="0" y="18"/>
+    <BoxUI height="4" layoutid="471248927" width="20" x="0" y="31"/>
+    <BoxUI height="4" layoutid="1638460516" width="20" x="0" y="4"/>
+    <BoxUI height="4" layoutid="1115332406" width="20" x="29" y="34"/>
+    <BoxUI height="6" layoutid="6992979" width="20" x="29" y="11"/>
+    <BoxUI height="6" layoutid="1566881115" width="20" x="29" y="26"/>
+    <ArrowUI layoutid="2125297333" visible="false"/>
+    <ArrowUI layoutid="423086931" visible="false"/>
+    <ArrowUI layoutid="28456222" visible="true">
+      <PointUI x="20" y="20"/>
+      <PointUI x="29" y="14"/>
+    </ArrowUI>
+    <ArrowUI layoutid="1522353520" visible="true">
+      <PointUI x="10" y="17"/>
+      <PointUI x="10" y="22"/>
+    </ArrowUI>
+    <ArrowUI layoutid="221429860" visible="true">
+      <PointUI x="20" y="6"/>
+      <PointUI x="29" y="12"/>
+    </ArrowUI>
+    <ArrowUI layoutid="2129980416" visible="true">
+      <PointUI x="10" y="8"/>
+      <PointUI x="10" y="18"/>
+    </ArrowUI>
+    <BoxUI height="4" layoutid="527033236" width="20" x="0" y="22"/>
+    <ArrowUI layoutid="1075440282" visible="true">
+      <PointUI x="20" y="24"/>
+      <PointUI x="29" y="16"/>
+    </ArrowUI>
+    <ArrowUI layoutid="1702446422" visible="true">
+      <PointUI x="10" y="26"/>
+      <PointUI x="10" y="31"/>
+    </ArrowUI>
+    <ArrowUI layoutid="1178356682" visible="true">
+      <PointUI x="20" y="32"/>
+      <PointUI x="29" y="31"/>
+    </ArrowUI>
+    <ArrowUI layoutid="546561740" visible="true">
+      <PointUI x="20" y="34"/>
+      <PointUI x="29" y="35"/>
+    </ArrowUI>
+    <ArrowUI layoutid="14005346" visible="true">
+      <PointUI x="10" y="22"/>
+      <PointUI x="10" y="31"/>
+    </ArrowUI>
+    <ArrowUI layoutid="21288971" visible="true">
+      <PointUI x="10" y="22"/>
+      <PointUI x="10" y="31"/>
+    </ArrowUI>
+  </Layout>
+</Workflow>

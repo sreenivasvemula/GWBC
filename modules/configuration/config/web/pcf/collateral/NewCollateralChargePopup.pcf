@@ -1,0 +1,54 @@
+<?xml version="1.0"?>
+<PCF
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:noNamespaceSchemaLocation="../../../../../pcf.xsd">
+  <Popup
+    beforeCommit="collateralUtil.createNewCollateralCharge( collateral, chargePattern, chargeAmount )"
+    canEdit="true"
+    id="NewCollateralChargePopup"
+    startInEditMode="true"
+    title="displaykey.Web.NewCollateralChargePopup.Title">
+    <LocationEntryPoint
+      signature="NewCollateralChargePopup(collateral : Collateral)"/>
+    <Variable
+      name="collateral"
+      type="Collateral"/>
+    <Variable
+      name="chargePattern"
+      type="ChargePattern"/>
+    <Variable
+      initialValue="0bd.ofCurrency(collateral.Currency)"
+      name="chargeAmount"
+      type="gw.pl.currency.MonetaryAmount"/>
+    <Variable
+      initialValue="new web.account.CollateralUtil()"
+      name="collateralUtil"/>
+    <Screen>
+      <Toolbar>
+        <EditButtons
+          editVisible="false"/>
+      </Toolbar>
+      <DetailViewPanel>
+        <InputColumn>
+          <Label
+            label="displaykey.Web.NewCollateralChargePopup.ChargeDetails"/>
+          <RangeInput
+            editable="true"
+            id="chargeType"
+            label="displaykey.Web.NewCollateralChargePopup.ChargeType"
+            required="true"
+            value="chargePattern"
+            valueRange="web.accounting.ChargePatternHelper.getChargePatterns( entity.Collateral )"/>
+          <MonetaryAmountInput
+            currency="collateral.Currency"
+            editable="true"
+            id="amount"
+            label="displaykey.Web.NewCollateralChargePopup.Amount"
+            required="true"
+            validationExpression="chargeAmount.IsPositive ? null : displaykey.Web.NewCollateralChargePopup.AmountWarning"
+            value="chargeAmount"/>
+        </InputColumn>
+      </DetailViewPanel>
+    </Screen>
+  </Popup>
+</PCF>

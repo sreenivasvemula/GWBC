@@ -1,0 +1,40 @@
+<?xml version="1.0"?>
+<entity
+  xmlns="http://guidewire.com/datamodel"
+  desc="Designates the PaymentItem was used to earn commission on the designated ItemCommission, but because there was no reserve at                 the time, no txn was created. This entity is conceptually equivalent to a zero-dollar transaction."
+  entity="ZeroCmsnEarnedMarker"
+  setterScriptability="hidden"
+  subpackage="commission"
+  table="zerocmsnearnedmarker"
+  type="retireable">
+  <implementsEntity
+    name="InCurrencySilo"/>
+  <foreignkey
+    columnName="BasePaymentItemID"
+    desc="Payment Item that caused $0 commission to be earned."
+    exportable="false"
+    fkentity="BasePaymentItem"
+    name="BasePaymentItem"
+    nullok="true"
+    setterScriptability="hidden"/>
+  <foreignkey
+    columnName="ChargeWrittenOffID"
+    desc="ChargeWrittenOff that caused $0 commission to be earned."
+    exportable="false"
+    fkentity="ChargeWrittenOff"
+    name="ChargeWrittenOff"
+    nullok="true"
+    setterScriptability="hidden"/>
+  <foreignkey
+    desc="ItemCommission whose commission was $0 earned by payment item"
+    exportable="false"
+    fkentity="ItemCommission"
+    getterScriptability="hidden"
+    name="ItemCommission"
+    nullok="false"
+    setterScriptability="hidden"/>
+  <checkconstraint
+    predicate="(BasePaymentItemID IS NULL AND ChargeWrittenOffID IS NOT NULL)                             OR (BasePaymentItemID IS NOT NULL AND ChargeWrittenOffID IS NULL)"/>
+  <dbcheckbuilder
+    className="com.guidewire.bc.system.database.dbchecks.commission.ZeroCmsnEarnedMarkerDBCheckBuilder"/>
+</entity>

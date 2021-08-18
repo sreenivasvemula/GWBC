@@ -1,0 +1,30 @@
+<?xml version="1.0"?>
+<Entity
+  name="FundsUseTracker">
+  <Columns>
+    <Column
+      beanPath="FundsUseTracker.UnappliedFund"
+      name="UnappliedFund"
+      sortOrder="0"/>
+    <Column
+      beanPath="FundsUseTracker.TrackableUseType"
+      name="UseType"
+      sortOrder="1"/>
+    <Column
+      beanPath="FundsUseTracker.TotalAmount"
+      name="Amount"
+      sortOrder="2"/>
+    <Column
+      beanPath="FundsUseTracker.EventDate"
+      name="EventDate"
+      sortOrder="3"/>
+  </Columns>
+  <DisplayName><![CDATA[displaykey.DisplayName.FundsUse.Short(Amount?.render())
+        ]]></DisplayName>
+  <DisplayName
+    type="Long"><![CDATA[displaykey.DisplayName.FundsUse.Long(
+  UnappliedFund,
+  UseType,
+  Amount?.render(),
+  EventDate?.format("short"))]]></DisplayName>
+</Entity>

@@ -1,0 +1,125 @@
+<?xml version="1.0"?>
+<PCF
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:noNamespaceSchemaLocation="../../../../../pcf.xsd">
+  <DetailViewPanel
+    id="NewTemplateDocumentDV">
+    <Require
+      name="documentCreationInfo"
+      type="gw.document.DocumentCreationInfo"/>
+    <Require
+      name="document"
+      type="Document"/>
+    <Require
+      name="documentContainer"
+      type="DocumentContainer"/>
+    <Variable
+      initialValue="documentContainer typeis Account ? documentContainer : null"
+      name="account"
+      type="Account"/>
+    <Variable
+      initialValue="documentContainer typeis Policy ? documentContainer : null"
+      name="policy"
+      type="Policy"/>
+    <Variable
+      initialValue="documentContainer typeis Producer ? documentContainer : null"
+      name="producer"
+      type="Producer"/>
+    <InputColumn>
+      <Label
+        label="displaykey.Web.NewTemplateDocumentDV.DocumentContents"/>
+      <Label
+        label="displaykey.Web.NewTemplateDocumentDV.Step1SelectTemplate"/>
+      <DocumentTemplateInput
+        clearEnabled="false"
+        editable="true"
+        freeInputEnabled="false"
+        id="TemplatePicker"
+        label="displaykey.Java.Document.Creation.Template"
+        onPick="resetTemplateBasedInfo();"
+        pickLocation="DocumentTemplateSearchPopup.push(documentContainer, account, policy, producer)"
+        required="true"
+        value="documentCreationInfo.DocumentTemplateDescriptor"/>
+      <InputSet
+        visible="documentCreationInfo.DocumentTemplateDescriptor != null">
+        <Label
+          label="displaykey.Web.NewTemplateDocumentDV.Step2SpecifyObjectValues"/>
+        <InputSetRef
+          def="DocumentTemplateContextObjectInputSet(documentCreationInfo,document,documentContainer)"
+          mode="documentCreationInfo.DocumentTemplateDescriptor.TemplateId"/>
+        <Label
+          label="displaykey.Web.NewTemplateDocumentDV.Step3GenerateDocument"/>
+        <!-- Note that two versions of the CreateDocument button are required
+              depending on whether the Document Assistant is enabled. This is
+              because the "download" attribute cannot contain a Gosu expression -->
+        <ButtonInput
+          action="createDocument()"
+          available="web.document.DocumentsHelper.isDocumentAssistantEnabled()"
+          id="CreateDocumentWithAssistant"
+          value="displaykey.Java.Document.Creation.CreateDocument"
+          visible="web.document.DocumentsHelper.isDocumentAssistantEnabled()"/>
+        <ButtonInput
+          action="createDocument()"
+          available="!web.document.DocumentsHelper.isDocumentAssistantEnabled()"
+          download="true"
+          id="CreateDocument"
+          value="displaykey.Java.Document.Creation.CreateDocument"
+          visible="!web.document.DocumentsHelper.isDocumentAssistantEnabled()"/>
+        <Label
+          label="displaykey.Web.NewTemplateDocumentDV.Step4SpecifyFileLocation"
+          visible="!web.document.DocumentsHelper.isDocumentAssistantEnabled()"/>
+        <!-- This widget is always rendered hidden -->
+        <DocumentFilePathInput
+          editable="true"
+          id="DocumentFilePath"
+          value="documentCreationInfo.DocumentFilePath"/>
+        <!-- When the Document Assistant is enabled, this widget will be rendered hidden. The end user should
+             not see nor need to edit the client-side path used by the Document Assistant -->
+        <DocumentScript
+          available="(!web.document.DocumentsHelper.isDocumentAssistantEnabled()) or (documentCreationInfo.File != null) or (documentCreationInfo.DocumentCreationScript != null)"
+          editable="true"
+          id="DocumentFile"
+          label="displaykey.Java.Document.Creation.FileLocation"
+          required="!web.document.DocumentsHelper.isDocumentAssistantEnabled()"
+          value="documentCreationInfo.File"/>
+      </InputSet>
+    </InputColumn>
+    <InputColumn>
+      <InputSetRef
+        def="DocumentMetadataInputSet(document, true)"
+        editable="true"/>
+    </InputColumn>
+    <Code><![CDATA[function getMode(dynamicWidgetInfo : gw.document.DocumentCreationInfo.DynamicWidgetInfo) : String {
+  return dynamicWidgetInfo.Type.toLowerCase();
+}
+
+function resetTemplateBasedInfo() {
+  documentCreationInfo.setDocumentFilePath(null)
+  documentCreationInfo.Document.Name = documentCreationInfo.DocumentTemplateDescriptor.Name
+  documentCreationInfo.Document.MimeType = documentCreationInfo.DocumentTemplateDescriptor.MimeType
+  documentCreationInfo.Document.SecurityType = documentCreationInfo.DocumentTemplateDescriptor.DefaultSecurityType
+  if (documentCreationInfo.Document.SecurityType == null) {
+    documentCreationInfo.Document.SecurityType = DocumentSecurityType.TC_UNRESTRICTED
+  }
+  documentCreationInfo.Document.Type = documentCreationInfo.DocumentTemplateDescriptor.TemplateType
+  documentCreationInfo.Document.Section = (documentCreationInfo.DocumentTemplateDescriptor.getMetadataPropertyValue( "section" ) as String)
+  documentCreationInfo.Document.DocumentLanguage = documentCreationInfo.DocumentTemplateDescriptor.Language
+  if (documentCreationInfo.Document.Status == null) {
+    documentCreationInfo.Document.Status = DocumentStatusType.TC_DRAFT
+  }
+  for ( dynamicWidgetInfo in documentCreationInfo.getDynamicWidgetInformation()) {
+    documentCreationInfo.setDefaultContextObjectValue(dynamicWidgetInfo.Name, eval(dynamicWidgetInfo.DefaultValueExpression));
+    documentCreationInfo.setPossibleContextObjectValues(dynamicWidgetInfo.Name, eval(dynamicWidgetInfo.PossibleValuesExpression) as Object[]);
+  }
+}
+
+function createDocument() {
+  var template = documentCreationInfo.DocumentTemplateDescriptor
+  var doc = documentCreationInfo.Document
+  var params = web.document.DocumentsHelper.getDocumentCreationParameters(documentCreationInfo)
+
+  web.document.DocumentsHelper.renderDocumentContents(documentCreationInfo, 
+        gw.document.DocumentProduction.createDocumentSynchronously(template, params, doc))
+}]]></Code>
+  </DetailViewPanel>
+</PCF>

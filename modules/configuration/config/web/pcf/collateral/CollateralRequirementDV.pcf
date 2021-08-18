@@ -1,0 +1,165 @@
+<?xml version="1.0"?>
+<PCF
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:noNamespaceSchemaLocation="../../../../../pcf.xsd">
+  <DetailViewPanel
+    id="CollateralRequirementDV">
+    <Require
+      name="requirement"
+      type="CollateralRequirement"/>
+    <Require
+      name="effectiveDateEditable"
+      type="Boolean"/>
+    <Variable
+      initialValue="initialLevel()"
+      name="level"
+      type="CollateralLevel"/>
+    <Variable
+      initialValue="new web.account.CollateralUtil()"
+      name="collateralUtil"/>
+    <InputColumn>
+      <Label
+        label="displaykey.Web.NewCollateralDV.EditValues"/>
+      <TextInput
+        editable="true"
+        id="name"
+        label="displaykey.Web.NewCollateralDV.CollateralName"
+        required="true"
+        value="requirement.RequirementName"/>
+      <MonetaryAmountInput
+        currency="requirement.Currency"
+        editable="true"
+        formatType="currency"
+        id="required"
+        label="displaykey.Web.NewCollateralDV.Requirement"
+        required="true"
+        validationExpression="requirement.Required.IsZero ? displaykey.Web.NewCollateralDV.AmountNotZero : null"
+        value="requirement.Required">
+        <PostOnChange
+          onChange="recommendedDate()"/>
+      </MonetaryAmountInput>
+      <TypeKeyInput
+        editable="true"
+        id="type"
+        label="displaykey.Web.NewCollateralDV.Type"
+        required="true"
+        value="requirement.RequirementType">
+        <PostOnChange
+          onChange="recommendedDate()"/>
+      </TypeKeyInput>
+      <RangeInput
+        editable="true"
+        id="levelRange"
+        label="displaykey.Web.NewCollateralDV.Level"
+        required="true"
+        value="level"
+        valueRange="collateralUtil.getLevels()">
+        <PostOnChange
+          onChange="resetPolicyPeriod()"/>
+      </RangeInput>
+      <RangeInput
+        editable="true"
+        id="policyPeriod"
+        label="displaykey.Web.NewCollateralDV.PolicyPeriod"
+        required="level ==CollateralLevel.TC_POLICYPERIOD"
+        value="requirement.PolicyPeriod"
+        valueRange="requirement.Collateral.Account.OpenPolicyPeriods"
+        visible="level == CollateralLevel.TC_POLICYPERIOD">
+        <PostOnChange
+          onChange="recommendedDate()"/>
+      </RangeInput>
+      <RangeInput
+        editable="true"
+        id="Policy"
+        label="displaykey.Web.NewCollateralDV.Policy"
+        required="level == CollateralLevel.TC_POLICY "
+        value="requirement.Policy"
+        valueRange="requirement.Collateral.Account.Policies"
+        visible="level == CollateralLevel.TC_POLICY"/>
+      <DateInput
+        editable="effectiveDateEditable"
+        id="effectiveDate"
+        label="displaykey.Web.NewCollateralDV.EffectiveDate"
+        required="true"
+        validationExpression="util.DateUtil.verifyDateOnOrAfterToday(requirement.EffectiveDate) ? null : displaykey.Web.NewCollateralDV.EffectiveDateError"
+        value="requirement.EffectiveDate">
+        <PostOnChange
+          target="DATA_ONLY"/>
+      </DateInput>
+      <DateInput
+        editable="true"
+        id="expirationDate"
+        label="displaykey.Web.NewCollateralDV.ExpirationDate"
+        validationExpression="verifyExpirationDate()"
+        value="requirement.ExpirationDate">
+        <PostOnChange
+          target="DATA_ONLY"/>
+      </DateInput>
+      <CheckBoxInput
+        editable="true"
+        id="segregate"
+        label="displaykey.Web.NewCollateralDV.Segregate"
+        required="false"
+        value="requirement.Segregated"
+        visible="requirement.RequirementType == &quot;Cash&quot;"/>
+      <CheckBoxInput
+        editable="true"
+        id="createChargeCheckbox"
+        label="displaykey.Web.NewCollateralRequirement.CreateCharge"
+        value="requirement.CreateCharge"
+        visible="requirement.RequirementType == &quot;Cash&quot; and requirement.isNewChargeCreatedIfRequired()">
+        <PostOnChange/>
+      </CheckBoxInput>
+    </InputColumn>
+    <Code><![CDATA[
+function resetPolicyPeriod(){
+        if(level != CollateralLevel.TC_POLICYPERIOD){
+          requirement.PolicyPeriod = null;
+        }
+        if(level != CollateralLevel.TC_POLICY){
+          requirement.Policy = null;
+        }
+      }
+
+      function initialLevel() : CollateralLevel{
+        if(requirement.PolicyPeriod != null){
+          return CollateralLevel.TC_POLICYPERIOD
+        }
+        if (requirement.Policy != null){
+           return CollateralLevel.TC_POLICY;
+        }
+        if(!requirement.isNew()){
+          return CollateralLevel.TC_ACCOUNT;
+        }
+        return null;
+      }
+      
+      function recommendedDate(){
+        if(requirement.RequirementType == "Cash"  && requirement.isNewChargeCreatedIfRequired() && effectiveDateEditable){
+           if(requirement.PolicyPeriod != null){
+             requirement.EffectiveDate = collateralUtil.getInvoiceDueDateAfterDate(requirement, getEffectiveDateForPolicyPeriodLevelReq() as java.util.Date);      
+           }else{
+             requirement.EffectiveDate = collateralUtil.getNextInvoiceDate(requirement);
+           }
+         }
+        }
+        
+        function getEffectiveDateForPolicyPeriodLevelReq() : String {
+          if(gw.api.util.DateUtil.verifyDateOnOrAfterToday( requirement.PolicyPeriod.PolicyPerEffDate )){
+            return requirement.PolicyPeriod.PolicyPerEffDate as java.lang.String; 
+          }
+          return gw.api.util.DateUtil.currentDate() as java.lang.String;
+        }
+        
+        function verifyExpirationDate () : String {
+          if(requirement.ExpirationDate == null)
+            return null;
+          if(!util.DateUtil.verifyDateOnOrAfterToday(requirement.ExpirationDate)) 
+             return displaykey.Web.NewCollateralDV.ExpirationDateError        
+          if(requirement.EffectiveDate > requirement.ExpirationDate)
+            return displaykey.Web.NewCollateralDV.ExpirationDateBeforeEffectiveDateError
+          return null;
+        }
+    ]]></Code>
+  </DetailViewPanel>
+</PCF>

@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?><subtype xmlns="http://guidewire.com/datamodel" desc="Billing instruction used to rewrite a policy" displayName="Rewrite" entity="Rewrite" subpackage="accounting.billinginstruction" supertype="NewPlcyPeriodBI">
+  <foreignkey columnName="RewriteAccountID" desc="The account to which the rewrite policy period will belong." exportasid="true" fkentity="Account" name="RewriteAccount" nullok="true"/>
+  <checkconstraint desc="Exactly one of RewriteAccountID, PriorPolicyPeriodID may be non-null" predicate="(RewriteAccountID IS NULL AND PriorPolicyPeriodID IS NOT NULL) OR (RewriteAccountID IS NOT NULL AND PriorPolicyPeriodID IS NULL)"/>
+</subtype>

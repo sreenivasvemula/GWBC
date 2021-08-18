@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xml:lang="en" lang="en" xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+    <meta http-equiv="Content-Style-Type" content="text/css" />
+    <!-- MOTW-DISABLED saved from url=(0014)about:internet -->
+    <title>Avoid Doubly Nested Loop Constructs</title>
+    <link rel="StyleSheet" href="css/bp-gosu.css" type="text/css" media="all" />
+    <link rel="StyleSheet" href="css/webworks.css" type="text/css" media="all" />
+    <link rel="StyleSheet" href="css/css-guidewire-extra.css" type="text/css" media="all" />
+    <script type="text/javascript" language="JavaScript1.2" src="wwhdata/common/context.js"></script>
+    <script type="text/javascript" language="JavaScript1.2" src="wwhdata/common/towwhdir.js"></script>
+    <script type="text/javascript" language="JavaScript1.2" src="wwhdata/common/wwhpagef.js"></script>
+    <script type="text/javascript" language="JavaScript1.2">
+      <!--
+        var  WebWorksRootPath = "";
+      // -->
+    </script>
+    <script type="text/javascript" language="JavaScript1.2">
+      <!--
+        // Set reference to top level help frame
+        //
+        var  WWHFrame = WWHGetWWHFrame("", true);
+      // -->
+    </script>
+    <script type="text/javascript" language="JavaScript1.2" src="scripts/expand.js"></script>
+    <!-- THE FOLLOWING IS A GUIDEWIRE STYLE DEFINITION FOR THE LINK TO THIS FEATURE -->
+    <link rel="StyleSheet" href="css/css-guidewire-extra.css" type="text/css" media="all" />
+    <!-- THE FOLLOWING IS A GUIDEWIRE GSCRIPT FUNCTION FOR THE LINK TO THIS FEATURE -->
+    <script type="text/javascript">
+function guidewire_selectall()
+{
+var text_val=eval("document.linktothisurlform.urlfield");
+text_val.focus();
+text_val.select();
+}
+</script>
+  </head>
+  <body onLoad="WWHUpdate();" onUnload="WWHUnload();" onKeyDown="WWHHandleKeyDown((document.all||document.getElementById||document.layers)?event:null);" onKeyPress="WWHHandleKeyPress((document.all||document.getElementById||document.layers)?event:null);" onKeyUp="WWHHandleKeyUp((document.all||document.getElementById||document.layers)?event:null);">
+    <!-- THE FOLLOWING IS A GUIDEWIRE DIV FOR THE 'LINK TO THIS' FEATURE -->
+    <div id="linkToThisPage" class="popup" style="display: none;">
+      <div class="popupTitle">Link Directly to This Page 
+           <a href="#" onclick="var thePopup = getElementById('linkToThisPage');thePopup.style.display='none';return false;"><img class="popupClosebox" src="wwhelp/wwhimpl/common/images/close.gif" /></a></div>
+      <div style="padding:6px;">
+        <div class="popupText" id="linkToThisPageBookmark">An error has occurred if you see this messsage.</div>
+        <form name="linktothisurlform" method="post" action="" style="width:275px;margin:0px">
+          <input type="text" class="popupURLText" id="linkToThisPageURL" name="urlfield" rows="1" cols="55" onClick="guidewire_selectall();" onFocus="guidewire_selectall();"></input>
+        </form>
+      </div>
+    </div>
+    <br />
+    <div class="WebWorks_Breadcrumbs" style="text-align: left;">
+      <span>BillingCenter Best Practices&nbsp;Guide</span> : 
+    <span class="WebWorks_Breadcrumbs" style="text-align: left;"><a class="WebWorks_Breadcrumb_Link" href="bp-gosu.6.01.html#2544917">Gosu Language Best Practices </a> : <a class="WebWorks_Breadcrumb_Link" href="bp-gosu.6.29.html#2544917">Gosu Performance Best Practices</a> : Avoid Doubly Nested Loop Constructs</span></div>
+    <hr align="left" />
+    <blockquote>
+      <h4 class="H2B_-_Heading_2_Break"><a name="2544917">Avoid Doubly Nested Loop Constructs</a></h4>
+      <div class="B_-_Body"><a name="2549296">Nesting a loop construct inside another often produces inefficient code or code that does not produce correct results. As a performance best practice, Guidewire recommends that you avoid any doubly nested loop constructs. </a></div>
+      <div class="B_-_Body"><a name="2549297">The following sample Gosu code attempts to find duplicate values in an array by using a for loop nested inside another. The code is inefficient because it loops through the array five times, once for each member of the array. It produces inappropriate results because it reports the duplicate value twice. </a></div>
+      <PRE class="CL_-_Code_Last_Line"><a name="2549406">var array = new int[]{1, 2, </a><span class="s_-_strong">3</span>, 4, <span class="s_-_strong">3</span>} &nbsp;// An array with a duplicated value</PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2549407">&nbsp;</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2549408">for (y in array index m) { &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;// Loop through the array </a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2549409">&nbsp;</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2549410">&nbsp;&nbsp;for (z in array index n) { &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;// Nested loop through the array or each </a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2549484">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;// member in the outer loop </a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2549411">&nbsp;</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2549432">&nbsp;&nbsp;&nbsp;&nbsp;if (m != n and y == z) {&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;// If current members in outer and inner </a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2549412">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;// loops differ and member values are equal</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2549413">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;print("duplicate value: " + z) &nbsp;&nbsp;&nbsp;// Print a duplicate value in the array</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2549414">&nbsp;</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2549415">&nbsp;&nbsp;&nbsp;&nbsp;}</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2549416">&nbsp;&nbsp;}</a></PRE>
+      <PRE class="CL_-_Code_Last_Line"><a name="2549417">} </a></PRE>
+      <div class="B_-_Body"><a name="2549310">The preceding sample code produces the following output. </a></div>
+      <PRE class="CF_-_Code_First_Line"><a name="2549311">duplicate value: 3</a></PRE>
+      <PRE class="CL_-_Code_Last_Line"><a name="2549312">duplicate value: 3</a></PRE>
+      <div class="B_-_Body"><a name="2549313">The following sample Gosu code is a better solution. The code is more efficient because it loops through the array once only. It produces appropriate results because it reports the duplicate value once only.</a></div>
+      <PRE class="CF_-_Code_First_Line"><a name="2549436">var array = new int[]{1, 2, </a><span class="s_-_strong">3</span>, 4, <span class="s_-_strong">3</span>} &nbsp;&nbsp;// An array with a duplicated value</PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2549437">var hashSet = new java.util.HashSet() &nbsp;// Declare an empty hash set, which prohibits </a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2549561">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;// duplicate values</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2549438">&nbsp;</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2549439">for (y in array)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;// Loop through the array</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2549440">&nbsp;&nbsp;if (!hashSet.add(y)) { &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;// If array value cannot be added </a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2549606">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;// to the hash set</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2549442">&nbsp;&nbsp;&nbsp;&nbsp;print("duplicate value: " + y) &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;// Print a duplicate value in the array</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2549443">&nbsp;</a></PRE>
+      <PRE class="CL_-_Code_Last_Line"><a name="2549444">&nbsp;&nbsp;}</a></PRE>
+      <div class="B_-_Body"><a name="2549323">The preceding sample code produces the following output. </a></div>
+      <PRE class="CF_-_Code_First_Line"><a name="2549324">duplicate value: 3</a></PRE>
+      <script type="text/javascript" language="JavaScript1.2">
+        <!--
+          // Clear related topics
+          //
+          WWHClearRelatedTopics();
+
+          document.writeln(WWHRelatedTopicsInlineHTML());
+        // -->
+      </script>
+    </blockquote>
+    <script type="text/javascript" language="JavaScript1.2">
+      <!--
+        document.write(WWHRelatedTopicsDivTag() + WWHPopupDivTag() + WWHALinksDivTag());
+      // -->
+    </script>
+  </body>
+</html>

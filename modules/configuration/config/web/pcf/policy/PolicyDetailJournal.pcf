@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PCF
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:noNamespaceSchemaLocation="../../../../../pcf.xsd">
+  <Page
+    canVisit="perm.System.plcytabview and perm.System.plcyjournalview"
+    id="PolicyDetailJournal"
+    showUpLink="true"
+    title="displaykey.Web.PolicyDetailJournal.Title">
+    <LocationEntryPoint
+      signature="PolicyDetailJournal(plcyPeriod: PolicyPeriod)"/>
+    <Variable
+      name="plcyPeriod"
+      type="PolicyPeriod"/>
+    <ScreenRef
+      def="JournalScreen(plcyPeriod, gw.api.web.policy.PolicyPeriodUtil.findAllPolicyCommissionsWithChargeDetails(plcyPeriod))"/>
+  </Page>
+</PCF>

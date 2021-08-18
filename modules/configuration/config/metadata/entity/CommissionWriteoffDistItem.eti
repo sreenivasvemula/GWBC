@@ -1,0 +1,80 @@
+<?xml version="1.0"?>
+<entity
+  xmlns="http://guidewire.com/datamodel"
+  desc="Wrapper for CommissionsReservePositiveWriteoffTxn and CommissionsReserveNegativeWriteoffTxn"
+  entity="CommissionWriteoffDistItem"
+  setterScriptability="hidden"
+  subpackage="commission"
+  table="cmsnreduction"
+  type="retireable">
+  <implementsEntity
+    name="Reversible"/>
+  <implementsEntity
+    name="InCurrencySilo"/>
+  <monetaryamount
+    amountColumnName="Amount"
+    desc="The amount of the payment."
+    name="Amount"
+    nullok="false"
+    scaleToCurrency="true"/>
+  <typekey
+    desc="The type of writeoff."
+    name="Type"
+    nullok="false"
+    typelist="CommissionWriteoffDistItemType"/>
+  <column
+    desc="The date of the commission writeoff."
+    name="DateWrittenOff"
+    nullok="false"
+    type="pastdatetime"/>
+  <foreignkey
+    columnName="ChargeCommissionID"
+    desc="The ChargeCommission instance associated with this commission writeoff"
+    fkentity="ChargeCommission"
+    name="ChargeCommission"
+    nullok="false"/>
+  <foreignkey
+    columnName="InvoiceItemID"
+    desc="The InvoiceItem this writeoff is against."
+    fkentity="InvoiceItem"
+    name="InvoiceItem"
+    nullok="false"/>
+  <foreignkey
+    columnName="ChargeWrittenOffID"
+    desc="The ChargeWrittenOff transaction that triggered this commission writeoff for Direct Bill."
+    fkentity="ChargeWrittenOff"
+    name="ChargeWrittenOff"
+    nullok="true"/>
+  <edgeForeignKey
+    desc="If non-null, refers to the CommissionWriteoffDistItem that this CommissionWriteoffDistItem reversed."
+    edgeTableName="revcmsnred"
+    exportable="false"
+    fkentity="CommissionWriteoffDistItem"
+    ignoreforevents="true"
+    loadable="true"
+    name="ReversedCommissionWriteoffDistItem"
+    nullok="true"
+    setterScriptability="doesNotExist"/>
+  <foreignkey
+    columnName="CommissionWriteoffID"
+    desc="The CommissionWriteoff that caused this CommissionWriteoffDistItem to be executed.  Note that this is a nullable foreign key because this CommissionWriteoffDistItem might have been executed directly without a             CommissionWriteoff approvable entity being involved. The CommissionWriteoff is primarily used to enforce             authority limits."
+    fkentity="CommissionWriteoff"
+    name="CommissionWriteoff"
+    nullok="true"
+    setterScriptability="doesNotExist"/>
+  <checkconstraint
+    desc="CommissionWriteoffDistItems should never have an amount of $0."
+    predicate="Amount != 0"/>
+  <dbcheckbuilder
+    className="com.guidewire.bc.system.database.dbchecks.commission.CommissionWriteoffDistItemDBCheckBuilder"/>
+  <onetoone
+    desc="The transaction context of the associated CommissionsReserveWriteoffTxn"
+    exportable="false"
+    fkentity="CommissionWriteoffDistItemContext"
+    getterScriptability="hidden"
+    ignoreforevents="true"
+    linkField="CommissionWriteoffDistItem"
+    name="CommissionWriteoffDistItemContext"
+    nullok="true"
+    setterScriptability="doesNotExist"/>
+</entity>

@@ -1,0 +1,75 @@
+<?xml version="1.0"?>
+<PCF
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:noNamespaceSchemaLocation="../../../../../../pcf.xsd">
+  <Page
+    canEdit="true"
+    canVisit="perm.System.admintabview and perm.System.pmntplanview"
+    id="PaymentPlans"
+    title="displaykey.Web.PaymentPlans.Title">
+    <Variable
+      initialValue="new web.plan.PlanHelper()"
+      name="PlanHelper"/>
+    <Screen
+      id="PaymentPlansScreen">
+      <Toolbar/>
+      <ListViewPanel
+        id="PaymentPlansLV">
+        <RowIterator
+          editable="false"
+          elementName="paymentPlan"
+          value="gw.api.web.plan.PaymentPlans.findVisiblePaymentPlans()">
+          <ToolbarFilter
+            label="displaykey.Web.PaymentPlansLV.Show"
+            name="Filter">
+            <ToolbarFilterOptionGroup
+              filters="new web.plan.PlanListFilterSet().FilterOptions"/>
+          </ToolbarFilter>
+          <Row>
+            <Cell
+              align="left"
+              id="PlanOrder"
+              label="displaykey.Web.PaymentPlansLV.PlanOrder"
+              sortOrder="1"
+              value="paymentPlan.PlanOrder"/>
+            <Cell
+              action="PaymentPlanDetail.go(paymentPlan)"
+              id="Name"
+              label="displaykey.Web.PaymentPlansLV.Name"
+              value="paymentPlan.Name"/>
+            <Cell
+              id="Description"
+              label="displaykey.Web.PaymentPlansLV.Description"
+              value="paymentPlan.Description"/>
+            <DateCell
+              id="EffectiveDate"
+              label="displaykey.Web.PaymentPlansLV.EffectiveDate"
+              value="paymentPlan.EffectiveDate"/>
+            <DateCell
+              id="ExpirationDate"
+              label="displaykey.Web.PaymentPlansLV.ExpirationDate"
+              value="paymentPlan.ExpirationDate"/>
+            <LinkCell
+              id="MovePriority"
+              label="displaykey.Web.PaymentPlansLV.PlanOrder.MovePriority">
+              <Link
+                action="PlanHelper.moveUp(paymentPlan)"
+                available="perm.System.pmntplanedit"
+                icon="&quot;arrow_up.png&quot;"
+                id="MoveUp"
+                tooltip="displaykey.Web.PaymentPlansLV.PlanOrder.MoveUp"
+                visible="paymentPlan.PlanOrder &gt; 1"/>
+              <Link
+                action="PlanHelper.moveDown(paymentPlan)"
+                available="perm.System.pmntplanedit"
+                icon="&quot;arrow_down.png&quot;"
+                id="MoveDown"
+                tooltip="displaykey.Web.PaymentPlansLV.PlanOrder.MoveDown"
+                visible="!paymentPlan.hasHighestPlanOrder()"/>
+            </LinkCell>
+          </Row>
+        </RowIterator>
+      </ListViewPanel>
+    </Screen>
+  </Page>
+</PCF>

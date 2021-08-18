@@ -1,0 +1,34 @@
+<?xml version="1.0"?>
+<PCF
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:noNamespaceSchemaLocation="../../../../../pcf.xsd">
+  <Popup
+    beforeCommit="payment.reverseDistOnly()"
+    canEdit="true"
+    canVisit="perm.System.acctpmntview and perm.DirectBillMoneyRcvd.pmntreverse"
+    id="DBUndistributePaymentConfirmationPopup"
+    startInEditMode="true"
+    title="displaykey.Web.DBUndistributePaymentConfirmation.Title">
+    <LocationEntryPoint
+      signature="DBUndistributePaymentConfirmationPopup(payment : DirectBillPayment)"/>
+    <Variable
+      name="payment"
+      type="DirectBillPayment"/>
+    <Variable
+      initialValue="(payment.BaseMoneyReceived as DirectBillMoneyRcvd).UnappliedFund"
+      name="unapplied"/>
+    <Screen>
+      <Toolbar>
+        <EditButtons
+          updateLabel="displaykey.Button.OK"/>
+      </Toolbar>
+      <DetailViewPanel>
+        <InputColumn>
+          <Label
+            id="Confirmation"
+            label="displaykey.Web.DBUndistributePaymentConfirmation.Confirmation((payment.NetDistributedToInvoiceItems + payment.NetInSuspense).render())"/>
+        </InputColumn>
+      </DetailViewPanel>
+    </Screen>
+  </Popup>
+</PCF>

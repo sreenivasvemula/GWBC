@@ -1,0 +1,41 @@
+<?xml version="1.0"?>
+<PCF
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:noNamespaceSchemaLocation="../../../../../pcf.xsd">
+  <DetailViewPanel
+    id="LOCDV">
+    <Require
+      name="loc"
+      type="LetterOfCredit"/>
+    <InputColumn>
+      <Label
+        label="displaykey.Web.LOCDV.Details"/>
+      <Input
+        editable="true"
+        id="idInput"
+        label="displaykey.Web.LOCDV.ID"
+        required="true"
+        value="loc.LOCID"/>
+      <Input
+        editable="true"
+        id="bankName"
+        label="displaykey.Web.LOCDV.BankName"
+        required="true"
+        value="loc.BankName"/>
+      <DateInput
+        editable="true"
+        id="ExpirationDate"
+        label="displaykey.Web.LOCDV.Expires"
+        validationExpression="util.DateUtil.verifyDateOnOrAfterToday(loc.ExpirationDate) or loc.ExpirationDate == null ? null : displaykey.Web.LOCDV.ExpirationDateError"
+        value="loc.ExpirationDate"/>
+      <MonetaryAmountInput
+        currency="loc.Currency"
+        editable="true"
+        formatType="currency"
+        id="amount"
+        label="displaykey.Web.LOCDV.Amount"
+        required="true"
+        value="loc.Amount"/>
+    </InputColumn>
+  </DetailViewPanel>
+</PCF>

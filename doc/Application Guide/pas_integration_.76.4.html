@@ -1,0 +1,737 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xml:lang="en" lang="en" xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+    <meta http-equiv="Content-Style-Type" content="text/css" />
+    <!-- MOTW-DISABLED saved from url=(0014)about:internet -->
+    <title>Billing Processes</title>
+    <link rel="StyleSheet" href="css/pas_integration_.css" type="text/css" media="all" />
+    <link rel="StyleSheet" href="css/webworks.css" type="text/css" media="all" />
+    <link rel="StyleSheet" href="css/css-guidewire-extra.css" type="text/css" media="all" />
+    <script type="text/javascript" language="JavaScript1.2" src="wwhdata/common/context.js"></script>
+    <script type="text/javascript" language="JavaScript1.2" src="wwhdata/common/towwhdir.js"></script>
+    <script type="text/javascript" language="JavaScript1.2" src="wwhdata/common/wwhpagef.js"></script>
+    <script type="text/javascript" language="JavaScript1.2">
+      <!--
+        var  WebWorksRootPath = "";
+      // -->
+    </script>
+    <script type="text/javascript" language="JavaScript1.2">
+      <!--
+        // Set reference to top level help frame
+        //
+        var  WWHFrame = WWHGetWWHFrame("", true);
+      // -->
+    </script>
+    <script type="text/javascript" language="JavaScript1.2" src="scripts/expand.js"></script>
+    <!-- THE FOLLOWING IS A GUIDEWIRE STYLE DEFINITION FOR THE LINK TO THIS FEATURE -->
+    <link rel="StyleSheet" href="css/css-guidewire-extra.css" type="text/css" media="all" />
+    <!-- THE FOLLOWING IS A GUIDEWIRE GSCRIPT FUNCTION FOR THE LINK TO THIS FEATURE -->
+    <script type="text/javascript">
+function guidewire_selectall()
+{
+var text_val=eval("document.linktothisurlform.urlfield");
+text_val.focus();
+text_val.select();
+}
+</script>
+  </head>
+  <body onLoad="WWHUpdate();" onUnload="WWHUnload();" onKeyDown="WWHHandleKeyDown((document.all||document.getElementById||document.layers)?event:null);" onKeyPress="WWHHandleKeyPress((document.all||document.getElementById||document.layers)?event:null);" onKeyUp="WWHHandleKeyUp((document.all||document.getElementById||document.layers)?event:null);">
+    <!-- THE FOLLOWING IS A GUIDEWIRE DIV FOR THE 'LINK TO THIS' FEATURE -->
+    <div id="linkToThisPage" class="popup" style="display: none;">
+      <div class="popupTitle">Link Directly to This Page 
+           <a href="#" onclick="var thePopup = getElementById('linkToThisPage');thePopup.style.display='none';return false;"><img class="popupClosebox" src="wwhelp/wwhimpl/common/images/close.gif" /></a></div>
+      <div style="padding:6px;">
+        <div class="popupText" id="linkToThisPageBookmark">An error has occurred if you see this messsage.</div>
+        <form name="linktothisurlform" method="post" action="" style="width:275px;margin:0px">
+          <input type="text" class="popupURLText" id="linkToThisPageURL" name="urlfield" rows="1" cols="55" onClick="guidewire_selectall();" onFocus="guidewire_selectall();"></input>
+        </form>
+      </div>
+    </div>
+    <br />
+    <div class="WebWorks_Breadcrumbs" style="text-align: left;">
+      <span>BillingCenter Application&nbsp;Guide</span> : 
+    <span class="WebWorks_Breadcrumbs" style="text-align: left;"><a class="WebWorks_Breadcrumb_Link" href="p-integration.html#1014269">External System Integration</a> : <a class="WebWorks_Breadcrumb_Link" href="pas_integration_.76.1.html#1014269">Policy Administration System Integration</a> : Billing Processes</span></div>
+    <hr align="left" />
+    <blockquote>
+      <h3 class="H1_-_Heading_1"><a name="1014269">Billing Processes</a></h3>
+      <div class="B_-_Body"><a name="1014270">The integration of BillingCenter and PolicyCenter includes many features that allow carriers to handle special billing needs. Most of these integrations are related to particular PolicyCenter job processes. This section describes various processes that BillingCenter and PolicyCenter share and the role of each application in the process.</a></div>
+      <div class="B_-_Body"><a name="1014271">PolicyCenter sends messages about the charges that BillingCenter needs to bill. These messages result in billing instructions of various types. The billing instruction type relates to the PolicyCenter job type. For example, the </a><span class="cv_-_computer_voice">Issuance</span> billing instruction type relates to the PolicyCenter submission job. Payment plan overrides in BillingCenter can accommodate different handling for each billing instruction type. For example, a carrier may wish to exclude a down payment amount for all policy changes. </div>
+      <h4 class="H2_-_Heading_2"><a name="1094578">PolicyCenter Submission, Renewal, and Rewrite Jobs</a></h4>
+      <div class="B_-_Body"><a name="1094579">Submission, renewal, and rewrite jobs in PolicyCenter create a new policy period. Upon binding the job, PolicyCenter produces a message that initiates a billing instruction in BillingCenter. In nearly all cases, the first job of a policy is a submission. This job happens the first time the carrier evaluates the policyholder to determine whether to offer coverage. The submission job requires the most manual data entry of any new policy period job. Similar to the submission job, the rewrite job is also initiated manually. However, rewrite takes advantage of existing policy data by copying that data and allowing you to update it. Renewal is the most automated of the new period jobs. The renewal process is usually highly automated and very </a><span class="e_-_emphasis">low touch</span>. </div>
+      <div class="B_-_Body"><a name="1170864">The following illustration shows the steps and messaging that occur between the applications when you quote a policy for the following jobs: submission, renewal, and rewrite.</a></div>
+      <div class="T_-_Table"><a name="1170984">&nbsp;</a></div>
+      <table class="withHeading" style="text-align: left" border="0" cellpadding="10" cellspacing="0" summary="">
+        <caption></caption>
+        <tr>
+          <td style="border-bottom-color: #000000; border-bottom-style: solid; border-bottom-width: 0.5pt; border-top-color: #000000; border-top-style: solid; border-top-width: 0.5pt; padding-bottom: 4pt; padding-left: 2pt; padding-right: 8pt; padding-top: 0pt; vertical-align: bottom">
+            <div class="TH_-_Table_Heading"><a name="1170867">PolicyCenter action</a></div>
+          </td>
+          <td style="border-bottom-color: #000000; border-bottom-style: solid; border-bottom-width: 0.5pt; border-top-color: #000000; border-top-style: solid; border-top-width: 0.5pt; padding-bottom: 4pt; padding-left: 2pt; padding-right: 8pt; padding-top: 0pt; vertical-align: bottom">
+            <div class="TH_-_Table_Heading"><a name="1170869">Messaging</a></div>
+          </td>
+          <td style="border-bottom-color: #000000; border-bottom-style: solid; border-bottom-width: 0.5pt; border-top-color: #000000; border-top-style: solid; border-top-width: 0.5pt; padding-bottom: 4pt; padding-left: 2pt; padding-right: 8pt; padding-top: 0pt; vertical-align: bottom">
+            <div class="TH_-_Table_Heading"><a name="1170871">Billing system action</a></div>
+          </td>
+        </tr>
+        <tr>
+          <td style="border-bottom-color: #c0d1d1; border-bottom-style: solid; border-bottom-width: 0.15pt; border-top-color: #000000; border-top-style: solid; border-top-width: 0.5pt; padding-bottom: 4pt; padding-left: 2pt; padding-right: 8pt; padding-top: 0pt; vertical-align: top">
+            <div class="LST_-_List_Start_Table_outer" style="margin-left: 0pt">
+              <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+                <tr style="vertical-align: baseline">
+                  <td>
+                    <div class="LST_-_List_Start_Table_inner" style="width: 9.36pt; white-space: nowrap">
+                      <span class="s_-_strong">1. 	</span>
+                    </div>
+                  </td>
+                  <td width="100%">
+                    <div class="LST_-_List_Start_Table_inner"><a name="1170873">User quotes.</a></div>
+                  </td>
+                </tr>
+              </table>
+            </div>
+            <div class="LIT_-_List_Item_Table_outer" style="margin-left: 0pt">
+              <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+                <tr style="vertical-align: baseline">
+                  <td>
+                    <div class="LIT_-_List_Item_Table_inner" style="width: 9.36pt; white-space: nowrap">
+                      <span class="s_-_strong">2. 	</span>
+                    </div>
+                  </td>
+                  <td width="100%">
+                    <div class="LIT_-_List_Item_Table_inner"><a name="1170874">User advances to </a><span class="uit_-_UI_element_table">Payment</span> screen. </div>
+                  </td>
+                </tr>
+              </table>
+            </div>
+          </td>
+          <td style="border-bottom-color: #c0d1d1; border-bottom-style: solid; border-bottom-width: 0.15pt; border-top-color: #000000; border-top-style: solid; border-top-width: 0.5pt; padding-bottom: 4pt; padding-left: 2pt; padding-right: 8pt; padding-top: 0pt; vertical-align: top">
+            <div class="TT_-_Table_Text"><a name="1170876">&nbsp;</a></div>
+          </td>
+          <td style="border-bottom-color: #c0d1d1; border-bottom-style: solid; border-bottom-width: 0.15pt; border-top-color: #000000; border-top-style: solid; border-top-width: 0.5pt; padding-bottom: 4pt; padding-left: 2pt; padding-right: 8pt; padding-top: 0pt; vertical-align: top">
+            <div class="TT_-_Table_Text"><a name="1170878">&nbsp;</a></div>
+          </td>
+        </tr>
+        <tr>
+          <td style="border-bottom-color: #c0d1d1; border-bottom-style: solid; border-bottom-width: 0.15pt; border-top-color: #c0d1d1; border-top-style: solid; border-top-width: 0.15pt; padding-bottom: 4pt; padding-left: 2pt; padding-right: 8pt; padding-top: 0pt; vertical-align: top">
+            <div class="TT_-_Table_Text"><a name="1170880">&nbsp;</a></div>
+          </td>
+          <td style="border-bottom-color: #c0d1d1; border-bottom-style: solid; border-bottom-width: 0.15pt; border-top-color: #c0d1d1; border-top-style: solid; border-top-width: 0.15pt; padding-bottom: 4pt; padding-left: 2pt; padding-right: 8pt; padding-top: 0pt; vertical-align: top">
+            <div class="LIT_-_List_Item_Table_outer" style="margin-left: 0pt">
+              <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+                <tr style="vertical-align: baseline">
+                  <td>
+                    <div class="LIT_-_List_Item_Table_inner" style="width: 9.36pt; white-space: nowrap">
+                      <span class="s_-_strong">3. 	</span>
+                    </div>
+                  </td>
+                  <td width="100%">
+                    <div class="LIT_-_List_Item_Table_inner"><a name="1170882">PolicyCenter sends message to get billing options, installment plans, and invoicing plans.</a></div>
+                  </td>
+                </tr>
+              </table>
+            </div>
+          </td>
+          <td style="border-bottom-color: #c0d1d1; border-bottom-style: solid; border-bottom-width: 0.15pt; border-top-color: #c0d1d1; border-top-style: solid; border-top-width: 0.15pt; padding-bottom: 4pt; padding-left: 2pt; padding-right: 8pt; padding-top: 0pt; vertical-align: top">
+            <div class="TT_-_Table_Text"><a name="1170884">&nbsp;</a></div>
+          </td>
+        </tr>
+        <tr>
+          <td style="border-bottom-color: #c0d1d1; border-bottom-style: solid; border-bottom-width: 0.15pt; border-top-color: #c0d1d1; border-top-style: solid; border-top-width: 0.15pt; padding-bottom: 4pt; padding-left: 2pt; padding-right: 8pt; padding-top: 0pt; vertical-align: top">
+            <div class="TT_-_Table_Text"><a name="1170886">&nbsp;</a></div>
+          </td>
+          <td style="border-bottom-color: #c0d1d1; border-bottom-style: solid; border-bottom-width: 0.15pt; border-top-color: #c0d1d1; border-top-style: solid; border-top-width: 0.15pt; padding-bottom: 4pt; padding-left: 2pt; padding-right: 8pt; padding-top: 0pt; vertical-align: top">
+            <div class="TT_-_Table_Text"><a name="1170888">&nbsp;</a></div>
+          </td>
+          <td style="border-bottom-color: #c0d1d1; border-bottom-style: solid; border-bottom-width: 0.15pt; border-top-color: #c0d1d1; border-top-style: solid; border-top-width: 0.15pt; padding-bottom: 4pt; padding-left: 2pt; padding-right: 8pt; padding-top: 0pt; vertical-align: top">
+            <div class="LIT_-_List_Item_Table_outer" style="margin-left: 0pt">
+              <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+                <tr style="vertical-align: baseline">
+                  <td>
+                    <div class="LIT_-_List_Item_Table_inner" style="width: 9.36pt; white-space: nowrap">
+                      <span class="s_-_strong">4. 	</span>
+                    </div>
+                  </td>
+                  <td width="100%">
+                    <div class="LIT_-_List_Item_Table_inner"><a name="1170890">Check to see if the producer code of record allows agency bill for this producer.</a></div>
+                  </td>
+                </tr>
+              </table>
+            </div>
+            <div class="LIT_-_List_Item_Table_outer" style="margin-left: 0pt">
+              <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+                <tr style="vertical-align: baseline">
+                  <td>
+                    <div class="LIT_-_List_Item_Table_inner" style="width: 9.36pt; white-space: nowrap">
+                      <span class="s_-_strong">5. 	</span>
+                    </div>
+                  </td>
+                  <td width="100%">
+                    <div class="LIT_-_List_Item_Table_inner"><a name="1170891">Look up installment and invoicing plans.</a></div>
+                  </td>
+                </tr>
+              </table>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td style="border-bottom-color: #c0d1d1; border-bottom-style: solid; border-bottom-width: 0.15pt; border-top-color: #c0d1d1; border-top-style: solid; border-top-width: 0.15pt; padding-bottom: 4pt; padding-left: 2pt; padding-right: 8pt; padding-top: 0pt; vertical-align: top">
+            <div class="TT_-_Table_Text"><a name="1170893">&nbsp;</a></div>
+          </td>
+          <td style="border-bottom-color: #c0d1d1; border-bottom-style: solid; border-bottom-width: 0.15pt; border-top-color: #c0d1d1; border-top-style: solid; border-top-width: 0.15pt; padding-bottom: 4pt; padding-left: 2pt; padding-right: 8pt; padding-top: 0pt; vertical-align: top">
+            <div class="LIT_-_List_Item_Table_outer" style="margin-left: 0pt">
+              <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+                <tr style="vertical-align: baseline">
+                  <td>
+                    <div class="LIT_-_List_Item_Table_inner" style="width: 9.36pt; white-space: nowrap">
+                      <span class="s_-_strong">6. 	</span>
+                    </div>
+                  </td>
+                  <td width="100%">
+                    <div class="LIT_-_List_Item_Table_inner"><a name="1170895">Billing system returns billing options, available installment plans, and invoicing plans.</a></div>
+                  </td>
+                </tr>
+              </table>
+            </div>
+          </td>
+          <td style="border-bottom-color: #c0d1d1; border-bottom-style: solid; border-bottom-width: 0.15pt; border-top-color: #c0d1d1; border-top-style: solid; border-top-width: 0.15pt; padding-bottom: 4pt; padding-left: 2pt; padding-right: 8pt; padding-top: 0pt; vertical-align: top">
+            <div class="TT_-_Table_Text"><a name="1170897">&nbsp;</a></div>
+          </td>
+        </tr>
+        <tr>
+          <td style="border-bottom-color: #c0d1d1; border-bottom-style: solid; border-bottom-width: 0.15pt; border-top-color: #c0d1d1; border-top-style: solid; border-top-width: 0.15pt; padding-bottom: 4pt; padding-left: 2pt; padding-right: 8pt; padding-top: 0pt; vertical-align: top">
+            <div class="LIT_-_List_Item_Table_outer" style="margin-left: 0pt">
+              <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+                <tr style="vertical-align: baseline">
+                  <td>
+                    <div class="LIT_-_List_Item_Table_inner" style="width: 9.36pt; white-space: nowrap">
+                      <span class="s_-_strong">7. 	</span>
+                    </div>
+                  </td>
+                  <td width="100%">
+                    <div class="LIT_-_List_Item_Table_inner"><a name="1170899">User selects billing method.</a></div>
+                  </td>
+                </tr>
+              </table>
+            </div>
+            <div class="LIT_-_List_Item_Table_outer" style="margin-left: 0pt">
+              <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+                <tr style="vertical-align: baseline">
+                  <td>
+                    <div class="LIT_-_List_Item_Table_inner" style="width: 9.36pt; white-space: nowrap">
+                      <span class="s_-_strong">8. 	</span>
+                    </div>
+                  </td>
+                  <td width="100%">
+                    <div class="LIT_-_List_Item_Table_inner"><a name="1170900">User selects installment plan.</a></div>
+                  </td>
+                </tr>
+              </table>
+            </div>
+            <div class="LIT_-_List_Item_Table_outer" style="margin-left: 0pt">
+              <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+                <tr style="vertical-align: baseline">
+                  <td>
+                    <div class="LIT_-_List_Item_Table_inner" style="width: 9.36pt; white-space: nowrap">
+                      <span class="s_-_strong">9. 	</span>
+                    </div>
+                  </td>
+                  <td width="100%">
+                    <div class="LIT_-_List_Item_Table_inner"><a name="1170901">(Optional) User clicks to preview payments that billing system returned.</a></div>
+                  </td>
+                </tr>
+              </table>
+            </div>
+          </td>
+          <td style="border-bottom-color: #c0d1d1; border-bottom-style: solid; border-bottom-width: 0.15pt; border-top-color: #c0d1d1; border-top-style: solid; border-top-width: 0.15pt; padding-bottom: 4pt; padding-left: 2pt; padding-right: 8pt; padding-top: 0pt; vertical-align: top">
+            <div class="TT_-_Table_Text"><a name="1170903">&nbsp;</a></div>
+          </td>
+          <td style="border-bottom-color: #c0d1d1; border-bottom-style: solid; border-bottom-width: 0.15pt; border-top-color: #c0d1d1; border-top-style: solid; border-top-width: 0.15pt; padding-bottom: 4pt; padding-left: 2pt; padding-right: 8pt; padding-top: 0pt; vertical-align: top">
+            <div class="TT_-_Table_Text"><a name="1170905">&nbsp;</a></div>
+          </td>
+        </tr>
+        <tr>
+          <td style="border-bottom-color: #c0d1d1; border-bottom-style: solid; border-bottom-width: 0.15pt; border-top-color: #c0d1d1; border-top-style: solid; border-top-width: 0.15pt; padding-bottom: 4pt; padding-left: 2pt; padding-right: 8pt; padding-top: 0pt; vertical-align: top">
+            <div class="TT_-_Table_Text"><a name="1170907">&nbsp;</a></div>
+          </td>
+          <td style="border-bottom-color: #c0d1d1; border-bottom-style: solid; border-bottom-width: 0.15pt; border-top-color: #c0d1d1; border-top-style: solid; border-top-width: 0.15pt; padding-bottom: 4pt; padding-left: 2pt; padding-right: 8pt; padding-top: 0pt; vertical-align: top">
+            <div class="LIT_-_List_Item_Table_outer" style="margin-left: 0pt">
+              <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+                <tr style="vertical-align: baseline">
+                  <td>
+                    <div class="LIT_-_List_Item_Table_inner" style="width: 9.36pt; white-space: nowrap">
+                      <span class="s_-_strong">10. 	</span>
+                    </div>
+                  </td>
+                  <td width="100%">
+                    <div class="LIT_-_List_Item_Table_inner"><a name="1170909">PolicyCenter sends message with the selected payment plan.</a></div>
+                  </td>
+                </tr>
+              </table>
+            </div>
+          </td>
+          <td style="border-bottom-color: #c0d1d1; border-bottom-style: solid; border-bottom-width: 0.15pt; border-top-color: #c0d1d1; border-top-style: solid; border-top-width: 0.15pt; padding-bottom: 4pt; padding-left: 2pt; padding-right: 8pt; padding-top: 0pt; vertical-align: top">
+            <div class="TT_-_Table_Text"><a name="1170911">&nbsp;</a></div>
+          </td>
+        </tr>
+        <tr>
+          <td style="border-bottom-color: #c0d1d1; border-bottom-style: solid; border-bottom-width: 0.15pt; border-top-color: #c0d1d1; border-top-style: solid; border-top-width: 0.15pt; padding-bottom: 4pt; padding-left: 2pt; padding-right: 8pt; padding-top: 0pt; vertical-align: top">
+            <div class="TT_-_Table_Text"><a name="1170913">&nbsp;</a></div>
+          </td>
+          <td style="border-bottom-color: #c0d1d1; border-bottom-style: solid; border-bottom-width: 0.15pt; border-top-color: #c0d1d1; border-top-style: solid; border-top-width: 0.15pt; padding-bottom: 4pt; padding-left: 2pt; padding-right: 8pt; padding-top: 0pt; vertical-align: top">
+            <div class="TT_-_Table_Text"><a name="1170915">&nbsp;</a></div>
+          </td>
+          <td style="border-bottom-color: #c0d1d1; border-bottom-style: solid; border-bottom-width: 0.15pt; border-top-color: #c0d1d1; border-top-style: solid; border-top-width: 0.15pt; padding-bottom: 4pt; padding-left: 2pt; padding-right: 8pt; padding-top: 0pt; vertical-align: top">
+            <div class="LIT_-_List_Item_Table_outer" style="margin-left: 0pt">
+              <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+                <tr style="vertical-align: baseline">
+                  <td>
+                    <div class="LIT_-_List_Item_Table_inner" style="width: 9.36pt; white-space: nowrap">
+                      <span class="s_-_strong">11. 	</span>
+                    </div>
+                  </td>
+                  <td width="100%">
+                    <div class="LIT_-_List_Item_Table_inner"><a name="1170917">Calculate payment schedule.</a></div>
+                  </td>
+                </tr>
+              </table>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td style="border-bottom-color: #c0d1d1; border-bottom-style: solid; border-bottom-width: 0.15pt; border-top-color: #c0d1d1; border-top-style: solid; border-top-width: 0.15pt; padding-bottom: 4pt; padding-left: 2pt; padding-right: 8pt; padding-top: 0pt; vertical-align: top">
+            <div class="TT_-_Table_Text"><a name="1170919">&nbsp;</a></div>
+          </td>
+          <td style="border-bottom-color: #c0d1d1; border-bottom-style: solid; border-bottom-width: 0.15pt; border-top-color: #c0d1d1; border-top-style: solid; border-top-width: 0.15pt; padding-bottom: 4pt; padding-left: 2pt; padding-right: 8pt; padding-top: 0pt; vertical-align: top">
+            <div class="LIT_-_List_Item_Table_outer" style="margin-left: 0pt">
+              <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+                <tr style="vertical-align: baseline">
+                  <td>
+                    <div class="LIT_-_List_Item_Table_inner" style="width: 9.36pt; white-space: nowrap">
+                      <span class="s_-_strong">12. 	</span>
+                    </div>
+                  </td>
+                  <td width="100%">
+                    <div class="LIT_-_List_Item_Table_inner"><a name="1170921">Billing system returns payment schedule which can be viewed in PolicyCenter.</a></div>
+                  </td>
+                </tr>
+              </table>
+            </div>
+          </td>
+          <td style="border-bottom-color: #c0d1d1; border-bottom-style: solid; border-bottom-width: 0.15pt; border-top-color: #c0d1d1; border-top-style: solid; border-top-width: 0.15pt; padding-bottom: 4pt; padding-left: 2pt; padding-right: 8pt; padding-top: 0pt; vertical-align: top">
+            <div class="TT_-_Table_Text"><a name="1170923">&nbsp;</a></div>
+          </td>
+        </tr>
+        <tr>
+          <td style="border-bottom-color: #c0d1d1; border-bottom-style: solid; border-bottom-width: 0.15pt; border-top-color: #c0d1d1; border-top-style: solid; border-top-width: 0.15pt; padding-bottom: 4pt; padding-left: 2pt; padding-right: 8pt; padding-top: 0pt; vertical-align: top">
+            <div class="LIT_-_List_Item_Table_outer" style="margin-left: 0pt">
+              <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+                <tr style="vertical-align: baseline">
+                  <td>
+                    <div class="LIT_-_List_Item_Table_inner" style="width: 9.36pt; white-space: nowrap">
+                      <span class="s_-_strong">13. 	</span>
+                    </div>
+                  </td>
+                  <td width="100%">
+                    <div class="LIT_-_List_Item_Table_inner"><a name="1170925">User selects invoicing plan.</a></div>
+                  </td>
+                </tr>
+              </table>
+            </div>
+            <div class="LIT_-_List_Item_Table_outer" style="margin-left: 0pt">
+              <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+                <tr style="vertical-align: baseline">
+                  <td>
+                    <div class="LIT_-_List_Item_Table_inner" style="width: 9.36pt; white-space: nowrap">
+                      <span class="s_-_strong">14. 	</span>
+                    </div>
+                  </td>
+                  <td width="100%">
+                    <div class="LIT_-_List_Item_Table_inner"><a name="1170926">User binds policy.</a></div>
+                  </td>
+                </tr>
+              </table>
+            </div>
+          </td>
+          <td style="border-bottom-color: #c0d1d1; border-bottom-style: solid; border-bottom-width: 0.15pt; border-top-color: #c0d1d1; border-top-style: solid; border-top-width: 0.15pt; padding-bottom: 4pt; padding-left: 2pt; padding-right: 8pt; padding-top: 0pt; vertical-align: top">
+            <div class="TT_-_Table_Text"><a name="1170928">&nbsp;</a></div>
+          </td>
+          <td style="border-bottom-color: #c0d1d1; border-bottom-style: solid; border-bottom-width: 0.15pt; border-top-color: #c0d1d1; border-top-style: solid; border-top-width: 0.15pt; padding-bottom: 4pt; padding-left: 2pt; padding-right: 8pt; padding-top: 0pt; vertical-align: top">
+            <div class="TT_-_Table_Text"><a name="1170930">&nbsp;</a></div>
+          </td>
+        </tr>
+        <tr>
+          <td style="border-bottom-color: #c0d1d1; border-bottom-style: solid; border-bottom-width: 0.15pt; border-top-color: #c0d1d1; border-top-style: solid; border-top-width: 0.15pt; padding-bottom: 4pt; padding-left: 2pt; padding-right: 8pt; padding-top: 0pt; vertical-align: top">
+            <div class="TT_-_Table_Text"><a name="1170932">&nbsp;</a></div>
+          </td>
+          <td style="border-bottom-color: #c0d1d1; border-bottom-style: solid; border-bottom-width: 0.15pt; border-top-color: #c0d1d1; border-top-style: solid; border-top-width: 0.15pt; padding-bottom: 4pt; padding-left: 2pt; padding-right: 8pt; padding-top: 0pt; vertical-align: top">
+            <div class="LIT_-_List_Item_Table_outer" style="margin-left: 0pt">
+              <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+                <tr style="vertical-align: baseline">
+                  <td>
+                    <div class="LIT_-_List_Item_Table_inner" style="width: 9.36pt; white-space: nowrap">
+                      <span class="s_-_strong">15. 	</span>
+                    </div>
+                  </td>
+                  <td width="100%">
+                    <div class="LIT_-_List_Item_Table_inner"><a name="1170934">If the billing system does not know about the account, PolicyCenter sends account information.</a></div>
+                  </td>
+                </tr>
+              </table>
+            </div>
+            <div class="LIT_-_List_Item_Table_outer" style="margin-left: 0pt">
+              <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+                <tr style="vertical-align: baseline">
+                  <td>
+                    <div class="LIT_-_List_Item_Table_inner" style="width: 9.36pt; white-space: nowrap">
+                      <span class="s_-_strong">16. 	</span>
+                    </div>
+                  </td>
+                  <td width="100%">
+                    <div class="LIT_-_List_Item_Table_inner"><a name="1170935">If the user adds an invoicing plan, PolicyCenter sends new invoicing information.</a></div>
+                  </td>
+                </tr>
+              </table>
+            </div>
+          </td>
+          <td style="border-bottom-color: #c0d1d1; border-bottom-style: solid; border-bottom-width: 0.15pt; border-top-color: #c0d1d1; border-top-style: solid; border-top-width: 0.15pt; padding-bottom: 4pt; padding-left: 2pt; padding-right: 8pt; padding-top: 0pt; vertical-align: top">
+            <div class="TT_-_Table_Text"><a name="1170937">&nbsp;</a></div>
+          </td>
+        </tr>
+        <tr>
+          <td style="border-bottom-color: #c0d1d1; border-bottom-style: solid; border-bottom-width: 0.15pt; border-top-color: #c0d1d1; border-top-style: solid; border-top-width: 0.15pt; padding-bottom: 4pt; padding-left: 2pt; padding-right: 8pt; padding-top: 0pt; vertical-align: top">
+            <div class="TT_-_Table_Text"><a name="1170939">&nbsp;</a></div>
+          </td>
+          <td style="border-bottom-color: #c0d1d1; border-bottom-style: solid; border-bottom-width: 0.15pt; border-top-color: #c0d1d1; border-top-style: solid; border-top-width: 0.15pt; padding-bottom: 4pt; padding-left: 2pt; padding-right: 8pt; padding-top: 0pt; vertical-align: top">
+            <div class="TT_-_Table_Text"><a name="1170941">&nbsp;</a></div>
+          </td>
+          <td style="border-bottom-color: #c0d1d1; border-bottom-style: solid; border-bottom-width: 0.15pt; border-top-color: #c0d1d1; border-top-style: solid; border-top-width: 0.15pt; padding-bottom: 4pt; padding-left: 2pt; padding-right: 8pt; padding-top: 0pt; vertical-align: top">
+            <div class="LIT_-_List_Item_Table_outer" style="margin-left: 0pt">
+              <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+                <tr style="vertical-align: baseline">
+                  <td>
+                    <div class="LIT_-_List_Item_Table_inner" style="width: 9.36pt; white-space: nowrap">
+                      <span class="s_-_strong">17. 	</span>
+                    </div>
+                  </td>
+                  <td width="100%">
+                    <div class="LIT_-_List_Item_Table_inner"><a name="1170943">If account is unknown, create account.</a></div>
+                  </td>
+                </tr>
+              </table>
+            </div>
+            <div class="LIT_-_List_Item_Table_outer" style="margin-left: 0pt">
+              <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+                <tr style="vertical-align: baseline">
+                  <td>
+                    <div class="LIT_-_List_Item_Table_inner" style="width: 9.36pt; white-space: nowrap">
+                      <span class="s_-_strong">18. 	</span>
+                    </div>
+                  </td>
+                  <td width="100%">
+                    <div class="LIT_-_List_Item_Table_inner"><a name="1170944">If new invoicing plan, add to invoicing plans.</a></div>
+                  </td>
+                </tr>
+              </table>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td style="border-bottom-color: #c0d1d1; border-bottom-style: solid; border-bottom-width: 0.15pt; border-top-color: #c0d1d1; border-top-style: solid; border-top-width: 0.15pt; padding-bottom: 4pt; padding-left: 2pt; padding-right: 8pt; padding-top: 0pt; vertical-align: top">
+            <div class="TT_-_Table_Text"><a name="1170946">&nbsp;</a></div>
+          </td>
+          <td style="border-bottom-color: #c0d1d1; border-bottom-style: solid; border-bottom-width: 0.15pt; border-top-color: #c0d1d1; border-top-style: solid; border-top-width: 0.15pt; padding-bottom: 4pt; padding-left: 2pt; padding-right: 8pt; padding-top: 0pt; vertical-align: top">
+            <div class="LIT_-_List_Item_Table_outer" style="margin-left: 0pt">
+              <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+                <tr style="vertical-align: baseline">
+                  <td>
+                    <div class="LIT_-_List_Item_Table_inner" style="width: 9.36pt; white-space: nowrap">
+                      <span class="s_-_strong">19. 	</span>
+                    </div>
+                  </td>
+                  <td width="100%">
+                    <div class="LIT_-_List_Item_Table_inner"><a name="1170948">PolicyCenter sends message to create a new policy and/or policy period in billing system. In that same message, PolicyCenter sends billing charges related to that policy transaction.</a></div>
+                  </td>
+                </tr>
+              </table>
+            </div>
+          </td>
+          <td style="border-bottom-color: #c0d1d1; border-bottom-style: solid; border-bottom-width: 0.15pt; border-top-color: #c0d1d1; border-top-style: solid; border-top-width: 0.15pt; padding-bottom: 4pt; padding-left: 2pt; padding-right: 8pt; padding-top: 0pt; vertical-align: top">
+            <div class="TT_-_Table_Text"><a name="1170950">&nbsp;</a></div>
+          </td>
+        </tr>
+        <tr>
+          <td style="border-bottom-color: #c0d1d1; border-bottom-style: solid; border-bottom-width: 0.15pt; border-top-color: #c0d1d1; border-top-style: solid; border-top-width: 0.15pt; padding-bottom: 4pt; padding-left: 2pt; padding-right: 8pt; padding-top: 0pt; vertical-align: top">
+            <div class="TT_-_Table_Text"><a name="1170952">&nbsp;</a></div>
+          </td>
+          <td style="border-bottom-color: #c0d1d1; border-bottom-style: solid; border-bottom-width: 0.15pt; border-top-color: #c0d1d1; border-top-style: solid; border-top-width: 0.15pt; padding-bottom: 4pt; padding-left: 2pt; padding-right: 8pt; padding-top: 0pt; vertical-align: top">
+            <div class="TT_-_Table_Text"><a name="1170954">&nbsp;</a></div>
+          </td>
+          <td style="border-bottom-color: #c0d1d1; border-bottom-style: solid; border-bottom-width: 0.15pt; border-top-color: #c0d1d1; border-top-style: solid; border-top-width: 0.15pt; padding-bottom: 4pt; padding-left: 2pt; padding-right: 8pt; padding-top: 0pt; vertical-align: top">
+            <div class="LIT_-_List_Item_Table_outer" style="margin-left: 0pt">
+              <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+                <tr style="vertical-align: baseline">
+                  <td>
+                    <div class="LIT_-_List_Item_Table_inner" style="width: 9.36pt; white-space: nowrap">
+                      <span class="s_-_strong">20. 	</span>
+                    </div>
+                  </td>
+                  <td width="100%">
+                    <div class="LIT_-_List_Item_Table_inner"><a name="1170956">Create policy or policy period on the account. Set </a><span class="cvt_-_computer_voice_table">PolicyPeriod.BoundDate</span> to the policy’s model date (the date when the policy was bound) as reported by PolicyCenter. Set <span class="cvt_-_computer_voice_table">PolicyPeriod.TermConfirmed</span> to <span class="cvt_-_computer_voice_table">false</span>. The policy term/period is bound, but not confirmed until payment is received and any other conditions for official binding are met.</div>
+                  </td>
+                </tr>
+              </table>
+            </div>
+            <div class="LIT_-_List_Item_Table_outer" style="margin-left: 0pt">
+              <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+                <tr style="vertical-align: baseline">
+                  <td>
+                    <div class="LIT_-_List_Item_Table_inner" style="width: 9.36pt; white-space: nowrap">
+                      <span class="s_-_strong">21. 	</span>
+                    </div>
+                  </td>
+                  <td width="100%">
+                    <div class="LIT_-_List_Item_Table_inner"><a name="1170957">Process and apply the new charges.</a></div>
+                  </td>
+                </tr>
+              </table>
+            </div>
+            <div class="LIT_-_List_Item_Table_outer" style="margin-left: 0pt">
+              <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+                <tr style="vertical-align: baseline">
+                  <td>
+                    <div class="LIT_-_List_Item_Table_inner" style="width: 9.36pt; white-space: nowrap">
+                      <span class="s_-_strong">22. 	</span>
+                    </div>
+                  </td>
+                  <td width="100%">
+                    <div class="LIT_-_List_Item_Table_inner"><a name="1170958">Process payment when received.</a></div>
+                  </td>
+                </tr>
+              </table>
+            </div>
+            <div class="LIT_-_List_Item_Table_outer" style="margin-left: 0pt">
+              <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+                <tr style="vertical-align: baseline">
+                  <td>
+                    <div class="LIT_-_List_Item_Table_inner" style="width: 9.36pt; white-space: nowrap">
+                      <span class="s_-_strong">23. 	</span>
+                    </div>
+                  </td>
+                  <td width="100%">
+                    <div class="LIT_-_List_Item_Table_inner"><a name="1170959">Call </a><span class="cvt_-_computer_voice_table">IPolicyPeriod.hasReceivedSufficientPaymentToConfirmPolicyPeriod</span> to determine whether payment is sufficient. Payment may be sufficient, for example, if it is equal to or greater than the amount due on the renewal’s first invoice. The call returns <span class="cvt_-_computer_voice_table">true</span> if the payment is sufficient.</div>
+                  </td>
+                </tr>
+              </table>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td style="border-bottom-color: #c0d1d1; border-bottom-style: solid; border-bottom-width: 0.15pt; border-top-color: #c0d1d1; border-top-style: solid; border-top-width: 0.15pt; padding-bottom: 4pt; padding-left: 2pt; padding-right: 8pt; padding-top: 0pt; vertical-align: top">
+            <div class="TT_-_Table_Text"><a name="1170961">&nbsp;</a></div>
+          </td>
+          <td style="border-bottom-color: #c0d1d1; border-bottom-style: solid; border-bottom-width: 0.15pt; border-top-color: #c0d1d1; border-top-style: solid; border-top-width: 0.15pt; padding-bottom: 4pt; padding-left: 2pt; padding-right: 8pt; padding-top: 0pt; vertical-align: top">
+            <div class="LIT_-_List_Item_Table_outer" style="margin-left: 0pt">
+              <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+                <tr style="vertical-align: baseline">
+                  <td>
+                    <div class="LIT_-_List_Item_Table_inner" style="width: 9.36pt; white-space: nowrap">
+                      <span class="s_-_strong">24. 	</span>
+                    </div>
+                  </td>
+                  <td width="100%">
+                    <div class="LIT_-_List_Item_Table_inner"><a name="1170963">If </a><span class="cvt_-_computer_voice_table">PolicyPeriod.ConfirmationNotificationState == NotifyUponSufficientPayment</span>, BillingCenter notifies PolicyCenter that sufficient payment has been received by calling the PolicyCenter <span class="cvt_-_computer_voice_table">PolicyRenewalAPI.confirmTerm</span> method.</div>
+                  </td>
+                </tr>
+              </table>
+            </div>
+          </td>
+          <td style="border-bottom-color: #c0d1d1; border-bottom-style: solid; border-bottom-width: 0.15pt; border-top-color: #c0d1d1; border-top-style: solid; border-top-width: 0.15pt; padding-bottom: 4pt; padding-left: 2pt; padding-right: 8pt; padding-top: 0pt; vertical-align: top">
+            <div class="TT_-_Table_Text"><a name="1170965">&nbsp;</a></div>
+          </td>
+        </tr>
+        <tr>
+          <td style="border-bottom-color: #c0d1d1; border-bottom-style: solid; border-bottom-width: 0.15pt; border-top-color: #c0d1d1; border-top-style: solid; border-top-width: 0.15pt; padding-bottom: 4pt; padding-left: 2pt; padding-right: 8pt; padding-top: 0pt; vertical-align: top">
+            <div class="LIT_-_List_Item_Table_outer" style="margin-left: 0pt">
+              <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+                <tr style="vertical-align: baseline">
+                  <td>
+                    <div class="LIT_-_List_Item_Table_inner" style="width: 9.36pt; white-space: nowrap">
+                      <span class="s_-_strong">25. 	</span>
+                    </div>
+                  </td>
+                  <td width="100%">
+                    <div class="LIT_-_List_Item_Table_inner"><a name="1170967">Set </a><span class="cvt_-_computer_voice_table">Policy.PolicyTerm</span> flag to <span class="cvt_-_computer_voice_table">true</span>.</div>
+                  </td>
+                </tr>
+              </table>
+            </div>
+          </td>
+          <td style="border-bottom-color: #c0d1d1; border-bottom-style: solid; border-bottom-width: 0.15pt; border-top-color: #c0d1d1; border-top-style: solid; border-top-width: 0.15pt; padding-bottom: 4pt; padding-left: 2pt; padding-right: 8pt; padding-top: 0pt; vertical-align: top">
+            <div class="TT_-_Table_Text"><a name="1170969">&nbsp;</a></div>
+          </td>
+          <td style="border-bottom-color: #c0d1d1; border-bottom-style: solid; border-bottom-width: 0.15pt; border-top-color: #c0d1d1; border-top-style: solid; border-top-width: 0.15pt; padding-bottom: 4pt; padding-left: 2pt; padding-right: 8pt; padding-top: 0pt; vertical-align: top">
+            <div class="TT_-_Table_Text"><a name="1170971">&nbsp;</a></div>
+          </td>
+        </tr>
+        <tr>
+          <td style="border-bottom-color: #c0d1d1; border-bottom-style: solid; border-bottom-width: 0.15pt; border-top-color: #c0d1d1; border-top-style: solid; border-top-width: 0.15pt; padding-bottom: 4pt; padding-left: 2pt; padding-right: 8pt; padding-top: 0pt; vertical-align: top">
+            <div class="TT_-_Table_Text"><a name="1170973">&nbsp;</a></div>
+          </td>
+          <td style="border-bottom-color: #c0d1d1; border-bottom-style: solid; border-bottom-width: 0.15pt; border-top-color: #c0d1d1; border-top-style: solid; border-top-width: 0.15pt; padding-bottom: 4pt; padding-left: 2pt; padding-right: 8pt; padding-top: 0pt; vertical-align: top">
+            <div class="LIT_-_List_Item_Table_outer" style="margin-left: 0pt">
+              <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+                <tr style="vertical-align: baseline">
+                  <td>
+                    <div class="LIT_-_List_Item_Table_inner" style="width: 9.36pt; white-space: nowrap">
+                      <span class="s_-_strong">26. 	</span>
+                    </div>
+                  </td>
+                  <td width="100%">
+                    <div class="LIT_-_List_Item_Table_inner"><a name="1170975">PolicyCenter sends BillingCenter a message that the policy term/period is officially confirmed.</a></div>
+                  </td>
+                </tr>
+              </table>
+            </div>
+          </td>
+          <td style="border-bottom-color: #c0d1d1; border-bottom-style: solid; border-bottom-width: 0.15pt; border-top-color: #c0d1d1; border-top-style: solid; border-top-width: 0.15pt; padding-bottom: 4pt; padding-left: 2pt; padding-right: 8pt; padding-top: 0pt; vertical-align: top">
+            <div class="TT_-_Table_Text"><a name="1170977">&nbsp;</a></div>
+          </td>
+        </tr>
+        <tr>
+          <td style="border-bottom-color: #000000; border-bottom-style: solid; border-bottom-width: 0.5pt; border-top-color: #c0d1d1; border-top-style: solid; border-top-width: 0.15pt; padding-bottom: 4pt; padding-left: 2pt; padding-right: 8pt; padding-top: 0pt; vertical-align: top">
+            <div class="TT_-_Table_Text"><a name="1170979">&nbsp;</a></div>
+          </td>
+          <td style="border-bottom-color: #000000; border-bottom-style: solid; border-bottom-width: 0.5pt; border-top-color: #c0d1d1; border-top-style: solid; border-top-width: 0.15pt; padding-bottom: 4pt; padding-left: 2pt; padding-right: 8pt; padding-top: 0pt; vertical-align: top">
+            <div class="TT_-_Table_Text"><a name="1170981">&nbsp;</a></div>
+          </td>
+          <td style="border-bottom-color: #000000; border-bottom-style: solid; border-bottom-width: 0.5pt; border-top-color: #c0d1d1; border-top-style: solid; border-top-width: 0.15pt; padding-bottom: 4pt; padding-left: 2pt; padding-right: 8pt; padding-top: 0pt; vertical-align: top">
+            <div class="LIT_-_List_Item_Table_outer" style="margin-left: 0pt">
+              <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+                <tr style="vertical-align: baseline">
+                  <td>
+                    <div class="LIT_-_List_Item_Table_inner" style="width: 9.36pt; white-space: nowrap">
+                      <span class="s_-_strong">27. 	</span>
+                    </div>
+                  </td>
+                  <td width="100%">
+                    <div class="LIT_-_List_Item_Table_inner"><a name="1170983">Record the confirmation by setting </a><span class="cvt_-_computer_voice_table">PolicyPeriod.TermConfirmed</span> to <span class="cvt_-_computer_voice_table">true</span>.</div>
+                  </td>
+                </tr>
+              </table>
+            </div>
+          </td>
+        </tr>
+      </table>
+      <div class="H3_-_Heading_3_outer" style="margin-left: 36pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <h5 class="H3_-_Heading_3_inner" style="width: 18pt; white-space: nowrap"></h5>
+            </td>
+            <td width="100%">
+              <h5 class="H3_-_Heading_3_inner"><a name="1094561">Specialized Renewals</a></h5>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="B_-_Body"><a name="1094562">PolicyCenter begins processing renewal jobs in advance of the expiration date of the current policy term. This   allows time for PolicyCenter to gather the information necessary to evaluate and rate the renewal. The renewal process differs significantly from the submission process because it is highly automated. In many cases, PolicyCenter automates this process all the way from initiation to bind. After the policy is bound, PolicyCenter sends a new policy period to BillingCenter along with all the information to produce the Renewal billing instruction.</a></div>
+      <div class="B_-_Body"><a name="1164580">Under normal conditions, a renewal occurs to an existing policy. However, when converting from a legacy billing system to BillingCenter, the renewal can occur to a legacy system policy that does not yet exist in BillingCenter. In such a situation, PolicyCenter can decide to send a NewRenewal billing instruction to BillingCenter. The NewRenewal instruction informs BillingCenter that the renewal is occurring to an existing legacy system policy that is new to BillingCenter.</a></div>
+      <div class="B_-_Body"><a name="1094542">The default integration between BillingCenter and PolicyCenter supports three forms of renewal processing.</a></div>
+      <div class="BI_-_Bullet_Item_outer" style="margin-left: 57pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="BI_-_Bullet_Item_inner" style="width: 15pt; white-space: nowrap">
+                <span class="bu_-_bullet">•	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="BI_-_Bullet_Item_inner"><span class="ri_-_run_in_header"><a name="1159229">Bind and Cancel processing</a></span> – The base configurations use this method of processing for all lines of business. Operating under the assumption that the policyholder wants and expects the renewal to be processed automatically, PolicyCenter binds and issues the renewal. When BillingCenter receives the Renewal billing instruction, it produces charges and invoices according to the applicable payment plan.</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="LP_-_List_Para"><a name="1165770">If no payment is received by the due date, BillingCenter starts a Not Taken delinquency. The delinquency process initiates the Cancel Immediately workflow, which notifies PolicyCenter that no money was received. PolicyCenter responds with a flat cancellation for the policy term.</a></div>
+      <div class="LP_-_List_Para"><a name="1165776">If a partial payment is received, BillingCenter starts a standard Past Due delinquency, and PolicyCenter generates an activity for the underwriter to determine the necessary action.</a></div>
+      <div class="BI_-_Bullet_Item_outer" style="margin-left: 57pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="BI_-_Bullet_Item_inner" style="width: 15pt; white-space: nowrap">
+                <span class="bu_-_bullet">•	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="BI_-_Bullet_Item_inner"><span class="ri_-_run_in_header"><a name="1095012">Confirmed Renewal processing</a></span> – In this form of processing, renewal terms remain unconfirmed until certain conditions are met, such as receipt of a sufficient payment.</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="LP_-_List_Para"><a name="1165779">First, PolicyCenter binds the renewal term and initiates a new policy period in BillingCenter. In PolicyCenter, the policy term exists as “unconfirmed,” and the policy summary screen includes an appropriate alert message. BillingCenter processes a Renewal billing instruction using the usual payment plan and charge details and performs its normal charge invoicing process.</a></div>
+      <div class="LP_-_List_Para"><a name="1165785">When BillingCenter receives sufficient payment, it notifies PolicyCenter that the payment condition has been met. If additional conditions exist, PolicyCenter checks whether they have been satisfied. After all conditions are met, PolicyCenter marks the policy term as “confirmed” and notifies BillingCenter to do the same.</a></div>
+      <div class="LP_-_List_Para"><a name="1165811">Confirmed Renewal processing is not enabled in the base configurations. To enable it, two plugins must be modified.</a></div>
+      <div class="BI2_-_Bullet_Item_002c_Level_2_outer" style="margin-left: 67pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="BI2_-_Bullet_Item_002c_Level_2_inner" style="width: 15pt; white-space: nowrap">
+                <span class="bu_-_bullet">•	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="BI2_-_Bullet_Item_002c_Level_2_inner"><a name="1165788">In PolicyCenter, the </a><span class="cv_-_computer_voice">PolicyRenewalPlugin</span> class <span class="cv_-_computer_voice">doesRenewalRequireConfirmation</span> method must return <span class="cv_-_computer_voice">true</span>. By default, it returns <span class="cv_-_computer_voice">false</span>.</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="BI2_-_Bullet_Item_002c_Level_2_outer" style="margin-left: 67pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="BI2_-_Bullet_Item_002c_Level_2_inner" style="width: 15pt; white-space: nowrap">
+                <span class="bu_-_bullet">•	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="BI2_-_Bullet_Item_002c_Level_2_inner"><a name="1165791">In BillingCenter, update the </a><span class="cv_-_computer_voice">PolicyPeriod</span> class <span class="cv_-_computer_voice">hasReceivedSufficientPaymentToConfirmPolicyPeriod</span> method to set the sufficient payment amount.</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="BI_-_Bullet_Item_outer" style="margin-left: 57pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="BI_-_Bullet_Item_inner" style="width: 15pt; white-space: nowrap">
+                <span class="bu_-_bullet">•	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="BI_-_Bullet_Item_inner"><span class="ri_-_run_in_header"><a name="1094519">Renewal Offer processing</a></span> – In this form of processing, PolicyCenter does not bind the renewal term until BillingCenter receives sufficient payment. Because the term is not bound, the policy period does not exist in BillingCenter.</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="LP_-_List_Para"><a name="1165794">First, PolicyCenter sends an offer letter to BillingCenter that specifies the required payment amount, due date, and a Renewal Offer Number. BillingCenter saves the Renewal Offer Number to identify the appropriate policy.</a></div>
+      <div class="LP_-_List_Para"><a name="1165800">When BillingCenter receives a payment with the Renewal Offer Number, it creates a suspense payment and notifies PolicyCenter. If the payment amount is sufficient, PolicyCenter binds the term and sends BillingCenter a Renewal billing instruction that includes the Renewal Offer Number. BillingCenter uses the Offer Number to identify the appropriate policy, create the policy period, and release the suspense payment.</a></div>
+      <div class="LP_-_List_Para"><a name="1165805">If partial or no payment is received by the due date, the offer expires and PolicyCenter closes the renewal transaction as Not Taken. If partial payment is received, PolicyCenter generates an activity to review the case. A possible outcome is for PolicyCenter to request that the payment be disbursed back to the sender.</a></div>
+      <div class="LP_-_List_Para"><a name="1165808">Renewal Offer processing is not enabled in the PolicyCenter base configuration. To enable it, the PolicyCenter </a><span class="cv_-_computer_voice">PolicyRenewalPlugin</span> class <span class="cv_-_computer_voice">isRenewalOffered</span> method must return <span class="cv_-_computer_voice">true</span>. By default, it returns <span class="cv_-_computer_voice">false</span>. BillingCenter requires no additional configuration to support Renewal Offer processing.</div>
+      <script type="text/javascript" language="JavaScript1.2">
+        <!--
+          // Clear related topics
+          //
+          WWHClearRelatedTopics();
+
+          document.writeln(WWHRelatedTopicsInlineHTML());
+        // -->
+      </script>
+    </blockquote>
+    <script type="text/javascript" language="JavaScript1.2">
+      <!--
+        document.write(WWHRelatedTopicsDivTag() + WWHPopupDivTag() + WWHALinksDivTag());
+      // -->
+    </script>
+  </body>
+</html>

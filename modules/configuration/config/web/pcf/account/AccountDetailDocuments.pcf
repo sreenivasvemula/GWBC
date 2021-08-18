@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PCF
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:noNamespaceSchemaLocation="../../../../../pcf.xsd">
+  <Page
+    canVisit="perm.System.accttabview and perm.System.acctdocview"
+    id="AccountDetailDocuments"
+    showUpLink="true"
+    title="displaykey.Web.AccountDetailDocuments.Title">
+    <LocationEntryPoint
+      signature="AccountDetailDocuments(account : Account)"/>
+    <Variable
+      name="account"
+      type="Account"/>
+    <Screen
+      id="AccountDetailDocumentsScreen">
+      <SearchPanel
+        criteriaName="documentSearchCriteria"
+        resultsName="documentList"
+        search="return documentSearchCriteria.performSearch(true)"
+        searchCriteria="var c = new DocumentSearchCriteria(); c.IncludeObsoletes = false; c.Account = account; return c;"
+        searchOnRefresh="true"
+        searchResultsType="DocumentQuery">
+        <PanelRef
+          def="DocumentSearchDV(documentSearchCriteria)"/>
+        <PanelRef
+          def="DocumentsLV(documentList)">
+          <Toolbar>
+            <ToolbarDivider/>
+          </Toolbar>
+        </PanelRef>
+      </SearchPanel>
+    </Screen>
+  </Page>
+</PCF>

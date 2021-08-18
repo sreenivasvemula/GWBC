@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PCF
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:noNamespaceSchemaLocation="../schema/pcf.xsd">
+  <Forward
+    id="FirstPage">
+    <LocationEntryPoint
+      signature="FirstPage()"/>
+    <Variable
+      initialValue="entity.User.util.CurrentUser"
+      name="user"
+      recalculateOnRefresh="true"/>
+    <!-- First try to determine the correct location based on startup page. -->
+    <ForwardCondition
+      action="Admin.go()"
+      condition="user.UserSettings.StartupPage == &quot;Admin&quot;"/>
+    <ForwardCondition
+      action="DesktopGroup.go()"
+      condition="User.UserSettings.StartupPage == &quot;DesktopGroup&quot;"/>
+    <ForwardCondition
+      action="Accounts.go()"
+      condition="User.UserSettings.StartupPage == &quot;Accounts&quot;"/>
+    <ForwardCondition
+      action="Policies.go()"
+      condition="User.UserSettings.StartupPage == &quot;Policies&quot;"/>
+    <ForwardCondition
+      action="Producers.go()"
+      condition="User.UserSettings.StartupPage == &quot;Producers&quot;"/>
+    <ForwardCondition
+      action="SearchGroup.go()"
+      condition="User.UserSettings.StartupPage == &quot;Search&quot;"/>
+    <ForwardCondition
+      action="Reports.go()"
+      condition="User.UserSettings.StartupPage == &quot;Reports&quot;"/>
+    <!-- Next just go in a default order -->
+    <ForwardCondition
+      action="Admin.go()"/>
+    <ForwardCondition
+      action="DesktopGroup.go()"/>
+    <ForwardCondition
+      action="Accounts.go()"/>
+    <ForwardCondition
+      action="Policies.go()"/>
+    <ForwardCondition
+      action="Producers.go()"/>
+    <ForwardCondition
+      action="Reports.go()"/>
+    <ForwardCondition
+      action="SearchGroup.go()"/>
+    <ForwardCondition
+      action="NoPermissionsPage.go()"/>
+  </Forward>
+</PCF>

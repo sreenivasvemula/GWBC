@@ -1,0 +1,73 @@
+<?xml version="1.0"?>
+<PCF
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:noNamespaceSchemaLocation="../../../../../pcf.xsd">
+  <ListViewPanel
+    alternateEntryStyle="false"
+    id="TransferDetailsLV"
+    mode="producer">
+    <ExposeIterator
+      name="TransferDetailsLV"
+      valueType="entity.FundsTransfer"
+      widget="TransferDetailsLV"/>
+    <Require
+      name="fundsTransferUtil"
+      type="gw.api.web.transaction.FundsTransferUtil"/>
+    <Require
+      name="canEditPage"
+      type="boolean"/>
+    <Variable
+      initialValue="new web.producer.ProducerSearchConverter()"
+      name="producerSearchConverter"/>
+    <RowIterator
+      editable="canEditPage"
+      elementName="singleTransfer"
+      hideCheckBoxesIfReadOnly="true"
+      toCreateAndAdd="createAndAddTransfer()"
+      toRemove="removeRow( singleTransfer )"
+      value="fundsTransferUtil.TransferTargets">
+      <Row
+        highlighted="singleTransfer.OpenApprovalActivity != null">
+        <PickerCell
+          editable="canEditPage"
+          id="TargetProducer"
+          inputConversion="producerSearchConverter.getProducer( VALUE )"
+          label="displaykey.Web.TransferDetailsDV.Producer"
+          pickLocation="ProducerSearchPopup.push()"
+          required="true"
+          value="singleTransfer.TargetProducer">
+          <PostOnChange/>
+        </PickerCell>
+        <MonetaryAmountCell
+          currency="singleTransfer.Currency"
+          editable="canEditPage"
+          formatType="currency"
+          id="Amount"
+          label="displaykey.Web.TransferDetailsDV.TransferAmount"
+          required="true"
+          value="singleTransfer.Amount"/>
+        <TypeKeyCell
+          editable="canEditPage"
+          id="Reason"
+          label="displaykey.Web.TransferDetailsDV.Reason"
+          value="singleTransfer.Reason"/>
+        <Cell
+          bold="true"
+          id="Activity"
+          label="displaykey.Web.TransferDetailsDV.Activity"
+          value="singleTransfer.OpenApprovalActivity != null ? displaykey.Web.TransferDetailsDV.ApprovalRequired : null"
+          visible="not canEditPage"/>
+      </Row>
+    </RowIterator>
+    <Code><![CDATA[function removeRow(transfer : FundsTransfer) {
+  transfer.remove();
+  fundsTransferUtil.removeFromTransfers(transfer);
+}
+
+function createAndAddTransfer() : FundsTransfer {
+  var transfer =  new FundsTransfer(fundsTransferUtil.SourceOwner.Currency, CurrentLocation)
+  fundsTransferUtil.addToTransfers( transfer )
+  return transfer
+}]]></Code>
+  </ListViewPanel>
+</PCF>

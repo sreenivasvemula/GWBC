@@ -1,0 +1,67 @@
+<?xml version="1.0"?>
+<PCF
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:noNamespaceSchemaLocation="../../../../../platform/config/web/schema/pcf.xsd">
+  <Page
+    id="FundsTracking"
+    parent="ServerTools()"
+    title="displaykey.Web.InternalTools.FundsTracking">
+    <Screen
+      id="FundsTrackingScreen">
+      <DetailViewPanel
+        id="FundsTrackingDV">
+        <InputColumn
+          labelWidth="250">
+          <ContentInput
+            label="getInputLabel()">
+            <Link
+              action="toggleFundsTracking()"
+              confirmMessage="getConfirmMessage()"
+              id="FundsTrackingButton"
+              label="getButtonLabel()"
+              styleClass="miniButton"/>
+          </ContentInput>
+        </InputColumn>
+      </DetailViewPanel>
+    </Screen>
+    <Code><![CDATA[uses gw.api.domain.fundstracking.FundsTrackingSwitch
+uses com.guidewire.pl.system.exception.ServerNotInMaintenanceModeException
+uses com.guidewire.pl.web.controller.UserDisplayableException
+
+function getButtonLabel(): String {
+  if (FundsTrackingSwitch.Enabled) {
+    return Displaykey.Web.InternalTools.FundsTracking.Button.Disable
+  } else {
+    return Displaykey.Web.InternalTools.FundsTracking.Button.Enable
+  }
+}
+
+function getInputLabel(): String {
+  if (FundsTrackingSwitch.Enabled) {
+    return DisplayKey.Web.InternalTools.FundsTracking.Label.Enabled
+  } else {
+    return DisplayKey.Web.InternalTools.FundsTracking.Label.Disabled
+  }
+}
+
+function toggleFundsTracking(): void {
+  try {
+    if (FundsTrackingSwitch.Enabled) {
+      FundsTrackingSwitch.disable()
+    } else {
+      FundsTrackingSwitch.enable()
+    }
+  } catch (e: ServerNotInMaintenanceModeException) {
+    throw new UserDisplayableException(DisplayKey.Web.InternalTools.FundsTracking.Error)
+  }
+}
+
+function getConfirmMessage(): String {
+  if (FundsTrackingSwitch.Enabled) {
+    return DisplayKey.Web.InternalTools.FundsTracking.Confirm.Disable
+  } else {
+    return DisplayKey.Web.InternalTools.FundsTracking.Confirm.Enable
+  }
+}]]></Code>
+  </Page>
+</PCF>

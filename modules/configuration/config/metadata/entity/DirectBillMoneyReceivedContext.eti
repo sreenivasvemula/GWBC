@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?><entity xmlns="http://guidewire.com/datamodel" desc="Context for DirectBillMoneyReceived-level transactions." entity="DirectBillMoneyReceivedContext" ignoreForEvents="true" overwrittenInStagingTable="true" platform="false" setterScriptability="hidden" subpackage="accounting.transaction" table="dbmoneyrcvdcontext" type="editable">
+  <implementsEntity name="TransactionContext"/>
+  <implementsEntity name="InCurrencySilo"/>
+  <foreignkey columnName="AccountID" desc="Reference to the Account from which this payment was received." fkentity="Account" getterScriptability="hidden" ignoreforevents="true" name="Account" nullok="false" setterScriptability="hidden"/>
+  <foreignkey columnName="DirectBillMoneyRcvdID" desc="Reference to the DirectBillMoneyReceived payment details that goes with this transaction." fkentity="DirectBillMoneyRcvd" getterScriptability="hidden" ignoreforevents="true" name="DirectBillMoneyRcvd" nullok="true" setterScriptability="hidden"/>
+  <foreignkey columnName="TransactionID" desc="Reference to DirectBillMoneyReceivedTxn" fkentity="DirectBillMoneyReceivedTxn" getterScriptability="doesNotExist" name="Transaction" nullok="false" setterScriptability="doesNotExist"/>
+</entity>

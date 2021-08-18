@@ -1,0 +1,40 @@
+<?xml version="1.0"?>
+<entity
+  xmlns="http://guidewire.com/datamodel"
+  entity="InvoiceItemOrdering"
+  loadable="false"
+  table="invoiceitemordering"
+  type="versionable">
+  <implementsEntity
+    name="NotInCurrencySilo"/>
+  <foreignkey
+    columnName="allocationplanID"
+    desc="The containing AllocationPlan for this distribution target invoice item filter."
+    fkentity="PaymentAllocationPlan"
+    name="ContainingAllocationPlan"
+    nullok="false"
+    setterScriptability="doesNotExist"/>
+  <typekey
+    desc="The invoice item ordering type"
+    name="InvoiceItemOrderingType"
+    nullok="false"
+    setterScriptability="doesNotExist"
+    typelist="InvoiceItemOrderingType"/>
+  <column
+    desc="The priority of this ordering within its parent payment allocation plan. Lower number values have higher priority."
+    name="Priority"
+    nullok="false"
+    setterScriptability="doesNotExist"
+    type="nonnegativeinteger"/>
+  <index
+    desc="Enforces the InvoiceItemOrderingType uniqueness constraint for InvoiceItemOrderings belonging to a Payment Allocation Plan."
+    name="AllocPlanOrdUniq"
+    unique="true">
+    <indexcol
+      keyposition="1"
+      name="allocationplanID"/>
+    <indexcol
+      keyposition="2"
+      name="InvoiceItemOrderingType"/>
+  </index>
+</entity>

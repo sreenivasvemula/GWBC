@@ -1,0 +1,27 @@
+<?xml version="1.0"?>
+<!-- ====================================================================  AccountTransfer  ==================================================================== -->
+<nonPersistentEntity
+  xmlns="http://guidewire.com/datamodel"
+  entity="AccountTransfer"
+  desc="Holds information about a transfer of policies between accounts"
+  subpackage="account">
+  <implementsEntity
+    name="NotInCurrencySilo"/>
+  <foreignkey
+    name="FromAccount"
+    desc="Account from which policies are being transferred"
+    columnName="FromAccountID"
+    fkentity="Account"
+    nullok="false"/>
+  <foreignkey
+    name="ToAccount"
+    desc="Account to which policies are being transferred"
+    columnName="ToAccountID"
+    fkentity="Account"
+    nullok="false"/>
+  <array
+    name="PolicyPeriods"
+    desc="The policy periods to transfer"
+    arrayentity="AccountTransferPolicyPeriod"
+    setterScriptability="doesNotExist"/>
+</nonPersistentEntity>

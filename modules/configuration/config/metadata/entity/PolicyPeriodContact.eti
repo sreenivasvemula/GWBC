@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?><entity xmlns="http://guidewire.com/datamodel" desc="Join Entity between a Contact and a policy period" displayName="PolicyPeriod Contact" entity="PolicyPeriodContact" subpackage="account" table="policyperiodcontact" type="retireable">
+  <implementsEntity name="NotInCurrencySilo"/>
+  <foreignkey columnName="PolicyPeriodID" desc="The related policy period" fkentity="PolicyPeriod" importableagainstexistingobject="false" name="PolicyPeriod" nullok="false"/>
+  <foreignkey columnName="ContactID" desc="The related contact" fkentity="Contact" importableagainstexistingobject="false" name="Contact" nullok="false"/>
+  <foreignkey columnName="PrimaryPolicyPeriodID" desc="The policy period for which this is the primary insured. Referenced by onetoone" fkentity="PolicyPeriod" importableagainstexistingobject="false" name="PrimaryPolicyPeriod" nullok="true"/>
+  <array arrayentity="PolPeriodContactRole" desc="The roles for this policy period contact" name="Roles" owner="true"/>
+  <array arrayentity="PlcyCorrespondenceEntry" desc="Types of correspondence that this PolicyPeriodContact should receive" exportable="false" name="CorrespondenceTypes" owner="true">
+    <link-association>
+      <typelist-map field="PlcyCorrespondenceType"/>
+    </link-association>
+  </array>
+</entity>

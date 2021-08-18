@@ -1,0 +1,47 @@
+<?xml version="1.0"?>
+<PCF
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:noNamespaceSchemaLocation="../../../../../pcf.xsd">
+  <DetailViewPanel
+    id="ContactSearchDV">
+    <Require
+      name="searchCriteria"
+      type="ContactSearchCriteria"/>
+    <Variable
+      initialValue="new gw.api.address.ContactSearchAddressOwner(searchCriteria)"
+      name="addressOwner"
+      recalculateOnRefresh="true"
+      type="gw.api.address.AddressOwner"/>
+    <InputColumn>
+      <Label
+        id="ContactCriteria"
+        label="displaykey.Web.AddressCriteriaSearchDV.SearchCriteria"/>
+      <RangeInput
+        editable="true"
+        id="ContactType"
+        label="displaykey.Web.ContactDetail.Type"
+        required="true"
+        value="searchCriteria.ContactSubtype"
+        valueRange="{typekey.Contact.TC_COMPANY, typekey.Contact.TC_PERSON}">
+        <PostOnChange/>
+      </RangeInput>
+      <InputSetRef
+        def="NameInputSet(new gw.api.name.SearchNameOwner(searchCriteria))"
+        mode="(searchCriteria.ContactSubtype == typekey.Contact.TC_PERSON) ? &quot;Person&quot; : &quot;Contact&quot;"/>
+      <TextInput
+        editable="true"
+        id="TaxID"
+        label="searchCriteria.ContactSubtype == typekey.Contact.TC_PERSON ? displaykey.Web.ContactDetail.Name.TaxID.SSN : displaykey.Web.ContactDetail.Name.TaxID.EIN"
+        value="searchCriteria.TaxID"/>
+      <InputSetRef
+        def="GlobalAddressInputSet(addressOwner)"
+        id="globalAddressContainer"
+        mode="address.AddressCountrySettings.getSettings(addressOwner.SelectedCountry).PCFMode"
+        widgets="globalAddressContainer"/>
+    </InputColumn>
+    <InputFooterSection>
+      <InputSetRef
+        def="SearchAndResetInputSet()"/>
+    </InputFooterSection>
+  </DetailViewPanel>
+</PCF>

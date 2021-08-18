@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?><entity xmlns="http://guidewire.com/datamodel" abstract="true" entity="ProducerPayment" exportable="false" final="false" platform="false" setterScriptability="hidden" subpackage="producer" table="ProducerPayment" type="retireable">
+  <implementsEntity name="Validatable"/>
+  <implementsEntity name="InCurrencySilo"/>
+  <typekey default="sent" name="Status" nullok="false" typelist="ProducerPaymentStatus"/>
+  <column desc="The date on which the payment was reversed, if any. Null if the payment has not been reversed." exportable="false" name="ReversalDate" nullok="true" setterScriptability="hidden" type="datetime"/>
+  <typekey desc="Reason why the payment has been reversed, if any. Null indicates that the payment has not been reversed." exportable="false" name="ReversalReason" nullok="true" setterScriptability="hidden" typelist="PaymentReversalReason"/>
+  <foreignkey columnName="ProducerID" fkentity="Producer" importableagainstexistingobject="true" name="Producer" nullok="false"/>
+  <foreignkey columnName="ReportingGroupID" desc="The reporting group assigned, if any" exportasid="true" fkentity="ReportingGroup" name="ReportingGroup" nullok="true"/>
+  <onetoone desc="The actual payment issued on for this producer payment" fkentity="OutgoingProducerPmnt" name="OutgoingPayment" nullok="true" setterScriptability="doesNotExist"/>
+  <array
+    name="CommissionPayment"
+    arrayentity="CommissionPayment"
+    desc="The actual payments issued on for this producer payment"
+    owner="false"
+    cascadeDelete="false"
+    setterScriptability="doesNotExist"/>
+</entity>

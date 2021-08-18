@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Entity name="AgencyDisbursementPaid">
+  <Columns>
+    <Column beanPath="Transaction.Subtype" name="Subtype"/>
+    <Column beanPath="Transaction.ReversedTransaction.TransactionNumber" name="ReversedTransactionNumber"/>
+    <Column beanPath="Transaction.Amount" name="Amount"/>
+    <DisplayNameColumn beanPath="AgencyDisbursementPaid.AgencyDisbPaidContext.Producer" name="Producer"/>
+  </Columns>
+  <DisplayName>
+    gw.api.domain.accounting.ReversibleUtil.formatReversibleDisplayName(
+      gw.api.util.TypeKeyUtil.toDisplayName(Subtype), ReversedTransactionNumber)
+  </DisplayName>
+  <DisplayName type="Short">
+    gw.api.domain.accounting.ReversibleUtil.formatReversibleDisplayName(
+      displaykey.DisplayName.AgencyDisbursementPaid.Short, ReversedTransactionNumber)
+  </DisplayName>
+  <DisplayName type="Long">
+    gw.api.domain.accounting.ReversibleUtil.formatReversibleDisplayName(
+      displaykey.DisplayName.AgencyDisbursementPaid.Long(gw.api.financials.MonetaryAmounts.render(Amount), Producer),
+      ReversedTransactionNumber)
+  </DisplayName>
+</Entity>

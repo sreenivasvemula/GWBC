@@ -1,0 +1,106 @@
+<?xml version="1.0"?>
+<entity
+  xmlns="http://guidewire.com/datamodel"
+  entity="CommissionSubPlan"
+  type="retireable"
+  desc="Represents a sub-plan of a commission plan. A sub-plan consists of a set of restrictions and commission parameters. When calculating commission for a policy, the first sub-plan whose restrictions are satisfied by the policy in question is used to determine commission."
+  abstract="true"
+  admin="true"
+  final="false"
+  subpackage="commission"
+  loadable="false"
+  platform="false"
+  table="commissionsubplan"
+  setterScriptability="hidden">
+  <implementsEntity
+    name="InCurrencySilo"/>
+  <array
+    name="CommissionableChargeItems"
+    desc="The charges for which commission may be calculated."
+    arrayentity="CommissionableChargeItem"
+    owner="true"/>
+  <foreignkey
+    name="CommissionPlan"
+    desc="FK to container."
+    columnName="CommissionPlanID"
+    fkentity="CommissionPlan"
+    nullok="false"
+    setterScriptability="doesNotExist"/>
+  <column
+    name="Name"
+    type="shorttext"
+    desc="The name of the sub-plan"
+    nullok="false">
+    <localization
+      nullok="false" tableName="cmsnsp_name_l10n"/>
+  </column>
+  <array
+    name="Incentives"
+    desc="Incentives for the sub-plan"
+    arrayentity="Incentive"
+    owner="true"/>
+  <typekey
+    name="PayableCriteria"
+    typelist="PayableCriteria"
+    desc="The criteria used for determining when commission becomes payable."
+    nullok="false"/>
+  <array
+    name="Rates"
+    desc="The table of rates at which different policy roles are commissioned."
+    arrayentity="CommissionSubPlanRate"
+    exportable="false"
+    getterScriptability="hidden"
+    owner="true"
+    setterScriptability="hidden">
+    <link-association>
+      <typelist-map
+        field="Role"/>
+    </link-association>
+  </array>
+  <array
+    name="SpecialChargePatternRates"
+    desc="The rates at which special charge patterns are commissioned."
+    arrayentity="CommissionSubPlanChargePatternRate"
+    exportable="false"
+    owner="true"/>
+  <column
+    name="SubPlanOrder"
+    type="integer"
+    desc="The order of this sub-plan in the containing commission plan's sub-plans list. When determining which sub-plan to use, sub-plans will be scanned in ascending order by this value."
+    getterScriptability="doesNotExist"
+    nullok="false"
+    setterScriptability="doesNotExist"/>
+  <column
+    name="SuspendForDelinquency"
+    type="bit"
+    desc="Determines whether or not to suspend payability if the policy is delinquent"
+    nullok="false"/>
+  <index
+    desc="Legacy"
+    name="commsubplanorder"
+    unique="true">
+    <indexcol
+      name="CommissionPlanID"
+      keyposition="1"/>
+    <indexcol
+      name="SubPlanOrder"
+      keyposition="2"/>
+    <indexcol
+      name="Retired"
+      keyposition="3"/>
+  </index>
+  <index
+    desc="Legacy"
+    name="commsubplanname"
+    unique="true">
+    <indexcol
+      name="CommissionPlanID"
+      keyposition="1"/>
+    <indexcol
+      name="Name"
+      keyposition="2"/>
+    <indexcol
+      name="Retired"
+      keyposition="3"/>
+  </index>
+</entity>

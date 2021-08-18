@@ -1,0 +1,47 @@
+<?xml version="1.0"?>
+<nonPersistentEntity
+  xmlns="http://guidewire.com/datamodel"
+  desc="Search criteria for transactions"
+  entity="TransactionSearchCrit"
+  final="false"
+  subpackage="search">
+  <implementsEntity
+    name="NotInCurrencySilo"/>
+  <column
+    desc="The number for this transaction"
+    name="TransactionNumber"
+    nullok="true"
+    type="shorttext"/>
+  <typekey
+    desc="The transaction type"
+    name="TransactionType"
+    nullok="true"
+    typelist="Transaction"/>
+  <monetaryamount
+    amountColumnName="MinAmount"
+    desc="The minimum amount to search for"
+    name="MinAmount"
+    nullok="true"
+    scaleToCurrency="true"/>
+  <monetaryamount
+    amountColumnName="MaxAmount"
+    desc="The maximum amount to search for"
+    name="MaxAmount"
+    nullok="true"
+    scaleToCurrency="true"/>
+  <column
+    desc="Earliest transaction date to search"
+    name="EarliestDate"
+    nullok="true"
+    type="datetime"/>
+  <column
+    desc="Latest transaction date to search"
+    name="LatestDate"
+    nullok="true"
+    type="datetime"/>
+  <typekey
+    desc="The currency unit to restrict the search to"
+    name="Currency"
+    nullok="true"
+    typelist="Currency"/>
+</nonPersistentEntity>

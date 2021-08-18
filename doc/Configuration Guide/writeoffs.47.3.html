@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xml:lang="en" lang="en" xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+    <meta http-equiv="Content-Style-Type" content="text/css" />
+    <!-- MOTW-DISABLED saved from url=(0014)about:internet -->
+    <title>Producer Write-Offs</title>
+    <link rel="StyleSheet" href="css/writeoffs.css" type="text/css" media="all" />
+    <link rel="StyleSheet" href="css/webworks.css" type="text/css" media="all" />
+    <link rel="StyleSheet" href="css/css-guidewire-extra.css" type="text/css" media="all" />
+    <script type="text/javascript" language="JavaScript1.2" src="wwhdata/common/context.js"></script>
+    <script type="text/javascript" language="JavaScript1.2" src="wwhdata/common/towwhdir.js"></script>
+    <script type="text/javascript" language="JavaScript1.2" src="wwhdata/common/wwhpagef.js"></script>
+    <script type="text/javascript" language="JavaScript1.2">
+      <!--
+        var  WebWorksRootPath = "";
+      // -->
+    </script>
+    <script type="text/javascript" language="JavaScript1.2">
+      <!--
+        // Set reference to top level help frame
+        //
+        var  WWHFrame = WWHGetWWHFrame("", true);
+      // -->
+    </script>
+    <script type="text/javascript" language="JavaScript1.2" src="scripts/expand.js"></script>
+    <!-- THE FOLLOWING IS A GUIDEWIRE STYLE DEFINITION FOR THE LINK TO THIS FEATURE -->
+    <link rel="StyleSheet" href="css/css-guidewire-extra.css" type="text/css" media="all" />
+    <!-- THE FOLLOWING IS A GUIDEWIRE GSCRIPT FUNCTION FOR THE LINK TO THIS FEATURE -->
+    <script type="text/javascript">
+function guidewire_selectall()
+{
+var text_val=eval("document.linktothisurlform.urlfield");
+text_val.focus();
+text_val.select();
+}
+</script>
+  </head>
+  <body onLoad="WWHUpdate();" onUnload="WWHUnload();" onKeyDown="WWHHandleKeyDown((document.all||document.getElementById||document.layers)?event:null);" onKeyPress="WWHHandleKeyPress((document.all||document.getElementById||document.layers)?event:null);" onKeyUp="WWHHandleKeyUp((document.all||document.getElementById||document.layers)?event:null);">
+    <!-- THE FOLLOWING IS A GUIDEWIRE DIV FOR THE 'LINK TO THIS' FEATURE -->
+    <div id="linkToThisPage" class="popup" style="display: none;">
+      <div class="popupTitle">Link Directly to This Page 
+           <a href="#" onclick="var thePopup = getElementById('linkToThisPage');thePopup.style.display='none';return false;"><img class="popupClosebox" src="wwhelp/wwhimpl/common/images/close.gif" /></a></div>
+      <div style="padding:6px;">
+        <div class="popupText" id="linkToThisPageBookmark">An error has occurred if you see this messsage.</div>
+        <form name="linktothisurlform" method="post" action="" style="width:275px;margin:0px">
+          <input type="text" class="popupURLText" id="linkToThisPageURL" name="urlfield" rows="1" cols="55" onClick="guidewire_selectall();" onFocus="guidewire_selectall();"></input>
+        </form>
+      </div>
+    </div>
+    <br />
+    <div class="WebWorks_Breadcrumbs" style="text-align: left;">
+      <span>BillingCenter Configuration Guide</span> : 
+    <span class="WebWorks_Breadcrumbs" style="text-align: left;"><a class="WebWorks_Breadcrumb_Link" href="p-BillingCenter.html#1215760">Guidewire BillingCenter Configuration</a> : <a class="WebWorks_Breadcrumb_Link" href="writeoffs.47.1.html#1215760">Configuring Write-Offs</a> : Producer Write-Offs</span></div>
+    <hr align="left" />
+    <blockquote>
+      <h3 class="H1_-_Heading_1"><a name="1215760">Producer Write-Offs</a></h3>
+      <div class="B_-_Body"><a name="1247470">The producer </a><span class="ui_-_UI_element">Write-Offs</span> screen lists a producer’s write-offs. For details, see <a href="javascript:WWHClickedPopup('app', 'producer_writeoffs.43.1.html#4600510', '');" title="Producer Write-offs">“Producer Write-offs” in the </a><span class="bt_-_book_title"><a href="javascript:WWHClickedPopup('app', 'producer_writeoffs.43.1.html#4600510', '');" title="Producer Write-offs">Application Guide</a></span>.</div>
+      <h4 class="H2_-_Heading_2"><a name="1246032">Defining a New Creation Date Filter</a></h4>
+      <div class="B_-_Body"><a name="1247433">The write-offs listed in the producer </a><span class="ui_-_UI_element">Write-offs</span> screen can be filtered based on the write-off’s creation date. The base configuration provides age options for 30, 60, and other numbers of days. Additional age options can be created by customizing the <span class="cv_-_computer_voice">ProducerWriteOffAgeRestriction</span> class.</div>
+      <div class="B_-_Body"><a name="1246323">To create an age option, define a new static variable in the </a><span class="cv_-_computer_voice">ProducerWriteOffAgeRestriction</span> class. A portion of the class’s implementation is shown below. The new variable <span class="cv_-_computer_voice">LAST_7_DAYS</span> defines a seven-day age option.</div>
+      <PRE class="CF_-_Code_First_Line"><a name="1222696">class ProducerWriteOffAgeRestriction {</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="1246709">&nbsp;</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="1246714">&nbsp;&nbsp;public static var LAST_7_DAYS : ProducerWriteOffAgeRestriction =</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="1246822">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;new ProducerWriteOffAgeRestriction(7)</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="1246877">&nbsp;&nbsp;public static var LAST_30_DAYS : ProducerWriteOFfAgeRestriction =</a></PRE>
+      <PRE class="CL_-_Code_Last_Line"><a name="1246957">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;new ProducerWriteOffAgeRestriction(30)</a></PRE>
+      <div class="B_-_Body"><a name="1247107">After defining the variable, add the variable to the static </a><span class="cv_-_computer_voice">ALL_OPTIONS</span> list.</div>
+      <div class="CS_-_Code_Single_Line"><a name="1247194">public static var ALL_OPTIONS : List&lt;ProducerWriteOffAgeRestriction&gt; = {LAST_7_DAYS, LAST_30_DAYS, ...}</a></div>
+      <div class="B_-_Body"><a name="1247309">Build and deploy the application. The producer </a><span class="ui_-_UI_element">Write-Offs</span> screen will include the new seven-day age option.</div>
+      <script type="text/javascript" language="JavaScript1.2">
+        <!--
+          // Clear related topics
+          //
+          WWHClearRelatedTopics();
+
+          document.writeln(WWHRelatedTopicsInlineHTML());
+        // -->
+      </script>
+    </blockquote>
+    <script type="text/javascript" language="JavaScript1.2">
+      <!--
+        document.write(WWHRelatedTopicsDivTag() + WWHPopupDivTag() + WWHALinksDivTag());
+      // -->
+    </script>
+  </body>
+</html>

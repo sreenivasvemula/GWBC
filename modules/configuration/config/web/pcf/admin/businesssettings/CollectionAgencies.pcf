@@ -1,0 +1,46 @@
+<?xml version="1.0"?>
+<PCF
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:noNamespaceSchemaLocation="../../../../../../pcf.xsd">
+  <Page
+    canVisit="perm.System.admintabview and perm.System.colagencyview"
+    id="CollectionAgencies"
+    title="displaykey.Web.CollectionAgencies.Title">
+    <Screen
+      id="CollectionAgenciesScreen">
+      <PanelRef
+        id="CollectionAgenciesPanel">
+        <Toolbar
+          id="CollectionAgenciesToolbar">
+          <CheckedValuesToolbarButton
+            allCheckedRowsAction="web.collection.CollectionAgencyUtil.deleteAgencies(CheckedValues)"
+            available="perm.System.colagencydelete"
+            confirmMessage="displaykey.Web.CollectionAgencies.DeleteAgencies.Confirm"
+            flags="all DeleteableAgency"
+            id="removeCollectionAgenciesButton"
+            iterator="CollectionAgenciesLV"
+            label="displaykey.Web.CollectionAgencies.DeleteAgencies"/>
+        </Toolbar>
+        <ListViewPanel
+          id="CollectionAgenciesLV">
+          <RowIterator
+            editable="false"
+            elementName="collectionAgency"
+            hasCheckBoxes="true"
+            value="gw.api.database.Query.make(entity.CollectionAgency).compare(&quot;Name&quot;, NotEquals, null).select()">
+            <ToolbarFlag
+              condition="!collectionAgency.isAssigned()"
+              name="DeleteableAgency"/>
+            <Row>
+              <Cell
+                action="CollectionAgencyDetail.go(collectionAgency)"
+                id="Name"
+                label="displaykey.Web.CollectionAgenciesLV.Name"
+                value="collectionAgency.Name"/>
+            </Row>
+          </RowIterator>
+        </ListViewPanel>
+      </PanelRef>
+    </Screen>
+  </Page>
+</PCF>

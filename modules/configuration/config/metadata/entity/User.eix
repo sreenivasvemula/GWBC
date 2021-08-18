@@ -1,0 +1,23 @@
+<?xml version="1.0"?>
+<internalExtension
+  xmlns="http://guidewire.com/datamodel"
+  entityName="User">
+  <description><![CDATA[The User entity]]></description>
+  <implementsEntity
+    name="NotInCurrencySilo"/>
+  <implementsEntity
+    name="HistoryEventContainer"/>
+  <foreignkey
+    columnName="AuthorityProfileID"
+    desc="Authority limit profile for this user"
+    fkentity="AuthorityLimitProfile"
+    name="AuthorityProfile"
+    nullok="true"/>
+  <array
+    arrayentity="UserHistory"
+    arrayfield="HistoryUser"
+    desc="History events for this User"
+    exportable="false"
+    name="History"/>
+  <events/>
+</internalExtension>

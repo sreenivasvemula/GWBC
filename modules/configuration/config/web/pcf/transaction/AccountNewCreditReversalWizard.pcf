@@ -1,0 +1,33 @@
+<?xml version="1.0"?>
+<PCF
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:noNamespaceSchemaLocation="../../../../../pcf.xsd">
+  <Wizard
+    beforeCommit="creditReversal.reverse()"
+    canVisit="perm.Transaction.revtxn"
+    cancelWarning="displaykey.Web.CreditReversalWizard.CancelConfirmation"
+    countsAsWork="false"
+    id="AccountNewCreditReversalWizard">
+    <LocationEntryPoint
+      signature="AccountNewCreditReversalWizard(account : Account)"/>
+    <Variable
+      name="account"
+      type="Account"/>
+    <Variable
+      initialValue="new CreditReversal()"
+      name="creditReversal"
+      type="CreditReversal"/>
+    <WizardStep
+      allowNext="creditReversal.Credit != null"
+      id="Step1"
+      label="displaykey.Web.CreditReversalWizard.CreditSearch.Label"
+      onExit="creditReversal.initiateApprovalActivityIfUserLacksAuthority()"
+      screen="CreditReversalCreditSearchScreen(account, creditReversal)"
+      title="displaykey.Web.CreditReversalWizard.CreditSearch.Title"/>
+    <WizardStep
+      id="Step2"
+      label="displaykey.Web.CreditReversalWizard.Confirmation.Label"
+      screen="CreditReversalConfirmationScreen(account, creditReversal)"
+      title="displaykey.Web.CreditReversalWizard.Confirmation.Title"/>
+  </Wizard>
+</PCF>

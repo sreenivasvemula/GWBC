@@ -1,0 +1,126 @@
+<?xml version="1.0"?>
+<PCF
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:noNamespaceSchemaLocation="../../../../../pcf.xsd">
+  <ListViewPanel
+    id="AgencyBillCycleEventsLV"
+    visible="process != null">
+    <Require
+      name="statementInvoice"
+      type="StatementInvoice"/>
+    <Variable
+      initialValue="statementInvoice.AgencyCycleProcess"
+      name="process"
+      recalculateOnRefresh="true"
+      type="AgencyCycleProcess"/>
+    <Row
+      renderAsSmartHeader="true">
+      <Cell
+        id="EventNameHeader"
+        value="displaykey.Web.ProducerAgencyBillCycles.CycleEvents.Header.EventName"/>
+      <Cell
+        id="EventDateHeader"
+        value="displaykey.Web.ProducerAgencyBillCycles.CycleEvents.Header.EventDate"/>
+      <Cell
+        id="TriggerStatusHeader"
+        value="displaykey.Web.ProducerAgencyBillCycles.CycleEvents.Header.TriggerStatus"/>
+    </Row>
+    <Row>
+      <Cell
+        id="CycleStartEventName"
+        value="displaykey.Web.ProducerAgencyBillCycles.CycleEvents.EventName.CycleStart"/>
+      <DateCell
+        id="CycleStartEventDate"
+        value="statementInvoice.EventDate"/>
+      <TypeKeyCell
+        id="CycleStartTriggerStatus"
+        value="isExecuted(statementInvoice.EventDate)"/>
+    </Row>
+    <Row
+      visible="process.SendStatementStatus != AgencyBillEventStatus.TC_NOTSCHEDULED">
+      <Cell
+        id="SendStatementEventName"
+        value="displaykey.Web.ProducerAgencyBillCycles.CycleEvents.EventName.StatementSent"/>
+      <DateCell
+        id="SendStatementEventDate"
+        value="process.SendStatementDate"/>
+      <TypeKeyCell
+        id="SendStatementTriggerStatus"
+        value="process.SendStatementStatus"/>
+    </Row>
+    <Row
+      visible="process.SendPromiseReminderStatus != AgencyBillEventStatus.TC_NOTSCHEDULED">
+      <Cell
+        id="SendPromiseReminderEventName"
+        value="displaykey.Web.ProducerAgencyBillCycles.CycleEvents.EventName.PromiseReminder"/>
+      <DateCell
+        id="SendPromiseReminderEventDate"
+        value="process.SendPromiseReminderDate"/>
+      <TypeKeyCell
+        id="SendPromiseReminderTriggerStatus"
+        value="process.SendPromiseReminderStatus"/>
+    </Row>
+    <Row
+      visible="process.GenPromiseExceptionStatus != AgencyBillEventStatus.TC_NOTSCHEDULED">
+      <Cell
+        id="GenPromiseExceptionEventName"
+        value="displaykey.Web.ProducerAgencyBillCycles.CycleEvents.EventName.PromiseException"/>
+      <DateCell
+        id="GenPromiseExceptionEventDate"
+        value="process.GenPromiseExceptionDate"/>
+      <TypeKeyCell
+        id="GenPromiseExceptionTriggerStatus"
+        value="process.GenPromiseExceptionStatus"/>
+    </Row>
+    <Row>
+      <Cell
+        id="DueEventName"
+        value="displaykey.Web.ProducerAgencyBillCycles.CycleEvents.EventName.PaymentDue"/>
+      <DateCell
+        id="DueEventDate"
+        value="statementInvoice.DUEDATE"/>
+      <TypeKeyCell
+        id="DueTriggerStatus"
+        value="isExecuted(statementInvoice.DUEDATE)"/>
+    </Row>
+    <Row
+      visible="process.GenPastDueExceptionStatus != AgencyBillEventStatus.TC_NOTSCHEDULED">
+      <Cell
+        id="GenPastDueExceptionEventName"
+        value="displaykey.Web.ProducerAgencyBillCycles.CycleEvents.EventName.PastDueException"/>
+      <DateCell
+        id="GenPastDueExceptionEventDate"
+        value="process.GenPastDueExceptionDate"/>
+      <TypeKeyCell
+        id="StatementSentTriggerStatus"
+        value="process.GenPastDueExceptionStatus"/>
+    </Row>
+    <Row
+      visible="process.SendDunning1Status != AgencyBillEventStatus.TC_NOTSCHEDULED">
+      <Cell
+        id="SendDunning1EventName"
+        value="displaykey.Web.ProducerAgencyBillCycles.CycleEvents.EventName.DunningLetterOne"/>
+      <DateCell
+        id="SendDunning1EventDate"
+        value="process.SendDunning1Date"/>
+      <TypeKeyCell
+        id="SendDunning1TriggerStatus"
+        value="process.SendDunning1Status"/>
+    </Row>
+    <Row
+      visible="process.SendDunning2Status != AgencyBillEventStatus.TC_NOTSCHEDULED">
+      <Cell
+        id="SendDunning2EventName"
+        value="displaykey.Web.ProducerAgencyBillCycles.CycleEvents.EventName.DunningLetterTwo"/>
+      <DateCell
+        id="SendDunning2EventDate"
+        value="process.SendDunning2Date"/>
+      <TypeKeyCell
+        id="SendDunning2TriggerStatus"
+        value="process.SendDunning2Status"/>
+    </Row>
+    <Code><![CDATA[function isExecuted(executionDate : DateTime) : AgencyBillEventStatus {
+  return DateTime.CurrentDate.before(executionDate) ? AgencyBillEventStatus.TC_FUTURE : AgencyBillEventStatus.TC_EXECUTED
+}]]></Code>
+  </ListViewPanel>
+</PCF>

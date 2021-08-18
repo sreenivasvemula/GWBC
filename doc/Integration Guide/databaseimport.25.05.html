@@ -1,0 +1,635 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xml:lang="en" lang="en" xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+    <meta http-equiv="Content-Style-Type" content="text/css" />
+    <!-- MOTW-DISABLED saved from url=(0014)about:internet -->
+    <title>Detailed Steps in a Typical Database Staging Table Import</title>
+    <link rel="StyleSheet" href="css/databaseimport.css" type="text/css" media="all" />
+    <link rel="StyleSheet" href="css/webworks.css" type="text/css" media="all" />
+    <link rel="StyleSheet" href="css/css-guidewire-extra.css" type="text/css" media="all" />
+    <script type="text/javascript" language="JavaScript1.2" src="wwhdata/common/context.js"></script>
+    <script type="text/javascript" language="JavaScript1.2" src="wwhdata/common/towwhdir.js"></script>
+    <script type="text/javascript" language="JavaScript1.2" src="wwhdata/common/wwhpagef.js"></script>
+    <script type="text/javascript" language="JavaScript1.2">
+      <!--
+        var  WebWorksRootPath = "";
+      // -->
+    </script>
+    <script type="text/javascript" language="JavaScript1.2">
+      <!--
+        // Set reference to top level help frame
+        //
+        var  WWHFrame = WWHGetWWHFrame("", true);
+      // -->
+    </script>
+    <script type="text/javascript" language="JavaScript1.2" src="scripts/expand.js"></script>
+    <!-- THE FOLLOWING IS A GUIDEWIRE STYLE DEFINITION FOR THE LINK TO THIS FEATURE -->
+    <link rel="StyleSheet" href="css/css-guidewire-extra.css" type="text/css" media="all" />
+    <!-- THE FOLLOWING IS A GUIDEWIRE GSCRIPT FUNCTION FOR THE LINK TO THIS FEATURE -->
+    <script type="text/javascript">
+function guidewire_selectall()
+{
+var text_val=eval("document.linktothisurlform.urlfield");
+text_val.focus();
+text_val.select();
+}
+</script>
+  </head>
+  <body onLoad="WWHUpdate();" onUnload="WWHUnload();" onKeyDown="WWHHandleKeyDown((document.all||document.getElementById||document.layers)?event:null);" onKeyPress="WWHHandleKeyPress((document.all||document.getElementById||document.layers)?event:null);" onKeyUp="WWHHandleKeyUp((document.all||document.getElementById||document.layers)?event:null);">
+    <!-- THE FOLLOWING IS A GUIDEWIRE DIV FOR THE 'LINK TO THIS' FEATURE -->
+    <div id="linkToThisPage" class="popup" style="display: none;">
+      <div class="popupTitle">Link Directly to This Page 
+           <a href="#" onclick="var thePopup = getElementById('linkToThisPage');thePopup.style.display='none';return false;"><img class="popupClosebox" src="wwhelp/wwhimpl/common/images/close.gif" /></a></div>
+      <div style="padding:6px;">
+        <div class="popupText" id="linkToThisPageBookmark">An error has occurred if you see this messsage.</div>
+        <form name="linktothisurlform" method="post" action="" style="width:275px;margin:0px">
+          <input type="text" class="popupURLText" id="linkToThisPageURL" name="urlfield" rows="1" cols="55" onClick="guidewire_selectall();" onFocus="guidewire_selectall();"></input>
+        </form>
+      </div>
+    </div>
+    <br />
+    <div class="WebWorks_Breadcrumbs" style="text-align: left;">
+      <span>BillingCenter Integration Guide</span> : 
+    <span class="WebWorks_Breadcrumbs" style="text-align: left;"><a class="WebWorks_Breadcrumb_Link" href="p-importingbillingandaccounts.fm.html#1798251">Importing Billing and Account Data</a> : <a class="WebWorks_Breadcrumb_Link" href="databaseimport.25.01.html#1798251">Importing from Database Staging Tables</a> : <a class="WebWorks_Breadcrumb_Link" href="databaseimport.25.03.html#1798251">Overview of a Typical Database Staging Table Import</a> : Detailed Steps in a Typical Database Staging Table Import</span></div>
+    <hr align="left" />
+    <blockquote>
+      <h4 class="H2B_-_Heading_2_Break"><a name="1798251">Detailed Steps in a Typical Database Staging Table Import</a></h4>
+      <div class="B_-_Body"><a name="2186024">Migrating data from a source or legacy system to BillingCenter typically happens in the following steps:</a></div>
+      <div class="LS_-_List_Start_outer" style="margin-left: 57pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="LS_-_List_Start_inner" style="width: 15pt; white-space: nowrap">
+                <span class="ri_-_run_in_header">	1.	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="LS_-_List_Start_inner"><span class="ri_-_run_in_header"><a name="1921350">If you changed the data model, run the server to perform upgrades</a></span> – The staging table import tools require that legacy data be converted to the same format as the server data.</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="NI_-_Note_Important">
+        <span class="n_-_note">IMPORTANT   </span><a name="2233439">If you add encryption or change encryption settings with data in operational tables, perform the upgrade successfully before running staging table import. For more information, see </a><a href="javascript:WWHClickedPopup('integration', 'encryption.17.4.html#2428243', '');" title="Encryption Features for Staging Tables">“Encryption Features for Staging Tables”</a>.</div>
+      <div class="LI_-_List_Item_outer" style="margin-left: 57pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="LI_-_List_Item_inner" style="width: 15pt; white-space: nowrap">
+                <span class="ri_-_run_in_header">	2.	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="LI_-_List_Item_inner"><span class="ri_-_run_in_header"><a name="2204856">Set the server to the maintenance run level</a></span> – Set each BillingCenter server to the maintenance run level by using the <span class="cv_-_computer_voice">system_tools</span> command line tool or the web service <span class="cv_-_computer_voice">SystemToolsAPI.setRunLevel</span> method. </div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="LI_-_List_Item_outer" style="margin-left: 57pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="LI_-_List_Item_inner" style="width: 15pt; white-space: nowrap">
+                <span class="ri_-_run_in_header">	3.	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="LI_-_List_Item_inner"><span class="ri_-_run_in_header"><a name="1608975">Back up the operational tables in the database</a></span> – Back up operational tables before import.</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="NW_-_Note_Warning">
+        <span class="w_-_warning">WARNING  </span><a name="1921145">As with any major database operation, back up all operational tables before importing.</a></div>
+      <div class="LI_-_List_Item_outer" style="margin-left: 57pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="LI_-_List_Item_inner" style="width: 15pt; white-space: nowrap">
+                <span class="ri_-_run_in_header">	4.	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="LI_-_List_Item_inner"><span class="ri_-_run_in_header"><a name="1822388">Clear the staging tables, the error tables, and the exclusion tables</a></span> – Your conversion tool would typically do this manually, but you can also do this using web service APIs described in <a href="javascript:WWHClickedPopup('integration', 'databaseimport.25.07.html#2186573', '');" title="Table Import Tools">“Table Import Tools”</a>.</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="LI_-_List_Item_outer" style="margin-left: 57pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="LI_-_List_Item_inner" style="width: 15pt; white-space: nowrap">
+                <span class="ri_-_run_in_header">	5.	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="LI_-_List_Item_inner"><span class="ri_-_run_in_header"><a name="1897737">Run BillingCenter database consistency checks</a></span> – Database consistency checks verify that the data in your operational tables does not contain any data integrity errors. Run database consistency checks using the web services API <span class="cv_-_computer_voice">SystemToolsAPI</span> method <span class="cv_-_computer_voice">checkDatabaseConsistency</span>, or using the command line:</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="CS_-_Code_Single_Line"><a name="1897692">system_tools -password </a><span class="pc_-_parameter_in_code">password</span> -checkdbconsistency</div>
+      <div class="LP_-_List_Para"><a name="1897696">See </a><a href="javascript:WWHClickedPopup('admin', 'commandsref.15.08.html#1350094', '');" title="System Tools Command">“System Tools Command” in the </a><span class="bt_-_book_title"><a href="javascript:WWHClickedPopup('admin', 'commandsref.15.08.html#1350094', '');" title="System Tools Command">System Administration Guide</a></span> for more information about the command line tool. </div>
+      <div class="LP_-_List_Para"><a name="2149362">If you do not run consistency checks regularly, run these a long time before converting your data. For example, plan several weeks to correct any errors you may encounter. </a></div>
+      <div class="LI_-_List_Item_outer" style="margin-left: 57pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="LI_-_List_Item_inner" style="width: 15pt; white-space: nowrap">
+                <span class="ri_-_run_in_header">	6.	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="LI_-_List_Item_inner"><span class="ri_-_run_in_header"><a name="2233447">Determine which records to migrate</a></span> – Your conversion tool determines which legacy records to migrate according to your own criteria. For example as a first step, the tool might generate an extraction list of account numbers for accounts to convert.</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="LI_-_List_Item_outer" style="margin-left: 57pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="LI_-_List_Item_inner" style="width: 15pt; white-space: nowrap">
+                <span class="ri_-_run_in_header">	7.	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="LI_-_List_Item_inner"><span class="ri_-_run_in_header"><a name="2233458">Convert and insert legacy data into staging tables</a></span> – Your conversion tool reads the accounts to convert from the source system converts their data to BillingCenter format. Then, your tool inserts the converted data for each account into the staging tables, along with associated subobjects in related tables. This step represents the bulk of your effort. Once completed, populate BillingCenter staging tables with account data ready to load into BillingCenter operational tables. For more information about populating staging tables, see <a href="javascript:WWHClickedPopup('integration', 'databaseimport.25.08.html#2233653', '');" title="Populating the Staging Tables">“Populating the Staging Tables”</a>.</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="LI_-_List_Item_outer" style="margin-left: 57pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="LI_-_List_Item_inner" style="width: 15pt; white-space: nowrap">
+                <span class="ri_-_run_in_header">	8.	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="LI_-_List_Item_inner"><span class="ri_-_run_in_header"><a name="1897635">Request integrity checks from the table import tools</a></span> – These tools are available as a web service of from the command line. An integrity check ensures the data meets BillingCenter basic data integrity requirements. If problems are found, those records are saved in an error table. BillingCenter runs all integrity checks and reports all errors before stopping.</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="LP_-_List_Para"><a name="2204926">The command line tool is as follows:</a></div>
+      <div class="CS_-_Code_Single_Line"><a name="1896956">table_import -integritycheck</a></div>
+      <div class="LP_-_List_Para"><a name="1896945">Your conversion tool might automatically trigger the integrity check using the web service or command line tools after converting and loading the data into staging tables. At the time you request an integrity check, you can optionally clear error tables and exclusion tables using optional parameters. Also, you can choose to perform the integrity check as part of a load request, and if so the load proceeds only if no integrity check errors occur. </a></div>
+      <div class="LP_-_List_Para"><a name="1897291">There is an optional command line flag to allow references to existing non-admin rows in the database: </a><span class="cv_-_computer_voice">-allreferencesallowed</span> (corresponding to the web service boolean parameter <span class="p_-_parameter">allowRefsToExistingNonAdminRows</span>). Only use this flag (or for the web service, set it to <span class="cv_-_computer_voice">true</span>)&nbsp;if absolutely necessary. For example, in the rare case a policy period overlaps between the existing operational data and the data you are loading. This option flag can cause performance degradation during the check and load process. </div>
+      <div class="LI_-_List_Item_outer" style="margin-left: 57pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="LI_-_List_Item_inner" style="width: 15pt; white-space: nowrap">
+                <span class="ri_-_run_in_header">	9.	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="LI_-_List_Item_inner"><span class="ri_-_run_in_header"><a name="2205012">Set the server to the multiuser run level</a></span> – Set each BillingCenter server to the multiuser run level by using the <span class="cv_-_computer_voice">system_tools</span> command line tool or the web service <span class="cv_-_computer_voice">SystemToolsAPI.setRunLevel</span> method. </div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="LI_-_List_Item_outer" style="margin-left: 57pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="LI_-_List_Item_inner" style="width: 15pt; white-space: nowrap">
+                <span class="ri_-_run_in_header">	10.	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="LI_-_List_Item_inner"><span class="ri_-_run_in_header"><a name="1607241">Check load errors from the Load History page</a></span> – This page is available at <span class="ui_-_UI_element">Server&nbsp;Tools</span>→ <span class="ui_-_UI_element">Info&nbsp;Pages</span> → <span class="ui_-_UI_element">Load History</span>. For more information about using this page, see <a href="javascript:WWHClickedPopup('admin', 'tools-server.13.20.html#1617687', '');" title="Load History">“Load History” in the </a><span class="bt_-_book_title"><a href="javascript:WWHClickedPopup('admin', 'tools-server.13.20.html#1617687', '');" title="Load History">System Administration Guide</a></span>.</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="LI_-_List_Item_outer" style="margin-left: 57pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="LI_-_List_Item_inner" style="width: 15pt; white-space: nowrap">
+                <span class="ri_-_run_in_header">	11.	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="LI_-_List_Item_inner"><span class="ri_-_run_in_header"><a name="2233484">Fix the errors and/or exclude records</a></span> – If there are errors, the conversion tool must correct the errors or remove the bad data and try again. Use the data viewable in the user interface to generate a redo&nbsp;list, which is a list of records to fix and rerun. Or, use this data to find records to skip by adding to the exclusion table. If you want to exclude records with errors and you know the corresponding LUWIDs, add the LUWIDs to the exclusion&nbsp;table using web service APIs and command line tools. See <a href="javascript:WWHClickedPopup('integration', 'databaseimport.25.07.html#2186573', '');" title="Table Import Tools">“Table Import Tools”</a>. Some errors are not associated with specific LUWIDs, in which case nothing can be moved to the exclusion table.</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="LI_-_List_Item_outer" style="margin-left: 57pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="LI_-_List_Item_inner" style="width: 15pt; white-space: nowrap">
+                <span class="ri_-_run_in_header">	12.	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="LI_-_List_Item_inner"><span class="ri_-_run_in_header"><a name="2205111">Set the server to the maintenance run level</a></span> – Set each BillingCenter server to the maintenance run level by using the <span class="cv_-_computer_voice">system_tools</span> command line tool or the web service <span class="cv_-_computer_voice">SystemToolsAPI.setRunLevel</span> method. </div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="LI_-_List_Item_outer" style="margin-left: 57pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="LI_-_List_Item_inner" style="width: 15pt; white-space: nowrap">
+                <span class="ri_-_run_in_header">	13.	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="LI_-_List_Item_inner"><span class="ri_-_run_in_header"><a name="1833629">Repeat integrity checks until they succeed</a></span> – Repeat integrity checks until there are no errors. </div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="LI_-_List_Item_outer" style="margin-left: 57pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="LI_-_List_Item_inner" style="width: 15pt; white-space: nowrap">
+                <span class="ri_-_run_in_header">	14.	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="LI_-_List_Item_inner"><span class="ri_-_run_in_header"><a name="2233493">Optionally, remove excluded records from staging tables</a></span> – Remove all rows from all staging tables for records whose LUWIDs are listed in the exclusion table. To do this, use the <span class="cv_-_computer_voice">deleteExcludedRowsFromStagingTables</span> tool described in <a href="javascript:WWHClickedPopup('integration', 'databaseimport.25.07.html#2186573', '');" title="Table Import Tools">“Table Import Tools”</a>.</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="LI_-_List_Item_outer" style="margin-left: 57pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="LI_-_List_Item_inner" style="width: 15pt; white-space: nowrap">
+                <span class="ri_-_run_in_header">	15.	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="LI_-_List_Item_inner"><span class="ri_-_run_in_header"><a name="2233504">Handle encrypted properties</a></span> – If you have any entities with properties that support property-level encryption, your staging table data must have encrypted properties before importing them into BillingCenter. For more information, see <a href="javascript:WWHClickedPopup('integration', 'encryption.17.4.html#2428243', '');" title="Encryption Features for Staging Tables">“Encryption Features for Staging Tables”</a>.</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="LI_-_List_Item_outer" style="margin-left: 57pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="LI_-_List_Item_inner" style="width: 15pt; white-space: nowrap">
+                <span class="ri_-_run_in_header">	16.	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="LI_-_List_Item_inner"><span class="ri_-_run_in_header"><a name="2032366">Load staging tables into operational tables</a></span> – Eventually, integrity checks succeed for all records except for records in the exclusion table. At this point, you can load data from the staging tables into the operational tables used by BillingCenter. Do this using one of the various web service (SOAP) APIs or command line tools for loading. See <a href="javascript:WWHClickedPopup('integration', 'databaseimport.25.07.html#2186573', '');" title="Table Import Tools">“Table Import Tools”</a>. For example, use the table import web service method <span class="cv_-_computer_voice">integrityCheckStagingTableContentsAndLoadSourceTables</span>. As BillingCenter inserts rows into the operational tables, it also inserts results into the load history table.</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="LP_-_List_Para"><a name="1897362">There is an optional command line flag to allow references to existing non-admin rows in the database: </a><span class="cv_-_computer_voice">-allreferencesallowed</span> (corresponding to the web service boolean parameter <span class="p_-_parameter">allowRefsToExistingNonAdminRows</span>). Only use this flag (or for the web service, set it to true) if absolutely necessary. For example, in the rare case a policy period overlaps between the existing operational data and the data you are loading. This option flag can cause performance degradation during the check and load process. </div>
+      <div class="LP_-_List_Para"><a name="1897041">If you use Oracle databases, Guidewire recommends you use the Boolean parameter </a><span class="cv_-_computer_voice">updateDBStatisticsWithEstimate</span> set to <span class="cv_-_computer_voice">true</span>. This indicates to update database statistics on any table loading with estimated changes based on contents of the associated staging table. This corresponds to the optional <span class="cv_-_computer_voice">–estimateorastats</span> option for the command line tool. If you load large amounts of data, the source table grows significantly. The optimizer could choose a bad query plan based on the existing state of the database statistics. Avoid this situation by updating the database statistics to reflect the expected size of the table after the load completes. </div>
+      <div class="LP_-_List_Para"><a name="1897042">In other words, for non-Oracle databases, load staging tables with the command:</a></div>
+      <div class="CS_-_Code_Single_Line"><a name="1897085">table_import -integritycheckandload </a></div>
+      <div class="LP_-_List_Para"><a name="1897095">For Oracle databases, load staging tables with the command:</a></div>
+      <div class="CS_-_Code_Single_Line"><a name="1897116">table_import -estimateorastats -integritycheckandload</a></div>
+      <div class="NW_-_Note_Warning">
+        <span class="w_-_warning">WARNING  </span><a name="1897129">For Oracle databases, failing to add the </a><span class="cv_-_computer_voice">-estimateorastats</span> option (or the equivalent web service parameter set to <span class="cv_-_computer_voice">true</span>) extremely reduces database performance. Remember to always add this additional option for Oracle databases.</div>
+      <div class="LP_-_List_Para"><a name="1921300">The server automatically removes all data from staging tables at completion. If there were errors, data remains in the staging tables.</a></div>
+      <div class="LI_-_List_Item_outer" style="margin-left: 57pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="LI_-_List_Item_inner" style="width: 15pt; white-space: nowrap">
+                <span class="ri_-_run_in_header">	17.	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="LI_-_List_Item_inner"><span class="ri_-_run_in_header"><a name="2205169">BillingCenter populates user and time properties, as well as other internal or calculated values</a></span> – During import, BillingCenter sets the value of the <span class="cv_-_computer_voice">CreateUserID</span> and <span class="cv_-_computer_voice">UpdateUserID</span> properties to the user ID of the user that authenticated the web service or command line tool. To detect converted records in queries, create a BillingCenter user called <span class="cv_-_computer_voice">Conversion</span> (or something like that) to detect these records. Creating a separate user for conversion helps diagnose potential problems later on. This user must have the SOAP Administration permission to execute the web service or command line tool. Do not give this user additional privileges or access to the user interface or other portions of BillingCenter. At this step, BillingCenter sets the <span class="cv_-_computer_voice">CreateTime</span> and <span class="cv_-_computer_voice">UpdateTime</span> properties to the start time of the server transaction. All rows now have the same time stamp for a single import run.</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="LI_-_List_Item_outer" style="margin-left: 57pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="LI_-_List_Item_inner" style="width: 15pt; white-space: nowrap">
+                <span class="ri_-_run_in_header">	18.	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="LI_-_List_Item_inner"><span class="ri_-_run_in_header"><a name="2205205">Set the server to the multiuser run level</a></span> – Set each BillingCenter server to the multiuser run level by using the <span class="cv_-_computer_voice">system_tools</span> command line tool or the web service <span class="cv_-_computer_voice">SystemToolsAPI.setRunLevel</span> method. </div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="LI_-_List_Item_outer" style="margin-left: 57pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="LI_-_List_Item_inner" style="width: 15pt; white-space: nowrap">
+                <span class="ri_-_run_in_header">	19.	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="LI_-_List_Item_inner"><span class="ri_-_run_in_header"><a name="2205193">Review the load history</a></span> – Review the load history at <span class="ui_-_UI_element">Server&nbsp;Tools </span>→ <span class="ui_-_UI_element">Info&nbsp;Pages</span> → <span class="ui_-_UI_element">Load Errors</span>. Ensure that the amount of data loaded is correct. For more information, see <a href="javascript:WWHClickedPopup('admin', 'tools-server.13.22.html#1617714', '');" title="Load Errors">“Load Errors” in the </a><span class="bt_-_book_title"><a href="javascript:WWHClickedPopup('admin', 'tools-server.13.22.html#1617714', '');" title="Load Errors">System Administration Guide</a></span>. </div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="LI_-_List_Item_outer" style="margin-left: 57pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="LI_-_List_Item_inner" style="width: 15pt; white-space: nowrap">
+                <span class="ri_-_run_in_header">	20.	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="LI_-_List_Item_inner"><span class="ri_-_run_in_header"><a name="1610100">Update database statistics </a></span>– Particularly after a large conversion, update database statistics. See <a href="javascript:WWHClickedPopup('admin', 'database.05.08.html#1199461', '');" title="Configuring Database Statistics">“Configuring Database Statistics” in the </a><span class="bt_-_book_title"><a href="javascript:WWHClickedPopup('admin', 'database.05.08.html#1199461', '');" title="Configuring Database Statistics">System Administration Guide</a></span>.</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="LI_-_List_Item_outer" style="margin-left: 57pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="LI_-_List_Item_inner" style="width: 15pt; white-space: nowrap">
+                <span class="ri_-_run_in_header">	21.	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="LI_-_List_Item_inner"><span class="ri_-_run_in_header"><a name="1618835">Update database consistency checks again</a></span> – Assuming there were no consistency errors before importing, new consistency errors after imports indicate something was wrong in the staging table data uncaught by integrity checks. See <a href="javascript:WWHClickedPopup('integration', 'databaseimport.25.05.html#1897737', '');" title="Detailed Steps in a Typical Database Staging Table Import">step 5</a> for the data consistency check options. </div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="LI_-_List_Item_outer" style="margin-left: 57pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="LI_-_List_Item_inner" style="width: 15pt; white-space: nowrap">
+                <span class="ri_-_run_in_header">	22.	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="LI_-_List_Item_inner"><span class="ri_-_run_in_header"><a name="2233555">Convert more records if necessary</a></span> – If you have more data to convert, begin again at <a href="javascript:WWHClickedPopup('integration', 'databaseimport.25.05.html#1897737', '');" title="Detailed Steps in a Typical Database Staging Table Import">step 5</a>.</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="LI_-_List_Item_outer" style="margin-left: 57pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="LI_-_List_Item_inner" style="width: 15pt; white-space: nowrap">
+                <span class="ri_-_run_in_header">	23.	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="LI_-_List_Item_inner"><span class="ri_-_run_in_header"><a name="2233559">Run batch processing</a></span> – Run the following types of batch processing in the order listed:</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="LS2A_-_List_Start_002c_Level_2_Alpha_outer" style="margin-left: 67pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="LS2A_-_List_Start_002c_Level_2_Alpha_inner" style="width: 15pt; white-space: nowrap">
+                <span class="ri_-_run_in_header">a.	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="LS2A_-_List_Start_002c_Level_2_Alpha_inner"><a name="2270498">Database Consistency Check</a></div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="LI2A_-_List_Item_002c_Level_2_Alpha_outer" style="margin-left: 67pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="LI2A_-_List_Item_002c_Level_2_Alpha_inner" style="width: 15pt; white-space: nowrap">
+                <span class="ri_-_run_in_header">b.	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="LI2A_-_List_Item_002c_Level_2_Alpha_inner"><a name="2270499">Charge ProRata Transaction </a></div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="LI2A_-_List_Item_002c_Level_2_Alpha_outer" style="margin-left: 67pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="LI2A_-_List_Item_002c_Level_2_Alpha_inner" style="width: 15pt; white-space: nowrap">
+                <span class="ri_-_run_in_header">c.	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="LI2A_-_List_Item_002c_Level_2_Alpha_inner"><a name="2270500">Write-off Staging </a></div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="LI2A_-_List_Item_002c_Level_2_Alpha_outer" style="margin-left: 67pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="LI2A_-_List_Item_002c_Level_2_Alpha_inner" style="width: 15pt; white-space: nowrap">
+                <span class="ri_-_run_in_header">d.	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="LI2A_-_List_Item_002c_Level_2_Alpha_inner"><a name="2270502">Invoice </a></div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="LI2A_-_List_Item_002c_Level_2_Alpha_outer" style="margin-left: 67pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="LI2A_-_List_Item_002c_Level_2_Alpha_inner" style="width: 15pt; white-space: nowrap">
+                <span class="ri_-_run_in_header">e.	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="LI2A_-_List_Item_002c_Level_2_Alpha_inner"><a name="2270503">Legacy Collateral </a></div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="LI2A_-_List_Item_002c_Level_2_Alpha_outer" style="margin-left: 67pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="LI2A_-_List_Item_002c_Level_2_Alpha_inner" style="width: 15pt; white-space: nowrap">
+                <span class="ri_-_run_in_header">f.	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="LI2A_-_List_Item_002c_Level_2_Alpha_inner"><a name="2270504">New Payment </a></div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="LI2A_-_List_Item_002c_Level_2_Alpha_outer" style="margin-left: 67pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="LI2A_-_List_Item_002c_Level_2_Alpha_inner" style="width: 15pt; white-space: nowrap">
+                <span class="ri_-_run_in_header">g.	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="LI2A_-_List_Item_002c_Level_2_Alpha_inner"><a name="2270505">Legacy Delinquency </a></div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="LI2A_-_List_Item_002c_Level_2_Alpha_outer" style="margin-left: 67pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="LI2A_-_List_Item_002c_Level_2_Alpha_inner" style="width: 15pt; white-space: nowrap">
+                <span class="ri_-_run_in_header">h.	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="LI2A_-_List_Item_002c_Level_2_Alpha_inner"><a name="2270506">Legacy Agency Bill </a></div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="LI2A_-_List_Item_002c_Level_2_Alpha_outer" style="margin-left: 67pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="LI2A_-_List_Item_002c_Level_2_Alpha_inner" style="width: 15pt; white-space: nowrap">
+                <span class="ri_-_run_in_header">i.	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="LI2A_-_List_Item_002c_Level_2_Alpha_inner"><a name="2270507">Statement Billed </a></div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="LI2A_-_List_Item_002c_Level_2_Alpha_outer" style="margin-left: 67pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="LI2A_-_List_Item_002c_Level_2_Alpha_inner" style="width: 15pt; white-space: nowrap">
+                <span class="ri_-_run_in_header">j.	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="LI2A_-_List_Item_002c_Level_2_Alpha_inner"><a name="2270508">Invoice Due </a></div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="LI2A_-_List_Item_002c_Level_2_Alpha_outer" style="margin-left: 67pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="LI2A_-_List_Item_002c_Level_2_Alpha_inner" style="width: 15pt; white-space: nowrap">
+                <span class="ri_-_run_in_header">k.	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="LI2A_-_List_Item_002c_Level_2_Alpha_inner"><a name="2270509">Statement Due </a></div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="LI2A_-_List_Item_002c_Level_2_Alpha_outer" style="margin-left: 67pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="LI2A_-_List_Item_002c_Level_2_Alpha_inner" style="width: 15pt; white-space: nowrap">
+                <span class="ri_-_run_in_header">l.	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="LI2A_-_List_Item_002c_Level_2_Alpha_inner"><a name="2270510">Database Statistics, a second time</a></div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="LI2A_-_List_Item_002c_Level_2_Alpha_outer" style="margin-left: 67pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="LI2A_-_List_Item_002c_Level_2_Alpha_inner" style="width: 15pt; white-space: nowrap">
+                <span class="ri_-_run_in_header">m.	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="LI2A_-_List_Item_002c_Level_2_Alpha_inner"><a name="2270511">Policy Closure </a></div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="LI2A_-_List_Item_002c_Level_2_Alpha_outer" style="margin-left: 67pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="LI2A_-_List_Item_002c_Level_2_Alpha_inner" style="width: 15pt; white-space: nowrap">
+                <span class="ri_-_run_in_header">n.	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="LI2A_-_List_Item_002c_Level_2_Alpha_inner"><a name="2270512">Commissions Payable Calculations</a></div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="LI2A_-_List_Item_002c_Level_2_Alpha_outer" style="margin-left: 67pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="LI2A_-_List_Item_002c_Level_2_Alpha_inner" style="width: 15pt; white-space: nowrap">
+                <span class="ri_-_run_in_header">o.	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="LI2A_-_List_Item_002c_Level_2_Alpha_inner"><a name="2270513">Producer Payment </a></div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="B_-_Body"><a name="1557405">In general, never interact with the BillingCenter database directly. Instead, use BillingCenter APIs to abstract access to entity data, including all data model changes. Using APIs removes the need to understand many details of the application logic governing data integrity. However, the staging tables are exceptional because conversion tools that you write can read/write staging table data before import.</a></div>
+      <div class="NW_-_Note_Warning">
+        <span class="w_-_warning">WARNING  </span><a name="1610148">You can directly manipulate the staging tables. </a>Do not directly read or write the load error tables or the exclusion tables. The only supported access to these tables is the Server Tools user interface. See <a href="javascript:WWHClickedPopup('admin', 'tools-server.13.01.html#1605238', '');" title="Using BillingCenter Server Tools">“Using BillingCenter Server Tools” in the </a><span class="bt_-_book_title"><a href="javascript:WWHClickedPopup('admin', 'tools-server.13.01.html#1605238', '');" title="Using BillingCenter Server Tools">System Administration Guide</a></span>.</div>
+      <div class="B_-_Body"><a name="1459866">BillingCenter attempts to perform the integrity check and then load all data in the staging tables, so each import attempt must start with a clean set of tables. Therefore remove the staging data after successfully loading the data. </a>This is also why accounts that cannot pass the integrity check must be fixed or removed before the import proceeds.</div>
+      <div class="B_-_Body"><a name="1867837">As part of doing a conversion from a source system into BillingCenter, there are several ways in which errors can be handled. During the development of the conversion tool, errors frequently occur due to incorrect mapping data from the source system into the staging tables. Errors also occur if you do not properly populating all necessary properties. Typically, fix these errors by adjusting algorithms in your conversion tool. Typically, you run many trial conversions and integrity checks with iterative algorithm changes before finally handling all issues.</a></div>
+      <div class="B_-_Body"><a name="1459872">If the server flags an error that is simply a problem with the source data, then correct it directly in the staging tables using direct SQL commands. In contrast, never modify operational tables with direct SQL commands.</a></div>
+      <div class="B_-_Body"><a name="1459873">Alternatively, you may want to correct errors in the source system. In that case, remove records that fail the integrity check from the staging tables. Correct the errors in the source system. Then, rerun the entire conversion process.</a></div>
+      <script type="text/javascript" language="JavaScript1.2">
+        <!--
+          // Clear related topics
+          //
+          WWHClearRelatedTopics();
+
+          document.writeln(WWHRelatedTopicsInlineHTML());
+        // -->
+      </script>
+    </blockquote>
+    <script type="text/javascript" language="JavaScript1.2">
+      <!--
+        document.write(WWHRelatedTopicsDivTag() + WWHPopupDivTag() + WWHALinksDivTag());
+      // -->
+    </script>
+  </body>
+</html>

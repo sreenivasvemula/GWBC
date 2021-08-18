@@ -1,0 +1,45 @@
+<?xml version="1.0"?>
+<PCF
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:noNamespaceSchemaLocation="../../../../../pcf.xsd">
+  <Wizard
+    beforeCommit="finalDataSet()"
+    id="AccountDetailNewPaymentRequestWizard">
+    <LocationEntryPoint
+      signature="AccountDetailNewPaymentRequestWizard(account : Account)"/>
+    <Variable
+      name="account"
+      type="Account"/>
+    <Variable
+      initialValue="initNewPaymentRequest()"
+      name="request"
+      type="PaymentRequest"/>
+    <WizardStep
+      allowFinish="false"
+      id="newPaymentRequest"
+      label="displaykey.Web.AccountDetailNewPaymentRequestWizard.NewPaymentRequest.Label"
+      screen="NewPaymentRequestScreen(request)"
+      title="displaykey.Web.AccountDetailNewPaymentRequestWizard.NewPaymentRequest.Title"/>
+    <WizardStep
+      allowFinish="true"
+      id="newPaymentRequestConfirmation"
+      label="displaykey.Web.AccountDetailNewPaymentRequestWizard.Confirmation.Label"
+      screen="NewPaymentRequestConfirmationScreen(request)"
+      title="displaykey.Web.AccountDetailNewPaymentRequestWizard.Confirmation.Title"/>
+    <Code><![CDATA[function initNewPaymentRequest() : PaymentRequest {
+        var npr = new PaymentRequest(account.Currency)
+        npr.Account = account
+        npr.RequestDate =util.DateUtil.currentDate();
+        npr.Status = "requested";
+        npr.DraftDate = util.DateUtil.addDays(npr.RequestDate, account.BillingPlan.DraftInterval);
+        if (gw.payment.PaymentInstrumentFilters.paymentRequestPaymentInstrumentFilter.contains(account.DefaultPaymentInstrument.PaymentMethod)) {
+          npr.PaymentInstrument = account.DefaultPaymentInstrument
+        }
+        return npr;
+      }
+
+      function finalDataSet() {
+        request.StatusDate = request.ChangeDeadlineDate
+      }]]></Code>
+  </Wizard>
+</PCF>

@@ -1,0 +1,112 @@
+<?xml version="1.0"?>
+<PCF
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:noNamespaceSchemaLocation="../../../../../pcf.xsd">
+  <Page
+    canVisit="perm.System.accttabview and perm.System.acctplcyview"
+    id="AccountDetailPolicies"
+    showUpLink="true"
+    title="displaykey.Web.AccountDetailPolicies.Title">
+    <LocationEntryPoint
+      signature="AccountDetailPolicies(account : Account)"/>
+    <Variable
+      name="account"
+      type="Account"/>
+    <Screen
+      id="AccountDetailPoliciesScreen">
+      <Variable
+        initialValue="null"
+        name="policyStartsWith"
+        type="String"/>
+      <Toolbar/>
+      <CardViewPanel>
+        <Card
+          id="OwnedTab"
+          title="displaykey.Web.AccountPoliciesLV.OwnedTab.Title"
+          visible="!account.Policies.IsEmpty">
+          <PanelIterator
+            elementName="policy"
+            id="OwnerPolicies"
+            value="account.Policies">
+            <PanelRef
+              def="PolicyPeriodPanelLV(policy.PolicyPeriods.toList())"
+              id="OwnedPolicyPeriods">
+              <TitleBar
+                title="policy.NumberAndLOB"/>
+              <Toolbar/>
+            </PanelRef>
+          </PanelIterator>
+          <ListViewPanel
+            id="GrandTotalLV">
+            <Row>
+              <Cell
+                align="left"
+                bold="true"
+                id="Number"
+                value="displaykey.Web.AccountDetailPoliciesScreen.TotalValue"/>
+              <Cell
+                id="PolicyPerEffDate"
+                value="null"/>
+              <Cell
+                id="PolicyPerExpirDate"
+                value="null"/>
+              <Cell
+                id="Status"
+                value="null"/>
+              <MonetaryAmountCell
+                bold="true"
+                currency="account.Currency"
+                formatType="currency"
+                id="TotalValue"
+                value="account.TotalValue - account.RawTotalValue"/>
+            </Row>
+          </ListViewPanel>
+        </Card>
+        <Card
+          id="PayerTab"
+          title="displaykey.Web.AccountPoliciesLV.PayerTab.Title"
+          visible="!gw.api.web.account.Policies.findPoliciesWhereAccountIsOverridingPayerOnAtLeastOnePeriod(account, null).Empty">
+          <ListDetailPanel
+            id="PayerPolicies"
+            selectionName="policy"
+            selectionType="Policy">
+            <Variable
+              initialValue="gw.api.web.account.Policies.findPoliciesWhereAccountIsOverridingPayerOnAtLeastOnePeriod(account, policyStartsWith)"
+              name="policies"
+              type="gw.api.database.IQueryBeanResult&lt;Policy&gt;"/>
+            <PanelRef
+              def="PoliciesLV(policies)">
+              <Toolbar>
+                <ToolbarInput
+                  editable="true"
+                  id="PolicyPeriodFilter"
+                  label="displaykey.Web.AccountPoliciesLV.PayerTab.PolicyStartsWith"
+                  value="policyStartsWith"/>
+                <ToolbarButton
+                  action="policies = gw.api.web.account.Policies.findPoliciesWhereAccountIsOverridingPayerOnAtLeastOnePeriod(account, policyStartsWith)"
+                  default="true"
+                  id="PolicyFilterGoButton"
+                  label="displaykey.Web.AccountPoliciesLV.PayerTab.PolicyStartsWithFilterGoButton"/>
+                <ToolbarButton
+                  action="policyStartsWith = null; policies= gw.api.web.account.Policies.findPoliciesWhereAccountIsOverridingPayerOnAtLeastOnePeriod(account, policyStartsWith)"
+                  id="PolicyFilterClearButton"
+                  label="displaykey.Web.AccountPoliciesLV.PayerTab.PolicyStartsWithFilterClearButton"/>
+              </Toolbar>
+            </PanelRef>
+            <CardViewPanel>
+              <Card
+                id="PolicyDetailCard"
+                title="displaykey.Web.AccountPoliciesLV.PayerTab.PolicyPeriods">
+                <PanelRef
+                  def="PolicyPeriodPanelLV(gw.api.web.account.Policies.findPolicyPeriodsFromPolicyWhereAccountIsOverridingPayer(account, policy, policyStartsWith).toList())"
+                  id="PayerPolicyPeriods">
+                  <Toolbar/>
+                </PanelRef>
+              </Card>
+            </CardViewPanel>
+          </ListDetailPanel>
+        </Card>
+      </CardViewPanel>
+    </Screen>
+  </Page>
+</PCF>

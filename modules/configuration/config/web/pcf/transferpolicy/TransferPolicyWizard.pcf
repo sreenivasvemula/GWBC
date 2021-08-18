@@ -1,0 +1,55 @@
+<?xml version="1.0"?>
+<PCF
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:noNamespaceSchemaLocation="../../../../../pcf.xsd">
+  <Wizard
+    afterCancel="PolicyDetailCommissions.go(refreshPolicyPeriod(policyPeriod))"
+    afterFinish="PolicyDetailCommissions.go(policyPeriod)"
+    beforeCommit="policyTransfer.executeTransfer()"
+    canVisit="perm.PolicyPeriod.plcyprodtx"
+    cancelWarning="displaykey.Web.TransferPolicyWizard.CancelConfirmation"
+    countsAsWork="false"
+    id="TransferPolicyWizard">
+    <LocationEntryPoint
+      signature="TransferPolicyWizard(policyPeriod : PolicyPeriod)"/>
+    <Variable
+      name="policyPeriod"
+      type="PolicyPeriod"/>
+    <!-- Helper object -->
+    <Variable
+      initialValue="newPolicyTransfer()"
+      name="policyTransfer"/>
+    <WizardStep
+      id="SelectRole"
+      label="displaykey.Web.TransferPolicyWizard.Producer.Label"
+      screen="TransferPolicyRoleScreen(policyTransfer)"
+      title="displaykey.Web.TransferPolicyWizard.Producer.Title"/>
+    <WizardStep
+      id="SelectNew"
+      label="displaykey.Web.TransferPolicyWizard.New.Label"
+      screen="TransferPolicyNewScreen(policyTransfer)"
+      title="displaykey.Web.TransferPolicyWizard.New.Title"/>
+    <WizardStep
+      id="Confirmation"
+      label="displaykey.Web.TransferPolicyWizard.Confirmation.Label"
+      screen="TransferPolicyConfirmationScreen(policyTransfer)"
+      title="displaykey.Web.TransferPolicyWizard.Confirmation.Title"/>
+    <Code><![CDATA[function newPolicyTransfer() : PolTransferByRole {
+      var tpolicy = new PolTransferByRole(policyPeriod.Currency)
+      tpolicy.PolicyPeriod = policyPeriod;
+      tpolicy.CommissionTransferOption = policyPeriod.AgencyBill ? 
+        CommissionTransferOption.TC_POINTINTIME : CommissionTransferOption.TC_ALLFUTURE;
+      tpolicy.RoleToTransfer = PolicyRole.TC_PRIMARY;
+      return tpolicy;
+    }
+    
+/**
+ * Force retrieval of the passed-in policy period from the database.  Need this for example so that when we cancel out of 
+ * the wizard, we don't get an exception on another page that we go to after the cancel (CC-53983)
+ */
+function refreshPolicyPeriod(thePolicyPeriod : PolicyPeriod) : PolicyPeriod {
+  var refreshedPolicyPeriod = gw.api.database.Query.make(entity.PolicyPeriod).compare("PublicID", Equals, thePolicyPeriod.PublicID).select().FirstResult
+  return refreshedPolicyPeriod
+}]]></Code>
+  </Wizard>
+</PCF>

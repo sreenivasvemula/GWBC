@@ -1,0 +1,31 @@
+<?xml version="1.0"?>
+<PCF
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:noNamespaceSchemaLocation="../../../../../pcf.xsd">
+  <Wizard
+    afterCancel="DesktopGroup.go()"
+    afterFinish="DesktopGroup.go()"
+    beforeCommit="reversal.reverse()"
+    canVisit="true"
+    cancelWarning="displaykey.Web.NewWriteoffReversalWizard.CancelConfirmation"
+    countsAsWork="false"
+    id="NewWriteoffReversalWizard">
+    <LocationEntryPoint
+      signature="NewWriteoffReversalWizard()"/>
+    <Variable
+      initialValue="new WriteoffReversal()"
+      name="reversal"
+      type="WriteoffReversal"/>
+    <WizardStep
+      allowNext="reversal.Writeoff != null"
+      id="Step1"
+      label="displaykey.Web.NewWriteoffReversalWizard.WriteoffSearch.Label"
+      screen="NewWriteoffReversalWriteoffSearchScreen(reversal, null)"
+      title="displaykey.Web.NewWriteoffReversalWizard.WriteoffSearch.Title"/>
+    <WizardStep
+      id="Step2"
+      label="displaykey.Web.NewWriteoffReversalWizard.Confirmation.Label"
+      screen="NewWriteoffReversalConfirmationScreen(reversal)"
+      title="displaykey.Web.NewWriteoffReversalWizard.Confirmation.Title"/>
+  </Wizard>
+</PCF>

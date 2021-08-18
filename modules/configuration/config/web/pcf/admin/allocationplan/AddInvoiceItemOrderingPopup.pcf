@@ -1,0 +1,50 @@
+<?xml version="1.0"?>
+<PCF
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:noNamespaceSchemaLocation="pcf.xsd">
+  <Popup
+    canEdit="true"
+    id="AddInvoiceItemOrderingPopup"
+    startInEditMode="true"
+    title="displaykey.Web.AddInvoiceItemOrderingPopup.Title">
+    <LocationEntryPoint
+      signature="AddInvoiceItemOrderingPopup(paymentAllocationPlan : PaymentAllocationPlan)"/>
+    <Variable
+      name="paymentAllocationPlan"
+      type="PaymentAllocationPlan"/>
+    <Screen>
+      <Toolbar>
+        <CheckedValuesToolbarButton
+          allCheckedRowsAction="CheckedValues.each(\ ordering -&gt; paymentAllocationPlan.addInvoiceItemOrderingFor(ordering)); CurrentLocation.commit()"
+          id="AddSelectedInvoiceItemOrderings"
+          iterator="InvoiceItemOrderingLV"
+          label="displaykey.Web.AddInvoiceItemOrderingPopup.Add"/>
+      </Toolbar>
+      <ListViewPanel
+        id="InvoiceItemOrderingLV">
+        <RowIterator
+          checkBoxVisible="CurrentLocation.InEditMode"
+          editable="true"
+          elementName="invoiceItemOrdering"
+          hasCheckBoxes="true"
+          id="InvoiceItemOrderings"
+          value="OrderingsNotOnPlan">
+          <Row>
+            <Cell
+              id="InvoiceItemOrderingName"
+              label="displaykey.Web.AddInvoiceItemOrderingPopup.Name"
+              value="invoiceItemOrdering.DisplayName"/>
+            <Cell
+              id="DistributionFilterDescription"
+              label="displaykey.Web.AddInvoiceItemOrderingPopup.Description"
+              value="invoiceItemOrdering.Description"
+              width="600"/>
+          </Row>
+        </RowIterator>
+      </ListViewPanel>
+    </Screen>
+    <Code><![CDATA[property get OrderingsNotOnPlan(): List<InvoiceItemOrderingType> {
+    return InvoiceItemOrderingType.getTypeKeys(false).where(\ ordering -> paymentAllocationPlan.getInvoiceItemOrderingFor(ordering) == null)
+}]]></Code>
+  </Popup>
+</PCF>

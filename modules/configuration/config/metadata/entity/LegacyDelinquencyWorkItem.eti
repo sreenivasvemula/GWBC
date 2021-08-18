@@ -1,0 +1,23 @@
+<?xml version="1.0"?>
+<entity
+  xmlns="http://guidewire.com/datamodel"
+  desc="A Legacy Delinquency Work Item"
+  entity="LegacyDelinquencyWorkItem"
+  loadable="false"
+  subpackage="delinquency"
+  table="LegacyDlnqWorkItem"
+  type="keyable">
+  <implementsEntity
+    name="WorkItem"/>
+  <implementsEntity
+    name="NotInCurrencySilo"/>
+  <foreignkey
+    columnName="DelinquencyProcessID"
+    desc="The Delinquency Process"
+    exportable="false"
+    fkentity="DelinquencyProcess"
+    getterScriptability="doesNotExist"
+    name="DelinquencyProcess"
+    nullok="true"
+    setterScriptability="doesNotExist"/>
+</entity>

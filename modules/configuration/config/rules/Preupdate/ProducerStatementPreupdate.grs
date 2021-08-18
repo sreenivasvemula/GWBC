@@ -1,0 +1,13 @@
+package rules.Preupdate
+
+@gw.rules.RuleName("ProducerStatement Pre-update")
+@gw.rules.RuleSetDescription("This is the ProducerStatement post-validation/pre-update rule set to permit modification of the producer statement and related entities.  Exceptions will cause the bounding database transaction to roll back, effectively vetoing the update.")
+class ProducerStatementPreupdate extends gw.rules.RuleSetBase {
+  static function invoke(bean : entity.ProducerStatement) : gw.rules.ExecutionSession {
+    return invoke( new gw.rules.ExecutionSession(), bean )
+  }
+
+  static function invoke(exeSession : gw.rules.ExecutionSession, bean : entity.ProducerStatement) : gw.rules.ExecutionSession {
+    return _invoke( exeSession, bean, "ProducerStatement Pre-update", ProducerStatementPreupdate )
+  }
+}

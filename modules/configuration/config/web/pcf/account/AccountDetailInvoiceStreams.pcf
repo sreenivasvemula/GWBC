@@ -1,0 +1,103 @@
+<?xml version="1.0"?>
+<PCF
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:noNamespaceSchemaLocation="../../../../../pcf.xsd">
+  <Page
+    afterCommit="remapViews()"
+    canEdit="perm.System.invcstrmedit"
+    canVisit="perm.System.accttabview and perm.System.acctinvcview"
+    id="AccountDetailInvoiceStreams"
+    showUpLink="true"
+    title="displaykey.Web.AccountDetailInvoiceStreams.Title">
+    <LocationEntryPoint
+      signature="AccountDetailInvoiceStreams(account : Account)"/>
+    <Variable
+      initialValue="util.DateUtil.currentDate()"
+      name="today"
+      type="DateTime"/>
+    <Variable
+      name="account"
+      type="Account"/>
+    <Variable
+      initialValue="account.InvoicesSortedByDate"
+      name="invoices"/>
+    <Variable
+      initialValue="remapViews()"
+      name="invoiceStreamViews"
+      type="gw.api.web.invoice.InvoiceStreamView[]"/>
+    <Screen
+      id="AccountDetailInvoiceStreamsScreen">
+      <Toolbar
+        id="InvoiceStreamsLV_tb">
+        <EditButtons/>
+        <AddButton
+          id="AddInvoiceStreamButton"
+          iterator="InvoiceStreamsLV"
+          label="displaykey.Button.Add"
+          toCreateAndAdd="createNewStream()"
+          visible="InEditMode"/>
+      </Toolbar>
+      <ListDetailPanel
+        id="InvoiceStreamsDetailPanel"
+        selectionName="invoiceStreamView"
+        selectionType="gw.api.web.invoice.InvoiceStreamView">
+        <ListViewPanel
+          id="InvoiceStreamsLV">
+          <RowIterator
+            editable="false"
+            elementName="eachInvoiceStreamView"
+            value="invoiceStreamViews">
+            <Row>
+              <Cell
+                id="InvoiceStreamDisplayName"
+                label="displaykey.Web.AccountDetailInvoices.InvoiceStream.InvoiceStreamColumn"
+                sortOrder="1"
+                value="eachInvoiceStreamView.DisplayName"/>
+            </Row>
+          </RowIterator>
+        </ListViewPanel>
+        <CardViewPanel
+          hideTabIfSingle="true">
+          <Card
+            id="InvoiceStreamDetailCard"
+            title="displaykey.Web.AccountDetailInvoices.InvoiceStream.InvoiceStreamDetailTitle">
+            <PanelRef
+              def="AccountInvoiceStreamDetailDV(account, invoiceStreamView)"/>
+          </Card>
+        </CardViewPanel>
+      </ListDetailPanel>
+    </Screen>
+    <Code><![CDATA[
+                    uses gw.api.web.invoice.InvoiceStreamView
+                    uses com.google.common.collect.Maps
+                    uses java.util.Map
+
+function createNewStream(): InvoiceStreamView {
+  var unappliedFund = account.DefaultUnappliedFund
+  var addedInvoiceStream = gw.api.domain.invoice.InvoiceStreamFactory.createInvoiceStreamFor(unappliedFund, Periodicity.TC_MONTHLY)
+  invoiceStreamViews = remapViews()
+  for (var newView in invoiceStreamViews) {
+    if (newView.InvoiceStream.equals(addedInvoiceStream)) {
+      return newView
+    }
+  }
+  return null
+}
+
+function remapViews(): InvoiceStreamView[] {
+  var viewMap = Maps.newHashMap() as Map <InvoiceStream, InvoiceStreamView>
+  for (var view in invoiceStreamViews) {
+    viewMap.put(view.InvoiceStream, view)
+  }
+  return account.InvoiceStreams.map(\elt -> {
+    var view = viewMap.get(elt)
+    if (view != null) {
+      return view
+    } else {
+      return new InvoiceStreamView(elt)
+    }
+  })
+}
+    ]]></Code>
+  </Page>
+</PCF>

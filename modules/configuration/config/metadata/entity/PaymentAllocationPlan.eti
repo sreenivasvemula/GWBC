@@ -1,0 +1,38 @@
+<?xml version="1.0"?>
+<subtype
+  xmlns="http://guidewire.com/datamodel"
+  desc="A payment allocation plan specifies distribution and allocation of moneys from payments, excess unapplied funds, etc., to InvoiceItems for an Account."
+  displayName="Moneys Allocation Plan"
+  entity="PaymentAllocationPlan"
+  setterScriptability="all"
+  subpackage="account"
+  supertype="Plan">
+  <implementsEntity
+    name="NotInCurrencySilo"/>
+  <array
+    arrayentity="DistributionCriterionFilter"
+    desc="A set of filters that together identify the positive, unsettled InvoiceItems available for distribution of moneys."
+    getterScriptability="doesNotExist"
+    name="DistributionCriteria"
+    owner="true"
+    setterScriptability="doesNotExist">
+    <link-association
+      hasGetter="false">
+      <typelist-map
+        field="DistributionFilterType"/>
+    </link-association>
+  </array>
+  <array
+    arrayentity="InvoiceItemOrdering"
+    desc="A set of orderings that, when compounded, order InvoiceItems according to allocation priority."
+    getterScriptability="doesNotExist"
+    name="InvoiceItemOrdering"
+    owner="true"
+    setterScriptability="doesNotExist">
+    <link-association
+      hasGetter="false">
+      <typelist-map
+        field="InvoiceItemOrderingType"/>
+    </link-association>
+  </array>
+</subtype>

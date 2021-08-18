@@ -1,0 +1,46 @@
+<?xml version="1.0"?>
+<PCF
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:noNamespaceSchemaLocation="../../../../../pcf.xsd">
+  <DetailViewPanel
+    id="DocumentSearchDV">
+    <Require
+      name="documentSearchCriteria"
+      type="DocumentSearchCriteria"/>
+    <InputColumn>
+      <Input
+        editable="true"
+        id="AuthorCriterion"
+        label="displaykey.Web.DocumentSearchDV.Author"
+        value="documentSearchCriteria.Author"/>
+      <TypeKeyInput
+        editable="true"
+        id="StatusCriterion"
+        label="displaykey.Web.DocumentSearchDV.Status"
+        value="documentSearchCriteria.Status"/>
+      <TypeKeyInput
+        editable="true"
+        id="TypeCriterion"
+        label="displaykey.Web.DocumentSearchDV.Type"
+        value="documentSearchCriteria.Type"/>
+    </InputColumn>
+    <InputColumn>
+      <DateCriterionChoiceInput
+        chosenOptionVisible="true"
+        editable="true"
+        id="DateSearchCriteria"
+        label="displaykey.Web.DocumentSearchDV.DateRange"
+        value="documentSearchCriteria.DateCriterionChoice"/>
+      <TypeKeyInput
+        editable="true"
+        id="Language"
+        label="displaykey.Web.DocumentSearchDV.Language"
+        value="documentSearchCriteria.Language"
+        visible="LanguageType.getTypeKeys( false ).Count &gt; 1"/>
+    </InputColumn>
+    <InputFooterSection>
+      <InputSetRef
+        def="SearchAndResetInputSet()"/>
+    </InputFooterSection>
+  </DetailViewPanel>
+</PCF>

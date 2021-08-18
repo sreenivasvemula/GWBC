@@ -1,0 +1,80 @@
+<?xml version="1.0"?>
+<PCF
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:noNamespaceSchemaLocation="../../../../../pcf.xsd">
+  <!-- Displays a list of the activities associated with a specific trouble ticket.  Also displays toolbar with
+       buttons available to add/remove activities. -->
+  <DetailViewPanel
+    id="TroubleTicketActivitiesDV">
+    <Require
+      name="troubleTicket"
+      type="TroubleTicket"/>
+    <InputColumn>
+      <ListViewInput
+        editable="true">
+        <!-- Toolbar Buttons -->
+        <Toolbar>
+          <ToolbarButton
+            id="NewActivityButton"
+            label="displaykey.Web.TroubleTicketDetailsPopup.Activities">
+            <MenuItemSetRef
+              def="NewActivityMenuItemSet(false, troubleTicket)"/>
+          </ToolbarButton>
+          <ToolbarButton
+            id="NewSharedActivityButton"
+            label="displaykey.Web.TroubleTicketDetailsPopup.SharedActivities">
+            <MenuItemSetRef
+              def="NewActivityMenuItemSet(true, troubleTicket)"/>
+          </ToolbarButton>
+        </Toolbar>
+        <!-- List of Activities on this Trouble Ticket -->
+        <ListViewPanel
+          id="TroubleTicketActivitiesLV">
+          <RowIterator
+            editable="true"
+            elementName="activity"
+            hideCheckBoxesIfReadOnly="true"
+            toRemove="troubleTicket.removeFromActivities(activity)"
+            value="troubleTicket.Activities">
+            <Row>
+              <Cell
+                icon="&quot;escalated.png&quot;"
+                iconLabel="displaykey.Web.TroubleTicketActivitiesDV.EscalatedIconLabel"
+                id="Escalated"
+                tooltip="displaykey.Web.TroubleTicketActivitiesDV.EscalatedIconLabel"
+                value="activity.Escalated"/>
+              <DateCell
+                fontColor="activity.Overdue == true ? &quot;Red&quot; : &quot;&quot;"
+                id="DueDate"
+                label="displaykey.Web.TroubleTicketActivitiesDV.DueDate"
+                sortOrder="1"
+                value="activity.TargetDate"/>
+              <TypeKeyCell
+                id="Priority"
+                label="displaykey.Web.TroubleTicketActivitiesDV.Priority"
+                value="activity.Priority"/>
+              <Cell
+                id="Status"
+                label="displaykey.Web.TroubleTicketActivitiesDV.Status"
+                value="activity.ActivityStatus"/>
+              <Cell
+                id="Subject"
+                label="displaykey.Web.TroubleTicketActivitiesDV.Subject"
+                value="activity.Subject"/>
+              <Cell
+                id="AssignedTo"
+                label="displaykey.Web.ActivityDetail.AssignedTo"
+                value="activity.AssignedTo"/>
+              <Cell
+                action="ActivityDetailForward.goInWorkspace(activity)"
+                helpText="displaykey.Web.TroubleTicketActivitiesDV.DetailsButtonHelpText"
+                id="ViewDetails"
+                styleClass="miniButton"
+                value="displaykey.Button.Details"/>
+            </Row>
+          </RowIterator>
+        </ListViewPanel>
+      </ListViewInput>
+    </InputColumn>
+  </DetailViewPanel>
+</PCF>

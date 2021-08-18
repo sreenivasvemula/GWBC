@@ -1,0 +1,93 @@
+<?xml version="1.0"?>
+<PCF
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:noNamespaceSchemaLocation="../../../../../../pcf.xsd">
+  <Wizard
+    afterCancel="ProducerDetail.go(producer)"
+    afterFinish="ProducerDetail.go(producer)"
+    beforeCommit="wizardState.beforeCommit()"
+    cancelWarning="displaykey.Web.AgencyDistributionWizard.CancelWarning(moneySetup.DistributionTypeName)"
+    id="AgencyDistributionWizard"
+    infoBar="ProducerInfoBar(producer)"
+    parent="ProducerDetailGroup(producer)">
+    <LocationEntryPoint
+      signature="AgencyDistributionWizard(producer : Producer, distributionType : gw.agencybill.AgencyDistributionWizardHelper.DistributionTypeEnum)"/>
+    <LocationEntryPoint
+      signature="AgencyDistributionWizard(producer : Producer, moneyToEdit : BaseMoneyReceived)"/>
+    <Variable
+      initialValue="gw.agencybill.AgencyDistributionWizardHelper.createMoneySetup(producer, CurrentLocation, distributionType, moneyToEdit)"
+      name="moneySetup"
+      type="gw.api.web.producer.agencybill.AgencyBillMoneyReceivedSetup"/>
+    <Variable
+      name="producer"
+      type="Producer"/>
+    <Variable
+      name="distributionType"
+      type="gw.agencybill.AgencyDistributionWizardHelper.DistributionTypeEnum"/>
+    <Variable
+      name="moneyToEdit"
+      type="BaseMoneyReceived"/>
+    <Variable
+      initialValue="new gw.agencybill.AgencyDistributionWizardHelper(moneySetup)"
+      name="wizardState"
+      type="gw.agencybill.AgencyDistributionWizardHelper"/>
+    <WizardStep
+      id="MoneyDetails"
+      label="displaykey.Web.AgencyDistributionWizard.Step.MoneyDetails.Label(moneySetup.DistributionTypeName)"
+      onExit="wizardState.onExitMoneyDetailsScreen()"
+      screen="AgencyDistributionWizard_MoneyDetailsScreen(wizardState)"
+      title="MoneyDetailsTitle"/>
+    <WizardStep
+      allowFinish="true"
+      allowNext="false"
+      available="wizardState.DoNotDistributeNow"
+      id="ReceivePaymentConfirmation"
+      screen="AgencyDistributionWizard_ReceivePaymentConfirmationScreen(wizardState.PaymentMoneySetup.Money)"
+      title="displaykey.Web.AgencyDistributionWizard.Step.ReceivePaymentConfirmation.Title"
+      visible="wizardState.DoNotDistributeNow"/>
+    <WizardStep
+      id="Distribution"
+      label="displaykey.Web.AgencyDistributionWizard.Step.Distribution.Label"
+      onExit="wizardState.validateFinishDistributionStep()"
+      screen="AgencyDistributionWizard_DistributionScreen(wizardState)"
+      title="DistributionTitle"
+      visible="!wizardState.DoNotDistributeNow &amp;&amp; !wizardState.SelectedDistributeNetOwedAmountsAutomatically"/>
+    <WizardStep
+      allowFinish="true"
+      allowNext="false"
+      id="Dispositions"
+      label="displaykey.Web.AgencyDistributionWizard.Step.Dispositions.Label"
+      screen="AgencyDistributionWizard_DispositionsScreen(wizardState)"
+      title="DispositionsTitle"
+      visible="!wizardState.DoNotDistributeNow"/>
+    <Code><![CDATA[property get DispositionsTitle() : String {
+  if (wizardState.IsCreditDistribution) {
+    return displaykey.Web.AgencyDistributionWizard.Step.Dispositions.Title.CreditDistribution
+  } else if (wizardState.IsPayment) {
+    return displaykey.Web.AgencyDistributionWizard.Step.Dispositions.Title.Payment
+  } else {
+    return displaykey.Web.AgencyDistributionWizard.Step.Dispositions.Title.Promise
+  }
+}
+
+property get MoneyDetailsTitle() : String {
+  if (wizardState.IsCreditDistribution) {
+    return displaykey.Web.AgencyDistributionWizard.Step.MoneyDetails.Title.CreditDistribution
+  } else if (wizardState.IsPayment) {
+    return displaykey.Web.AgencyDistributionWizard.Step.MoneyDetails.Title.Payment
+  } else {
+    return displaykey.Web.AgencyDistributionWizard.Step.MoneyDetails.Title.Promise
+  }
+}
+
+property get DistributionTitle() : String {
+  if (wizardState.IsCreditDistribution) {
+    return displaykey.Web.AgencyDistributionWizard.Step.Distribution.Title.CreditDistribution
+  } else if (wizardState.IsPayment) {
+    return displaykey.Web.AgencyDistributionWizard.Step.Distribution.Title.Payment
+  } else {
+    return displaykey.Web.AgencyDistributionWizard.Step.Distribution.Title.Promise
+  }
+}]]></Code>
+  </Wizard>
+</PCF>

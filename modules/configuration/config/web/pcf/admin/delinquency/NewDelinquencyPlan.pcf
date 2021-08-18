@@ -1,0 +1,40 @@
+<?xml version="1.0"?>
+<PCF
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:noNamespaceSchemaLocation="../../../../../../pcf.xsd">
+  <Page
+    afterCancel="DelinquencyPlans.go()"
+    afterCommit="DelinquencyPlans.go()"
+    canEdit="true"
+    canVisit="perm.System.admintabview and perm.System.delplancreate"
+    id="NewDelinquencyPlan"
+    onResume="preValidatePlan( dlnqPlan )"
+    parent="DelinquencyPlans()"
+    showUpLink="true"
+    startInEditMode="true"
+    title="displaykey.Web.NewDelinquencyPlan.Title">
+    <LocationEntryPoint
+      signature="NewDelinquencyPlan(currency:Currency)"/>
+    <Variable
+      initialValue="initDelinquencyPlan()"
+      name="dlnqPlan"
+      type="DelinquencyPlan"/>
+    <Variable
+      name="currency"
+      type="Currency"/>
+    <ScreenRef
+      def="DelinquencyPlanDetailScreen(dlnqPlan)"/>
+    <Code><![CDATA[function initDelinquencyPlan() : DelinquencyPlan {
+        var newDelinquencyPlan =  new DelinquencyPlan(currency, CurrentLocation);
+        newDelinquencyPlan.EffectiveDate = util.DateUtil.currentDate();
+        return newDelinquencyPlan;
+      }
+      function preValidatePlan( plan : DelinquencyPlan ) {
+        validatePlan( plan );
+        web.delinquency.DelinquencyPlanUtil.validateDelinquencyPlanEvents( plan );
+      }
+      function validatePlan( plan : DelinquencyPlan ) {
+        web.delinquency.DelinquencyPlanUtil.validateDelinquencyPlanReasons( plan );
+      }]]></Code>
+  </Page>
+</PCF>

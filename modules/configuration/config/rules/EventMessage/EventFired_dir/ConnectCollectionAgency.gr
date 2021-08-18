@@ -1,0 +1,24 @@
+package rules.EventMessage.EventFired_dir
+
+@gw.rules.RuleName("Connect Collection Agency")
+internal class ConnectCollectionAgency {
+  static function doCondition(messageContext : entity.MessageContext) : boolean {
+    
+/*start00rule*/
+return messageContext.EventName == "ConnectCollectionAgency"
+/*end00rule*/
+
+  }
+
+  static function doAction(messageContext : entity.MessageContext, actions : gw.rules.Action) {
+
+/*start00rule*/
+var delinquencyProcess = messageContext.Root as DelinquencyProcess
+var account = delinquencyProcess.Account
+if (account.CollectionAgency != null) {
+  account.Collecting = true
+}
+/*end00rule*/
+
+  }
+}

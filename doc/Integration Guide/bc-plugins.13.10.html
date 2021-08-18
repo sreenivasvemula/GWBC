@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xml:lang="en" lang="en" xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+    <meta http-equiv="Content-Style-Type" content="text/css" />
+    <!-- MOTW-DISABLED saved from url=(0014)about:internet -->
+    <title>BillingCenter Application Event Customization Plugin</title>
+    <link rel="StyleSheet" href="css/bc-plugins.css" type="text/css" media="all" />
+    <link rel="StyleSheet" href="css/webworks.css" type="text/css" media="all" />
+    <link rel="StyleSheet" href="css/css-guidewire-extra.css" type="text/css" media="all" />
+    <script type="text/javascript" language="JavaScript1.2" src="wwhdata/common/context.js"></script>
+    <script type="text/javascript" language="JavaScript1.2" src="wwhdata/common/towwhdir.js"></script>
+    <script type="text/javascript" language="JavaScript1.2" src="wwhdata/common/wwhpagef.js"></script>
+    <script type="text/javascript" language="JavaScript1.2">
+      <!--
+        var  WebWorksRootPath = "";
+      // -->
+    </script>
+    <script type="text/javascript" language="JavaScript1.2">
+      <!--
+        // Set reference to top level help frame
+        //
+        var  WWHFrame = WWHGetWWHFrame("", true);
+      // -->
+    </script>
+    <script type="text/javascript" language="JavaScript1.2" src="scripts/expand.js"></script>
+    <!-- THE FOLLOWING IS A GUIDEWIRE STYLE DEFINITION FOR THE LINK TO THIS FEATURE -->
+    <link rel="StyleSheet" href="css/css-guidewire-extra.css" type="text/css" media="all" />
+    <!-- THE FOLLOWING IS A GUIDEWIRE GSCRIPT FUNCTION FOR THE LINK TO THIS FEATURE -->
+    <script type="text/javascript">
+function guidewire_selectall()
+{
+var text_val=eval("document.linktothisurlform.urlfield");
+text_val.focus();
+text_val.select();
+}
+</script>
+  </head>
+  <body onLoad="WWHUpdate();" onUnload="WWHUnload();" onKeyDown="WWHHandleKeyDown((document.all||document.getElementById||document.layers)?event:null);" onKeyPress="WWHHandleKeyPress((document.all||document.getElementById||document.layers)?event:null);" onKeyUp="WWHHandleKeyUp((document.all||document.getElementById||document.layers)?event:null);">
+    <!-- THE FOLLOWING IS A GUIDEWIRE DIV FOR THE 'LINK TO THIS' FEATURE -->
+    <div id="linkToThisPage" class="popup" style="display: none;">
+      <div class="popupTitle">Link Directly to This Page 
+           <a href="#" onclick="var thePopup = getElementById('linkToThisPage');thePopup.style.display='none';return false;"><img class="popupClosebox" src="wwhelp/wwhimpl/common/images/close.gif" /></a></div>
+      <div style="padding:6px;">
+        <div class="popupText" id="linkToThisPageBookmark">An error has occurred if you see this messsage.</div>
+        <form name="linktothisurlform" method="post" action="" style="width:275px;margin:0px">
+          <input type="text" class="popupURLText" id="linkToThisPageURL" name="urlfield" rows="1" cols="55" onClick="guidewire_selectall();" onFocus="guidewire_selectall();"></input>
+        </form>
+      </div>
+    </div>
+    <br />
+    <div class="WebWorks_Breadcrumbs" style="text-align: left;">
+      <span>BillingCenter Integration Guide</span> : 
+    <span class="WebWorks_Breadcrumbs" style="text-align: left;"><a class="WebWorks_Breadcrumb_Link" href="p-plugins.html#3434973">Plugins</a> : <a class="WebWorks_Breadcrumb_Link" href="bc-plugins.13.01.html#3434973">Billing Plugins</a> : BillingCenter Application Event Customization Plugin</span></div>
+    <hr align="left" />
+    <blockquote>
+      <h3 class="H1_-_Heading_1"><a name="3434973">BillingCenter Application Event Customization Plugin</a></h3>
+      <div class="B_-_Body"><a name="3531261">You can customize BillingCenter processing of certain types of objects by implementing the </a><span class="cv_-_computer_voice">IEventHandler</span> plugin. BillingCenter calls the methods of this plugin whenever important events occur in the life cycle of BillingCenter entities. </div>
+      <div class="B_-_Body"><a name="3531277">In the context of the </a><span class="cv_-_computer_voice">IEventHandler</span> plugin, the term <span class="e_-_emphasis">event</span> means<span class="e_-_emphasis"> an opportunity to trigger customer code</span>. This plugin has nothing to do with the BillingCenter messaging&nbsp;event system, the Event&nbsp;Fired rule set, or messaging destinations. Similarly, this plugin has nothing to do with history events.</div>
+      <div class="B_-_Body"><a name="3531200">Most of the </a><span class="cv_-_computer_voice">IEventHandler</span> plugin methods return a Boolean value, which determines an important setting or behavior. You can calculate the return values dynamically and even call out to external systems if necessary. For performance reasons however, call out to external systems only if strictly necessary.</div>
+      <div class="B_-_Body"><a name="3434978">For any of the </a><span class="cv_-_computer_voice">IEventHandler</span> plugin methods, if the answer is always the same and does not rely on any calculation, you must still include this method. Write the method as a single line of code that always returns <span class="cv_-_computer_voice">true</span> or always return <span class="cv_-_computer_voice">false</span>.</div>
+      <h4 class="H2_-_Heading_2"><a name="3434979">Determining Whether to Start the Delinquency Process</a></h4>
+      <div class="B_-_Body"><a name="3434981">BillingCenter calls the </a><span class="cv_-_computer_voice">canStartDelinquencyProcess</span> method to start delinquency. It takes a policy period object and returns true or false. If BillingCenter calls this method, the policy (technically a <span class="cv_-_computer_voice">PolicyPeriod</span> entity) in the method parameters is already past due but an active delinquency process has not yet started. This method confirms whether to start the delinquency process for a past-due policy.</div>
+      <div class="B_-_Body"><a name="3434983">Separately, BillingCenter calls the </a><span class="cv_-_computer_voice">beforeStartDelinquencyProcessing</span> method before starting a delinquency process for a past-due policy. The method takes an array of policy periods as an argument. The policy period is past due but does not have an active delinquency process yet.</div>
+      <h4 class="H2_-_Heading_2"><a name="3434984">Controlling Whether to Close Policies</a></h4>
+      <div class="B_-_Body"><a name="3434986">BillingCenter calls the </a><span class="cv_-_computer_voice">beforePolicyPeriodClosed</span> method immediately before a policy period closes. This method returns <span class="cv_-_computer_voice">true</span> to close the policy period. Otherwise, it returns <span class="cv_-_computer_voice">false</span> or <span class="cv_-_computer_voice">null</span> to prevent the policy period from closing.</div>
+      <div class="B_-_Body"><a name="3434987">The method signature looks like:</a></div>
+      <div class="CS_-_Code_Single_Line"><a name="3434988">Boolean beforePolicyPeriodClosed(PolicyPeriod </a><span class="pc_-_parameter_in_code">policyPeriod</span>)</div>
+      <h4 class="H2_-_Heading_2"><a name="3434989">Custom Processing During Policy Transfer to New Producers</a></h4>
+      <div class="B_-_Body"><a name="3434991">BillingCenter calls the </a><span class="cv_-_computer_voice">policyPeriodTransferredToNewProducer</span> method immediately before transferring a policy period to a new producer. There is no return value. The method takes a policy period and two producers, specified by producer code.</div>
+      <div class="B_-_Body"><a name="3434992">The method signature looks like:</a></div>
+      <PRE class="CF_-_Code_First_Line"><a name="3434993">void policyPeriodTransferredToNewProducer(PolicyPeriod policyPeriod, </a></PRE>
+      <PRE class="CL_-_Code_Last_Line"><a name="3434994">&nbsp;&nbsp;ProducerCode oldProducerCode, ProducerCode newProducerCode)</a></PRE>
+      <h4 class="H2_-_Heading_2"><a name="3434995">Validating Credit Card Numbers</a></h4>
+      <div class="B_-_Body"><a name="3434997">BillingCenter calls the </a><span class="cv_-_computer_voice">validateCreditCardNumber</span> method whenever credit card information changes on an <span class="cv_-_computer_voice">Account</span> or a <span class="cv_-_computer_voice">Policy</span>. The method returns <span class="cv_-_computer_voice">true</span> if the information is valid. Otherwise, it returns <span class="cv_-_computer_voice">false</span>. </div>
+      <div class="B_-_Body"><a name="3434998">The method signature looks like:</a></div>
+      <div class="CS_-_Code_Single_Line"><a name="3434999">Boolean validateCreditCardNumber(CreditCardIssuer </a><span class="pc_-_parameter_in_code">issuer</span>, String <span class="pc_-_parameter_in_code">number</span>, String <span class="pc_-_parameter_in_code">cvv</span>, Date <span class="pc_-_parameter_in_code">expiration</span>)</div>
+      <h4 class="H2_-_Heading_2"><a name="3435000">Validating Manual Refunds</a></h4>
+      <div class="B_-_Body"><a name="3435002">BillingCenter calls the </a><span class="cv_-_computer_voice">validateManualRefundAmount</span> method whenever someone attempts a manual refund. The method must return <span class="cv_-_computer_voice">true</span> if the amount is less than or equal to the allowable refund amount. Otherwise, it returns <span class="cv_-_computer_voice">false</span>. </div>
+      <div class="B_-_Body"><a name="3435003">The method signature looks like:</a></div>
+      <PRE class="CF_-_Code_First_Line"><a name="3435004">Boolean validateManualRefundAmount(BigDecimal </a><span class="pc_-_parameter_in_code">amount</span>, BigDecimal <span class="pc_-_parameter_in_code">suspended</span>, </PRE>
+      <PRE class="CL_-_Code_Last_Line"><a name="3435005">&nbsp;&nbsp;BigDecimal </a><span class="pc_-_parameter_in_code">pendingRefund</span>, Refund <span class="pc_-_parameter_in_code">refund</span>)</PRE>
+      <div class="B_-_Body"><a name="3435006">The default behavior is to return </a><span class="cv_-_computer_voice">true</span> if <span class="cv_-_computer_voice">amount</span> is less than or equal to the value:</div>
+      <div class="CS_-_Code_Single_Line"><a name="3435007">(suspended - pendingRefund)</a></div>
+      <div class="B_-_Body"><a name="3435008">If you want a similar behavior as the default behavior, this method would look like the following, shown as a Gosu plugin method:</a></div>
+      <PRE class="CF_-_Code_First_Line"><a name="3435009">public function validateManualRefundAmount(amount : BigDecimal, suspended : BigDecimal, </a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="3435010">&nbsp;&nbsp;&nbsp;pendingRefund : BigDecimal, refund : Refund) : Boolean {</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="3435011">&nbsp;&nbsp;&nbsp;return amount &lt;= (suspended - pendingRefund)</a></PRE>
+      <PRE class="CL_-_Code_Last_Line"><a name="3435012">}</a></PRE>
+      <h4 class="H2_-_Heading_2"><a name="3435014">Determining Whether To Place Holds On Accounts </a></h4>
+      <div class="B_-_Body"><a name="3435016">If an approver rejects a disbursement, BillingCenter calls the </a><span class="cv_-_computer_voice">rejectDisbursementBehavior</span> method to determine how to handle the disbursement on the <span class="cv_-_computer_voice">RefundDetail</span> screen. The method returns <span class="cv_-_computer_voice">true</span> to allow the approver to put a hold on the account by showing a button that places a hold on the policy. If method returns <span class="cv_-_computer_voice">false</span>, BillingCenter hides the button on that screen.</div>
+      <div class="B_-_Body"><a name="3435018">The return value affects the user interface code only. The return result does not define whether to put a policy on hold automatically. If customers want a hold to happen automatically, customers could implement this method and place a hold manually on the policy.</a></div>
+      <div class="B_-_Body"><a name="3435019">The method signature looks like:</a></div>
+      <div class="CS_-_Code_Single_Line"><a name="3435020">Boolean rejectDisbursementBehavior(Refund </a><span class="pc_-_parameter_in_code">refundToReject</span>)</div>
+      <h4 class="H2_-_Heading_2"><a name="3435021">Determining Whether to Pay Disbursements</a></h4>
+      <div class="B_-_Body"><a name="3531666">If an approver rejects a disbursement, BillingCenter calls the </a><span class="cv_-_computer_voice">payDisbursementUponDueDate</span> method to determine whether to pay it. In your implementation of this method, return <span class="cv_-_computer_voice">true</span> to pay the disbursement if the date reaches the due date regardless of the disbursement’s approval status. Otherwise, return <span class="cv_-_computer_voice">false</span>.</div>
+      <div class="B_-_Body"><a name="3435025">The method signature looks like:</a></div>
+      <div class="CS_-_Code_Single_Line"><a name="3435026">Boolean payDisbursementUponDueDate(Refund </a><span class="pc_-_parameter_in_code">refundToPay</span>)</div>
+      <script type="text/javascript" language="JavaScript1.2">
+        <!--
+          // Clear related topics
+          //
+          WWHClearRelatedTopics();
+
+          document.writeln(WWHRelatedTopicsInlineHTML());
+        // -->
+      </script>
+    </blockquote>
+    <script type="text/javascript" language="JavaScript1.2">
+      <!--
+        document.write(WWHRelatedTopicsDivTag() + WWHPopupDivTag() + WWHALinksDivTag());
+      // -->
+    </script>
+  </body>
+</html>

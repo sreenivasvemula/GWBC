@@ -1,0 +1,43 @@
+<?xml version="1.0"?>
+<PCF
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:noNamespaceSchemaLocation="../../../../../pcf.xsd">
+  <InputSet
+    id="InvoiceStreamAnchorDateInputSet"
+    mode="twicepermonth">
+    <Require
+      name="invoiceStreamView"
+      type="gw.api.web.invoice.InvoiceStreamView"/>
+    <BooleanRadioInput
+      editable="true"
+      id="OverrideInvoiceDayOfMonth"
+      label="displaykey.Web.AccountDetailInvoices.InvoiceStream.OverrideAccountInvoiceDays"
+      required="true"
+      value="invoiceStreamView.OverrideAnchorDates">
+      <PostOnChange/>
+    </BooleanRadioInput>
+    <TextInput
+      id="AccountInvoiceDays"
+      label="displaykey.Web.AccountDetailInvoices.InvoiceStream.AccountTwicePerMonthInvoiceDays"
+      value="displaykey.Web.AccountDetailInvoices.InvoiceStream.AccountTwicePerMonthInvoiceDayValues(invoiceStreamView.PayerDefaultAnchorDateViews[0].DayOfMonth, invoiceStreamView.PayerDefaultAnchorDateViews[1].DayOfMonth)"/>
+    <TextInput
+      id="OverridingInvoiceDays"
+      label="displaykey.Web.AccountDetailInvoices.InvoiceStream.OverridingTwicePerMonthInvoiceDays"
+      value="displaykey.Web.AccountDetailInvoices.InvoiceStream.AccountTwicePerMonthInvoiceDayValues(invoiceStreamView.OverridingAnchorDateViews[0].DayOfMonth, invoiceStreamView.OverridingAnchorDateViews[1].DayOfMonth)"
+      visible="invoiceStreamView.OverrideAnchorDates &amp;&amp; !CurrentLocation.InEditMode"/>
+    <TextInput
+      editable="invoiceStreamView.OverrideAnchorDates"
+      id="OverridingFirstInvoiceDayOfMonth"
+      label="displaykey.Web.AccountDetailInvoices.InvoiceStream.OverridingTwicePerMonthFirstInvoiceDay"
+      required="true"
+      value="invoiceStreamView.OverridingAnchorDateViews[0].DayOfMonth"
+      visible="invoiceStreamView.OverrideAnchorDates &amp;&amp; CurrentLocation.InEditMode"/>
+    <TextInput
+      editable="invoiceStreamView.OverrideAnchorDates"
+      id="OverridingSecondInvoiceDayOfMonth"
+      label="displaykey.Web.AccountDetailInvoices.InvoiceStream.OverridingTwicePerMonthSecondInvoiceDay"
+      required="true"
+      value="invoiceStreamView.OverridingAnchorDateViews[1].DayOfMonth"
+      visible="invoiceStreamView.OverrideAnchorDates &amp;&amp; CurrentLocation.InEditMode"/>
+  </InputSet>
+</PCF>

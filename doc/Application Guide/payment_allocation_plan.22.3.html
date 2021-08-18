@@ -1,0 +1,493 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xml:lang="en" lang="en" xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+    <meta http-equiv="Content-Style-Type" content="text/css" />
+    <!-- MOTW-DISABLED saved from url=(0014)about:internet -->
+    <title>Maintaining Payment Allocation Plans</title>
+    <link rel="StyleSheet" href="css/payment_allocation_plan.css" type="text/css" media="all" />
+    <link rel="StyleSheet" href="css/webworks.css" type="text/css" media="all" />
+    <link rel="StyleSheet" href="css/css-guidewire-extra.css" type="text/css" media="all" />
+    <script type="text/javascript" language="JavaScript1.2" src="wwhdata/common/context.js"></script>
+    <script type="text/javascript" language="JavaScript1.2" src="wwhdata/common/towwhdir.js"></script>
+    <script type="text/javascript" language="JavaScript1.2" src="wwhdata/common/wwhpagef.js"></script>
+    <script type="text/javascript" language="JavaScript1.2">
+      <!--
+        var  WebWorksRootPath = "";
+      // -->
+    </script>
+    <script type="text/javascript" language="JavaScript1.2">
+      <!--
+        // Set reference to top level help frame
+        //
+        var  WWHFrame = WWHGetWWHFrame("", true);
+      // -->
+    </script>
+    <script type="text/javascript" language="JavaScript1.2" src="scripts/expand.js"></script>
+    <!-- THE FOLLOWING IS A GUIDEWIRE STYLE DEFINITION FOR THE LINK TO THIS FEATURE -->
+    <link rel="StyleSheet" href="css/css-guidewire-extra.css" type="text/css" media="all" />
+    <!-- THE FOLLOWING IS A GUIDEWIRE GSCRIPT FUNCTION FOR THE LINK TO THIS FEATURE -->
+    <script type="text/javascript">
+function guidewire_selectall()
+{
+var text_val=eval("document.linktothisurlform.urlfield");
+text_val.focus();
+text_val.select();
+}
+</script>
+  </head>
+  <body onLoad="WWHUpdate();" onUnload="WWHUnload();" onKeyDown="WWHHandleKeyDown((document.all||document.getElementById||document.layers)?event:null);" onKeyPress="WWHHandleKeyPress((document.all||document.getElementById||document.layers)?event:null);" onKeyUp="WWHHandleKeyUp((document.all||document.getElementById||document.layers)?event:null);">
+    <!-- THE FOLLOWING IS A GUIDEWIRE DIV FOR THE 'LINK TO THIS' FEATURE -->
+    <div id="linkToThisPage" class="popup" style="display: none;">
+      <div class="popupTitle">Link Directly to This Page 
+           <a href="#" onclick="var thePopup = getElementById('linkToThisPage');thePopup.style.display='none';return false;"><img class="popupClosebox" src="wwhelp/wwhimpl/common/images/close.gif" /></a></div>
+      <div style="padding:6px;">
+        <div class="popupText" id="linkToThisPageBookmark">An error has occurred if you see this messsage.</div>
+        <form name="linktothisurlform" method="post" action="" style="width:275px;margin:0px">
+          <input type="text" class="popupURLText" id="linkToThisPageURL" name="urlfield" rows="1" cols="55" onClick="guidewire_selectall();" onFocus="guidewire_selectall();"></input>
+        </form>
+      </div>
+    </div>
+    <br />
+    <div class="WebWorks_Breadcrumbs" style="text-align: left;">
+      <span>BillingCenter Application&nbsp;Guide</span> : 
+    <span class="WebWorks_Breadcrumbs" style="text-align: left;"><a class="WebWorks_Breadcrumb_Link" href="p-setting_up.html#1227608">BillingCenter Plans</a> : <a class="WebWorks_Breadcrumb_Link" href="payment_allocation_plan.22.1.html#1227608">Payment Allocation Plans</a> : Maintaining Payment Allocation Plans</span></div>
+    <hr align="left" />
+    <blockquote>
+      <h3 class="H1_-_Heading_1"><a name="1227608">Maintaining Payment Allocation Plans</a></h3>
+      <div class="B_-_Body"><a name="1227700">The BillingCenter base configuration includes one payment allocation plan named </a><span class="ui_-_UI_element">Default Payment Allocation Plan</span>. This plan can be used as is. Alternatively, it can be modified or cloned and used as a starting point for defining a new plan. If a payment allocation plan is modified, the changes take affect immediately for all subsequent distributions. A new payment allocation plan can also be created by clicking <span class="ui_-_UI_element">Administration</span> → <span class="ui_-_UI_element">Actions</span> → <span class="ui_-_UI_element">New Payment Allocation Plan</span>.</div>
+      <h4 class="H2_-_Heading_2"><a name="1206528">The Default Payment Allocation Plan</a></h4>
+      <div class="B_-_Body"><a name="1230408">The </a><span class="ui_-_UI_element">Administration</span> → <span class="ui_-_UI_element">Business Settings</span> → <span class="ui_-_UI_element">Payment Allocation Plans</span> page lists all the defined payment allocation plans in BillingCenter. If multiple payment allocation plans exist, they are ordered hierarchically from top to bottom. The plan at the top of the list has the highest priority. When a new account is created, its default payment allocation plan is the plan with the highest priority whose account‑creation date falls within the plan’s effective and expiration dates.</div>
+      <div class="B_-_Body"><a name="1230399">The list of payment allocation plans can be reordered by clicking the up and down arrow icons in the </a><span class="ui_-_UI_element">Move Priority</span> column. Changing the priority affects only new accounts that are created after the change. It does not affect existing accounts.</div>
+      <h4 class="H2_-_Heading_2"><a name="1204154">Filtering Invoice Items</a></h4>
+      <div class="B_-_Body"><a name="1204155">The filters listed in the </a><span class="ui_-_UI_element">What invoice items can be paid?</span> setting determine which invoice items are eligible to be paid. Multiple filters can be applied in a single payment allocation plan. The order in which filters are applied is not important.</div>
+      <div class="B_-_Body"><a name="1223274">The initial pool of eligible invoice items includes all items of the account that have not already been fully paid. Each item in the pool is then passed through one of the plan’s filters. If the item meets the filter’s criteria, it remains in the pool of eligible items. If the item does not meet the criteria, it is removed from the pool and considered ineligible for payment in the current distribution. After every item has been processed by the filter, the remaining items go through the next filter, if one exists. This cycle continues, removing items that do not meet a filter’s criteria, until all filters in the plan have been applied. The remaining invoice items in the pool are those that have met the criteria of all the filters and are, therefore, considered eligible for payment. Items found ineligible are not allocated money in this distribution even if money remains after paying all eligible items. Any remaining money is placed in an appropriate Unapplied T‑account.</a></div>
+      <div class="B_-_Body"><a name="1222910">The following invoice item filters and their criteria are included in the BillingCenter base configuration:</a></div>
+      <div class="BI_-_Bullet_Item_outer" style="margin-left: 57pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="BI_-_Bullet_Item_inner" style="width: 15pt; white-space: nowrap">
+                <span class="bu_-_bullet">•	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="BI_-_Bullet_Item_inner"><span class="ri_-_run_in_header"><a name="1203358">Billed or Due </a></span>– Allow invoice items that are billed or due.</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="BI_-_Bullet_Item_outer" style="margin-left: 57pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="BI_-_Bullet_Item_inner" style="width: 15pt; white-space: nowrap">
+                <span class="bu_-_bullet">•	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="BI_-_Bullet_Item_inner"><span class="ri_-_run_in_header"><a name="1223032">Invoice</a></span> – Allow invoice items on the payment's associated invoice (if any). If no associated invoice exists (as in the case of distributing money from Unapplied T‑accounts) then all invoice items are allowed.</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="BI_-_Bullet_Item_outer" style="margin-left: 57pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="BI_-_Bullet_Item_inner" style="width: 15pt; white-space: nowrap">
+                <span class="bu_-_bullet">•	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="BI_-_Bullet_Item_inner"><span class="ri_-_run_in_header"><a name="1214115">Next Planned Invoice</a></span> – Allow invoice items contained in the next planned invoice and invoices that are billed or due.</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="BI_-_Bullet_Item_outer" style="margin-left: 57pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="BI_-_Bullet_Item_inner" style="width: 15pt; white-space: nowrap">
+                <span class="bu_-_bullet">•	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="BI_-_Bullet_Item_inner"><span class="ri_-_run_in_header"><a name="1214128">Past Due</a></span>– Allow invoice items that are past due.</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="BI_-_Bullet_Item_outer" style="margin-left: 57pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="BI_-_Bullet_Item_inner" style="width: 15pt; white-space: nowrap">
+                <span class="bu_-_bullet">•	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="BI_-_Bullet_Item_inner"><span class="ri_-_run_in_header"><a name="1203382">Policy Period </a></span>– Allow invoice items that are on the payment's associated policy period (if any). If no associated policy period exists (as in the case of distributing money from Unapplied T‑accounts) then all invoice items are allowed.</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="BI_-_Bullet_Item_outer" style="margin-left: 57pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="BI_-_Bullet_Item_inner" style="width: 15pt; white-space: nowrap">
+                <span class="bu_-_bullet">•	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="BI_-_Bullet_Item_inner"><span class="ri_-_run_in_header"><a name="1223005">Positive</a></span> – Allow invoice items with amounts greater than zero.</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="B_-_Body"><a name="1229319">New invoice item filters can be created by using the Gosu programming language. For details, see </a><a href="javascript:WWHClickedPopup('config', 'cash-handling-config-bc.45.3.html#1156436', '');" title="Writing an Invoice Item Filter">“Writing an Invoice Item Filter” in the </a><span class="bt_-_book_title"><a href="javascript:WWHClickedPopup('config', 'cash-handling-config-bc.45.3.html#1156436', '');" title="Writing an Invoice Item Filter">Configuration Guide</a></span>.</div>
+      <div class="H3_-_Heading_3_outer" style="margin-left: 36pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <h5 class="H3_-_Heading_3_inner" style="width: 18pt; white-space: nowrap"></h5>
+            </td>
+            <td width="100%">
+              <h5 class="H3_-_Heading_3_inner"><a name="1225596">Adding and Removing Invoice Item Filters</a></h5>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="B_-_Body"><a name="1227965">To add invoice item filters to the payment allocation plan or remove filters from the plan, perform the following steps:</a></div>
+      <div class="LS_-_List_Start_outer" style="margin-left: 57pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="LS_-_List_Start_inner" style="width: 15pt; white-space: nowrap">
+                <span class="ri_-_run_in_header">	1.	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="LS_-_List_Start_inner"><a name="1228113">To add or remove filters for a new payment allocation plan, create the plan by selecting </a><span class="ui_-_UI_element">Administration</span> → <span class="ui_-_UI_element">Actions</span> → <span class="ui_-_UI_element">New Payment Allocation Plan</span>. Fill in the required fields, such as <span class="ui_-_UI_element">Name</span> and <span class="ui_-_UI_element">Effective Date</span>. The new plan is assigned some default filters that can be removed if so desired.</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="LI_-_List_Item_outer" style="margin-left: 57pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="LI_-_List_Item_inner" style="width: 15pt; white-space: nowrap">
+                <span class="ri_-_run_in_header">	2.	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="LI_-_List_Item_inner"><a name="1228563">To add or remove filters for an existing plan, display the list of existing plans by selecting </a><span class="ui_-_UI_element">Administration</span> → <span class="ui_-_UI_element">Business Settings</span> → <span class="ui_-_UI_element">Payment Allocation Plans</span>. Select the plan to modify by clicking its entry in the <span class="ui_-_UI_element">Name</span> column. Select <span class="ui_-_UI_element">Edit</span> to enter edit mode.</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="LI_-_List_Item_outer" style="margin-left: 57pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="LI_-_List_Item_inner" style="width: 15pt; white-space: nowrap">
+                <span class="ri_-_run_in_header">	3.	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="LI_-_List_Item_inner"><a name="1228950">To add a filter, select </a><span class="ui_-_UI_element">Add</span> in the <span class="ui_-_UI_element">What invoice items can be paid?</span> section. In the list of available filters, check the desired filters and select <span class="ui_-_UI_element">Add Filters</span>. The order of items in the filter list is not important.</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="LI_-_List_Item_outer" style="margin-left: 57pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="LI_-_List_Item_inner" style="width: 15pt; white-space: nowrap">
+                <span class="ri_-_run_in_header">	4.	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="LI_-_List_Item_inner"><a name="1229059">To remove a filter, check the undesired filter in the </a><span class="ui_-_UI_element">What invoice items can be paid?</span> section and select <span class="ui_-_UI_element">Remove</span>.</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="LI_-_List_Item_outer" style="margin-left: 57pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="LI_-_List_Item_inner" style="width: 15pt; white-space: nowrap">
+                <span class="ri_-_run_in_header">	5.	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="LI_-_List_Item_inner"><a name="1229229">Select </a><span class="ui_-_UI_element">Update</span> to save the current list of filters.</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <h4 class="H2_-_Heading_2"><a name="1215559">Ordering Invoice Items</a></h4>
+      <div class="B_-_Body"><a name="1205164">Invoice items eligible for payment are ordered according to the priority in which each item is paid. Order priority is based on the item’s type, such as </a><span class="ui_-_UI_element">Recapture Charges</span>, or the item’s settings, such as <span class="ui_-_UI_element">Billed Date</span>. Invoice items with a higher priority are allocated money before items with a lower priority. The priority is determined by the order of entries specified in the <span class="ui_-_UI_element">What order do you want to pay them in?</span> list. Items at the top of the list have a higher priority than items below it.</div>
+      <div class="B_-_Body"><a name="1226323">As an example, assume a plan’s order priority (from high priority to low) is </a><span class="ui_-_UI_element">Recapture Charges</span>, <span class="ui_-_UI_element">Billed Date</span>, and <span class="ui_-_UI_element">Charge Pattern</span>. When distributing money among eligible invoice items, recapture charges are allocated money first. If any money remains, items are paid based on their billed date from the earliest date to the latest. For items that share the same billed date, they are ordered according to the priority of their charge patterns.</div>
+      <div class="BKN_-_Body_002c_Keep_Next"><a name="1205777">The following invoice item types and settings can be specified to define the order of payment:</a></div>
+      <div class="BI_-_Bullet_Item_outer" style="margin-left: 57pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="BI_-_Bullet_Item_inner" style="width: 15pt; white-space: nowrap">
+                <span class="bu_-_bullet">•	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="BI_-_Bullet_Item_inner"><span class="ri_-_run_in_header"><a name="1215359">Billed Date</a></span> - Item’s billed date from earliest to most recent.</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="BI_-_Bullet_Item_outer" style="margin-left: 57pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="BI_-_Bullet_Item_inner" style="width: 15pt; white-space: nowrap">
+                <span class="bu_-_bullet">•	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="BI_-_Bullet_Item_inner"><span class="ri_-_run_in_header"><a name="1215360">Billed Status</a></span> - Item’s billed status from earliest to most recent.</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="BI_-_Bullet_Item_outer" style="margin-left: 57pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="BI_-_Bullet_Item_inner" style="width: 15pt; white-space: nowrap">
+                <span class="bu_-_bullet">•	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="BI_-_Bullet_Item_inner"><span class="ri_-_run_in_header"><a name="1225101">Charge Pattern</a></span> - Priority of item’s charge pattern.</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="BI_-_Bullet_Item_outer" style="margin-left: 57pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="BI_-_Bullet_Item_inner" style="width: 15pt; white-space: nowrap">
+                <span class="bu_-_bullet">•	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="BI_-_Bullet_Item_inner"><span class="ri_-_run_in_header"><a name="1225087">Event Date</a></span> - Item’s event date.</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="BI_-_Bullet_Item_outer" style="margin-left: 57pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="BI_-_Bullet_Item_inner" style="width: 15pt; white-space: nowrap">
+                <span class="bu_-_bullet">•	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="BI_-_Bullet_Item_inner"><span class="ri_-_run_in_header"><a name="1215361">Invoice</a></span> - Item’s invoice (if any).</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="BI_-_Bullet_Item_outer" style="margin-left: 57pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="BI_-_Bullet_Item_inner" style="width: 15pt; white-space: nowrap">
+                <span class="bu_-_bullet">•	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="BI_-_Bullet_Item_inner"><span class="ri_-_run_in_header"><a name="1215362">Policy Period</a></span> - Item’s policy period (if any).</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="BI_-_Bullet_Item_outer" style="margin-left: 57pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="BI_-_Bullet_Item_inner" style="width: 15pt; white-space: nowrap">
+                <span class="bu_-_bullet">•	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="BI_-_Bullet_Item_inner"><span class="ri_-_run_in_header"><a name="1225069">Recapture Charges</a></span> - Recapture charge items.</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="BI_-_Bullet_Item_outer" style="margin-left: 57pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="BI_-_Bullet_Item_inner" style="width: 15pt; white-space: nowrap">
+                <span class="bu_-_bullet">•	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="BI_-_Bullet_Item_inner"><span class="ri_-_run_in_header"><a name="1215363">Reverse Billed Date</a></span> - Item’s billed date from most recent to earliest.</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="BI_-_Bullet_Item_outer" style="margin-left: 57pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="BI_-_Bullet_Item_inner" style="width: 15pt; white-space: nowrap">
+                <span class="bu_-_bullet">•	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="BI_-_Bullet_Item_inner"><span class="ri_-_run_in_header"><a name="1215364">Reverse Event Date</a></span> - Item’s event date from most recent to earliest.</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="BI_-_Bullet_Item_outer" style="margin-left: 57pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="BI_-_Bullet_Item_inner" style="width: 15pt; white-space: nowrap">
+                <span class="bu_-_bullet">•	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="BI_-_Bullet_Item_inner"><span class="ri_-_run_in_header"><a name="1215365">Spread Excess Even</a></span> - Order billed and due invoice items first. Distribute any remaining money equally among the remaining unpaid eligible items.</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="B_-_Body"><a name="1225713">The order of invoice item payment can also be performed by using the Gosu programming language. For details, see </a><a href="javascript:WWHClickedPopup('config', 'cash-handling-config-bc.45.4.html#1183275', '');" title="Ordering of Invoice Items">“Ordering of Invoice Items” in the </a><span class="bt_-_book_title"><a href="javascript:WWHClickedPopup('config', 'cash-handling-config-bc.45.4.html#1183275', '');" title="Ordering of Invoice Items">Configuration Guide</a></span>.</div>
+      <div class="H3_-_Heading_3_outer" style="margin-left: 36pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <h5 class="H3_-_Heading_3_inner" style="width: 18pt; white-space: nowrap"></h5>
+            </td>
+            <td width="100%">
+              <h5 class="H3_-_Heading_3_inner"><a name="1229336">Defining the Order of Payment</a></h5>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="B_-_Body"><a name="1229374">To define the order in which to pay invoice items, perform the following steps:</a></div>
+      <div class="LS_-_List_Start_outer" style="margin-left: 57pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="LS_-_List_Start_inner" style="width: 15pt; white-space: nowrap">
+                <span class="ri_-_run_in_header">	1.	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="LS_-_List_Start_inner"><a name="1229381">To define the payment order for a new payment allocation plan, create the plan by selecting </a><span class="ui_-_UI_element">Administration</span> → <span class="ui_-_UI_element">Actions</span> → <span class="ui_-_UI_element">New Payment Allocation Plan</span>. Fill in the required fields, such as <span class="ui_-_UI_element">Name</span> and <span class="ui_-_UI_element">Effective Date</span>.</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="LI_-_List_Item_outer" style="margin-left: 57pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="LI_-_List_Item_inner" style="width: 15pt; white-space: nowrap">
+                <span class="ri_-_run_in_header">	2.	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="LI_-_List_Item_inner"><a name="1229367">To define the payment order for an existing plan, display the list of existing plans by selecting </a><span class="ui_-_UI_element">Administration</span> → <span class="ui_-_UI_element">Business Settings</span> → <span class="ui_-_UI_element">Payment Allocation Plans</span>. Select the plan to modify by clicking its entry in the <span class="ui_-_UI_element">Name</span> column. Select <span class="ui_-_UI_element">Edit</span> to enter edit mode.</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="LI_-_List_Item_outer" style="margin-left: 57pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="LI_-_List_Item_inner" style="width: 15pt; white-space: nowrap">
+                <span class="ri_-_run_in_header">	3.	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="LI_-_List_Item_inner"><a name="1229563">To add an invoice type or setting, select </a><span class="ui_-_UI_element">Add</span> in the <span class="ui_-_UI_element">What order do you want to pay them in?</span> section. In the list of available invoice types and settings, check the desired entries and select <span class="ui_-_UI_element">Add Priority</span>.</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="LI_-_List_Item_outer" style="margin-left: 57pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="LI_-_List_Item_inner" style="width: 15pt; white-space: nowrap">
+                <span class="ri_-_run_in_header">	4.	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="LI_-_List_Item_inner"><a name="1229559">To remove an invoice type or setting, check the undesired entry in the </a><span class="ui_-_UI_element">What order do you want to pay them in?</span> section and select <span class="ui_-_UI_element">Remove</span>.</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="LI_-_List_Item_outer" style="margin-left: 57pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="LI_-_List_Item_inner" style="width: 15pt; white-space: nowrap">
+                <span class="ri_-_run_in_header">	5.	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="LI_-_List_Item_inner"><a name="1229783">Set the order of payment from highest priority (paid first) to lowest priority. To increase an entry’s priority, click its up arrow icon in the </a><span class="ui_-_UI_element">Move Priority</span> column. To decrease an entry’s priority, click its down arrow icon. Arrange the list’s entries until they are in the desired order.</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="LI_-_List_Item_outer" style="margin-left: 57pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="LI_-_List_Item_inner" style="width: 15pt; white-space: nowrap">
+                <span class="ri_-_run_in_header">	6.	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="LI_-_List_Item_inner"><a name="1230057">Select </a><span class="ui_-_UI_element">Update</span> to save the current order of payment.</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <script type="text/javascript" language="JavaScript1.2">
+        <!--
+          // Clear related topics
+          //
+          WWHClearRelatedTopics();
+
+          document.writeln(WWHRelatedTopicsInlineHTML());
+        // -->
+      </script>
+    </blockquote>
+    <script type="text/javascript" language="JavaScript1.2">
+      <!--
+        document.write(WWHRelatedTopicsDivTag() + WWHPopupDivTag() + WWHALinksDivTag());
+      // -->
+    </script>
+  </body>
+</html>

@@ -1,0 +1,32 @@
+<?xml version="1.0"?>
+<PCF
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:noNamespaceSchemaLocation="../../../../../../pcf.xsd">
+  <!-- ListView that displays the results of a Group search when selecting a group
+    to assign an Assignable entity to (such as an Activity). -->
+  <ListViewPanel
+    id="BCAssignmentGroupLV">
+    <Require
+      name="Groups"
+      type="GroupQuery"/>
+    <RowIterator
+      editable="false"
+      elementName="group"
+      pickValue="group"
+      selectLabel="displaykey.Button.Assign"
+      value="Groups">
+      <Row>
+        <Cell
+          id="Group"
+          label="displaykey.Web.AssignmentGroupLV.Group"
+          sortBy="Group.Name"
+          sortOrder="1"
+          value="group.DisplayName"/>
+        <Cell
+          id="Supervisor"
+          label="displaykey.Web.AssignmentGroupLV.Supervisor"
+          value="group.Supervisor"/>
+      </Row>
+    </RowIterator>
+  </ListViewPanel>
+</PCF>

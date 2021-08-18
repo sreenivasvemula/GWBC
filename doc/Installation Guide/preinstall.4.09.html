@@ -1,0 +1,888 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xml:lang="en" lang="en" xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+    <meta http-equiv="Content-Style-Type" content="text/css" />
+    <!-- MOTW-DISABLED saved from url=(0014)about:internet -->
+    <title>Configuring Oracle for BillingCenter</title>
+    <link rel="StyleSheet" href="css/preinstall.css" type="text/css" media="all" />
+    <link rel="StyleSheet" href="css/webworks.css" type="text/css" media="all" />
+    <link rel="StyleSheet" href="css/css-guidewire-extra.css" type="text/css" media="all" />
+    <script type="text/javascript" language="JavaScript1.2" src="wwhdata/common/context.js"></script>
+    <script type="text/javascript" language="JavaScript1.2" src="wwhdata/common/towwhdir.js"></script>
+    <script type="text/javascript" language="JavaScript1.2" src="wwhdata/common/wwhpagef.js"></script>
+    <script type="text/javascript" language="JavaScript1.2">
+      <!--
+        var  WebWorksRootPath = "";
+      // -->
+    </script>
+    <script type="text/javascript" language="JavaScript1.2">
+      <!--
+        // Set reference to top level help frame
+        //
+        var  WWHFrame = WWHGetWWHFrame("", true);
+      // -->
+    </script>
+    <script type="text/javascript" language="JavaScript1.2" src="scripts/expand.js"></script>
+    <!-- THE FOLLOWING IS A GUIDEWIRE STYLE DEFINITION FOR THE LINK TO THIS FEATURE -->
+    <link rel="StyleSheet" href="css/css-guidewire-extra.css" type="text/css" media="all" />
+    <!-- THE FOLLOWING IS A GUIDEWIRE GSCRIPT FUNCTION FOR THE LINK TO THIS FEATURE -->
+    <script type="text/javascript">
+function guidewire_selectall()
+{
+var text_val=eval("document.linktothisurlform.urlfield");
+text_val.focus();
+text_val.select();
+}
+</script>
+  </head>
+  <body onLoad="WWHUpdate();" onUnload="WWHUnload();" onKeyDown="WWHHandleKeyDown((document.all||document.getElementById||document.layers)?event:null);" onKeyPress="WWHHandleKeyPress((document.all||document.getElementById||document.layers)?event:null);" onKeyUp="WWHHandleKeyUp((document.all||document.getElementById||document.layers)?event:null);">
+    <!-- THE FOLLOWING IS A GUIDEWIRE DIV FOR THE 'LINK TO THIS' FEATURE -->
+    <div id="linkToThisPage" class="popup" style="display: none;">
+      <div class="popupTitle">Link Directly to This Page 
+           <a href="#" onclick="var thePopup = getElementById('linkToThisPage');thePopup.style.display='none';return false;"><img class="popupClosebox" src="wwhelp/wwhimpl/common/images/close.gif" /></a></div>
+      <div style="padding:6px;">
+        <div class="popupText" id="linkToThisPageBookmark">An error has occurred if you see this messsage.</div>
+        <form name="linktothisurlform" method="post" action="" style="width:275px;margin:0px">
+          <input type="text" class="popupURLText" id="linkToThisPageURL" name="urlfield" rows="1" cols="55" onClick="guidewire_selectall();" onFocus="guidewire_selectall();"></input>
+        </form>
+      </div>
+    </div>
+    <br />
+    <div class="WebWorks_Breadcrumbs" style="text-align: left;">
+      <span>BillingCenter Installation Guide</span> : 
+    <span class="WebWorks_Breadcrumbs" style="text-align: left;"><a class="WebWorks_Breadcrumb_Link" href="preinstall.4.01.html#2348554">Preparing a BillingCenter Environment</a> : <a class="WebWorks_Breadcrumb_Link" href="preinstall.4.05.html#2348554">Configuring the Database</a> : Configuring Oracle for BillingCenter</span></div>
+    <hr align="left" />
+    <blockquote>
+      <h4 class="H2B_-_Heading_2_Break"><a name="2348554">Configuring Oracle for BillingCenter</a></h4>
+      <div class="B_-_Body"><a name="2345803">These directions assume you have already installed Oracle. See the </a><span class="e_-_emphasis">Guidewire Platform Support Matrix</span> for information about which specific Oracle versions Guidewire supports for BillingCenter 8.0.4. The <span class="e_-_emphasis">Guidewire Platform Support Matrix </span>is available from the Guidewire Resource Portal at <span class="cv_-_computer_voice"><a href="https://guidewire.custhelp.com/app/resources/products/platform" target="external_window">https://guidewire.custhelp.com/app/resources/products/platform</a></span>. </div>
+      <div class="B_-_Body"><a name="2451900">BillingCenter requires Oracle Locator, which is included with Oracle Multimedia. Refer to Oracle MOS (My Oracle Support) note </a><span class="bt_-_book_title">How To Verify That Oracle Locator Is Installed (Doc ID 357943.1)</span>.</div>
+      <div class="B_-_Body"><a name="2464936">This topic includes:</a></div>
+      <div class="BI_-_Bullet_Item_outer" style="margin-left: 57pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="BI_-_Bullet_Item_inner" style="width: 15pt; white-space: nowrap">
+                <span class="bu_-_bullet">•	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="BI_-_Bullet_Item_inner"><a href="javascript:WWHClickedPopup('install', 'preinstall.4.09.html#2345805', '');" title="Configuring Oracle for BillingCenter" name="2464965">Prerequisites to Installing on Oracle</a></div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="BI_-_Bullet_Item_outer" style="margin-left: 57pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="BI_-_Bullet_Item_inner" style="width: 15pt; white-space: nowrap">
+                <span class="bu_-_bullet">•	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="BI_-_Bullet_Item_inner"><a href="javascript:WWHClickedPopup('install', 'preinstall.4.09.html#2345929', '');" title="Configuring Oracle for BillingCenter" name="2464981">Using Oracle Resource Consumer Groups for Slow Account Queries</a></div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="BI_-_Bullet_Item_outer" style="margin-left: 57pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="BI_-_Bullet_Item_inner" style="width: 15pt; white-space: nowrap">
+                <span class="bu_-_bullet">•	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="BI_-_Bullet_Item_inner"><a href="javascript:WWHClickedPopup('install', 'preinstall.4.09.html#2421273', '');" title="Configuring Oracle for BillingCenter" name="2464996">Configuring BillingCenter to Use Oracle SecureFile LOBs</a></div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="BI_-_Bullet_Item_outer" style="margin-left: 57pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="BI_-_Bullet_Item_inner" style="width: 15pt; white-space: nowrap">
+                <span class="bu_-_bullet">•	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="BI_-_Bullet_Item_inner"><a href="javascript:WWHClickedPopup('install', 'preinstall.4.09.html#2461101', '');" title="Configuring Oracle for BillingCenter" name="2465011">Configuring Table Partitioning for Oracle</a></div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="BI_-_Bullet_Item_outer" style="margin-left: 57pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="BI_-_Bullet_Item_inner" style="width: 15pt; white-space: nowrap">
+                <span class="bu_-_bullet">•	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="BI_-_Bullet_Item_inner"><a href="javascript:WWHClickedPopup('install', 'preinstall.4.09.html#2461743', '');" title="Configuring Oracle for BillingCenter" name="2465033">Configuring Index Partitioning for Oracle</a></div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="BI_-_Bullet_Item_outer" style="margin-left: 57pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="BI_-_Bullet_Item_inner" style="width: 15pt; white-space: nowrap">
+                <span class="bu_-_bullet">•	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="BI_-_Bullet_Item_inner"><a href="javascript:WWHClickedPopup('install', 'preinstall.4.09.html#2450518', '');" title="Configuring Oracle for BillingCenter" name="2465048">Configuring Oracle Date Interval Partitioning</a></div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="BI_-_Bullet_Item_outer" style="margin-left: 57pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="BI_-_Bullet_Item_inner" style="width: 15pt; white-space: nowrap">
+                <span class="bu_-_bullet">•	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="BI_-_Bullet_Item_inner"><a href="javascript:WWHClickedPopup('install', 'preinstall.4.09.html#2450675', '');" title="Configuring Oracle for BillingCenter" name="2465063">Configuring Oracle Adaptive Optimization for BillingCenter</a></div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="H3_-_Heading_3_outer" style="margin-left: 36pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <h5 class="H3_-_Heading_3_inner" style="width: 18pt; white-space: nowrap"></h5>
+            </td>
+            <td width="100%">
+              <h5 class="H3_-_Heading_3_inner"><a name="2345805">Prerequisites to Installing on Oracle</a></h5>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="B_-_Body"><a name="2472221">Create a separate user and schema for each Guidewire application. Sharing a schema can result in naming conflicts for primary key constraints and indexes.</a></div>
+      <div class="B_-_Body"><a name="2345806">Ensure that your Oracle database is running in an environment that optimizes storage performance while maintaining storage maintainability. Oracle recommends you use the SAME (Stripe and Mirror Everywhere) strategy. To learn more about the SAME strategy, consult the following </a><span class="cv_-_computer_voice">http://www.oracle.com/technology/deploy/performance/pdf/opt_storage_conf.pdf</span>.</div>
+      <div class="B_-_Body"><a name="2347224">Oracle Java Virtual Machine (JVM) must be installed on all Oracle databases hosting BillingCenter. The only exception is when the BillingCenter application locale is English and you only require case-insensitive searches. Ensure that Oracle initialization parameter </a><span class="cv_-_computer_voice">java_pool_size</span> is set to a value of above 50 MB.</div>
+      <div class="BKN_-_Body_002c_Keep_Next"><a name="2345807">Configure Oracle to use asynchronous IOs. Asynchronous IO significantly simplifies a database’s IO management while increasing its performance. For performance reasons, tune your operating system to Oracle database requirements. Oracle provides guidance on tuning your database based on:</a></div>
+      <div class="BI_-_Bullet_Item_outer" style="margin-left: 57pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="BI_-_Bullet_Item_inner" style="width: 15pt; white-space: nowrap">
+                <span class="bu_-_bullet">•	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="BI_-_Bullet_Item_inner"><a name="2345808">Operating system</a></div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="BI_-_Bullet_Item_outer" style="margin-left: 57pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="BI_-_Bullet_Item_inner" style="width: 15pt; white-space: nowrap">
+                <span class="bu_-_bullet">•	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="BI_-_Bullet_Item_inner"><a name="2345809">Available memory</a></div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="BI_-_Bullet_Item_outer" style="margin-left: 57pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="BI_-_Bullet_Item_inner" style="width: 15pt; white-space: nowrap">
+                <span class="bu_-_bullet">•	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="BI_-_Bullet_Item_inner"><a name="2345810">Database release</a></div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="B_-_Body"><a name="2345811">Consult Oracle documentation and support web site for information on how to tune your database.</a></div>
+      <div class="B_-_Body"><a name="2345815">The Oracle database supports server-side caching that can help increase BillingCenter performance. The size of the Oracle database cache is critical to supporting server-side caching. For internal tests, Guidewire uses a database cache size of 3.6 GB or more. Consult the Oracle documentation for information on selecting a cache size appropriate to your server computer’s architecture.</a></div>
+      <div class="B_-_Body"><a name="2347185">After your database is in production, you can not easily modify the storage architecture. Guidewire recommends that you test and tune your database’s storage performance prior to installing BillingCenter. There are many tools available for optimizing database performance, including an open source tool, IOzone (</a><span class="cv_-_computer_voice">www.iozone.org</span>).</div>
+      <h6 class="HS_-_Head_Sub"><a name="2347193">To prepare an Oracle database for BillingCenter</a></h6>
+      <div class="LI_-_List_Item_outer" style="margin-left: 57pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="LI_-_List_Item_inner" style="width: 15pt; white-space: nowrap">
+                <span class="ri_-_run_in_header">	1.	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="LI_-_List_Item_inner"><a name="2345827">Create a new database instance for BillingCenter. </a></div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="LP_-_List_Para"><a name="2345831">Guidewire recommends that you not share the BillingCenter database with other data or applications.</a></div>
+      <div class="NI_-_Note_Important">
+        <span class="n_-_note">IMPORTANT   </span><a name="2345832">Guidewire currently supports single-byte character sets that are a strict superset of ASCII, and </a><span class="cv_-_computer_voice">AL32UTF8</span> or <span class="cv_-_computer_voice">UTF8</span> for Unicode. Only use a supported character set with BillingCenter. Refer to your Oracle documentation for a complete list of supported character sets. <span class="cv_-_computer_voice">WE8ISO8859P1</span> is a single-byte character set that supports both Western European languages and American English. <span class="cv_-_computer_voice">AL32UTF8</span> and <span class="cv_-_computer_voice">UTF8</span> are Oracle character sets supported for the storage of Unicode data, such as Asian characters. If using the <span class="cv_-_computer_voice">AL32UTF8</span> or <span class="cv_-_computer_voice">UTF8</span> character set, the Oracle instance must be configured with <span class="cv_-_computer_voice">nls_length_semantics</span> set to <span class="cv_-_computer_voice">char</span>. Otherwise, the database does not start.</div>
+      <div class="LI_-_List_Item_outer" style="margin-left: 57pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="LI_-_List_Item_inner" style="width: 15pt; white-space: nowrap">
+                <span class="ri_-_run_in_header">	2.	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="LI_-_List_Item_inner"><a name="2345840">Create one or more tablespaces to support the BillingCenter logical tablespaces. Guidewire recommends that you create a separate tablespace for each logical tablespace:</a></div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="T_-_Table"><a name="2345869">&nbsp;</a></div>
+      <table class="withHeadingIndent" style="text-align: left" border="0" cellpadding="10" cellspacing="0" summary="">
+        <caption></caption>
+        <tr>
+          <td style="border-bottom-color: #000000; border-bottom-style: solid; border-bottom-width: 0.5pt; border-top-color: #000000; border-top-style: solid; border-top-width: 0.5pt; padding-bottom: 4pt; padding-left: 2pt; padding-right: 8pt; padding-top: 0pt; vertical-align: bottom">
+            <div class="TH_-_Table_Heading"><a name="2345843">Logical Name</a></div>
+          </td>
+          <td style="border-bottom-color: #000000; border-bottom-style: solid; border-bottom-width: 0.5pt; border-top-color: #000000; border-top-style: solid; border-top-width: 0.5pt; padding-bottom: 4pt; padding-left: 2pt; padding-right: 8pt; padding-top: 0pt; vertical-align: bottom">
+            <div class="TH_-_Table_Heading"><a name="2345845">Usage</a></div>
+          </td>
+        </tr>
+        <tr>
+          <td style="border-bottom-color: #c0d1d1; border-bottom-style: solid; border-bottom-width: 0.15pt; border-top-color: #000000; border-top-style: solid; border-top-width: 0.5pt; padding-bottom: 4pt; padding-left: 2pt; padding-right: 8pt; padding-top: 0pt; vertical-align: top">
+            <div class="TT_-_Table_Text"><a name="2345847">ADMIN</a></div>
+          </td>
+          <td style="border-bottom-color: #c0d1d1; border-bottom-style: solid; border-bottom-width: 0.15pt; border-top-color: #000000; border-top-style: solid; border-top-width: 0.5pt; padding-bottom: 4pt; padding-left: 2pt; padding-right: 8pt; padding-top: 0pt; vertical-align: top">
+            <div class="TT_-_Table_Text"><a name="2345849">Stores system parameters.</a></div>
+          </td>
+        </tr>
+        <tr>
+          <td style="border-bottom-color: #c0d1d1; border-bottom-style: solid; border-bottom-width: 0.15pt; border-top-color: #c0d1d1; border-top-style: solid; border-top-width: 0.15pt; padding-bottom: 4pt; padding-left: 2pt; padding-right: 8pt; padding-top: 0pt; vertical-align: top">
+            <div class="TT_-_Table_Text"><a name="2345851">OP</a></div>
+          </td>
+          <td style="border-bottom-color: #c0d1d1; border-bottom-style: solid; border-bottom-width: 0.15pt; border-top-color: #c0d1d1; border-top-style: solid; border-top-width: 0.15pt; padding-bottom: 4pt; padding-left: 2pt; padding-right: 8pt; padding-top: 0pt; vertical-align: top">
+            <div class="TT_-_Table_Text"><a name="2345856">Stores the main BillingCenter data tables.</a></div>
+          </td>
+        </tr>
+        <tr>
+          <td style="border-bottom-color: #c0d1d1; border-bottom-style: solid; border-bottom-width: 0.15pt; border-top-color: #c0d1d1; border-top-style: solid; border-top-width: 0.15pt; padding-bottom: 4pt; padding-left: 2pt; padding-right: 8pt; padding-top: 0pt; vertical-align: top">
+            <div class="TT_-_Table_Text"><a name="2345858">TYPELIST</a></div>
+          </td>
+          <td style="border-bottom-color: #c0d1d1; border-bottom-style: solid; border-bottom-width: 0.15pt; border-top-color: #c0d1d1; border-top-style: solid; border-top-width: 0.15pt; padding-bottom: 4pt; padding-left: 2pt; padding-right: 8pt; padding-top: 0pt; vertical-align: top">
+            <div class="TT_-_Table_Text"><a name="2345860">Stores system code tables.</a></div>
+          </td>
+        </tr>
+        <tr>
+          <td style="border-bottom-color: #c0d1d1; border-bottom-style: solid; border-bottom-width: 0.15pt; border-top-color: #c0d1d1; border-top-style: solid; border-top-width: 0.15pt; padding-bottom: 4pt; padding-left: 2pt; padding-right: 8pt; padding-top: 0pt; vertical-align: top">
+            <div class="TT_-_Table_Text"><a name="2345862">INDEX</a></div>
+          </td>
+          <td style="border-bottom-color: #c0d1d1; border-bottom-style: solid; border-bottom-width: 0.15pt; border-top-color: #c0d1d1; border-top-style: solid; border-top-width: 0.15pt; padding-bottom: 4pt; padding-left: 2pt; padding-right: 8pt; padding-top: 0pt; vertical-align: top">
+            <div class="TT_-_Table_Text"><a name="2345864">Stores system indexes.</a></div>
+          </td>
+        </tr>
+        <tr>
+          <td style="border-bottom-color: #c0d1d1; border-bottom-style: solid; border-bottom-width: 0.15pt; border-top-color: #c0d1d1; border-top-style: solid; border-top-width: 0.15pt; padding-bottom: 4pt; padding-left: 2pt; padding-right: 8pt; padding-top: 0pt; vertical-align: top">
+            <div class="TT_-_Table_Text"><a name="2345866">STAGING</a></div>
+          </td>
+          <td style="border-bottom-color: #c0d1d1; border-bottom-style: solid; border-bottom-width: 0.15pt; border-top-color: #c0d1d1; border-top-style: solid; border-top-width: 0.15pt; padding-bottom: 4pt; padding-left: 2pt; padding-right: 8pt; padding-top: 0pt; vertical-align: top">
+            <div class="TT_-_Table_Text"><a name="2345868">Stores inbound staging data tables.</a></div>
+          </td>
+        </tr>
+        <tr>
+          <td style="border-bottom-color: #000000; border-bottom-style: solid; border-bottom-width: 0.5pt; border-top-color: #c0d1d1; border-top-style: solid; border-top-width: 0.15pt; padding-bottom: 4pt; padding-left: 2pt; padding-right: 8pt; padding-top: 0pt; vertical-align: top">
+            <div class="TT_-_Table_Text"><a name="2346505">LOB</a></div>
+          </td>
+          <td style="border-bottom-color: #000000; border-bottom-style: solid; border-bottom-width: 0.5pt; border-top-color: #c0d1d1; border-top-style: solid; border-top-width: 0.15pt; padding-bottom: 4pt; padding-left: 2pt; padding-right: 8pt; padding-top: 0pt; vertical-align: top">
+            <div class="TT_-_Table_Text"><a name="2346507">Stores off-row LOB (large object) data. The LOB tablespace is optional. If you do not specify a physical tablespace for the LOB logical tablespace, then LOB data is stored in the tablespace mapped to the OP logical tablespace.</a></div>
+            <div class="TT_-_Table_Text"><a name="2358768">BillingCenter uses the LOB tablespace for new tables only. For an existing configuration in which the BillingCenter schema has been created, if you designate an LOB tablespace, BillingCenter does not move existing LOB columns to the LOB tablespace. If you add an LOB column to an existing table, BillingCenter does not put the column in the LOB tablespace. If you define a new table with LOB data, BillingCenter stores the LOB data in the designated LOB tablespace.</a></div>
+            <div class="TT_-_Table_Text"><a name="2421314">See </a><a href="javascript:WWHClickedPopup('install', 'preinstall.4.09.html#2421273', '');" title="Configuring Oracle for BillingCenter">“Configuring BillingCenter to Use Oracle SecureFile LOBs”</a>.</div>
+          </td>
+        </tr>
+      </table>
+      <div class="LP_-_List_Para"><a name="2345870">You can name your tablespaces anything you like in a production environment: either the same as the logical tablespace names or entirely different. As you configure BillingCenter, you map the tablespaces you created to the BillingCenter internal logical tablespaces.</a></div>
+      <div class="LP_-_List_Para"><a name="2422573">For a development environment, use the same tablespace names as the logical names. The </a><span class="cv_-_computer_voice">gwbc dev-dropdb</span> command only works if the tablespace names match the default logical names.</div>
+      <div class="LI_-_List_Item_outer" style="margin-left: 57pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="LI_-_List_Item_inner" style="width: 15pt; white-space: nowrap">
+                <span class="ri_-_run_in_header">	3.	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="LI_-_List_Item_inner"><a name="2345883">Create a single database user, </a><span class="cv_-_computer_voice">bcUser,</span> in the BillingCenter database.</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="LI_-_List_Item_outer" style="margin-left: 57pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="LI_-_List_Item_inner" style="width: 15pt; white-space: nowrap">
+                <span class="ri_-_run_in_header">	4.	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="LI_-_List_Item_inner"><a name="2345887">Grant </a><span class="cv_-_computer_voice">bcUser</span> the following permissions:</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="BI2_-_Bullet_Item_002c_Level_2_outer" style="margin-left: 67pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="BI2_-_Bullet_Item_002c_Level_2_inner" style="width: 15pt; white-space: nowrap">
+                <span class="bu_-_bullet">•	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="BI2_-_Bullet_Item_002c_Level_2_inner"><a name="2345888">alter session</a></div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="BI2_-_Bullet_Item_002c_Level_2_outer" style="margin-left: 67pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="BI2_-_Bullet_Item_002c_Level_2_inner" style="width: 15pt; white-space: nowrap">
+                <span class="bu_-_bullet">•	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="BI2_-_Bullet_Item_002c_Level_2_inner"><a name="2345889">create procedure</a></div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="BI2_-_Bullet_Item_002c_Level_2_outer" style="margin-left: 67pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="BI2_-_Bullet_Item_002c_Level_2_inner" style="width: 15pt; white-space: nowrap">
+                <span class="bu_-_bullet">•	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="BI2_-_Bullet_Item_002c_Level_2_inner"><a name="2345890">create sequence </a></div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="BI2_-_Bullet_Item_002c_Level_2_outer" style="margin-left: 67pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="BI2_-_Bullet_Item_002c_Level_2_inner" style="width: 15pt; white-space: nowrap">
+                <span class="bu_-_bullet">•	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="BI2_-_Bullet_Item_002c_Level_2_inner"><a name="2345891">create session</a></div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="BI2_-_Bullet_Item_002c_Level_2_outer" style="margin-left: 67pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="BI2_-_Bullet_Item_002c_Level_2_inner" style="width: 15pt; white-space: nowrap">
+                <span class="bu_-_bullet">•	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="BI2_-_Bullet_Item_002c_Level_2_inner"><a name="2345892">create table</a></div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="BI2_-_Bullet_Item_002c_Level_2_outer" style="margin-left: 67pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="BI2_-_Bullet_Item_002c_Level_2_inner" style="width: 15pt; white-space: nowrap">
+                <span class="bu_-_bullet">•	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="BI2_-_Bullet_Item_002c_Level_2_inner"><a name="2345893">create trigger</a></div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="BI2_-_Bullet_Item_002c_Level_2_outer" style="margin-left: 67pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="BI2_-_Bullet_Item_002c_Level_2_inner" style="width: 15pt; white-space: nowrap">
+                <span class="bu_-_bullet">•	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="BI2_-_Bullet_Item_002c_Level_2_inner"><a name="2345894">create view</a></div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="BI2_-_Bullet_Item_002c_Level_2_outer" style="margin-left: 67pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="BI2_-_Bullet_Item_002c_Level_2_inner" style="width: 15pt; white-space: nowrap">
+                <span class="bu_-_bullet">•	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="BI2_-_Bullet_Item_002c_Level_2_inner"><a name="2345895">query rewrite</a></div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="BI2_-_Bullet_Item_002c_Level_2_outer" style="margin-left: 67pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="BI2_-_Bullet_Item_002c_Level_2_inner" style="width: 15pt; white-space: nowrap">
+                <span class="bu_-_bullet">•	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="BI2_-_Bullet_Item_002c_Level_2_inner"><a name="2345896">select any dictionary</a></div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="LP_-_List_Para"><a name="2345900">If your users want to view statspack data on the BillingCenter Info Pages interface, you also need to grant the</a><span class="cv_-_computer_voice"> bcUser</span> access to Statspack's (perfstat user) tables.</div>
+      <div class="LI_-_List_Item_outer" style="margin-left: 57pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="LI_-_List_Item_inner" style="width: 15pt; white-space: nowrap">
+                <span class="ri_-_run_in_header">	5.	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="LI_-_List_Item_inner"><a name="2345910">Grant </a><span class="cv_-_computer_voice">quota</span> on all the tablespaces listed in <a href="javascript:WWHClickedPopup('install', 'preinstall.4.09.html#2345840', '');" title="Configuring Oracle for BillingCenter">step 2</a> to the <span class="cv_-_computer_voice">bcUser</span>.</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="LI_-_List_Item_outer" style="margin-left: 57pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="LI_-_List_Item_inner" style="width: 15pt; white-space: nowrap">
+                <span class="ri_-_run_in_header">	6.	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="LI_-_List_Item_inner"><a name="2345914">Set default tablespace for </a><span class="cv_-_computer_voice">bcUser</span> to the one being mapped to the <span class="cv_-_computer_voice">OP</span> logical tablespace.</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="LI_-_List_Item_outer" style="margin-left: 57pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="LI_-_List_Item_inner" style="width: 15pt; white-space: nowrap">
+                <span class="ri_-_run_in_header">	7.	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="LI_-_List_Item_inner"><a name="2345915">If you run the database server and the application server on the same computer, be aware that Oracle adds directories to the </a><span class="cv_-_computer_voice">PATH</span> environment variable. To prevent potential conflicts with BillingCenter files, Guidewire recommends that you edit your <span class="cv_-_computer_voice">PATH</span> variable and move the Oracle directories to the end, after the BillingCenter directories. Guidewire recommends that you do not run database and application servers on the same computer in a production environment.</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="LI_-_List_Item_outer" style="margin-left: 57pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="LI_-_List_Item_inner" style="width: 15pt; white-space: nowrap">
+                <span class="ri_-_run_in_header">	8.	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="LI_-_List_Item_inner"><a name="2358367">Test a connection to the database from a database client. Verify that all the tablespaces are visible.</a></div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="H3_-_Heading_3_outer" style="margin-left: 36pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <h5 class="H3_-_Heading_3_inner" style="width: 18pt; white-space: nowrap"></h5>
+            </td>
+            <td width="100%">
+              <h5 class="H3_-_Heading_3_inner"><a name="2345929">Using Oracle Resource Consumer Groups for Slow </a>Account Queries</h5>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="N_-_Note">
+        <span class="n_-_note">Note: </span><a name="2345933">The information in this topic is provided for implementations that experience slow account queries. If you do not experience slow account queries, you do not need to define a resource consumer group for account queries.</a></div>
+      <div class="B_-_Body"><a name="2345940">Oracle provides resource plans and consumer groups to handle resources in the database. One useful feature is to cancel a query based on the execution time. You can configure BillingCenter to switch to a resource consumer group that you define to perform account searches. You can set this resource consumer group to have a time limit and cancel SQL operations for account searches that exceed the time limit.</a></div>
+      <div class="B_-_Body"><a name="2345953">BillingCenter saves the initial resource consumer group detected when the application server is started and reverts to that group following the account query.</a></div>
+      <div class="B_-_Body"><a name="2345957">The requirements for using Oracle resource consumer groups for account queries are:</a></div>
+      <div class="BI_-_Bullet_Item_outer" style="margin-left: 57pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="BI_-_Bullet_Item_inner" style="width: 15pt; white-space: nowrap">
+                <span class="bu_-_bullet">•	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="BI_-_Bullet_Item_inner"><a name="2345961">The </a><span class="cv_-_computer_voice">&lt;oracle-settings&gt;</span> attribute <span class="cv_-_computer_voice">db-resource-mgr-cancel-sql</span> is set in <span class="cv_-_computer_voice">database-config.xml</span> to a resource consumer group defined in Oracle. For example:</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <PRE class="CF_-_Code_First_Line"><a name="2446945">&lt;database name="ClaimCenterDatabase" dbtype="oracle" autoupgrade="false"&gt;</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2446947">...</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2446992">&nbsp;&nbsp;&lt;oracle-settings db-resource-mgr-cancel-sql="" /&gt;</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2446994">...</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2446986">&lt;/database&gt;</a></PRE>
+      <div class="BI_-_Bullet_Item_outer" style="margin-left: 57pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="BI_-_Bullet_Item_inner" style="width: 15pt; white-space: nowrap">
+                <span class="bu_-_bullet">•	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="BI_-_Bullet_Item_inner"><a name="2345962">The Oracle resource manager plan is set at the system level.</a></div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="BI_-_Bullet_Item_outer" style="margin-left: 57pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="BI_-_Bullet_Item_inner" style="width: 15pt; white-space: nowrap">
+                <span class="bu_-_bullet">•	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="BI_-_Bullet_Item_inner"><a name="2345966">The </a><span class="cv_-_computer_voice">bcUser</span> has privileges to switch between the two resource groups.</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="B_-_Body"><a name="2345970">BillingCenter checks these conditions when the server starts.</a></div>
+      <div class="H3_-_Heading_3_outer" style="margin-left: 36pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <h5 class="H3_-_Heading_3_inner" style="width: 18pt; white-space: nowrap"></h5>
+            </td>
+            <td width="100%">
+              <h5 class="H3_-_Heading_3_inner"><a name="2421273">Configuring BillingCenter to Use Oracle </a><span class="cvh_-_computer_voice_in_heading">SecureFile</span> LOBs</h5>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="B_-_Body"><a name="2421280">BillingCenter supports Oracle SecureFile LOBs for unstructured data. To configure BillingCenter to use SecureFile LOBs, modify the </a><span class="cv_-_computer_voice">&lt;database&gt;</span> block in <span class="cv_-_computer_voice">database-config.xml</span>. You can specify to use SecureFile LOBs for all LOBs in the database or for specific tables. You can also configure whether to use caching and the LOB type. The LOB type can be <span class="cv_-_computer_voice">BASIC</span>, <span class="cv_-_computer_voice">SECURE</span>, or <span class="cv_-_computer_voice">SECURE_COMPRESSED</span>. If not specified otherwise BillingCenter uses SecureFile LOBs.</div>
+      <div class="B_-_Body"><a name="2421281">To specify to use basic file LOBs for all LOBs in the database, add the following to the </a><span class="cv_-_computer_voice">&lt;database&gt;</span> block.</div>
+      <PRE class="CF_-_Code_First_Line"><a name="2421282">&lt;ora-db-ddl&gt;</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2421283">&nbsp;&nbsp;&lt;ora-lobs type="BASIC" caching="</a><span class="pc_-_parameter_in_code">true</span>|<span class="pc_-_parameter_in_code">false</span>"/&gt;</PRE>
+      <PRE class="CL_-_Code_Last_Line"><a name="2421284">&lt;/ora-db-ddl&gt;</a></PRE>
+      <div class="B_-_Body"><a name="2445837">To specify to use compressed SecureFile LOBs for all LOBs in the database, add the following to the </a><span class="cv_-_computer_voice">&lt;database&gt;</span> block.</div>
+      <PRE class="CF_-_Code_First_Line"><a name="2445838">&lt;ora-db-ddl&gt;</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2445839">&nbsp;&nbsp;&lt;ora-lobs type="SECURE_COMPRESSED" caching="</a><span class="pc_-_parameter_in_code">true</span>|<span class="pc_-_parameter_in_code">false</span>"/&gt;</PRE>
+      <PRE class="CL_-_Code_Last_Line"><a name="2445840">&lt;/ora-db-ddl&gt;</a></PRE>
+      <div class="B_-_Body"><a name="2421285">To specify to use basic file LOBs for all LOBs on a particular table, add the </a><span class="cv_-_computer_voice">&lt;ora-lobs&gt;</span> element within the <span class="cv_-_computer_voice">&lt;ora-table-ddl&gt;</span> block for the table.</div>
+      <PRE class="CF_-_Code_First_Line"><a name="2445604">&lt;ora-db-ddl&gt;</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2421287">&nbsp;&nbsp;&lt;ora-table-ddl name="bc_</a><span class="pc_-_parameter_in_code">tablename</span>"&gt; </PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2421292">&nbsp;&nbsp;&nbsp;&nbsp;&lt;ora-lobs type="BASIC" /&gt; </a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2445630">&nbsp;&nbsp;&lt;/ora-table-ddl&gt; </a></PRE>
+      <PRE class="CL_-_Code_Last_Line"><a name="2445664">&lt;/ora-db-ddl&gt;</a></PRE>
+      <div class="B_-_Body"><a name="2421296">If any LOBs are configured to be SecureFile LOBs, and the LOB tablespace is configured, it must be managed with Automatic Segment Space Management. If the LOB tablespace is not configured, then the ADMIN, OP and STAGING tablespaces must be managed with Automatic Segment Space Management.</a></div>
+      <div class="B_-_Body"><a name="2421297">To specify to use caching for LOBs, add the attribute </a><span class="cv_-_computer_voice">caching="true"</span> to the <span class="cv_-_computer_voice">&lt;ora-lobs&gt;</span> element.</div>
+      <div class="B_-_Body"><a name="2421325">If you configure a LOB type for the database or for a specific table, you cannot change the configuration after the database has been created. You also cannot change the caching configuration after the database has been created.</a></div>
+      <div class="B_-_Body"><a name="2461099">Refer to Oracle documentation for information about basic file, SecureFile, and compressed SecureFile LOBs.</a></div>
+      <div class="H3_-_Heading_3_outer" style="margin-left: 36pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <h5 class="H3_-_Heading_3_inner" style="width: 18pt; white-space: nowrap"></h5>
+            </td>
+            <td width="100%">
+              <h5 class="H3_-_Heading_3_inner"><a name="2461101">Configuring Table Partitioning for Oracle</a></h5>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="B_-_Body"><a name="2461102">Table hash partitioning can improve performance of queries on large tables. To enable hash partitioning on a table, add the </a><span class="cv_-_computer_voice">&lt;ora-table-hash-partitioning&gt;</span> element to the <span class="cv_-_computer_voice">&lt;ora-table-ddl&gt;</span> block of <span class="cv_-_computer_voice">&lt;ora-db-ddl&gt;</span> in <span class="cv_-_computer_voice">database-config.xml</span>. For example:</div>
+      <PRE class="CF_-_Code_First_Line"><a name="2462537">&lt;database name="BillingCenterDatabase" dbtype="oracle" autoupgrade="false"&gt;</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2462538">&nbsp;&nbsp;...</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2462539">&nbsp;&nbsp;&lt;upgrade&gt;</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2462540">&nbsp;&nbsp;&nbsp;&nbsp;...</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2421696">&nbsp;&nbsp;&nbsp;&nbsp;&lt;ora-db-ddl&gt;</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2421697">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;ora-table-ddl name="</a><span class="pc_-_parameter_in_code">Table Name</span>"&gt;</PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2421698">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;ora-table-hash-partitioning hash-column="</a><span class="pc_-_parameter_in_code">column name</span>" num-partitions="<span class="pc_-_parameter_in_code">number</span>"/&gt;</PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2421699">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;/ora-table-ddl&gt;</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2421700">&nbsp;&nbsp;&nbsp;&nbsp;&lt;/ora-db-ddl&gt;</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2462609">&nbsp;&nbsp;&lt;/upgrade&gt;</a></PRE>
+      <PRE class="CL_-_Code_Last_Line"><a name="2462621">&lt;/database&gt;</a></PRE>
+      <div class="B_-_Body"><a name="2421702">If a keyable table is partitioned, by default, BillingCenter uses the </a><span class="cv_-_computer_voice">ID</span> column as the hash column. You can specify a different column by using the <span class="cv_-_computer_voice">hash-column</span> attribute on <span class="cv_-_computer_voice">&lt;ora-table-hash-partitioning&gt;</span>. For non-keyable tables, the <span class="cv_-_computer_voice">hash-column</span> attribute is required.</div>
+      <div class="B_-_Body"><a name="2463517">If a keyable table is partitioned, BillingCenter also partitions the primary key index and the index on </a><span class="cv_-_computer_voice">PublicID</span>. This index is on <span class="cv_-_computer_voice">PublicID</span> and <span class="cv_-_computer_voice">Retired</span> if the table is for a retireable entity.</div>
+      <div class="B_-_Body"><a name="2463532">By default, BillingCenter uses 128 partitions. You can override this number by defining a </a><span class="cv_-_computer_voice">num-partitions</span> attribute on <span class="cv_-_computer_voice">&lt;ora-table-hash-partitioning&gt;</span>.</div>
+      <div class="N_-_Note">
+        <span class="n_-_note">Note: </span><a name="2463524">BillingCenter creates partitions only when creating a table or index. BillingCenter does not modify existing tables or indexes. If a table is dropped and rebuilt during an upgrade, BillingCenter partitions the table if the table is configured to be partitioned. The schema verifier detects and flags if a table is configured as partitioned but is not, or if it is not configured as partitioned but is partitioned.</a></div>
+      <div class="H3_-_Heading_3_outer" style="margin-left: 36pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <h5 class="H3_-_Heading_3_inner" style="width: 18pt; white-space: nowrap"></h5>
+            </td>
+            <td width="100%">
+              <h5 class="H3_-_Heading_3_inner"><a name="2461743">Configuring Index Partitioning for Oracle</a></h5>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="B_-_Body"><a name="2461761">Index partitioning can improve performance of queries in large tables. You can use the DDL configuration element </a><span class="cv_-_computer_voice">&lt;ora-index-partitioning&gt;</span> in <span class="cv_-_computer_voice">database-config.xml</span> to specify Oracle index partitioning. </div>
+      <div class="B_-_Body"><a name="2462494">The </a><span class="cv_-_computer_voice">&lt;ora-index-partitioning&gt;</span> XML element is a subelement of <span class="cv_-_computer_voice">&lt;ora-index-ddl&gt;</span>, which is itself a subelement of <span class="cv_-_computer_voice">&lt;ora-table-ddl&gt;</span>. For example:</div>
+      <PRE class="CF_-_Code_First_Line"><a name="2462125">&lt;database name="BillingCenterDatabase" dbtype="oracle" autoupgrade="false"&gt;</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2462126">&nbsp;&nbsp;...</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2462127">&nbsp;&nbsp;&lt;upgrade&gt;</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2462351">&nbsp;&nbsp;&nbsp;&nbsp;...</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2462047">&nbsp;&nbsp;&nbsp;&nbsp;&lt;ora-db-ddl&gt;</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2462048">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;ora-table-ddl name="</a><span class="pst_-_parameter_in_code_snippets_table">Table Name</span>"&gt;</PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2462049">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;ora-index-ddl key-columns="</a><span class="pst_-_parameter_in_code_snippets_table">column1</span>,<span class="pst_-_parameter_in_code_snippets_table">column2</span>,..."&gt;</PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2462050">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;ora-index-partitioning </a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2462805">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;partitioning-type="LOCAL|HASH|RANGE" </a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2463196">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;// The next two elements apply only to the RANGE partitioning type.</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2462820">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;range-partitioning-column-list="</a><span class="pst_-_parameter_in_code_snippets_table">column1,column2,...</span>"&gt;</PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2462868">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;ora-index-range-partition value-list=</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2467099">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"</a><span class="pst_-_parameter_in_code_snippets_table">number1</span>|<span class="pst_-_parameter_in_code_snippets_table">’string1’</span><span class="ps_-_parameter_in_code_snippets">,</span><span class="pst_-_parameter_in_code_snippets_table">number2</span>|<span class="pst_-_parameter_in_code_snippets_table">’string2’</span><span class="ps_-_parameter_in_code_snippets">,...</span>"/&gt;</PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2467058">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;ora-index-range-partition value-list=</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2467120">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"</a><span class="pst_-_parameter_in_code_snippets_table">number1a</span>|<span class="pst_-_parameter_in_code_snippets_table">’string1a’</span><span class="ps_-_parameter_in_code_snippets">,</span><span class="pst_-_parameter_in_code_snippets_table">number2a</span>|<span class="pst_-_parameter_in_code_snippets_table">’string2a’</span><span class="ps_-_parameter_in_code_snippets">,...</span>"/&gt;</PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2467077">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;...</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2462924">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;/ora-index-partitioning </a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2462051">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;/ora-index-ddl&gt;</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2462052">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;/ora-table-ddl&gt;</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2462053">&nbsp;&nbsp;&nbsp;&nbsp;&lt;/ora-db-ddl&gt;</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2462040">&nbsp;&nbsp;&lt;/upgrade&gt;</a></PRE>
+      <PRE class="CL_-_Code_Last_Line"><a name="2462330">&lt;/database&gt;</a></PRE>
+      <div class="BI_-_Bullet_Item_outer" style="margin-left: 57pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="BI_-_Bullet_Item_inner" style="width: 15pt; white-space: nowrap">
+                <span class="bu_-_bullet">•	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="BI_-_Bullet_Item_inner"><a name="2462024">The attribute </a><span class="cv_-_computer_voice">partitioning-type</span> is required. This attribute can take the values <span class="cv_-_computer_voice">LOCAL</span>, <span class="cv_-_computer_voice">HASH</span>, or <span class="cv_-_computer_voice">RANGE</span>. </div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="BI2_-_Bullet_Item_002c_Level_2_outer" style="margin-left: 67pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="BI2_-_Bullet_Item_002c_Level_2_inner" style="width: 15pt; white-space: nowrap">
+                <span class="bu_-_bullet">•	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="BI2_-_Bullet_Item_002c_Level_2_inner"><span class="cv_-_computer_voice"><a name="2463004">LOCAL</a></span> – The attribute <span class="cv_-_computer_voice">partitioning-type</span> is the only attribute allowed, and the index will be partitioned as the table is partitioned. </div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="BI2_-_Bullet_Item_002c_Level_2_outer" style="margin-left: 67pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="BI2_-_Bullet_Item_002c_Level_2_inner" style="width: 15pt; white-space: nowrap">
+                <span class="bu_-_bullet">•	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="BI2_-_Bullet_Item_002c_Level_2_inner"><span class="cv_-_computer_voice"><a name="2463001">HASH</a></span> – The index will be globally hash-partitioned on the leading key of the index by using the number of partitions specified or the default number 128. </div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="BI2_-_Bullet_Item_002c_Level_2_outer" style="margin-left: 67pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="BI2_-_Bullet_Item_002c_Level_2_inner" style="width: 15pt; white-space: nowrap">
+                <span class="bu_-_bullet">•	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="BI2_-_Bullet_Item_002c_Level_2_inner"><span class="cv_-_computer_voice"><a name="2463054">RANGE</a></span> – The index will be range-partitioned by using the <span class="cv_-_computer_voice">range-partitioning-column-list</span> columns and the values specified in the <span class="cv_-_computer_voice">ora-index-range-partition</span> elements under this element.</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="LP2_-_List_Para_002c_Level_2"><a name="2461763">The </a><span class="cv_-_computer_voice">range-partitioning-column-list</span> element takes a comma-delimited list of columns to use for range-partitioning this index. This element requires the definition of one or more <span class="cv_-_computer_voice">ora-index-range-partition</span> elements.</div>
+      <div class="LP2_-_List_Para_002c_Level_2"><a name="2465883">The </a><span class="cv_-_computer_voice">ora-index-range-partition</span> defines the value range for each partition in <span class="cv_-_computer_voice">value-list</span>. It defines a comma-delimited, ordered list of literal values corresponding to the column list defined in <span class="cv_-_computer_voice">range-partitioning-column-list</span>. Any single <span class="cv_-_computer_voice">String</span> value must be inside single quotation marks. The entire list of values must be surrounded by double quotation marks. The values defined are used in the SQL clause <span class="cv_-_computer_voice">VALUES LESS THAN(value_list)</span>. Do not specify the last range, which will always be <span class="cv_-_computer_voice">VALUES</span> <span class="cv_-_computer_voice">LESS</span> <span class="cv_-_computer_voice">THAN</span> <span class="cv_-_computer_voice">(MAXVALUE[, MAXVALUE, ...])</span>.</div>
+      <div class="N_-_Note">
+        <span class="n_-_note">Note: </span><a name="2465768">BillingCenter does not support indexes that are range-partitioned on a date column.</a></div>
+      <div class="B_-_Body"><a name="2466101">For example, the following </a><span class="cv_-_computer_voice">database</span> block defines an index range partitioning that uses five partitions and two column values per partition. The final partition, created automatically by BillingCenter, uses the following values for the two columns defined in <span class="cv_-_computer_voice">range-partitioning-column-list</span>:</div>
+      <div class="BI_-_Bullet_Item_outer" style="margin-left: 57pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="BI_-_Bullet_Item_inner" style="width: 15pt; white-space: nowrap">
+                <span class="bu_-_bullet">•	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="BI_-_Bullet_Item_inner"><span class="cv_-_computer_voice"><a name="2466765">ADDRESSBOOKUID</a></span> – At least <span class="cv_-_computer_voice">'ab:830'</span> and less than <span class="cv_-_computer_voice">MAXVALUE</span></div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="BI_-_Bullet_Item_outer" style="margin-left: 57pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="BI_-_Bullet_Item_inner" style="width: 15pt; white-space: nowrap">
+                <span class="bu_-_bullet">•	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="BI_-_Bullet_Item_inner"><span class="cv_-_computer_voice"><a name="2466665">RETIRED</a></span> – At least 0 and less than <span class="cv_-_computer_voice">MAXVALUE</span></div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <PRE class="CF_-_Code_First_Line"><a name="2466332">&lt;database name="bcDatabase" dbtype="oracle" autoupgrade="false"&gt;</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2466361">...</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2466328">&nbsp;&nbsp;&lt;upgrade degree-parallel-ddl="1" verifyschema="true"&gt;</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2466291">&nbsp;&nbsp;&nbsp;&nbsp;&lt;ora-db-ddl&gt;</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2466292">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;tablespaces admin="bc_ADMIN" index="bc_INDEX" op="bc_OP" </a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2466379">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;staging="bc_STAGING" typelist="bc_TYPELIST"/&gt;</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2466293">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;ora-table-ddl table-name="bc_CLAIM"&gt;</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2466294">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;ora-index-ddl key-columns="ADDRESSBOOKUID, RETIRED, SUBTYPE, ID"&gt; </a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2466295">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;ora-index-partitioning partitioning-type="RANGE"</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2466464">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;range-partitioning-column-list="ADDRESSBOOKUID, RETIRED"&gt;</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2466296">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;ora-index-range-partition value-list="'ab:20', 0"/&gt;</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2466297">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;ora-index-range-partition value-list="'ab:40', 0"/&gt;</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2466298">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;ora-index-range-partition value-list="'ab:60', 0"/&gt;</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2466299">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;ora-index-range-partition value-list="'ab:830', 0"/&gt;</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2466300">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;/ora-index-partitioning&gt;</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2466301">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;/ora-index-ddl&gt;</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2466302">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;/ora-table-ddl&gt;</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2466303">&nbsp;&nbsp;&nbsp;&nbsp;&lt;/ora-db-ddl&gt;</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2466304">&nbsp;&nbsp;&lt;/upgrade&gt;</a></PRE>
+      <PRE class="CL_-_Code_Last_Line"><a name="2466286">&lt;/database&gt;</a></PRE>
+      <div class="H3_-_Heading_3_outer" style="margin-left: 36pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <h5 class="H3_-_Heading_3_inner" style="width: 18pt; white-space: nowrap"></h5>
+            </td>
+            <td width="100%">
+              <h5 class="H3_-_Heading_3_inner"><a name="2450518">Configuring Oracle Date Interval Partitioning</a></h5>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="B_-_Body"><a name="2450522">You can configure BillingCenter to use Oracle partitioning by date intervals. </a></div>
+      <div class="B_-_Body"><a name="2450523">To configure date interval partitioning on a table, add an </a><span class="cv_-_computer_voice">&lt;ora-table-date-interval-partitioning&gt;</span> element within <span class="cv_-_computer_voice">&lt;ora-table-ddl&gt;</span>. The <span class="cv_-_computer_voice">&lt;ora-table-ddl&gt;</span> element is a subelement of <span class="cv_-_computer_voice">&lt;ora-table-ddl&gt;</span> in the <span class="cv_-_computer_voice">&lt;database&gt;</span> element of <span class="cv_-_computer_voice">database-config.xml</span>. The <span class="cv_-_computer_voice">&lt;ora-table-date-interval-partitioning&gt;</span> element has two attributes. Use the <span class="cv_-_computer_voice">datecolumn</span> attribute to specify a non-nullable timestamp column that BillingCenter will use to determine partition boundaries. Use the <span class="cv_-_computer_voice">interval</span> attribute to specify the period of time for each partition. You can set <span class="cv_-_computer_voice">interval</span> to <span class="cv_-_computer_voice">DAILY</span>, <span class="cv_-_computer_voice">WEEKLY</span>, <span class="cv_-_computer_voice">MONTHLY</span>, <span class="cv_-_computer_voice">QUARTERLY</span>, or <span class="cv_-_computer_voice">YEARLY</span>. For example:</div>
+      <PRE class="CF_-_Code_First_Line"><a name="2450527">&lt;database&gt;</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2450528">&nbsp;&nbsp;...</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2450529">&nbsp;&nbsp;&lt;ora-db-ddl&gt;</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2450533">&nbsp;&nbsp;&nbsp;&nbsp;&lt;ora-table-ddl table-name="bc_table"&gt;</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2450534">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;ora-table-date-interval-partitioning datecolumn="updateTime" interval="MONTHLY"&gt;</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2450535">&nbsp;&nbsp;&nbsp;&nbsp;&lt;/ora-table-ddl&gt;</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2450536">&nbsp;&nbsp;&lt;/ora-db-ddl&gt;</a></PRE>
+      <PRE class="CL_-_Code_Last_Line"><a name="2450537">&lt;/database&gt;</a></PRE>
+      <div class="B_-_Body"><a name="2450541">BillingCenter stores partitioned data in the operational tablespace.</a></div>
+      <div class="H3_-_Heading_3_outer" style="margin-left: 36pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <h5 class="H3_-_Heading_3_inner" style="width: 18pt; white-space: nowrap"></h5>
+            </td>
+            <td width="100%">
+              <h5 class="H3_-_Heading_3_inner"><a name="2450675">Configuring Oracle Adaptive Optimization for BillingCenter</a></h5>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="B_-_Body"><a name="2450735">Oracle 12c introduced a feature called adaptive optimization. Guidewire has conducted performance testing of BillingCenter with adaptive optimization enabled and has not observed significant performance improvement. Therefore, you might want to disable adaptive optimization for BillingCenter.</a></div>
+      <div class="B_-_Body"><a name="2450839">Although you can completely disable adaptive optimization at the database level, this might impact your integrations and non-Guidewire schemas. So Guidewire provides a configuration option to control adaptive optimization for BillingCenter only.</a></div>
+      <div class="B_-_Body"><a name="2451128">You can disable adaptive optimization for BillingCenter by configuring the </a><span class="cv_-_computer_voice">adaptive-optimization</span> attribute of the <span class="cv_-_computer_voice">&lt;oracle-settings&gt;</span> element. Or you can set adaptive optimization for BillingCenter to reporting-only mode. In reporting-only mode, Oracle collects information required for adaptive optimization, but does not modify the plan. You can view this information in the adaptive plan report.</div>
+      <div class="B_-_Body"><a name="2451310">You can set </a><span class="cv_-_computer_voice">adaptive-optimization</span> to the following values:</div>
+      <div class="BI_-_Bullet_Item_outer" style="margin-left: 57pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="BI_-_Bullet_Item_inner" style="width: 15pt; white-space: nowrap">
+                <span class="bu_-_bullet">•	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="BI_-_Bullet_Item_inner"><span class="cv_-_computer_voice"><a name="2450980">REPORTING_ONLY</a></span> – BillingCenter sets both <span class="cv_-_computer_voice">OPTIMIZER_ADAPTIVE_FEATURES</span> and <span class="cv_-_computer_voice">OPTIMIZER_ADAPTIVE_REPORTING_ONLY</span> to <span class="cv_-_computer_voice">TRUE</span> every time it initializes a connection.</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="BI_-_Bullet_Item_outer" style="margin-left: 57pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="BI_-_Bullet_Item_inner" style="width: 15pt; white-space: nowrap">
+                <span class="bu_-_bullet">•	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="BI_-_Bullet_Item_inner"><span class="cv_-_computer_voice"><a name="2451537">OFF</a></span> – BillingCenter sets both <span class="cv_-_computer_voice">OPTIMIZER_ADAPTIVE_FEATURES</span> and <span class="cv_-_computer_voice">OPTIMIZER_ADAPTIVE_REPORTING_ONLY</span> to <span class="cv_-_computer_voice">FALSE</span> every time it initializes a connection.</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="B_-_Body"><a name="2451541">For example:</a></div>
+      <PRE class="CF_-_Code_First_Line"><a name="2451566">&lt;database&gt;</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2451567">&nbsp;&nbsp;...</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2451636">&nbsp;&nbsp;&lt;oracle-settings adaptive-optimization="OFF" /&gt;</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2451640">&nbsp;&nbsp;...</a></PRE>
+      <PRE class="CL_-_Code_Last_Line"><a name="2451644">&lt;/database&gt;</a></PRE>
+      <div class="B_-_Body"><a name="2451559">If you do not specify a value for </a><span class="cv_-_computer_voice">adaptive-optimization</span>, BillingCenter does not set the <span class="cv_-_computer_voice">OPTIMIZER_ADAPTIVE_FEATURES</span> and <span class="cv_-_computer_voice">OPTIMIZER_ADAPTIVE_REPORTING_ONLY</span> Oracle parameters.</div>
+      <script type="text/javascript" language="JavaScript1.2">
+        <!--
+          // Clear related topics
+          //
+          WWHClearRelatedTopics();
+
+          document.writeln(WWHRelatedTopicsInlineHTML());
+        // -->
+      </script>
+    </blockquote>
+    <script type="text/javascript" language="JavaScript1.2">
+      <!--
+        document.write(WWHRelatedTopicsDivTag() + WWHPopupDivTag() + WWHALinksDivTag());
+      // -->
+    </script>
+  </body>
+</html>

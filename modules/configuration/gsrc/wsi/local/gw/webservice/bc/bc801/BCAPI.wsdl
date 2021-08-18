@@ -1,0 +1,2951 @@
+<?xml version="1.0"?>
+<!-- Generated WSDL for gw.webservice.bc.bc801.BCAPI web service -->
+<wsdl:definitions targetNamespace="http://guidewire.com/bc/ws/gw/webservice/bc/bc801/BCAPI" name="BCAPI" xmlns:gwsoap="http://guidewire.com/ws/soapheaders" xmlns:gwwsdl="http://guidewire.com/pl/wsdl" xmlns:pogo="http://guidewire.com/bc/ws/gw/webservice/bc/bc801/NoteDTO" xmlns:pogo10="http://guidewire.com/bc/ws/gw/webservice/bc/bc801/DelinquencyProcessDTO" xmlns:pogo11="http://guidewire.com/bc/ws/gw/webservice/bc/bc801/ActivityInfoDTO" xmlns:pogo12="http://guidewire.com/gw/api/tools" xmlns:pogo13="http://guidewire.com/bc/ws/gw/webservice/bc/bc801/PremiumReportDueDateDTO" xmlns:pogo2="http://guidewire.com/bc/typekey" xmlns:pogo3="http://guidewire.com/bc/ws/gw/webservice/bc/bc801/DocumentDTO" xmlns:pogo4="http://guidewire.com/bc/ws/gw/webservice/bc/bc801/TroubleTicketDTO" xmlns:pogo5="http://guidewire.com/bc/ws/gw/webservice/bc/bc801/AccountInfoDTO" xmlns:pogo6="http://guidewire.com/bc/ws/gw/webservice/bc/bc801/ProducerInfoDTO" xmlns:pogo7="http://guidewire.com/bc/ws/gw/webservice/bc/bc801/AddressDTO" xmlns:pogo8="http://guidewire.com/bc/ws/gw/webservice/bc/bc801/PolicyPeriodInfoDTO" xmlns:pogo9="http://guidewire.com/bc/ws/gw/webservice/bc/bc801/CollateralRequirementDTO" xmlns:soap11="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:tns="http://guidewire.com/bc/ws/gw/webservice/bc/bc801/BCAPI" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsdl:types>
+    <xs:schema targetNamespace="http://guidewire.com/bc/ws/gw/webservice/bc/bc801/BCAPI" elementFormDefault="qualified" xmlns:gw="http://guidewire.com/xsd" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+      <xs:import namespace="http://guidewire.com/ws/soapheaders" schemaLocation="../../../../../../gw/xsd/guidewire/soapheaders.xsd"/>
+      <xs:import namespace="http://guidewire.com/bc/ws/gw/webservice/bc/bc801/PremiumReportDueDateDTO"/>
+      <xs:import namespace="http://guidewire.com/gw/api/tools"/>
+      <xs:import namespace="http://guidewire.com/bc/ws/gw/webservice/bc/bc801/ActivityInfoDTO"/>
+      <xs:import namespace="http://guidewire.com/bc/ws/gw/webservice/bc/bc801/DelinquencyProcessDTO"/>
+      <xs:import namespace="http://guidewire.com/bc/ws/gw/webservice/bc/bc801/CollateralRequirementDTO"/>
+      <xs:import namespace="http://guidewire.com/bc/ws/gw/webservice/bc/bc801/PolicyPeriodInfoDTO"/>
+      <xs:import namespace="http://guidewire.com/bc/ws/gw/webservice/bc/bc801/AddressDTO"/>
+      <xs:import namespace="http://guidewire.com/bc/ws/gw/webservice/bc/bc801/ProducerInfoDTO"/>
+      <xs:import namespace="http://guidewire.com/bc/ws/gw/webservice/bc/bc801/AccountInfoDTO"/>
+      <xs:import namespace="http://guidewire.com/bc/ws/gw/webservice/bc/bc801/TroubleTicketDTO"/>
+      <xs:import namespace="http://guidewire.com/bc/ws/gw/webservice/bc/bc801/DocumentDTO"/>
+      <xs:import namespace="http://guidewire.com/bc/typekey"/>
+      <xs:import namespace="http://guidewire.com/bc/ws/gw/webservice/bc/bc801/NoteDTO"/>
+      <!-- addNoteToAccount(NoteDTO, String) : String -->
+      <xs:element name="addNoteToAccount">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="noteDTO" minOccurs="0" type="pogo:NoteDTO"/>
+            <xs:element name="accountPublicID" type="xs:string" minOccurs="0"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="addNoteToAccountResponse">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="return" type="xs:string" minOccurs="0"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="SOAPServerException">
+        <xs:complexType/>
+      </xs:element>
+      <xs:element name="RequiredFieldException">
+        <xs:complexType/>
+      </xs:element>
+      <xs:element name="BadIdentifierException">
+        <xs:complexType/>
+      </xs:element>
+      <xs:element name="WsiAuthenticationException">
+        <xs:complexType/>
+      </xs:element>
+      <!-- addNoteToPolicyPeriod(NoteDTO, String) : String -->
+      <xs:element name="addNoteToPolicyPeriod">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="noteDTO" minOccurs="0" type="pogo:NoteDTO"/>
+            <xs:element name="policyPeriodPublicID" type="xs:string" minOccurs="0"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="addNoteToPolicyPeriodResponse">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="return" type="xs:string" minOccurs="0"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <!-- addNoteToProducer(NoteDTO, String) : String -->
+      <xs:element name="addNoteToProducer">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="noteDTO" minOccurs="0" type="pogo:NoteDTO"/>
+            <xs:element name="producerPublicID" type="xs:string" minOccurs="0"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="addNoteToProducerResponse">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="return" type="xs:string" minOccurs="0"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <!-- addNoteToTroubleTicket(NoteDTO, String) : String -->
+      <xs:element name="addNoteToTroubleTicket">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="noteDTO" minOccurs="0" type="pogo:NoteDTO"/>
+            <xs:element name="troubleTicketPublicID" type="xs:string" minOccurs="0"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="addNoteToTroubleTicketResponse">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="return" type="xs:string" minOccurs="0"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <!-- changeBillingMethodToAgencyBill(String) -->
+      <xs:element name="changeBillingMethodToAgencyBill">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="policyPeriodPublicID" type="xs:string" minOccurs="0"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="changeBillingMethodToAgencyBillResponse">
+        <xs:complexType/>
+      </xs:element>
+      <!-- changeBillingMethodToDirectBill(boolean, String) -->
+      <xs:element name="changeBillingMethodToDirectBill">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="createInvoiceForToday" type="xs:boolean"/>
+            <xs:element name="policyPeriodPublicID" type="xs:string" minOccurs="0"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="changeBillingMethodToDirectBillResponse">
+        <xs:complexType/>
+      </xs:element>
+      <!-- changeBillingMethodToListBill(String, String, String, String, Boolean) -->
+      <xs:element name="changeBillingMethodToListBill">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="policyPeriodPublicID" type="xs:string" minOccurs="0"/>
+            <xs:element name="listBillAccountPublicID" type="xs:string" minOccurs="0"/>
+            <xs:element name="paymentPlanPublicID" type="xs:string" minOccurs="0"/>
+            <xs:element name="invoiceStreamPublicID" type="xs:string" minOccurs="0"/>
+            <xs:element name="movePlannedInvoicesOnly" type="xs:boolean" minOccurs="0"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="changeBillingMethodToListBillResponse">
+        <xs:complexType/>
+      </xs:element>
+      <!-- addDocumentToAccount(DocumentDTO, String) : String -->
+      <xs:element name="addDocumentToAccount">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="documentDTO" minOccurs="0" type="pogo3:DocumentDTO"/>
+            <xs:element name="accountPublicID" type="xs:string" minOccurs="0"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="addDocumentToAccountResponse">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="return" type="xs:string" minOccurs="0"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <!-- addDocumentToPolicyPeriod(DocumentDTO, String) : String -->
+      <xs:element name="addDocumentToPolicyPeriod">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="documentDTO" minOccurs="0" type="pogo3:DocumentDTO"/>
+            <xs:element name="policyPeriodPublicID" type="xs:string" minOccurs="0"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="addDocumentToPolicyPeriodResponse">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="return" type="xs:string" minOccurs="0"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <!-- addDocumentToProducer(DocumentDTO, String) : String -->
+      <xs:element name="addDocumentToProducer">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="documentDTO" minOccurs="0" type="pogo3:DocumentDTO"/>
+            <xs:element name="producerPublicID" type="xs:string" minOccurs="0"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="addDocumentToProducerResponse">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="return" type="xs:string" minOccurs="0"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <!-- createSharedActivity(String, String, String, Priority, Date, Date, Boolean, TroubleTicketDTO) : String -->
+      <xs:element name="createSharedActivity">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="activityPatternPublicID" type="xs:string" minOccurs="0"/>
+            <xs:element name="subject" type="xs:string" minOccurs="0"/>
+            <xs:element name="description" type="xs:string" minOccurs="0"/>
+            <xs:element name="priority" minOccurs="0" type="pogo2:Priority"/>
+            <xs:element name="targetDate" type="xs:dateTime" gw:type="java.util.Date" minOccurs="0"/>
+            <xs:element name="escalationDate" type="xs:dateTime" gw:type="java.util.Date" minOccurs="0"/>
+            <xs:element name="mandatory" type="xs:boolean" minOccurs="0"/>
+            <xs:element name="troubleTicketDTO" minOccurs="0" type="pogo4:TroubleTicketDTO"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="createSharedActivityResponse">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="return" type="xs:string" minOccurs="0"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <!-- createActivity(String, String, String, Priority, Date, Date, Boolean, TroubleTicketDTO) : String -->
+      <xs:element name="createActivity">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="activityPatternPublicID" type="xs:string" minOccurs="0"/>
+            <xs:element name="subject" type="xs:string" minOccurs="0"/>
+            <xs:element name="description" type="xs:string" minOccurs="0"/>
+            <xs:element name="priority" minOccurs="0" type="pogo2:Priority"/>
+            <xs:element name="targetDate" type="xs:dateTime" gw:type="java.util.Date" minOccurs="0"/>
+            <xs:element name="escalationDate" type="xs:dateTime" gw:type="java.util.Date" minOccurs="0"/>
+            <xs:element name="mandatory" type="xs:boolean" minOccurs="0"/>
+            <xs:element name="troubleTicketDTO" minOccurs="0" type="pogo4:TroubleTicketDTO"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="createActivityResponse">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="return" type="xs:string" minOccurs="0"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <!-- createActivityAssignedToUser(String, String, String, Priority, Date, Date, Boolean, TroubleTicketDTO, String, String) : String -->
+      <xs:element name="createActivityAssignedToUser">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="activityPatternPublicID" type="xs:string" minOccurs="0"/>
+            <xs:element name="subject" type="xs:string" minOccurs="0"/>
+            <xs:element name="description" type="xs:string" minOccurs="0"/>
+            <xs:element name="priority" minOccurs="0" type="pogo2:Priority"/>
+            <xs:element name="targetDate" type="xs:dateTime" gw:type="java.util.Date" minOccurs="0"/>
+            <xs:element name="escalationDate" type="xs:dateTime" gw:type="java.util.Date" minOccurs="0"/>
+            <xs:element name="mandatory" type="xs:boolean" minOccurs="0"/>
+            <xs:element name="troubleTicketDTO" minOccurs="0" type="pogo4:TroubleTicketDTO"/>
+            <xs:element name="userPublicID" type="xs:string" minOccurs="0"/>
+            <xs:element name="groupPublicID" type="xs:string" minOccurs="0"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="createActivityAssignedToUserResponse">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="return" type="xs:string" minOccurs="0"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <!-- getAccountInfo(String) : AccountInfoDTO -->
+      <xs:element name="getAccountInfo">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="accountPublicID" type="xs:string" minOccurs="0"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="getAccountInfoResponse">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="return" minOccurs="0" type="pogo5:AccountInfoDTO"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <!-- getProducerInfo(String) : ProducerInfoDTO -->
+      <xs:element name="getProducerInfo">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="producerPublicID" type="xs:string" minOccurs="0"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="getProducerInfoResponse">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="return" minOccurs="0" type="pogo6:ProducerInfoDTO"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <!-- getPolicyPeriodInfo(String) : PolicyPeriodInfoDTO -->
+      <xs:element name="getPolicyPeriodInfo">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="policyPeriodPublicID" type="xs:string" minOccurs="0"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="getPolicyPeriodInfoResponse">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="return" minOccurs="0" type="pogo8:PolicyPeriodInfoDTO"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <!-- createCollateralRequirement(CollateralRequirementDTO) : String -->
+      <xs:element name="createCollateralRequirement">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="collateralRequirementDTO" minOccurs="0" type="pogo9:CollateralRequirementDTO"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="createCollateralRequirementResponse">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="return" type="xs:string" minOccurs="0"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="SOAPException">
+        <xs:complexType/>
+      </xs:element>
+      <!-- startDelinquencyOnAccount(String, DelinquencyReason) : DelinquencyProcessDTO -->
+      <xs:element name="startDelinquencyOnAccount">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="accountPublicID" type="xs:string" minOccurs="0"/>
+            <xs:element name="reason" minOccurs="0" type="pogo2:DelinquencyReason"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="startDelinquencyOnAccountResponse">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="return" minOccurs="0" type="pogo10:DelinquencyProcessDTO"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <!-- startDelinquencyOnPolicyPeriod(String, DelinquencyReason) : DelinquencyProcessDTO -->
+      <xs:element name="startDelinquencyOnPolicyPeriod">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="policyPeriodPublicID" type="xs:string" minOccurs="0"/>
+            <xs:element name="reason" minOccurs="0" type="pogo2:DelinquencyReason"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="startDelinquencyOnPolicyPeriodResponse">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="return" minOccurs="0" type="pogo10:DelinquencyProcessDTO"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <!-- triggerDelinquencyWorkflowOnAccount(String, WorkflowTriggerKey) : Boolean -->
+      <xs:element name="triggerDelinquencyWorkflowOnAccount">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="accountPublicID" type="xs:string" minOccurs="0"/>
+            <xs:element name="workflowTrigger" minOccurs="0" type="pogo2:WorkflowTriggerKey"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="triggerDelinquencyWorkflowOnAccountResponse">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="return" type="xs:boolean" minOccurs="0"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <!-- triggerDelinquencyWorkflowOnPolicyPeriod(String, WorkflowTriggerKey) : Boolean -->
+      <xs:element name="triggerDelinquencyWorkflowOnPolicyPeriod">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="policyPeriodPublicID" type="xs:string" minOccurs="0"/>
+            <xs:element name="workflowTrigger" minOccurs="0" type="pogo2:WorkflowTriggerKey"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="triggerDelinquencyWorkflowOnPolicyPeriodResponse">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="return" type="xs:boolean" minOccurs="0"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <!-- encryptDataOnStagingTables() -->
+      <xs:element name="encryptDataOnStagingTables">
+        <xs:complexType/>
+      </xs:element>
+      <xs:element name="encryptDataOnStagingTablesResponse">
+        <xs:complexType/>
+      </xs:element>
+      <!-- encryptDataOnStagingTablesAsBatchProcess() : ProcessID -->
+      <xs:element name="encryptDataOnStagingTablesAsBatchProcess">
+        <xs:complexType/>
+      </xs:element>
+      <xs:element name="encryptDataOnStagingTablesAsBatchProcessResponse">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="return" minOccurs="0" type="pogo12:ProcessID"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <!-- createPremiumReportDueDate(PremiumReportDueDateDTO) : String -->
+      <xs:element name="createPremiumReportDueDate">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="premiumReportDueDateDTO" minOccurs="0" type="pogo13:PremiumReportDueDateDTO"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="createPremiumReportDueDateResponse">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="return" type="xs:string" minOccurs="0"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <!-- cancelPremiumReportDueDate(String, Date, Date) : Boolean -->
+      <xs:element name="cancelPremiumReportDueDate">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="policyPeriodPublicID" type="xs:string" minOccurs="0"/>
+            <xs:element name="startDate" type="xs:dateTime" gw:type="java.util.Date" minOccurs="0"/>
+            <xs:element name="endDate" type="xs:dateTime" gw:type="java.util.Date" minOccurs="0"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="cancelPremiumReportDueDateResponse">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="return" type="xs:boolean" minOccurs="0"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+    </xs:schema>
+    <xs:schema targetNamespace="http://guidewire.com/bc/ws/gw/webservice/bc/bc801/NoteDTO" elementFormDefault="qualified" xmlns:gw="http://guidewire.com/xsd" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+      <xs:import namespace="http://guidewire.com/bc/ws/gw/webservice/bc/bc801/PremiumReportDueDateDTO"/>
+      <xs:import namespace="http://guidewire.com/gw/api/tools"/>
+      <xs:import namespace="http://guidewire.com/bc/ws/gw/webservice/bc/bc801/ActivityInfoDTO"/>
+      <xs:import namespace="http://guidewire.com/bc/ws/gw/webservice/bc/bc801/DelinquencyProcessDTO"/>
+      <xs:import namespace="http://guidewire.com/bc/ws/gw/webservice/bc/bc801/CollateralRequirementDTO"/>
+      <xs:import namespace="http://guidewire.com/bc/ws/gw/webservice/bc/bc801/PolicyPeriodInfoDTO"/>
+      <xs:import namespace="http://guidewire.com/bc/ws/gw/webservice/bc/bc801/AddressDTO"/>
+      <xs:import namespace="http://guidewire.com/bc/ws/gw/webservice/bc/bc801/ProducerInfoDTO"/>
+      <xs:import namespace="http://guidewire.com/bc/ws/gw/webservice/bc/bc801/AccountInfoDTO"/>
+      <xs:import namespace="http://guidewire.com/bc/ws/gw/webservice/bc/bc801/TroubleTicketDTO"/>
+      <xs:import namespace="http://guidewire.com/bc/ws/gw/webservice/bc/bc801/DocumentDTO"/>
+      <xs:import namespace="http://guidewire.com/bc/typekey"/>
+      <xs:complexType name="NoteDTO">
+        <xs:sequence>
+          <xs:element name="AuthorPublicID" type="xs:string" minOccurs="0"/>
+          <xs:element name="AuthoringDate" type="xs:dateTime" gw:type="java.util.Date" minOccurs="0"/>
+          <xs:element name="Body" type="xs:string" minOccurs="0"/>
+          <xs:element name="Confidential" type="xs:boolean" minOccurs="0"/>
+          <xs:element name="Language" minOccurs="0" type="pogo2:LanguageType"/>
+          <xs:element name="PublicID" type="xs:string" minOccurs="0"/>
+          <xs:element name="RelatedTo" minOccurs="0" type="pogo2:RelatedTo"/>
+          <xs:element name="SecurityType" minOccurs="0" type="pogo2:NoteSecurityType"/>
+          <xs:element name="Subject" type="xs:string" minOccurs="0"/>
+          <xs:element name="Topic" minOccurs="0" type="pogo2:NoteTopicType"/>
+        </xs:sequence>
+      </xs:complexType>
+    </xs:schema>
+    <xs:schema targetNamespace="http://guidewire.com/bc/typekey" elementFormDefault="qualified" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+      <xs:import namespace="http://guidewire.com/bc/ws/gw/webservice/bc/bc801/PremiumReportDueDateDTO"/>
+      <xs:import namespace="http://guidewire.com/gw/api/tools"/>
+      <xs:import namespace="http://guidewire.com/bc/ws/gw/webservice/bc/bc801/ActivityInfoDTO"/>
+      <xs:import namespace="http://guidewire.com/bc/ws/gw/webservice/bc/bc801/DelinquencyProcessDTO"/>
+      <xs:import namespace="http://guidewire.com/bc/ws/gw/webservice/bc/bc801/CollateralRequirementDTO"/>
+      <xs:import namespace="http://guidewire.com/bc/ws/gw/webservice/bc/bc801/PolicyPeriodInfoDTO"/>
+      <xs:import namespace="http://guidewire.com/bc/ws/gw/webservice/bc/bc801/AddressDTO"/>
+      <xs:import namespace="http://guidewire.com/bc/ws/gw/webservice/bc/bc801/ProducerInfoDTO"/>
+      <xs:import namespace="http://guidewire.com/bc/ws/gw/webservice/bc/bc801/AccountInfoDTO"/>
+      <xs:import namespace="http://guidewire.com/bc/ws/gw/webservice/bc/bc801/TroubleTicketDTO"/>
+      <xs:import namespace="http://guidewire.com/bc/ws/gw/webservice/bc/bc801/DocumentDTO"/>
+      <xs:import namespace="http://guidewire.com/bc/ws/gw/webservice/bc/bc801/NoteDTO"/>
+      <xs:simpleType name="LanguageType">
+        <xs:restriction base="xs:string">
+          <xs:enumeration value="en_US"/>
+          <xs:enumeration value="fr_CA"/>
+        </xs:restriction>
+      </xs:simpleType>
+      <xs:simpleType name="RelatedTo">
+        <xs:restriction base="xs:string">
+          <xs:enumeration value="account"/>
+          <xs:enumeration value="delinquencies"/>
+          <xs:enumeration value="disbursement"/>
+          <xs:enumeration value="invoices"/>
+          <xs:enumeration value="payments"/>
+          <xs:enumeration value="policies"/>
+          <xs:enumeration value="producer"/>
+          <xs:enumeration value="transactions"/>
+          <xs:enumeration value="troubleTickets"/>
+        </xs:restriction>
+      </xs:simpleType>
+      <xs:simpleType name="NoteSecurityType">
+        <xs:restriction base="xs:string">
+          <xs:enumeration value="unrestricted"/>
+          <xs:enumeration value="internalonly"/>
+          <xs:enumeration value="confidential"/>
+        </xs:restriction>
+      </xs:simpleType>
+      <xs:simpleType name="NoteTopicType">
+        <xs:restriction base="xs:string">
+          <xs:enumeration value="billingerror"/>
+          <xs:enumeration value="delinquency"/>
+          <xs:enumeration value="disbursement"/>
+          <xs:enumeration value="dispute"/>
+          <xs:enumeration value="general"/>
+          <xs:enumeration value="policytransfer"/>
+          <xs:enumeration value="renewalcarryover"/>
+          <xs:enumeration value="subrogation"/>
+        </xs:restriction>
+      </xs:simpleType>
+      <xs:simpleType name="DocumentSection">
+        <xs:restriction base="xs:string">
+          <xs:enumeration value="TestDocumentSection"/>
+        </xs:restriction>
+      </xs:simpleType>
+      <xs:simpleType name="DocumentSecurityType">
+        <xs:restriction base="xs:string">
+          <xs:enumeration value="unrestricted"/>
+          <xs:enumeration value="internalonly"/>
+          <xs:enumeration value="confidential"/>
+        </xs:restriction>
+      </xs:simpleType>
+      <xs:simpleType name="DocumentStatusType">
+        <xs:restriction base="xs:string">
+          <xs:enumeration value="approved"/>
+          <xs:enumeration value="approving"/>
+          <xs:enumeration value="draft"/>
+          <xs:enumeration value="final"/>
+          <xs:enumeration value="filed"/>
+        </xs:restriction>
+      </xs:simpleType>
+      <xs:simpleType name="DocumentType">
+        <xs:restriction base="xs:string">
+          <xs:enumeration value="billingerror"/>
+          <xs:enumeration value="delinquency"/>
+          <xs:enumeration value="disbursement"/>
+          <xs:enumeration value="dispute"/>
+          <xs:enumeration value="email"/>
+          <xs:enumeration value="email_sent"/>
+          <xs:enumeration value="general"/>
+          <xs:enumeration value="other"/>
+          <xs:enumeration value="policy_transfer"/>
+          <xs:enumeration value="renewal_carryover"/>
+          <xs:enumeration value="subrogation"/>
+        </xs:restriction>
+      </xs:simpleType>
+      <xs:simpleType name="Priority">
+        <xs:restriction base="xs:string">
+          <xs:enumeration value="urgent"/>
+          <xs:enumeration value="high"/>
+          <xs:enumeration value="normal"/>
+          <xs:enumeration value="low"/>
+        </xs:restriction>
+      </xs:simpleType>
+      <xs:simpleType name="TroubleTicketType">
+        <xs:restriction base="xs:string">
+          <xs:enumeration value="dispute"/>
+          <xs:enumeration value="processingerror"/>
+          <xs:enumeration value="customercomplaint"/>
+          <xs:enumeration value="customerquestion"/>
+          <xs:enumeration value="reporterror"/>
+          <xs:enumeration value="disasterhold"/>
+          <xs:enumeration value="automatic"/>
+        </xs:restriction>
+      </xs:simpleType>
+      <xs:simpleType name="AddressType">
+        <xs:restriction base="xs:string">
+          <xs:enumeration value="billing"/>
+          <xs:enumeration value="business"/>
+          <xs:enumeration value="home"/>
+          <xs:enumeration value="other"/>
+        </xs:restriction>
+      </xs:simpleType>
+      <xs:simpleType name="Country">
+        <xs:restriction base="xs:string">
+          <xs:enumeration value="US"/>
+          <xs:enumeration value="CA"/>
+          <xs:enumeration value="AF"/>
+          <xs:enumeration value="AL"/>
+          <xs:enumeration value="DZ"/>
+          <xs:enumeration value="AS"/>
+          <xs:enumeration value="AD"/>
+          <xs:enumeration value="AO"/>
+          <xs:enumeration value="AI"/>
+          <xs:enumeration value="AQ"/>
+          <xs:enumeration value="AG"/>
+          <xs:enumeration value="AR"/>
+          <xs:enumeration value="AM"/>
+          <xs:enumeration value="AW"/>
+          <xs:enumeration value="AU"/>
+          <xs:enumeration value="AT"/>
+          <xs:enumeration value="AZ"/>
+          <xs:enumeration value="BS"/>
+          <xs:enumeration value="BH"/>
+          <xs:enumeration value="BD"/>
+          <xs:enumeration value="BB"/>
+          <xs:enumeration value="BY"/>
+          <xs:enumeration value="BE"/>
+          <xs:enumeration value="BZ"/>
+          <xs:enumeration value="BJ"/>
+          <xs:enumeration value="BM"/>
+          <xs:enumeration value="BT"/>
+          <xs:enumeration value="BO"/>
+          <xs:enumeration value="BA"/>
+          <xs:enumeration value="BW"/>
+          <xs:enumeration value="BV"/>
+          <xs:enumeration value="BR"/>
+          <xs:enumeration value="IO"/>
+          <xs:enumeration value="VG"/>
+          <xs:enumeration value="BN"/>
+          <xs:enumeration value="BG"/>
+          <xs:enumeration value="BF"/>
+          <xs:enumeration value="BI"/>
+          <xs:enumeration value="KH"/>
+          <xs:enumeration value="CM"/>
+          <xs:enumeration value="CV"/>
+          <xs:enumeration value="KY"/>
+          <xs:enumeration value="CF"/>
+          <xs:enumeration value="TD"/>
+          <xs:enumeration value="CL"/>
+          <xs:enumeration value="CN"/>
+          <xs:enumeration value="CX"/>
+          <xs:enumeration value="CC"/>
+          <xs:enumeration value="CO"/>
+          <xs:enumeration value="KM"/>
+          <xs:enumeration value="CG"/>
+          <xs:enumeration value="CD"/>
+          <xs:enumeration value="CK"/>
+          <xs:enumeration value="CR"/>
+          <xs:enumeration value="HR"/>
+          <xs:enumeration value="CU"/>
+          <xs:enumeration value="CY"/>
+          <xs:enumeration value="CZ"/>
+          <xs:enumeration value="DK"/>
+          <xs:enumeration value="DJ"/>
+          <xs:enumeration value="DM"/>
+          <xs:enumeration value="DO"/>
+          <xs:enumeration value="EC"/>
+          <xs:enumeration value="EG"/>
+          <xs:enumeration value="SV"/>
+          <xs:enumeration value="GQ"/>
+          <xs:enumeration value="ER"/>
+          <xs:enumeration value="EE"/>
+          <xs:enumeration value="ET"/>
+          <xs:enumeration value="FK"/>
+          <xs:enumeration value="FO"/>
+          <xs:enumeration value="FJ"/>
+          <xs:enumeration value="FI"/>
+          <xs:enumeration value="FR"/>
+          <xs:enumeration value="GF"/>
+          <xs:enumeration value="PF"/>
+          <xs:enumeration value="TF"/>
+          <xs:enumeration value="GA"/>
+          <xs:enumeration value="GM"/>
+          <xs:enumeration value="GE"/>
+          <xs:enumeration value="DE"/>
+          <xs:enumeration value="GH"/>
+          <xs:enumeration value="GI"/>
+          <xs:enumeration value="GR"/>
+          <xs:enumeration value="GL"/>
+          <xs:enumeration value="GD"/>
+          <xs:enumeration value="GP"/>
+          <xs:enumeration value="GU"/>
+          <xs:enumeration value="GT"/>
+          <xs:enumeration value="GN"/>
+          <xs:enumeration value="GW"/>
+          <xs:enumeration value="GY"/>
+          <xs:enumeration value="HT"/>
+          <xs:enumeration value="HM"/>
+          <xs:enumeration value="HN"/>
+          <xs:enumeration value="HK"/>
+          <xs:enumeration value="HU"/>
+          <xs:enumeration value="IS"/>
+          <xs:enumeration value="IN"/>
+          <xs:enumeration value="ID"/>
+          <xs:enumeration value="IR"/>
+          <xs:enumeration value="IQ"/>
+          <xs:enumeration value="IE"/>
+          <xs:enumeration value="IL"/>
+          <xs:enumeration value="IT"/>
+          <xs:enumeration value="CI"/>
+          <xs:enumeration value="JM"/>
+          <xs:enumeration value="JP"/>
+          <xs:enumeration value="JO"/>
+          <xs:enumeration value="KZ"/>
+          <xs:enumeration value="KE"/>
+          <xs:enumeration value="KI"/>
+          <xs:enumeration value="KP"/>
+          <xs:enumeration value="KR"/>
+          <xs:enumeration value="KW"/>
+          <xs:enumeration value="KG"/>
+          <xs:enumeration value="LA"/>
+          <xs:enumeration value="LV"/>
+          <xs:enumeration value="LB"/>
+          <xs:enumeration value="LS"/>
+          <xs:enumeration value="LR"/>
+          <xs:enumeration value="LY"/>
+          <xs:enumeration value="LI"/>
+          <xs:enumeration value="LT"/>
+          <xs:enumeration value="LU"/>
+          <xs:enumeration value="MO"/>
+          <xs:enumeration value="MK"/>
+          <xs:enumeration value="MG"/>
+          <xs:enumeration value="MW"/>
+          <xs:enumeration value="MY"/>
+          <xs:enumeration value="MV"/>
+          <xs:enumeration value="ML"/>
+          <xs:enumeration value="MT"/>
+          <xs:enumeration value="MH"/>
+          <xs:enumeration value="MQ"/>
+          <xs:enumeration value="MR"/>
+          <xs:enumeration value="MU"/>
+          <xs:enumeration value="YT"/>
+          <xs:enumeration value="MX"/>
+          <xs:enumeration value="FM"/>
+          <xs:enumeration value="MD"/>
+          <xs:enumeration value="MC"/>
+          <xs:enumeration value="MN"/>
+          <xs:enumeration value="ME"/>
+          <xs:enumeration value="MS"/>
+          <xs:enumeration value="MA"/>
+          <xs:enumeration value="MZ"/>
+          <xs:enumeration value="MM"/>
+          <xs:enumeration value="NA"/>
+          <xs:enumeration value="NR"/>
+          <xs:enumeration value="NP"/>
+          <xs:enumeration value="NL"/>
+          <xs:enumeration value="AN"/>
+          <xs:enumeration value="NC"/>
+          <xs:enumeration value="NZ"/>
+          <xs:enumeration value="NI"/>
+          <xs:enumeration value="NE"/>
+          <xs:enumeration value="NG"/>
+          <xs:enumeration value="NU"/>
+          <xs:enumeration value="NF"/>
+          <xs:enumeration value="MP"/>
+          <xs:enumeration value="NO"/>
+          <xs:enumeration value="OM"/>
+          <xs:enumeration value="PK"/>
+          <xs:enumeration value="PW"/>
+          <xs:enumeration value="PS"/>
+          <xs:enumeration value="PA"/>
+          <xs:enumeration value="PG"/>
+          <xs:enumeration value="PY"/>
+          <xs:enumeration value="PE"/>
+          <xs:enumeration value="PH"/>
+          <xs:enumeration value="PN"/>
+          <xs:enumeration value="PL"/>
+          <xs:enumeration value="PT"/>
+          <xs:enumeration value="PR"/>
+          <xs:enumeration value="QA"/>
+          <xs:enumeration value="RE"/>
+          <xs:enumeration value="RO"/>
+          <xs:enumeration value="RU"/>
+          <xs:enumeration value="RW"/>
+          <xs:enumeration value="BL"/>
+          <xs:enumeration value="MF"/>
+          <xs:enumeration value="WS"/>
+          <xs:enumeration value="SM"/>
+          <xs:enumeration value="ST"/>
+          <xs:enumeration value="SA"/>
+          <xs:enumeration value="SN"/>
+          <xs:enumeration value="RS"/>
+          <xs:enumeration value="SC"/>
+          <xs:enumeration value="SL"/>
+          <xs:enumeration value="SG"/>
+          <xs:enumeration value="SK"/>
+          <xs:enumeration value="SI"/>
+          <xs:enumeration value="SB"/>
+          <xs:enumeration value="SO"/>
+          <xs:enumeration value="ZA"/>
+          <xs:enumeration value="GS"/>
+          <xs:enumeration value="ES"/>
+          <xs:enumeration value="LK"/>
+          <xs:enumeration value="SH"/>
+          <xs:enumeration value="KN"/>
+          <xs:enumeration value="LC"/>
+          <xs:enumeration value="PM"/>
+          <xs:enumeration value="VC"/>
+          <xs:enumeration value="SD"/>
+          <xs:enumeration value="SR"/>
+          <xs:enumeration value="SJ"/>
+          <xs:enumeration value="SZ"/>
+          <xs:enumeration value="SE"/>
+          <xs:enumeration value="CH"/>
+          <xs:enumeration value="SY"/>
+          <xs:enumeration value="TW"/>
+          <xs:enumeration value="TJ"/>
+          <xs:enumeration value="TZ"/>
+          <xs:enumeration value="TH"/>
+          <xs:enumeration value="TL"/>
+          <xs:enumeration value="TG"/>
+          <xs:enumeration value="TK"/>
+          <xs:enumeration value="TO"/>
+          <xs:enumeration value="TT"/>
+          <xs:enumeration value="TN"/>
+          <xs:enumeration value="TR"/>
+          <xs:enumeration value="TM"/>
+          <xs:enumeration value="TC"/>
+          <xs:enumeration value="TV"/>
+          <xs:enumeration value="UM"/>
+          <xs:enumeration value="VI"/>
+          <xs:enumeration value="UG"/>
+          <xs:enumeration value="UA"/>
+          <xs:enumeration value="AE"/>
+          <xs:enumeration value="GB"/>
+          <xs:enumeration value="UY"/>
+          <xs:enumeration value="UZ"/>
+          <xs:enumeration value="VU"/>
+          <xs:enumeration value="VA"/>
+          <xs:enumeration value="VE"/>
+          <xs:enumeration value="VN"/>
+          <xs:enumeration value="WF"/>
+          <xs:enumeration value="EH"/>
+          <xs:enumeration value="YE"/>
+          <xs:enumeration value="ZM"/>
+          <xs:enumeration value="ZW"/>
+          <xs:enumeration value="unknown"/>
+        </xs:restriction>
+      </xs:simpleType>
+      <xs:simpleType name="State">
+        <xs:restriction base="xs:string">
+          <xs:enumeration value="Hokkaido"/>
+          <xs:enumeration value="Aomori"/>
+          <xs:enumeration value="Iwate"/>
+          <xs:enumeration value="Miyagi"/>
+          <xs:enumeration value="Akita"/>
+          <xs:enumeration value="Yamagata"/>
+          <xs:enumeration value="Fukushima"/>
+          <xs:enumeration value="Ibaraki"/>
+          <xs:enumeration value="AU_JBT"/>
+          <xs:enumeration value="Tochigi"/>
+          <xs:enumeration value="Gumma"/>
+          <xs:enumeration value="Saitama"/>
+          <xs:enumeration value="Chiba"/>
+          <xs:enumeration value="Tokyo"/>
+          <xs:enumeration value="Kanagawa"/>
+          <xs:enumeration value="Niigata"/>
+          <xs:enumeration value="Toyama"/>
+          <xs:enumeration value="Ishikawa"/>
+          <xs:enumeration value="Fukui"/>
+          <xs:enumeration value="Yamanashi"/>
+          <xs:enumeration value="Nagano"/>
+          <xs:enumeration value="Gifu"/>
+          <xs:enumeration value="Shizuoka"/>
+          <xs:enumeration value="Aichi"/>
+          <xs:enumeration value="Mie"/>
+          <xs:enumeration value="Shiga"/>
+          <xs:enumeration value="Kyoto"/>
+          <xs:enumeration value="Osaka"/>
+          <xs:enumeration value="Hyogo"/>
+          <xs:enumeration value="Nara"/>
+          <xs:enumeration value="Wakayama"/>
+          <xs:enumeration value="Tottori"/>
+          <xs:enumeration value="Shimane"/>
+          <xs:enumeration value="Okayama"/>
+          <xs:enumeration value="Hiroshima"/>
+          <xs:enumeration value="Yamaguchi"/>
+          <xs:enumeration value="Tokushima"/>
+          <xs:enumeration value="Kagawa"/>
+          <xs:enumeration value="Ehime"/>
+          <xs:enumeration value="Kochi"/>
+          <xs:enumeration value="Fukuoka"/>
+          <xs:enumeration value="Saga"/>
+          <xs:enumeration value="Nagasaki"/>
+          <xs:enumeration value="Kumamoto"/>
+          <xs:enumeration value="Oita"/>
+          <xs:enumeration value="Miyazaki"/>
+          <xs:enumeration value="Kagoshima"/>
+          <xs:enumeration value="Okinawa"/>
+          <xs:enumeration value="AU_ACT"/>
+          <xs:enumeration value="AL"/>
+          <xs:enumeration value="AK"/>
+          <xs:enumeration value="AB"/>
+          <xs:enumeration value="AZ"/>
+          <xs:enumeration value="AR"/>
+          <xs:enumeration value="DE_BW"/>
+          <xs:enumeration value="DE_BY"/>
+          <xs:enumeration value="DE_BE"/>
+          <xs:enumeration value="DE_BB"/>
+          <xs:enumeration value="DE_HB"/>
+          <xs:enumeration value="BC"/>
+          <xs:enumeration value="CA"/>
+          <xs:enumeration value="CO"/>
+          <xs:enumeration value="CT"/>
+          <xs:enumeration value="DE"/>
+          <xs:enumeration value="DC"/>
+          <xs:enumeration value="FM"/>
+          <xs:enumeration value="FL"/>
+          <xs:enumeration value="GA"/>
+          <xs:enumeration value="GU"/>
+          <xs:enumeration value="DE_HH"/>
+          <xs:enumeration value="HI"/>
+          <xs:enumeration value="DE_HE"/>
+          <xs:enumeration value="ID"/>
+          <xs:enumeration value="IL"/>
+          <xs:enumeration value="IN"/>
+          <xs:enumeration value="IA"/>
+          <xs:enumeration value="KS"/>
+          <xs:enumeration value="KY"/>
+          <xs:enumeration value="LA"/>
+          <xs:enumeration value="DE_NI"/>
+          <xs:enumeration value="ME"/>
+          <xs:enumeration value="MB"/>
+          <xs:enumeration value="MH"/>
+          <xs:enumeration value="MD"/>
+          <xs:enumeration value="MA"/>
+          <xs:enumeration value="DE_MV"/>
+          <xs:enumeration value="MI"/>
+          <xs:enumeration value="MN"/>
+          <xs:enumeration value="MS"/>
+          <xs:enumeration value="MO"/>
+          <xs:enumeration value="MT"/>
+          <xs:enumeration value="NE"/>
+          <xs:enumeration value="NV"/>
+          <xs:enumeration value="NB"/>
+          <xs:enumeration value="NH"/>
+          <xs:enumeration value="NJ"/>
+          <xs:enumeration value="NM"/>
+          <xs:enumeration value="AU_NSW"/>
+          <xs:enumeration value="NY"/>
+          <xs:enumeration value="NL"/>
+          <xs:enumeration value="NC"/>
+          <xs:enumeration value="ND"/>
+          <xs:enumeration value="DE_NW"/>
+          <xs:enumeration value="MP"/>
+          <xs:enumeration value="AU_NT"/>
+          <xs:enumeration value="NT"/>
+          <xs:enumeration value="NS"/>
+          <xs:enumeration value="NU"/>
+          <xs:enumeration value="OH"/>
+          <xs:enumeration value="OK"/>
+          <xs:enumeration value="ON"/>
+          <xs:enumeration value="OR"/>
+          <xs:enumeration value="PA"/>
+          <xs:enumeration value="PE"/>
+          <xs:enumeration value="PR"/>
+          <xs:enumeration value="QC"/>
+          <xs:enumeration value="AU_QLD"/>
+          <xs:enumeration value="DE_RP"/>
+          <xs:enumeration value="RI"/>
+          <xs:enumeration value="DE_SL"/>
+          <xs:enumeration value="SK"/>
+          <xs:enumeration value="DE_SN"/>
+          <xs:enumeration value="DE_ST"/>
+          <xs:enumeration value="DE_SH"/>
+          <xs:enumeration value="AU_SA"/>
+          <xs:enumeration value="SC"/>
+          <xs:enumeration value="SD"/>
+          <xs:enumeration value="AU_TAS"/>
+          <xs:enumeration value="TN"/>
+          <xs:enumeration value="TX"/>
+          <xs:enumeration value="DE_TH"/>
+          <xs:enumeration value="UT"/>
+          <xs:enumeration value="VT"/>
+          <xs:enumeration value="AU_VIC"/>
+          <xs:enumeration value="VI"/>
+          <xs:enumeration value="VA"/>
+          <xs:enumeration value="WA"/>
+          <xs:enumeration value="WV"/>
+          <xs:enumeration value="AU_WA"/>
+          <xs:enumeration value="WI"/>
+          <xs:enumeration value="WY"/>
+          <xs:enumeration value="YT"/>
+        </xs:restriction>
+      </xs:simpleType>
+      <xs:simpleType name="CollateralRequirementType">
+        <xs:restriction base="xs:string">
+          <xs:enumeration value="cash"/>
+          <xs:enumeration value="loc"/>
+          <xs:enumeration value="mixed"/>
+        </xs:restriction>
+      </xs:simpleType>
+      <xs:simpleType name="DelinquencyReason">
+        <xs:restriction base="xs:string">
+          <xs:enumeration value="CollatShortfall"/>
+          <xs:enumeration value="FailureToReport"/>
+          <xs:enumeration value="NotTaken"/>
+          <xs:enumeration value="Other"/>
+          <xs:enumeration value="PastDue"/>
+          <xs:enumeration value="ProducerRefer"/>
+        </xs:restriction>
+      </xs:simpleType>
+      <xs:simpleType name="ActivityStatus">
+        <xs:restriction base="xs:string">
+          <xs:enumeration value="open"/>
+          <xs:enumeration value="skipped"/>
+          <xs:enumeration value="complete"/>
+          <xs:enumeration value="canceled"/>
+          <xs:enumeration value="obsolete"/>
+        </xs:restriction>
+      </xs:simpleType>
+      <xs:simpleType name="ActivityType">
+        <xs:restriction base="xs:string">
+          <xs:enumeration value="approval"/>
+          <xs:enumeration value="approvaldenied"/>
+          <xs:enumeration value="assignmentreview"/>
+          <xs:enumeration value="general"/>
+        </xs:restriction>
+      </xs:simpleType>
+      <xs:simpleType name="DelinquencyProcessStatus">
+        <xs:restriction base="xs:string">
+          <xs:enumeration value="Closed"/>
+          <xs:enumeration value="Error"/>
+          <xs:enumeration value="OnHold"/>
+          <xs:enumeration value="Open"/>
+        </xs:restriction>
+      </xs:simpleType>
+      <xs:simpleType name="WorkflowState">
+        <xs:restriction base="xs:string">
+          <xs:enumeration value="active"/>
+          <xs:enumeration value="completed"/>
+          <xs:enumeration value="error"/>
+          <xs:enumeration value="suspended"/>
+        </xs:restriction>
+      </xs:simpleType>
+      <xs:simpleType name="WorkflowTriggerKey">
+        <xs:restriction base="xs:string">
+          <xs:enumeration value="Cancel"/>
+          <xs:enumeration value="CanceledInPAS"/>
+          <xs:enumeration value="ExitDelinquency"/>
+        </xs:restriction>
+      </xs:simpleType>
+    </xs:schema>
+    <xs:schema targetNamespace="http://guidewire.com/bc/ws/gw/webservice/bc/bc801/DocumentDTO" elementFormDefault="qualified" xmlns:gw="http://guidewire.com/xsd" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+      <xs:import namespace="http://guidewire.com/bc/ws/gw/webservice/bc/bc801/PremiumReportDueDateDTO"/>
+      <xs:import namespace="http://guidewire.com/gw/api/tools"/>
+      <xs:import namespace="http://guidewire.com/bc/ws/gw/webservice/bc/bc801/ActivityInfoDTO"/>
+      <xs:import namespace="http://guidewire.com/bc/ws/gw/webservice/bc/bc801/DelinquencyProcessDTO"/>
+      <xs:import namespace="http://guidewire.com/bc/ws/gw/webservice/bc/bc801/CollateralRequirementDTO"/>
+      <xs:import namespace="http://guidewire.com/bc/ws/gw/webservice/bc/bc801/PolicyPeriodInfoDTO"/>
+      <xs:import namespace="http://guidewire.com/bc/ws/gw/webservice/bc/bc801/AddressDTO"/>
+      <xs:import namespace="http://guidewire.com/bc/ws/gw/webservice/bc/bc801/ProducerInfoDTO"/>
+      <xs:import namespace="http://guidewire.com/bc/ws/gw/webservice/bc/bc801/AccountInfoDTO"/>
+      <xs:import namespace="http://guidewire.com/bc/ws/gw/webservice/bc/bc801/TroubleTicketDTO"/>
+      <xs:import namespace="http://guidewire.com/bc/typekey"/>
+      <xs:import namespace="http://guidewire.com/bc/ws/gw/webservice/bc/bc801/NoteDTO"/>
+      <xs:complexType name="DocumentDTO">
+        <xs:sequence>
+          <xs:element name="Author" type="xs:string" minOccurs="0"/>
+          <xs:element name="DMS" type="xs:boolean" minOccurs="0"/>
+          <xs:element name="DateCreated" type="xs:dateTime" gw:type="java.util.Date" minOccurs="0"/>
+          <xs:element name="DateModified" type="xs:dateTime" gw:type="java.util.Date" minOccurs="0"/>
+          <xs:element name="Description" type="xs:string" minOccurs="0"/>
+          <xs:element name="DocUID" type="xs:string" minOccurs="0"/>
+          <xs:element name="DocumentIdentifier" type="xs:string" minOccurs="0"/>
+          <xs:element name="Inbound" type="xs:boolean" minOccurs="0"/>
+          <xs:element name="Language" minOccurs="0" type="pogo2:LanguageType"/>
+          <xs:element name="MimeType" type="xs:string" minOccurs="0"/>
+          <xs:element name="Name" type="xs:string" minOccurs="0"/>
+          <xs:element name="Obsolete" type="xs:boolean" minOccurs="0"/>
+          <xs:element name="PendingDocUID" type="xs:string" minOccurs="0"/>
+          <xs:element name="PublicID" type="xs:string" minOccurs="0"/>
+          <xs:element name="Recipient" type="xs:string" minOccurs="0"/>
+          <xs:element name="Section" minOccurs="0" type="pogo2:DocumentSection"/>
+          <xs:element name="SecurityType" minOccurs="0" type="pogo2:DocumentSecurityType"/>
+          <xs:element name="Status" minOccurs="0" type="pogo2:DocumentStatusType"/>
+          <xs:element name="Type" minOccurs="0" type="pogo2:DocumentType"/>
+        </xs:sequence>
+      </xs:complexType>
+    </xs:schema>
+    <xs:schema targetNamespace="http://guidewire.com/bc/ws/gw/webservice/bc/bc801/TroubleTicketDTO" elementFormDefault="qualified" xmlns:gw="http://guidewire.com/xsd" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+      <xs:import namespace="http://guidewire.com/bc/ws/gw/webservice/bc/bc801/PremiumReportDueDateDTO"/>
+      <xs:import namespace="http://guidewire.com/gw/api/tools"/>
+      <xs:import namespace="http://guidewire.com/bc/ws/gw/webservice/bc/bc801/ActivityInfoDTO"/>
+      <xs:import namespace="http://guidewire.com/bc/ws/gw/webservice/bc/bc801/DelinquencyProcessDTO"/>
+      <xs:import namespace="http://guidewire.com/bc/ws/gw/webservice/bc/bc801/CollateralRequirementDTO"/>
+      <xs:import namespace="http://guidewire.com/bc/ws/gw/webservice/bc/bc801/PolicyPeriodInfoDTO"/>
+      <xs:import namespace="http://guidewire.com/bc/ws/gw/webservice/bc/bc801/AddressDTO"/>
+      <xs:import namespace="http://guidewire.com/bc/ws/gw/webservice/bc/bc801/ProducerInfoDTO"/>
+      <xs:import namespace="http://guidewire.com/bc/ws/gw/webservice/bc/bc801/AccountInfoDTO"/>
+      <xs:import namespace="http://guidewire.com/bc/ws/gw/webservice/bc/bc801/DocumentDTO"/>
+      <xs:import namespace="http://guidewire.com/bc/typekey"/>
+      <xs:import namespace="http://guidewire.com/bc/ws/gw/webservice/bc/bc801/NoteDTO"/>
+      <xs:complexType name="TroubleTicketDTO">
+        <xs:sequence>
+          <xs:element name="CloseUserPublicID" type="xs:string" minOccurs="0"/>
+          <xs:element name="DetailedDescription" type="xs:string" minOccurs="0"/>
+          <xs:element name="EscalationDate" type="xs:dateTime" gw:type="java.util.Date" minOccurs="0"/>
+          <xs:element name="HoldPublicID" type="xs:string" minOccurs="0"/>
+          <xs:element name="Priority" minOccurs="0" type="pogo2:Priority"/>
+          <xs:element name="PublicID" type="xs:string" minOccurs="0"/>
+          <xs:element name="TargetDate" type="xs:dateTime" gw:type="java.util.Date" minOccurs="0"/>
+          <xs:element name="TicketType" minOccurs="0" type="pogo2:TroubleTicketType"/>
+          <xs:element name="Title" type="xs:string" minOccurs="0"/>
+          <xs:element name="TroubleTicketNumber" type="xs:string" minOccurs="0"/>
+        </xs:sequence>
+      </xs:complexType>
+    </xs:schema>
+    <xs:schema targetNamespace="http://guidewire.com/bc/ws/gw/webservice/bc/bc801/AccountInfoDTO" elementFormDefault="qualified" xmlns:gw="http://guidewire.com/xsd" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+      <xs:import namespace="http://guidewire.com/bc/ws/gw/webservice/bc/bc801/PremiumReportDueDateDTO"/>
+      <xs:import namespace="http://guidewire.com/gw/api/tools"/>
+      <xs:import namespace="http://guidewire.com/bc/ws/gw/webservice/bc/bc801/ActivityInfoDTO"/>
+      <xs:import namespace="http://guidewire.com/bc/ws/gw/webservice/bc/bc801/DelinquencyProcessDTO"/>
+      <xs:import namespace="http://guidewire.com/bc/ws/gw/webservice/bc/bc801/CollateralRequirementDTO"/>
+      <xs:import namespace="http://guidewire.com/bc/ws/gw/webservice/bc/bc801/PolicyPeriodInfoDTO"/>
+      <xs:import namespace="http://guidewire.com/bc/ws/gw/webservice/bc/bc801/AddressDTO"/>
+      <xs:import namespace="http://guidewire.com/bc/ws/gw/webservice/bc/bc801/ProducerInfoDTO"/>
+      <xs:import namespace="http://guidewire.com/bc/ws/gw/webservice/bc/bc801/TroubleTicketDTO"/>
+      <xs:import namespace="http://guidewire.com/bc/ws/gw/webservice/bc/bc801/DocumentDTO"/>
+      <xs:import namespace="http://guidewire.com/bc/typekey"/>
+      <xs:import namespace="http://guidewire.com/bc/ws/gw/webservice/bc/bc801/NoteDTO"/>
+      <xs:complexType name="AccountInfoDTO">
+        <xs:sequence>
+          <xs:element name="AccountName" type="xs:string" minOccurs="0"/>
+          <xs:element name="AccountNameKanji" type="xs:string" minOccurs="0"/>
+          <xs:element name="AmountBilled" type="xs:string" gw:type="gw.pl.currency.MonetaryAmount" minOccurs="0"/>
+          <xs:element name="AmountDue" type="xs:string" gw:type="gw.pl.currency.MonetaryAmount" minOccurs="0"/>
+          <xs:element name="AmountInUnappliedFunds" type="xs:string" gw:type="gw.pl.currency.MonetaryAmount" minOccurs="0"/>
+          <xs:element name="AmountPaid" type="xs:string" gw:type="gw.pl.currency.MonetaryAmount" minOccurs="0"/>
+          <xs:element name="AmountUnbilled" type="xs:string" gw:type="gw.pl.currency.MonetaryAmount" minOccurs="0"/>
+          <xs:element name="Delinquent" type="xs:boolean" minOccurs="0"/>
+          <xs:element name="HasOpenPolicies" type="xs:boolean" minOccurs="0"/>
+          <xs:element name="InfoDate" type="xs:dateTime" gw:type="java.util.Date" minOccurs="0"/>
+          <xs:element name="LastInvoiceAmount" type="xs:string" gw:type="gw.pl.currency.MonetaryAmount" minOccurs="0"/>
+          <xs:element name="LastInvoiceDueDate" type="xs:dateTime" gw:type="java.util.Date" minOccurs="0"/>
+          <xs:element name="LastPaymentAmount" type="xs:string" gw:type="gw.pl.currency.MonetaryAmount" minOccurs="0"/>
+          <xs:element name="LastPaymentReceivedDate" type="xs:dateTime" gw:type="java.util.Date" minOccurs="0"/>
+          <xs:element name="NextInvoiceAmount" type="xs:string" gw:type="gw.pl.currency.MonetaryAmount" minOccurs="0"/>
+          <xs:element name="NextInvoiceDueDate" type="xs:dateTime" gw:type="java.util.Date" minOccurs="0"/>
+          <xs:element name="PublicID" type="xs:string" minOccurs="0"/>
+        </xs:sequence>
+      </xs:complexType>
+    </xs:schema>
+    <xs:schema targetNamespace="http://guidewire.com/bc/ws/gw/webservice/bc/bc801/ProducerInfoDTO" elementFormDefault="qualified" xmlns:gw="http://guidewire.com/xsd" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+      <xs:import namespace="http://guidewire.com/bc/ws/gw/webservice/bc/bc801/PremiumReportDueDateDTO"/>
+      <xs:import namespace="http://guidewire.com/gw/api/tools"/>
+      <xs:import namespace="http://guidewire.com/bc/ws/gw/webservice/bc/bc801/ActivityInfoDTO"/>
+      <xs:import namespace="http://guidewire.com/bc/ws/gw/webservice/bc/bc801/DelinquencyProcessDTO"/>
+      <xs:import namespace="http://guidewire.com/bc/ws/gw/webservice/bc/bc801/CollateralRequirementDTO"/>
+      <xs:import namespace="http://guidewire.com/bc/ws/gw/webservice/bc/bc801/PolicyPeriodInfoDTO"/>
+      <xs:import namespace="http://guidewire.com/bc/ws/gw/webservice/bc/bc801/AddressDTO"/>
+      <xs:import namespace="http://guidewire.com/bc/ws/gw/webservice/bc/bc801/AccountInfoDTO"/>
+      <xs:import namespace="http://guidewire.com/bc/ws/gw/webservice/bc/bc801/TroubleTicketDTO"/>
+      <xs:import namespace="http://guidewire.com/bc/ws/gw/webservice/bc/bc801/DocumentDTO"/>
+      <xs:import namespace="http://guidewire.com/bc/typekey"/>
+      <xs:import namespace="http://guidewire.com/bc/ws/gw/webservice/bc/bc801/NoteDTO"/>
+      <xs:complexType name="ProducerInfoDTO">
+        <xs:sequence>
+          <xs:element name="InfoDate" type="xs:dateTime" gw:type="java.util.Date" minOccurs="0"/>
+          <xs:element name="Name" type="xs:string" minOccurs="0"/>
+          <xs:element name="NameKanji" type="xs:string" minOccurs="0"/>
+          <xs:element name="PrimaryAddress" minOccurs="0" type="pogo7:AddressDTO"/>
+          <xs:element name="PublicID" type="xs:string" minOccurs="0"/>
+          <xs:element name="TotalGrossPremium" type="xs:string" gw:type="gw.pl.currency.MonetaryAmount" minOccurs="0"/>
+          <xs:element name="TotalOutstanding" type="xs:string" gw:type="gw.pl.currency.MonetaryAmount" minOccurs="0"/>
+          <xs:element name="TotalPastDue" type="xs:string" gw:type="gw.pl.currency.MonetaryAmount" minOccurs="0"/>
+        </xs:sequence>
+      </xs:complexType>
+    </xs:schema>
+    <xs:schema targetNamespace="http://guidewire.com/bc/ws/gw/webservice/bc/bc801/AddressDTO" elementFormDefault="qualified" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+      <xs:import namespace="http://guidewire.com/bc/ws/gw/webservice/bc/bc801/PremiumReportDueDateDTO"/>
+      <xs:import namespace="http://guidewire.com/gw/api/tools"/>
+      <xs:import namespace="http://guidewire.com/bc/ws/gw/webservice/bc/bc801/ActivityInfoDTO"/>
+      <xs:import namespace="http://guidewire.com/bc/ws/gw/webservice/bc/bc801/DelinquencyProcessDTO"/>
+      <xs:import namespace="http://guidewire.com/bc/ws/gw/webservice/bc/bc801/CollateralRequirementDTO"/>
+      <xs:import namespace="http://guidewire.com/bc/ws/gw/webservice/bc/bc801/PolicyPeriodInfoDTO"/>
+      <xs:import namespace="http://guidewire.com/bc/ws/gw/webservice/bc/bc801/ProducerInfoDTO"/>
+      <xs:import namespace="http://guidewire.com/bc/ws/gw/webservice/bc/bc801/AccountInfoDTO"/>
+      <xs:import namespace="http://guidewire.com/bc/ws/gw/webservice/bc/bc801/TroubleTicketDTO"/>
+      <xs:import namespace="http://guidewire.com/bc/ws/gw/webservice/bc/bc801/DocumentDTO"/>
+      <xs:import namespace="http://guidewire.com/bc/typekey"/>
+      <xs:import namespace="http://guidewire.com/bc/ws/gw/webservice/bc/bc801/NoteDTO"/>
+      <xs:complexType name="AddressDTO">
+        <xs:sequence>
+          <xs:element name="AddressBookUID" type="xs:string" minOccurs="0"/>
+          <xs:element name="AddressLine1" type="xs:string" minOccurs="0"/>
+          <xs:element name="AddressLine1Kanji" type="xs:string" minOccurs="0"/>
+          <xs:element name="AddressLine2" type="xs:string" minOccurs="0"/>
+          <xs:element name="AddressLine2Kanji" type="xs:string" minOccurs="0"/>
+          <xs:element name="AddressLine3" type="xs:string" minOccurs="0"/>
+          <xs:element name="AddressType" minOccurs="0" type="pogo2:AddressType"/>
+          <xs:element name="CEDEX" type="xs:boolean" minOccurs="0"/>
+          <xs:element name="CEDEXBureau" type="xs:string" minOccurs="0"/>
+          <xs:element name="City" type="xs:string" minOccurs="0"/>
+          <xs:element name="CityKanji" type="xs:string" minOccurs="0"/>
+          <xs:element name="Country" minOccurs="0" type="pogo2:Country"/>
+          <xs:element name="County" type="xs:string" minOccurs="0"/>
+          <xs:element name="PostalCode" type="xs:string" minOccurs="0"/>
+          <xs:element name="PublicID" type="xs:string" minOccurs="0"/>
+          <xs:element name="State" minOccurs="0" type="pogo2:State"/>
+        </xs:sequence>
+      </xs:complexType>
+    </xs:schema>
+    <xs:schema targetNamespace="http://guidewire.com/bc/ws/gw/webservice/bc/bc801/PolicyPeriodInfoDTO" elementFormDefault="qualified" xmlns:gw="http://guidewire.com/xsd" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+      <xs:import namespace="http://guidewire.com/bc/ws/gw/webservice/bc/bc801/PremiumReportDueDateDTO"/>
+      <xs:import namespace="http://guidewire.com/gw/api/tools"/>
+      <xs:import namespace="http://guidewire.com/bc/ws/gw/webservice/bc/bc801/ActivityInfoDTO"/>
+      <xs:import namespace="http://guidewire.com/bc/ws/gw/webservice/bc/bc801/DelinquencyProcessDTO"/>
+      <xs:import namespace="http://guidewire.com/bc/ws/gw/webservice/bc/bc801/CollateralRequirementDTO"/>
+      <xs:import namespace="http://guidewire.com/bc/ws/gw/webservice/bc/bc801/AddressDTO"/>
+      <xs:import namespace="http://guidewire.com/bc/ws/gw/webservice/bc/bc801/ProducerInfoDTO"/>
+      <xs:import namespace="http://guidewire.com/bc/ws/gw/webservice/bc/bc801/AccountInfoDTO"/>
+      <xs:import namespace="http://guidewire.com/bc/ws/gw/webservice/bc/bc801/TroubleTicketDTO"/>
+      <xs:import namespace="http://guidewire.com/bc/ws/gw/webservice/bc/bc801/DocumentDTO"/>
+      <xs:import namespace="http://guidewire.com/bc/typekey"/>
+      <xs:import namespace="http://guidewire.com/bc/ws/gw/webservice/bc/bc801/NoteDTO"/>
+      <xs:complexType name="PolicyPeriodInfoDTO">
+        <xs:sequence>
+          <xs:element name="AccountPublicID" type="xs:string" minOccurs="0"/>
+          <xs:element name="AmountBilled" type="xs:string" gw:type="gw.pl.currency.MonetaryAmount" minOccurs="0"/>
+          <xs:element name="AmountDue" type="xs:string" gw:type="gw.pl.currency.MonetaryAmount" minOccurs="0"/>
+          <xs:element name="AmountInUnappliedFund" type="xs:string" gw:type="gw.pl.currency.MonetaryAmount" minOccurs="0"/>
+          <xs:element name="AmountPaid" type="xs:string" gw:type="gw.pl.currency.MonetaryAmount" minOccurs="0"/>
+          <xs:element name="AmountUnbilled" type="xs:string" gw:type="gw.pl.currency.MonetaryAmount" minOccurs="0"/>
+          <xs:element name="Delinquent" type="xs:boolean" minOccurs="0"/>
+          <xs:element name="EffectiveDate" type="xs:dateTime" gw:type="java.util.Date" minOccurs="0"/>
+          <xs:element name="ExpirationDate" type="xs:dateTime" gw:type="java.util.Date" minOccurs="0"/>
+          <xs:element name="InfoDate" type="xs:dateTime" gw:type="java.util.Date" minOccurs="0"/>
+          <xs:element name="LastInvoiceAmount" type="xs:string" gw:type="gw.pl.currency.MonetaryAmount" minOccurs="0"/>
+          <xs:element name="LastInvoiceDueDate" type="xs:dateTime" gw:type="java.util.Date" minOccurs="0"/>
+          <xs:element name="LastPaymentAmount" type="xs:string" gw:type="gw.pl.currency.MonetaryAmount" minOccurs="0"/>
+          <xs:element name="LastPaymentReceivedDate" type="xs:dateTime" gw:type="java.util.Date" minOccurs="0"/>
+          <xs:element name="NextInvoiceAmount" type="xs:string" gw:type="gw.pl.currency.MonetaryAmount" minOccurs="0"/>
+          <xs:element name="NextInvoiceDueDate" type="xs:dateTime" gw:type="java.util.Date" minOccurs="0"/>
+          <xs:element name="PrimaryInsuredName" type="xs:string" minOccurs="0"/>
+          <xs:element name="PublicID" type="xs:string" minOccurs="0"/>
+        </xs:sequence>
+      </xs:complexType>
+    </xs:schema>
+    <xs:schema targetNamespace="http://guidewire.com/bc/ws/gw/webservice/bc/bc801/CollateralRequirementDTO" elementFormDefault="qualified" xmlns:gw="http://guidewire.com/xsd" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+      <xs:import namespace="http://guidewire.com/bc/ws/gw/webservice/bc/bc801/PremiumReportDueDateDTO"/>
+      <xs:import namespace="http://guidewire.com/gw/api/tools"/>
+      <xs:import namespace="http://guidewire.com/bc/ws/gw/webservice/bc/bc801/ActivityInfoDTO"/>
+      <xs:import namespace="http://guidewire.com/bc/ws/gw/webservice/bc/bc801/DelinquencyProcessDTO"/>
+      <xs:import namespace="http://guidewire.com/bc/ws/gw/webservice/bc/bc801/PolicyPeriodInfoDTO"/>
+      <xs:import namespace="http://guidewire.com/bc/ws/gw/webservice/bc/bc801/AddressDTO"/>
+      <xs:import namespace="http://guidewire.com/bc/ws/gw/webservice/bc/bc801/ProducerInfoDTO"/>
+      <xs:import namespace="http://guidewire.com/bc/ws/gw/webservice/bc/bc801/AccountInfoDTO"/>
+      <xs:import namespace="http://guidewire.com/bc/ws/gw/webservice/bc/bc801/TroubleTicketDTO"/>
+      <xs:import namespace="http://guidewire.com/bc/ws/gw/webservice/bc/bc801/DocumentDTO"/>
+      <xs:import namespace="http://guidewire.com/bc/typekey"/>
+      <xs:import namespace="http://guidewire.com/bc/ws/gw/webservice/bc/bc801/NoteDTO"/>
+      <xs:complexType name="CollateralRequirementDTO">
+        <xs:sequence>
+          <xs:element name="CollateralPublicID" type="xs:string" minOccurs="0"/>
+          <xs:element name="EffectiveDate" type="xs:dateTime" gw:type="java.util.Date" minOccurs="0"/>
+          <xs:element name="ExpirationDate" type="xs:dateTime" gw:type="java.util.Date" minOccurs="0"/>
+          <xs:element name="PolicyPeriodPublicID" type="xs:string" minOccurs="0"/>
+          <xs:element name="PolicyPublicID" type="xs:string" minOccurs="0"/>
+          <xs:element name="PublicID" type="xs:string" minOccurs="0"/>
+          <xs:element name="Required" type="xs:string" gw:type="gw.pl.currency.MonetaryAmount" minOccurs="0"/>
+          <xs:element name="RequirementName" type="xs:string" minOccurs="0"/>
+          <xs:element name="RequirementType" minOccurs="0" type="pogo2:CollateralRequirementType"/>
+          <xs:element name="Segregated" type="xs:boolean" minOccurs="0"/>
+        </xs:sequence>
+      </xs:complexType>
+    </xs:schema>
+    <xs:schema targetNamespace="http://guidewire.com/bc/ws/gw/webservice/bc/bc801/DelinquencyProcessDTO" elementFormDefault="qualified" xmlns:gw="http://guidewire.com/xsd" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+      <xs:import namespace="http://guidewire.com/bc/ws/gw/webservice/bc/bc801/PremiumReportDueDateDTO"/>
+      <xs:import namespace="http://guidewire.com/gw/api/tools"/>
+      <xs:import namespace="http://guidewire.com/bc/ws/gw/webservice/bc/bc801/ActivityInfoDTO"/>
+      <xs:import namespace="http://guidewire.com/bc/ws/gw/webservice/bc/bc801/CollateralRequirementDTO"/>
+      <xs:import namespace="http://guidewire.com/bc/ws/gw/webservice/bc/bc801/PolicyPeriodInfoDTO"/>
+      <xs:import namespace="http://guidewire.com/bc/ws/gw/webservice/bc/bc801/AddressDTO"/>
+      <xs:import namespace="http://guidewire.com/bc/ws/gw/webservice/bc/bc801/ProducerInfoDTO"/>
+      <xs:import namespace="http://guidewire.com/bc/ws/gw/webservice/bc/bc801/AccountInfoDTO"/>
+      <xs:import namespace="http://guidewire.com/bc/ws/gw/webservice/bc/bc801/TroubleTicketDTO"/>
+      <xs:import namespace="http://guidewire.com/bc/ws/gw/webservice/bc/bc801/DocumentDTO"/>
+      <xs:import namespace="http://guidewire.com/bc/typekey"/>
+      <xs:import namespace="http://guidewire.com/bc/ws/gw/webservice/bc/bc801/NoteDTO"/>
+      <xs:complexType name="DelinquencyProcessDTO">
+        <xs:sequence>
+          <xs:element name="Activities" minOccurs="0" gw:viewas="array">
+            <xs:complexType>
+              <xs:sequence>
+                <xs:element minOccurs="0" maxOccurs="unbounded" name="Entry" nillable="true" type="pogo11:ActivityInfoDTO"/>
+              </xs:sequence>
+            </xs:complexType>
+          </xs:element>
+          <xs:element name="Amount" type="xs:string" gw:type="gw.pl.currency.MonetaryAmount" minOccurs="0"/>
+          <xs:element name="CurrentEventCompleted" type="xs:boolean" minOccurs="0"/>
+          <xs:element name="CurrentEventCompletionDate" type="xs:dateTime" gw:type="java.util.Date" minOccurs="0"/>
+          <xs:element name="CurrentEventDescription" type="xs:string" minOccurs="0"/>
+          <xs:element name="CurrentEventTargetDate" type="xs:dateTime" gw:type="java.util.Date" minOccurs="0"/>
+          <xs:element name="DelinquencyPlanName" type="xs:string" minOccurs="0"/>
+          <xs:element name="GracePeriodEndDate" type="xs:dateTime" gw:type="java.util.Date" minOccurs="0"/>
+          <xs:element name="NextEventDescription" type="xs:string" minOccurs="0"/>
+          <xs:element name="NextEventTargetDate" type="xs:dateTime" gw:type="java.util.Date" minOccurs="0"/>
+          <xs:element name="PublicID" type="xs:string" minOccurs="0"/>
+          <xs:element name="Reason" minOccurs="0" type="pogo2:DelinquencyReason"/>
+          <xs:element name="StartDate" type="xs:dateTime" gw:type="java.util.Date" minOccurs="0"/>
+          <xs:element name="Status" minOccurs="0" type="pogo2:DelinquencyProcessStatus"/>
+          <xs:element name="TargetAccountPublicID" type="xs:string" minOccurs="0"/>
+          <xs:element name="TargetPolicyPeriodPublicID" type="xs:string" minOccurs="0"/>
+          <xs:element name="WorkflowState" minOccurs="0" type="pogo2:WorkflowState"/>
+        </xs:sequence>
+      </xs:complexType>
+    </xs:schema>
+    <xs:schema targetNamespace="http://guidewire.com/bc/ws/gw/webservice/bc/bc801/ActivityInfoDTO" elementFormDefault="qualified" xmlns:gw="http://guidewire.com/xsd" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+      <xs:import namespace="http://guidewire.com/bc/ws/gw/webservice/bc/bc801/PremiumReportDueDateDTO"/>
+      <xs:import namespace="http://guidewire.com/gw/api/tools"/>
+      <xs:import namespace="http://guidewire.com/bc/ws/gw/webservice/bc/bc801/DelinquencyProcessDTO"/>
+      <xs:import namespace="http://guidewire.com/bc/ws/gw/webservice/bc/bc801/CollateralRequirementDTO"/>
+      <xs:import namespace="http://guidewire.com/bc/ws/gw/webservice/bc/bc801/PolicyPeriodInfoDTO"/>
+      <xs:import namespace="http://guidewire.com/bc/ws/gw/webservice/bc/bc801/AddressDTO"/>
+      <xs:import namespace="http://guidewire.com/bc/ws/gw/webservice/bc/bc801/ProducerInfoDTO"/>
+      <xs:import namespace="http://guidewire.com/bc/ws/gw/webservice/bc/bc801/AccountInfoDTO"/>
+      <xs:import namespace="http://guidewire.com/bc/ws/gw/webservice/bc/bc801/TroubleTicketDTO"/>
+      <xs:import namespace="http://guidewire.com/bc/ws/gw/webservice/bc/bc801/DocumentDTO"/>
+      <xs:import namespace="http://guidewire.com/bc/typekey"/>
+      <xs:import namespace="http://guidewire.com/bc/ws/gw/webservice/bc/bc801/NoteDTO"/>
+      <xs:complexType name="ActivityInfoDTO">
+        <xs:sequence>
+          <xs:element name="ApprovalRationale" type="xs:string" minOccurs="0"/>
+          <xs:element name="Approved" type="xs:boolean" minOccurs="0"/>
+          <xs:element name="AssignedUserPublicID" type="xs:string" minOccurs="0"/>
+          <xs:element name="CloseUserPublicID" type="xs:string" minOccurs="0"/>
+          <xs:element name="CreateTime" type="xs:dateTime" gw:type="java.util.Date" minOccurs="0"/>
+          <xs:element name="Description" type="xs:string" minOccurs="0"/>
+          <xs:element name="EndDate" type="xs:dateTime" gw:type="java.util.Date" minOccurs="0"/>
+          <xs:element name="Escalated" type="xs:boolean" minOccurs="0"/>
+          <xs:element name="EscalationDate" type="xs:dateTime" gw:type="java.util.Date" minOccurs="0"/>
+          <xs:element name="Mandatory" type="xs:boolean" minOccurs="0"/>
+          <xs:element name="Priority" minOccurs="0" type="pogo2:Priority"/>
+          <xs:element name="PublicID" type="xs:string" minOccurs="0"/>
+          <xs:element name="Status" minOccurs="0" type="pogo2:ActivityStatus"/>
+          <xs:element name="Subject" type="xs:string" minOccurs="0"/>
+          <xs:element name="TargetDate" type="xs:dateTime" gw:type="java.util.Date" minOccurs="0"/>
+          <xs:element name="Type" minOccurs="0" type="pogo2:ActivityType"/>
+        </xs:sequence>
+      </xs:complexType>
+    </xs:schema>
+    <xs:schema targetNamespace="http://guidewire.com/gw/api/tools" elementFormDefault="qualified" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+      <xs:import namespace="http://guidewire.com/bc/ws/gw/webservice/bc/bc801/PremiumReportDueDateDTO"/>
+      <xs:import namespace="http://guidewire.com/bc/ws/gw/webservice/bc/bc801/ActivityInfoDTO"/>
+      <xs:import namespace="http://guidewire.com/bc/ws/gw/webservice/bc/bc801/DelinquencyProcessDTO"/>
+      <xs:import namespace="http://guidewire.com/bc/ws/gw/webservice/bc/bc801/CollateralRequirementDTO"/>
+      <xs:import namespace="http://guidewire.com/bc/ws/gw/webservice/bc/bc801/PolicyPeriodInfoDTO"/>
+      <xs:import namespace="http://guidewire.com/bc/ws/gw/webservice/bc/bc801/AddressDTO"/>
+      <xs:import namespace="http://guidewire.com/bc/ws/gw/webservice/bc/bc801/ProducerInfoDTO"/>
+      <xs:import namespace="http://guidewire.com/bc/ws/gw/webservice/bc/bc801/AccountInfoDTO"/>
+      <xs:import namespace="http://guidewire.com/bc/ws/gw/webservice/bc/bc801/TroubleTicketDTO"/>
+      <xs:import namespace="http://guidewire.com/bc/ws/gw/webservice/bc/bc801/DocumentDTO"/>
+      <xs:import namespace="http://guidewire.com/bc/typekey"/>
+      <xs:import namespace="http://guidewire.com/bc/ws/gw/webservice/bc/bc801/NoteDTO"/>
+      <xs:complexType name="ProcessID">
+        <xs:sequence>
+          <xs:element name="Pid" type="xs:long" minOccurs="0"/>
+        </xs:sequence>
+      </xs:complexType>
+    </xs:schema>
+    <xs:schema targetNamespace="http://guidewire.com/bc/ws/gw/webservice/bc/bc801/PremiumReportDueDateDTO" elementFormDefault="qualified" xmlns:gw="http://guidewire.com/xsd" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+      <xs:import namespace="http://guidewire.com/gw/api/tools"/>
+      <xs:import namespace="http://guidewire.com/bc/ws/gw/webservice/bc/bc801/ActivityInfoDTO"/>
+      <xs:import namespace="http://guidewire.com/bc/ws/gw/webservice/bc/bc801/DelinquencyProcessDTO"/>
+      <xs:import namespace="http://guidewire.com/bc/ws/gw/webservice/bc/bc801/CollateralRequirementDTO"/>
+      <xs:import namespace="http://guidewire.com/bc/ws/gw/webservice/bc/bc801/PolicyPeriodInfoDTO"/>
+      <xs:import namespace="http://guidewire.com/bc/ws/gw/webservice/bc/bc801/AddressDTO"/>
+      <xs:import namespace="http://guidewire.com/bc/ws/gw/webservice/bc/bc801/ProducerInfoDTO"/>
+      <xs:import namespace="http://guidewire.com/bc/ws/gw/webservice/bc/bc801/AccountInfoDTO"/>
+      <xs:import namespace="http://guidewire.com/bc/ws/gw/webservice/bc/bc801/TroubleTicketDTO"/>
+      <xs:import namespace="http://guidewire.com/bc/ws/gw/webservice/bc/bc801/DocumentDTO"/>
+      <xs:import namespace="http://guidewire.com/bc/typekey"/>
+      <xs:import namespace="http://guidewire.com/bc/ws/gw/webservice/bc/bc801/NoteDTO"/>
+      <xs:complexType name="PremiumReportDueDateDTO">
+        <xs:sequence>
+          <xs:element name="DelinquencyProcessPublicID" type="xs:string" minOccurs="0"/>
+          <xs:element name="DueDate" type="xs:dateTime" gw:type="java.util.Date" minOccurs="0"/>
+          <xs:element name="PeriodEndDate" type="xs:dateTime" gw:type="java.util.Date" minOccurs="0"/>
+          <xs:element name="PeriodStartDate" type="xs:dateTime" gw:type="java.util.Date" minOccurs="0"/>
+          <xs:element name="PremiumReportBIPublicIDs" minOccurs="0" gw:viewas="array">
+            <xs:complexType>
+              <xs:sequence>
+                <xs:element minOccurs="0" maxOccurs="unbounded" name="Entry" type="xs:string" nillable="true"/>
+              </xs:sequence>
+            </xs:complexType>
+          </xs:element>
+          <xs:element name="PremiumReportDDPolicyPeriodPublicID" type="xs:string" minOccurs="0"/>
+          <xs:element name="PublicID" type="xs:string" minOccurs="0"/>
+        </xs:sequence>
+      </xs:complexType>
+    </xs:schema>
+  </wsdl:types>
+  <wsdl:portType name="BCAPIPortType">
+    <wsdl:operation name="addNoteToAccount">
+      <wsdl:input name="addNoteToAccount" message="tns:addNoteToAccount"/>
+      <wsdl:output name="addNoteToAccountResponse" message="tns:addNoteToAccountResponse"/>
+      <!-- If communication error or any other SOAP problem occurs. -->
+      <wsdl:fault name="SOAPServerException" message="tns:SOAPServerException"/>
+      <!-- If accountPublicID is null. -->
+      <wsdl:fault name="RequiredFieldException" message="tns:RequiredFieldException"/>
+      <!-- If there is no Account with PublicID matching accountPublicID. -->
+      <wsdl:fault name="BadIdentifierException" message="tns:BadIdentifierException"/>
+      <wsdl:fault name="WsiAuthenticationException" message="tns:WsiAuthenticationException"/>
+    </wsdl:operation>
+    <wsdl:operation name="addNoteToPolicyPeriod">
+      <wsdl:input name="addNoteToPolicyPeriod" message="tns:addNoteToPolicyPeriod"/>
+      <wsdl:output name="addNoteToPolicyPeriodResponse" message="tns:addNoteToPolicyPeriodResponse"/>
+      <!-- If communication error or any other SOAP problem occurs. -->
+      <wsdl:fault name="SOAPServerException" message="tns:SOAPServerException"/>
+      <!-- If policyPeriodPublicID is null. -->
+      <wsdl:fault name="RequiredFieldException" message="tns:RequiredFieldException"/>
+      <!-- If there is no PolicyPeriod with PublicID matching policyPeriodPublicID. -->
+      <wsdl:fault name="BadIdentifierException" message="tns:BadIdentifierException"/>
+      <wsdl:fault name="WsiAuthenticationException" message="tns:WsiAuthenticationException"/>
+    </wsdl:operation>
+    <wsdl:operation name="addNoteToProducer">
+      <wsdl:input name="addNoteToProducer" message="tns:addNoteToProducer"/>
+      <wsdl:output name="addNoteToProducerResponse" message="tns:addNoteToProducerResponse"/>
+      <!-- If communication error or any other SOAP problem occurs. -->
+      <wsdl:fault name="SOAPServerException" message="tns:SOAPServerException"/>
+      <!-- If producerPublicID is null. -->
+      <wsdl:fault name="RequiredFieldException" message="tns:RequiredFieldException"/>
+      <!-- If there is no Producer with PublicID matching producerPublicID. -->
+      <wsdl:fault name="BadIdentifierException" message="tns:BadIdentifierException"/>
+      <wsdl:fault name="WsiAuthenticationException" message="tns:WsiAuthenticationException"/>
+    </wsdl:operation>
+    <wsdl:operation name="addNoteToTroubleTicket">
+      <wsdl:input name="addNoteToTroubleTicket" message="tns:addNoteToTroubleTicket"/>
+      <wsdl:output name="addNoteToTroubleTicketResponse" message="tns:addNoteToTroubleTicketResponse"/>
+      <!-- If communication error or any other SOAP problem occurs. -->
+      <wsdl:fault name="SOAPServerException" message="tns:SOAPServerException"/>
+      <!-- If troubleTicketPublicID is null. -->
+      <wsdl:fault name="RequiredFieldException" message="tns:RequiredFieldException"/>
+      <!-- If there is no TroubleTicket with PublicID matching troubleTicketPublicID. -->
+      <wsdl:fault name="BadIdentifierException" message="tns:BadIdentifierException"/>
+      <wsdl:fault name="WsiAuthenticationException" message="tns:WsiAuthenticationException"/>
+    </wsdl:operation>
+    <wsdl:operation name="changeBillingMethodToAgencyBill">
+      <wsdl:input name="changeBillingMethodToAgencyBill" message="tns:changeBillingMethodToAgencyBill"/>
+      <wsdl:output name="changeBillingMethodToAgencyBillResponse" message="tns:changeBillingMethodToAgencyBillResponse"/>
+      <!-- If communication error or any other SOAP problem occurs. -->
+      <wsdl:fault name="SOAPServerException" message="tns:SOAPServerException"/>
+      <!-- Policy period public id is not valid -->
+      <wsdl:fault name="BadIdentifierException" message="tns:BadIdentifierException"/>
+      <!-- Policy period public id cannot be null -->
+      <wsdl:fault name="RequiredFieldException" message="tns:RequiredFieldException"/>
+      <wsdl:fault name="WsiAuthenticationException" message="tns:WsiAuthenticationException"/>
+    </wsdl:operation>
+    <wsdl:operation name="changeBillingMethodToDirectBill">
+      <wsdl:input name="changeBillingMethodToDirectBill" message="tns:changeBillingMethodToDirectBill"/>
+      <wsdl:output name="changeBillingMethodToDirectBillResponse" message="tns:changeBillingMethodToDirectBillResponse"/>
+      <!-- If communication error or any other SOAP problem occurs. -->
+      <wsdl:fault name="SOAPServerException" message="tns:SOAPServerException"/>
+      <!-- Policy period public id is not valid -->
+      <wsdl:fault name="BadIdentifierException" message="tns:BadIdentifierException"/>
+      <!-- Policy period public id cannot be null -->
+      <wsdl:fault name="RequiredFieldException" message="tns:RequiredFieldException"/>
+      <wsdl:fault name="WsiAuthenticationException" message="tns:WsiAuthenticationException"/>
+    </wsdl:operation>
+    <wsdl:operation name="changeBillingMethodToListBill">
+      <wsdl:input name="changeBillingMethodToListBill" message="tns:changeBillingMethodToListBill"/>
+      <wsdl:output name="changeBillingMethodToListBillResponse" message="tns:changeBillingMethodToListBillResponse"/>
+      <!-- If communication error or any other SOAP problem occurs. -->
+      <wsdl:fault name="SOAPServerException" message="tns:SOAPServerException"/>
+      <!-- [If policyPeriodPublicID is null., If listBillAccountPublicID is null., If paymentPlanPublicID is null., If invoiceStreamPublicID is null.] -->
+      <wsdl:fault name="RequiredFieldException" message="tns:RequiredFieldException"/>
+      <!-- [If there is no PolicyPeriod with the given policyPeriodPublicID., If there is no Account with the given listBillAccountPublicID., If there is no PaymentPlan with the given paymentPlanPublicID., If there is no InvoiceStream with the given invoiceStreamPublicID., If the ListBillAccount is not List Bill.] -->
+      <wsdl:fault name="BadIdentifierException" message="tns:BadIdentifierException"/>
+      <wsdl:fault name="WsiAuthenticationException" message="tns:WsiAuthenticationException"/>
+    </wsdl:operation>
+    <wsdl:operation name="addDocumentToAccount">
+      <wsdl:input name="addDocumentToAccount" message="tns:addDocumentToAccount"/>
+      <wsdl:output name="addDocumentToAccountResponse" message="tns:addDocumentToAccountResponse"/>
+      <!-- If a communication error or any other SOAP problem occurs. -->
+      <wsdl:fault name="SOAPServerException" message="tns:SOAPServerException"/>
+      <!-- [If documentDTO is null, If accountPublicID is null.] -->
+      <wsdl:fault name="RequiredFieldException" message="tns:RequiredFieldException"/>
+      <!-- If there is no Account with the given accountPublicID. -->
+      <wsdl:fault name="BadIdentifierException" message="tns:BadIdentifierException"/>
+      <wsdl:fault name="WsiAuthenticationException" message="tns:WsiAuthenticationException"/>
+    </wsdl:operation>
+    <wsdl:operation name="addDocumentToPolicyPeriod">
+      <wsdl:input name="addDocumentToPolicyPeriod" message="tns:addDocumentToPolicyPeriod"/>
+      <wsdl:output name="addDocumentToPolicyPeriodResponse" message="tns:addDocumentToPolicyPeriodResponse"/>
+      <!-- If a communication error or any other SOAP problem occurs. -->
+      <wsdl:fault name="SOAPServerException" message="tns:SOAPServerException"/>
+      <!-- [If documentDTO is null, If policyPeriodID is null.] -->
+      <wsdl:fault name="RequiredFieldException" message="tns:RequiredFieldException"/>
+      <!-- If there is no PolicyPeriod with the given policyPeriodPublicID. -->
+      <wsdl:fault name="BadIdentifierException" message="tns:BadIdentifierException"/>
+      <wsdl:fault name="WsiAuthenticationException" message="tns:WsiAuthenticationException"/>
+    </wsdl:operation>
+    <wsdl:operation name="addDocumentToProducer">
+      <wsdl:input name="addDocumentToProducer" message="tns:addDocumentToProducer"/>
+      <wsdl:output name="addDocumentToProducerResponse" message="tns:addDocumentToProducerResponse"/>
+      <!-- If a communication error or any other SOAP problem occurs. -->
+      <wsdl:fault name="SOAPServerException" message="tns:SOAPServerException"/>
+      <!-- [If documentDTO is null, If producerPublicID is null.] -->
+      <wsdl:fault name="RequiredFieldException" message="tns:RequiredFieldException"/>
+      <!-- If there is no Producer with the given producerPublicID. -->
+      <wsdl:fault name="BadIdentifierException" message="tns:BadIdentifierException"/>
+      <wsdl:fault name="WsiAuthenticationException" message="tns:WsiAuthenticationException"/>
+    </wsdl:operation>
+    <wsdl:operation name="createSharedActivity">
+      <wsdl:input name="createSharedActivity" message="tns:createSharedActivity"/>
+      <wsdl:output name="createSharedActivityResponse" message="tns:createSharedActivityResponse"/>
+      <!-- If communication error or any other SOAP problem occurs. -->
+      <wsdl:fault name="SOAPServerException" message="tns:SOAPServerException"/>
+      <!-- If activityPatternPublicID is null. -->
+      <wsdl:fault name="RequiredFieldException" message="tns:RequiredFieldException"/>
+      <!-- If activityPatternPublicID does not correspond to an existing activity pattern -->
+      <wsdl:fault name="BadIdentifierException" message="tns:BadIdentifierException"/>
+      <wsdl:fault name="WsiAuthenticationException" message="tns:WsiAuthenticationException"/>
+    </wsdl:operation>
+    <wsdl:operation name="createActivity">
+      <wsdl:input name="createActivity" message="tns:createActivity"/>
+      <wsdl:output name="createActivityResponse" message="tns:createActivityResponse"/>
+      <!-- If communication error or any other SOAP problem occurs. -->
+      <wsdl:fault name="SOAPServerException" message="tns:SOAPServerException"/>
+      <!-- If activityPatternPublicID is null. -->
+      <wsdl:fault name="RequiredFieldException" message="tns:RequiredFieldException"/>
+      <!-- If activityPatternPublicID does not correspond to an existing activity pattern -->
+      <wsdl:fault name="BadIdentifierException" message="tns:BadIdentifierException"/>
+      <wsdl:fault name="WsiAuthenticationException" message="tns:WsiAuthenticationException"/>
+    </wsdl:operation>
+    <wsdl:operation name="createActivityAssignedToUser">
+      <wsdl:input name="createActivityAssignedToUser" message="tns:createActivityAssignedToUser"/>
+      <wsdl:output name="createActivityAssignedToUserResponse" message="tns:createActivityAssignedToUserResponse"/>
+      <!-- If communication error or any other SOAP problem occurs. -->
+      <wsdl:fault name="SOAPServerException" message="tns:SOAPServerException"/>
+      <!-- [If activityPatternPublicID is null., If userPublicID is null., If groupPublicID is null.] -->
+      <wsdl:fault name="RequiredFieldException" message="tns:RequiredFieldException"/>
+      <!-- [If activityPatternPublicID does not correspond to an existing activity pattern, If userPublicID does not correspond to an existing User, If the User lacks permission to own an Activity., If groupPublicID does not correspond to an existing Group] -->
+      <wsdl:fault name="BadIdentifierException" message="tns:BadIdentifierException"/>
+      <wsdl:fault name="WsiAuthenticationException" message="tns:WsiAuthenticationException"/>
+    </wsdl:operation>
+    <wsdl:operation name="getAccountInfo">
+      <wsdl:input name="getAccountInfo" message="tns:getAccountInfo"/>
+      <wsdl:output name="getAccountInfoResponse" message="tns:getAccountInfoResponse"/>
+      <!-- If communication error or any other SOAP problem occurs. -->
+      <wsdl:fault name="SOAPServerException" message="tns:SOAPServerException"/>
+      <!-- If accountPublicID is null. -->
+      <wsdl:fault name="RequiredFieldException" message="tns:RequiredFieldException"/>
+      <!-- If accountPublicID does not correspond to an existing Account -->
+      <wsdl:fault name="BadIdentifierException" message="tns:BadIdentifierException"/>
+      <wsdl:fault name="WsiAuthenticationException" message="tns:WsiAuthenticationException"/>
+    </wsdl:operation>
+    <wsdl:operation name="getProducerInfo">
+      <wsdl:input name="getProducerInfo" message="tns:getProducerInfo"/>
+      <wsdl:output name="getProducerInfoResponse" message="tns:getProducerInfoResponse"/>
+      <!-- If communication error or any other SOAP problem occurs. -->
+      <wsdl:fault name="SOAPServerException" message="tns:SOAPServerException"/>
+      <!-- If producerPublicID is null. -->
+      <wsdl:fault name="RequiredFieldException" message="tns:RequiredFieldException"/>
+      <!-- If there is no Producer with PublicID matching producerPublicID. -->
+      <wsdl:fault name="BadIdentifierException" message="tns:BadIdentifierException"/>
+      <wsdl:fault name="WsiAuthenticationException" message="tns:WsiAuthenticationException"/>
+    </wsdl:operation>
+    <wsdl:operation name="getPolicyPeriodInfo">
+      <wsdl:input name="getPolicyPeriodInfo" message="tns:getPolicyPeriodInfo"/>
+      <wsdl:output name="getPolicyPeriodInfoResponse" message="tns:getPolicyPeriodInfoResponse"/>
+      <!-- If communication error or any other SOAP problem occurs. -->
+      <wsdl:fault name="SOAPServerException" message="tns:SOAPServerException"/>
+      <!-- If policyPeriodPublicID is null. -->
+      <wsdl:fault name="RequiredFieldException" message="tns:RequiredFieldException"/>
+      <!-- If there is no PolicyPeriod with PublicID matching policyPeriodPublicID. -->
+      <wsdl:fault name="BadIdentifierException" message="tns:BadIdentifierException"/>
+      <wsdl:fault name="WsiAuthenticationException" message="tns:WsiAuthenticationException"/>
+    </wsdl:operation>
+    <wsdl:operation name="createCollateralRequirement">
+      <wsdl:input name="createCollateralRequirement" message="tns:createCollateralRequirement"/>
+      <wsdl:output name="createCollateralRequirementResponse" message="tns:createCollateralRequirementResponse"/>
+      <!-- If a communication error or any other SOAP problem occurs. -->
+      <wsdl:fault name="SOAPServerException" message="tns:SOAPServerException"/>
+      <!-- [If collateralRequirementDTO is null, If collateralRequirementDTO.CollateralPublicID is null., If collateralRequirementDTO.EffectiveDate is null., If collateralRequirementDTO.RequirementName is null., If collateralRequirementDTO.RequirementType is null.] -->
+      <wsdl:fault name="RequiredFieldException" message="tns:RequiredFieldException"/>
+      <!-- [If collateralRequirementDTO.EffectiveDate occurrs in the past., If collateralRequirementDTO.ExpirationDate occurrs in the past., If collateralRequirementDTO.Required is null or zero., If collateralRequirementDTO.EffectiveDate occurs after collateralRequirementDTO.ExpirationDate., If collateralRequirementDTO.CollateralRequirementType is not Cash but collateralRequirementDTO.Segregated has been set., If both collateralRequirementDTO.PolicyPublicID and collateralRequirementDTO.PolicyPeriodPublicID are non-null., If Policy with PolicyPublicID does not belong to Account that has Collateral with PublicID = collateralRequirementDTO.CollateralPublicID., If PolicyPeriod with PolicyPeriodPublicID does not belong to Account that has Collateral with PublicID = collateralRequirementDTO.CollateralPublicID.] -->
+      <wsdl:fault name="SOAPException" message="tns:SOAPException"/>
+      <!-- [If there is no Collateral with the given collateralRequirementDTO.CollateralPublicID., If there is no Policy with the given collateralRequirementDTO.PolicyPublicID., If there is no PolicyPeriod with the given collateralRequirementDTO.PolicyPeriodPublicID.] -->
+      <wsdl:fault name="BadIdentifierException" message="tns:BadIdentifierException"/>
+      <wsdl:fault name="WsiAuthenticationException" message="tns:WsiAuthenticationException"/>
+    </wsdl:operation>
+    <wsdl:operation name="startDelinquencyOnAccount">
+      <wsdl:input name="startDelinquencyOnAccount" message="tns:startDelinquencyOnAccount"/>
+      <wsdl:output name="startDelinquencyOnAccountResponse" message="tns:startDelinquencyOnAccountResponse"/>
+      <!-- If communication error or any other SOAP problem occurs. -->
+      <wsdl:fault name="SOAPServerException" message="tns:SOAPServerException"/>
+      <!-- [If accountPublicID is null., If reason is null.] -->
+      <wsdl:fault name="RequiredFieldException" message="tns:RequiredFieldException"/>
+      <!-- If there is no Account with PublicID matching accountPublicID. -->
+      <wsdl:fault name="BadIdentifierException" message="tns:BadIdentifierException"/>
+      <wsdl:fault name="WsiAuthenticationException" message="tns:WsiAuthenticationException"/>
+    </wsdl:operation>
+    <wsdl:operation name="startDelinquencyOnPolicyPeriod">
+      <wsdl:input name="startDelinquencyOnPolicyPeriod" message="tns:startDelinquencyOnPolicyPeriod"/>
+      <wsdl:output name="startDelinquencyOnPolicyPeriodResponse" message="tns:startDelinquencyOnPolicyPeriodResponse"/>
+      <!-- If communication error or any other SOAP problem occurs. -->
+      <wsdl:fault name="SOAPServerException" message="tns:SOAPServerException"/>
+      <!-- [If policyPeriodPublicID is null., If reason is null.] -->
+      <wsdl:fault name="RequiredFieldException" message="tns:RequiredFieldException"/>
+      <!-- If there is no PolicyPeriod with PublicID matching policyPeriodPublicID. -->
+      <wsdl:fault name="BadIdentifierException" message="tns:BadIdentifierException"/>
+      <wsdl:fault name="WsiAuthenticationException" message="tns:WsiAuthenticationException"/>
+    </wsdl:operation>
+    <wsdl:operation name="triggerDelinquencyWorkflowOnAccount">
+      <wsdl:input name="triggerDelinquencyWorkflowOnAccount" message="tns:triggerDelinquencyWorkflowOnAccount"/>
+      <wsdl:output name="triggerDelinquencyWorkflowOnAccountResponse" message="tns:triggerDelinquencyWorkflowOnAccountResponse"/>
+      <!-- If communication error or any other SOAP problem occurs. -->
+      <wsdl:fault name="SOAPServerException" message="tns:SOAPServerException"/>
+      <!-- [If accountPublicID is null., If workflowTrigger is null.] -->
+      <wsdl:fault name="RequiredFieldException" message="tns:RequiredFieldException"/>
+      <!-- If there is no Account with PublicID matching accountPublicID. -->
+      <wsdl:fault name="BadIdentifierException" message="tns:BadIdentifierException"/>
+      <wsdl:fault name="WsiAuthenticationException" message="tns:WsiAuthenticationException"/>
+    </wsdl:operation>
+    <wsdl:operation name="triggerDelinquencyWorkflowOnPolicyPeriod">
+      <wsdl:input name="triggerDelinquencyWorkflowOnPolicyPeriod" message="tns:triggerDelinquencyWorkflowOnPolicyPeriod"/>
+      <wsdl:output name="triggerDelinquencyWorkflowOnPolicyPeriodResponse" message="tns:triggerDelinquencyWorkflowOnPolicyPeriodResponse"/>
+      <!-- If communication error or any other SOAP problem occurs. -->
+      <wsdl:fault name="SOAPServerException" message="tns:SOAPServerException"/>
+      <!-- [If policyPeriodPublicID is null., If workflowTrigger is null.] -->
+      <wsdl:fault name="RequiredFieldException" message="tns:RequiredFieldException"/>
+      <!-- If there is no PolicyPeriod with PublicID matching policyPeriodPublicID. -->
+      <wsdl:fault name="BadIdentifierException" message="tns:BadIdentifierException"/>
+      <wsdl:fault name="WsiAuthenticationException" message="tns:WsiAuthenticationException"/>
+    </wsdl:operation>
+    <wsdl:operation name="encryptDataOnStagingTables">
+      <wsdl:input name="encryptDataOnStagingTables" message="tns:encryptDataOnStagingTables"/>
+      <wsdl:output name="encryptDataOnStagingTablesResponse" message="tns:encryptDataOnStagingTablesResponse"/>
+      <!--  -->
+      <wsdl:fault name="SOAPException" message="tns:SOAPException"/>
+      <wsdl:fault name="WsiAuthenticationException" message="tns:WsiAuthenticationException"/>
+    </wsdl:operation>
+    <wsdl:operation name="encryptDataOnStagingTablesAsBatchProcess">
+      <wsdl:input name="encryptDataOnStagingTablesAsBatchProcess" message="tns:encryptDataOnStagingTablesAsBatchProcess"/>
+      <wsdl:output name="encryptDataOnStagingTablesAsBatchProcessResponse" message="tns:encryptDataOnStagingTablesAsBatchProcessResponse"/>
+      <!--  -->
+      <wsdl:fault name="SOAPException" message="tns:SOAPException"/>
+      <wsdl:fault name="WsiAuthenticationException" message="tns:WsiAuthenticationException"/>
+    </wsdl:operation>
+    <wsdl:operation name="createPremiumReportDueDate">
+      <wsdl:input name="createPremiumReportDueDate" message="tns:createPremiumReportDueDate"/>
+      <wsdl:output name="createPremiumReportDueDateResponse" message="tns:createPremiumReportDueDateResponse"/>
+      <!-- If communication error or any other SOAP problem occurs. -->
+      <wsdl:fault name="SOAPServerException" message="tns:SOAPServerException"/>
+      <!-- [If premiumReportDueDateDTO is null., If the DueDate field of premiumReportDueDateDTO is null., If the PeriodStartDate field of premiumReportDueDateDTO is null., If the PremiumReportDDPolicyPeriodPublicID field of premiumReportDueDateDTO is null.] -->
+      <wsdl:fault name="RequiredFieldException" message="tns:RequiredFieldException"/>
+      <wsdl:fault name="WsiAuthenticationException" message="tns:WsiAuthenticationException"/>
+    </wsdl:operation>
+    <wsdl:operation name="cancelPremiumReportDueDate">
+      <wsdl:input name="cancelPremiumReportDueDate" message="tns:cancelPremiumReportDueDate"/>
+      <wsdl:output name="cancelPremiumReportDueDateResponse" message="tns:cancelPremiumReportDueDateResponse"/>
+      <!-- If communication error or any other SOAP problem occurs. -->
+      <wsdl:fault name="SOAPServerException" message="tns:SOAPServerException"/>
+      <!-- [If policyPeriodPublicID is null., If startDate is null.] -->
+      <wsdl:fault name="RequiredFieldException" message="tns:RequiredFieldException"/>
+      <!-- [If there is no PolicyPeriod with PublicID matching policyPeriodPublicID., If there is no PremiumReportDueDate found with the given policyPeriodPublicID, startDate and endDate.] -->
+      <wsdl:fault name="BadIdentifierException" message="tns:BadIdentifierException"/>
+      <wsdl:fault name="WsiAuthenticationException" message="tns:WsiAuthenticationException"/>
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="BCAPISoap12Binding" type="tns:BCAPIPortType">
+    <soap12:binding transport="http://schemas.xmlsoap.org/soap/http" style="document"/>
+    <wsdl:operation name="addNoteToAccount">
+      <soap12:operation soapActionRequired="false" style="document"/>
+      <wsdl:input name="addNoteToAccount">
+        <soap12:body use="literal"/>
+        <soap12:header message="tns:gw-authentication" part="gw-authentication" use="literal"/>
+        <soap12:header message="tns:gw-locale" part="gw-locale" use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="addNoteToAccountResponse">
+        <soap12:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="SOAPServerException">
+        <soap12:fault name="SOAPServerException" use="literal"/>
+      </wsdl:fault>
+      <wsdl:fault name="RequiredFieldException">
+        <soap12:fault name="RequiredFieldException" use="literal"/>
+      </wsdl:fault>
+      <wsdl:fault name="BadIdentifierException">
+        <soap12:fault name="BadIdentifierException" use="literal"/>
+      </wsdl:fault>
+      <wsdl:fault name="WsiAuthenticationException">
+        <soap12:fault name="WsiAuthenticationException" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="addNoteToPolicyPeriod">
+      <soap12:operation soapActionRequired="false" style="document"/>
+      <wsdl:input name="addNoteToPolicyPeriod">
+        <soap12:body use="literal"/>
+        <soap12:header message="tns:gw-authentication" part="gw-authentication" use="literal"/>
+        <soap12:header message="tns:gw-locale" part="gw-locale" use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="addNoteToPolicyPeriodResponse">
+        <soap12:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="SOAPServerException">
+        <soap12:fault name="SOAPServerException" use="literal"/>
+      </wsdl:fault>
+      <wsdl:fault name="RequiredFieldException">
+        <soap12:fault name="RequiredFieldException" use="literal"/>
+      </wsdl:fault>
+      <wsdl:fault name="BadIdentifierException">
+        <soap12:fault name="BadIdentifierException" use="literal"/>
+      </wsdl:fault>
+      <wsdl:fault name="WsiAuthenticationException">
+        <soap12:fault name="WsiAuthenticationException" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="addNoteToProducer">
+      <soap12:operation soapActionRequired="false" style="document"/>
+      <wsdl:input name="addNoteToProducer">
+        <soap12:body use="literal"/>
+        <soap12:header message="tns:gw-authentication" part="gw-authentication" use="literal"/>
+        <soap12:header message="tns:gw-locale" part="gw-locale" use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="addNoteToProducerResponse">
+        <soap12:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="SOAPServerException">
+        <soap12:fault name="SOAPServerException" use="literal"/>
+      </wsdl:fault>
+      <wsdl:fault name="RequiredFieldException">
+        <soap12:fault name="RequiredFieldException" use="literal"/>
+      </wsdl:fault>
+      <wsdl:fault name="BadIdentifierException">
+        <soap12:fault name="BadIdentifierException" use="literal"/>
+      </wsdl:fault>
+      <wsdl:fault name="WsiAuthenticationException">
+        <soap12:fault name="WsiAuthenticationException" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="addNoteToTroubleTicket">
+      <soap12:operation soapActionRequired="false" style="document"/>
+      <wsdl:input name="addNoteToTroubleTicket">
+        <soap12:body use="literal"/>
+        <soap12:header message="tns:gw-authentication" part="gw-authentication" use="literal"/>
+        <soap12:header message="tns:gw-locale" part="gw-locale" use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="addNoteToTroubleTicketResponse">
+        <soap12:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="SOAPServerException">
+        <soap12:fault name="SOAPServerException" use="literal"/>
+      </wsdl:fault>
+      <wsdl:fault name="RequiredFieldException">
+        <soap12:fault name="RequiredFieldException" use="literal"/>
+      </wsdl:fault>
+      <wsdl:fault name="BadIdentifierException">
+        <soap12:fault name="BadIdentifierException" use="literal"/>
+      </wsdl:fault>
+      <wsdl:fault name="WsiAuthenticationException">
+        <soap12:fault name="WsiAuthenticationException" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="changeBillingMethodToAgencyBill">
+      <soap12:operation soapActionRequired="false" style="document"/>
+      <wsdl:input name="changeBillingMethodToAgencyBill">
+        <soap12:body use="literal"/>
+        <soap12:header message="tns:gw-authentication" part="gw-authentication" use="literal"/>
+        <soap12:header message="tns:gw-locale" part="gw-locale" use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="changeBillingMethodToAgencyBillResponse">
+        <soap12:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="SOAPServerException">
+        <soap12:fault name="SOAPServerException" use="literal"/>
+      </wsdl:fault>
+      <wsdl:fault name="BadIdentifierException">
+        <soap12:fault name="BadIdentifierException" use="literal"/>
+      </wsdl:fault>
+      <wsdl:fault name="RequiredFieldException">
+        <soap12:fault name="RequiredFieldException" use="literal"/>
+      </wsdl:fault>
+      <wsdl:fault name="WsiAuthenticationException">
+        <soap12:fault name="WsiAuthenticationException" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="changeBillingMethodToDirectBill">
+      <soap12:operation soapActionRequired="false" style="document"/>
+      <wsdl:input name="changeBillingMethodToDirectBill">
+        <soap12:body use="literal"/>
+        <soap12:header message="tns:gw-authentication" part="gw-authentication" use="literal"/>
+        <soap12:header message="tns:gw-locale" part="gw-locale" use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="changeBillingMethodToDirectBillResponse">
+        <soap12:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="SOAPServerException">
+        <soap12:fault name="SOAPServerException" use="literal"/>
+      </wsdl:fault>
+      <wsdl:fault name="BadIdentifierException">
+        <soap12:fault name="BadIdentifierException" use="literal"/>
+      </wsdl:fault>
+      <wsdl:fault name="RequiredFieldException">
+        <soap12:fault name="RequiredFieldException" use="literal"/>
+      </wsdl:fault>
+      <wsdl:fault name="WsiAuthenticationException">
+        <soap12:fault name="WsiAuthenticationException" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="changeBillingMethodToListBill">
+      <soap12:operation soapActionRequired="false" style="document"/>
+      <wsdl:input name="changeBillingMethodToListBill">
+        <soap12:body use="literal"/>
+        <soap12:header message="tns:gw-authentication" part="gw-authentication" use="literal"/>
+        <soap12:header message="tns:gw-locale" part="gw-locale" use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="changeBillingMethodToListBillResponse">
+        <soap12:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="SOAPServerException">
+        <soap12:fault name="SOAPServerException" use="literal"/>
+      </wsdl:fault>
+      <wsdl:fault name="RequiredFieldException">
+        <soap12:fault name="RequiredFieldException" use="literal"/>
+      </wsdl:fault>
+      <wsdl:fault name="BadIdentifierException">
+        <soap12:fault name="BadIdentifierException" use="literal"/>
+      </wsdl:fault>
+      <wsdl:fault name="WsiAuthenticationException">
+        <soap12:fault name="WsiAuthenticationException" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="addDocumentToAccount">
+      <soap12:operation soapActionRequired="false" style="document"/>
+      <wsdl:input name="addDocumentToAccount">
+        <soap12:body use="literal"/>
+        <soap12:header message="tns:gw-authentication" part="gw-authentication" use="literal"/>
+        <soap12:header message="tns:gw-locale" part="gw-locale" use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="addDocumentToAccountResponse">
+        <soap12:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="SOAPServerException">
+        <soap12:fault name="SOAPServerException" use="literal"/>
+      </wsdl:fault>
+      <wsdl:fault name="RequiredFieldException">
+        <soap12:fault name="RequiredFieldException" use="literal"/>
+      </wsdl:fault>
+      <wsdl:fault name="BadIdentifierException">
+        <soap12:fault name="BadIdentifierException" use="literal"/>
+      </wsdl:fault>
+      <wsdl:fault name="WsiAuthenticationException">
+        <soap12:fault name="WsiAuthenticationException" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="addDocumentToPolicyPeriod">
+      <soap12:operation soapActionRequired="false" style="document"/>
+      <wsdl:input name="addDocumentToPolicyPeriod">
+        <soap12:body use="literal"/>
+        <soap12:header message="tns:gw-authentication" part="gw-authentication" use="literal"/>
+        <soap12:header message="tns:gw-locale" part="gw-locale" use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="addDocumentToPolicyPeriodResponse">
+        <soap12:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="SOAPServerException">
+        <soap12:fault name="SOAPServerException" use="literal"/>
+      </wsdl:fault>
+      <wsdl:fault name="RequiredFieldException">
+        <soap12:fault name="RequiredFieldException" use="literal"/>
+      </wsdl:fault>
+      <wsdl:fault name="BadIdentifierException">
+        <soap12:fault name="BadIdentifierException" use="literal"/>
+      </wsdl:fault>
+      <wsdl:fault name="WsiAuthenticationException">
+        <soap12:fault name="WsiAuthenticationException" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="addDocumentToProducer">
+      <soap12:operation soapActionRequired="false" style="document"/>
+      <wsdl:input name="addDocumentToProducer">
+        <soap12:body use="literal"/>
+        <soap12:header message="tns:gw-authentication" part="gw-authentication" use="literal"/>
+        <soap12:header message="tns:gw-locale" part="gw-locale" use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="addDocumentToProducerResponse">
+        <soap12:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="SOAPServerException">
+        <soap12:fault name="SOAPServerException" use="literal"/>
+      </wsdl:fault>
+      <wsdl:fault name="RequiredFieldException">
+        <soap12:fault name="RequiredFieldException" use="literal"/>
+      </wsdl:fault>
+      <wsdl:fault name="BadIdentifierException">
+        <soap12:fault name="BadIdentifierException" use="literal"/>
+      </wsdl:fault>
+      <wsdl:fault name="WsiAuthenticationException">
+        <soap12:fault name="WsiAuthenticationException" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="createSharedActivity">
+      <soap12:operation soapActionRequired="false" style="document"/>
+      <wsdl:input name="createSharedActivity">
+        <soap12:body use="literal"/>
+        <soap12:header message="tns:gw-authentication" part="gw-authentication" use="literal"/>
+        <soap12:header message="tns:gw-locale" part="gw-locale" use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="createSharedActivityResponse">
+        <soap12:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="SOAPServerException">
+        <soap12:fault name="SOAPServerException" use="literal"/>
+      </wsdl:fault>
+      <wsdl:fault name="RequiredFieldException">
+        <soap12:fault name="RequiredFieldException" use="literal"/>
+      </wsdl:fault>
+      <wsdl:fault name="BadIdentifierException">
+        <soap12:fault name="BadIdentifierException" use="literal"/>
+      </wsdl:fault>
+      <wsdl:fault name="WsiAuthenticationException">
+        <soap12:fault name="WsiAuthenticationException" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="createActivity">
+      <soap12:operation soapActionRequired="false" style="document"/>
+      <wsdl:input name="createActivity">
+        <soap12:body use="literal"/>
+        <soap12:header message="tns:gw-authentication" part="gw-authentication" use="literal"/>
+        <soap12:header message="tns:gw-locale" part="gw-locale" use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="createActivityResponse">
+        <soap12:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="SOAPServerException">
+        <soap12:fault name="SOAPServerException" use="literal"/>
+      </wsdl:fault>
+      <wsdl:fault name="RequiredFieldException">
+        <soap12:fault name="RequiredFieldException" use="literal"/>
+      </wsdl:fault>
+      <wsdl:fault name="BadIdentifierException">
+        <soap12:fault name="BadIdentifierException" use="literal"/>
+      </wsdl:fault>
+      <wsdl:fault name="WsiAuthenticationException">
+        <soap12:fault name="WsiAuthenticationException" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="createActivityAssignedToUser">
+      <soap12:operation soapActionRequired="false" style="document"/>
+      <wsdl:input name="createActivityAssignedToUser">
+        <soap12:body use="literal"/>
+        <soap12:header message="tns:gw-authentication" part="gw-authentication" use="literal"/>
+        <soap12:header message="tns:gw-locale" part="gw-locale" use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="createActivityAssignedToUserResponse">
+        <soap12:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="SOAPServerException">
+        <soap12:fault name="SOAPServerException" use="literal"/>
+      </wsdl:fault>
+      <wsdl:fault name="RequiredFieldException">
+        <soap12:fault name="RequiredFieldException" use="literal"/>
+      </wsdl:fault>
+      <wsdl:fault name="BadIdentifierException">
+        <soap12:fault name="BadIdentifierException" use="literal"/>
+      </wsdl:fault>
+      <wsdl:fault name="WsiAuthenticationException">
+        <soap12:fault name="WsiAuthenticationException" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="getAccountInfo">
+      <soap12:operation soapActionRequired="false" style="document"/>
+      <wsdl:input name="getAccountInfo">
+        <soap12:body use="literal"/>
+        <soap12:header message="tns:gw-authentication" part="gw-authentication" use="literal"/>
+        <soap12:header message="tns:gw-locale" part="gw-locale" use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="getAccountInfoResponse">
+        <soap12:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="SOAPServerException">
+        <soap12:fault name="SOAPServerException" use="literal"/>
+      </wsdl:fault>
+      <wsdl:fault name="RequiredFieldException">
+        <soap12:fault name="RequiredFieldException" use="literal"/>
+      </wsdl:fault>
+      <wsdl:fault name="BadIdentifierException">
+        <soap12:fault name="BadIdentifierException" use="literal"/>
+      </wsdl:fault>
+      <wsdl:fault name="WsiAuthenticationException">
+        <soap12:fault name="WsiAuthenticationException" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="getProducerInfo">
+      <soap12:operation soapActionRequired="false" style="document"/>
+      <wsdl:input name="getProducerInfo">
+        <soap12:body use="literal"/>
+        <soap12:header message="tns:gw-authentication" part="gw-authentication" use="literal"/>
+        <soap12:header message="tns:gw-locale" part="gw-locale" use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="getProducerInfoResponse">
+        <soap12:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="SOAPServerException">
+        <soap12:fault name="SOAPServerException" use="literal"/>
+      </wsdl:fault>
+      <wsdl:fault name="RequiredFieldException">
+        <soap12:fault name="RequiredFieldException" use="literal"/>
+      </wsdl:fault>
+      <wsdl:fault name="BadIdentifierException">
+        <soap12:fault name="BadIdentifierException" use="literal"/>
+      </wsdl:fault>
+      <wsdl:fault name="WsiAuthenticationException">
+        <soap12:fault name="WsiAuthenticationException" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="getPolicyPeriodInfo">
+      <soap12:operation soapActionRequired="false" style="document"/>
+      <wsdl:input name="getPolicyPeriodInfo">
+        <soap12:body use="literal"/>
+        <soap12:header message="tns:gw-authentication" part="gw-authentication" use="literal"/>
+        <soap12:header message="tns:gw-locale" part="gw-locale" use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="getPolicyPeriodInfoResponse">
+        <soap12:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="SOAPServerException">
+        <soap12:fault name="SOAPServerException" use="literal"/>
+      </wsdl:fault>
+      <wsdl:fault name="RequiredFieldException">
+        <soap12:fault name="RequiredFieldException" use="literal"/>
+      </wsdl:fault>
+      <wsdl:fault name="BadIdentifierException">
+        <soap12:fault name="BadIdentifierException" use="literal"/>
+      </wsdl:fault>
+      <wsdl:fault name="WsiAuthenticationException">
+        <soap12:fault name="WsiAuthenticationException" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="createCollateralRequirement">
+      <soap12:operation soapActionRequired="false" style="document"/>
+      <wsdl:input name="createCollateralRequirement">
+        <soap12:body use="literal"/>
+        <soap12:header message="tns:gw-authentication" part="gw-authentication" use="literal"/>
+        <soap12:header message="tns:gw-locale" part="gw-locale" use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="createCollateralRequirementResponse">
+        <soap12:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="SOAPServerException">
+        <soap12:fault name="SOAPServerException" use="literal"/>
+      </wsdl:fault>
+      <wsdl:fault name="RequiredFieldException">
+        <soap12:fault name="RequiredFieldException" use="literal"/>
+      </wsdl:fault>
+      <wsdl:fault name="SOAPException">
+        <soap12:fault name="SOAPException" use="literal"/>
+      </wsdl:fault>
+      <wsdl:fault name="BadIdentifierException">
+        <soap12:fault name="BadIdentifierException" use="literal"/>
+      </wsdl:fault>
+      <wsdl:fault name="WsiAuthenticationException">
+        <soap12:fault name="WsiAuthenticationException" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="startDelinquencyOnAccount">
+      <soap12:operation soapActionRequired="false" style="document"/>
+      <wsdl:input name="startDelinquencyOnAccount">
+        <soap12:body use="literal"/>
+        <soap12:header message="tns:gw-authentication" part="gw-authentication" use="literal"/>
+        <soap12:header message="tns:gw-locale" part="gw-locale" use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="startDelinquencyOnAccountResponse">
+        <soap12:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="SOAPServerException">
+        <soap12:fault name="SOAPServerException" use="literal"/>
+      </wsdl:fault>
+      <wsdl:fault name="RequiredFieldException">
+        <soap12:fault name="RequiredFieldException" use="literal"/>
+      </wsdl:fault>
+      <wsdl:fault name="BadIdentifierException">
+        <soap12:fault name="BadIdentifierException" use="literal"/>
+      </wsdl:fault>
+      <wsdl:fault name="WsiAuthenticationException">
+        <soap12:fault name="WsiAuthenticationException" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="startDelinquencyOnPolicyPeriod">
+      <soap12:operation soapActionRequired="false" style="document"/>
+      <wsdl:input name="startDelinquencyOnPolicyPeriod">
+        <soap12:body use="literal"/>
+        <soap12:header message="tns:gw-authentication" part="gw-authentication" use="literal"/>
+        <soap12:header message="tns:gw-locale" part="gw-locale" use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="startDelinquencyOnPolicyPeriodResponse">
+        <soap12:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="SOAPServerException">
+        <soap12:fault name="SOAPServerException" use="literal"/>
+      </wsdl:fault>
+      <wsdl:fault name="RequiredFieldException">
+        <soap12:fault name="RequiredFieldException" use="literal"/>
+      </wsdl:fault>
+      <wsdl:fault name="BadIdentifierException">
+        <soap12:fault name="BadIdentifierException" use="literal"/>
+      </wsdl:fault>
+      <wsdl:fault name="WsiAuthenticationException">
+        <soap12:fault name="WsiAuthenticationException" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="triggerDelinquencyWorkflowOnAccount">
+      <soap12:operation soapActionRequired="false" style="document"/>
+      <wsdl:input name="triggerDelinquencyWorkflowOnAccount">
+        <soap12:body use="literal"/>
+        <soap12:header message="tns:gw-authentication" part="gw-authentication" use="literal"/>
+        <soap12:header message="tns:gw-locale" part="gw-locale" use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="triggerDelinquencyWorkflowOnAccountResponse">
+        <soap12:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="SOAPServerException">
+        <soap12:fault name="SOAPServerException" use="literal"/>
+      </wsdl:fault>
+      <wsdl:fault name="RequiredFieldException">
+        <soap12:fault name="RequiredFieldException" use="literal"/>
+      </wsdl:fault>
+      <wsdl:fault name="BadIdentifierException">
+        <soap12:fault name="BadIdentifierException" use="literal"/>
+      </wsdl:fault>
+      <wsdl:fault name="WsiAuthenticationException">
+        <soap12:fault name="WsiAuthenticationException" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="triggerDelinquencyWorkflowOnPolicyPeriod">
+      <soap12:operation soapActionRequired="false" style="document"/>
+      <wsdl:input name="triggerDelinquencyWorkflowOnPolicyPeriod">
+        <soap12:body use="literal"/>
+        <soap12:header message="tns:gw-authentication" part="gw-authentication" use="literal"/>
+        <soap12:header message="tns:gw-locale" part="gw-locale" use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="triggerDelinquencyWorkflowOnPolicyPeriodResponse">
+        <soap12:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="SOAPServerException">
+        <soap12:fault name="SOAPServerException" use="literal"/>
+      </wsdl:fault>
+      <wsdl:fault name="RequiredFieldException">
+        <soap12:fault name="RequiredFieldException" use="literal"/>
+      </wsdl:fault>
+      <wsdl:fault name="BadIdentifierException">
+        <soap12:fault name="BadIdentifierException" use="literal"/>
+      </wsdl:fault>
+      <wsdl:fault name="WsiAuthenticationException">
+        <soap12:fault name="WsiAuthenticationException" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="encryptDataOnStagingTables">
+      <soap12:operation soapActionRequired="false" style="document"/>
+      <wsdl:input name="encryptDataOnStagingTables">
+        <soap12:body use="literal"/>
+        <soap12:header message="tns:gw-authentication" part="gw-authentication" use="literal"/>
+        <soap12:header message="tns:gw-locale" part="gw-locale" use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="encryptDataOnStagingTablesResponse">
+        <soap12:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="SOAPException">
+        <soap12:fault name="SOAPException" use="literal"/>
+      </wsdl:fault>
+      <wsdl:fault name="WsiAuthenticationException">
+        <soap12:fault name="WsiAuthenticationException" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="encryptDataOnStagingTablesAsBatchProcess">
+      <soap12:operation soapActionRequired="false" style="document"/>
+      <wsdl:input name="encryptDataOnStagingTablesAsBatchProcess">
+        <soap12:body use="literal"/>
+        <soap12:header message="tns:gw-authentication" part="gw-authentication" use="literal"/>
+        <soap12:header message="tns:gw-locale" part="gw-locale" use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="encryptDataOnStagingTablesAsBatchProcessResponse">
+        <soap12:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="SOAPException">
+        <soap12:fault name="SOAPException" use="literal"/>
+      </wsdl:fault>
+      <wsdl:fault name="WsiAuthenticationException">
+        <soap12:fault name="WsiAuthenticationException" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="createPremiumReportDueDate">
+      <soap12:operation soapActionRequired="false" style="document"/>
+      <wsdl:input name="createPremiumReportDueDate">
+        <soap12:body use="literal"/>
+        <soap12:header message="tns:gw-authentication" part="gw-authentication" use="literal"/>
+        <soap12:header message="tns:gw-locale" part="gw-locale" use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="createPremiumReportDueDateResponse">
+        <soap12:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="SOAPServerException">
+        <soap12:fault name="SOAPServerException" use="literal"/>
+      </wsdl:fault>
+      <wsdl:fault name="RequiredFieldException">
+        <soap12:fault name="RequiredFieldException" use="literal"/>
+      </wsdl:fault>
+      <wsdl:fault name="WsiAuthenticationException">
+        <soap12:fault name="WsiAuthenticationException" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="cancelPremiumReportDueDate">
+      <soap12:operation soapActionRequired="false" style="document"/>
+      <wsdl:input name="cancelPremiumReportDueDate">
+        <soap12:body use="literal"/>
+        <soap12:header message="tns:gw-authentication" part="gw-authentication" use="literal"/>
+        <soap12:header message="tns:gw-locale" part="gw-locale" use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="cancelPremiumReportDueDateResponse">
+        <soap12:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="SOAPServerException">
+        <soap12:fault name="SOAPServerException" use="literal"/>
+      </wsdl:fault>
+      <wsdl:fault name="RequiredFieldException">
+        <soap12:fault name="RequiredFieldException" use="literal"/>
+      </wsdl:fault>
+      <wsdl:fault name="BadIdentifierException">
+        <soap12:fault name="BadIdentifierException" use="literal"/>
+      </wsdl:fault>
+      <wsdl:fault name="WsiAuthenticationException">
+        <soap12:fault name="WsiAuthenticationException" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:binding name="BCAPISoap11Binding" type="tns:BCAPIPortType">
+    <soap11:binding transport="http://schemas.xmlsoap.org/soap/http" style="document"/>
+    <wsdl:operation name="addNoteToAccount">
+      <soap11:operation style="document"/>
+      <wsdl:input name="addNoteToAccount">
+        <soap11:body use="literal"/>
+        <soap11:header message="tns:gw-authentication" part="gw-authentication" use="literal"/>
+        <soap11:header message="tns:gw-locale" part="gw-locale" use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="addNoteToAccountResponse">
+        <soap11:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="SOAPServerException">
+        <soap11:fault name="SOAPServerException" use="literal"/>
+      </wsdl:fault>
+      <wsdl:fault name="RequiredFieldException">
+        <soap11:fault name="RequiredFieldException" use="literal"/>
+      </wsdl:fault>
+      <wsdl:fault name="BadIdentifierException">
+        <soap11:fault name="BadIdentifierException" use="literal"/>
+      </wsdl:fault>
+      <wsdl:fault name="WsiAuthenticationException">
+        <soap11:fault name="WsiAuthenticationException" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="addNoteToPolicyPeriod">
+      <soap11:operation style="document"/>
+      <wsdl:input name="addNoteToPolicyPeriod">
+        <soap11:body use="literal"/>
+        <soap11:header message="tns:gw-authentication" part="gw-authentication" use="literal"/>
+        <soap11:header message="tns:gw-locale" part="gw-locale" use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="addNoteToPolicyPeriodResponse">
+        <soap11:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="SOAPServerException">
+        <soap11:fault name="SOAPServerException" use="literal"/>
+      </wsdl:fault>
+      <wsdl:fault name="RequiredFieldException">
+        <soap11:fault name="RequiredFieldException" use="literal"/>
+      </wsdl:fault>
+      <wsdl:fault name="BadIdentifierException">
+        <soap11:fault name="BadIdentifierException" use="literal"/>
+      </wsdl:fault>
+      <wsdl:fault name="WsiAuthenticationException">
+        <soap11:fault name="WsiAuthenticationException" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="addNoteToProducer">
+      <soap11:operation style="document"/>
+      <wsdl:input name="addNoteToProducer">
+        <soap11:body use="literal"/>
+        <soap11:header message="tns:gw-authentication" part="gw-authentication" use="literal"/>
+        <soap11:header message="tns:gw-locale" part="gw-locale" use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="addNoteToProducerResponse">
+        <soap11:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="SOAPServerException">
+        <soap11:fault name="SOAPServerException" use="literal"/>
+      </wsdl:fault>
+      <wsdl:fault name="RequiredFieldException">
+        <soap11:fault name="RequiredFieldException" use="literal"/>
+      </wsdl:fault>
+      <wsdl:fault name="BadIdentifierException">
+        <soap11:fault name="BadIdentifierException" use="literal"/>
+      </wsdl:fault>
+      <wsdl:fault name="WsiAuthenticationException">
+        <soap11:fault name="WsiAuthenticationException" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="addNoteToTroubleTicket">
+      <soap11:operation style="document"/>
+      <wsdl:input name="addNoteToTroubleTicket">
+        <soap11:body use="literal"/>
+        <soap11:header message="tns:gw-authentication" part="gw-authentication" use="literal"/>
+        <soap11:header message="tns:gw-locale" part="gw-locale" use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="addNoteToTroubleTicketResponse">
+        <soap11:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="SOAPServerException">
+        <soap11:fault name="SOAPServerException" use="literal"/>
+      </wsdl:fault>
+      <wsdl:fault name="RequiredFieldException">
+        <soap11:fault name="RequiredFieldException" use="literal"/>
+      </wsdl:fault>
+      <wsdl:fault name="BadIdentifierException">
+        <soap11:fault name="BadIdentifierException" use="literal"/>
+      </wsdl:fault>
+      <wsdl:fault name="WsiAuthenticationException">
+        <soap11:fault name="WsiAuthenticationException" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="changeBillingMethodToAgencyBill">
+      <soap11:operation style="document"/>
+      <wsdl:input name="changeBillingMethodToAgencyBill">
+        <soap11:body use="literal"/>
+        <soap11:header message="tns:gw-authentication" part="gw-authentication" use="literal"/>
+        <soap11:header message="tns:gw-locale" part="gw-locale" use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="changeBillingMethodToAgencyBillResponse">
+        <soap11:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="SOAPServerException">
+        <soap11:fault name="SOAPServerException" use="literal"/>
+      </wsdl:fault>
+      <wsdl:fault name="BadIdentifierException">
+        <soap11:fault name="BadIdentifierException" use="literal"/>
+      </wsdl:fault>
+      <wsdl:fault name="RequiredFieldException">
+        <soap11:fault name="RequiredFieldException" use="literal"/>
+      </wsdl:fault>
+      <wsdl:fault name="WsiAuthenticationException">
+        <soap11:fault name="WsiAuthenticationException" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="changeBillingMethodToDirectBill">
+      <soap11:operation style="document"/>
+      <wsdl:input name="changeBillingMethodToDirectBill">
+        <soap11:body use="literal"/>
+        <soap11:header message="tns:gw-authentication" part="gw-authentication" use="literal"/>
+        <soap11:header message="tns:gw-locale" part="gw-locale" use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="changeBillingMethodToDirectBillResponse">
+        <soap11:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="SOAPServerException">
+        <soap11:fault name="SOAPServerException" use="literal"/>
+      </wsdl:fault>
+      <wsdl:fault name="BadIdentifierException">
+        <soap11:fault name="BadIdentifierException" use="literal"/>
+      </wsdl:fault>
+      <wsdl:fault name="RequiredFieldException">
+        <soap11:fault name="RequiredFieldException" use="literal"/>
+      </wsdl:fault>
+      <wsdl:fault name="WsiAuthenticationException">
+        <soap11:fault name="WsiAuthenticationException" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="changeBillingMethodToListBill">
+      <soap11:operation style="document"/>
+      <wsdl:input name="changeBillingMethodToListBill">
+        <soap11:body use="literal"/>
+        <soap11:header message="tns:gw-authentication" part="gw-authentication" use="literal"/>
+        <soap11:header message="tns:gw-locale" part="gw-locale" use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="changeBillingMethodToListBillResponse">
+        <soap11:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="SOAPServerException">
+        <soap11:fault name="SOAPServerException" use="literal"/>
+      </wsdl:fault>
+      <wsdl:fault name="RequiredFieldException">
+        <soap11:fault name="RequiredFieldException" use="literal"/>
+      </wsdl:fault>
+      <wsdl:fault name="BadIdentifierException">
+        <soap11:fault name="BadIdentifierException" use="literal"/>
+      </wsdl:fault>
+      <wsdl:fault name="WsiAuthenticationException">
+        <soap11:fault name="WsiAuthenticationException" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="addDocumentToAccount">
+      <soap11:operation style="document"/>
+      <wsdl:input name="addDocumentToAccount">
+        <soap11:body use="literal"/>
+        <soap11:header message="tns:gw-authentication" part="gw-authentication" use="literal"/>
+        <soap11:header message="tns:gw-locale" part="gw-locale" use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="addDocumentToAccountResponse">
+        <soap11:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="SOAPServerException">
+        <soap11:fault name="SOAPServerException" use="literal"/>
+      </wsdl:fault>
+      <wsdl:fault name="RequiredFieldException">
+        <soap11:fault name="RequiredFieldException" use="literal"/>
+      </wsdl:fault>
+      <wsdl:fault name="BadIdentifierException">
+        <soap11:fault name="BadIdentifierException" use="literal"/>
+      </wsdl:fault>
+      <wsdl:fault name="WsiAuthenticationException">
+        <soap11:fault name="WsiAuthenticationException" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="addDocumentToPolicyPeriod">
+      <soap11:operation style="document"/>
+      <wsdl:input name="addDocumentToPolicyPeriod">
+        <soap11:body use="literal"/>
+        <soap11:header message="tns:gw-authentication" part="gw-authentication" use="literal"/>
+        <soap11:header message="tns:gw-locale" part="gw-locale" use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="addDocumentToPolicyPeriodResponse">
+        <soap11:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="SOAPServerException">
+        <soap11:fault name="SOAPServerException" use="literal"/>
+      </wsdl:fault>
+      <wsdl:fault name="RequiredFieldException">
+        <soap11:fault name="RequiredFieldException" use="literal"/>
+      </wsdl:fault>
+      <wsdl:fault name="BadIdentifierException">
+        <soap11:fault name="BadIdentifierException" use="literal"/>
+      </wsdl:fault>
+      <wsdl:fault name="WsiAuthenticationException">
+        <soap11:fault name="WsiAuthenticationException" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="addDocumentToProducer">
+      <soap11:operation style="document"/>
+      <wsdl:input name="addDocumentToProducer">
+        <soap11:body use="literal"/>
+        <soap11:header message="tns:gw-authentication" part="gw-authentication" use="literal"/>
+        <soap11:header message="tns:gw-locale" part="gw-locale" use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="addDocumentToProducerResponse">
+        <soap11:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="SOAPServerException">
+        <soap11:fault name="SOAPServerException" use="literal"/>
+      </wsdl:fault>
+      <wsdl:fault name="RequiredFieldException">
+        <soap11:fault name="RequiredFieldException" use="literal"/>
+      </wsdl:fault>
+      <wsdl:fault name="BadIdentifierException">
+        <soap11:fault name="BadIdentifierException" use="literal"/>
+      </wsdl:fault>
+      <wsdl:fault name="WsiAuthenticationException">
+        <soap11:fault name="WsiAuthenticationException" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="createSharedActivity">
+      <soap11:operation style="document"/>
+      <wsdl:input name="createSharedActivity">
+        <soap11:body use="literal"/>
+        <soap11:header message="tns:gw-authentication" part="gw-authentication" use="literal"/>
+        <soap11:header message="tns:gw-locale" part="gw-locale" use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="createSharedActivityResponse">
+        <soap11:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="SOAPServerException">
+        <soap11:fault name="SOAPServerException" use="literal"/>
+      </wsdl:fault>
+      <wsdl:fault name="RequiredFieldException">
+        <soap11:fault name="RequiredFieldException" use="literal"/>
+      </wsdl:fault>
+      <wsdl:fault name="BadIdentifierException">
+        <soap11:fault name="BadIdentifierException" use="literal"/>
+      </wsdl:fault>
+      <wsdl:fault name="WsiAuthenticationException">
+        <soap11:fault name="WsiAuthenticationException" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="createActivity">
+      <soap11:operation style="document"/>
+      <wsdl:input name="createActivity">
+        <soap11:body use="literal"/>
+        <soap11:header message="tns:gw-authentication" part="gw-authentication" use="literal"/>
+        <soap11:header message="tns:gw-locale" part="gw-locale" use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="createActivityResponse">
+        <soap11:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="SOAPServerException">
+        <soap11:fault name="SOAPServerException" use="literal"/>
+      </wsdl:fault>
+      <wsdl:fault name="RequiredFieldException">
+        <soap11:fault name="RequiredFieldException" use="literal"/>
+      </wsdl:fault>
+      <wsdl:fault name="BadIdentifierException">
+        <soap11:fault name="BadIdentifierException" use="literal"/>
+      </wsdl:fault>
+      <wsdl:fault name="WsiAuthenticationException">
+        <soap11:fault name="WsiAuthenticationException" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="createActivityAssignedToUser">
+      <soap11:operation style="document"/>
+      <wsdl:input name="createActivityAssignedToUser">
+        <soap11:body use="literal"/>
+        <soap11:header message="tns:gw-authentication" part="gw-authentication" use="literal"/>
+        <soap11:header message="tns:gw-locale" part="gw-locale" use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="createActivityAssignedToUserResponse">
+        <soap11:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="SOAPServerException">
+        <soap11:fault name="SOAPServerException" use="literal"/>
+      </wsdl:fault>
+      <wsdl:fault name="RequiredFieldException">
+        <soap11:fault name="RequiredFieldException" use="literal"/>
+      </wsdl:fault>
+      <wsdl:fault name="BadIdentifierException">
+        <soap11:fault name="BadIdentifierException" use="literal"/>
+      </wsdl:fault>
+      <wsdl:fault name="WsiAuthenticationException">
+        <soap11:fault name="WsiAuthenticationException" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="getAccountInfo">
+      <soap11:operation style="document"/>
+      <wsdl:input name="getAccountInfo">
+        <soap11:body use="literal"/>
+        <soap11:header message="tns:gw-authentication" part="gw-authentication" use="literal"/>
+        <soap11:header message="tns:gw-locale" part="gw-locale" use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="getAccountInfoResponse">
+        <soap11:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="SOAPServerException">
+        <soap11:fault name="SOAPServerException" use="literal"/>
+      </wsdl:fault>
+      <wsdl:fault name="RequiredFieldException">
+        <soap11:fault name="RequiredFieldException" use="literal"/>
+      </wsdl:fault>
+      <wsdl:fault name="BadIdentifierException">
+        <soap11:fault name="BadIdentifierException" use="literal"/>
+      </wsdl:fault>
+      <wsdl:fault name="WsiAuthenticationException">
+        <soap11:fault name="WsiAuthenticationException" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="getProducerInfo">
+      <soap11:operation style="document"/>
+      <wsdl:input name="getProducerInfo">
+        <soap11:body use="literal"/>
+        <soap11:header message="tns:gw-authentication" part="gw-authentication" use="literal"/>
+        <soap11:header message="tns:gw-locale" part="gw-locale" use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="getProducerInfoResponse">
+        <soap11:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="SOAPServerException">
+        <soap11:fault name="SOAPServerException" use="literal"/>
+      </wsdl:fault>
+      <wsdl:fault name="RequiredFieldException">
+        <soap11:fault name="RequiredFieldException" use="literal"/>
+      </wsdl:fault>
+      <wsdl:fault name="BadIdentifierException">
+        <soap11:fault name="BadIdentifierException" use="literal"/>
+      </wsdl:fault>
+      <wsdl:fault name="WsiAuthenticationException">
+        <soap11:fault name="WsiAuthenticationException" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="getPolicyPeriodInfo">
+      <soap11:operation style="document"/>
+      <wsdl:input name="getPolicyPeriodInfo">
+        <soap11:body use="literal"/>
+        <soap11:header message="tns:gw-authentication" part="gw-authentication" use="literal"/>
+        <soap11:header message="tns:gw-locale" part="gw-locale" use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="getPolicyPeriodInfoResponse">
+        <soap11:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="SOAPServerException">
+        <soap11:fault name="SOAPServerException" use="literal"/>
+      </wsdl:fault>
+      <wsdl:fault name="RequiredFieldException">
+        <soap11:fault name="RequiredFieldException" use="literal"/>
+      </wsdl:fault>
+      <wsdl:fault name="BadIdentifierException">
+        <soap11:fault name="BadIdentifierException" use="literal"/>
+      </wsdl:fault>
+      <wsdl:fault name="WsiAuthenticationException">
+        <soap11:fault name="WsiAuthenticationException" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="createCollateralRequirement">
+      <soap11:operation style="document"/>
+      <wsdl:input name="createCollateralRequirement">
+        <soap11:body use="literal"/>
+        <soap11:header message="tns:gw-authentication" part="gw-authentication" use="literal"/>
+        <soap11:header message="tns:gw-locale" part="gw-locale" use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="createCollateralRequirementResponse">
+        <soap11:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="SOAPServerException">
+        <soap11:fault name="SOAPServerException" use="literal"/>
+      </wsdl:fault>
+      <wsdl:fault name="RequiredFieldException">
+        <soap11:fault name="RequiredFieldException" use="literal"/>
+      </wsdl:fault>
+      <wsdl:fault name="SOAPException">
+        <soap11:fault name="SOAPException" use="literal"/>
+      </wsdl:fault>
+      <wsdl:fault name="BadIdentifierException">
+        <soap11:fault name="BadIdentifierException" use="literal"/>
+      </wsdl:fault>
+      <wsdl:fault name="WsiAuthenticationException">
+        <soap11:fault name="WsiAuthenticationException" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="startDelinquencyOnAccount">
+      <soap11:operation style="document"/>
+      <wsdl:input name="startDelinquencyOnAccount">
+        <soap11:body use="literal"/>
+        <soap11:header message="tns:gw-authentication" part="gw-authentication" use="literal"/>
+        <soap11:header message="tns:gw-locale" part="gw-locale" use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="startDelinquencyOnAccountResponse">
+        <soap11:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="SOAPServerException">
+        <soap11:fault name="SOAPServerException" use="literal"/>
+      </wsdl:fault>
+      <wsdl:fault name="RequiredFieldException">
+        <soap11:fault name="RequiredFieldException" use="literal"/>
+      </wsdl:fault>
+      <wsdl:fault name="BadIdentifierException">
+        <soap11:fault name="BadIdentifierException" use="literal"/>
+      </wsdl:fault>
+      <wsdl:fault name="WsiAuthenticationException">
+        <soap11:fault name="WsiAuthenticationException" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="startDelinquencyOnPolicyPeriod">
+      <soap11:operation style="document"/>
+      <wsdl:input name="startDelinquencyOnPolicyPeriod">
+        <soap11:body use="literal"/>
+        <soap11:header message="tns:gw-authentication" part="gw-authentication" use="literal"/>
+        <soap11:header message="tns:gw-locale" part="gw-locale" use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="startDelinquencyOnPolicyPeriodResponse">
+        <soap11:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="SOAPServerException">
+        <soap11:fault name="SOAPServerException" use="literal"/>
+      </wsdl:fault>
+      <wsdl:fault name="RequiredFieldException">
+        <soap11:fault name="RequiredFieldException" use="literal"/>
+      </wsdl:fault>
+      <wsdl:fault name="BadIdentifierException">
+        <soap11:fault name="BadIdentifierException" use="literal"/>
+      </wsdl:fault>
+      <wsdl:fault name="WsiAuthenticationException">
+        <soap11:fault name="WsiAuthenticationException" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="triggerDelinquencyWorkflowOnAccount">
+      <soap11:operation style="document"/>
+      <wsdl:input name="triggerDelinquencyWorkflowOnAccount">
+        <soap11:body use="literal"/>
+        <soap11:header message="tns:gw-authentication" part="gw-authentication" use="literal"/>
+        <soap11:header message="tns:gw-locale" part="gw-locale" use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="triggerDelinquencyWorkflowOnAccountResponse">
+        <soap11:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="SOAPServerException">
+        <soap11:fault name="SOAPServerException" use="literal"/>
+      </wsdl:fault>
+      <wsdl:fault name="RequiredFieldException">
+        <soap11:fault name="RequiredFieldException" use="literal"/>
+      </wsdl:fault>
+      <wsdl:fault name="BadIdentifierException">
+        <soap11:fault name="BadIdentifierException" use="literal"/>
+      </wsdl:fault>
+      <wsdl:fault name="WsiAuthenticationException">
+        <soap11:fault name="WsiAuthenticationException" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="triggerDelinquencyWorkflowOnPolicyPeriod">
+      <soap11:operation style="document"/>
+      <wsdl:input name="triggerDelinquencyWorkflowOnPolicyPeriod">
+        <soap11:body use="literal"/>
+        <soap11:header message="tns:gw-authentication" part="gw-authentication" use="literal"/>
+        <soap11:header message="tns:gw-locale" part="gw-locale" use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="triggerDelinquencyWorkflowOnPolicyPeriodResponse">
+        <soap11:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="SOAPServerException">
+        <soap11:fault name="SOAPServerException" use="literal"/>
+      </wsdl:fault>
+      <wsdl:fault name="RequiredFieldException">
+        <soap11:fault name="RequiredFieldException" use="literal"/>
+      </wsdl:fault>
+      <wsdl:fault name="BadIdentifierException">
+        <soap11:fault name="BadIdentifierException" use="literal"/>
+      </wsdl:fault>
+      <wsdl:fault name="WsiAuthenticationException">
+        <soap11:fault name="WsiAuthenticationException" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="encryptDataOnStagingTables">
+      <soap11:operation style="document"/>
+      <wsdl:input name="encryptDataOnStagingTables">
+        <soap11:body use="literal"/>
+        <soap11:header message="tns:gw-authentication" part="gw-authentication" use="literal"/>
+        <soap11:header message="tns:gw-locale" part="gw-locale" use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="encryptDataOnStagingTablesResponse">
+        <soap11:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="SOAPException">
+        <soap11:fault name="SOAPException" use="literal"/>
+      </wsdl:fault>
+      <wsdl:fault name="WsiAuthenticationException">
+        <soap11:fault name="WsiAuthenticationException" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="encryptDataOnStagingTablesAsBatchProcess">
+      <soap11:operation style="document"/>
+      <wsdl:input name="encryptDataOnStagingTablesAsBatchProcess">
+        <soap11:body use="literal"/>
+        <soap11:header message="tns:gw-authentication" part="gw-authentication" use="literal"/>
+        <soap11:header message="tns:gw-locale" part="gw-locale" use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="encryptDataOnStagingTablesAsBatchProcessResponse">
+        <soap11:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="SOAPException">
+        <soap11:fault name="SOAPException" use="literal"/>
+      </wsdl:fault>
+      <wsdl:fault name="WsiAuthenticationException">
+        <soap11:fault name="WsiAuthenticationException" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="createPremiumReportDueDate">
+      <soap11:operation style="document"/>
+      <wsdl:input name="createPremiumReportDueDate">
+        <soap11:body use="literal"/>
+        <soap11:header message="tns:gw-authentication" part="gw-authentication" use="literal"/>
+        <soap11:header message="tns:gw-locale" part="gw-locale" use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="createPremiumReportDueDateResponse">
+        <soap11:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="SOAPServerException">
+        <soap11:fault name="SOAPServerException" use="literal"/>
+      </wsdl:fault>
+      <wsdl:fault name="RequiredFieldException">
+        <soap11:fault name="RequiredFieldException" use="literal"/>
+      </wsdl:fault>
+      <wsdl:fault name="WsiAuthenticationException">
+        <soap11:fault name="WsiAuthenticationException" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="cancelPremiumReportDueDate">
+      <soap11:operation style="document"/>
+      <wsdl:input name="cancelPremiumReportDueDate">
+        <soap11:body use="literal"/>
+        <soap11:header message="tns:gw-authentication" part="gw-authentication" use="literal"/>
+        <soap11:header message="tns:gw-locale" part="gw-locale" use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="cancelPremiumReportDueDateResponse">
+        <soap11:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="SOAPServerException">
+        <soap11:fault name="SOAPServerException" use="literal"/>
+      </wsdl:fault>
+      <wsdl:fault name="RequiredFieldException">
+        <soap11:fault name="RequiredFieldException" use="literal"/>
+      </wsdl:fault>
+      <wsdl:fault name="BadIdentifierException">
+        <soap11:fault name="BadIdentifierException" use="literal"/>
+      </wsdl:fault>
+      <wsdl:fault name="WsiAuthenticationException">
+        <soap11:fault name="WsiAuthenticationException" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="BCAPI">
+    <wsdl:port name="BCAPISoap12Port" binding="tns:BCAPISoap12Binding">
+      <soap12:address location="local:///gw/webservice/bc/bc801/BCAPI"/>
+    </wsdl:port>
+    <wsdl:port name="BCAPISoap11Port" binding="tns:BCAPISoap11Binding">
+      <soap11:address location="local:///gw/webservice/bc/bc801/BCAPI/soap11"/>
+    </wsdl:port>
+  </wsdl:service>
+  <wsdl:message name="addNoteToAccount">
+    <wsdl:part name="parameters" element="tns:addNoteToAccount"/>
+  </wsdl:message>
+  <wsdl:message name="addNoteToAccountResponse">
+    <wsdl:part name="parameters" element="tns:addNoteToAccountResponse"/>
+  </wsdl:message>
+  <wsdl:message name="SOAPServerException">
+    <wsdl:part name="SOAPServerException" element="tns:SOAPServerException"/>
+  </wsdl:message>
+  <wsdl:message name="RequiredFieldException">
+    <wsdl:part name="RequiredFieldException" element="tns:RequiredFieldException"/>
+  </wsdl:message>
+  <wsdl:message name="BadIdentifierException">
+    <wsdl:part name="BadIdentifierException" element="tns:BadIdentifierException"/>
+  </wsdl:message>
+  <wsdl:message name="WsiAuthenticationException">
+    <wsdl:part name="WsiAuthenticationException" element="tns:WsiAuthenticationException"/>
+  </wsdl:message>
+  <wsdl:message name="addNoteToPolicyPeriod">
+    <wsdl:part name="parameters" element="tns:addNoteToPolicyPeriod"/>
+  </wsdl:message>
+  <wsdl:message name="addNoteToPolicyPeriodResponse">
+    <wsdl:part name="parameters" element="tns:addNoteToPolicyPeriodResponse"/>
+  </wsdl:message>
+  <wsdl:message name="addNoteToProducer">
+    <wsdl:part name="parameters" element="tns:addNoteToProducer"/>
+  </wsdl:message>
+  <wsdl:message name="addNoteToProducerResponse">
+    <wsdl:part name="parameters" element="tns:addNoteToProducerResponse"/>
+  </wsdl:message>
+  <wsdl:message name="addNoteToTroubleTicket">
+    <wsdl:part name="parameters" element="tns:addNoteToTroubleTicket"/>
+  </wsdl:message>
+  <wsdl:message name="addNoteToTroubleTicketResponse">
+    <wsdl:part name="parameters" element="tns:addNoteToTroubleTicketResponse"/>
+  </wsdl:message>
+  <wsdl:message name="changeBillingMethodToAgencyBill">
+    <wsdl:part name="parameters" element="tns:changeBillingMethodToAgencyBill"/>
+  </wsdl:message>
+  <wsdl:message name="changeBillingMethodToAgencyBillResponse">
+    <wsdl:part name="parameters" element="tns:changeBillingMethodToAgencyBillResponse"/>
+  </wsdl:message>
+  <wsdl:message name="changeBillingMethodToDirectBill">
+    <wsdl:part name="parameters" element="tns:changeBillingMethodToDirectBill"/>
+  </wsdl:message>
+  <wsdl:message name="changeBillingMethodToDirectBillResponse">
+    <wsdl:part name="parameters" element="tns:changeBillingMethodToDirectBillResponse"/>
+  </wsdl:message>
+  <wsdl:message name="changeBillingMethodToListBill">
+    <wsdl:part name="parameters" element="tns:changeBillingMethodToListBill"/>
+  </wsdl:message>
+  <wsdl:message name="changeBillingMethodToListBillResponse">
+    <wsdl:part name="parameters" element="tns:changeBillingMethodToListBillResponse"/>
+  </wsdl:message>
+  <wsdl:message name="addDocumentToAccount">
+    <wsdl:part name="parameters" element="tns:addDocumentToAccount"/>
+  </wsdl:message>
+  <wsdl:message name="addDocumentToAccountResponse">
+    <wsdl:part name="parameters" element="tns:addDocumentToAccountResponse"/>
+  </wsdl:message>
+  <wsdl:message name="addDocumentToPolicyPeriod">
+    <wsdl:part name="parameters" element="tns:addDocumentToPolicyPeriod"/>
+  </wsdl:message>
+  <wsdl:message name="addDocumentToPolicyPeriodResponse">
+    <wsdl:part name="parameters" element="tns:addDocumentToPolicyPeriodResponse"/>
+  </wsdl:message>
+  <wsdl:message name="addDocumentToProducer">
+    <wsdl:part name="parameters" element="tns:addDocumentToProducer"/>
+  </wsdl:message>
+  <wsdl:message name="addDocumentToProducerResponse">
+    <wsdl:part name="parameters" element="tns:addDocumentToProducerResponse"/>
+  </wsdl:message>
+  <wsdl:message name="createSharedActivity">
+    <wsdl:part name="parameters" element="tns:createSharedActivity"/>
+  </wsdl:message>
+  <wsdl:message name="createSharedActivityResponse">
+    <wsdl:part name="parameters" element="tns:createSharedActivityResponse"/>
+  </wsdl:message>
+  <wsdl:message name="createActivity">
+    <wsdl:part name="parameters" element="tns:createActivity"/>
+  </wsdl:message>
+  <wsdl:message name="createActivityResponse">
+    <wsdl:part name="parameters" element="tns:createActivityResponse"/>
+  </wsdl:message>
+  <wsdl:message name="createActivityAssignedToUser">
+    <wsdl:part name="parameters" element="tns:createActivityAssignedToUser"/>
+  </wsdl:message>
+  <wsdl:message name="createActivityAssignedToUserResponse">
+    <wsdl:part name="parameters" element="tns:createActivityAssignedToUserResponse"/>
+  </wsdl:message>
+  <wsdl:message name="getAccountInfo">
+    <wsdl:part name="parameters" element="tns:getAccountInfo"/>
+  </wsdl:message>
+  <wsdl:message name="getAccountInfoResponse">
+    <wsdl:part name="parameters" element="tns:getAccountInfoResponse"/>
+  </wsdl:message>
+  <wsdl:message name="getProducerInfo">
+    <wsdl:part name="parameters" element="tns:getProducerInfo"/>
+  </wsdl:message>
+  <wsdl:message name="getProducerInfoResponse">
+    <wsdl:part name="parameters" element="tns:getProducerInfoResponse"/>
+  </wsdl:message>
+  <wsdl:message name="getPolicyPeriodInfo">
+    <wsdl:part name="parameters" element="tns:getPolicyPeriodInfo"/>
+  </wsdl:message>
+  <wsdl:message name="getPolicyPeriodInfoResponse">
+    <wsdl:part name="parameters" element="tns:getPolicyPeriodInfoResponse"/>
+  </wsdl:message>
+  <wsdl:message name="createCollateralRequirement">
+    <wsdl:part name="parameters" element="tns:createCollateralRequirement"/>
+  </wsdl:message>
+  <wsdl:message name="createCollateralRequirementResponse">
+    <wsdl:part name="parameters" element="tns:createCollateralRequirementResponse"/>
+  </wsdl:message>
+  <wsdl:message name="SOAPException">
+    <wsdl:part name="SOAPException" element="tns:SOAPException"/>
+  </wsdl:message>
+  <wsdl:message name="startDelinquencyOnAccount">
+    <wsdl:part name="parameters" element="tns:startDelinquencyOnAccount"/>
+  </wsdl:message>
+  <wsdl:message name="startDelinquencyOnAccountResponse">
+    <wsdl:part name="parameters" element="tns:startDelinquencyOnAccountResponse"/>
+  </wsdl:message>
+  <wsdl:message name="startDelinquencyOnPolicyPeriod">
+    <wsdl:part name="parameters" element="tns:startDelinquencyOnPolicyPeriod"/>
+  </wsdl:message>
+  <wsdl:message name="startDelinquencyOnPolicyPeriodResponse">
+    <wsdl:part name="parameters" element="tns:startDelinquencyOnPolicyPeriodResponse"/>
+  </wsdl:message>
+  <wsdl:message name="triggerDelinquencyWorkflowOnAccount">
+    <wsdl:part name="parameters" element="tns:triggerDelinquencyWorkflowOnAccount"/>
+  </wsdl:message>
+  <wsdl:message name="triggerDelinquencyWorkflowOnAccountResponse">
+    <wsdl:part name="parameters" element="tns:triggerDelinquencyWorkflowOnAccountResponse"/>
+  </wsdl:message>
+  <wsdl:message name="triggerDelinquencyWorkflowOnPolicyPeriod">
+    <wsdl:part name="parameters" element="tns:triggerDelinquencyWorkflowOnPolicyPeriod"/>
+  </wsdl:message>
+  <wsdl:message name="triggerDelinquencyWorkflowOnPolicyPeriodResponse">
+    <wsdl:part name="parameters" element="tns:triggerDelinquencyWorkflowOnPolicyPeriodResponse"/>
+  </wsdl:message>
+  <wsdl:message name="encryptDataOnStagingTables">
+    <wsdl:part name="parameters" element="tns:encryptDataOnStagingTables"/>
+  </wsdl:message>
+  <wsdl:message name="encryptDataOnStagingTablesResponse">
+    <wsdl:part name="parameters" element="tns:encryptDataOnStagingTablesResponse"/>
+  </wsdl:message>
+  <wsdl:message name="encryptDataOnStagingTablesAsBatchProcess">
+    <wsdl:part name="parameters" element="tns:encryptDataOnStagingTablesAsBatchProcess"/>
+  </wsdl:message>
+  <wsdl:message name="encryptDataOnStagingTablesAsBatchProcessResponse">
+    <wsdl:part name="parameters" element="tns:encryptDataOnStagingTablesAsBatchProcessResponse"/>
+  </wsdl:message>
+  <wsdl:message name="createPremiumReportDueDate">
+    <wsdl:part name="parameters" element="tns:createPremiumReportDueDate"/>
+  </wsdl:message>
+  <wsdl:message name="createPremiumReportDueDateResponse">
+    <wsdl:part name="parameters" element="tns:createPremiumReportDueDateResponse"/>
+  </wsdl:message>
+  <wsdl:message name="cancelPremiumReportDueDate">
+    <wsdl:part name="parameters" element="tns:cancelPremiumReportDueDate"/>
+  </wsdl:message>
+  <wsdl:message name="cancelPremiumReportDueDateResponse">
+    <wsdl:part name="parameters" element="tns:cancelPremiumReportDueDateResponse"/>
+  </wsdl:message>
+  <wsdl:message name="gw-authentication">
+    <wsdl:part name="gw-authentication" element="gwsoap:authentication"/>
+  </wsdl:message>
+  <wsdl:message name="gw-locale">
+    <wsdl:part name="gw-locale" element="gwsoap:locale"/>
+  </wsdl:message>
+</wsdl:definitions>

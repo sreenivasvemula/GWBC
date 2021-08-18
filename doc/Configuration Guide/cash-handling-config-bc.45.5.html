@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xml:lang="en" lang="en" xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+    <meta http-equiv="Content-Style-Type" content="text/css" />
+    <!-- MOTW-DISABLED saved from url=(0014)about:internet -->
+    <title>Modifying the DirectBillPayment Plugin</title>
+    <link rel="StyleSheet" href="css/cash-handling-config-bc.css" type="text/css" media="all" />
+    <link rel="StyleSheet" href="css/webworks.css" type="text/css" media="all" />
+    <link rel="StyleSheet" href="css/css-guidewire-extra.css" type="text/css" media="all" />
+    <script type="text/javascript" language="JavaScript1.2" src="wwhdata/common/context.js"></script>
+    <script type="text/javascript" language="JavaScript1.2" src="wwhdata/common/towwhdir.js"></script>
+    <script type="text/javascript" language="JavaScript1.2" src="wwhdata/common/wwhpagef.js"></script>
+    <script type="text/javascript" language="JavaScript1.2">
+      <!--
+        var  WebWorksRootPath = "";
+      // -->
+    </script>
+    <script type="text/javascript" language="JavaScript1.2">
+      <!--
+        // Set reference to top level help frame
+        //
+        var  WWHFrame = WWHGetWWHFrame("", true);
+      // -->
+    </script>
+    <script type="text/javascript" language="JavaScript1.2" src="scripts/expand.js"></script>
+    <!-- THE FOLLOWING IS A GUIDEWIRE STYLE DEFINITION FOR THE LINK TO THIS FEATURE -->
+    <link rel="StyleSheet" href="css/css-guidewire-extra.css" type="text/css" media="all" />
+    <!-- THE FOLLOWING IS A GUIDEWIRE GSCRIPT FUNCTION FOR THE LINK TO THIS FEATURE -->
+    <script type="text/javascript">
+function guidewire_selectall()
+{
+var text_val=eval("document.linktothisurlform.urlfield");
+text_val.focus();
+text_val.select();
+}
+</script>
+  </head>
+  <body onLoad="WWHUpdate();" onUnload="WWHUnload();" onKeyDown="WWHHandleKeyDown((document.all||document.getElementById||document.layers)?event:null);" onKeyPress="WWHHandleKeyPress((document.all||document.getElementById||document.layers)?event:null);" onKeyUp="WWHHandleKeyUp((document.all||document.getElementById||document.layers)?event:null);">
+    <!-- THE FOLLOWING IS A GUIDEWIRE DIV FOR THE 'LINK TO THIS' FEATURE -->
+    <div id="linkToThisPage" class="popup" style="display: none;">
+      <div class="popupTitle">Link Directly to This Page 
+           <a href="#" onclick="var thePopup = getElementById('linkToThisPage');thePopup.style.display='none';return false;"><img class="popupClosebox" src="wwhelp/wwhimpl/common/images/close.gif" /></a></div>
+      <div style="padding:6px;">
+        <div class="popupText" id="linkToThisPageBookmark">An error has occurred if you see this messsage.</div>
+        <form name="linktothisurlform" method="post" action="" style="width:275px;margin:0px">
+          <input type="text" class="popupURLText" id="linkToThisPageURL" name="urlfield" rows="1" cols="55" onClick="guidewire_selectall();" onFocus="guidewire_selectall();"></input>
+        </form>
+      </div>
+    </div>
+    <br />
+    <div class="WebWorks_Breadcrumbs" style="text-align: left;">
+      <span>BillingCenter Configuration Guide</span> : 
+    <span class="WebWorks_Breadcrumbs" style="text-align: left;"><a class="WebWorks_Breadcrumb_Link" href="p-BillingCenter.html#1187387">Guidewire BillingCenter Configuration</a> : <a class="WebWorks_Breadcrumb_Link" href="cash-handling-config-bc.45.1.html#1187387">Configuring Payment Allocation Plans</a> : Modifying the DirectBillPayment Plugin</span></div>
+    <hr align="left" />
+    <blockquote>
+      <h3 class="H1_-_Heading_1"><a name="1187387">Modifying the </a><span class="cvh_-_computer_voice_in_heading">DirectBillPayment</span> Plugin</h3>
+      <div class="B_-_Body"><a name="1187442">The code that carries out the payment allocation plan, including the plan’s invoice item filtering and item ordering, is invoked by the </a><span class="cv_-_computer_voice">DirectBillPayment</span> plugin. For plugin details, see <a href="javascript:WWHClickedPopup('integration', 'bc-plugins.13.30.html#3435318', '');" title="Direct Bill Payment Plugin">“Direct Bill Payment Plugin” in the </a><span class="bt_-_book_title"><a href="javascript:WWHClickedPopup('integration', 'bc-plugins.13.30.html#3435318', '');" title="Direct Bill Payment Plugin">Integration Guide</a></span>.</div>
+      <div class="B_-_Body"><a name="1188175">It is reasonable to expect the final payment distribution to conform to the defined settings in the payment allocation plan. However, because the </a><span class="cv_-_computer_voice">DirectBillPayment</span> plugin hooks into certain allocation plan operations, if the plugin methods are customized, the distribution results can differ from the expected results. For example, the plugin might perform special processing before invoking the payment allocation plan. Alternatively, the plugin might invoke the allocation plan two or more times, passing the plan different invoice items in each invocation.</div>
+      <div class="B_-_Body"><a name="1188919">The </a><span class="cv_-_computer_voice">DirectBillPayment</span> plugin’s <span class="cv_-_computer_voice">allocatePayment</span> method invokes the payment allocation plan. Other methods in the plugin also invoke the payment allocation plan, but those methods handle very special situations. The discussion in this section focuses on customizing the <span class="cv_-_computer_voice">allocatePayment</span> method.</div>
+      <h4 class="H2_-_Heading_2"><a name="1188777">The </a><span class="cvh_-_computer_voice_in_heading">allocatePayment</span> Method</h4>
+      <div class="B_-_Body"><a name="1188916">To view and modify the </a><span class="cv_-_computer_voice">allocatePayment</span> method, select <span class="ui_-_UI_element">Navigate</span>&nbsp;→ <span class="ui_-_UI_element">Class</span>... and enter <span class="ui_-_UI_element">DirectBillPayment</span>. Select the plugin entry. The <span class="cv_-_computer_voice">allocatePayment</span> implementation in the base configuration is shown below. The method first determines the total amount of money to distribute. It then passes that amount and the list of all invoice items associated with the payment to the payment allocation plan for processing. The payment allocation plan filters the eligible invoice items, orders them, and finally distributes money among them.</div>
+      <PRE class="CF_-_Code_First_Line"><a name="1189987">override function</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="1190009">allocatePayment( payment : DirectBillPayment, amount : MonetaryAmount ){</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="1190253">&nbsp;&nbsp;// Determine total amount to distribute</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="1190084">&nbsp;&nbsp;var amountToDistribute = AllocationPool.withGross( amount )</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="1190299">&nbsp;&nbsp;// Invoke payment allocation plan</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="1190148">&nbsp;&nbsp;paymentAllocationStrategy( payment ).allocate( payment.DistItemsList, amountToDistribute )</a></PRE>
+      <PRE class="CL_-_Code_Last_Line"><a name="1190243">}</a></PRE>
+      <div class="B_-_Body"><a name="1190250">A sample modification to the </a><span class="cv_-_computer_voice">allocatePayment</span> method is shown below. This version filters worker’s comp invoice items and pays those items by invoking the payment allocation plan. If any money remains after paying the worker’s comp items, the remaining invoice items are collected and passed to a second invocation of the allocation plan. Comments in the source code describe the operations performed.</div>
+      <PRE class="CF_-_Code_First_Line"><a name="1191168">override function</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="1191190">allocatePayment( payment : DirectBillPayment, amount : MonetaryAmount ){</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="1191266">&nbsp;</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="1192007">&nbsp;&nbsp;// Collect all worker’s comp invoice items</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="1191312">&nbsp;&nbsp;var workersCompItems = payment.DistItems.</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="1191357">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;where(\ item -&gt; item.PolicyPeriod.Policy.LOBCode == “WorkersComp” )</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="1191432">&nbsp;</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="1191434">&nbsp;&nbsp;// If any worker’s comp invoice items exist...</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="1191490">&nbsp;&nbsp;if( !workersCompItems.IsEmpty ){</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="1191526">&nbsp;&nbsp;&nbsp;&nbsp;// ...pay them first by invoking the payment allocation plan</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="1191594">&nbsp;&nbsp;&nbsp;&nbsp;// Note: The plan’s filter may still determine these items to be ineligible for payment</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="1191770">&nbsp;&nbsp;&nbsp;&nbsp;var amountToDistribute = AllocationPool.withGross( amount )</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="1191843">&nbsp;&nbsp;&nbsp;&nbsp;paymentAllocationStrategy( payment ).allocate( workersCompItems.toList(),</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="1191923">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;amountToDistribute )</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="1191997">&nbsp;&nbsp;}</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="1192002">&nbsp;</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="1192004">&nbsp;&nbsp;// Collect all remaining invoice items</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="1192049">&nbsp;&nbsp;var otherItems = payment.DistItems.</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="1192088">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;where(\ item -&gt; item.PolicyPeriod.Policy.LOBCode != “WorkersComp” )</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="1192196">&nbsp;</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="1192198">&nbsp;&nbsp;// If any remaining invoice items exist...</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="1192163">&nbsp;&nbsp;if( !otherItems.IsEmpty ){</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="1192503">&nbsp;</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="1192193">&nbsp;&nbsp;&nbsp;&nbsp;// If any worker’s comp items existed...</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="1192589">&nbsp;&nbsp;&nbsp;&nbsp;var workersCompAmount = new MonetaryAmount( 0, amount.Currency )&nbsp;&nbsp;&nbsp;// default amount distributed</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="1192297">&nbsp;&nbsp;&nbsp;&nbsp;if( !workersCompItems.IsEmpty ){</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="1192335">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;// ...calculate how much was distributed to them</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="1192396">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;workersCompAmount = workersCompItems.sum(\ item -&gt; item.GrossAmountOwed )</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="1192581">&nbsp;&nbsp;&nbsp;&nbsp;}</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="1192668">&nbsp;</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="1192670">&nbsp;&nbsp;&nbsp;&nbsp;// Calculate the remaining money to distribute</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="1192722">&nbsp;&nbsp;&nbsp;&nbsp;var remainingMoney = amount - workersCompAmount</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="1192779">&nbsp;&nbsp;&nbsp;&nbsp;var zero = 0bd.ofCurrency( amount.Currency )&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;// constant in current currency</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="1192866">&nbsp;&nbsp;&nbsp;&nbsp;var amountToDistribute = AllocationPool.withGross( remainingMoney &gt; zero ? remainingMoney : zero )</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="1192971">&nbsp;</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="1192973">&nbsp;&nbsp;&nbsp;&nbsp;// ...pay the remaining invoice items using any remaining money</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="1193042">&nbsp;&nbsp;&nbsp;&nbsp;paymentAllocationStrategy( payment ).allocate( otherItems.toList(), amountToDistribute )</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="1193137">&nbsp;&nbsp;}</a></PRE>
+      <PRE class="CL_-_Code_Last_Line"><a name="1193142">}</a></PRE>
+      <script type="text/javascript" language="JavaScript1.2">
+        <!--
+          // Clear related topics
+          //
+          WWHClearRelatedTopics();
+
+          document.writeln(WWHRelatedTopicsInlineHTML());
+        // -->
+      </script>
+    </blockquote>
+    <script type="text/javascript" language="JavaScript1.2">
+      <!--
+        document.write(WWHRelatedTopicsDivTag() + WWHPopupDivTag() + WWHALinksDivTag());
+      // -->
+    </script>
+  </body>
+</html>

@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<subtype xmlns="http://guidewire.com/datamodel" desc="An agency payment made against a agency bill cycle"
+         entity="AgencyCyclePayment" subpackage="producer.agencybill" supertype="AgencyCycleDist">
+    <monetaryamount amountColumnName="WriteOffAmount"
+                    desc="The amount of the producer unapplied write-off associated with this payment, if there is one.  A positive amount means a loss for the carrier and a gain for the producer unapplied."
+                    name="WriteOffAmount" nullok="true" scaleToCurrency="true"/>
+    <array
+            name="ProdWriteoffContexts"
+            desc="The set of ProdWriteoffContexts that are associated with this AgencyCyclePayment."
+            arrayentity="ProdWriteoffContext"
+            />
+    <edgeForeignKey
+            desc="If this payment was executed from a promise, this points back to the promise that created this payment."
+            edgeTableName="appfrmprom" fkentity="AgencyCyclePromise" getterScriptability="all" ignoreforevents="true"
+            name="AppliedFromPromise" nullok="true" setterScriptability="doesNotExist"/>
+    <dbcheckbuilder
+            className="com.guidewire.bc.system.database.dbchecks.producer.agencybill.AgencyCyclePaymentDBCheckBuilder"/>
+</subtype>

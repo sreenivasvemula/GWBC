@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?><nonPersistentEntity xmlns="http://guidewire.com/datamodel" desc="Criteria to search for reversible charges" entity="ReversibleChargeSearchCriteria" extendable="true" subpackage="search">
+  <implementsEntity name="NotInCurrencySilo"/>
+  <column desc="The earliest date of the charge (inclusive)" name="EarliestDate" nullok="true" type="dateonly"/>
+  <column desc="The latest date of the charge (inclusive)" name="LatestDate" nullok="true" type="dateonly"/>
+  <monetaryamount amountColumnName="MaxAmount" desc="The maxiumum amount of the charge (inclusive)" name="MaxAmount" nullok="true" scaleToCurrency="true"/>
+  <monetaryamount amountColumnName="MinAmount" desc="The minumum amount of the charge (inclusive)" name="MinAmount" nullok="true" scaleToCurrency="true"/>
+  <foreignkey columnName="AccountID" desc="Related account" fkentity="Account" name="Account" nullok="true"/>
+  <foreignkey columnName="ChargePatternID" desc="Related charge pattern" fkentity="ChargePattern" name="ChargePattern" nullok="true"/>
+  <typekey
+    name="Currency"
+    typelist="Currency"
+    desc="The currency unit to restrict the search to"
+    nullok="true"/>
+  <foreignkey columnName="PolicyPeriodID" desc="Related policy period" fkentity="PolicyPeriod" name="PolicyPeriod" nullok="true"/>
+</nonPersistentEntity>

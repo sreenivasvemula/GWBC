@@ -1,0 +1,111 @@
+<?xml version="1.0"?>
+<PCF
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:noNamespaceSchemaLocation="../../../../../pcf.xsd">
+  <DetailViewPanel
+    id="WriteoffSearchDV">
+    <Require
+      name="writeoffSearch"
+      type="WriteoffSearchCriteria"/>
+    <Require
+      name="accountEditable"
+      type="Boolean"/>
+    <Variable
+      initialValue="new web.account.AccountSearchConverter()"
+      name="accountSearchConverter"
+      type="web.account.AccountSearchConverter"/>
+    <Variable
+      initialValue="new web.policy.PolicySearchConverter()"
+      name="policySearchConverter"
+      type="web.policy.PolicySearchConverter"/>
+    <InputColumn>
+      <Label
+        id="WriteoffBasics"
+        label="displaykey.Web.WriteoffSearchDV.WriteoffBasics"/>
+      <TypeKeyInput
+        editable="true"
+        id="ReasonCriterion"
+        label="displaykey.Web.WriteoffSearchDV.Reason"
+        value="writeoffSearch.Reason"/>
+      <TypeKeyInput
+        editable="gw.api.util.CurrencyUtil.isMultiCurrencyMode() &amp;&amp; accountEditable"
+        id="CurrencyCriterion"
+        label="displaykey.Web.WriteoffSearchDV.Currency"
+        value="writeoffSearch.Currency"
+        visible="gw.api.util.CurrencyUtil.isMultiCurrencyMode()">
+        <PostOnChange
+          onChange="blankMinimumAndMaximumFields()"/>
+      </TypeKeyInput>
+      <MonetaryAmountInput
+        available="writeoffSearch.Currency != null || gw.api.util.CurrencyUtil.isSingleCurrencyMode()"
+        currency="gw.search.SearchHelper.getDefaultCurrencyIfNull(writeoffSearch.Currency)"
+        editable="true"
+        id="MinAmountCriterion"
+        label="displaykey.Web.WriteoffSearchDV.MinAmount"
+        value="writeoffSearch.MinAmount"/>
+      <MonetaryAmountInput
+        available="writeoffSearch.Currency != null || gw.api.util.CurrencyUtil.isSingleCurrencyMode()"
+        currency="gw.search.SearchHelper.getDefaultCurrencyIfNull(writeoffSearch.Currency)"
+        editable="true"
+        id="MaxAmountCriterion"
+        label="displaykey.Web.WriteoffSearchDV.MaxAmount"
+        value="writeoffSearch.MaxAmount"/>
+      <Label
+        id="WriteoffDatesCriterion"
+        label="displaykey.Web.WriteoffSearchDV.Dates"/>
+      <DateInput
+        editable="true"
+        id="EarliestDateCriterion"
+        label="displaykey.Web.WriteoffSearchDV.EarliestDate"
+        value="writeoffSearch.EarliestDate"/>
+      <DateInput
+        editable="true"
+        id="LatestDateCriterion"
+        label="displaykey.Web.WriteoffSearchDV.LatestDate"
+        value="writeoffSearch.LatestDate"/>
+    </InputColumn>
+    <InputColumn>
+      <Label
+        id="RelatedItems"
+        label="displaykey.Web.WriteoffSearchDV.RelatedItems"/>
+      <RangeInput
+        editable="true"
+        id="ChargePatternCriterion"
+        label="displaykey.Web.WriteoffSearchDV.ChargePattern"
+        noneSelectedLabel="displaykey.Web.WriteoffSearchDV.ChargePattern.NonSelectedLabel"
+        value="writeoffSearch.ChargePattern"
+        valueRange="web.accounting.ChargePatternHelper.getReversableChargePatterns()"/>
+      <Input
+        available="accountEditable"
+        editable="accountEditable"
+        id="AccountCriterion"
+        inputConversion="accountSearchConverter.getAccount(VALUE)"
+        label="displaykey.Web.WriteoffSearchDV.Account"
+        value="writeoffSearch.Account">
+        <MenuItem
+          action="AccountSearchPopup.push()"
+          icon="&quot;search.png&quot;"
+          id="AccountPicker"/>
+      </Input>
+      <Input
+        editable="true"
+        id="PolicyPeriodCriterion"
+        inputConversion="policySearchConverter.getPolicyPeriod(VALUE)"
+        label="displaykey.Web.WriteoffSearchDV.Policy"
+        value="writeoffSearch.PolicyPeriod">
+        <MenuItem
+          action="PolicySearchPopup.push()"
+          icon="&quot;search.png&quot;"
+          id="PolicyPicker"/>
+      </Input>
+    </InputColumn>
+    <InputFooterSection>
+      <InputSetRef
+        def="SearchAndResetInputSet()"/>
+    </InputFooterSection>
+    <Code><![CDATA[function blankMinimumAndMaximumFields() {
+  writeoffSearch.MinAmount = null
+  writeoffSearch.MaxAmount = null
+}]]></Code>
+  </DetailViewPanel>
+</PCF>

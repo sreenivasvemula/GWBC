@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PCF
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:noNamespaceSchemaLocation="../../../../../pcf.xsd">
+  <Forward
+    canVisit="perm.System.accttabview"
+    id="AccountForward">
+    <LocationEntryPoint
+      signature="AccountForward()"/>
+    <!-- Set gotoMostRecentAccount variable to true to have this forward go to the most recently viewed account,
+         false to have this forward go to the Accounts search page -->
+    <Variable
+      initialValue="false"
+      name="gotoMostRecentAccount"
+      type="Boolean"/>
+    <ForwardCondition
+      action="gw.api.web.account.AccountUtil.getMostRecentlyViewedAccount().getDestination().go()"
+      condition="gotoMostRecentAccount and (gw.api.web.account.AccountUtil.getMostRecentlyViewedAccount() != null)"/>
+    <ForwardCondition
+      action="AccountsGroup.go()"/>
+  </Forward>
+</PCF>

@@ -1,0 +1,43 @@
+<?xml version="1.0"?>
+<PCF
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:noNamespaceSchemaLocation="../../../../../pcf.xsd">
+  <DetailViewPanel
+    editable="true"
+    id="NewCommissionPaymentDV">
+    <Require
+      name="standardPayment"
+      type="StandardCmsnPayment"/>
+    <Variable
+      initialValue="standardPayment.StandardProducerCode.TotalCommissionPayable"
+      name="currentPayable"
+      recalculateOnRefresh="true"/>
+    <InputColumn>
+      <Label
+        id="paymentType"
+        label="displaykey.Web.NewCommissionPaymentDV.PaymentType"/>
+      <Choice
+        id="AllCurrentChoice"
+        option="&quot;allcurrent&quot;"
+        value="standardPayment.PaymentType">
+        <Input
+          id="AllCurrent"
+          label="displaykey.Web.NewCommissionPaymentDV.AllCurrent(currentPayable.render())"
+          value="null"/>
+      </Choice>
+      <Choice
+        id="OtherAmountChoice"
+        option="&quot;other&quot;"
+        value="standardPayment.PaymentType">
+        <MonetaryAmountInput
+          currency="standardPayment.Currency"
+          editable="true"
+          id="OtherAmount"
+          label="displaykey.Web.NewCommissionPaymentDV.OtherAmount"
+          required="true"
+          validationExpression="standardPayment.Amount == null or standardPayment.Amount &lt;= currentPayable ? null : displaykey.Web.NewCommissionPaymentDV.OtherAmountInvalid(standardPayment.Amount.render(), currentPayable.render())"
+          value="standardPayment.Amount"/>
+      </Choice>
+    </InputColumn>
+  </DetailViewPanel>
+</PCF>

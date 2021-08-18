@@ -1,0 +1,56 @@
+<?xml version="1.0"?>
+<PCF
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:noNamespaceSchemaLocation="../../../../../pcf.xsd">
+  <Popup
+    beforeCommit="invoicingOverridesView.update()"
+    canEdit="true"
+    id="ChangeInvoicingOverridesPopup"
+    startInEditMode="true"
+    title="displaykey.Web.ChangeInvoicingOverridesPopup.Title">
+    <LocationEntryPoint
+      signature="ChangeInvoicingOverridesPopup(policyPeriod : PolicyPeriod)"/>
+    <Variable
+      name="policyPeriod"
+      type="PolicyPeriod"/>
+    <Variable
+      initialValue="new gw.invoice.InvoicingOverridesView(policyPeriod)"
+      name="invoicingOverridesView"/>
+    <Screen>
+      <Toolbar>
+        <EditButtons/>
+      </Toolbar>
+      <DetailViewPanel>
+        <InputColumn>
+          <PickerInput
+            action="AccountDetailSummary.go(policyPeriod.OverridingPayerAccount)"
+            editable="true"
+            id="OverridingPayerAccount"
+            inputConversion="(VALUE==null or VALUE ==&quot;&quot;) ?  null : gw.api.database.Query.make(Account).compare(&quot;AccountName&quot;, Equals, VALUE).select().AtMostOneRow "
+            label="displaykey.Web.ChangeInvoicingOverridesPopup.OverridingPayerAccount"
+            pickLocation="AccountSearchPopup.push()"
+            validationExpression="validateOverridingPayer()"
+            value="invoicingOverridesView.OverridingPayerAccount">
+            <PostOnChange/>
+          </PickerInput>
+          <RangeInput
+            editable="true"
+            id="OverridingInvoiceStream"
+            label="displaykey.Web.ChangeInvoicingOverridesPopup.OverridingInvoiceStream"
+            value="invoicingOverridesView.OverridingInvoiceStream"
+            valueRange="gw.api.domain.invoice.InvoiceStreams.getCompatibleInvoiceStreams(invoicingOverridesView.DefaultPayer, policyPeriod.PaymentPlan)"/>
+        </InputColumn>
+      </DetailViewPanel>
+    </Screen>
+    <Code><![CDATA[function validateOverridingPayer(): String {
+  
+  if (invoicingOverridesView.OverridingPayerAccount != null && policyPeriod.getCurrency()!= invoicingOverridesView.OverridingPayerAccount.getCurrency()){
+    return displaykey.Java.Error.Currency.Mismatched(
+        policyPeriod.getIntrinsicType().getDisplayName(), policyPeriod.getDisplayName(),
+            policyPeriod.getCurrency(), displaykey.Web.ChangeInvoicingOverridesPopup.OverridingPayerAccount, invoicingOverridesView.OverridingPayerAccount.getCurrency());
+  }
+
+  return gw.api.web.account.PolicyPeriods.checkForOverridingPayerAccountError(policyPeriod, invoicingOverridesView.OverridingPayerAccount)
+}]]></Code>
+  </Popup>
+</PCF>

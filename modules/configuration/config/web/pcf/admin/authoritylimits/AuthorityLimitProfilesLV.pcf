@@ -1,0 +1,36 @@
+<?xml version="1.0"?>
+<PCF
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:noNamespaceSchemaLocation="../../../../../../pcf.xsd">
+  <ListViewPanel
+    id="AuthorityLimitProfilesLV">
+    <ExposeIterator
+      flags="AuthorityLimitProfile"
+      valueType="entity.AuthorityLimitProfile"
+      widget="AuthorityLimitProfilesLV"/>
+    <Require
+      name="AuthorityLimitProfileList"
+      type="AuthorityLimitProfileQuery"/>
+    <RowIterator
+      editable="false"
+      elementName="AuthorityLimitProfile"
+      hasCheckBoxes="true"
+      value="AuthorityLimitProfileList">
+      <ToolbarFlag
+        name="AuthorityLimitProfile"/>
+      <Row>
+        <Cell
+          action="AuthorityLimitProfileDetailPage.go(AuthorityLimitProfile)"
+          id="Name"
+          label="displaykey.Web.Admin.AuthorityLimitProfilesLV.Name"
+          sortOrder="1"
+          value="AuthorityLimitProfile.Name"/>
+        <Cell
+          id="Description"
+          label="displaykey.Web.Admin.AuthorityLimitProfilesLV.Description"
+          sortOrder="2"
+          value="AuthorityLimitProfile.Description"/>
+      </Row>
+    </RowIterator>
+  </ListViewPanel>
+</PCF>

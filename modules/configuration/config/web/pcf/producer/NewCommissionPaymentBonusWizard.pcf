@@ -1,0 +1,37 @@
+<?xml version="1.0"?>
+<PCF
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:noNamespaceSchemaLocation="../../../../../pcf.xsd">
+  <Wizard
+    beforeCommit="gw.api.web.producer.ProducerUtil.schedule(bonusPayment)"
+    canEdit="true"
+    cancelWarning="displaykey.Web.NewCommissionPaymentBonusWizard.CancelConfirmation"
+    id="NewCommissionPaymentBonusWizard">
+    <LocationEntryPoint
+      signature="NewCommissionPaymentBonusWizard(producer : Producer)"/>
+    <Variable
+      name="producer"
+      type="Producer"/>
+    <Variable
+      initialValue="newBonusPayment()"
+      name="bonusPayment"/>
+    <WizardStep
+      id="DetailsStep"
+      label="displaykey.Web.NewCommissionPaymentBonusWizard.Details.Label"
+      onExit="bonusPayment.initiateApprovalActivityIfUserLacksAuthority()"
+      screen="NewCommissionPaymentBonusDetailsScreen(bonusPayment, producer)"
+      title="displaykey.Web.NewCommissionPaymentBonusWizard.Details.Title"/>
+    <WizardStep
+      allowFinish="true"
+      id="ConfirmationStep"
+      label="displaykey.Web.NewCommissionPaymentBonusWizard.Confirmation.Label"
+      screen="NewCommissionPaymentBonusConfirmationScreen(bonusPayment, producer)"
+      title="displaykey.Web.NewCommissionPaymentBonusWizard.Confirmation.Title"/>
+    <Code><![CDATA[function newBonusPayment() : BonusCmsnPayment {
+        var bcp = new BonusCmsnPayment(producer.Currency)
+        bcp.Producer = producer;
+        bcp.PaymentTime = "immediately";
+        return bcp;
+      }]]></Code>
+  </Wizard>
+</PCF>

@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?><subtype xmlns="http://guidewire.com/datamodel" abstract="true" desc="Base class for Agency Bill Suspense Payment Item and Agency Bill Suspense Promise Item: Stores values to be applied to policy period that does not yet exist." entity="BaseSuspDistItem" final="false" subpackage="payment" supertype="BaseNonReceivableDistItem">
+  <column desc="Date that this suspense item was released. This will be null if the item isn't released." name="ReleasedDate" nullok="true" setterScriptability="doesNotExist" type="pastdatetime"/>
+  <column desc="String description or identifier of the not-yet-existing policy to which this suspense item should be applied. This can be null, in which case the Event Handler used by the batch process will have to use another mechanism to associate this with a PolicyPeriod, or perhaps just release it and use the funds for other reasons." name="PolicyNumber" nullok="true" type="shorttext"/>
+  <foreignkey columnName="MatchingPolicyID" desc="Actual policy period that item was matched against. This is null until a match is found." fkentity="PolicyPeriod" name="MatchingPolicy" nullok="true"/>
+  <edgeForeignKey desc="Points to an existing AgencySuspDistItem being modified" edgeTableName="ModifiedFromBSDI" fkentity="BaseSuspDistItem" ignoreforevents="true" loadable="false" name="ModifiedFrom" nullok="true"/>  
+  <dbcheckbuilder className="com.guidewire.bc.system.database.dbchecks.payment.BaseSuspDistItemDBCheckBuilder"/>
+</subtype>

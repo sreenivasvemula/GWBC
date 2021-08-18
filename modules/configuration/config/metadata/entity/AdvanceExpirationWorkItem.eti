@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<entity
+  xmlns="http://guidewire.com/datamodel"
+  entity="AdvanceExpirationWorkItem"
+  final="false"
+  loadable="false"
+  subpackage="commission"
+  table="advanceexpirationworkitem"
+  type="keyable">
+  <implementsEntity
+    name="NotInCurrencySilo"/>
+  <implementsEntity
+    name="WorkItem"/>
+  <foreignkey
+    columnName="AdvanceCmsnPaymentID"
+    desc="The advance commission payment to expire"
+    fkentity="AdvanceCmsnPayment"
+    name="AdvanceCmsnPayment"
+    nullok="false"/>
+  <fulldescription><![CDATA[Work item for the advance expiration work queue, which processes expired commissions advances to a producer]]></fulldescription>
+</entity>

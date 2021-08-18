@@ -1,0 +1,118 @@
+<?xml version="1.0"?>
+<PCF
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:noNamespaceSchemaLocation="../../../../../pcf.xsd">
+  <DetailViewPanel
+    id="TransferDetailsDV">
+    <Require
+      name="fundsTransferUtil"
+      type="gw.api.web.transaction.FundsTransferUtil"/>
+    <Require
+      name="canEditPage"
+      type="Boolean"/>
+    <InputColumn>
+      <InputSet
+        editable="canEditPage"
+        id="AccountInfo"
+        visible="fundsTransferUtil.SourceType == TAccountOwnerType.TC_ACCOUNT">
+        <Variable
+          initialValue="fundsTransferUtil.SourceType == TAccountOwnerType.TC_ACCOUNT ? fundsTransferUtil.SourceOwner as Account : null"
+          name="account"
+          type="Account"/>
+        <Input
+          id="AccountNumber"
+          label="displaykey.Web.TransferDetailsDV.AccountNumber"
+          value="account.AccountNumber"/>
+        <RangeInput
+          editable="true"
+          id="UnappliedFunds"
+          label="displaykey.Web.TransferDetailsDV.UnappliedFund"
+          required="true"
+          value="fundsTransferUtil.SourceUnappliedFunds"
+          valueRange="account.UnappliedFundsOrdered"
+          visible="account.DesignatedUnappliedFundsOrdered.HasElements">
+          <PostOnChange/>
+        </RangeInput>
+        <MonetaryAmountInput
+          align="right"
+          currency="account.Currency"
+          formatType="currency"
+          id="UnappliedAmount"
+          label="displaykey.Web.TransferDetailsDV.UnappliedAmount"
+          value="fundsTransferUtil.SourceUnappliedFunds.Balance"
+          visible="true"/>
+      </InputSet>
+      <InputSet
+        editable="canEditPage"
+        id="producerInfo"
+        visible="fundsTransferUtil.SourceType == TAccountOwnerType.TC_PRODUCER">
+        <Variable
+          initialValue="fundsTransferUtil.SourceType == TAccountOwnerType.TC_PRODUCER ? fundsTransferUtil.SourceOwner as Producer : null"
+          name="producer"
+          type="Producer"/>
+        <Input
+          id="ProducerName"
+          label="displaykey.Web.TransferDetailsDV.ProducerName"
+          value="producer.DisplayName"/>
+        <MonetaryAmountInput
+          align="right"
+          currency="producer.Currency"
+          formatType="currency"
+          id="AvailableTransferAmount"
+          label="displaykey.Web.TransferDetailsDV.UnappliedAmount"
+          value="producer.UnappliedAmount"/>
+      </InputSet>
+      <Label
+        label="displaykey.Web.TransferDetailsDV.Details"/>
+      <RangeRadioInput
+        editable="canEditPage"
+        id="Target"
+        label="displaykey.Web.TransferDetailsDV.Target"
+        required="true"
+        stacked="true"
+        value="fundsTransferUtil.TargetType"
+        valueRange="getAvailableSourceTypes()"
+        visible="canEditPage">
+        <PostOnChange
+          onChange="cleanRows()"/>
+      </RangeRadioInput>
+      <ListViewInput
+        def="TransferDetailsLV(fundsTransferUtil, canEditPage)"
+        labelAbove="true"
+        mode="fundsTransferUtil.TargetType.Code">
+        <Toolbar>
+          <IteratorButtons
+            addVisible="canEditPage"
+            iterator="TransferDetailsLV.TransferDetailsLV"
+            removeVisible="canEditPage"/>
+        </Toolbar>
+      </ListViewInput>
+    </InputColumn>
+    <Code><![CDATA[function removeRow(transfer : FundsTransfer) {
+  transfer.remove();
+  fundsTransferUtil.removeFromTransfers(transfer);
+}
+
+function cleanRows() {
+  fundsTransferUtil.TransferTargets.each(\ transfer : FundsTransfer -> removeRow(transfer));
+  fundsTransferUtil.addToTransfers(new FundsTransfer(fundsTransferUtil.SourceOwner.Currency))
+}
+
+public static function validateAmount(value : gw.pl.currency.MonetaryAmount) : String{
+  return value.IsPositive ? null : "Amount has to be a positive number."
+}
+
+
+public static function validateAmount(pFundsTransferUtil : web.transaction.FundsTransferUtil) : String {
+  if (!pFundsTransferUtil.validateAmounts()) {
+    return displaykey.Web.TransferDetailsDV.CannotCreateTransfer;
+  } else {
+    return null;
+  }
+}
+function getAvailableSourceTypes() : TAccountOwnerType[] {
+  return new TAccountOwnerType[]{TAccountOwnerType.TC_ACCOUNT, 
+    TAccountOwnerType.TC_PRODUCER}
+}]]></Code>
+  </DetailViewPanel>
+</PCF>

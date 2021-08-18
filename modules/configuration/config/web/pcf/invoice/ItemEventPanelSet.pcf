@@ -1,0 +1,115 @@
+<?xml version="1.0"?>
+<PCF
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:noNamespaceSchemaLocation="../../../../../pcf.xsd">
+  <PanelSet
+    id="ItemEventPanelSet">
+    <Require
+      name="invoiceItem"
+      type="InvoiceItem"/>
+    <Variable
+      initialValue="invoiceItem.getItemEventsForRole(null)"
+      name="itemEvents"
+      type="List&lt;ItemEvent&gt;"/>
+    <Variable
+      initialValue="null"
+      name="selectedPolicyRole"
+      type="PolicyRole"/>
+    <PanelRef>
+      <TitleBar
+        title="displaykey.Web.InvoiceItemDetailPopup.ItemEventsTitle"/>
+      <DetailViewPanel>
+        <InputColumn>
+          <ListViewInput>
+            <Toolbar>
+              <ToolbarRangeInput
+                id="PolicyRoleFilter"
+                label="displaykey.Web.InvoiceItemDetailPopup.PolicyRole"
+                noneSelectedLabel="displaykey.Web.InvoiceItemDetailPopup.All"
+                value="selectedPolicyRole"
+                valueRange="PolicyRole.getTypeKeys(false)">
+                <PostOnChange
+                  onChange="itemEvents =  invoiceItem.getItemEventsForRole(selectedPolicyRole)"/>
+              </ToolbarRangeInput>
+            </Toolbar>
+            <ListViewPanel
+              editable="false"
+              id="ItemEventsLV">
+              <RowIterator
+                editable="false"
+                elementName="itemEvent"
+                value="itemEvents">
+                <Row>
+                  <DateCell
+                    footerLabel="displaykey.Web.InvoiceItemDetailPopup.Total"
+                    id="eventDate"
+                    label="displaykey.Web.InvoiceItemDetailPopup.ItemEventDate"
+                    sortOrder="1"
+                    value="itemEvent.EventDate"/>
+                  <Cell
+                    id="eventType"
+                    label="displaykey.Web.InvoiceItemDetailPopup.EventType"
+                    value="itemEvent.DisplayString"/>
+                  <Cell
+                    action="TransactionDetailPopup.push(itemEvent.Transaction)"
+                    actionAvailable="itemEvent.Transaction != null"
+                    id="eventTransaction"
+                    label="displaykey.Web.InvoiceItemDetailPopup.TransactionNumber"
+                    value="itemEvent.Transaction.TransactionNumber "/>
+                  <MonetaryAmountCell
+                    actionAvailable="itemEvent.Transaction != null"
+                    currency="invoiceItem.Currency"
+                    footerSumValue="itemEvent.GrossAmountChanged"
+                    formatType="currency"
+                    id="gross"
+                    label="displaykey.Web.InvoiceItemDetailPopup.Gross"
+                    value="itemEvent.GrossAmountChanged"/>
+                  <MonetaryAmountCell
+                    actionAvailable="itemEvent.Transaction != null"
+                    currency="invoiceItem.Currency"
+                    footerSumValue="itemEvent.CmsnReserveChanged"
+                    formatType="currency"
+                    id="reserve"
+                    label="displaykey.Web.InvoiceItemDetailPopup.Reserve"
+                    value="itemEvent.CmsnReserveChanged"
+                    valueVisible="isReserveAndPaidVisibleOnPaymentEvent(itemEvent)"/>
+                  <MonetaryAmountCell
+                    actionAvailable="itemEvent.Transaction != null"
+                    currency="invoiceItem.Currency"
+                    footerSumValue="itemEvent.CommissionWriteoff"
+                    formatType="currency"
+                    id="writeOff"
+                    label="displaykey.Web.InvoiceItemDetailPopup.Writeoff"
+                    value="itemEvent.CommissionWriteoff"/>
+                  <MonetaryAmountCell
+                    actionAvailable="itemEvent.Transaction != null"
+                    currency="invoiceItem.Currency"
+                    footerSumValue="itemEvent.Payable"
+                    formatType="currency"
+                    id="payable"
+                    label="displaykey.Web.InvoiceItemDetailPopup.Payable"
+                    value="itemEvent.Payable"/>
+                  <MonetaryAmountCell
+                    actionAvailable="itemEvent.Transaction != null"
+                    currency="invoiceItem.Currency"
+                    footerSumValue="itemEvent.Paid"
+                    formatType="currency"
+                    id="paid"
+                    label="displaykey.Web.InvoiceItemDetailPopup.Paid"
+                    value="itemEvent.Paid"
+                    valueVisible="isReserveAndPaidVisibleOnPaymentEvent(itemEvent)"/>
+                </Row>
+              </RowIterator>
+            </ListViewPanel>
+          </ListViewInput>
+        </InputColumn>
+      </DetailViewPanel>
+    </PanelRef>
+    <Code><![CDATA[function isReserveAndPaidVisibleOnPaymentEvent(itemEvent : ItemEvent) : Boolean{
+  if(!(itemEvent.EventType.equals(ItemEventType.TC_PAYMENT) or itemEvent.EventType.equals(ItemEventType.TC_PAYMENTREVERSED) or itemEvent.EventType.equals(ItemEventType.TC_PAYMENTMOVEDFROM) or itemEvent.EventType.equals(ItemEventType.TC_PAYMENTMOVEDTO))){
+    return true
+  }
+  return selectedPolicyRole == null or selectedPolicyRole.equals(PolicyRole.TC_PRIMARY) 
+}]]></Code>
+  </PanelSet>
+</PCF>

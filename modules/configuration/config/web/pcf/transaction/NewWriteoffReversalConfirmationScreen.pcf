@@ -1,0 +1,88 @@
+<?xml version="1.0"?>
+<PCF
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:noNamespaceSchemaLocation="../../../../../pcf.xsd">
+  <!-- This screen is one of the steps in the New Writeoff Reversal wizard.  It is where the user confirms the write-off and
+  selects a reason for the revesal -->
+  <Screen
+    id="NewWriteoffReversalConfirmationScreen">
+    <Require
+      name="reversal"
+      type="WriteoffReversal"/>
+    <Toolbar>
+      <WizardButtons/>
+    </Toolbar>
+    <AlertBar
+      id="ApprovalActivityAlertBar"
+      label="displaykey.Web.ApprovalActivityAlertBar"
+      visible="!reversal.getApprovalHandler().isCurrentUserCanApproveAction()"/>
+    <DetailViewPanel
+      id="NewWriteoffReversalConfirmationDV">
+      <InputColumn>
+        <DateInput
+          id="TransactionDate"
+          label="displaykey.Web.NewWriteoffReversalConfirmationScreen.Date"
+          value="reversal.Writeoff.ExecutionDate"/>
+        <Input
+          id="Description"
+          label="displaykey.Web.NewWriteoffReversalConfirmationScreen.Description"
+          value="reversal.Writeoff.DisplayName"/>
+        <ListViewInput
+          editable="false"
+          label="displaykey.Web.NewChargeReversalConfirmationScreen.LineItems">
+          <Toolbar/>
+          <ListViewPanel
+            id="TransactionLineItemsLV">
+            <RowIterator
+              editable="false"
+              elementName="chargeWrittenOff"
+              value="reversal.Writeoff.WriteoffTxns">
+              <Row>
+                <Cell
+                  id="Name"
+                  label="displaykey.Web.NewWriteoffReversalConfirmationScreen.Name"
+                  value="chargeWrittenOff.LongDisplayName"/>
+                <DateCell
+                  id="Date"
+                  label="displaykey.Web.NewWriteoffReversalConfirmationScreen.Date"
+                  value="chargeWrittenOff.TransactionDate"/>
+                <MonetaryAmountCell
+                  currency="chargeWrittenOff.Currency"
+                  formatType="currency"
+                  id="Amount"
+                  label="displaykey.Web.TransactionLineItemsLV.Amount"
+                  value="chargeWrittenOff.Amount"/>
+              </Row>
+            </RowIterator>
+          </ListViewPanel>
+        </ListViewInput>
+        <InputDivider/>
+        <Input
+          id="NewWriteoff"
+          label="displaykey.Web.NewWriteoffReversalConfirmationScreen.NewDescription"
+          value="reversal.WriteoffReversalName"/>
+        <TypeKeyInput
+          editable="true"
+          id="Reason"
+          label="displaykey.Web.NewWriteoffReversalConfirmationScreen.Reason"
+          value="reversal.Reason"/>
+        <InputDivider/>
+      </InputColumn>
+    </DetailViewPanel>
+    <PanelRef
+      def="ApprovalActivityDV(getApprovalActivityIfRequired())"
+      visible="!reversal.getApprovalHandler().isCurrentUserCanApproveAction()"/>
+    <Code><![CDATA[
+function getApprovalActivityIfRequired() : entity.WtoffRevApprActivity{
+  
+  if(!reversal.getApprovalHandler().isCurrentUserCanApproveAction()){
+    reversal.getApprovalHandler().approvalRequired(null)
+    return reversal.getOpenApprovalActivity()
+  }else{
+    return null
+  }
+  
+}
+    ]]></Code>
+  </Screen>
+</PCF>

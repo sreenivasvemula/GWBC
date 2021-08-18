@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xml:lang="en" lang="en" xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+    <meta http-equiv="Content-Style-Type" content="text/css" />
+    <!-- MOTW-DISABLED saved from url=(0014)about:internet -->
+    <title>Loading Active (Open) Delinquencies</title>
+    <link rel="StyleSheet" href="css/databaseimport.css" type="text/css" media="all" />
+    <link rel="StyleSheet" href="css/webworks.css" type="text/css" media="all" />
+    <link rel="StyleSheet" href="css/css-guidewire-extra.css" type="text/css" media="all" />
+    <script type="text/javascript" language="JavaScript1.2" src="wwhdata/common/context.js"></script>
+    <script type="text/javascript" language="JavaScript1.2" src="wwhdata/common/towwhdir.js"></script>
+    <script type="text/javascript" language="JavaScript1.2" src="wwhdata/common/wwhpagef.js"></script>
+    <script type="text/javascript" language="JavaScript1.2">
+      <!--
+        var  WebWorksRootPath = "";
+      // -->
+    </script>
+    <script type="text/javascript" language="JavaScript1.2">
+      <!--
+        // Set reference to top level help frame
+        //
+        var  WWHFrame = WWHGetWWHFrame("", true);
+      // -->
+    </script>
+    <script type="text/javascript" language="JavaScript1.2" src="scripts/expand.js"></script>
+    <!-- THE FOLLOWING IS A GUIDEWIRE STYLE DEFINITION FOR THE LINK TO THIS FEATURE -->
+    <link rel="StyleSheet" href="css/css-guidewire-extra.css" type="text/css" media="all" />
+    <!-- THE FOLLOWING IS A GUIDEWIRE GSCRIPT FUNCTION FOR THE LINK TO THIS FEATURE -->
+    <script type="text/javascript">
+function guidewire_selectall()
+{
+var text_val=eval("document.linktothisurlform.urlfield");
+text_val.focus();
+text_val.select();
+}
+</script>
+  </head>
+  <body onLoad="WWHUpdate();" onUnload="WWHUnload();" onKeyDown="WWHHandleKeyDown((document.all||document.getElementById||document.layers)?event:null);" onKeyPress="WWHHandleKeyPress((document.all||document.getElementById||document.layers)?event:null);" onKeyUp="WWHHandleKeyUp((document.all||document.getElementById||document.layers)?event:null);">
+    <!-- THE FOLLOWING IS A GUIDEWIRE DIV FOR THE 'LINK TO THIS' FEATURE -->
+    <div id="linkToThisPage" class="popup" style="display: none;">
+      <div class="popupTitle">Link Directly to This Page 
+           <a href="#" onclick="var thePopup = getElementById('linkToThisPage');thePopup.style.display='none';return false;"><img class="popupClosebox" src="wwhelp/wwhimpl/common/images/close.gif" /></a></div>
+      <div style="padding:6px;">
+        <div class="popupText" id="linkToThisPageBookmark">An error has occurred if you see this messsage.</div>
+        <form name="linktothisurlform" method="post" action="" style="width:275px;margin:0px">
+          <input type="text" class="popupURLText" id="linkToThisPageURL" name="urlfield" rows="1" cols="55" onClick="guidewire_selectall();" onFocus="guidewire_selectall();"></input>
+        </form>
+      </div>
+    </div>
+    <br />
+    <div class="WebWorks_Breadcrumbs" style="text-align: left;">
+      <span>BillingCenter Integration Guide</span> : 
+    <span class="WebWorks_Breadcrumbs" style="text-align: left;"><a class="WebWorks_Breadcrumb_Link" href="p-importingbillingandaccounts.fm.html#2270726">Importing Billing and Account Data</a> : <a class="WebWorks_Breadcrumb_Link" href="databaseimport.25.01.html#2270726">Importing from Database Staging Tables</a> : <a class="WebWorks_Breadcrumb_Link" href="databaseimport.25.09.html#2270726">Loading BillingCenter-specific Entities</a> : Loading Active (Open) Delinquencies</span></div>
+    <hr align="left" />
+    <blockquote>
+      <h4 class="H2B_-_Heading_2_Break"><a name="2270726">Loading Active (Open) Delinquencies</a></h4>
+      <div class="B_-_Body"><a name="2270727">To load active (open) delinquencies, create a delinquency plan in BillingCenter, based closely on the logic used in your legacy system. In your test cases, call this plan “Legacy Delinquency Plan”. Put this name in the script parameter </a><span class="cv_-_computer_voice">LegacyDelinquencyPlan</span>. This string must match the delinquency plan that you want to compare your legacy processes against.</div>
+      <div class="B_-_Body"><a name="2270728">For each reason on the plan, you must define a workflow, which is standard for BillingCenter. However, you need to provide additional code in the workflows you define for them to work after staging table import.</a></div>
+      <div class="B_-_Body"><a name="2278946">BillingCenter provides a template for your workflow definitions in the file </a><span class="cv_-_computer_voice">LegacyDelinquency.1.xml</span>. The most important code in the template allows BillingCenter to skip already completed process events. For example: </div>
+      <PRE class="CF_-_Code_First_Line"><a name="2270729">&lt;Enter&gt; </a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2278968">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;// Get the first dunning event instance for the current work flow</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2270730">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;var </a><span class="s_-_strong">eventName</span> = DelinquencyEventName.<span class="s_-_strong">TC_</span><span class="s_-_strong" style="font-style: italic">DUNNINGLETTER1</span></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2270731">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;var </a><span class="s_-_strong">event</span> = dlnqProcess.getProcessEventById(<span class="s_-_strong">eventName.Code</span>)</PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2279051">&nbsp;</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2279054">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;// Send the first dunning letter if not sent already.</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2270732">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if (</a><span class="s_-_strong">! event.Completed</span>) { </PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2270733">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;plcyPeriod.</a><span class="s_-_strong">sendDunningLetter()</span></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2270734">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;event.</a><span class="s_-_strong">flagCompleted</span>()&nbsp;&nbsp;// Set completion time and mark step as current.</PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2270735">&nbsp;} else {</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2270736">       event.</a><span class="s_-_strong">flagCurrent</span>()&nbsp;&nbsp;&nbsp;&nbsp;// Mark step as current without changing completion time.</PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2270737">     }</a></PRE>
+      <PRE class="CL_-_Code_Last_Line"><a name="2270738">&lt;/Enter&gt;</a></PRE>
+      <div class="B_-_Body"><a name="2270739">In the example above, </a><span class="cv_-_computer_voice">TC_</span><span class="p_-_parameter">DUNNINGLETTER1</span> refers to whatever event name corresponds to this delinquency event, and <span class="cv_-_computer_voice">sendDunningLetter</span> is the action to take. The <span class="cv_-_computer_voice">flagCompleted</span> method marks the completed time (<span class="cv_-_computer_voice">CompletionTime</span>) on the event, and sets this step to be the current event (<span class="cv_-_computer_voice">CurrentEvent</span>) in the process. The <span class="cv_-_computer_voice">flagCurrent</span> method sets this step to be the <span class="cv_-_computer_voice">CurrentEvent</span> in the process but does not overwrite the <span class="cv_-_computer_voice">CompletionTime</span> loaded from staging tables.</div>
+      <h6 class="HS_-_Head_Sub"><a name="2279445">Staging Tables</a></h6>
+      <div class="B_-_Body"><a name="2279447">Populate the </a><span class="cv_-_computer_voice">bcst_delinquencyprocess</span> and <span class="cv_-_computer_voice">bcst_delinquencyprocessevent</span> staging tables. Every delinquency process has multiple process&nbsp;events. The process must have one event for every <span class="cv_-_computer_voice">DelinquencyPlanEvent</span> entity in the delinquency reason on the corresponding legacy plan, matched by their <span class="cv_-_computer_voice">EventName</span> properties. An integrity check verifies this. </div>
+      <div class="NW_-_Note_Warning">
+        <span class="w_-_warning">WARNING  </span><a name="2270741">No date restrictions ensure that dates occur in the correct order or to match appropriate </a><span class="cv_-_computer_voice">PlanEvent.DaysAfterInception</span> properties. Carefully set all dates, or problems may occur. </div>
+      <div class="B_-_Body"><a name="2270742">BillingCenter enforces the </a><span class="cv_-_computer_voice">CompletionTime</span> property to occur in the past. Events with the <span class="cv_-_computer_voice">CompletionTime</span> property specified do not execute the corresponding action for this event after import. Events without a completion time property do run, so BillingCenter sends the dunning letters. </div>
+      <h6 class="HS_-_Head_Sub"><a name="2270743">After Import</a></h6>
+      <div class="B_-_Body"><a name="2270744">After delinquency import, run Legacy Delinquency batch processing, which operates on delinquency processes that match the following criteria: </a></div>
+      <div class="BI_-_Bullet_Item_outer" style="margin-left: 57pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="BI_-_Bullet_Item_inner" style="width: 15pt; white-space: nowrap">
+                <span class="bu_-_bullet">•	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="BI_-_Bullet_Item_inner"><a name="2273848">The associated account uses the Legacy Delinquency Plan.</a></div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="BI_-_Bullet_Item_outer" style="margin-left: 57pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="BI_-_Bullet_Item_inner" style="width: 15pt; white-space: nowrap">
+                <span class="bu_-_bullet">•	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="BI_-_Bullet_Item_inner"><a name="2270748">The status is Open.</a></div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="BI_-_Bullet_Item_outer" style="margin-left: 57pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="BI_-_Bullet_Item_inner" style="width: 15pt; white-space: nowrap">
+                <span class="bu_-_bullet">•	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="BI_-_Bullet_Item_inner"><a name="2270749">There is no associated workflow. </a></div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="B_-_Body"><a name="2270750">The process starts a workflow for each delinquency. The workflow skips steps with a non-null </a><span class="cv_-_computer_voice">CompletionTime</span> property and stops after all these steps, which completed in the past or present. The workflow resumes uncompleted steps on future runs of Workflow batch processing. </div>
+      <div class="B_-_Body"><a name="2286233">After loading and importing delinquencies for a legacy delinquency plan, you can change the delinquency plan for an account by using the Workflow editor.</a></div>
+      <script type="text/javascript" language="JavaScript1.2">
+        <!--
+          // Clear related topics
+          //
+          WWHClearRelatedTopics();
+
+          document.writeln(WWHRelatedTopicsInlineHTML());
+        // -->
+      </script>
+    </blockquote>
+    <script type="text/javascript" language="JavaScript1.2">
+      <!--
+        document.write(WWHRelatedTopicsDivTag() + WWHPopupDivTag() + WWHALinksDivTag());
+      // -->
+    </script>
+  </body>
+</html>

@@ -1,0 +1,133 @@
+<?xml version="1.0"?>
+<PCF
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:noNamespaceSchemaLocation="../../../../../pcf.xsd">
+  <ListViewPanel
+    id="PolicyAddChargesLV">
+    <Require
+      name="billingInstruction"
+      type="BillingInstruction"/>
+    <Require
+      name="policyPeriod"
+      type="PolicyPeriod"/>
+    <Require
+      name="chargeToInvoicingOverridesViewMap"
+      type="java.util.HashMap&lt;gw.api.domain.charge.ChargeInitializer, gw.invoice.InvoicingOverridesView&gt;"/>
+    <Variable
+      initialValue="new web.account.AccountSearchConverter()"
+      name="accountSearchConverter"
+      type="web.account.AccountSearchConverter"/>
+    <ExposeIterator
+      valueType="gw.api.domain.charge.ChargeInitializer"
+      widget="ChargeIterator"/>
+    <RowIterator
+      editable="true"
+      elementName="initializer"
+      hideIfReadOnly="true"
+      id="ChargeIterator"
+      toCreateAndAdd="addInitializer()"
+      toRemove="billingInstruction.removeChargeInitializer(initializer); chargeToInvoicingOverridesViewMap.remove(initializer)"
+      value="billingInstruction.ChargeInitializers">
+      <Row>
+        <RangeCell
+          editable="true"
+          footerLabel="displaykey.Web.NewPolicyChargesLV.Total"
+          id="Type"
+          label="displaykey.Web.NewPolicyChargesLV.Type"
+          optionLabel="VALUE.ChargeName"
+          required="true"
+          value="initializer.ChargePattern"
+          valueRange="web.accounting.ChargePatternHelper.getChargePatterns( entity.PolicyPeriod )"/>
+        <TextCell
+          editable="true"
+          id="ChargeGroup"
+          label="displaykey.Web.NewPolicyChargesLV.ChargeGroup"
+          value="initializer.ChargeGroup"/>
+        <Cell
+          editable="true"
+          id="Payer"
+          inputConversion="accountSearchConverter.getAccount(VALUE)"
+          label="displaykey.Web.NewPolicyChargesLV.Payer"
+          onPick="chargeToInvoicingOverridesViewMap.get(initializer).update()"
+          value="chargeToInvoicingOverridesViewMap.get(initializer).OverridingPayerAccount">
+          <PostOnChange
+            onChange="chargeToInvoicingOverridesViewMap.get(initializer).update()"/>
+          <MenuItem
+            action="AccountSearchPopup.push()"
+            icon="&quot;search.png&quot;"
+            id="AccountPicker"/>
+        </Cell>
+        <RangeCell
+          editable="!isPayerAccountNull(initializer)"
+          id="InvoiceStream"
+          label="displaykey.Web.NewPolicyChargesLV.OverridingStream"
+          noneSelectedLabel="null"
+          validationExpression="overridingInvoiceStreamValidation(initializer)"
+          value="chargeToInvoicingOverridesViewMap.get(initializer).OverridingInvoiceStream"
+          valueRange="getEligibleInvoiceStreams(initializer)"
+          visible="areAnyChargePayersAccounts()">
+          <PostOnChange
+            onChange="chargeToInvoicingOverridesViewMap.get(initializer).update()"/>
+        </RangeCell>
+        <MonetaryAmountCell
+          currency="billingInstruction.Currency"
+          editable="true"
+          footerSumValue="initializer.Amount"
+          id="Amount"
+          label="displaykey.Web.NewPolicyChargesLV.Amount"
+          required="true"
+          validationExpression="initializer.Amount.IsZero ? displaykey.Web.Charge.ChargeAmountCannotBeZero : null"
+          value="initializer.Amount">
+          <PostOnChange/>
+        </MonetaryAmountCell>
+      </Row>
+    </RowIterator>
+    <Code><![CDATA[function getEligibleInvoiceStreams(chargeInitializer : gw.api.domain.charge.ChargeInitializer) : List<InvoiceStream> {
+  return gw.api.domain.invoice.InvoiceStreams.getCompatibleInvoiceStreams(getPayerAccount(chargeInitializer), policyPeriod.PaymentPlan)
+    .sortBy(\ invoiceStream -> invoiceStream.DisplayName)
+}
+
+function getPayerAccount(chargeInitializer : gw.api.domain.charge.ChargeInitializer) : Account {
+  var defaultPayer = chargeToInvoicingOverridesViewMap.get(chargeInitializer).DefaultPayer
+  if (defaultPayer != null) {
+    return defaultPayer typeis Account ? defaultPayer : null
+  } else {
+    var policyPayer = policyPeriod.DefaultPayer
+    return policyPayer typeis Account ? policyPayer : null
+  }
+}
+
+function isPayerAccountNull(chargeInitializer : gw.api.domain.charge.ChargeInitializer) : boolean {
+  return getPayerAccount(chargeInitializer) == null
+}
+
+function areAnyChargePayersAccounts() : boolean {
+  for (var initializer in billingInstruction.ChargeInitializers) {
+    if (getPayerAccount(initializer) != null) {
+      return true
+    }
+  }
+  return false
+}
+
+function addInitializer() :gw.api.domain.charge.ChargeInitializer{
+  var initializer = billingInstruction.buildCharge(0bd.ofCurrency(billingInstruction.Currency),  gw.api.domain.accounting.ChargePatternKey.PREMIUM.get())
+  chargeToInvoicingOverridesViewMap.put(initializer, new gw.invoice.InvoicingOverridesView(initializer))
+  return initializer
+}
+
+function overridingInvoiceStreamValidation(initializer : gw.api.domain.charge.ChargeInitializer )  : String {
+   var view = chargeToInvoicingOverridesViewMap.get(initializer)
+  
+   if (view.OverridingInvoiceStream == null) {
+     return null
+   }
+  
+   if (!getEligibleInvoiceStreams(initializer).contains(view.OverridingInvoiceStream)){
+     return displaykey.Web.NewPolicyChargesLV.OverridingStreamValidation
+   }
+  
+   return null
+}]]></Code>
+  </ListViewPanel>
+</PCF>

@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<PCF
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:noNamespaceSchemaLocation="pcf.xsd">
+  <Forward
+    id="AgencyBillSelectPaymentForward">
+    <LocationEntryPoint
+      signature="AgencyBillSelectPaymentForward(producer : Producer, agencyMoneyReceived : AgencyBillMoneyRcvd)"/>
+    <Variable
+      name="producer"
+      type="Producer"/>
+    <Variable
+      name="agencyMoneyReceived"
+      type="AgencyBillMoneyRcvd"/>
+    <ForwardCondition
+      action="AgencyBillExecutedPayments.go(producer, agencyMoneyReceived)"/>
+  </Forward>
+</PCF>

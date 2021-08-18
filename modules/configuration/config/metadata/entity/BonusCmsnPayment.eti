@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<subtype
+  xmlns="http://guidewire.com/datamodel"
+  entity="BonusCmsnPayment"
+  subpackage="commission"
+  supertype="ManualCmsnPayment">
+  <array
+    name="ActivitiesCreatedByAppr"
+    arrayentity="BonusCmsnApprActivity"
+    setterScriptability="doesNotExist">
+    <link-association>
+      <typelist-map
+        field="Status"/>
+    </link-association>
+  </array>
+  <dbcheckbuilder
+    className="com.guidewire.bc.system.database.dbchecks.commission.BonusCmsnPaymentDBCheckBuilder"/>
+</subtype>

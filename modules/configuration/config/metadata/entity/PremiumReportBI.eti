@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?><subtype xmlns="http://guidewire.com/datamodel" desc="Billing instruction used to notify the associated policy period of a premium report" displayName="Premium Report BI" entity="PremiumReportBI" subpackage="accounting.billinginstruction" supertype="ExistingPlcyPeriodBI">
+  <onetoone desc="The PremiumReportDueDate matching this Premium Report (via join table)." fkentity="PremiumReportBIPremiumReportDueDate" getterScriptability="doesNotExist" name="PremiumReportBIPremiumReportDueDate" nullok="true" setterScriptability="doesNotExist"/>
+  <column desc="The start date of the billing period of this premium report" name="PeriodStartDate" nullok="false" type="datetime"/>
+  <column desc="The end date of the billing period of this premium report" name="PeriodEndDate" nullok="true" type="datetime"/>
+  <column desc="If set, will override the due date of the first invoice that this BI's charge is billed on." name="PaymentDueDate" nullok="true" type="datetime"/>
+  <column default="false" desc="Whether the Policy Administration System had received payment for the premium report at the time of this billing instruction" name="PaymentReceived" nullok="false" type="bit"/>
+</subtype>

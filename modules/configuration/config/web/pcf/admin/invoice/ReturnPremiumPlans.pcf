@@ -1,0 +1,75 @@
+<?xml version="1.0"?>
+<PCF
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:noNamespaceSchemaLocation="pcf.xsd">
+  <Page
+    canEdit="true"
+    canVisit="perm.System.admintabview and perm.System.retpremplanview"
+    id="ReturnPremiumPlans"
+    title="displaykey.Web.ReturnPremiumPlans.Title">
+    <Variable
+      initialValue="new web.plan.PlanHelper()"
+      name="PlanHelper"/>
+    <Screen
+      id="ReturnPremiumPlansScreen">
+      <Toolbar/>
+      <ListViewPanel
+        id="ReturnPremiumPlansLV">
+        <RowIterator
+          editable="false"
+          elementName="returnPremiumPlan"
+          value="gw.api.database.Query.make(ReturnPremiumPlan).select()">
+          <ToolbarFilter
+            label="displaykey.Web.ReturnPremiumPlansLV.Show"
+            name="Filter">
+            <ToolbarFilterOptionGroup
+              filters="new web.plan.PlanListFilterSet().FilterOptions"/>
+          </ToolbarFilter>
+          <Row>
+            <Cell
+              align="left"
+              id="PlanOrder"
+              label="displaykey.Web.ReturnPremiumPlansLV.PlanOrder"
+              sortOrder="1"
+              value="returnPremiumPlan.PlanOrder"/>
+            <Cell
+              action="ReturnPremiumPlanDetail.go(returnPremiumPlan)"
+              id="Name"
+              label="displaykey.Web.ReturnPremiumPlansLV.Name"
+              value="returnPremiumPlan.Name"/>
+            <Cell
+              id="Description"
+              label="displaykey.Web.ReturnPremiumPlansLV.Description"
+              value="returnPremiumPlan.Description"/>
+            <Cell
+              id="EffectiveDate"
+              label="displaykey.Web.ReturnPremiumPlansLV.EffectiveDate"
+              value="returnPremiumPlan.EffectiveDate"/>
+            <Cell
+              id="ExpirationDate"
+              label="displaykey.Web.ReturnPremiumPlansLV.ExpirationDate"
+              value="returnPremiumPlan.ExpirationDate"/>
+            <LinkCell
+              id="MovePriority"
+              label="displaykey.Web.ReturnPremiumPlansLV.PlanOrder.MovePriority">
+              <Link
+                action="PlanHelper.moveUp(returnPremiumPlan)"
+                available="perm.System.retpremplanedit"
+                icon="&quot;arrow_up.png&quot;"
+                id="MoveUp"
+                tooltip="displaykey.Web.ReturnPremiumPlansLV.PlanOrder.MoveUp"
+                visible="returnPremiumPlan.PlanOrder &gt; 1"/>
+              <Link
+                action="PlanHelper.moveDown(returnPremiumPlan)"
+                available="perm.System.retpremplanedit"
+                icon="&quot;arrow_down.png&quot;"
+                id="MoveDown"
+                tooltip="displaykey.Web.ReturnPremiumPlansLV.PlanOrder.MoveDown"
+                visible="!returnPremiumPlan.hasHighestPlanOrder()"/>
+            </LinkCell>
+          </Row>
+        </RowIterator>
+      </ListViewPanel>
+    </Screen>
+  </Page>
+</PCF>

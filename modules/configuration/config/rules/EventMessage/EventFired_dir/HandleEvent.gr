@@ -1,0 +1,22 @@
+package rules.EventMessage.EventFired_dir
+
+@gw.rules.RuleName("Handle Event")
+internal class HandleEvent {
+  static function doCondition(messageContext : entity.MessageContext) : boolean {
+    
+/*start00rule*/
+return messageContext.EventName == "AccountAdded"
+/*end00rule*/
+
+  }
+
+  static function doAction(messageContext : entity.MessageContext, actions : gw.rules.Action) {
+
+/*start00rule*/
+var account = messageContext.Root as Account
+messageContext.createMessage("Account [" + account.AccountNumber + "] added")
+
+/*end00rule*/
+
+  }
+}

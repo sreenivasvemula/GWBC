@@ -1,0 +1,249 @@
+<?xml version="1.0"?>
+
+<work-queues xmlns="http://guidewire.com/work-queue">
+
+    <!-- ======================================================================
+    Tuning Tips
+
+    The number of worker instances is likely to be the only setting that needs
+    to be tuned in order to achieve desired performance.
+
+    The default worker instances provided below are intended for use by the
+    average small carrier.  You are not average, you are exceptional.  If your
+    batches do not complete in the time desired, try increasing the worker
+    instances.
+
+    Background Reading
+
+    Wikipedia’s article on "software performance testing" is a good place to
+    start.  Pay specific attention to the "Methodology" section.  Additional
+    reading at the bottom of the article may also be of interest.  A basic
+    rule of tuning is to: change one value, test, observe results, repeat.
+    Tuning is like playing the number guessing game.
+
+    The following sections in the BillingCenter System Administration Guide
+    provide understanding of this configuration file:
+        - "Running Batch Processes and Work Queues"
+        - "Configuring Distributed Work Queues"
+
+   ======================================================================== -->
+
+    <work-queue workQueueClass="com.guidewire.bc.domain.fundstracking.impl.FundsAllotmentWorkQueue"
+                progressinterval="600000">
+        <worker instances="1"/>
+    </work-queue>
+
+    <work-queue workQueueClass="com.guidewire.pl.domain.escalation.ActivityEscalationWorkQueue"
+                progressinterval="600000">
+        <worker instances="1"/>
+    </work-queue>
+
+    <work-queue workQueueClass="com.guidewire.bc.domain.account.impl.AccountInactivityWorkQueue"
+                progressinterval="600000">
+        <worker instances="1"/>
+    </work-queue>
+
+    <work-queue workQueueClass="com.guidewire.pl.domain.escalation.GroupExceptionWorkQueue"
+                progressinterval="600000">
+        <worker instances="1"/>
+    </work-queue>
+
+    <work-queue workQueueClass="com.guidewire.pl.domain.escalation.UserExceptionWorkQueue"
+                progressinterval="600000">
+        <worker instances="1"/>
+    </work-queue>
+
+    <work-queue workQueueClass="com.guidewire.pl.system.workflow.engine.monitor.WorkflowDistributedWorkQueue"
+                progressinterval="600000">
+        <worker/>
+    </work-queue>
+
+    <work-queue workQueueClass="com.guidewire.bc.domain.account.impl.CollEffectiveWorkQueue"
+                progressinterval="600000">
+        <worker instances="1"/>
+    </work-queue>
+
+    <work-queue workQueueClass="com.guidewire.bc.domain.account.impl.CollExpirationWorkQueue"
+                progressinterval="600000">
+        <worker instances="1"/>
+    </work-queue>
+
+    <work-queue workQueueClass="com.guidewire.bc.domain.account.impl.FullPayDiscountWorkQueue"
+                progressinterval="600000">
+        <worker instances="1"/>
+    </work-queue>
+
+    <work-queue workQueueClass="com.guidewire.bc.domain.account.impl.LetterOfCreditWorkQueue"
+                progressinterval="600000">
+        <worker instances="1"/>
+    </work-queue>
+
+    <work-queue workQueueClass="com.guidewire.bc.domain.account.impl.PolicyClosureWorkQueue"
+                progressinterval="600000">
+        <worker instances="1"/>
+    </work-queue>
+
+    <work-queue workQueueClass="com.guidewire.bc.domain.accounting.billinginstruction.impl.PremiumReportDDWorkQueue"
+                progressinterval="600000">
+        <worker instances="1"/>
+    </work-queue>
+
+    <work-queue workQueueClass="com.guidewire.bc.domain.accounting.impl.ChargeProRataTxnWorkQueue"
+                progressinterval="600000">
+        <worker instances="1"/>
+    </work-queue>
+
+    <work-queue workQueueClass="com.guidewire.bc.domain.accounting.impl.ReleaseChargeHoldWorkQueue"
+                progressinterval="600000">
+        <worker instances="1"/>
+    </work-queue>
+
+    <work-queue workQueueClass="com.guidewire.bc.domain.commission.AdvanceExpirationWorkQueue"
+                progressinterval="600000">
+        <worker instances="1"/>
+    </work-queue>
+
+    <work-queue workQueueClass="com.guidewire.bc.domain.commission.impl.CommissionPayableWorkQueue"
+                progressinterval="600000">
+        <worker instances="1"/>
+    </work-queue>
+
+    <work-queue workQueueClass="com.guidewire.bc.domain.commission.impl.CommissionPaymentWorkQueue"
+                progressinterval="600000">
+        <worker instances="1"/>
+    </work-queue>
+
+    <work-queue workQueueClass="com.guidewire.bc.domain.disbursement.impl.AutomaticDisbursementWorkQueue"
+                progressinterval="600000">
+        <worker instances="1"/>
+    </work-queue>
+
+    <work-queue workQueueClass="com.guidewire.bc.domain.disbursement.impl.DisbursementWorkQueue"
+                progressinterval="600000">
+        <worker instances="1"/>
+    </work-queue>
+
+    <work-queue workQueueClass="com.guidewire.bc.domain.invoice.impl.InvoiceBilledWorkQueue"
+                progressinterval="600000">
+        <worker instances="1"/>
+    </work-queue>
+
+    <work-queue workQueueClass="com.guidewire.bc.domain.invoice.impl.InvoiceDueWorkQueue"
+                progressinterval="600000">
+        <worker instances="1"/>
+    </work-queue>
+
+    <work-queue workQueueClass="com.guidewire.bc.domain.invoice.impl.StatementBilledWorkQueue"
+                progressinterval="600000">
+        <worker instances="1"/>
+    </work-queue>
+
+    <work-queue workQueueClass="com.guidewire.bc.domain.invoice.impl.StatementDueWorkQueue"
+                progressinterval="600000">
+        <worker instances="1"/>
+    </work-queue>
+
+    <work-queue workQueueClass="com.guidewire.bc.domain.payment.impl.NewPaymentWorkQueue"
+                progressinterval="600000">
+        <worker instances="1"/>
+    </work-queue>
+
+    <work-queue workQueueClass="com.guidewire.bc.domain.payment.impl.PaymentRequestWorkQueue"
+                progressinterval="600000">
+        <worker instances="1"/>
+    </work-queue>
+
+    <work-queue workQueueClass="com.guidewire.bc.domain.payment.impl.SuspensePaymentWorkQueue"
+                progressinterval="600000">
+        <worker instances="1"/>
+    </work-queue>
+
+    <work-queue workQueueClass="com.guidewire.bc.domain.producer.agencybill.impl.AgencySuspensePaymentWorkQueue"
+                progressinterval="600000">
+        <worker instances="1"/>
+    </work-queue>
+
+    <work-queue workQueueClass="com.guidewire.bc.domain.producer.impl.ProducerPaymentWorkQueue"
+                progressinterval="600000">
+        <worker instances="1"/>
+    </work-queue>
+
+    <work-queue workQueueClass="com.guidewire.bc.domain.troubleticket.impl.ReleaseTtktHoldTypesWorkQueue"
+                progressinterval="600000">
+        <worker instances="1"/>
+    </work-queue>
+
+    <work-queue workQueueClass="com.guidewire.bc.domain.troubleticket.impl.TroubleTicketEscalationWorkQueue"
+                progressinterval="600000">
+        <worker instances="1"/>
+    </work-queue>
+
+    <work-queue workQueueClass="com.guidewire.pl.system.database.checker.DBConsistencyCheckWorkQueue" progressinterval="86400000">
+        <worker instances="1" batchsize="1"/>
+    </work-queue>
+
+    <work-queue workQueueClass="com.guidewire.pl.system.database.dbstatistics.DBStatisticsWorkItemWorkQueue" progressinterval="86400000">
+        <worker instances="1" batchsize="1"/>
+    </work-queue>
+
+    <!-- ====================================================================
+      These work queues are run once, only after loading data from staging
+      tables, and should be run with exactly 1 worker each (instances="1")
+      as they are not safe to run with multiple-workers.
+
+      Under normal production they should be disabled (instances="0").
+    ==================================================================== -->
+
+    <work-queue workQueueClass="com.guidewire.bc.domain.producer.agencybill.impl.LegacyAGBLWorkQueue"
+                progressinterval="600000">
+        <worker instances="0"/>
+    </work-queue>
+
+    <work-queue workQueueClass="com.guidewire.bc.domain.account.impl.LegacyCollateralWorkQueue"
+                progressinterval="600000">
+        <worker instances="0"/>
+    </work-queue>
+
+    <work-queue workQueueClass="com.guidewire.bc.domain.delinquency.impl.LegacyDelinquencyWorkQueue"
+                progressinterval="600000">
+        <worker instances="0"/>
+    </work-queue>
+
+    <work-queue workQueueClass="com.guidewire.bc.domain.accounting.impl.WriteoffStagingWorkQueue"
+                progressinterval="600000">
+        <worker instances="0"/>
+    </work-queue>
+
+    <!-- ====================================================================
+      The following work queue is run once, only after upgrading from 3.0.2 or
+      earlier to 8.0.0+. It can be run with multiple workers.
+
+      Under normal production it should be disabled (instances="0").
+    ==================================================================== -->
+
+    <work-queue workQueueClass="com.guidewire.bc.domain.accounting.billinginstruction.impl.UpgradeBillingInstructionPaymentPlanWorkQueue"
+                progressinterval="600000">
+        <worker instances="0"/>
+    </work-queue>
+
+    <!-- ====================================================================
+      The following work queue is used to normalize phone numbers after
+      upgrading from earlier versions of BillingCenter to 8.0.0+. It works
+      in conjunction with the IPhoneNormalizerPlugin, see the upgrade guide
+      for details.
+
+      This work queue is intended for use with multiple workers, as
+      normalizing all the phone numbers in a large database will take a very
+      long time with only one worker. The best number of workers to use will
+      vary according to the available hardware.
+
+      This work queue should be disabled (instances="0") once all old phone
+      numbers have been normalized, and is never needed for an initial
+      implementation of BillingCenter.
+    ==================================================================== -->
+
+    <work-queue workQueueClass="com.guidewire.pl.domain.phone.CompactPhoneNormalizerWorkQueue" progressinterval="600000">
+        <worker instances="0" batchsize="100"/>
+    </work-queue>
+
+</work-queues>

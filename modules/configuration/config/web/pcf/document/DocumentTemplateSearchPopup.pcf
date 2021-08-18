@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PCF
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:noNamespaceSchemaLocation="../../../../../pcf.xsd">
+  <Popup
+    id="DocumentTemplateSearchPopup"
+    returnType="gw.plugin.document.IDocumentTemplateDescriptor"
+    title="displaykey.Web.DocumentTemplateSearchPopup.DocumentTemplates">
+    <LocationEntryPoint
+      signature="DocumentTemplateSearchPopup()"/>
+    <LocationEntryPoint
+      signature="DocumentTemplateSearchPopup(documentContainer : DocumentContainer, account : Account, policy : Policy, producer : Producer)"/>
+    <LocationEntryPoint
+      signature="DocumentTemplateSearchPopup(symbolNames : java.util.Set&lt;String&gt;)"/>
+    <Variable
+      name="documentContainer"
+      type="DocumentContainer"/>
+    <Variable
+      name="account"
+      type="Account"/>
+    <Variable
+      name="policy"
+      type="Policy"/>
+    <Variable
+      name="producer"
+      type="Producer"/>
+    <Variable
+      name="symbolNames"
+      type="java.util.Set&lt;String&gt;"/>
+    <Screen
+      id="DocumentTemplateSearchScreen">
+      <Toolbar/>
+      <SearchPanel
+        criteriaName="documentTemplateSearchCriteria"
+        resultCachingEnabled="false"
+        resultsName="documentTemplateSearchResultsList"
+        search="symbolNames != null ? documentTemplateSearchCriteria.performSearch(symbolNames) : documentTemplateSearchCriteria.performSearch(new gw.document.LocationSymbolProvider(CurrentLocation))"
+        searchCriteria="new DocumentTemplateSearchCriteria()"
+        searchResultsType="gw.plugin.document.IDocumentTemplateDescriptor[]">
+        <PanelRef
+          def="DocumentTemplateSearchDV(documentTemplateSearchCriteria)"/>
+        <PanelRef
+          def="DocumentTemplateSearchResultsLV(documentTemplateSearchResultsList)">
+          <TitleBar
+            appendListViewPaging="true"
+            title="displaykey.Web.DocumentTemplateSearchPopup.SearchResults"/>
+          <Toolbar/>
+        </PanelRef>
+      </SearchPanel>
+    </Screen>
+  </Popup>
+</PCF>

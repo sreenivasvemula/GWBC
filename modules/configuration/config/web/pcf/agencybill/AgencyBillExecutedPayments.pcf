@@ -1,0 +1,281 @@
+<?xml version="1.0"?>
+<PCF
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:noNamespaceSchemaLocation="../../../../../pcf.xsd">
+  <Page
+    canVisit="perm.System.prodtabview and perm.System.prodpmntview"
+    id="AgencyBillExecutedPayments"
+    title="displaykey.Web.AgencyBillPayments.Executed.Title">
+    <LocationEntryPoint
+      signature="AgencyBillExecutedPayments(producer : Producer)"/>
+    <LocationEntryPoint
+      signature="AgencyBillExecutedPayments(producer : Producer, initialSelectedMoney : AgencyBillMoneyRcvd)"/>
+    <Variable
+      name="producer"
+      type="Producer"/>
+    <Variable
+      name="initialSelectedMoney"
+      type="AgencyBillMoneyRcvd"/>
+    <Screen>
+      <ListDetailPanel
+        selectionName="selectedMoneyReceived"
+        selectionOnEnter="initialSelectedMoney"
+        selectionType="AgencyBillMoneyRcvd">
+        <Variable
+          initialValue="producer.findAgencyMoneyReceiveds()"
+          name="moneyReceiveds"
+          recalculateOnRefresh="true"
+          type="AgencyBillMoneyRcvdQuery"/>
+        <PanelRef>
+          <Toolbar>
+            <ToolbarFilter
+              iterator="MoneyReceivedIterator"
+              label="displaykey.Web.AgencyBillPayments.Executed.PaymentsLV.PaymentsReceivedFilter.Label"
+              name="PaymentsReceivedFilter">
+              <ToolbarFilterOption
+                filter="new gw.payment.BaseMoneyReceivedDateFilter(30)"
+                label="displaykey.Web.AgencyBillPayments.Executed.PaymentsLV.PaymentsReceivedFilter.Last30Days"/>
+              <ToolbarFilterOption
+                filter="new gw.payment.BaseMoneyReceivedDateFilter(60)"
+                label="displaykey.Web.AgencyBillPayments.Executed.PaymentsLV.PaymentsReceivedFilter.Last60Days"/>
+              <ToolbarFilterOption
+                filter="new gw.payment.BaseMoneyReceivedDateFilter(90)"
+                label="displaykey.Web.AgencyBillPayments.Executed.PaymentsLV.PaymentsReceivedFilter.Last90Days"/>
+              <ToolbarFilterOption
+                filter="new filters.StandardQueryFilter(&quot;All&quot;, \ qf -&gt; {})"
+                label="displaykey.Web.AgencyBillPayments.Executed.PaymentsLV.PaymentsReceivedFilter.All"/>
+            </ToolbarFilter>
+            <ToolbarDivider/>
+            <CheckedValuesToolbarButton
+              checkedRowAction="AgencyDistributionWizard.go(producer, CheckedValue)"
+              flags="one Payment, all Executed, all NotReversedOrModified"
+              id="Edit"
+              iterator="MoneyReceivedIterator"
+              label="displaykey.Web.AgencyBillPayments.Executed.PaymentsLV.Edit"
+              shortcut="E"/>
+            <ToolbarDivider/>
+            <CheckedValuesToolbarButton
+              checkedRowAction="AgencyDistributionReversalConfirmationPopup.push(CheckedValue)"
+              flags="one Payment, all NotReversedOrModified"
+              id="Reverse"
+              iterator="MoneyReceivedIterator"
+              label="displaykey.Web.AgencyBillPayments.Executed.PaymentsLV.Reverse"
+              shortcut="R"/>
+            <ToolbarDivider/>
+            <CheckedValuesToolbarButton
+              checkedRowAction="AgencySuspenseItemsPopup.push(CheckedValue.BaseDist as AgencyCycleDist, false)"
+              flags="one Payment, all HaveSuspItems"
+              id="ViewSuspenseItems"
+              iterator="MoneyReceivedIterator"
+              label="displaykey.Web.AgencyBillPayments.Executed.PaymentsLV.ViewSuspenseItems"
+              shortcut="U"/>
+            <ToolbarDivider/>
+            <CheckedValuesToolbarButton
+              checkedRowAction="MoveAgencyPaymentConfirmationPopup.push(CheckedValue)"
+              flags="one Payment, all NotReversedOrModified"
+              id="MoveToDifferentProducer"
+              iterator="MoneyReceivedIterator"
+              label="displaykey.Web.AgencyBillPayments.Executed.PaymentsLV.MoveToDifferentProducer"
+              shortcut="M"/>
+            <ToolbarDivider/>
+            <CheckedValuesToolbarButton
+              checkedRowAction="AgencyPaymentSplitConfirmationPopup.push(CheckedValue)"
+              flags="one Payment, all NotReversedOrModified"
+              id="Split"
+              iterator="MoneyReceivedIterator"
+              label="displaykey.Web.AgencyBillPayments.Executed.PaymentsLV.Split"
+              shortcut="S"/>
+          </Toolbar>
+          <ListViewPanel
+            id="PaymentsLV">
+            <RowIterator
+              checkBoxVisible="true"
+              editable="false"
+              elementName="moneyReceived"
+              hasCheckBoxes="true"
+              id="MoneyReceivedIterator"
+              value="moneyReceiveds">
+              <ToolbarFlag
+                name="Payment"/>
+              <ToolbarFlag
+                condition="moneyReceived.Executed"
+                name="Executed"/>
+              <ToolbarFlag
+                condition="not (moneyReceived.Reversed or moneyReceived.Modified) "
+                name="NotReversedOrModified"/>
+              <ToolbarFlag
+                condition="(moneyReceived.BaseDist as AgencyCycleDist).SuspDistItemsThatHaveNotBeenReleased.HasElements"
+                name="HaveSuspItems"/>
+              <Row>
+                <DateCell
+                  id="Date"
+                  label="displaykey.Web.AgencyBillPayments.Executed.PaymentsLV.Date"
+                  sortDirection="descending"
+                  sortOrder="1"
+                  value="moneyReceived.ReceivedDate"/>
+                <Cell
+                  action="TransactionDetailPopup.push(moneyReceived.MoneyReceivedTransaction)"
+                  enableSort="false"
+                  id="TransactionNumber"
+                  label="displaykey.Web.AgencyBillPayments.Executed.PaymentsLV.TransactionNumber"
+                  value="moneyReceived.MoneyReceivedTransaction.TransactionNumber"/>
+                <MonetaryAmountCell
+                  currency="producer.Currency"
+                  enableSort="false"
+                  formatType="currency"
+                  id="ReceivedAmount"
+                  label="displaykey.Web.AgencyBillPayments.Executed.PaymentsLV.ReceivedAmount"
+                  value="moneyReceived.TotalAmount"/>
+                <MonetaryAmountCell
+                  currency="producer.Currency"
+                  enableSort="false"
+                  formatType="currency"
+                  id="Distributed"
+                  label="displaykey.Web.AgencyBillPayments.Executed.PaymentsLV.Distributed"
+                  value="moneyReceived.NetAmountDistributed"/>
+                <MonetaryAmountCell
+                  currency="producer.Currency"
+                  enableSort="false"
+                  formatType="currency"
+                  id="Suspense"
+                  label="displaykey.Web.AgencyBillPayments.Executed.PaymentsLV.Suspense"
+                  value="moneyReceived.NetSuspenseAmount"/>
+                <MonetaryAmountCell
+                  currency="producer.Currency"
+                  enableSort="false"
+                  formatType="currency"
+                  id="Remaining"
+                  label="displaykey.Web.AgencyBillPayments.Executed.PaymentsLV.Remaining"
+                  value="moneyReceived.TotalAmount - moneyReceived.NetAmountDistributed - moneyReceived.NetSuspenseAmount"/>
+                <Cell
+                  enableSort="false"
+                  id="Reversed"
+                  label="displaykey.Web.AgencyBillPayments.Executed.PaymentsLV.Reversed"
+                  value="moneyReceived.Reversed"/>
+                <Cell
+                  id="PaymentInstrument"
+                  label="displaykey.Web.AgencyBillPayments.Executed.PaymentsLV.PaymentInstrument"
+                  value="moneyReceived.PaymentInstrument"/>
+                <Cell
+                  enableSort="false"
+                  id="RefNumber"
+                  label="displaykey.Web.AgencyBillPayments.Executed.PaymentsLV.RefNumber"
+                  value="moneyReceived.RefNumber"/>
+              </Row>
+            </RowIterator>
+          </ListViewPanel>
+        </PanelRef>
+        <CardViewPanel>
+          <Card
+            id="PaymentDetailCard"
+            title="displaykey.Web.AgencyBillPayments.Executed.PaymentDetail(selectedMoneyReceived.ReceivedDate.AsUIStyle)">
+            <DetailViewPanel>
+              <InputColumn>
+                <Label
+                  id="PaymentDetails"
+                  label="displaykey.Web.AgencyBillPayments.Executed.PaymentDetails.Header"/>
+                <TypeKeyInput
+                  id="Reversed"
+                  label="displaykey.Web.AgencyBillPayments.Executed.PaymentDetails.Reversed"
+                  value="selectedMoneyReceived.ReversalReason"
+                  visible="selectedMoneyReceived.Reversed"/>
+                <DateInput
+                  id="ReceivedDate"
+                  label="displaykey.Web.AgencyBillPayments.Executed.PaymentDetails.ReceivedDate"
+                  value="selectedMoneyReceived.ReceivedDate"/>
+                <DateInput
+                  id="DistributedDate"
+                  label="displaykey.Web.AgencyBillPayments.Executed.PaymentDetails.DistributedDate"
+                  value="selectedMoneyReceived.BaseDist.DistributedDate"
+                  visible="selectedMoneyReceived.DistributedDenorm"/>
+                <Input
+                  action="TransactionDetailPopup.push(selectedMoneyReceived.MoneyReceivedTransaction)"
+                  actionAvailable="selectedMoneyReceived.MoneyReceivedTransaction != null"
+                  id="TransactionNumber"
+                  label="displaykey.Web.AgencyBillPayments.Executed.PaymentDetails.TransactionNumber"
+                  value="selectedMoneyReceived.MoneyReceivedTransaction.TransactionNumber"
+                  visible="selectedMoneyReceived.MoneyReceivedTransaction != null"/>
+                <Input
+                  id="Name"
+                  label="displaykey.Web.AgencyBillPayments.Executed.PaymentDetails.Name"
+                  value="selectedMoneyReceived.Name"/>
+                <Input
+                  id="PaymentDescription"
+                  label="displaykey.Web.AgencyBillPayments.Executed.PaymentDetails.PaymentDescription"
+                  value="selectedMoneyReceived.Description"/>
+                <Input
+                  action="AgencyBillSelectPaymentForward.go((selectedMoneyReceived.MovedFromPMR as AgencyBillMoneyRcvd).Producer, selectedMoneyReceived.MovedFromPMR as AgencyBillMoneyRcvd)"
+                  id="OriginalPayment"
+                  label="displaykey.Web.AgencyBillPayments.Executed.PaymentDetails.OriginalPayment"
+                  value="selectedMoneyReceived.MovedFromPMR"
+                  visible="selectedMoneyReceived.MovedFromPMR != null"/>
+              </InputColumn>
+              <InputColumn>
+                <Label
+                  label="displaykey.Web.AgencyBillPayments.Executed.PaymentApplication.Header"/>
+                <MonetaryAmountInput
+                  align="right"
+                  currency="selectedMoneyReceived.Currency"
+                  formatType="currency"
+                  id="ReceivedAmount"
+                  label="displaykey.Web.AgencyBillPayments.Executed.PaymentApplication.ReceivedAmount"
+                  value="selectedMoneyReceived.TotalAmount"/>
+                <MonetaryAmountInput
+                  currency="selectedMoneyReceived.Currency"
+                  formatType="currency"
+                  id="Distributed"
+                  label="displaykey.Web.AgencyBillPayments.Executed.PaymentApplication.Distributed"
+                  value="selectedMoneyReceived.NetAmountDistributed"/>
+                <MonetaryAmountInput
+                  currency="selectedMoneyReceived.Currency"
+                  formatType="currency"
+                  id="Suspense"
+                  label="displaykey.Web.AgencyBillPayments.Executed.PaymentApplication.Suspense"
+                  value="selectedMoneyReceived.NetSuspenseAmount"/>
+                <Input
+                  formatType="currency"
+                  id="ProducerWriteOff"
+                  label="displaykey.Web.AgencyBillPayments.Executed.PaymentApplication.ProducerWriteOff"
+                  value="selectedMoneyReceived.DistributedDenorm ? selectedMoneyReceived.AgencyCyclePayment.ProducerWriteoffAmount : 0"/>
+                <Input
+                  formatType="currency"
+                  id="ItemWriteOff"
+                  label="displaykey.Web.AgencyBillPayments.Executed.PaymentApplication.ItemWriteOff"
+                  value="selectedMoneyReceived.DistributedDenorm ? selectedMoneyReceived.AgencyCyclePayment.ItemWriteOffAmount : 0"/>
+                <MonetaryAmountInput
+                  currency="selectedMoneyReceived.Currency"
+                  formatType="currency"
+                  id="RemainingAmount"
+                  label="displaykey.Web.AgencyBillPayments.SavedPayments.PaymentApplication.Remaining"
+                  value="selectedMoneyReceived.TotalAmount - selectedMoneyReceived.NetAmountDistributed - selectedMoneyReceived.NetSuspenseAmount"/>
+              </InputColumn>
+              <InputColumn>
+                <Label
+                  label="displaykey.Web.AgencyBillPayments.Executed.PaymentInstrument.Header"/>
+                <Input
+                  id="PaymentInstrument"
+                  label="displaykey.Web.AgencyBillPayments.Executed.PaymentInstrument.PaymentInstrument"
+                  value="selectedMoneyReceived.PaymentInstrument"/>
+                <Input
+                  id="RefNumber"
+                  label="displaykey.Web.AgencyBillPayments.Executed.PaymentInstrument.RefNumber"
+                  value="selectedMoneyReceived.RefNumber"/>
+                <Input
+                  id="PaymentInstrumentToken"
+                  label="displaykey.Web.AgencyBillPayments.Executed.PaymentInstrument.PaymentInstrumentToken"
+                  value="selectedMoneyReceived.PaymentInstrument.Token"/>
+              </InputColumn>
+            </DetailViewPanel>
+            <PanelRef
+              def="AgencyDistItemsReadOnlyCV(selectedMoneyReceived.BaseDist as AgencyCycleDist)">
+              <TitleBar
+                id="DistributionHeader"
+                title="displaykey.Web.AgencyBillPayments.Executed.AgencyDistItemsLV"/>
+              <Toolbar/>
+            </PanelRef>
+          </Card>
+        </CardViewPanel>
+      </ListDetailPanel>
+    </Screen>
+  </Page>
+</PCF>

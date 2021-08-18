@@ -1,0 +1,66 @@
+<?xml version="1.0"?>
+<PCF
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:noNamespaceSchemaLocation="../../../../../pcf.xsd">
+  <ListViewPanel
+    id="FundsTrackerLV">
+    <Require
+      name="account"
+      type="Account"/>
+    <Require
+      name="type"
+      type="gw.entity.IEntityType"/>
+    <RowIterator
+      editable="false"
+      elementName="fundsTracker"
+      id="FundsIterator"
+      value="gw.pcf.fundstracking.AccountDetailFundsTrackingHelper.getFundsTrackers(account, type)">
+      <ToolbarFilter
+        label="displaykey.Web.AccountDetailFundsTracking.UnappliedFilterLabel"
+        name="UnappliedFilter">
+        <ToolbarFilterOptionGroup
+          filters="gw.pcf.fundstracking.AccountDetailFundsTrackingHelper.getUnappliedFilters(account)"/>
+      </ToolbarFilter>
+      <Row>
+        <Cell
+          action="goToPopup(fundsTracker)"
+          id="Description"
+          label="TypeName"
+          sortOrder="4"
+          value="fundsTracker.Description"/>
+        <DateCell
+          id="EventDate"
+          label="displaykey.Web.AccountDetailFundsTracking.SourceEventDate"
+          sortDirection="descending"
+          sortOrder="1"
+          value="fundsTracker.EventDate"/>
+        <MonetaryAmountCell
+          currency="fundsTracker.Currency"
+          formatType="currency"
+          id="UnallottedAmount"
+          label="displaykey.Web.AccountDetailFundsTracking.SourceUnallotted"
+          sortOrder="2"
+          value="fundsTracker.UnallottedAmount"/>
+        <MonetaryAmountCell
+          currency="fundsTracker.Currency"
+          formatType="currency"
+          id="TotalAmount"
+          label="displaykey.Web.AccountDetailFundsTracking.SourceTotal"
+          sortOrder="3"
+          value="fundsTracker.TotalAmount"/>
+      </Row>
+    </RowIterator>
+    <Code><![CDATA[function goToPopup(fundsTracker : FundsTracker) : pcf.api.Location{
+  if (fundsTracker typeis FundsSourceTracker){
+     return SourceOfFundsPopup.push(fundsTracker)
+  } else if (fundsTracker typeis FundsUseTracker){
+    return UseOfFundsPopup.push(fundsTracker)
+  }
+  return null //unreachable  
+}
+
+property get TypeName() : String {
+  return (type == FundsSourceTracker) ? displaykey.Web.AccountDetailFundsTracking.FundsSource : displaykey.Web.AccountDetailFundsTracking.FundsUse
+}]]></Code>
+  </ListViewPanel>
+</PCF>

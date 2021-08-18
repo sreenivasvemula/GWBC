@@ -1,0 +1,32 @@
+package rules.Preupdate.AccountPreupdate_dir
+uses gw.api.util.LocaleUtil
+uses com.guidewire.bc.system.locale.BCDisplayKeys
+
+@gw.rules.RuleName("Account Created History Event")
+internal class AccountCreatedHistoryEvent {
+  static function doCondition(account : entity.Account) : boolean {
+    
+/*start00rule*/
+return account.New
+/*end00rule*/
+
+  }
+
+  static function doAction(account : entity.Account, actions : gw.rules.Action) {
+
+/*start00rule*/
+var description : String
+LocaleUtil.runAsCurrentLocaleAndLanguage(LocaleUtil.getDefaultLocale(), LocaleUtil.getDefaultLanguage(),
+      \ -> {
+        description = BCDisplayKeys.Java_AccountHistory_AccountCreated.localize()
+      })
+if (description == null) {
+  description = displaykey.Java.AccountHistory.AccountCreated
+}
+account.addHistoryFromGosu(DateTime.CurrentDate,
+                              HistoryEventType.TC_ACCOUNTCREATED,
+                              description, null, null, true);
+/*end00rule*/
+
+  }
+}

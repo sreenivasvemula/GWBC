@@ -1,0 +1,87 @@
+<?xml version="1.0"?>
+<PCF
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:noNamespaceSchemaLocation="../../../../../../pcf.xsd">
+  <Popup
+    canEdit="true"
+    id="AgencyDistributionWizard_SavePopup"
+    startInEditMode="true"
+    title="getTitle()">
+    <LocationEntryPoint
+      signature="AgencyDistributionWizard_SavePopup(wizardState : gw.agencybill.AgencyDistributionWizardHelper)"/>
+    <Variable
+      name="wizardState"
+      type="gw.agencybill.AgencyDistributionWizardHelper"/>
+    <Variable
+      initialValue="wizardState.MoneySetup.Money"
+      name="money"/>
+    <Screen>
+      <Toolbar>
+        <ToolbarButton
+          action="wizardState.finishSave(CurrentLocation)"
+          id="FinishButton"
+          label="displaykey.Button.OK"/>
+        <ToolbarButton
+          action="wizardState.cancelSave(CurrentLocation)"
+          id="CancelButton"
+          label="displaykey.Button.Cancel"/>
+      </Toolbar>
+      <AlertBar
+        id="SimilarDistributionExists"
+        label="getSimilarDistributionText()"
+        showConfirmMessage="false"
+        visible="wizardState.SimilarSavedDistributionExists"/>
+      <DetailViewPanel>
+        <InputColumn>
+          <Input
+            id="Producer"
+            label="displaykey.Web.AgencyDistributionWizard.SavePopup.Producer"
+            value="wizardState.MoneySetup.Producer"/>
+          <Input
+            id="PaymentInstrument"
+            label="displaykey.Web.AgencyDistributionWizard.SavePopup.PaymentInstrument"
+            value="wizardState.PaymentMoneySetup.Money.PaymentInstrument"
+            visible="wizardState.IsPayment"/>
+          <MonetaryAmountInput
+            currency="wizardState.MoneySetup.Producer.Currency"
+            formatType="currency"
+            id="Amount"
+            label="displaykey.Web.AgencyDistributionWizard.SavePopup.Amount"
+            value="money.Amount"/>
+          <Input
+            id="SavedBy"
+            label="displaykey.Web.AgencyDistributionWizard.SavePopup.SavedBy"
+            value="User.util.CurrentUser"/>
+          <DateInput
+            id="SavedDate"
+            label="displaykey.Web.AgencyDistributionWizard.SavePopup.SavedDate"
+            value="util.DateUtil.currentDate()"/>
+          <Input
+            editable="true"
+            id="Name"
+            label="displaykey.Web.AgencyDistributionWizard.SavePopup.Name"
+            value="wizardState.AgencyCycleDistView.AgencyCycleDist.BaseMoneyReceived.Name"/>
+        </InputColumn>
+      </DetailViewPanel>
+    </Screen>
+    <Code><![CDATA[function getSimilarDistributionText() : String {
+  if (wizardState.IsCreditDistribution) {
+    return displaykey.Web.AgencyDistributionWizard.SavePopup.SimilarCreditDistributionExists
+  } else if (wizardState.IsPayment) {
+    return displaykey.Web.AgencyDistributionWizard.SavePopup.SimilarPaymentExists  
+  } else {
+    return displaykey.Web.AgencyDistributionWizard.SavePopup.SimilarPromiseExists
+  }
+}
+
+function getTitle() : String {
+  if (wizardState.IsCreditDistribution) {
+    return displaykey.Web.AgencyDistributionWizard.SavePopup.Title.CreditDistribution
+  } else if (wizardState.IsPayment) {
+    return displaykey.Web.AgencyDistributionWizard.SavePopup.Title.Payment
+  } else {
+    return displaykey.Web.AgencyDistributionWizard.SavePopup.Title.Promise
+  }  
+}]]></Code>
+  </Popup>
+</PCF>

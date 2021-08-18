@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?><entity xmlns="http://guidewire.com/datamodel" admin="true" desc="The authority a user has to perform an action." entity="AuthorityLimit" exportable="true" loadable="false" platform="false" subpackage="community" table="authoritylimit" type="retireable">
+  <implementsEntity name="NotInCurrencySilo"/>
+  <monetaryamount amountColumnName="LimitAmount" amountRange="nonnegative" desc="The maximum amount authorized." name="LimitAmount" nullok="false" scaleToCurrency="true" soapnullok="true">
+    <tag name="DefaultValueZero"/>
+  </monetaryamount>
+  <typekey desc="The limit type." name="LimitType" nullok="false" typelist="AuthorityLimitType"/>
+  <foreignkey columnName="ProfileID" desc="The authority limit profile this limit is a part of." exportable="false" fkentity="AuthorityLimitProfile" name="Profile" nullok="true"/>
+</entity>

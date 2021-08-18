@@ -1,0 +1,47 @@
+<?xml version="1.0"?>
+<PCF
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:noNamespaceSchemaLocation="../../../../../pcf.xsd">
+  <ListViewPanel
+    id="AccountDetailTransactionsLV">
+    <Require
+      name="transactions"
+      type="Transaction[]"/>
+    <Variable
+      initialValue="new web.transaction.TransactionFilterSet()"
+      name="filterset"/>
+    <RowIterator
+      editable="false"
+      elementName="trx"
+      id="TransactionIterator"
+      value="transactions">
+      <ToolbarFilter
+        id="TransactionsFilterSetID"
+        label="displaykey.Web.TransactionDetailsLV.Show"
+        name="TransactionsFilterSet">
+        <ToolbarFilterOptionGroup
+          filters="filterset.FilterOptions"/>
+      </ToolbarFilter>
+      <Row>
+        <DateCell
+          id="Date"
+          label="displaykey.Web.AccountDetailTransactions.Date"
+          value="trx.TransactionDate"/>
+        <Cell
+          action="TransactionDetailPopup.push(trx)"
+          id="TransactionNumber"
+          label="displaykey.Web.AccountDetailTransactions.TransactionNumber"
+          value="trx.TransactionNumber"/>
+        <Cell
+          id="TransactionDesc"
+          label="displaykey.Web.AccountDetailTransactions.TransactionDesc"
+          value="trx.DisplayName"/>
+        <MonetaryAmountCell
+          currency="trx.Currency"
+          id="Amount"
+          label="displaykey.Web.AccountDetailTransactions.Amount"
+          value="trx.Amount"/>
+      </Row>
+    </RowIterator>
+  </ListViewPanel>
+</PCF>

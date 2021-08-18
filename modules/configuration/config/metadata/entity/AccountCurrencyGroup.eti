@@ -1,0 +1,46 @@
+<?xml version="1.0"?>
+<entity
+  xmlns="http://guidewire.com/datamodel"
+  entity="AccountCurrencyGroup"
+  type="retireable"
+  desc="A hidden join entity owned by Account that associates it with a {@link MixedCurrencyAccountGroup} (implements an explicit edge foreign key for currency denormalization)."
+  subpackage="account"
+  platform="false"
+  table="acctcurrencygrp"
+  setterScriptability="doesNotExist">
+    <implementsEntity name="NotInCurrencySilo"/>
+    <foreignkey
+        name="Owner"
+        desc="The owning account."
+        columnName="OwnerID"
+        fkentity="Account"
+        ignoreforevents="true"
+        loadable="false"
+        exportable="false"
+        setterScriptability="doesNotExist"
+        nullok="true"/>
+    <foreignkey
+        name="ForeignEntity"
+        desc="The mixed currency account group (if any) to which the owning account belongs."
+        columnName="ForeignEntityID"
+        fkentity="MixedCurrencyAccountGroup"
+        ignoreforevents="true"
+        loadable="false"
+        exportable="false"
+        getterScriptability="doesNotExist"
+        nullok="true"/>
+    <typekey
+        name="CurrencyInGroup"
+        typelist="Currency"
+        desc="The de-normalized currency of the edge owner account, which is the unique currency in the group defined by the linked (foreign entity) MixedCurrencyAccountGroup."
+        nullok="false"
+        setterScriptability="doesNotExist"
+        getterScriptability="doesNotExist"/>
+    <index
+        name="AcctGrpCurRestrict"
+        desc="Implements the currency uniqueness constraint for mixed currency splinter account groups."
+        unique="true">
+      <indexcol name="ForeignEntityID" keyposition="1"/>
+      <indexcol name="CurrencyInGroup" keyposition="2"/>
+    </index>
+</entity>

@@ -1,0 +1,31 @@
+<?xml version="1.0"?>
+<Workflow subtype="SimpleFailureToReport" version="1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="workflow.xsd">
+  <Context>
+    <Symbol name="dlnqProcess" type="DelinquencyProcess" value="Workflow.DelinquencyProcess"/>
+    <Symbol name="acct" type="Account" value="Workflow.DelinquencyProcess.Account"/>
+  </Context>
+  <Start firstStep="Inception"/>
+  <ManualStep id="Inception" layoutid="28364413">
+    <Enter>dlnqProcess.onInception()</Enter>
+    <Trigger desc="" id="Cancel" layoutid="17538618" nextStep="Cancellation"></Trigger>
+    <Trigger desc="" id="ExitDelinquency" layoutid="9899196" nextStep="ExitDelinquency"/>
+  </ManualStep>
+  <Outcome id="Cancellation" layoutid="12886169">
+    <Enter>dlnqProcess.cancelTarget()</Enter>
+  </Outcome>
+  <Outcome id="ExitDelinquency" layoutid="5922076"/>
+  <Layout>
+    <BoxUI height="4" layoutid="28364413" width="11" x="-19" y="2"/>
+    <BoxUI height="4" layoutid="12886169" width="13" x="0" y="12"/>
+    <ArrowUI layoutid="17538618" visible="true">
+      <PointUI x="-8" y="4"/>
+      <PointUI x="0" y="14"/>
+    </ArrowUI>
+    <BoxUI height="4" layoutid="5922076" width="13" x="0" y="3"/>
+    <ArrowUI layoutid="9899196" visible="true">
+      <PointUI x="-8" y="4"/>
+      <PointUI x="0" y="5"/>
+    </ArrowUI>
+  </Layout>
+  <Finish>      dlnqProcess.exitDelinquency()</Finish>
+</Workflow>

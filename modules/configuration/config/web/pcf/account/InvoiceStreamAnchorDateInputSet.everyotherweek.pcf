@@ -1,0 +1,31 @@
+<?xml version="1.0"?>
+<PCF
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:noNamespaceSchemaLocation="../../../../../pcf.xsd">
+  <InputSet
+    id="InvoiceStreamAnchorDateInputSet"
+    mode="everyotherweek">
+    <Require
+      name="invoiceStreamView"
+      type="gw.api.web.invoice.InvoiceStreamView"/>
+    <BooleanRadioInput
+      editable="true"
+      id="OverrideInvoiceDayOfMonth"
+      label="displaykey.Web.AccountDetailInvoices.InvoiceStream.OverrideAccountInvoiceDay"
+      required="true"
+      value="invoiceStreamView.OverrideAnchorDates">
+      <PostOnChange/>
+    </BooleanRadioInput>
+    <DateInput
+      id="AccountEveryOtherWeekInvoiceAnchorDate"
+      label="displaykey.Web.AccountDetailInvoices.InvoiceStream.AccountEveryOtherWeekInvoiceDate"
+      value="invoiceStreamView.PayerDefaultAnchorDateViews[0].Date"/>
+    <DateInput
+      editable="invoiceStreamView.OverrideAnchorDates"
+      id="OverridingEveryOtherWeekInvoiceAnchorDate"
+      label="displaykey.Web.AccountDetailInvoices.InvoiceStream.OverridingEveryOtherWeekInvoiceAnchorDate"
+      required="true"
+      value="invoiceStreamView.OverridingAnchorDateViews[0].Date"
+      visible="invoiceStreamView.OverrideAnchorDates"/>
+  </InputSet>
+</PCF>

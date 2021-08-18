@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?><internalExtension xmlns="http://guidewire.com/datamodel" entityName="Activity">
+    <implementsEntity name="NotInCurrencySilo"/>
+    <implementsEntity name="BCAssignable"/>
+    <foreignkey columnName="DelinquencyProcessID" desc="The process on which this activity was created" fkentity="DelinquencyProcess" name="DelinquencyProcess" nullok="true"/>
+    <foreignkey columnName="TroubleTicketID" desc="The trouble ticket on which this activity was created" fkentity="TroubleTicket" name="TroubleTicket" nullok="true"/>
+    <foreignkey columnName="PolicyPeriodID" desc="The associated policy period, if applicable" fkentity="PolicyPeriod" name="PolicyPeriod" nullok="true"/>
+    <foreignkey columnName="AccountID" desc="The account (if any) that is associated with this activity" fkentity="Account" name="Account" nullok="true"/>
+    <foreignkey columnName="AccountContactID" desc="AccountContact this activity is associated with." exportasid="true" fkentity="AccountContact" loadable="false" name="AccountContact" nullok="true"/>
+    <!-- Moved from platform -->
+    <index desc="Compound index to speed ActivitySearchAssignedToMeXXX" name="activityu1" trackUsage="true" unique="true">
+        <indexcol keyposition="1" name="AssignedUserId"/>
+        <indexcol keyposition="2" name="Status"/>
+        <indexcol keyposition="3" name="AssignmentStatus"/>
+        <indexcol keyposition="4" name="Retired"/>
+        <indexcol keyposition="5" name="TargetDate"/>
+        <indexcol keyposition="6" name="Type"/>
+        <indexcol keyposition="7" name="ID"/>
+    </index>
+    <!-- This index was moved from pl definition.
+   If BC ever use PLDependencies.getActivityFinder().findOpenNonEscalatedActivitiesThatNeedToBeEscalated()
+   either through the ActivityEscalationMonitor batch process or dircetly, then
+   the following index should be re-created to improve the performance
+   <index name="activityu0" unique="true" trackUsage="true" desc="Compound index to speed activity escalation">
+     <indexcol name="Status" keyposition="1"/>
+     <indexcol name="Escalated" keyposition="2"/>
+     <indexcol name="Retired" keyposition="3"/>
+     <indexcol name="EscalationDate" keyposition="4"/>
+     <indexcol name="ID" keyposition="5"/>
+   </index> -->
+    <index desc="Index for ActivityFinder used by DesktopActivities.pcf" name="desktopactivity" trackUsage="true" unique="false">
+      <indexcol keyposition="1" name="subtype"/>
+      <indexcol keyposition="2" name="status"/>
+      <indexcol keyposition="3" name="retired"/>
+    </index>
+  <events/>
+    <dbcheckbuilder className="com.guidewire.pl.domain.activity.dbchecks.ActivityDBCheckBuilder"/>
+</internalExtension>

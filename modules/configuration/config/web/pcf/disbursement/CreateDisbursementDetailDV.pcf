@@ -1,0 +1,81 @@
+<?xml version="1.0"?>
+<PCF
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:noNamespaceSchemaLocation="../../../../../pcf.xsd">
+  <DetailViewPanel
+    id="CreateDisbursementDetailDV">
+    <Require
+      name="disbursementVar"
+      type="Disbursement"/>
+    <Variable
+      initialValue="perm.Transaction.disbpayeeedit"
+      name="CanEditDisbursementPayee"
+      type="Boolean"/>
+    <Require
+      name="isAmountEditable"
+      type="boolean"/>
+    <InputColumn>
+      <Label
+        label="displaykey.Web.CreateDisbursementDetailScreen.AmountToDisbursement"/>
+      <MonetaryAmountInput
+        currency="disbursementVar.Currency"
+        editable="isAmountEditable"
+        id="amount"
+        label="displaykey.Web.CreateDisbursementDetailScreen.Amount"
+        validationExpression="disbursementVar.validateManualDisbursement()"
+        value="disbursementVar.Amount"/>
+      <DateInput
+        editable="true"
+        id="effectiveDate"
+        label="displaykey.Web.CreateDisbursementDetailScreen.DueDate"
+        validationExpression="validateDueDate()"
+        value="disbursementVar.DueDate"/>
+      <RangeInput
+        editable="true"
+        id="reason"
+        label="displaykey.Web.CreateDisbursementDetailScreen.Reason"
+        value="disbursementVar.Reason"
+        valueRange="disbursementVar.VisibleDisbursementReasons"/>
+      <Label
+        label="displaykey.Web.CreateDisbursementDetailScreen.PayeeInfo"/>
+      <Input
+        editable="CanEditDisbursementPayee"
+        id="payTo"
+        label="displaykey.Web.CreateDisbursementDetailScreen.PayTo"
+        required="true"
+        value="disbursementVar.PayTo"/>
+      <Input
+        editable="CanEditDisbursementPayee"
+        id="mailTo"
+        label="displaykey.Web.CreateDisbursementDetailScreen.MailTo"
+        required="true"
+        value="disbursementVar.MailTo"/>
+      <TextAreaInput
+        editable="CanEditDisbursementPayee"
+        id="mailToAddress"
+        label="displaykey.Web.CreateDisbursementDetailScreen.MailToAddress"
+        numRows="4"
+        required="true"
+        value="disbursementVar.Address"/>
+      <Input
+        editable="CanEditDisbursementPayee"
+        id="memo"
+        label="displaykey.Web.CreateDisbursementDetailScreen.Memo"
+        value="disbursementVar.Memo"/>
+      <Input
+        editable="CanEditDisbursementPayee"
+        id="internalComment"
+        label="displaykey.Web.CreateDisbursementDetailScreen.InternalComment"
+        value="disbursementVar.InternalComment"/>
+    </InputColumn>
+    <Code><![CDATA[function validateDueDate() : String {
+  if (util.DateUtil.verifyDateOnOrAfterToday(disbursementVar.DueDate)) {
+    if (disbursementVar typeis SuspenseDisbursement == false or util.DateUtil.compareIgnoreTime((disbursementVar as SuspenseDisbursement).SuspensePayment.PaymentDate, disbursementVar.DueDate) <= 0) {
+      return null
+    }
+    return displaykey.Web.CreateDisbursementDetailScreen.DueDateBeforePaymentDate
+  }
+  return displaykey.Web.CreateDisbursementDetailScreen.DueDateInPast
+}]]></Code>
+  </DetailViewPanel>
+</PCF>

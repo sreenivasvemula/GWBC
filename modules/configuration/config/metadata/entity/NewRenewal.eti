@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+<!-- ===================================================================  New Renewal Billing Instruction                                      =================================================================== -->
+<subtype
+  xmlns="http://guidewire.com/datamodel"
+  entity="NewRenewal"
+  desc="Billing instruction used to add a renewed policy when the policy does not have a prior period in BillingCenter"
+  displayName="New Renewal"
+  subpackage="accounting.billinginstruction"
+  supertype="NewPlcyPeriodBI">
+  <foreignkey
+    name="NewRenewalAccount"
+    desc="The account to which the new policy period will belong"
+    columnName="NewRenewalAccountID"
+    exportasid="true"
+    fkentity="Account"
+    nullok="false"/>
+</subtype>

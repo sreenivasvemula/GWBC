@@ -1,0 +1,342 @@
+<?xml version="1.0"?>
+<entity
+  xmlns="http://guidewire.com/datamodel"
+  desc="The single entry in the schedule of payments for a given policy or account"
+  entity="InvoiceItem"
+  setterScriptability="hidden"
+  subpackage="invoice"
+  table="invoiceitem"
+  type="retireable">
+  <implementsEntity
+    name="Reversible"/>
+  <implementsEntity
+    name="ItemState"/>
+  <implementsEntity
+    name="InCurrencySilo"/>
+  <monetaryamount
+    amountColumnName="Amount"
+    desc="The amount of the invoice item"
+    name="Amount"
+    nullok="false"
+    scaleToCurrency="true"
+    setterScriptability="hidden"
+    soapnullok="true">
+    <tag
+      name="DefaultValueZero"/>
+  </monetaryamount>
+  <column
+    desc="The description of the invoice item"
+    name="Description"
+    nullok="true"
+    type="mediumtext"/>
+  <column
+    desc="The date of the invoice item"
+    name="EventDate"
+    nullok="false"
+    type="dateonly"/>
+  <column
+    desc="The number of this installment on the payment schedule"
+    name="InstallmentNumber"
+    nullok="true"
+    type="integer"/>
+  <column
+    desc="Comments for invoice item"
+    name="Comments"
+    nullok="true"
+    type="mediumtext"/>
+  <column
+    default="false"
+    desc="Whether the item must be on an invoice that is billed today"
+    name="BillToday"
+    nullok="true"
+    type="bit"/>
+  <column
+    desc="Field for custom grouping of invoice items for payment"
+    name="CustomPaymentGroup"
+    nullok="true"
+    type="mediumtext"/>
+  <column
+    default="false"
+    desc="True if invoice item has ever been associated with an agency payment exception (ie: a commission or gross mismatch in a payment to the item)"
+    exportable="false"
+    name="HasBeenPaymentException"
+    nullok="false"
+    setterScriptability="doesNotExist"
+    type="bit"/>
+  <column
+    createhistogram="true"
+    default="true"
+    desc="True if this invoice item can approach being more settled by an agency bill payment. This means the item's primary active commission or gross is not at this point exactly or oversettled."
+    exportable="false"
+    loadable="false"
+    loadedByCallback="true"
+    name="CanBePaidMoreByAgencyBill"
+    nullok="false"
+    setterScriptability="doesNotExist"
+    type="bit"/>
+  <column
+    createhistogram="true"
+    default="true"
+    desc="True if this invoice item can approach being more settled by an agency bill promise. This means the item's primary active commission or gross is not at this point exactly or oversettled including promised amounts."
+    exportable="false"
+    loadable="false"
+    loadedByCallback="true"
+    name="CanBePromisedMoreByAgencyBill"
+    nullok="false"
+    setterScriptability="doesNotExist"
+    type="bit"/>
+  <column
+    desc="The date of the current payment exception against this Invoice Item.  Null if the item is not currently in exception."
+    exportable="false"
+    name="PaymentExceptionDate"
+    nullok="true"
+    setterScriptability="doesNotExist"
+    type="datetime"/>
+  <typekey
+    default="none"
+    desc="Describes how and if this invoice item's payment exception status is locked."
+    getterScriptability="doesNotExist"
+    name="PaymentExceptionLock"
+    nullok="false"
+    setterScriptability="doesNotExist"
+    typelist="ExceptionLock"/>
+  <column
+    desc="The last date this item's payment exception lock was set to anything other than 'None'. Will be null if the payment exception lock is currently set to 'None'"
+    exportable="false"
+    name="PaymentExceptionLockDate"
+    nullok="true"
+    setterScriptability="doesNotExist"
+    type="dateonly"/>
+  <column
+    desc="The date of the current promise exception against this Invoice Item.  Null if the item is not currently in exception."
+    exportable="false"
+    name="PromiseExceptionDate"
+    nullok="true"
+    setterScriptability="doesNotExist"
+    type="datetime"/>
+  <typekey
+    default="none"
+    desc="Describes how and if this invoice item's promise exception status is locked."
+    getterScriptability="doesNotExist"
+    name="PromiseExceptionLock"
+    nullok="false"
+    setterScriptability="doesNotExist"
+    typelist="ExceptionLock"/>
+  <column
+    desc="The last date this item's promise exception lock was set to anything other than 'None'. Will be null if the promise exception lock is currently set to 'None'"
+    exportable="false"
+    name="PromiseExceptionLockDate"
+    nullok="true"
+    setterScriptability="doesNotExist"
+    type="dateonly"/>
+  <column
+    desc="User-inputted comments about an agency payment exception associated with this invoice item"
+    name="ExceptionComments"
+    nullok="true"
+    type="mediumtext"/>
+  <column
+    default="false"
+    desc="True if invoice item has a non-reversed ChargeBilled transaction"
+    exportable="false"
+    name="HasChargeBilledTransaction"
+    nullok="false"
+    setterScriptability="doesNotExist"
+    type="bit"/>
+  <column
+    default="false"
+    desc="True if invoice item has a non-reversed ChargeDue transaction"
+    exportable="false"
+    name="HasChargeDueTransaction"
+    nullok="false"
+    setterScriptability="doesNotExist"
+    type="bit"/>
+  <typekey
+    default="installment"
+    desc="The type of invoice item"
+    name="Type"
+    nullok="false"
+    setterScriptability="hidden"
+    typelist="InvoiceItemType"/>
+  <foreignkey
+    columnName="ChargeID"
+    desc="The charge associated with this item"
+    exportable="false"
+    fkentity="Charge"
+    importableagainstexistingobject="false"
+    name="Charge"
+    nullok="false"
+    setterScriptability="hidden"/>
+  <foreignkey
+    columnName="InvoiceID"
+    desc="The invoice to which this item is attached"
+    exportable="false"
+    fkentity="Invoice"
+    importableagainstexistingobject="false"
+    name="Invoice"
+    nullok="false"/>
+  <foreignkey
+    columnName="PolicyPeriodID"
+    desc="The Policy Period that this Invoice Item belongs to.  This field exists for performance reasons.  (Value is InvoiceItem -&gt; Charge -&gt; TAccountOwner if not Direct Bill Account-Level invoice item, else null)"
+    fkentity="PolicyPeriod"
+    name="PolicyPeriod"
+    nullok="true"
+    overwrittenInStagingTable="true"
+    setterScriptability="hidden"/>
+  <edgeForeignKey
+    desc="If not null, then this refers to the InvoiceItem for which this is the onset."
+    edgeTableName="onsetinvoiceitem"
+    exportable="false"
+    fkentity="InvoiceItem"
+    ignoreforevents="true"
+    loadable="true"
+    name="InvoiceItemForWhichThisIsTheOnset"
+    nullok="true"
+    setterScriptability="doesNotExist"/>
+  <edgeForeignKey
+    desc="If non-null, refers to the invoice item which this invoice item reversed."
+    edgeTableName="revinvoiceitem"
+    exportable="false"
+    fkentity="InvoiceItem"
+    ignoreforevents="true"
+    loadable="true"
+    name="ReversedInvoiceItem"
+    nullok="true"
+    setterScriptability="doesNotExist"/>
+  <array
+    arrayentity="BasePaymentItem"
+    desc="An array of the payment items associated with this invoice item."
+    name="PaymentItems"
+    setterScriptability="doesNotExist"/>
+  <array
+    arrayentity="AgencyPromiseItem"
+    desc="This is here to get around a problem where if an agency promise item is modified (e.g., paid), but not yet committed, a Query won't see the change, but an array access will look into the bundle/cache.  That's why this not being exposed anywhere."
+    getterScriptability="doesNotExist"
+    name="AgencyPromiseItems"
+    setterScriptability="doesNotExist"/>
+  <array
+    arrayentity="ItemCommission"
+    desc="Set of join entities between this InvoiceItem and its PolicyCommissions"
+    getterScriptability="hidden"
+    name="ItemCommissions"
+    owner="true"
+    setterScriptability="hidden"/>
+  <array
+    arrayentity="ItemEvent"
+    cascadeDelete="true"
+    desc="Events that occurred on this InvoiceItem."
+    name="ItemEvents"
+    setterScriptability="doesNotExist"/>
+  <array
+    arrayentity="CommissionWriteoffDistItem"
+    desc="Set of CommissionWriteoffDistItems against this invoice item"
+    getterScriptability="hidden"
+    name="CommissionWriteoffDistItems"
+    setterScriptability="hidden"/>
+  <array
+    arrayentity="ItemGrossWriteoff"
+    desc="Set of gross writeoff approvables against this invoice item.  May be executed, or awaiting approval"
+    getterScriptability="hidden"
+    name="GrossWriteoffs"
+    setterScriptability="hidden"/>
+  <array
+    arrayentity="InvoiceItemCommissionRateOverride"
+    getterScriptability="hidden"
+    name="CommissionRateOverrides"
+    owner="true"
+    setterScriptability="hidden">
+    <link-association>
+      <typelist-map
+        field="Role"/>
+    </link-association>
+  </array>
+  <!-- Denormalizations -->
+  <monetaryamount
+    amountColumnName="PaidAmount"
+    desc="Denormalization of the total amount of all ChargePaidFromUnapplieds applied for this invoice item"
+    exportable="false"
+    loadable="false"
+    loadedByCallback="true"
+    name="PaidAmount"
+    nullok="false"
+    scaleToCurrency="true"
+    setterScriptability="doesNotExist">
+    <tag
+      name="DefaultValueZero"/>
+  </monetaryamount>
+  <monetaryamount
+    amountColumnName="GrossAmountWrittenOff"
+    desc="Denormalization of the total amount of all ChargeWrittenOffTxns applied for this invoice item"
+    exportable="false"
+    loadable="false"
+    loadedByCallback="true"
+    name="GrossAmountWrittenOff"
+    nullok="false"
+    scaleToCurrency="true"
+    setterScriptability="doesNotExist">
+    <tag
+      name="DefaultValueZero"/>
+  </monetaryamount>
+  <column
+    default="false"
+    desc="Denormalized field, true if and only if Amount is equal to PaidAmount + GrossAmountWrittenOff"
+    loadable="false"
+    loadedByCallback="true"
+    name="GrossSettled"
+    nullok="false"
+    setterScriptability="hidden"
+    type="bit"/>
+  <index
+    desc="Covering index for queries which look for invoice items which have been fully settled in gross"
+    name="grosssettledindex"
+    unique="true">
+    <indexcol
+      keyposition="1"
+      name="InvoiceID"/>
+    <indexcol
+      keyposition="2"
+      name="Retired"/>
+    <indexcol
+      keyposition="3"
+      name="GrossSettled"/>
+    <indexcol
+      keyposition="4"
+      name="ID"/>
+  </index>
+  <events/>
+  <dbcheckbuilder
+    className="com.guidewire.bc.system.database.dbchecks.commission.InvoiceItemItemCommissionDBCheckBuilder"/>
+  <dbcheckbuilder
+    className="com.guidewire.bc.system.database.dbchecks.invoice.InvoiceItemPaidAmountDBCheckBuilder"/>
+  <dbcheckbuilder
+    className="com.guidewire.bc.system.database.dbchecks.invoice.InvoiceItemHasBilledAndDueTransactionDBCheckBuilder"/>
+  <dbcheckbuilder
+    className="com.guidewire.bc.system.database.dbchecks.invoice.StatementInvoiceLineNumberDBCheckBuilder"/>
+  <dbcheckbuilder
+    className="com.guidewire.bc.system.database.dbchecks.invoice.InvoiceItemPolicyPeriodDBCheckBuilder"/>
+  <dbcheckbuilder
+    className="com.guidewire.bc.system.database.dbchecks.invoice.InvoiceItemReversalDBCheckBuilder"/>
+  <dbcheckbuilder
+    className="com.guidewire.bc.system.database.dbchecks.invoice.InvoiceItemGrossWrittenOffDBCheckBuilder"/>
+  <dbcheckbuilder
+    className="com.guidewire.bc.system.database.dbchecks.invoice.InvoiceItemZeroGrossDBCheckBuilder"/>
+  <checkconstraint
+    applicabletostagingtable="false"
+    desc="The PromisedAndPaidAmount field must not be NULL."
+    predicate="PromisedAndPaidAmount IS NOT NULL"/>
+  <checkconstraint
+    desc="If the Invoice Item is being loaded as a payment exception, HasBeenPaymentException should be true."
+    predicate="PaymentExceptionDate IS NULL OR HasBeenPaymentException != 0"/>
+  <index
+    desc="Better performance for delinquent invoice items."
+    name="chrggrosssttldidx">
+    <indexcol
+      keyposition="1"
+      name="ChargeID"/>
+    <indexcol
+      keyposition="2"
+      name="Retired"/>
+    <indexcol
+      keyposition="3"
+      name="GrossSettled"/>
+  </index>
+</entity>

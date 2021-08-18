@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?><nonPersistentEntity xmlns="http://guidewire.com/datamodel" desc="Holds status information about a Producer" entity="ProducerInfo" subpackage="producer">
+  <implementsEntity name="NotInCurrencySilo"/>
+  <monetaryamount amountColumnName="TotalGrossPremium"
+    desc="Total Gross Premium" name="TotalGrossPremium" nullok="true" scaleToCurrency="true"/>
+  <monetaryamount amountColumnName="TotalOutstanding"
+    desc="Total Outstanding" name="TotalOutstanding" nullok="true" scaleToCurrency="true"/>
+  <monetaryamount  amountColumnName="TotalPastDue"
+    desc="Total Past Due" name="TotalPastDue" nullok="true" scaleToCurrency="true"/>
+  <column desc="The date and time that this snapshot of the Producer Info was taken." name="InfoDate" nullok="true" type="datetime"/>
+  <foreignkey columnName="ProducerID" desc="The Producer from which status information is collected" exportasid="true" fkentity="Producer" name="Producer" nullok="false"/>
+  <foreignkey columnName="PrimaryAddressID" desc="The Address of the Producer's Primary Contact" exportasid="true" fkentity="Address" name="PrimaryAddress" nullok="true"/>
+</nonPersistentEntity>

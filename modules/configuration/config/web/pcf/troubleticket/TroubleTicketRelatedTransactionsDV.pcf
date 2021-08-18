@@ -1,0 +1,38 @@
+<?xml version="1.0"?>
+<PCF
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:noNamespaceSchemaLocation="../../../../../pcf.xsd">
+  <DetailViewPanel
+    id="TroubleTicketRelatedTransactionsDV">
+    <Require
+      name="TroubleTicket"
+      type="TroubleTicket"/>
+    <InputColumn>
+      <ListViewInput
+        def="TransactionsLV(TroubleTicket.AssociatedTransactions as entity.TransactionQuery, true)"
+        editable="true">
+        <Toolbar>
+          <ToolbarButton
+            action="TroubleTicketTransactionsPopup.push(TroubleTicket)"
+            hideIfEditable="true"
+            id="transactions"
+            label="displaykey.Web.TroubleTicketDetailsPopup.Transactions"/>
+          <PickerToolbarButton
+            action="TransactionsPopup.push(TroubleTicket.PotentialAssociatedTransactions)"
+            hideIfReadOnly="true"
+            id="TroubleTicketRelatedTransactionsDV_AddButton"
+            label="displaykey.Button.Add"
+            onPick="TroubleTicket.associateWithTransactions(PickedValue)"/>
+          <CheckedValuesToolbarButton
+            checkedRowAction="TroubleTicket.removeAssociatedTransaction(CheckedValue)"
+            hideIfReadOnly="true"
+            id="TroubleTicketRelatedTransactionsDV_RemoveButton"
+            iterator="TransactionsLV.TransactionsLV"
+            label="displaykey.Button.Remove"/>
+          <IteratorButtons
+            iterator="TransactionsLV.TransactionsLV"/>
+        </Toolbar>
+      </ListViewInput>
+    </InputColumn>
+  </DetailViewPanel>
+</PCF>

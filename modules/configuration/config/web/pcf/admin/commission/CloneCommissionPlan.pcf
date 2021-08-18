@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PCF
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:noNamespaceSchemaLocation="../../../../../../pcf.xsd">
+  <Page
+    afterCancel="CommissionPlanDetail.go(commissionPlan)"
+    afterCommit="CommissionPlanDetail.go(clonedCommissionPlan)"
+    canEdit="true"
+    id="CloneCommissionPlan"
+    parent="CommissionPlans()"
+    showUpLink="true"
+    startInEditMode="true"
+    title="displaykey.Web.CloneCommissionPlan.Title(commissionPlan)">
+    <LocationEntryPoint
+      signature="CloneCommissionPlan(commissionPlan : CommissionPlan)"/>
+    <Variable
+      name="commissionPlan"
+      type="CommissionPlan"/>
+    <Variable
+      initialValue="commissionPlan.makeClone() as CommissionPlan"
+      name="clonedCommissionPlan"/>
+    <ScreenRef
+      def="CommissionPlanDetailScreen(clonedCommissionPlan)"/>
+  </Page>
+</PCF>

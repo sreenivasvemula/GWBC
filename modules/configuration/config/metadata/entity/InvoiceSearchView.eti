@@ -1,0 +1,43 @@
+<?xml version="1.0"?>
+<!-- ====================================================================  InvoiceSearchView  ==================================================================== -->
+<viewEntity
+  xmlns="http://guidewire.com/datamodel"
+  entity="InvoiceSearchView"
+  desc="Supports the efficient creation of Invoice lists in BillingCenter's views."
+  exportable="false"
+  subpackage="search.view"
+  primaryEntity="AccountInvoice">
+  <viewEntityLink
+    name="Invoice"
+    path="ID"/>
+  <viewEntityLink
+    name="Account"
+    path="Account"/>
+  <viewEntityColumn
+    name="EventDate"
+    path="EventDate"/>
+  <viewEntityColumn
+    name="PaymentDueDate"
+    path="PaymentDueDate"/>
+  <viewEntityColumn
+    name="InvoiceNumber"
+    path="InvoiceNumber"/>
+  <viewEntityColumn
+    name="AccountNumber"
+    path="Account.AccountNumber"/>
+  <viewEntityColumn
+    name="AccountName"
+    path="Account.AccountName"/>
+  <viewEntityTypekey
+    name="Status"
+    path="Status"/>
+  <viewEntityColumn
+    name="Amount"
+    path="Amount_amt"/>
+  <viewEntityColumn
+    name="AmountDue"
+    path="AmountDue_amt"/>
+  <viewEntityTypekey
+    name="Currency"
+    path="Account.Currency"/>
+</viewEntity>

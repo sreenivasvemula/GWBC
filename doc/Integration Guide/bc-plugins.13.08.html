@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xml:lang="en" lang="en" xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+    <meta http-equiv="Content-Style-Type" content="text/css" />
+    <!-- MOTW-DISABLED saved from url=(0014)about:internet -->
+    <title>Billing Instruction Execution Customization Plugin</title>
+    <link rel="StyleSheet" href="css/bc-plugins.css" type="text/css" media="all" />
+    <link rel="StyleSheet" href="css/webworks.css" type="text/css" media="all" />
+    <link rel="StyleSheet" href="css/css-guidewire-extra.css" type="text/css" media="all" />
+    <script type="text/javascript" language="JavaScript1.2" src="wwhdata/common/context.js"></script>
+    <script type="text/javascript" language="JavaScript1.2" src="wwhdata/common/towwhdir.js"></script>
+    <script type="text/javascript" language="JavaScript1.2" src="wwhdata/common/wwhpagef.js"></script>
+    <script type="text/javascript" language="JavaScript1.2">
+      <!--
+        var  WebWorksRootPath = "";
+      // -->
+    </script>
+    <script type="text/javascript" language="JavaScript1.2">
+      <!--
+        // Set reference to top level help frame
+        //
+        var  WWHFrame = WWHGetWWHFrame("", true);
+      // -->
+    </script>
+    <script type="text/javascript" language="JavaScript1.2" src="scripts/expand.js"></script>
+    <!-- THE FOLLOWING IS A GUIDEWIRE STYLE DEFINITION FOR THE LINK TO THIS FEATURE -->
+    <link rel="StyleSheet" href="css/css-guidewire-extra.css" type="text/css" media="all" />
+    <!-- THE FOLLOWING IS A GUIDEWIRE GSCRIPT FUNCTION FOR THE LINK TO THIS FEATURE -->
+    <script type="text/javascript">
+function guidewire_selectall()
+{
+var text_val=eval("document.linktothisurlform.urlfield");
+text_val.focus();
+text_val.select();
+}
+</script>
+  </head>
+  <body onLoad="WWHUpdate();" onUnload="WWHUnload();" onKeyDown="WWHHandleKeyDown((document.all||document.getElementById||document.layers)?event:null);" onKeyPress="WWHHandleKeyPress((document.all||document.getElementById||document.layers)?event:null);" onKeyUp="WWHHandleKeyUp((document.all||document.getElementById||document.layers)?event:null);">
+    <!-- THE FOLLOWING IS A GUIDEWIRE DIV FOR THE 'LINK TO THIS' FEATURE -->
+    <div id="linkToThisPage" class="popup" style="display: none;">
+      <div class="popupTitle">Link Directly to This Page 
+           <a href="#" onclick="var thePopup = getElementById('linkToThisPage');thePopup.style.display='none';return false;"><img class="popupClosebox" src="wwhelp/wwhimpl/common/images/close.gif" /></a></div>
+      <div style="padding:6px;">
+        <div class="popupText" id="linkToThisPageBookmark">An error has occurred if you see this messsage.</div>
+        <form name="linktothisurlform" method="post" action="" style="width:275px;margin:0px">
+          <input type="text" class="popupURLText" id="linkToThisPageURL" name="urlfield" rows="1" cols="55" onClick="guidewire_selectall();" onFocus="guidewire_selectall();"></input>
+        </form>
+      </div>
+    </div>
+    <br />
+    <div class="WebWorks_Breadcrumbs" style="text-align: left;">
+      <span>BillingCenter Integration Guide</span> : 
+    <span class="WebWorks_Breadcrumbs" style="text-align: left;"><a class="WebWorks_Breadcrumb_Link" href="p-plugins.html#3434923">Plugins</a> : <a class="WebWorks_Breadcrumb_Link" href="bc-plugins.13.01.html#3434923">Billing Plugins</a> : Billing Instruction Execution Customization Plugin</span></div>
+    <hr align="left" />
+    <blockquote>
+      <h3 class="H1_-_Heading_1"><a name="3434923">Billing Instruction Execution Customization Plugin</a></h3>
+      <div class="B_-_Body"><a name="3434924">Implement the </a><span class="cv_-_computer_voice">IBillingInstruction</span> plugin interface to add charges to a billing instruction. Refer to the Gosu code of the default implementation <span class="cv_-_computer_voice">gw.plugin.billinginstruction.impl.BillingInstruction</span> for an example implementation.</div>
+      <h4 class="H2_-_Heading_2"><a name="3434940">Add Additional Charges</a></h4>
+      <div class="B_-_Body"><a name="3434941">The method </a><span class="cv_-_computer_voice">addAdditionalCharges</span> takes a billing instruction as a parameter. Your implementation of this method lets you create additional charges on the billing instruction. In the default implementation of <span class="cv_-_computer_voice">IBillingInstruction</span> plugin, this method does nothing. However, you could add additional charges. You probably want to check the billing instruction type before adding charges, with code such as:</div>
+      <div class="CS_-_Code_Single_Line"><a name="3557754">if (billingInstruction typeis AccountGeneral)</a></div>
+      <div class="B_-_Body"><a name="3434942">BillingCenter treats any new charges identically to charges originally on the billing instruction. New charges have an effective date identical to the effective date of the billing instruction. BillingCenter automatically adds charge transactions and invoice items as appropriate.</a></div>
+      <div class="B_-_Body"><a name="3434943">For example, the following is a Gosu implementation of the plugin that adds one charge:</a></div>
+      <PRE class="CF_-_Code_First_Line"><a name="3434944">public override function addAdditionalCharges(billingInstruction : BillingInstruction) {</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="3434945">&nbsp;</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="3434946">    if (billingInstruction typeis AccountGeneral) {</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="3434947">      var lateFee = new Charge()</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="3434948">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;lateFee.ChargePattern = ChargePatternKey.ACCOUNTLATEFEE;</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="3434949">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;lateFee.Amount = 100</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="3434950">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;billingInstruction.addToCharges(lateFee)</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="3434951">&nbsp;</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="3434952">    } else if (billingInstruction typeis Issuance) {</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="3434953">      var premium = new Charge()</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="3434954">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;premium.ChargePattern = ChargePatternKey.PREMIUM;</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="3434955">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;premium.Amount = 100</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="3434956">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;billingInstruction.addToCharges(premium)</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="3434957">    }</a></PRE>
+      <PRE class="CL_-_Code_Last_Line"><a name="3434958">  }</a></PRE>
+      <script type="text/javascript" language="JavaScript1.2">
+        <!--
+          // Clear related topics
+          //
+          WWHClearRelatedTopics();
+
+          document.writeln(WWHRelatedTopicsInlineHTML());
+        // -->
+      </script>
+    </blockquote>
+    <script type="text/javascript" language="JavaScript1.2">
+      <!--
+        document.write(WWHRelatedTopicsDivTag() + WWHPopupDivTag() + WWHALinksDivTag());
+      // -->
+    </script>
+  </body>
+</html>

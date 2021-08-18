@@ -1,0 +1,33 @@
+<?xml version="1.0"?>
+<entity
+  xmlns="http://guidewire.com/datamodel"
+  desc="Context for charge instance transactions."
+  entity="ChargeInstanceCtx"
+  final="false"
+  ignoreForEvents="true"
+  overwrittenInStagingTable="true"
+  setterScriptability="hidden"
+  subpackage="accounting.transaction"
+  table="chargeinstancecontext"
+  type="retireable">
+  <implementsEntity
+    name="TransactionContext"/>
+  <implementsEntity
+    name="InCurrencySilo"/>
+  <foreignkey
+    columnName="ChargeID"
+    fkentity="Charge"
+    getterScriptability="hidden"
+    ignoreforevents="true"
+    name="Charge"
+    nullok="false"
+    setterScriptability="hidden"/>
+  <foreignkey
+    columnName="TransactionID"
+    desc="Reference to ChargeInstanceTxn"
+    fkentity="ChargeInstanceTxn"
+    getterScriptability="doesNotExist"
+    name="Transaction"
+    nullok="false"
+    setterScriptability="doesNotExist"/>
+</entity>

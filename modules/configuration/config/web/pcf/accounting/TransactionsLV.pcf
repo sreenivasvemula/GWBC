@@ -1,0 +1,145 @@
+<?xml version="1.0"?>
+<PCF
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:noNamespaceSchemaLocation="../../../../../pcf.xsd">
+  <!-- Displays list of Transactions in a special format using nested row iterators.  The main row represents a
+  Transaction and also displays information about the first line item in the transaction.  The subrows represent the
+  subsequent (2nd,3rd..) line items in the Transaction. -->
+  <ListViewPanel
+    id="TransactionsLV">
+    <ExposeIterator
+      flags="transaction"
+      valueType="entity.Transaction"
+      widget="TransactionsLV"/>
+    <!-- The list of Transactions to display -->
+    <Require
+      name="transactions"
+      type="TransactionQuery"/>
+    <Require
+      name="showCheckboxes"
+      type="Boolean"/>
+    <!-- Outermost RowIterator is over Transactions.  If showCheckboxes=true, show a checkbox in each main row. -->
+    <RowIterator
+      checkBoxVisible="showCheckboxes"
+      editable="true"
+      elementName="transaction"
+      hasCheckBoxes="true"
+      id="Transactions"
+      value="transactions">
+      <!-- Main row represents the Transaction itself, but also displays info about first line item in Transaction -->
+      <ToolbarFlag
+        name="transaction"/>
+      <Row>
+        <DateCell
+          dateFormat="short"
+          id="TransactionDate"
+          label="displaykey.Web.TransactionsLV.TransactionDate"
+          sortOrder="1"
+          timeFormat="long"
+          value="transaction.TransactionDate"/>
+        <Cell
+          action="TransactionDetailPopup.push(transaction)"
+          enableSort="false"
+          id="TransactionNumber"
+          label="displaykey.Web.TransactionsLV.TransactionNumber"
+          value="transaction.TransactionNumber"/>
+        <Cell
+          enableSort="false"
+          id="Description"
+          label="displaykey.Web.TransactionsLV.Description"
+          value="transaction.LongDisplayName"/>
+        <Cell
+          enableSort="false"
+          id="TAccount"
+          label="displaykey.Web.TransactionsLV.TAccount"
+          value="transaction.FirstLineItem.TAccount.TAccountOwnerTypeNameTAccountName"/>
+        <MonetaryAmountCell
+          currency="transaction.Currency"
+          enableSort="false"
+          formatType="currency"
+          id="Debit"
+          label="displaykey.Web.TransactionsLV.Debit"
+          value="getDebitAmount(transaction)"/>
+        <MonetaryAmountCell
+          currency="transaction.Currency"
+          enableSort="false"
+          formatType="currency"
+          id="Credit"
+          label="displaykey.Web.TransactionsLV.Credit"
+          value="getCreditAmount(transaction)"/>
+      </Row>
+      <!-- Subrows represent the subsequent line items in the Transaction, which might be credits or debits -->
+      <RowIterator
+        editable="false"
+        elementName="LineItem"
+        id="OtherDebits"
+        pageSize="0"
+        value="org.apache.commons.lang.ArrayUtils.remove(transaction.DebitLineItems, 0) as LineItem[]">
+        <Row>
+          <Cell
+            id="TransactionDate"
+            value="&quot;&quot;"/>
+          <Cell
+            id="TransactionNumber"
+            value="&quot;&quot;"/>
+          <Cell
+            id="Description"
+            value="&quot;&quot;"/>
+          <Cell
+            id="TAccount"
+            value="LineItem.TAccount.TAccountOwnerTypeNameTAccountName"/>
+          <MonetaryAmountCell
+            currency="LineItem.Currency"
+            formatType="currency"
+            id="Debit"
+            value="LineItem.Amount"/>
+          <Cell
+            formatType="currency"
+            id="Credit"
+            value="0.0"/>
+        </Row>
+      </RowIterator>
+      <RowIterator
+        editable="false"
+        elementName="LineItem"
+        id="OtherCredits"
+        pageSize="0"
+        value="transaction.CreditLineItems">
+        <Row>
+          <Cell
+            id="TransactionDate"
+            value="&quot;&quot;"/>
+          <Cell
+            id="TransactionNumber"
+            value="&quot;&quot;"/>
+          <Cell
+            id="Description"
+            value="&quot;&quot;"/>
+          <Cell
+            id="TAccount"
+            value="LineItem.TAccount.TAccountOwnerTypeNameTAccountName"/>
+          <Cell
+            formatType="currency"
+            id="Debit"
+            value="0.0"/>
+          <MonetaryAmountCell
+            currency="LineItem.Currency"
+            formatType="currency"
+            id="Credit"
+            value="LineItem.Amount"/>
+        </Row>
+      </RowIterator>
+    </RowIterator>
+    <Code><![CDATA[uses gw.pl.currency.MonetaryAmount
+
+function getDebitAmount(transaction : Transaction) : MonetaryAmount {
+  var debitAmount = transaction.FirstLineItem.Type == "debit" ? transaction.FirstLineItem.Amount : 0
+  return ((debitAmount) as java.math.BigDecimal).ofCurrency(transaction.Currency)
+}
+
+function getCreditAmount(transaction : Transaction) : MonetaryAmount {
+  var debitAmount = transaction.FirstLineItem.Type == "credit" ? transaction.FirstLineItem.Amount : 0
+  return ((debitAmount) as java.math.BigDecimal).ofCurrency(transaction.Currency)
+}]]></Code>
+  </ListViewPanel>
+</PCF>

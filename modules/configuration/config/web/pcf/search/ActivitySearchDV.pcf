@@ -1,0 +1,34 @@
+<?xml version="1.0"?>
+<PCF
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:noNamespaceSchemaLocation="../../../../../pcf.xsd">
+  <DetailViewPanel
+    id="ActivitySearchDV">
+    <Require
+      name="searchCriteria"
+      type="ActivitySearchCriteria"/>
+    <Variable
+      name="user"
+      type="entity.User"/>
+    <InputColumn>
+      <Label
+        id="SearchCriteria"
+        label="displaykey.Web.ActivitySearchDV.SearchCriteria"/>
+      <RangeInput
+        editable="true"
+        id="ActivityPatternCriterion"
+        label="displaykey.Web.ActivitySearchDV.ActivityPattern"
+        value="searchCriteria.ActivityPattern"
+        valueRange="web.admin.ActivityPatternsUtil.getAllActivityPatterns()"/>
+      <AltUserInput
+        editable="true"
+        id="AssignedToUserCriterion"
+        label="displaykey.Web.ActivitySearchDV.AssignedToUser"
+        value="searchCriteria.AssignedToUser"/>
+    </InputColumn>
+    <InputFooterSection>
+      <InputSetRef
+        def="SearchAndResetInputSet()"/>
+    </InputFooterSection>
+  </DetailViewPanel>
+</PCF>

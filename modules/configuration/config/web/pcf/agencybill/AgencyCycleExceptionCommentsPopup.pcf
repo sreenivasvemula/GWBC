@@ -1,0 +1,41 @@
+<?xml version="1.0"?>
+<PCF
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:noNamespaceSchemaLocation="../../../../../pcf.xsd">
+  <Popup
+    beforeCommit="web.producer.agencybill.ExceptionItemUtil.applyCommentToCycleExceptions(agencyCyclesWithException, comments, isLatePayments, CurrentLocation)"
+    canEdit="true"
+    id="AgencyCycleExceptionCommentsPopup"
+    startInEditMode="true"
+    title="displaykey.Web.AgencyCycleExceptionCommentsPopup.Title">
+    <LocationEntryPoint
+      signature="AgencyCycleExceptionCommentsPopup(agencyCyclesWithException : AgencyCycleProcess[] , isLatePayments : boolean)"/>
+    <Variable
+      name="agencyCyclesWithException"
+      type="AgencyCycleProcess[]"/>
+    <Variable
+      name="isLatePayments"
+      type="boolean"/>
+    <Variable
+      initialValue="web.producer.agencybill.ExceptionItemUtil.getInitialCycleExceptionComments(agencyCyclesWithException, isLatePayments)"
+      name="comments"/>
+    <Screen>
+      <Toolbar>
+        <EditButtons/>
+      </Toolbar>
+      <DetailViewPanel>
+        <InputColumn>
+          <TextAreaInput
+            boldLabel="true"
+            editable="true"
+            id="exceptionComments"
+            label="displaykey.Web.AgencyCycleExceptionCommentsPopup.CommentsExplanation"
+            labelAbove="true"
+            numCols="80"
+            numRows="8"
+            value="comments"/>
+        </InputColumn>
+      </DetailViewPanel>
+    </Screen>
+  </Popup>
+</PCF>

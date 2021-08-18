@@ -1,0 +1,166 @@
+<?xml version="1.0"?>
+<PCF
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:noNamespaceSchemaLocation="../../../../../pcf.xsd">
+  <Page
+    afterCancel="DesktopSuspensePayments.go()"
+    afterCommit="DesktopSuspensePayments.go()"
+    beforeCommit="finalizeSuspensePayment() "
+    canEdit="true"
+    id="NewSuspensePayment"
+    parent="DesktopSuspensePayments()"
+    showUpLink="true"
+    startInEditMode="true"
+    title="displaykey.Web.NewSuspensePayment">
+    <LocationEntryPoint
+      signature="NewSuspensePayment(currency : Currency)"/>
+    <Variable
+      name="currency"
+      type="Currency"/>
+    <Variable
+      initialValue="new SuspensePayment(currency, CurrentLocation)"
+      name="suspensePayment"/>
+    <Variable
+      initialValue="suspensePayment.CurrentApplyTo"
+      name="applyTo"/>
+    <Variable
+      initialValue="suspensePayment.AccountNumber"
+      name="accountNumber"/>
+    <Variable
+      initialValue="suspensePayment.PolicyNumber"
+      name="policyNumber"/>
+    <Variable
+      initialValue="suspensePayment.ProducerName"
+      name="producerName"/>
+    <Variable
+      initialValue="suspensePayment.Description"
+      name="description"/>
+    <Variable
+      initialValue="new gw.payment.PaymentInstrumentRange( getInitialSuspensePaymentInstruments() )"
+      name="paymentInstrumentRange"/>
+    <Screen
+      id="NewSuspensePaymentScreen">
+      <TitleBar
+        appendListViewPaging="true"
+        title="displaykey.Web.NewSuspensePayment"/>
+      <Toolbar>
+        <EditButtons
+          editVisible="false"/>
+      </Toolbar>
+      <DetailViewPanel
+        id="NewSuspensePaymentDV">
+        <InputColumn>
+          <DateInput
+            editable="true"
+            id="paymentDate"
+            label="displaykey.Web.NewSuspensePayment.PaymentDate"
+            required="true"
+            value="suspensePayment.PaymentDate"/>
+          <TextInput
+            id="Currency"
+            label="displaykey.Web.NewSuspensePayment.Currency"
+            value="suspensePayment.Currency"/>
+          <MonetaryAmountInput
+            currency="suspensePayment.Currency"
+            editable="true"
+            id="amount"
+            label="displaykey.Web.NewSuspensePayment.Amount"
+            required="true"
+            value="suspensePayment.Amount"/>
+          <RangeInput
+            editable="true"
+            id="PaymentInstrument"
+            label="displaykey.Web.NewSuspensePayment.PaymentInstrument"
+            onPick="paymentInstrumentRange.addPaymentInstrument(suspensePayment.PaymentInstrument)"
+            required="true"
+            value="suspensePayment.PaymentInstrument"
+            valueRange="paymentInstrumentRange.AvailableInstruments">
+            <MenuItem
+              action="NewPaymentInstrumentPopup.push(gw.payment.PaymentInstrumentFilters.suspensePaymentInstrumentOptions,false)"
+              id="CreateNewPaymentInstrument"
+              label="displaykey.Web.NewPaymentInstrument.CreateNewPaymentInstrument"/>
+            <PostOnChange/>
+          </RangeInput>
+          <InputSetRef
+            def="PaymentReceiptInputSet(suspensePayment)"
+            mode="suspensePayment.PaymentInstrument.PaymentMethod"/>
+          <Input
+            editable="true"
+            id="InvoiceNumber"
+            label="displaykey.Web.NewSuspensePayment.InvoiceNumber"
+            value="suspensePayment.InvoiceNumber"/>
+          <Label
+            label="displaykey.Web.NewSuspensePayment.Target"/>
+          <Choice
+            id="AccountChoice"
+            option="SuspensePaymentApplyTo.TC_ACCOUNT.Code"
+            value="applyTo">
+            <Input
+              conversionExpression="(PickedValue as Account).AccountNumber"
+              editable="true"
+              id="AccountNumber"
+              label="displaykey.Web.NewSuspensePayment.AccountNumber"
+              value="accountNumber">
+              <MenuItem
+                action="AccountSearchPopup.push()"
+                icon="&quot;search.png&quot;"
+                id="AccountPicker"/>
+            </Input>
+          </Choice>
+          <Choice
+            id="PolicyChoice"
+            option="SuspensePaymentApplyTo.TC_POLICY.Code"
+            value="applyTo">
+            <Input
+              conversionExpression="(PickedValue as PolicyPeriod).PolicyNumber"
+              editable="true"
+              id="PolicyNumber"
+              label="displaykey.Web.NewSuspensePayment.PolicyNumber"
+              value="policyNumber">
+              <MenuItem
+                action="PolicySearchPopup.push()"
+                icon="&quot;search.png&quot;"
+                id="PolicyPicker"/>
+            </Input>
+          </Choice>
+          <Choice
+            id="ProducerChoice"
+            option="SuspensePaymentApplyTo.TC_PRODUCER.Code"
+            value="applyTo">
+            <Input
+              conversionExpression="(PickedValue as Producer).Name"
+              editable="true"
+              id="ProducerName"
+              label="displaykey.Web.NewSuspensePayment.ProducerName"
+              value="producerName">
+              <MenuItem
+                action="ProducerSearchPopup.push()"
+                icon="&quot;search.png&quot;"
+                id="ProducerPicker"/>
+            </Input>
+          </Choice>
+          <TextAreaInput
+            editable="true"
+            id="Description"
+            label="displaykey.Web.NewSuspensePayment.Description"
+            numRows="4"
+            value="description"/>
+        </InputColumn>
+      </DetailViewPanel>
+    </Screen>
+    <Code><![CDATA[function getInitialSuspensePaymentInstruments() : List<PaymentInstrument> {
+  var instruments = new java.util.ArrayList<PaymentInstrument>() { 
+    gw.api.web.payment.PaymentInstrumentFactory.getCashPaymentInstrument(),
+    gw.api.web.payment.PaymentInstrumentFactory.getCheckPaymentInstrument()
+  }
+    
+  return instruments
+}
+
+function finalizeSuspensePayment() {
+  suspensePayment.setApplyToTarget(applyTo, accountNumber, policyNumber, producerName)
+  suspensePayment.Description = description
+  suspensePayment.createSuspensePayment()
+}]]></Code>
+  </Page>
+</PCF>

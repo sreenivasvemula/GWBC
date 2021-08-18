@@ -1,0 +1,31 @@
+<?xml version="1.0"?>
+<PCF
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:noNamespaceSchemaLocation="../../../../../pcf.xsd">
+  <Screen
+    id="InvoiceSearchScreen">
+    <Require
+      name="isClearBundle"
+      type="boolean"/>
+    <Require
+      name="showHyperlinks"
+      type="boolean"/>
+    <!-- Regarding SearchMethods.validateAndSearch: The 2nd parameter controls the search mode of all associated contact fields. -->
+    <SearchPanel
+      criteriaName="searchCriteria"
+      maxSearchResults="gw.api.system.BCConfigParameters.MaxSearchResults.Value"
+      resultsName="invoiceSearchViews"
+      search="gw.search.SearchMethods.validateAndSearch(searchCriteria, StringCriterionMode.TC_STARTSWITH)"
+      searchCriteria="new gw.search.InvoiceSearchCriteria()"
+      searchResultsType="InvoiceSearchViewQuery">
+      <PanelRef
+        def="InvoiceSearchDV(searchCriteria)">
+        <Toolbar/>
+      </PanelRef>
+      <PanelRef
+        def="InvoiceSearchResultsLV(invoiceSearchViews, showHyperlinks, false)">
+        <Toolbar/>
+      </PanelRef>
+    </SearchPanel>
+  </Screen>
+</PCF>

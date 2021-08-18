@@ -1,0 +1,36 @@
+<?xml version="1.0"?>
+<PCF
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:noNamespaceSchemaLocation="../../../../../pcf.xsd">
+  <Screen
+    id="SelectMultiplePolicyPeriodsScreen">
+    <Require
+      name="policySearchCriteria"
+      type="gw.search.PolicySearchCriteria"/>
+    <SearchPanel
+      criteriaName="searchCriteria"
+      resultsName="policySearchViews"
+      search="gw.search.SearchMethods.validateAndSearch(searchCriteria, StringCriterionMode.TC_STARTSWITH)"
+      searchCriteria="policySearchCriteria"
+      searchResultsType="PolicySearchViewQuery">
+      <PanelRef
+        def="PolicySearchDV(searchCriteria)">
+        <Toolbar>
+          <CheckedValuesToolbarButton
+            id="addbutton"
+            iterator="PolicySearchResultsLV.PolicySearchResultsLV"
+            label="displaykey.Web.SelectMultiplePolicyPeriodsScreen.Add"
+            pickValue="gw.api.web.search.SearchPopupUtil.getPolicyPeriodArray(CheckedValues)"/>
+          <ToolbarButton
+            action="CurrentLocation.cancel()"
+            id="CancelButton"
+            label="displaykey.Button.Cancel"/>
+        </Toolbar>
+      </PanelRef>
+      <PanelRef
+        def="PolicySearchResultsLV(policySearchViews, null, true, false, true)">
+        <Toolbar/>
+      </PanelRef>
+    </SearchPanel>
+  </Screen>
+</PCF>

@@ -1,0 +1,118 @@
+<?xml version="1.0"?>
+<PCF
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:noNamespaceSchemaLocation="../../../../../pcf.xsd">
+  <Page
+    afterReturnFromPopup="charges = account.getChargesRelatedToAccount( filterType )"
+    beforeCommit="validateAndExecute();"
+    canEdit="perm.System.accttabview and perm.System.acctchargesview"
+    canVisit="perm.System.accttabview and perm.System.acctchargesview"
+    id="AccountDetailCharges"
+    showUpLink="true"
+    title="displaykey.Web.AccountDetailCharges.Title">
+    <LocationEntryPoint
+      signature="AccountDetailCharges(account : Account)"/>
+    <Variable
+      name="account"
+      type="Account"/>
+    <Variable
+      initialValue="ChargeFilterType.TC_ALL"
+      name="filterType"
+      type="ChargeFilterType"/>
+    <Variable
+      initialValue="account.ChargesRelatedToAccount"
+      name="charges"/>
+    <Variable
+      name="targetInvoice"
+      type="Invoice"/>
+    <Screen
+      id="AccountDetailChargesScreen">
+      <Toolbar>
+        <ToolbarRangeInput
+          id="FilterTypeSelector"
+          required="true"
+          value="filterType"
+          valueRange="typekey.ChargeFilterType.getTypeKeys(false)">
+          <PostOnChange
+            onChange="charges = account.getChargesRelatedToAccount( filterType )"/>
+        </ToolbarRangeInput>
+        <ToolbarDivider/>
+        <CheckedValuesToolbarButton
+          allCheckedRowsAction="ChargeHoldsPopup.push(CheckedValues)"
+          id="editHold"
+          iterator="ChargesLV.ChargesLV"
+          label="displaykey.Web.AccountDetailCharges.EditHoldsButton"
+          visible="perm.Transaction.chargeholdcreate and perm.Transaction.chargeholdrelease"/>
+        <CheckedValuesToolbarButton
+          allCheckedRowsAction="CommissionRatesPopup.push(CheckedValues)"
+          flags="any hasPrimaryProducerCode"
+          id="editCommissionRates"
+          iterator="ChargesLV.ChargesLV"
+          label="displaykey.Web.AccountDetailCharges.OverrideCommissionButton"/>
+        <CheckedValuesToolbarButton
+          id="AssignInvoiceItemsFromCharge"
+          iterator="ChargesLV.ChargesLV"
+          label="displaykey.Web.AccountDetailCharges.AssignPayer">
+          <CheckedValuesMenuItem
+            allCheckedRowsAction="AssignInvoiceItemsToNewPayerPopup.push(allInvoiceItemsFromCharges(CheckedValues), account, CheckedValues)"
+            id="AccountPayerChoice"
+            label="displaykey.Web.AccountDetailCharges.AssignPayer.Account"/>
+          <CheckedValuesMenuItem
+            allCheckedRowsAction="AssignInvoiceItemsToNewProducerPayerPopup.push(allInvoiceItemsFromCharges(CheckedValues), CheckedValues, account)"
+            id="ProducerPayerChoice"
+            label="displaykey.Web.AccountDetailCharges.AssignPayer.Producer"/>
+        </CheckedValuesToolbarButton>
+      </Toolbar>
+      <ListDetailPanel
+        id="AccountDetailChargesListDetailPanel"
+        selectionName="charge"
+        selectionType="Charge">
+        <PanelRef
+          def="ChargesLV(charges, true, 0, true, false, true)"/>
+        <CardViewPanel>
+          <Card
+            id="InvoiceItems"
+            title="displaykey.Web.AccountDetailCharges.InvoiceItems">
+            <PanelRef
+              def="InvoiceItemsLV(charge.AllInvoiceItems, charge, true)">
+              <Toolbar>
+                <ToolbarButton
+                  action="EditInvoiceItemsPopup.push(charge)"
+                  available="!charge.Reversed &amp;&amp; !charge.Reversal"
+                  id="EditInvoiceItems"
+                  label="displaykey.Web.AccountDetailCharges.ModifyInvoiceItems"/>
+                <CheckedValuesToolbarButton
+                  allCheckedRowsAction="web.invoice.InvoiceUtil.validateItemsForMove(CheckedValues); MoveInvoiceItemsPopup.push(CheckedValues, CheckedValues[0].Payer)"
+                  id="MoveInvoiceItems"
+                  iterator="InvoiceItemsLV.InvoiceItemsLV"
+                  label="displaykey.Web.AccountDetailCharges.MoveInvoiceItems"/>
+                <CheckedValuesToolbarButton
+                  id="AssignInvoiceItems"
+                  iterator="InvoiceItemsLV.InvoiceItemsLV"
+                  label="displaykey.Web.AccountDetailCharges.AssignPayer"
+                  visible="!CurrentLocation.InEditMode">
+                  <CheckedValuesMenuItem
+                    allCheckedRowsAction="AssignInvoiceItemsToNewPayerPopup.push(CheckedValues, account, new Charge[]{})"
+                    id="AccountPayerChoiceInvoiceItems"
+                    label="displaykey.Web.AccountDetailCharges.AssignPayer.Account"/>
+                  <CheckedValuesMenuItem
+                    allCheckedRowsAction="AssignInvoiceItemsToNewProducerPayerPopup.push(CheckedValues, new Charge[]{}, account)"
+                    id="ProducerPayerChoiceInvoiceItems"
+                    label="displaykey.Web.AccountDetailCharges.AssignPayer.Producer"/>
+                </CheckedValuesToolbarButton>
+              </Toolbar>
+            </PanelRef>
+          </Card>
+        </CardViewPanel>
+      </ListDetailPanel>
+    </Screen>
+    <Code><![CDATA[function validateAndExecute() {
+  gw.api.web.account.AccountUtil.validateInvoiceItems(account);
+ }
+
+function allInvoiceItemsFromCharges( fromCharges : Charge[] ) : InvoiceItem[] {
+  var allItems = fromCharges.flatMap( \ eachCharge -> eachCharge.AllInvoiceItems )
+  return gw.api.web.invoice.InvoiceItems.withoutOffsetsOrCommissionRemainder(allItems) as entity.InvoiceItem[]
+}]]></Code>
+  </Page>
+</PCF>

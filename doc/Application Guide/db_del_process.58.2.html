@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xml:lang="en" lang="en" xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+    <meta http-equiv="Content-Style-Type" content="text/css" />
+    <!-- MOTW-DISABLED saved from url=(0014)about:internet -->
+    <title>Direct Bill Delinquency Process</title>
+    <link rel="StyleSheet" href="css/db_del_process.css" type="text/css" media="all" />
+    <link rel="StyleSheet" href="css/webworks.css" type="text/css" media="all" />
+    <link rel="StyleSheet" href="css/css-guidewire-extra.css" type="text/css" media="all" />
+    <script type="text/javascript" language="JavaScript1.2" src="wwhdata/common/context.js"></script>
+    <script type="text/javascript" language="JavaScript1.2" src="wwhdata/common/towwhdir.js"></script>
+    <script type="text/javascript" language="JavaScript1.2" src="wwhdata/common/wwhpagef.js"></script>
+    <script type="text/javascript" language="JavaScript1.2">
+      <!--
+        var  WebWorksRootPath = "";
+      // -->
+    </script>
+    <script type="text/javascript" language="JavaScript1.2">
+      <!--
+        // Set reference to top level help frame
+        //
+        var  WWHFrame = WWHGetWWHFrame("", true);
+      // -->
+    </script>
+    <script type="text/javascript" language="JavaScript1.2" src="scripts/expand.js"></script>
+    <!-- THE FOLLOWING IS A GUIDEWIRE STYLE DEFINITION FOR THE LINK TO THIS FEATURE -->
+    <link rel="StyleSheet" href="css/css-guidewire-extra.css" type="text/css" media="all" />
+    <!-- THE FOLLOWING IS A GUIDEWIRE GSCRIPT FUNCTION FOR THE LINK TO THIS FEATURE -->
+    <script type="text/javascript">
+function guidewire_selectall()
+{
+var text_val=eval("document.linktothisurlform.urlfield");
+text_val.focus();
+text_val.select();
+}
+</script>
+  </head>
+  <body onLoad="WWHUpdate();" onUnload="WWHUnload();" onKeyDown="WWHHandleKeyDown((document.all||document.getElementById||document.layers)?event:null);" onKeyPress="WWHHandleKeyPress((document.all||document.getElementById||document.layers)?event:null);" onKeyUp="WWHHandleKeyUp((document.all||document.getElementById||document.layers)?event:null);">
+    <!-- THE FOLLOWING IS A GUIDEWIRE DIV FOR THE 'LINK TO THIS' FEATURE -->
+    <div id="linkToThisPage" class="popup" style="display: none;">
+      <div class="popupTitle">Link Directly to This Page 
+           <a href="#" onclick="var thePopup = getElementById('linkToThisPage');thePopup.style.display='none';return false;"><img class="popupClosebox" src="wwhelp/wwhimpl/common/images/close.gif" /></a></div>
+      <div style="padding:6px;">
+        <div class="popupText" id="linkToThisPageBookmark">An error has occurred if you see this messsage.</div>
+        <form name="linktothisurlform" method="post" action="" style="width:275px;margin:0px">
+          <input type="text" class="popupURLText" id="linkToThisPageURL" name="urlfield" rows="1" cols="55" onClick="guidewire_selectall();" onFocus="guidewire_selectall();"></input>
+        </form>
+      </div>
+    </div>
+    <br />
+    <div class="WebWorks_Breadcrumbs" style="text-align: left;">
+      <span>BillingCenter Application&nbsp;Guide</span> : 
+    <span class="WebWorks_Breadcrumbs" style="text-align: left;"><a class="WebWorks_Breadcrumb_Link" href="p_direct_bill.html#1120033">Direct Bill Processing</a> : <a class="WebWorks_Breadcrumb_Link" href="db_del_process.58.1.html#1120033">Direct Bill Delinquency</a> : Direct Bill Delinquency Process</span></div>
+    <hr align="left" />
+    <blockquote>
+      <h3 class="H1_-_Heading_1"><a name="1120033">Direct Bill Delinquency Process</a></h3>
+      <div class="B_-_Body"><a name="1120034">The delinquency process can initiate cancellation or reinstate a delinquent account or policy. BillingCenter initiates a delinquency automatically if an invoice is past due. You can also start a delinquency manually.</a></div>
+      <div class="B_-_Body"><a name="1105934">BillingCenter uses the delinquency plan and associated delinquency workflows to handle the delinquency process.</a></div>
+      <div class="B_-_Body"><a name="1105990">Each delinquency occurs for a reason such as a payment being past due or the insured failing to send a premium report. The delinquency plan associates each delinquency reason with an appropriate workflow type for handling that delinquency.</a></div>
+      <div class="B_-_Body"><a name="1105967">The workflow consists of a network of steps for managing the delinquency. These steps execute tasks such as waiting for a grace period to elapse, sending a dunning letter, creating an approval activity, and contacting a collection agency.</a></div>
+      <div class="B_-_Body"><a name="1105926">The delinquency process cannot directly cancel the policy. Instead, BillingCenter sends notification to the policy administration system (PAS) to initiate the cancellation. The PAS does the actual cancellation and then sends the cancellation amount to BillingCenter in a billing instruction. At that point, BillingCenter either bills the insured for the balance owed or disburses the refund. The delinquency process may also include a step to write off trivial amounts if that is what the carrier wants to define. For smaller amounts, the carrier may chose to cancel the policy without attempting to recover the unpaid amount.</a></div>
+      <h4 class="H2_-_Heading_2"><a name="1105692">Delinquency Plans</a></h4>
+      <div class="B_-_Body"><a name="1105687">You must select a delinquency plan for each account. You can optionally assign a delinquency plan to a policy period. If a policy becomes delinquent, BillingCenter uses the account delinquency plan if the policy period does not have an associated delinquency plan. BillingCenter also uses the account delinquency plan if the delinquent amount is an account-level charge. BillingCenter uses the policy period delinquency plan if it exists and the delinquent charge is for the policy period.</a></div>
+      <div class="B_-_Body"><a name="1105127">A delinquency plan definition has two parts, general settings and workflow settings. General settings apply to all delinquencies that the plan handles. Workflow settings are specific to each delinquency reason handled by the delinquency plan.</a></div>
+      <div class="H3_-_Heading_3_outer" style="margin-left: 36pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <h5 class="H3_-_Heading_3_inner" style="width: 18pt; white-space: nowrap"></h5>
+            </td>
+            <td width="100%">
+              <h5 class="H3_-_Heading_3_inner"><a name="1105864">General Settings</a></h5>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="B_-_Body"><a name="1119541">The delinquency plan general settings define how BillingCenter handles delinquencies for accounts and polices. You can determine which accounts are to be targeted for cancellation, the threshold amounts that, if reached, initiate a delinquency, and any delinquency-related fees you want to assess. The delinquency plan also lets you specify a grace period, which allows you to extend additional time for insureds to pay their invoices. See </a><a href="javascript:WWHClickedPopup('app', 'delinquency_plans.23.05.html#2617838', '');" title="Delinquency Plan General Tab">“Delinquency Plan General Tab”</a> for details.</div>
+      <div class="H3_-_Heading_3_outer" style="margin-left: 36pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <h5 class="H3_-_Heading_3_inner" style="width: 18pt; white-space: nowrap"></h5>
+            </td>
+            <td width="100%">
+              <h5 class="H3_-_Heading_3_inner"><a name="1119547">Workflow Settings</a></h5>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="B_-_Body"><a name="1119531">The delinquency plan workflow settings specify the reasons that initiate a delinquency for a policy or an account, and the workflow and associated events for each delinquency reason. </a></div>
+      <script type="text/javascript" language="JavaScript1.2">
+        <!--
+          // Clear related topics
+          //
+          WWHClearRelatedTopics();
+
+          document.writeln(WWHRelatedTopicsInlineHTML());
+        // -->
+      </script>
+    </blockquote>
+    <script type="text/javascript" language="JavaScript1.2">
+      <!--
+        document.write(WWHRelatedTopicsDivTag() + WWHPopupDivTag() + WWHALinksDivTag());
+      // -->
+    </script>
+  </body>
+</html>

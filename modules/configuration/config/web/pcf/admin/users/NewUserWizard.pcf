@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PCF
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:noNamespaceSchemaLocation="../../../../../../pcf.xsd">
+  <Wizard
+    afterCancel="Admin.go()"
+    afterFinish="UserDetailPage.go(User)"
+    canVisit="perm.User.create and perm.System.useradmin"
+    id="NewUserWizard">
+    <LocationEntryPoint
+      signature="NewUserWizard()"/>
+    <Variable
+      initialValue="new User()"
+      name="user"
+      type="User"/>
+    <WizardStep
+      id="BasicsStep"
+      label="displaykey.Web.NewUserWizard.Basics"
+      screen="NewUserWizardBasicStepScreen(user)"
+      title="displaykey.Web.NewUserWizard.Basics"/>
+    <WizardStep
+      id="ProfileStep"
+      label="displaykey.Web.NewUserWizard.Profile"
+      screen="NewUserWizardProfileStepScreen(user)"
+      title="displaykey.Web.NewUserWizard.Profile"/>
+    <WizardStep
+      allowFinish="true"
+      id="AuthorityLimitStep"
+      label="displaykey.Web.NewUserWizard.AuthorityLimit"
+      screen="NewUserWizardAuthorityLimitStepScreen(user)"
+      title="displaykey.Web.NewUserWizard.AuthorityLimit"/>
+  </Wizard>
+</PCF>

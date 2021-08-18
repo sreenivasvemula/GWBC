@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?><entity xmlns="http://guidewire.com/datamodel" desc="Entity required by Subrogation" entity="Subrogation" platform="false" setterScriptability="hidden" subpackage="account" table="subrogation" type="retireable">
+  <implementsEntity name="InCurrencySilo"/>
+  <monetaryamount amountColumnName="Amount"
+    desc="the amount to subrogate" name="Amount" nullok="true" scaleToCurrency="true"/>
+  <column desc="The claim number for this claim" name="ClaimNumber" nullok="false" supportsLinguisticSearch="true" type="shorttext"/>
+  <foreignkey columnName="SourceAccountID" desc="The source account of the subrogation funds" fkentity="Account" name="SourceAccount" nullok="false"/>
+  <foreignkey columnName="ChargeID" desc="The charge associated with the subrogation" fkentity="Charge" name="Charge" nullok="true" setterScriptability="hidden"/>
+  <index desc="Legacy" name="claimnumberdenorm">
+    <indexcol keyposition="1" name="ClaimNumberDenorm"/>
+    <indexcol keyposition="2" name="Retired"/>
+  </index>
+    <checkconstraint
+            desc="Amount must not be zero"
+            stagingtablepredicate="Amount != 0"/>
+</entity>

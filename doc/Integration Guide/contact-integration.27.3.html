@@ -1,0 +1,570 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xml:lang="en" lang="en" xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+    <meta http-equiv="Content-Style-Type" content="text/css" />
+    <!-- MOTW-DISABLED saved from url=(0014)about:internet -->
+    <title>Contact Web Service APIs</title>
+    <link rel="StyleSheet" href="css/contact-integration.css" type="text/css" media="all" />
+    <link rel="StyleSheet" href="css/webworks.css" type="text/css" media="all" />
+    <link rel="StyleSheet" href="css/css-guidewire-extra.css" type="text/css" media="all" />
+    <script type="text/javascript" language="JavaScript1.2" src="wwhdata/common/context.js"></script>
+    <script type="text/javascript" language="JavaScript1.2" src="wwhdata/common/towwhdir.js"></script>
+    <script type="text/javascript" language="JavaScript1.2" src="wwhdata/common/wwhpagef.js"></script>
+    <script type="text/javascript" language="JavaScript1.2">
+      <!--
+        var  WebWorksRootPath = "";
+      // -->
+    </script>
+    <script type="text/javascript" language="JavaScript1.2">
+      <!--
+        // Set reference to top level help frame
+        //
+        var  WWHFrame = WWHGetWWHFrame("", true);
+      // -->
+    </script>
+    <script type="text/javascript" language="JavaScript1.2" src="scripts/expand.js"></script>
+    <!-- THE FOLLOWING IS A GUIDEWIRE STYLE DEFINITION FOR THE LINK TO THIS FEATURE -->
+    <link rel="StyleSheet" href="css/css-guidewire-extra.css" type="text/css" media="all" />
+    <!-- THE FOLLOWING IS A GUIDEWIRE GSCRIPT FUNCTION FOR THE LINK TO THIS FEATURE -->
+    <script type="text/javascript">
+function guidewire_selectall()
+{
+var text_val=eval("document.linktothisurlform.urlfield");
+text_val.focus();
+text_val.select();
+}
+</script>
+  </head>
+  <body onLoad="WWHUpdate();" onUnload="WWHUnload();" onKeyDown="WWHHandleKeyDown((document.all||document.getElementById||document.layers)?event:null);" onKeyPress="WWHHandleKeyPress((document.all||document.getElementById||document.layers)?event:null);" onKeyUp="WWHHandleKeyUp((document.all||document.getElementById||document.layers)?event:null);">
+    <!-- THE FOLLOWING IS A GUIDEWIRE DIV FOR THE 'LINK TO THIS' FEATURE -->
+    <div id="linkToThisPage" class="popup" style="display: none;">
+      <div class="popupTitle">Link Directly to This Page 
+           <a href="#" onclick="var thePopup = getElementById('linkToThisPage');thePopup.style.display='none';return false;"><img class="popupClosebox" src="wwhelp/wwhimpl/common/images/close.gif" /></a></div>
+      <div style="padding:6px;">
+        <div class="popupText" id="linkToThisPageBookmark">An error has occurred if you see this messsage.</div>
+        <form name="linktothisurlform" method="post" action="" style="width:275px;margin:0px">
+          <input type="text" class="popupURLText" id="linkToThisPageURL" name="urlfield" rows="1" cols="55" onClick="guidewire_selectall();" onFocus="guidewire_selectall();"></input>
+        </form>
+      </div>
+    </div>
+    <br />
+    <div class="WebWorks_Breadcrumbs" style="text-align: left;">
+      <span>BillingCenter Integration Guide</span> : 
+    <span class="WebWorks_Breadcrumbs" style="text-align: left;"><a class="WebWorks_Breadcrumb_Link" href="p-claims.html#2084787">Other Integration Topics</a> : <a class="WebWorks_Breadcrumb_Link" href="contact-integration.27.1.html#2084787">Contact Integration</a> : Contact Web Service APIs</span></div>
+    <hr align="left" />
+    <blockquote>
+      <h3 class="H1_-_Heading_1"><a name="2084787">Contact Web Service APIs</a></h3>
+      <div class="B_-_Body"><a name="2084789">The web service </a><span class="cv_-_computer_voice">ContactAPI</span> provides external systems a way to interact with contacts in BillingCenter. This web service is WS-I compliant. Refer to the implementation class in Studio for details of all the methods in this API. Each of the methods in this API that changes contact data in BillingCenter requires a transaction ID, which must be set in the SOAP request header for the call.</div>
+      <h6 class="HS_-_Head_Sub"><a name="2151158">See also</a></h6>
+      <div class="BI_-_Bullet_Item_outer" style="margin-left: 57pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="BI_-_Bullet_Item_inner" style="width: 15pt; white-space: nowrap">
+                <span class="bu_-_bullet">•	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="BI_-_Bullet_Item_inner"><a href="javascript:WWHClickedPopup('integration', 'webservices.06.1.html#3412469', '');" title="Web Services Introduction" name="2151162">“Web Services Introduction”</a></div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <h4 class="H2_-_Heading_2"><a name="2099526">Delete a Contact</a></h4>
+      <div class="B_-_Body"><a name="2204898"> </a>You can delete a contact in BillingCenter from an external system by using the following method in <span class="cv_-_computer_voice">ContactAPI</span>. </div>
+      <div class="B_-_Body"><a name="2205242">BillingCenter prevents you from deleting contacts that are </a><span class="e_-_emphasis">in use</span>. A contact is in use if it has any of the following qualities:</div>
+      <div class="BI_-_Bullet_Item_outer" style="margin-left: 57pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="BI_-_Bullet_Item_inner" style="width: 15pt; white-space: nowrap">
+                <span class="bu_-_bullet">•	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="BI_-_Bullet_Item_inner"><a name="2205243">The contact is used by an account.</a></div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="BI_-_Bullet_Item_outer" style="margin-left: 57pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="BI_-_Bullet_Item_inner" style="width: 15pt; white-space: nowrap">
+                <span class="bu_-_bullet">•	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="BI_-_Bullet_Item_inner"><a name="2205244">The contact is used by a </a><span class="cv_-_computer_voice">PolicyPeriod</span>.</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="BI_-_Bullet_Item_outer" style="margin-left: 57pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="BI_-_Bullet_Item_inner" style="width: 15pt; white-space: nowrap">
+                <span class="bu_-_bullet">•	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="BI_-_Bullet_Item_inner"><a name="2205245">The contact has any account only roles.</a></div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="BI_-_Bullet_Item_outer" style="margin-left: 57pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="BI_-_Bullet_Item_inner" style="width: 15pt; white-space: nowrap">
+                <span class="bu_-_bullet">•	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="BI_-_Bullet_Item_inner"><a name="2205246">The contact is referenced from a user (a subobject of </a><span class="cv_-_computer_voice">User</span>). </div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="BI_-_Bullet_Item_outer" style="margin-left: 57pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="BI_-_Bullet_Item_inner" style="width: 15pt; white-space: nowrap">
+                <span class="bu_-_bullet">•	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="BI_-_Bullet_Item_inner"><a name="2205247">The contact is a participant in a reinsurance agreement.</a></div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="BI_-_Bullet_Item_outer" style="margin-left: 57pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="BI_-_Bullet_Item_inner" style="width: 15pt; white-space: nowrap">
+                <span class="bu_-_bullet">•	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="BI_-_Bullet_Item_inner"><a name="2205248">The contact is a broker in a reinsurance agreement.</a></div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="B_-_Body"><a name="2205249">If you try to delete a contact that is in use, these APIs throw an exception. </a></div>
+      <div class="B_-_Body"><a name="2205250">If the account is in use by an account, the exception message mentions which account uses it. If there are multiple accounts that use it, only one account is mentioned in the message.</a></div>
+      <div class="B_-_Body"><a name="2205260">The </a><span class="cv_-_computer_voice">removeContact</span> method takes the following argument:</div>
+      <div class="BI_-_Bullet_Item_outer" style="margin-left: 57pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="BI_-_Bullet_Item_inner" style="width: 15pt; white-space: nowrap">
+                <span class="bu_-_bullet">•	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="BI_-_Bullet_Item_inner"><a name="2205261">An address book UID (a </a><span class="cv_-_computer_voice">String</span>). This ID is unique and is separate from the public ID. The address book UID corresponds to the external contact management system’s native internal ID for this contact.</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="B_-_Body"><a name="2205262">The </a><span class="cv_-_computer_voice">removeContact</span> method returns nothing. </div>
+      <div class="B_-_Body"><a name="2205263">In addition to the limitations of deletion mentioned earlier, this method also requires that the contact is auto synced to an external address book. </a></div>
+      <div class="B_-_Body"><a name="2205308">The following Java example demonstrates this API:</a></div>
+      <div class="CS_-_Code_Single_Line"><a name="2205309">contactAPI.removeContact("12345");</a></div>
+      <h4 class="H2_-_Heading_2"><a name="2205310">Determine if a Contact Can Be Deleted</a></h4>
+      <div class="B_-_Body"><a name="2205316">You can check whether contacts can be deleted from an external system by using the </a><span class="cv_-_computer_voice">isContactDeletable</span> method. This method requires an <span class="cv_-_computer_voice">AddressBookUID</span> as a parameter.</div>
+      <div class="B_-_Body"><a name="2205320">The return value is </a><span class="cv_-_computer_voice">true</span> if it the contact can be deleted or <span class="cv_-_computer_voice">false</span> if the contact cannot be deleted.</div>
+      <div class="B_-_Body"><a name="2205321">BillingCenter prevents you from deleting contacts that are </a><span class="e_-_emphasis">in use</span>. A contact is in use if it has any of the following qualities:</div>
+      <div class="BI_-_Bullet_Item_outer" style="margin-left: 57pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="BI_-_Bullet_Item_inner" style="width: 15pt; white-space: nowrap">
+                <span class="bu_-_bullet">•	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="BI_-_Bullet_Item_inner"><a name="2205322">The contact is used by an account.</a></div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="BI_-_Bullet_Item_outer" style="margin-left: 57pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="BI_-_Bullet_Item_inner" style="width: 15pt; white-space: nowrap">
+                <span class="bu_-_bullet">•	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="BI_-_Bullet_Item_inner"><a name="2205323">The contact is used by a </a><span class="cv_-_computer_voice">PolicyPeriod</span>.</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="BI_-_Bullet_Item_outer" style="margin-left: 57pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="BI_-_Bullet_Item_inner" style="width: 15pt; white-space: nowrap">
+                <span class="bu_-_bullet">•	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="BI_-_Bullet_Item_inner"><a name="2205324">The contact has any account only roles.</a></div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="BI_-_Bullet_Item_outer" style="margin-left: 57pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="BI_-_Bullet_Item_inner" style="width: 15pt; white-space: nowrap">
+                <span class="bu_-_bullet">•	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="BI_-_Bullet_Item_inner"><a name="2205325">The contact is referenced from a user (a subobject of </a><span class="cv_-_computer_voice">User</span>). </div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="BI_-_Bullet_Item_outer" style="margin-left: 57pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="BI_-_Bullet_Item_inner" style="width: 15pt; white-space: nowrap">
+                <span class="bu_-_bullet">•	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="BI_-_Bullet_Item_inner"><a name="2205326">The contact is a participant in a reinsurance agreement.</a></div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="BI_-_Bullet_Item_outer" style="margin-left: 57pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="BI_-_Bullet_Item_inner" style="width: 15pt; white-space: nowrap">
+                <span class="bu_-_bullet">•	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="BI_-_Bullet_Item_inner"><a name="2205327">The contact is a broker in a reinsurance agreement.</a></div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="BI_-_Bullet_Item_outer" style="margin-left: 57pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="BI_-_Bullet_Item_inner" style="width: 15pt; white-space: nowrap">
+                <span class="bu_-_bullet">•	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="BI_-_Bullet_Item_inner"><a name="2205328">The contact is a local-only contact, which means that auto sync is disabled for the contact</a></div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="B_-_Body"><a name="2205003">The contact can be deleted (returns </a><span class="cv_-_computer_voice">true</span>) unless any of the following are true. </div>
+      <div class="BI_-_Bullet_Item_outer" style="margin-left: 57pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="BI_-_Bullet_Item_inner" style="width: 15pt; white-space: nowrap">
+                <span class="bu_-_bullet">•	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="BI_-_Bullet_Item_inner"><a name="2205004">The contact is a local-only contact, which means that auto sync is disabled for the contact</a></div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="BI_-_Bullet_Item_outer" style="margin-left: 57pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="BI_-_Bullet_Item_inner" style="width: 15pt; white-space: nowrap">
+                <span class="bu_-_bullet">•	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="BI_-_Bullet_Item_inner"><a name="2205005">The contact is a </a><span class="cv_-_computer_voice">UserContact</span>, which means that it is associated with a BillingCenter user</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="BI_-_Bullet_Item_outer" style="margin-left: 57pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="BI_-_Bullet_Item_inner" style="width: 15pt; white-space: nowrap">
+                <span class="bu_-_bullet">•	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="BI_-_Bullet_Item_inner"><a name="2205006">The contact is connected to any </a><span class="cv_-_computer_voice">PolicyPeriod</span>, <span class="cv_-_computer_voice">Account</span>, or <span class="cv_-_computer_voice">Producer</span> object.</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="B_-_Body"><a name="2205376">The following Java example demonstrates this API:</a></div>
+      <div class="CS_-_Code_Single_Line"><a name="2205380">Boolean isDeletableContact = contactAPI.isContactDeletableByPublicID("bc:12345");</a></div>
+      <h4 class="H2_-_Heading_2"><a name="2084923">Update Contacts</a></h4>
+      <div class="B_-_Body"><a name="2192987">You can update a contact from an external system by using the </a><span class="cv_-_computer_voice">updateContact</span> method. It returns nothing.</div>
+      <div class="B_-_Body"><a name="2205399">To add a new contact you must populate and provide a contact as the first argument. Specify the contact in a XSD-defined XML object. The type’s fully qualified name is:</a></div>
+      <div class="CS_-_Code_Single_Line"><a name="2205400">gw.webservice.contactapi.beanmodel.XmlBackedInstance</a></div>
+      <div class="B_-_Body"><a name="2207645">The </a><span class="cv_-_computer_voice">XmlBackedInstance</span> is a type defined in the <span class="cv_-_computer_voice">BeanModel.xsd</span> file. You can find this XSD file in Studio. The <span class="cv_-_computer_voice">XmlBackedInstance</span> type in this XSD is basically a XML container for a series of pairs of property name and property value, both as <span class="cv_-_computer_voice">String</span> values. </div>
+      <div class="B_-_Body"><a name="2205409">To determine which contact to update, BillingCenter uses that object’s address book UID, which is in the </a><span class="cv_-_computer_voice">LinkID</span> property in the <span class="cv_-_computer_voice">XmlBackedInstance</span> object. If the contact cannot be found, BillingCenter throws an exception. Finally, BillingCenter uses the other properties in the contact XML object to update the contact entity instance.</div>
+      <div class="B_-_Body"><a name="2205416">This method updates the contact only if automatic synchronization (autosync) is enabled for that contact.</a></div>
+      <div class="B_-_Body"><a name="2205417">The following Java example demonstrates these APIs:</a></div>
+      <PRE class="CF_-_Code_First_Line"><a name="2205418">gw.webservice.contactapi.beanmodel.XmlBackedInstance contactXML;</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2205419">&nbsp;</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2205420">// here you would populate fields in the contactXML object, especially the LinkID property,</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2205421">// which contains the Address Book UID for this contact</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2205422">&nbsp;</a></PRE>
+      <PRE class="CL_-_Code_Last_Line"><a name="2205423">contactAPI.updateContact(contactXML);</a></PRE>
+      <h4 class="H2_-_Heading_2"><a name="2084957">Merge Contacts</a></h4>
+      <div class="B_-_Body"><a name="2084958">You can merge two contacts from an external system. You need to know the IDs of both contacts, and you must decide which one will survive after the merge. </a></div>
+      <div class="B_-_Body"><a name="2194087">To merge contacts, use the </a><span class="cv_-_computer_voice">mergeContacts</span> method. This method returns nothing.</div>
+      <div class="B_-_Body"><a name="2194088">Pass the following parameters in this order:</a></div>
+      <div class="LS_-_List_Start_outer" style="margin-left: 57pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="LS_-_List_Start_inner" style="width: 15pt; white-space: nowrap">
+                <span class="ri_-_run_in_header">	1.	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="LS_-_List_Start_inner"><a name="2084963">The ID of the contact to keep. This parameter is known as the </a><span class="e_-_emphasis">kept </span>contact.</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="LI_-_List_Item_outer" style="margin-left: 57pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="LI_-_List_Item_inner" style="width: 15pt; white-space: nowrap">
+                <span class="ri_-_run_in_header">	2.	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="LI_-_List_Item_inner"><a name="2084964">The ID of the contact to delete. This parameter is known as the </a><span class="e_-_emphasis">deleted </span>contact. </div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="LI_-_List_Item_outer" style="margin-left: 57pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="LI_-_List_Item_inner" style="width: 15pt; white-space: nowrap">
+                <span class="ri_-_run_in_header">	3.	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="LI_-_List_Item_inner"><a name="2205486">A transaction ID (a </a><span class="cv_-_computer_voice">String</span>) that uniquely identifies the request from an external system. BillingCenter performs no built-in check with this parameter in the current release. You can modify BillingCenter to use this transaction ID to detect, log, and handle duplicate requests. A request is a duplicate if the transaction ID matches a previous request. </div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="B_-_Body"><a name="2205497">Merging contacts has the following results:</a></div>
+      <div class="BI_-_Bullet_Item_outer" style="margin-left: 57pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="BI_-_Bullet_Item_inner" style="width: 15pt; white-space: nowrap">
+                <span class="bu_-_bullet">•	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="BI_-_Bullet_Item_inner"><a name="2205516">Fields on the deleted contact are not preserved.</a></div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="BI_-_Bullet_Item_outer" style="margin-left: 57pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="BI_-_Bullet_Item_inner" style="width: 15pt; white-space: nowrap">
+                <span class="bu_-_bullet">•	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="BI_-_Bullet_Item_inner"><a name="2205517">Account contact (</a><span class="cv_-_computer_voice">AccountContact</span>) objects that reference the deleted contact now reference the kept contact. If both exist on the same account, the kept contact’s <span class="cv_-_computer_voice">AccountContact</span> property value is used.</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="BI_-_Bullet_Item_outer" style="margin-left: 57pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="BI_-_Bullet_Item_inner" style="width: 15pt; white-space: nowrap">
+                <span class="bu_-_bullet">•	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="BI_-_Bullet_Item_inner"><a name="2205518">Account contact roles (</a><span class="cv_-_computer_voice">AccountContactRole[]</span>) on a merged <span class="cv_-_computer_voice">AccountContact</span> move to the kept contact’s account contact. If there are duplicate roles, the kept contact’s roles are preserved.</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="BI_-_Bullet_Item_outer" style="margin-left: 57pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="BI_-_Bullet_Item_inner" style="width: 15pt; white-space: nowrap">
+                <span class="bu_-_bullet">•	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="BI_-_Bullet_Item_inner"><a name="2205522">BillingCenter refreshes the kept contact from the external Contact Management System. BillingCenter calls the contact system plugin (</a><span class="cv_-_computer_voice">IContactSystemPlugin</span>) method called <span class="cv_-_computer_voice">retrieveContact(String, Bundle)</span>.</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="BI_-_Bullet_Item_outer" style="margin-left: 57pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="BI_-_Bullet_Item_inner" style="width: 15pt; white-space: nowrap">
+                <span class="bu_-_bullet">•	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="BI_-_Bullet_Item_inner"><a name="2205100">Policy contact roles (</a><span class="cv_-_computer_voice">PolicyContactRole[]</span>) on a merged <span class="cv_-_computer_voice">PolicyPeriodContact</span> move to the kept contact’s policy period contact. If there are duplicate roles, the kept contact’s roles are preserved.</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="BI_-_Bullet_Item_outer" style="margin-left: 57pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="BI_-_Bullet_Item_inner" style="width: 15pt; white-space: nowrap">
+                <span class="bu_-_bullet">•	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="BI_-_Bullet_Item_inner"><a name="2205101">Producer contact roles (</a><span class="cv_-_computer_voice">ProducerContactRole[]</span>) on a merged <span class="cv_-_computer_voice">ProducerContact</span> move to the kept contact’s producer contact. If there are duplicate roles, the kept contact’s roles are preserved.</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="BI_-_Bullet_Item_outer" style="margin-left: 57pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="BI_-_Bullet_Item_inner" style="width: 15pt; white-space: nowrap">
+                <span class="bu_-_bullet">•	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="BI_-_Bullet_Item_inner"><a name="2205102">The deleted contact and any duplicate subobject is retired (deleted). This includes the following: </a><span class="cv_-_computer_voice">AccountContact</span>, <span class="cv_-_computer_voice">AccountContactRole</span>, <span class="cv_-_computer_voice">PolicyPeriodContact</span>, <span class="cv_-_computer_voice">PolicyContactRole</span>, <span class="cv_-_computer_voice">ProducerContact</span>, and <span class="cv_-_computer_voice">ProducerContactRole</span>.</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="B_-_Body"><a name="2205554">The following Java example demonstrates these APIs:</a></div>
+      <PRE class="CL_-_Code_Last_Line"><a name="2205555">contactAPI.mergeContacts("pc:uid:1234", "pc:uid:5550", "my-transaction-ID-12345");</a></PRE>
+      <h4 class="H2_-_Heading_2"><a name="2193128">Handling Rejection and Approval of Pending Changes</a></h4>
+      <div class="B_-_Body"><a name="2193188">An external contact management system might, like ContactManager, support pending changes. </a><span class="e_-_emphasis">Pending changes</span> are changes to contacts that are applied in the core application, but require approval in the contact management system before being applied there. </div>
+      <div class="N_-_Note">
+        <span class="n_-_note">Note: </span><a name="2209131">In the base configuration, BillingCenter and PolicyCenter do not use the pending changes feature. All changes to contacts in either of these core applications are applied in the contact management system. BillingCenter and PolicyCenter implement the pending change methods, as required by </a><span class="cv_-_computer_voice">ABClientAPI</span>, and if a contact management system calls any of these methods, the application throws an exception. </div>
+      <div class="B_-_Body"><a name="2209122">The ClaimCenter implementation of </a><span class="cv_-_computer_voice">ContactAPI</span> has methods that the external contact management system can call to indicate if pending create or pending update operations have been approved or rejected. In each case, the methods pass in a parameter that contains the context of the original change, usually the user, claim, and contact information. This information enables ClaimCenter to notify the user of the results of the operation. If the change is rejected, ClaimCenter creates an activity for the user giving the details of the change that was rejected. If the rejection was for a pending update, ClaimCenter also copies the contact data from the contact management system and attaches it as a note to the activity. </div>
+      <div class="B_-_Body"><a name="2193446">These pending change methods are:</a></div>
+      <div class="BI_-_Bullet_Item_outer" style="margin-left: 57pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="BI_-_Bullet_Item_inner" style="width: 15pt; white-space: nowrap">
+                <span class="bu_-_bullet">•	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="BI_-_Bullet_Item_inner"><span class="cv_-_computer_voice"><a name="2193464">pendingCreateRejected</a></span> – ClaimCenter creates a pending create rejected activity for the user that created the contact.</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="BI_-_Bullet_Item_outer" style="margin-left: 57pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="BI_-_Bullet_Item_inner" style="width: 15pt; white-space: nowrap">
+                <span class="bu_-_bullet">•	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="BI_-_Bullet_Item_inner"><span class="cv_-_computer_voice"><a name="2193470">pendingCreateApproved</a></span> – No action is taken. ClaimCenter already has the <span class="cv_-_computer_voice">AddressBookUID</span> for the contact.</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="BI_-_Bullet_Item_outer" style="margin-left: 57pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="BI_-_Bullet_Item_inner" style="width: 15pt; white-space: nowrap">
+                <span class="bu_-_bullet">•	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="BI_-_Bullet_Item_inner"><span class="cv_-_computer_voice"><a name="2193472">pendingUpdateRejected</a></span> – ClaimCenter creates a pending update rejected activity for the user that changed the contact.</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="BI_-_Bullet_Item_outer" style="margin-left: 57pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="BI_-_Bullet_Item_inner" style="width: 15pt; white-space: nowrap">
+                <span class="bu_-_bullet">•	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="BI_-_Bullet_Item_inner"><span class="cv_-_computer_voice"><a name="2193474">pendingUpdateApproved</a></span> – ClaimCenter updates the contact graph with any new <span class="cv_-_computer_voice">AddressBookUID</span> values that were created for any new entities that were created in the update. Additionally, if there was context information sent with the update approval, ClaimCenter synchronizes all contacts that have this <span class="cv_-_computer_voice">AddressBookUID</span> with the contact management system.</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="B_-_Body"><a name="2083383">&nbsp;</a></div>
+      <script type="text/javascript" language="JavaScript1.2">
+        <!--
+          // Clear related topics
+          //
+          WWHClearRelatedTopics();
+
+          document.writeln(WWHRelatedTopicsInlineHTML());
+        // -->
+      </script>
+    </blockquote>
+    <script type="text/javascript" language="JavaScript1.2">
+      <!--
+        document.write(WWHRelatedTopicsDivTag() + WWHPopupDivTag() + WWHALinksDivTag());
+      // -->
+    </script>
+  </body>
+</html>

@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<subtype xmlns="http://guidewire.com/datamodel"
+        entity="FundsSourceTracker"
+        desc="A FundsSourceTracker tracks allotments from a FundsSource to FundsUses."
+        displayName="Funds Source Tracker"
+        subpackage="fundstracking"
+        supertype="FundsTracker">
+    <typekey name="TrackableSourceType"
+            typelist="FundsSourceType"
+            desc="Type of source"
+            getterScriptability="hidden"
+            setterScriptability="hidden"
+            nullok="false"/>
+    <array name="FundsUseAllotments"
+            desc="Allotments for this source.  This is an owned array to allow removal and insertion of funds allotments in the same bundle transaction"
+            owner="true"
+            setterScriptability="hidden"
+            arrayentity="FundsAllotment"
+            arrayfield="FundsSourceTracker"/>
+</subtype>

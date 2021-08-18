@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xml:lang="en" lang="en" xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+    <meta http-equiv="Content-Style-Type" content="text/css" />
+    <!-- MOTW-DISABLED saved from url=(0014)about:internet -->
+    <title>Modifying Agency Bill Payment and Credit Distributions</title>
+    <link rel="StyleSheet" href="css/distributions.css" type="text/css" media="all" />
+    <link rel="StyleSheet" href="css/webworks.css" type="text/css" media="all" />
+    <link rel="StyleSheet" href="css/css-guidewire-extra.css" type="text/css" media="all" />
+    <script type="text/javascript" language="JavaScript1.2" src="wwhdata/common/context.js"></script>
+    <script type="text/javascript" language="JavaScript1.2" src="wwhdata/common/towwhdir.js"></script>
+    <script type="text/javascript" language="JavaScript1.2" src="wwhdata/common/wwhpagef.js"></script>
+    <script type="text/javascript" language="JavaScript1.2">
+      <!--
+        var  WebWorksRootPath = "";
+      // -->
+    </script>
+    <script type="text/javascript" language="JavaScript1.2">
+      <!--
+        // Set reference to top level help frame
+        //
+        var  WWHFrame = WWHGetWWHFrame("", true);
+      // -->
+    </script>
+    <script type="text/javascript" language="JavaScript1.2" src="scripts/expand.js"></script>
+    <!-- THE FOLLOWING IS A GUIDEWIRE STYLE DEFINITION FOR THE LINK TO THIS FEATURE -->
+    <link rel="StyleSheet" href="css/css-guidewire-extra.css" type="text/css" media="all" />
+    <!-- THE FOLLOWING IS A GUIDEWIRE GSCRIPT FUNCTION FOR THE LINK TO THIS FEATURE -->
+    <script type="text/javascript">
+function guidewire_selectall()
+{
+var text_val=eval("document.linktothisurlform.urlfield");
+text_val.focus();
+text_val.select();
+}
+</script>
+  </head>
+  <body onLoad="WWHUpdate();" onUnload="WWHUnload();" onKeyDown="WWHHandleKeyDown((document.all||document.getElementById||document.layers)?event:null);" onKeyPress="WWHHandleKeyPress((document.all||document.getElementById||document.layers)?event:null);" onKeyUp="WWHHandleKeyUp((document.all||document.getElementById||document.layers)?event:null);">
+    <!-- THE FOLLOWING IS A GUIDEWIRE DIV FOR THE 'LINK TO THIS' FEATURE -->
+    <div id="linkToThisPage" class="popup" style="display: none;">
+      <div class="popupTitle">Link Directly to This Page 
+           <a href="#" onclick="var thePopup = getElementById('linkToThisPage');thePopup.style.display='none';return false;"><img class="popupClosebox" src="wwhelp/wwhimpl/common/images/close.gif" /></a></div>
+      <div style="padding:6px;">
+        <div class="popupText" id="linkToThisPageBookmark">An error has occurred if you see this messsage.</div>
+        <form name="linktothisurlform" method="post" action="" style="width:275px;margin:0px">
+          <input type="text" class="popupURLText" id="linkToThisPageURL" name="urlfield" rows="1" cols="55" onClick="guidewire_selectall();" onFocus="guidewire_selectall();"></input>
+        </form>
+      </div>
+    </div>
+    <br />
+    <div class="WebWorks_Breadcrumbs" style="text-align: left;">
+      <span>BillingCenter Configuration Guide</span> : 
+    <span class="WebWorks_Breadcrumbs" style="text-align: left;"><a class="WebWorks_Breadcrumb_Link" href="p-BillingCenter.html#1210704">Guidewire BillingCenter Configuration</a> : <a class="WebWorks_Breadcrumb_Link" href="distributions.46.1.html#1210704">Configuring Distributions</a> : Modifying Agency Bill Payment and Credit Distributions</span></div>
+    <hr align="left" />
+    <blockquote>
+      <h3 class="H1_-_Heading_1"><a name="1210704">Modifying Agency Bill Payment and Credit Distributions</a></h3>
+      <div class="B_-_Body"><a name="1213294">Agency bill payment and credit distributions can be modified using the Gosu programming language or the BillingCenter user interface. For information about utilizing the user interface for payment distributions, see </a><a href="javascript:WWHClickedPopup('app', 'ab_receiv_pay.65.4.html#1005846', '');" title="Agency Bill Payments Handling">“Agency Bill Payments Handling” in the </a><span class="bt_-_book_title"><a href="javascript:WWHClickedPopup('app', 'ab_receiv_pay.65.4.html#1005846', '');" title="Agency Bill Payments Handling">Application Guide</a></span>. To modify a credit distribution with the user interface, see <a href="javascript:WWHClickedPopup('app', 'ab_receiv_pay.65.6.html#1146963', '');" title="Agency Bill Credit Distributions Handling">“Agency Bill Credit Distributions Handling” in the </a><span class="bt_-_book_title"><a href="javascript:WWHClickedPopup('app', 'ab_receiv_pay.65.6.html#1146963', '');" title="Agency Bill Credit Distributions Handling">Application Guide</a></span>.</div>
+      <div class="B_-_Body"><a name="1215249">When modifying an agency bill payment or credit distribution in Gosu, each distribution comprises three elements: a</a><span class="e_-_emphasis"> money</span> element, a <span class="e_-_emphasis">distribution</span> element, and one or more<span class="e_-_emphasis"> distribution items</span>. The money element wraps the total monetary amount of the distribution. The distribution element contains details about the transaction, including an array of distribution items. Each distribution item refers to a particular invoice item and specifies the monetary amount distributed to the invoice item. When editing a particular distribution, each of the three elements can be modified.</div>
+      <div class="B_-_Body"><a name="1214192">The three elements of the distribution being modified must not be altered directly. Instead, a copy of each element must be created. All modifications are then performed upon the copies. After completing the desired modifications, the copies can be executed and committed. The newly‑committed distribution becomes the payment or credit of record, replacing the original distribution. The original distribution is accordingly reversed.</a></div>
+      <div class="B_-_Body"><a name="1214935">The sample code below demonstrates the operations performed to modify an agency bill payment or credit distribution. Notice that the identical procedure is performed whether the distribution is a payment or a credit. The classes and methods used in the sample are described in the</a><span class="e_-_emphasis"> Gosu API Reference</span>.</div>
+      <PRE class="CF_-_Code_First_Line"><a name="1216152">/* Variables */</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="1220108">AgencyBillMoneyRcvd&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;distMoney&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;// Executed distribution to modify</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="1216178">AgencyBillPaymentMoneySetup&nbsp;&nbsp;&nbsp;&nbsp;moneySetup&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;// Wrapper for executed distribution. Includes link to</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="1220460">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;// original distribution element and a copy of money</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="1222103">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;// element.</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="1216269">AgencyBillMoneyRcvd&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;copyMoney&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;// Copy of money element. Retrieved from moneySetup.</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="1216352">AgencyCycleDist&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;copyDist&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;// Copy of distribution element. Created from moneySetup.</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="1217138">BaseDistItem&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;copyDistItem&nbsp;&nbsp;&nbsp;// Copy of distributed item. Created from moneySetup.</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="1216436">&nbsp;</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="1216438">/* Retrieve a wrapper of the executed distribution.</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="1220312">&nbsp;* This wrapper includes the original distribution element and a copy of the money element.</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="1220369">&nbsp;*/</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="1216500">moneySetup = AgencyBillMoneySetupFactory.createEditingPaymentMoney( distMoney,</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="1216659">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;distMoney.getBundle() )</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="1216737">&nbsp;</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="1216739">/* If you want to edit the money element, retrieve the copy of it from the moneySetup wrapper */</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="1216817">copyMoney = (AgencyBillMoneyRcvd)moneySetup.getMoney()&nbsp;&nbsp;&nbsp;&nbsp;// Get the copy</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="1216888">copyMoney.setAmount( $120 )&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;// Edit the copy</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="1216940">&nbsp;</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="1216942">/* Make a copy of the linked distribution element, including its distribution items */</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="1216982">copyDist = moneySetup.prepareDistribution()</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="1217026">&nbsp;</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="1217028">/* Retrieve the copies of the distribution items and edit the copies */</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="1217105">for( copyDistItem : copyDist.getDistItems() ){&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;// Get a copy</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="1217251">&nbsp;&nbsp;copyDistItem.setGrossAmountToApply( $10 )&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;// Edit the copy</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="1217346">}</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="1217349">&nbsp;</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="1217351">/* Execute and commit the modified copies. The modified distribution becomes the distribution of</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="1217573">&nbsp;* record, replacing the original distribution.</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="1217500">&nbsp;*/</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="1217505">copyDist.execute()</a></PRE>
+      <PRE class="CL_-_Code_Last_Line"><a name="1217525">copyMoney.getBundle.commit()</a></PRE>
+      <script type="text/javascript" language="JavaScript1.2">
+        <!--
+          // Clear related topics
+          //
+          WWHClearRelatedTopics();
+
+          document.writeln(WWHRelatedTopicsInlineHTML());
+        // -->
+      </script>
+    </blockquote>
+    <script type="text/javascript" language="JavaScript1.2">
+      <!--
+        document.write(WWHRelatedTopicsDivTag() + WWHPopupDivTag() + WWHALinksDivTag());
+      // -->
+    </script>
+  </body>
+</html>

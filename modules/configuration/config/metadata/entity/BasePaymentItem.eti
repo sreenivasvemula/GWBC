@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<subtype
+  xmlns="http://guidewire.com/datamodel"
+  entity="BasePaymentItem"
+  desc="Base class for payment items: Stores values to be applied to an invoice item as part of a payment"
+  abstract="true"
+  final="false"
+  subpackage="payment"
+  supertype="BaseDistItem">
+  <array
+    name="ProducerContexts"
+    desc="The set of producer contexts that are associated with this payment item."
+    arrayentity="ProducerContext"
+    getterScriptability="doesNotExist"
+    setterScriptability="doesNotExist"/>
+  <array arrayentity="ZeroCmsnEarnedMarker"
+         name="ZeroCmsnEarnedMarkers"
+         desc="The set of ZeroCmsnEarnedMarkers 'earned' from this payment item."
+         setterScriptability="hidden"/>
+</subtype>

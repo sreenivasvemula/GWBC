@@ -1,0 +1,50 @@
+<?xml version="1.0"?>
+<import xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="http://www.guidewire.com/ab/import/ab_import.xsd">
+    <!-- Default PaymentAllocationPlan -->
+    <PaymentAllocationPlan public-id="cash_plan:1">
+        <Description>The default allocation plan for payment, excess unapplied, account negative items, and other forms of available "cash".</Description>
+        <Description_L10N_ARRAY/>
+        <EffectiveDate>1990-01-01 00:00:00.000</EffectiveDate>
+        <ExpirationDate/>
+        <InUse>true</InUse>
+        <Name>Default Payment Allocation Plan</Name>
+        <Name_L10N_ARRAY>default payment allocation plan</Name_L10N_ARRAY>
+        <PlanOrder>1</PlanOrder>
+        <DistributionCriteria>
+            <DistributionCriterionFilter public-id="filter_type:1">
+                <DistributionFilterType>Positive</DistributionFilterType>
+                <ContainingAllocationPlan>cash_plan:1</ContainingAllocationPlan>
+            </DistributionCriterionFilter>
+            <DistributionCriterionFilter public-id="filter_type:2">
+                <DistributionFilterType>Invoice</DistributionFilterType>
+                <ContainingAllocationPlan>cash_plan:1</ContainingAllocationPlan>
+            </DistributionCriterionFilter>
+            <DistributionCriterionFilter public-id="filter_type:3">
+                <DistributionFilterType>PolicyPeriod</DistributionFilterType>
+                <ContainingAllocationPlan>cash_plan:1</ContainingAllocationPlan>
+            </DistributionCriterionFilter>
+            <DistributionCriterionFilter public-id="filter_type:4">
+                <DistributionFilterType>BilledOrDue</DistributionFilterType>
+                <ContainingAllocationPlan>cash_plan:1</ContainingAllocationPlan>
+            </DistributionCriterionFilter>
+        </DistributionCriteria>
+        <InvoiceItemOrdering>
+            <InvoiceItemOrdering public-id="ordering_type:1">
+                <InvoiceItemOrderingType>RecaptureFirst</InvoiceItemOrderingType>
+                <ContainingAllocationPlan>cash_plan:1</ContainingAllocationPlan>
+                <Priority>1</Priority>
+            </InvoiceItemOrdering>
+            <InvoiceItemOrdering public-id="ordering_type:2">
+                <InvoiceItemOrderingType>EventDate</InvoiceItemOrderingType>
+                <ContainingAllocationPlan>cash_plan:1</ContainingAllocationPlan>
+                <Priority>2</Priority>
+            </InvoiceItemOrdering>
+            <InvoiceItemOrdering public-id="ordering_type:3">
+                <InvoiceItemOrderingType>ChargePattern</InvoiceItemOrderingType>
+                <ContainingAllocationPlan>cash_plan:1</ContainingAllocationPlan>
+                <Priority>3</Priority>
+            </InvoiceItemOrdering>
+        </InvoiceItemOrdering>
+    </PaymentAllocationPlan>
+</import>

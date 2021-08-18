@@ -1,0 +1,35 @@
+<?xml version="1.0"?>
+<entity
+  xmlns="http://guidewire.com/datamodel"
+  entity="FundsTransferReversal"
+  type="retireable"
+  desc="Reverses a FundsTransfer."
+  subpackage="accounting"
+  platform="false"
+  table="fundstransferreversal">
+  <implementsEntity
+    name="NotInCurrencySilo"/>
+  <implementsEntity
+    name="Approvable"/>
+  <typekey
+    name="ReversalReason"
+    typelist="ReversalReason"
+    desc="the reason for the funds transfer reversal"
+    nullok="false"/>
+  <foreignkey
+    name="FundsTransferTransaction"
+    desc="The FundsTransfer that is being reversed"
+    fkentity="TransferTransaction"
+    nullok="false"/>
+  <array
+    name="ActivitiesCreatedByApproval"
+    arrayentity="FundsTransferReversalApprovalActivity"
+    setterScriptability="doesNotExist">
+    <link-association>
+      <typelist-map
+        field="Status"/>
+    </link-association>
+  </array>
+  <dbcheckbuilder
+    className="com.guidewire.bc.system.database.dbchecks.accounting.FundsTransferReversalDBCheckBuilder"/>
+</entity>

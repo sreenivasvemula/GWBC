@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?><entity xmlns="http://guidewire.com/datamodel" entity="ChargeReversal" loadable="false" platform="false" subpackage="accounting" table="chargereversal" type="retireable">
+  <implementsEntity name="NotInCurrencySilo"/>
+  <implementsEntity name="Approvable"/>
+  <foreignkey columnName="ChargeID" desc="The charge to reverse" fkentity="Charge" name="Charge" nullok="false" setterScriptability="hidden"/>
+  <typekey desc="The reason the transaction was reversed" name="Reason" nullok="true" typelist="ReversalReason"/>
+  <array arrayentity="ChrgRvslApprActivity" name="ActivitiesCreatedByAppr" setterScriptability="doesNotExist">
+    <link-association>
+      <typelist-map field="Status"/>
+    </link-association>
+  </array>
+</entity>

@@ -1,0 +1,39 @@
+<?xml version="1.0"?>
+<!-- ====================================================================  DisbursementSearchView  ==================================================================== -->
+<viewEntity
+  xmlns="http://guidewire.com/datamodel"
+  entity="DisbursementSearchView"
+  desc="Base class for supporting efficient creation of Disbursement lists in BillingCenter's views."
+  abstract="true"
+  exportable="false"
+  final="false"
+  subpackage="search.view"
+  primaryEntity="Disbursement">
+  <viewEntityLink
+    name="Disbursement"
+    path="ID"/>
+  <viewEntityColumn
+    name="CloseDate"
+    path="CloseDate"/>
+  <viewEntityColumn
+    name="CheckNumber"
+    path="OutgoingPayment.RefNumber"/>
+  <viewEntityTypekey
+    name="Reason"
+    path="Reason"/>
+  <viewEntityColumn
+    name="PayTo"
+    path="PayTo"/>
+  <viewEntityColumn
+    name="Amount"
+    path="Amount_amt"/>
+  <viewEntityTypekey
+    name="PaymentMethod"
+    path="PaymentInstrument.PaymentMethod"/>
+  <viewEntityTypekey
+    name="Status"
+    path="Status"/>
+  <viewEntityTypekey
+    name="Currency"
+    path="Currency"/>
+</viewEntity>

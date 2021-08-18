@@ -1,0 +1,139 @@
+<?xml version="1.0"?>
+<entity
+  xmlns="http://guidewire.com/datamodel"
+  abstract="true"
+  desc="An invoice for a TAccountOwner"
+  entity="Invoice"
+  final="false"
+  setterScriptability="hidden"
+  subpackage="invoice"
+  table="invoice"
+  type="retireable">
+  <implementsEntity
+    name="Validatable"/>
+  <implementsEntity
+    name="InCurrencySilo"/>
+  <column
+    name="Description"
+    nullok="true"
+    type="mediumtext"/>
+  <column
+    desc="The date of the event"
+    name="EventDate"
+    nullok="false"
+    type="dateonly"/>
+  <column
+    desc="The human-readable number for this invoice"
+    name="InvoiceNumber"
+    nullok="false"
+    supportsLinguisticSearch="true"
+    type="shorttext"/>
+  <column
+    default="0"
+    desc="The number of times an invoice is resent"
+    getterScriptability="doesNotExist"
+    name="NumResends"
+    nullok="false"
+    setterScriptability="doesNotExist"
+    type="integer"/>
+  <column
+    desc="The date that the invoice is due"
+    name="PaymentDueDate"
+    nullok="false"
+    type="dateonly"/>
+  <typekey
+    name="Status"
+    nullok="false"
+    setterScriptability="doesNotExist"
+    typelist="InvoiceStatus"/>
+  <array
+    arrayentity="InvoiceItem"
+    exportable="false"
+    name="InvoiceItems"
+    setterScriptability="hidden"/>
+  <!-- Denormalizations.
+    Note that when one of these changes, we don't need to set the dirty bit, because they are only updated during a
+    call to recalcAmounts(). Note also that the computed value of one of these values may not assume another memoized
+    value in this set is correct. -->
+  <monetaryamount
+    amountColumnName="Amount"
+    desc="The amount of the invoice"
+    loadable="false"
+    loadedByCallback="true"
+    name="Amount"
+    nullok="false"
+    scaleToCurrency="true"
+    setterScriptability="doesNotExist"
+    soapnullok="true">
+    <tag
+      name="DefaultValueZero"/>
+  </monetaryamount>
+  <monetaryamount
+    amountColumnName="AmountDue"
+    desc="The amount due on the invoice"
+    loadable="false"
+    loadedByCallback="true"
+    name="AmountDue"
+    nullok="false"
+    scaleToCurrency="true"
+    setterScriptability="doesNotExist"
+    soapnullok="true">
+    <tag
+      name="DefaultValueZero"/>
+  </monetaryamount>
+  <foreignkey
+    columnName="InvoiceStreamID"
+    fkentity="InvoiceStream"
+    name="InvoiceStream"
+    nullok="false"
+    setterScriptability="doesNotExist"/>
+  <column
+    default="false"
+    desc="Whether or not the invoice is an ad-hoc invoice, such as invoices created for catch-up invoicing."
+    name="AdHoc"
+    nullok="false"
+    type="bit"/>
+  <events>
+    <event
+      description="Fired when the invoice is resent (NOT when it is sent the first time)"
+      name="InvoiceResent"/>
+  </events>
+  <index
+    desc="Legacy"
+    name="invoicenumdenorm">
+    <indexcol
+      keyposition="1"
+      name="InvoiceNumberDenorm"/>
+    <indexcol
+      keyposition="2"
+      name="Retired"/>
+  </index>
+  <index
+    desc="Index on subtype used by ProducerPayment to find agency bill invoices that need to have denorms updated."
+    name="idsubtype"
+    unique="true">
+    <indexcol
+      keyposition="1"
+      name="ID"/>
+    <indexcol
+      keyposition="2"
+      name="Subtype"/>
+    <indexcol
+      keyposition="3"
+      name="Retired"/>
+  </index>
+  <index
+    desc="Index on invoice number and retired for multipayment screen"
+    name="invoicenum">
+    <indexcol
+      keyposition="1"
+      name="InvoiceNumber"/>
+    <indexcol
+      keyposition="2"
+      name="Retired"/>
+  </index>
+  <dbcheckbuilder
+    className="com.guidewire.bc.system.database.dbchecks.invoice.InvoiceAmountDBCheckBuilder"/>
+  <dbcheckbuilder
+    className="com.guidewire.bc.system.database.dbchecks.invoice.InvoiceDateDBCheckBuilder"/>
+</entity>

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PCF
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:noNamespaceSchemaLocation="../../../../../pcf.xsd">
+  <Popup
+    id="AgencyBillPolicyDetailsPopup"
+    title="displaykey.Web.AgencyBillPolicyDetailsPopup.Title">
+    <LocationEntryPoint
+      signature="AgencyBillPolicyDetailsPopup(policyPeriod : PolicyPeriod)"/>
+    <Variable
+      name="policyPeriod"
+      type="PolicyPeriod"/>
+    <Screen>
+      <PanelRef
+        def="AgencyBillPolicySummaryDV(policyPeriod)"/>
+      <PanelRef
+        def="AgencyBillPolicyTxnsLV(policyPeriod)">
+        <Toolbar/>
+      </PanelRef>
+    </Screen>
+  </Popup>
+</PCF>

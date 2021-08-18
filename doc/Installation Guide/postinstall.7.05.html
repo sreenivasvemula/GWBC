@@ -1,0 +1,815 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xml:lang="en" lang="en" xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+    <meta http-equiv="Content-Style-Type" content="text/css" />
+    <!-- MOTW-DISABLED saved from url=(0014)about:internet -->
+    <title>Configuring Single Sign-on Authentication</title>
+    <link rel="StyleSheet" href="css/postinstall.css" type="text/css" media="all" />
+    <link rel="StyleSheet" href="css/webworks.css" type="text/css" media="all" />
+    <link rel="StyleSheet" href="css/css-guidewire-extra.css" type="text/css" media="all" />
+    <script type="text/javascript" language="JavaScript1.2" src="wwhdata/common/context.js"></script>
+    <script type="text/javascript" language="JavaScript1.2" src="wwhdata/common/towwhdir.js"></script>
+    <script type="text/javascript" language="JavaScript1.2" src="wwhdata/common/wwhpagef.js"></script>
+    <script type="text/javascript" language="JavaScript1.2">
+      <!--
+        var  WebWorksRootPath = "";
+      // -->
+    </script>
+    <script type="text/javascript" language="JavaScript1.2">
+      <!--
+        // Set reference to top level help frame
+        //
+        var  WWHFrame = WWHGetWWHFrame("", true);
+      // -->
+    </script>
+    <script type="text/javascript" language="JavaScript1.2" src="scripts/expand.js"></script>
+    <!-- THE FOLLOWING IS A GUIDEWIRE STYLE DEFINITION FOR THE LINK TO THIS FEATURE -->
+    <link rel="StyleSheet" href="css/css-guidewire-extra.css" type="text/css" media="all" />
+    <!-- THE FOLLOWING IS A GUIDEWIRE GSCRIPT FUNCTION FOR THE LINK TO THIS FEATURE -->
+    <script type="text/javascript">
+function guidewire_selectall()
+{
+var text_val=eval("document.linktothisurlform.urlfield");
+text_val.focus();
+text_val.select();
+}
+</script>
+  </head>
+  <body onLoad="WWHUpdate();" onUnload="WWHUnload();" onKeyDown="WWHHandleKeyDown((document.all||document.getElementById||document.layers)?event:null);" onKeyPress="WWHHandleKeyPress((document.all||document.getElementById||document.layers)?event:null);" onKeyUp="WWHHandleKeyUp((document.all||document.getElementById||document.layers)?event:null);">
+    <!-- THE FOLLOWING IS A GUIDEWIRE DIV FOR THE 'LINK TO THIS' FEATURE -->
+    <div id="linkToThisPage" class="popup" style="display: none;">
+      <div class="popupTitle">Link Directly to This Page 
+           <a href="#" onclick="var thePopup = getElementById('linkToThisPage');thePopup.style.display='none';return false;"><img class="popupClosebox" src="wwhelp/wwhimpl/common/images/close.gif" /></a></div>
+      <div style="padding:6px;">
+        <div class="popupText" id="linkToThisPageBookmark">An error has occurred if you see this messsage.</div>
+        <form name="linktothisurlform" method="post" action="" style="width:275px;margin:0px">
+          <input type="text" class="popupURLText" id="linkToThisPageURL" name="urlfield" rows="1" cols="55" onClick="guidewire_selectall();" onFocus="guidewire_selectall();"></input>
+        </form>
+      </div>
+    </div>
+    <br />
+    <div class="WebWorks_Breadcrumbs" style="text-align: left;">
+      <span>BillingCenter Installation Guide</span> : 
+    <span class="WebWorks_Breadcrumbs" style="text-align: left;"><a class="WebWorks_Breadcrumb_Link" href="postinstall.7.01.html#2671222">Additional BillingCenter Setup Tasks</a> : Configuring Single Sign-on Authentication</span></div>
+    <hr align="left" />
+    <blockquote>
+      <h3 class="H1_-_Heading_1"><a name="2671222">Configuring Single Sign-on Authentication</a></h3>
+      <div class="B_-_Body"><a name="2671272">You can configure BillingCenter to use single sign-on (SSO) authentication. BillingCenter then forwards users from the application URL to an authentication provider which checks the users credentials and then forwards back to BillingCenter. BillingCenter generates a unique Cross-Site Request Forgery (CSRF) token for each user session. The CSRF token is included in each request and used by the server to verify the legitimacy of the user request.</a></div>
+      <div class="B_-_Body"><a name="2675221">The following configuration is a basic example. You can use this example to develop more complicated authentication features, such as redirecting users to different failure pages depending on the failure reason and so forth.</a></div>
+      <h6 class="HS_-_Head_Sub"><a name="2675222">To configure SSO authentication</a></h6>
+      <div class="LS_-_List_Start_outer" style="margin-left: 57pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="LS_-_List_Start_inner" style="width: 15pt; white-space: nowrap">
+                <span class="ri_-_run_in_header">	1.	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="LS_-_List_Start_inner"><a name="2671616">Create a Gosu class </a><span class="cv_-_computer_voice">CustomAuthServlet.gs</span>.</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="LS2A_-_List_Start_002c_Level_2_Alpha_outer" style="margin-left: 67pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="LS2A_-_List_Start_002c_Level_2_Alpha_inner" style="width: 15pt; white-space: nowrap">
+                <span class="ri_-_run_in_header">a.	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="LS2A_-_List_Start_002c_Level_2_Alpha_inner"><a name="2671700">Open Studio.</a></div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="LI2A_-_List_Item_002c_Level_2_Alpha_outer" style="margin-left: 67pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="LI2A_-_List_Item_002c_Level_2_Alpha_inner" style="width: 15pt; white-space: nowrap">
+                <span class="ri_-_run_in_header">b.	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="LI2A_-_List_Item_002c_Level_2_Alpha_inner"><a name="2671734">In the Studio Project window, expand </a><span class="ui_-_UI_element">configuration</span>.</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="LI2A_-_List_Item_002c_Level_2_Alpha_outer" style="margin-left: 67pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="LI2A_-_List_Item_002c_Level_2_Alpha_inner" style="width: 15pt; white-space: nowrap">
+                <span class="ri_-_run_in_header">c.	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="LI2A_-_List_Item_002c_Level_2_Alpha_inner"><a name="2671738">Right-click </a><span class="ui_-_UI_element">gsrc</span> and click <span class="ui_-_UI_element">New</span> → <span class="ui_-_UI_element">Package</span>.</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="LI2A_-_List_Item_002c_Level_2_Alpha_outer" style="margin-left: 67pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="LI2A_-_List_Item_002c_Level_2_Alpha_inner" style="width: 15pt; white-space: nowrap">
+                <span class="ri_-_run_in_header">d.	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="LI2A_-_List_Item_002c_Level_2_Alpha_inner"><a name="2671739">Enter a package name for upgrade purposes, such as </a><span class="ps_-_parameter_in_code_snippets">companyName</span><span class="cv_-_computer_voice">.auth</span>.</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="LI2A_-_List_Item_002c_Level_2_Alpha_outer" style="margin-left: 67pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="LI2A_-_List_Item_002c_Level_2_Alpha_inner" style="width: 15pt; white-space: nowrap">
+                <span class="ri_-_run_in_header">e.	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="LI2A_-_List_Item_002c_Level_2_Alpha_inner"><a name="2671778">Right-click the package and click </a><span class="ui_-_UI_element">New</span> → <span class="ui_-_UI_element">Gosu Class</span>.</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="LI2A_-_List_Item_002c_Level_2_Alpha_outer" style="margin-left: 67pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="LI2A_-_List_Item_002c_Level_2_Alpha_inner" style="width: 15pt; white-space: nowrap">
+                <span class="ri_-_run_in_header">f.	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="LI2A_-_List_Item_002c_Level_2_Alpha_inner"><a name="2671779">Enter </a><span class="cv_-_computer_voice">CustomAuthServlet</span> as the name for the class and click <span class="ui_-_UI_element">OK</span>.</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="LI2A_-_List_Item_002c_Level_2_Alpha_outer" style="margin-left: 67pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="LI2A_-_List_Item_002c_Level_2_Alpha_inner" style="width: 15pt; white-space: nowrap">
+                <span class="ri_-_run_in_header">g.	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="LI2A_-_List_Item_002c_Level_2_Alpha_inner"><a name="2671730">Enter the following class definition:</a></div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <PRE class="CF_-_Code_First_Line"><a name="2671617">package </a><span class="pc_-_parameter_in_code">companyName</span>.auth</PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2671618">&nbsp;</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2671619">uses com.guidewire.pl.system.dependency.PLDependencies</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2671620">uses com.guidewire.pl.system.service.context.ServiceToken</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2671621">uses com.guidewire.pl.system.server.Version</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2671622">uses com.guidewire.pl.web.controller.WebServlet</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2671623">uses javax.servlet.http.HttpServletResponse</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2671624">uses javax.servlet.http.HttpServletRequest</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2671625">uses javax.servlet.http.HttpServlet</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2671626">uses gw.servlet.ServletUtils</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2671627">uses javax.security.auth.login.LoginException</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2671628">uses gw.servlet.Servlet</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2671629">uses gw.plugin.Plugins</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2671630">uses gw.plugin.baseurlbuilder.IBaseURLBuilder</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2671631">&nbsp;</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2671632">@Servlet( \ path : String -&gt;path.matches( "/ssosaml" ) )</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2671633">class CustomAuthServlet extends HttpServlet {</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2671634">&nbsp;&nbsp;override function doPost(req: HttpServletRequest, resp: HttpServletResponse) {</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2671635">&nbsp;&nbsp;&nbsp;&nbsp;var user:User = ServletUtils.getAuthenticatedUser(req, true);</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2671636">&nbsp;&nbsp;&nbsp;&nbsp;if (user != null) {</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2671637">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;redirectToIndex(req, resp);</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2671638">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return;</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2671639">&nbsp;&nbsp;&nbsp;&nbsp;}</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2671640">&nbsp;</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2671641">&nbsp;&nbsp;&nbsp;&nbsp;// try to login</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2671642">&nbsp;&nbsp;&nbsp;&nbsp;try {</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2671643">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;PLDependencies.LoginManager.login(req);</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2671644">&nbsp;&nbsp;&nbsp;&nbsp;} catch (e : LoginException) {</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2671645">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;respondUnauthorized(req,resp);</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2671646">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return;</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2671647">&nbsp;&nbsp;&nbsp;&nbsp;}</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2671648">&nbsp;</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2671649">&nbsp;&nbsp;&nbsp;&nbsp;var serviceToken:ServiceToken = PLDependencies.CommonDependencies.ServiceToken;</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2671650">&nbsp;&nbsp;&nbsp;&nbsp;if (serviceToken == null || !serviceToken.AuthenticatedUser) {</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2671651">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;respondUnauthorized(req,resp);</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2671652">&nbsp;&nbsp;&nbsp;&nbsp;} else {</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2671653">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;// store token</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2671654">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;req.getSession(false).setAttribute(WebServlet.SERVICE_TOKEN_SESSION_ATTR, serviceToken);</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2671655">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;redirectToIndex(req, resp);</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2671656">&nbsp;&nbsp;&nbsp;&nbsp;}</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2671657">&nbsp;</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2671658">&nbsp;&nbsp;&nbsp;&nbsp;return;</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2671659">&nbsp;&nbsp;}</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2671660">&nbsp;</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2671661">&nbsp;&nbsp;private function respondUnauthorized(req:HttpServletRequest, resp:HttpServletResponse) {</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2671662">&nbsp;&nbsp;&nbsp;&nbsp;print("User is unauthorized")</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2671663">&nbsp;&nbsp;&nbsp;&nbsp;redirectToError(req, resp);</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2671665">&nbsp;&nbsp;}</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2671666">&nbsp;</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2671667">&nbsp;&nbsp;private function redirectToIndex(req:HttpServletRequest, resp:HttpServletResponse) {</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2671668">&nbsp;&nbsp;&nbsp;&nbsp;print("User is authorized. Send to index page.")</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2671669">&nbsp;&nbsp;&nbsp;&nbsp;var plugin:IBaseURLBuilder = (IBaseURLBuilder) Plugins.get("BaseURLBuilderPlugin");</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2671670">&nbsp;&nbsp;&nbsp;&nbsp;var bcStartupPageEP = "BillingCenterStartupPageEP"</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2671671">&nbsp;&nbsp;&nbsp;&nbsp;resp.sendRedirect(plugin.getApplicationBaseURL(req) + "/" + bcStartupPageEP + ".do");</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2671673">&nbsp;&nbsp;}</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2671674">&nbsp;</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2675212">&nbsp;&nbsp;private function redirectToError(req:HttpServletRequest, resp:HttpServletResponse) {</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2675213">&nbsp;&nbsp;&nbsp;&nbsp;print("User is unauthorized. Send to Default Failure page.")</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2675214">&nbsp;&nbsp;&nbsp;&nbsp;var plugin:IBaseURLBuilder = (IBaseURLBuilder) Plugins.get("BaseURLBuilderPlugin");</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2675208">&nbsp;&nbsp;&nbsp;&nbsp;var defaultFailureEP = "DefaultFailureEP"</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2675209">&nbsp;&nbsp;&nbsp;&nbsp;resp.sendRedirect(plugin.getApplicationBaseURL(req) + "/" + defaultFailureEP + ".do");</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2675199">&nbsp;&nbsp;}</a></PRE>
+      <PRE class="CL_-_Code_Last_Line"><a name="2671682">}</a></PRE>
+      <div class="LI_-_List_Item_outer" style="margin-left: 57pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="LI_-_List_Item_inner" style="width: 15pt; white-space: nowrap">
+                <span class="ri_-_run_in_header">	2.	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="LI_-_List_Item_inner"><a name="2671684">Expand </a><span class="uis_-_UI_element_Studio">configuration</span> → <span class="uis_-_UI_element_Studio">config</span> → <span class="uis_-_UI_element_Studio">servlets</span> and open <span class="cv_-_computer_voice">servlets.xml</span>.</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="LI_-_List_Item_outer" style="margin-left: 57pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="LI_-_List_Item_inner" style="width: 15pt; white-space: nowrap">
+                <span class="ri_-_run_in_header">	3.	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="LI_-_List_Item_inner"><a name="2672296">Add your custom servlet to the list. For example:</a></div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="CS_-_Code_Single_Line"><a name="2672353">&lt;servlet class="</a><span class="pc_-_parameter_in_code">companyName</span>.auth.CustomAuthServlet"/&gt;</div>
+      <div class="LI_-_List_Item_outer" style="margin-left: 57pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="LI_-_List_Item_inner" style="width: 15pt; white-space: nowrap">
+                <span class="ri_-_run_in_header">	4.	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="LI_-_List_Item_inner"><a name="2671605">Add an </a><span class="cv_-_computer_voice">AuthServicePlugin.gs</span> Gosu class to your custom authentication package.</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <PRE class="CF_-_Code_First_Line"><a name="2672530">package </a><span class="pc_-_parameter_in_code">companyName</span>.auth</PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2672480">&nbsp;</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2672481">uses gw.plugin.security.AuthenticationServicePlugin</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2672482">uses gw.plugin.security.AuthenticationServicePluginCallbackHandler</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2672483">uses gw.plugin.security.AuthenticationSource</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2672484">uses gw.plugin.security.UserNamePasswordAuthenticationSource</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2672485">uses java.lang.IllegalArgumentException</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2672486">uses javax.security.auth.login.FailedLoginException</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2672487">&nbsp;</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2672489">class AuthServicePlugin implements AuthenticationServicePlugin {</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2672490">var _handler: AuthenticationServicePluginCallbackHandler;</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2672491">&nbsp;&nbsp;override function authenticate(p0: AuthenticationSource): String {</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2672492">&nbsp;&nbsp;&nbsp;&nbsp;if (p0 typeis  UserNamePasswordAuthenticationSource == false) {</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2672493">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;throw new IllegalArgumentException("Authentication source type " + p0.getClass().getName() + </a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2672586">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"is not known to this plugin");</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2672494">&nbsp;&nbsp;&nbsp;&nbsp;}</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2672495">&nbsp;&nbsp;&nbsp;&nbsp;var uNameSource:UserNamePasswordAuthenticationSource =  (UserNamePasswordAuthenticationSource) p0 ;</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2672496">&nbsp;&nbsp;&nbsp;&nbsp;var username = uNameSource.Username;</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2672497">&nbsp;&nbsp;&nbsp;&nbsp;var userPublicId = _handler.findUser(username);</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2672498">&nbsp;&nbsp;&nbsp;&nbsp;if (userPublicId == null) {   throw new FailedLoginException("Bad user name " + username);}</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2672499">&nbsp;&nbsp;&nbsp;&nbsp;return userPublicId;</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2672502">&nbsp;&nbsp;}</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2672503">&nbsp;</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2672504">&nbsp;&nbsp;override function setCallback(p0: AuthenticationServicePluginCallbackHandler) {</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2672505">&nbsp;&nbsp;&nbsp;&nbsp;_handler = p0;</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2672507">&nbsp;&nbsp;}</a></PRE>
+      <PRE class="CL_-_Code_Last_Line"><a name="2672508">}</a></PRE>
+      <div class="LI_-_List_Item_outer" style="margin-left: 57pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="LI_-_List_Item_inner" style="width: 15pt; white-space: nowrap">
+                <span class="ri_-_run_in_header">	5.	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="LI_-_List_Item_inner"><a name="2672419">Add an </a><span class="cv_-_computer_voice">AuthSourceCreator.gs</span> Gosu class to your custom authentication package.</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <PRE class="CF_-_Code_First_Line"><a name="2672857">package </a><span class="pc_-_parameter_in_code">companyName</span>.auth</PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2672813">&nbsp;</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2672814">uses gw.plugin.security.AuthenticationSourceCreatorPlugin</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2672815">uses gw.plugin.security.AuthenticationSource</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2672816">uses javax.servlet.http.HttpServletRequest</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2672817">uses gw.plugin.security.UserNamePasswordAuthenticationSource</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2672818">&nbsp;</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2672820">class AuthSourceCreator implements AuthenticationSourceCreatorPlugin {</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2672821">&nbsp;&nbsp;override function createSourceFromHTTPRequest(p0: HttpServletRequest): AuthenticationSource {</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2672822">&nbsp;</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2672823">&nbsp;&nbsp;&nbsp;&nbsp;var source:AuthenticationSource; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2673171">&nbsp;&nbsp;&nbsp;&nbsp;var userName:String =  p0.getParameter ("username");</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2672825">&nbsp;&nbsp;&nbsp;&nbsp;var password:String =  p0.getParameter("password");</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2672826">&nbsp;</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2672827">&nbsp;&nbsp;&nbsp;&nbsp;print("userName\t" + userName)</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2672828">&nbsp;&nbsp;&nbsp;&nbsp;print("password\t" + password)</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2672829">&nbsp;</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2672830">    source = new UserNamePasswordAuthenticationSource(userName, password);</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2672831">&nbsp;</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2672832">    return source;</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2672833">&nbsp;</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2672834">  }</a></PRE>
+      <PRE class="CL_-_Code_Last_Line"><a name="2672835">}</a></PRE>
+      <div class="LP_-_List_Para"><a name="2673176">In your code, check for errors and throw </a><span class="cv_-_computer_voice">InvalidAuthenticationSourceData</span> if there are errors.</div>
+      <div class="LI_-_List_Item_outer" style="margin-left: 57pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="LI_-_List_Item_inner" style="width: 15pt; white-space: nowrap">
+                <span class="ri_-_run_in_header">	6.	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="LI_-_List_Item_inner"><a name="2672808">Associate </a><span class="cv_-_computer_voice">AuthServicePlugin.gs</span> to the <span class="cv_-_computer_voice">AuthenticationServicePlugin</span> plugin.</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="LS2A_-_List_Start_002c_Level_2_Alpha_outer" style="margin-left: 67pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="LS2A_-_List_Start_002c_Level_2_Alpha_inner" style="width: 15pt; white-space: nowrap">
+                <span class="ri_-_run_in_header">a.	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="LS2A_-_List_Start_002c_Level_2_Alpha_inner"><a name="2673390">Expand </a><span class="uis_-_UI_element_Studio">configuration</span> → <span class="uis_-_UI_element_Studio">config</span> → <span class="uis_-_UI_element_Studio">Plugins → registry</span> and open <span class="cv_-_computer_voice">AuthenticationServicePlugin.gwp</span>.</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="LI2A_-_List_Item_002c_Level_2_Alpha_outer" style="margin-left: 67pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="LI2A_-_List_Item_002c_Level_2_Alpha_inner" style="width: 15pt; white-space: nowrap">
+                <span class="ri_-_run_in_header">b.	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="LI2A_-_List_Item_002c_Level_2_Alpha_inner"><a name="2673391">Click <img class="Default" src="images/remove.png" style="display: inline; float: none; left: 0.0; top: 0.0" alt="" /> to remove the default plugin.</a></div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="LI2A_-_List_Item_002c_Level_2_Alpha_outer" style="margin-left: 67pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="LI2A_-_List_Item_002c_Level_2_Alpha_inner" style="width: 15pt; white-space: nowrap">
+                <span class="ri_-_run_in_header">c.	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="LI2A_-_List_Item_002c_Level_2_Alpha_inner"><a name="2673444">Click <img class="Default" src="images/add.png" style="display: inline; float: none; left: 0.0; top: 0.0" alt="" /> and select </a><span class="uis_-_UI_element_Studio">Add Gosu Plugin</span>.</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="LI2A_-_List_Item_002c_Level_2_Alpha_outer" style="margin-left: 67pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="LI2A_-_List_Item_002c_Level_2_Alpha_inner" style="width: 15pt; white-space: nowrap">
+                <span class="ri_-_run_in_header">d.	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="LI2A_-_List_Item_002c_Level_2_Alpha_inner"><a name="2673498">For </a><span class="uis_-_UI_element_Studio">Gosu Class</span> enter the <span class="cv_-_computer_voice">AuthServicePlugin.gs</span> class, including the fully qualified package.</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="LI_-_List_Item_outer" style="margin-left: 57pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="LI_-_List_Item_inner" style="width: 15pt; white-space: nowrap">
+                <span class="ri_-_run_in_header">	7.	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="LI_-_List_Item_inner"><a name="2673611">Associate </a><span class="cv_-_computer_voice">AuthSourceCreator.gs</span> to the <span class="cv_-_computer_voice">AuthenticationSourceCreatorPlugin</span> plugin.</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="LS2A_-_List_Start_002c_Level_2_Alpha_outer" style="margin-left: 67pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="LS2A_-_List_Start_002c_Level_2_Alpha_inner" style="width: 15pt; white-space: nowrap">
+                <span class="ri_-_run_in_header">a.	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="LS2A_-_List_Start_002c_Level_2_Alpha_inner"><a name="2673660">Open </a><span class="cv_-_computer_voice">AuthenticationSourceCreatorPlugin.gwp</span>.</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="LI2A_-_List_Item_002c_Level_2_Alpha_outer" style="margin-left: 67pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="LI2A_-_List_Item_002c_Level_2_Alpha_inner" style="width: 15pt; white-space: nowrap">
+                <span class="ri_-_run_in_header">b.	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="LI2A_-_List_Item_002c_Level_2_Alpha_inner"><a name="2673664">Click <img class="Default" src="images/remove.png" style="display: inline; float: none; left: 0.0; top: 0.0" alt="" /> to remove the default plugin.</a></div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="LI2A_-_List_Item_002c_Level_2_Alpha_outer" style="margin-left: 67pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="LI2A_-_List_Item_002c_Level_2_Alpha_inner" style="width: 15pt; white-space: nowrap">
+                <span class="ri_-_run_in_header">c.	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="LI2A_-_List_Item_002c_Level_2_Alpha_inner"><a name="2673668">Click <img class="Default" src="images/add.png" style="display: inline; float: none; left: 0.0; top: 0.0" alt="" /> and select </a><span class="uis_-_UI_element_Studio">Add Gosu Plugin</span>.</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="LI2A_-_List_Item_002c_Level_2_Alpha_outer" style="margin-left: 67pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="LI2A_-_List_Item_002c_Level_2_Alpha_inner" style="width: 15pt; white-space: nowrap">
+                <span class="ri_-_run_in_header">d.	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="LI2A_-_List_Item_002c_Level_2_Alpha_inner"><a name="2673669">For </a><span class="uis_-_UI_element_Studio">Gosu Class</span> enter the <span class="cv_-_computer_voice">AuthSourceCreator.gs</span> class, including the fully qualified package.</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="LI_-_List_Item_outer" style="margin-left: 57pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="LI_-_List_Item_inner" style="width: 15pt; white-space: nowrap">
+                <span class="ri_-_run_in_header">	8.	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="LI_-_List_Item_inner"><a name="2673656">Create an entry point for the entry page.</a></div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="LS2A_-_List_Start_002c_Level_2_Alpha_outer" style="margin-left: 67pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="LS2A_-_List_Start_002c_Level_2_Alpha_inner" style="width: 15pt; white-space: nowrap">
+                <span class="ri_-_run_in_header">a.	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="LS2A_-_List_Start_002c_Level_2_Alpha_inner"><a name="2675344">Expand </a><span class="uis_-_UI_element_Studio">configuration</span> → <span class="uis_-_UI_element_Studio">config</span> → <span class="uis_-_UI_element_Studio">Page Configuration → pcf</span>, right-click <span class="uis_-_UI_element_Studio">entrypoints</span> and click New → PCF file.</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="LI2A_-_List_Item_002c_Level_2_Alpha_outer" style="margin-left: 67pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="LI2A_-_List_Item_002c_Level_2_Alpha_inner" style="width: 15pt; white-space: nowrap">
+                <span class="ri_-_run_in_header">b.	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="LI2A_-_List_Item_002c_Level_2_Alpha_inner"><a name="2675348">Enter </a><span class="cv_-_computer_voice">BillingCenterStartupPageEP</span> for the file name.</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="LI2A_-_List_Item_002c_Level_2_Alpha_outer" style="margin-left: 67pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="LI2A_-_List_Item_002c_Level_2_Alpha_inner" style="width: 15pt; white-space: nowrap">
+                <span class="ri_-_run_in_header">c.	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="LI2A_-_List_Item_002c_Level_2_Alpha_inner"><a name="2675349">Select </a><span class="uis_-_UI_element_Studio">Entry Point</span> for the file type and click OK.</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="LI2A_-_List_Item_002c_Level_2_Alpha_outer" style="margin-left: 67pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="LI2A_-_List_Item_002c_Level_2_Alpha_inner" style="width: 15pt; white-space: nowrap">
+                <span class="ri_-_run_in_header">d.	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="LI2A_-_List_Item_002c_Level_2_Alpha_inner"><a name="2675324">Select the entry point.</a></div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="LI2A_-_List_Item_002c_Level_2_Alpha_outer" style="margin-left: 67pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="LI2A_-_List_Item_002c_Level_2_Alpha_inner" style="width: 15pt; white-space: nowrap">
+                <span class="ri_-_run_in_header">e.	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="LI2A_-_List_Item_002c_Level_2_Alpha_inner"><a name="2675328">Set </a><span class="uis_-_UI_element_Studio">location</span> to <span class="cv_-_computer_voice">BillingCenterStartupPage()</span>.</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="LI2A_-_List_Item_002c_Level_2_Alpha_outer" style="margin-left: 67pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="LI2A_-_List_Item_002c_Level_2_Alpha_inner" style="width: 15pt; white-space: nowrap">
+                <span class="ri_-_run_in_header">f.	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="LI2A_-_List_Item_002c_Level_2_Alpha_inner"><a name="2675329">Set </a><span class="uis_-_UI_element_Studio">authenticationRequired</span> to <span class="cv_-_computer_voice">false</span>.</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="LI_-_List_Item_outer" style="margin-left: 57pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="LI_-_List_Item_inner" style="width: 15pt; white-space: nowrap">
+                <span class="ri_-_run_in_header">	9.	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="LI_-_List_Item_inner"><a name="2675190">Create an entry point for the default failure page.</a></div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="LS2A_-_List_Start_002c_Level_2_Alpha_outer" style="margin-left: 67pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="LS2A_-_List_Start_002c_Level_2_Alpha_inner" style="width: 15pt; white-space: nowrap">
+                <span class="ri_-_run_in_header">a.	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="LS2A_-_List_Start_002c_Level_2_Alpha_inner"><a name="2675194">Right-click </a><span class="uis_-_UI_element_Studio">entrypoints</span> and click New → PCF file.</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="LI2A_-_List_Item_002c_Level_2_Alpha_outer" style="margin-left: 67pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="LI2A_-_List_Item_002c_Level_2_Alpha_inner" style="width: 15pt; white-space: nowrap">
+                <span class="ri_-_run_in_header">b.	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="LI2A_-_List_Item_002c_Level_2_Alpha_inner"><a name="2675185">Enter </a><span class="cv_-_computer_voice">DefaultFailureEP</span> for the file name.</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="LI2A_-_List_Item_002c_Level_2_Alpha_outer" style="margin-left: 67pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="LI2A_-_List_Item_002c_Level_2_Alpha_inner" style="width: 15pt; white-space: nowrap">
+                <span class="ri_-_run_in_header">c.	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="LI2A_-_List_Item_002c_Level_2_Alpha_inner"><a name="2675186">Select </a><span class="uis_-_UI_element_Studio">Entry Point</span> for the file type and click OK.</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="LI2A_-_List_Item_002c_Level_2_Alpha_outer" style="margin-left: 67pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="LI2A_-_List_Item_002c_Level_2_Alpha_inner" style="width: 15pt; white-space: nowrap">
+                <span class="ri_-_run_in_header">d.	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="LI2A_-_List_Item_002c_Level_2_Alpha_inner"><a name="2675176">Select the entry point.</a></div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="LI2A_-_List_Item_002c_Level_2_Alpha_outer" style="margin-left: 67pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="LI2A_-_List_Item_002c_Level_2_Alpha_inner" style="width: 15pt; white-space: nowrap">
+                <span class="ri_-_run_in_header">e.	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="LI2A_-_List_Item_002c_Level_2_Alpha_inner"><a name="2675177">Set </a><span class="uis_-_UI_element_Studio">location</span> to <span class="cv_-_computer_voice">DefaultFailurePage()</span>.</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="LI2A_-_List_Item_002c_Level_2_Alpha_outer" style="margin-left: 67pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="LI2A_-_List_Item_002c_Level_2_Alpha_inner" style="width: 15pt; white-space: nowrap">
+                <span class="ri_-_run_in_header">f.	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="LI2A_-_List_Item_002c_Level_2_Alpha_inner"><a name="2675178">Set </a><span class="uis_-_UI_element_Studio">authenticationRequired</span> to <span class="cv_-_computer_voice">false</span>.</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="LI_-_List_Item_outer" style="margin-left: 57pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="LI_-_List_Item_inner" style="width: 15pt; white-space: nowrap">
+                <span class="ri_-_run_in_header">	10.	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="LI_-_List_Item_inner"><a name="2674454">Create a </a><span class="cv_-_computer_voice">BaseURLBuilderPlugin</span>.</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="LS2A_-_List_Start_002c_Level_2_Alpha_outer" style="margin-left: 67pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="LS2A_-_List_Start_002c_Level_2_Alpha_inner" style="width: 15pt; white-space: nowrap">
+                <span class="ri_-_run_in_header">a.	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="LS2A_-_List_Start_002c_Level_2_Alpha_inner"><a name="2674619">Right-click </a><span class="uis_-_UI_element_Studio">configuration</span> → <span class="uis_-_UI_element_Studio">config</span> → <span class="uis_-_UI_element_Studio">Plugins → registry</span> and click <span class="uis_-_UI_element_Studio">New</span> → <span class="uis_-_UI_element_Studio">Plugin</span>.</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="LI2A_-_List_Item_002c_Level_2_Alpha_outer" style="margin-left: 67pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="LI2A_-_List_Item_002c_Level_2_Alpha_inner" style="width: 15pt; white-space: nowrap">
+                <span class="ri_-_run_in_header">b.	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="LI2A_-_List_Item_002c_Level_2_Alpha_inner"><a name="2674492">Enter </a><span class="cv_-_computer_voice">BaseURLBuilderPlugin</span> for the name.</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="LI2A_-_List_Item_002c_Level_2_Alpha_outer" style="margin-left: 67pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="LI2A_-_List_Item_002c_Level_2_Alpha_inner" style="width: 15pt; white-space: nowrap">
+                <span class="ri_-_run_in_header">c.	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="LI2A_-_List_Item_002c_Level_2_Alpha_inner"><a name="2674534">Enter </a><span class="cv_-_computer_voice">IBaseURLBuilder</span> for the interface and click OK.</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="LI2A_-_List_Item_002c_Level_2_Alpha_outer" style="margin-left: 67pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="LI2A_-_List_Item_002c_Level_2_Alpha_inner" style="width: 15pt; white-space: nowrap">
+                <span class="ri_-_run_in_header">d.	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="LI2A_-_List_Item_002c_Level_2_Alpha_inner"><a name="2674600">Click <img class="Default" src="images/add.png" style="display: inline; float: none; left: 0.0; top: 0.0" alt="" /> and select </a><span class="uis_-_UI_element_Studio">Add Java Plugin</span>.</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="LI2A_-_List_Item_002c_Level_2_Alpha_outer" style="margin-left: 67pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="LI2A_-_List_Item_002c_Level_2_Alpha_inner" style="width: 15pt; white-space: nowrap">
+                <span class="ri_-_run_in_header">e.	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="LI2A_-_List_Item_002c_Level_2_Alpha_inner"><a name="2674662">Enter </a><span class="cv_-_computer_voice">com.guidewire.pl.web.render.html.BaseURLBuilderImpl</span> for the <span class="uis_-_UI_element_Studio">Java Class</span>.</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="LI_-_List_Item_outer" style="margin-left: 57pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="LI_-_List_Item_inner" style="width: 15pt; white-space: nowrap">
+                <span class="ri_-_run_in_header">	11.	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="LI_-_List_Item_inner"><a name="2674722">Save all changes.</a></div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="LI_-_List_Item_outer" style="margin-left: 57pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="LI_-_List_Item_inner" style="width: 15pt; white-space: nowrap">
+                <span class="ri_-_run_in_header">	12.	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="LI_-_List_Item_inner"><a name="2674792">Include the following form on an HTML page for testing.</a></div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <PRE class="CF_-_Code_First_Line"><a name="2674724">&lt;form name="input" action="http://localhost:8080/bc/service/ssosaml" method="post"&gt;</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2674726">&nbsp;&nbsp;Username: &lt;input type="text" name="username"&gt;</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2674727">&nbsp;&nbsp;Password: &lt;input type="text" name="password"&gt;</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2674728">&nbsp;</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2674729">&nbsp;&nbsp;&lt;input type="submit" value="Submit"&gt;</a></PRE>
+      <PRE class="CL_-_Code_Last_Line"><a name="2674730">&lt;/form&gt;</a></PRE>
+      <script type="text/javascript" language="JavaScript1.2">
+        <!--
+          // Clear related topics
+          //
+          WWHClearRelatedTopics();
+
+          document.writeln(WWHRelatedTopicsInlineHTML());
+        // -->
+      </script>
+    </blockquote>
+    <script type="text/javascript" language="JavaScript1.2">
+      <!--
+        document.write(WWHRelatedTopicsDivTag() + WWHPopupDivTag() + WWHALinksDivTag());
+      // -->
+    </script>
+  </body>
+</html>

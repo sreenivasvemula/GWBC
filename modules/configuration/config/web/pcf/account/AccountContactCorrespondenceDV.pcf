@@ -1,0 +1,29 @@
+<?xml version="1.0"?>
+<PCF
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:noNamespaceSchemaLocation="../../../../../pcf.xsd">
+  <DetailViewPanel
+    id="AccountContactCorrespondenceDV">
+    <Require
+      name="accountContact"
+      type="AccountContact"/>
+    <InputColumn>
+      <Label
+        id="CorrespondenceTypesLabel"
+        label="displaykey.Web.AccountContactCorrespondenceDV.CorrespondenceTypes"/>
+      <InputIterator
+        elementName="correspondenceTypeRow"
+        id="CorrespondenceTypes"
+        value="gw.account.AccountCorrespondence.getRows(accountContact)">
+        <CheckBoxInput
+          boldLabel="true"
+          editable="true"
+          id="CorrespondenceType"
+          label="correspondenceTypeRow.CorrespondenceType"
+          value="correspondenceTypeRow.Recipient">
+          <PostOnChange/>
+        </CheckBoxInput>
+      </InputIterator>
+    </InputColumn>
+  </DetailViewPanel>
+</PCF>

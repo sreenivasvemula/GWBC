@@ -1,0 +1,67 @@
+<?xml version="1.0"?>
+<PCF
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:noNamespaceSchemaLocation="../../../../../pcf.xsd">
+  <Popup
+    beforeCommit="reverse()"
+    canEdit="true"
+    id="AgencyDistributionReversalConfirmationPopup"
+    startInEditMode="true"
+    title="agencyCycleDist typeis AgencyCyclePromise ? displaykey.Web.AgencyDistributionReversalConfirmationPopup.Promise.Title : displaykey.Web.AgencyDistributionReversalConfirmationPopup.Payment.Title">
+    <LocationEntryPoint
+      signature="AgencyDistributionReversalConfirmationPopup(agencyCycleDist : AgencyCycleDist)"/>
+    <LocationEntryPoint
+      signature="AgencyDistributionReversalConfirmationPopup(money : AgencyBillMoneyRcvd)"/>
+    <Variable
+      initialValue="money.AgencyCyclePayment"
+      name="agencyCycleDist"
+      type="AgencyCycleDist"/>
+    <Variable
+      name="money"
+      type="AgencyBillMoneyRcvd"/>
+    <Variable
+      name="reversalReason"
+      type="PaymentReversalReason"/>
+    <Screen>
+      <Toolbar>
+        <EditButtons
+          editVisible="false"
+          id="ConfirmationButtons"
+          updateLabel="displaykey.Button.OK"
+          updateShortcut="O"/>
+      </Toolbar>
+      <AlertBar
+        id="LargePaymentWarning"
+        label="displaykey.Web.PaymentReversalConfirmation.LargePaymentWarning"
+        visible="DistItemCount &gt; 10000"/>
+      <DetailViewPanel
+        id="ConfirmationDV">
+        <InputColumn>
+          <Label
+            label="displaykey.Web.AgencyDistributionReversalPopup.ConfirmationMessage"/>
+          <TypeKeyInput
+            editable="true"
+            id="ReversalReason"
+            label="displaykey.Web.AgencyDistributionReversalPopup.ReversalReason"
+            required="true"
+            value="reversalReason"/>
+        </InputColumn>
+      </DetailViewPanel>
+    </Screen>
+    <Code><![CDATA[function reverse() {
+   if (agencyCycleDist != null) {
+     agencyCycleDist.reverse(reversalReason)
+   } else {
+     money.reverse(reversalReason)
+   }
+}
+
+// Query is faster than loading all the dist items in agencyCycleDist.DistItems.Count
+property get DistItemCount() : int {
+  return gw.api.database.Query.make(BaseDistItem)
+      .compare(BaseDistItem#ActiveDist, Equals, agencyCycleDist)
+      .compare(BaseDistItem#ReversedDate, Equals, null)
+      .select().Count 
+}]]></Code>
+  </Popup>
+</PCF>

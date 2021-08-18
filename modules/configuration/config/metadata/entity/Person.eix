@@ -1,0 +1,44 @@
+<?xml version="1.0"?>
+<internalExtension
+  xmlns="http://guidewire.com/datamodel"
+  entityName="Person">
+  <implementsEntity
+           name="NotInCurrencySilo"/>
+  <index
+    name="PersonLastN"
+    desc="Covering index for search by person last name"
+    expectedtobecovering="true"
+    trackUsage="true"
+    unique="true">
+    <indexcol
+      name="LastNameDenorm"
+      keyposition="1"/>
+    <indexcol
+      name="Subtype"
+      keyposition="2"/>
+    <indexcol
+      name="Retired"
+      keyposition="3"/>
+    <indexcol
+      name="ID"
+      keyposition="4"/>
+  </index>
+  <index
+    name="PersonFirstN"
+    desc="Covering index for search by person first name"
+    trackUsage="true"
+    unique="true">
+    <indexcol
+      name="FirstNameDenorm"
+      keyposition="1"/>
+    <indexcol
+      name="Subtype"
+      keyposition="2"/>
+    <indexcol
+      name="Retired"
+      keyposition="3"/>
+    <indexcol
+      name="ID"
+      keyposition="4"/>
+  </index>
+</internalExtension>

@@ -1,0 +1,278 @@
+<?xml version="1.0"?>
+<PCF
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:noNamespaceSchemaLocation="../../../../../../pcf.xsd">
+  <Popup
+    afterCommit="gw.api.web.PebblesUtil.invalidateIterators(TopLocation, gw.api.web.producer.agencybill.distributionwizard.AgencyCycleDistChargeOwnerView)"
+    canEdit="true"
+    id="AgencyDistributionWizard_DetailsPopup"
+    startInEditMode="true"
+    title="getTitle()">
+    <LocationEntryPoint
+      signature="AgencyDistributionWizard_DetailsPopup(chargeOwnerView : gw.api.web.producer.agencybill.distributionwizard.AgencyCycleDistChargeOwnerView, availableAmount : gw.pl.currency.MonetaryAmount, wizardState : gw.agencybill.AgencyDistributionWizardHelper)"/>
+    <Variable
+      name="chargeOwnerView"
+      type="gw.api.web.producer.agencybill.distributionwizard.AgencyCycleDistChargeOwnerView"/>
+    <Variable
+      name="availableAmount"
+      type="gw.pl.currency.MonetaryAmount"/>
+    <Variable
+      name="wizardState"
+      type="gw.agencybill.AgencyDistributionWizardHelper"/>
+    <Screen>
+      <Toolbar>
+        <EditButtons
+          updateShortcut="O"/>
+      </Toolbar>
+      <DetailViewPanel>
+        <InputColumn>
+          <Label
+            label="displaykey.Web.AgencyDistributionWizard.DetailsPopup.DistributionInfo(wizardState.MoneySetup.DistributionTypeName)"/>
+          <TextInput
+            id="PolicyNumber"
+            label="chargeOwnerView.ChargeOwner typeis PolicyPeriod ? displaykey.Web.AgencyDistributionWizard.DetailsPopup.PolicyNumber : displaykey.Web.AgencyDistributionWizard.DetailsPopup.ChargeOwner"
+            value="chargeOwnerView.ChargeOwner typeis PolicyPeriod ? chargeOwnerView.ChargeOwner : chargeOwnerView.DisplayName"
+            visible="!(chargeOwnerView.ChargeOwner typeis Account)"/>
+          <TextInput
+            id="OwnerAccount"
+            label="displaykey.Web.AgencyDistributionWizard.DetailsPopup.OwnerAccount"
+            value="chargeOwnerView.Account"
+            visible="chargeOwnerView.ChargeOwner typeis PolicyPeriod || chargeOwnerView.ChargeOwner typeis Account"/>
+        </InputColumn>
+        <InputColumn>
+          <Label
+            label="displaykey.Web.AgencyDistributionWizard.DetailsPopup.ThisChargeOwner(chargeOwnerView.ChargeOwnerTypeName)"/>
+          <MonetaryAmountInput
+            currency="chargeOwnerView.Account.Currency"
+            formatType="currency"
+            id="Available"
+            label="displaykey.Web.AgencyDistributionWizard.DetailsPopup.Available"
+            value="availableAmount"/>
+          <MonetaryAmountInput
+            currency="chargeOwnerView.Account.Currency"
+            formatType="currency"
+            id="Distributed"
+            label="displaykey.Web.AgencyDistributionWizard.DetailsPopup.Distributed"
+            value="chargeOwnerView.TotalNetAmountToDistribute"/>
+          <MonetaryAmountInput
+            currency="chargeOwnerView.Account.Currency"
+            formatType="currency"
+            id="Remaining"
+            label="displaykey.Web.AgencyDistributionWizard.DetailsPopup.Remaining"
+            value="availableAmount - chargeOwnerView.TotalNetAmountToDistribute"/>
+        </InputColumn>
+      </DetailViewPanel>
+      <PanelRef>
+        <Toolbar>
+          <ToolbarButton
+            action="gw.plugin.Plugins.get(gw.plugin.agencybill.IAgencyCycleDist).distributeNetAmount(chargeOwnerView.AgencyDistItems, availableAmount)"
+            id="Autodistribute"
+            label="displaykey.Web.AgencyDistributionWizard.DetailsPopup.Autodistribute"/>
+          <ToolbarButton
+            action="clearAllAmounts()"
+            id="ClearAllAmounts"
+            label="displaykey.Web.AgencyDistributionWizard.DetailsPopup.ClearAllAmounts"/>
+        </Toolbar>
+        <ListViewPanel
+          id="DistItemsLV">
+          <RowIterator
+            canPick="false"
+            editable="true"
+            elementName="agencyDistItem"
+            value="chargeOwnerView.AgencyDistItems">
+            <Variable
+              initialValue="agencyDistItem.InvoiceItem"
+              name="invoiceItem"/>
+            <Variable
+              initialValue="agencyDistItem.NetAmountToApply"
+              name="netToApply"
+              recalculateOnRefresh="true"
+              type="gw.pl.currency.MonetaryAmount"/>
+            <Variable
+              initialValue="gw.agencybill.CommissionCalculator.getCommissionPercentToApply(agencyDistItem)"
+              name="percentToApply"
+              recalculateOnRefresh="true"
+              type="java.math.BigDecimal"/>
+            <Row
+              editable="invoiceItem.Type != InvoiceItemType.TC_COMMISSIONREMAINDER">
+              <Cell
+                id="LineItemNumber"
+                label="displaykey.Web.AgencyDistributionWizard.DetailsPopup.DistItemsLV.LineItemNumber"
+                value="invoiceItem.LineItemNumber"/>
+              <Cell
+                action="invoiceItem.StatementInvoiceDetailViewAction()"
+                actionAvailable="invoiceItem.AgencyBill"
+                id="StatementNumber"
+                label="displaykey.Web.AgencyDistributionWizard.DetailsPopup.DistItemsLV.StatementNumber"
+                value="invoiceItem.Invoice.InvoiceNumber"/>
+              <DateCell
+                id="StatementDate"
+                label="displaykey.Web.AgencyDistributionWizard.DetailsPopup.DistItemsLV.StatementDate"
+                value="invoiceItem.Invoice.EventDate"/>
+              <Cell
+                action="InvoiceItemHistoryPopup.push(invoiceItem)"
+                id="ItemDescription"
+                label="displaykey.Web.AgencyDistributionWizard.DetailsPopup.DistItemsLV.Item"
+                value="invoiceItem.DisplayNameAsItemType"/>
+              <Cell
+                id="Context"
+                label="displaykey.Web.AgencyDistributionWizard.DetailsPopup.DistItemsLV.Context"
+                value="invoiceItem.Charge.BillingInstruction"/>
+              <MonetaryAmountCell
+                currency="agencyDistItem.Currency"
+                footerSumValue="agencyDistItem.GrossAmountOwed"
+                formatType="currency"
+                id="GrossOwed"
+                label="displaykey.Web.AgencyDistributionWizard.DetailsPopup.DistItemsLV.GrossOwed"
+                value="agencyDistItem.GrossAmountOwed"/>
+              <MonetaryAmountCell
+                currency="agencyDistItem.Currency"
+                footerSumValue="agencyDistItem.CommissionAmountOwed"
+                formatType="currency"
+                id="CommissionOwed"
+                label="displaykey.Web.AgencyDistributionWizard.DetailsPopup.DistItemsLV.CommissionOwed"
+                value="agencyDistItem.CommissionAmountOwed"/>
+              <Cell
+                formatType="percentagePoints"
+                id="PercentOwed"
+                label="displaykey.Web.AgencyDistributionWizard.DetailsPopup.DistItemsLV.PercentOwed"
+                validationExpression="agencyDistItem.GrossAmountOwed.IsNotZero &amp;&amp; (percentToApply &lt; 0 || percentToApply &gt; 100)? displaykey.Java.Error.AgencyCycleDistChargeOwnerView.InvalidCommissionAmount: null"
+                value="gw.agencybill.CommissionCalculator.getCommissionPercent(agencyDistItem)"/>
+              <MonetaryAmountCell
+                currency="agencyDistItem.Currency"
+                footerSumValue="agencyDistItem.NetAmountOwed"
+                formatType="currency"
+                id="NetOwed"
+                label="displaykey.Web.AgencyDistributionWizard.DetailsPopup.DistItemsLV.NetOwed"
+                value="agencyDistItem.NetAmountOwed"/>
+              <LinkCell
+                id="FillDefaultsButtonCell"
+                label="displaykey.Web.AgencyDistributionWizard.DetailsPopup.DistItemsLV.Copy"
+                tooltip="">
+                <Link
+                  action="agencyDistItem.fillUnpaidAmounts()"
+                  icon="&quot;copyover.png&quot;"
+                  id="FillDefaultsButton"
+                  styleClass="none"
+                  tooltip="displaykey.Web.AgencyDistributionWizard.Step.Distribution.AgencyDistItemsLV.FillDefaultsButtonInfo"
+                  visible="invoiceItem.Type != InvoiceItemType.TC_COMMISSIONREMAINDER &amp;&amp; agencyDistItem.CommissionModifiable"/>
+              </LinkCell>
+              <MonetaryAmountCell
+                currency="agencyDistItem.Currency"
+                editable="true"
+                footerSumValue="agencyDistItem.GrossAmountToApply"
+                formatType="currency"
+                id="GrossToApply"
+                inputConversion="new java.math.BigDecimal(VALUE ?: &quot;0&quot;).ofCurrency(availableAmount.Currency)"
+                label="displaykey.Web.AgencyDistributionWizard.DetailsPopup.DistItemsLV.Gross"
+                validationExpression="return wizardState.isGrossAmountToApplyInvalid(agencyDistItem) ?  displaykey.Java.Error.BaseDist.InvalidGrossDistributionAmount : null"
+                value="agencyDistItem.GrossAmountToApply">
+                <PostOnChange
+                  onChange="if (agencyDistItem.GrossAmountToApply == null) agencyDistItem.GrossAmountToApply = 0bd.ofCurrency(availableAmount.Currency); gw.agencybill.CommissionCalculator.convertGrossToApplyToGrossAndCommissionToApply(agencyDistItem)"
+                  target="DATA_ONLY"/>
+              </MonetaryAmountCell>
+              <MonetaryAmountCell
+                currency="agencyDistItem.Currency"
+                editable="agencyDistItem.InvoiceItem.PolicyPeriodItem &amp;&amp; agencyDistItem.CommissionModifiable"
+                footerSumValue="agencyDistItem.CommissionAmountToApply"
+                formatType="currency"
+                id="CommissionToApply"
+                inputConversion="new java.math.BigDecimal(VALUE ?: &quot;0&quot;).ofCurrency(availableAmount.Currency)"
+                label="displaykey.Web.AgencyDistributionWizard.DetailsPopup.DistItemsLV.Commission"
+                validationExpression="return wizardState.isCommissionAmountToApplyInvalid(agencyDistItem)?  displaykey.Java.Error.BaseDist.InvalidCommissionDistributionAmount : null"
+                value="agencyDistItem.CommissionAmountToApply">
+                <PostOnChange
+                  onChange="if (agencyDistItem.CommissionAmountToApply == null) agencyDistItem.CommissionAmountToApply = 0bd.ofCurrency(availableAmount.Currency) // TODO Per Jira BC-11026, remove this expression"
+                  target="DATA_ONLY"/>
+              </MonetaryAmountCell>
+              <Cell
+                editable="agencyDistItem.InvoiceItem.PolicyPeriodItem &amp;&amp; agencyDistItem.CommissionModifiable"
+                formatType="percentagePoints"
+                id="PercentToApply"
+                inputConversion="new java.math.BigDecimal(VALUE == null ? &quot;0&quot; : VALUE)"
+                label="displaykey.Web.AgencyDistributionWizard.DetailsPopup.DistItemsLV.Percent"
+                value="percentToApply"
+                width="80">
+                <PostOnChange
+                  onChange="gw.agencybill.CommissionCalculator.convertPercentToApplyToGrossAndCommissionToApply(percentToApply, agencyDistItem)"
+                  target="DATA_ONLY"/>
+              </Cell>
+              <MonetaryAmountCell
+                currency="agencyDistItem.Currency"
+                editable="agencyDistItem.CommissionModifiable"
+                footerSumValue="agencyDistItem.NetAmountToApply"
+                formatType="currency"
+                id="NetToApply"
+                inputConversion="new java.math.BigDecimal(VALUE ?: &quot;0&quot;).ofCurrency(availableAmount.Currency)"
+                label="displaykey.Web.AgencyDistributionWizard.DetailsPopup.DistItemsLV.Net"
+                value="netToApply">
+                <PostOnChange
+                  onChange="gw.agencybill.CommissionCalculator.convertNetToApplyToGrossAndCommissionToApply(netToApply, agencyDistItem)"
+                  target="DATA_ONLY"/>
+              </MonetaryAmountCell>
+              <MonetaryAmountCell
+                currency="agencyDistItem.Currency"
+                footerSumValue="agencyDistItem.NetAmountOwed - agencyDistItem.NetAmountToApply"
+                formatType="currency"
+                id="Difference"
+                label="displaykey.Web.AgencyDistributionWizard.DetailsPopup.DistItemsLV.Difference"
+                value="agencyDistItem.NetAmountOwed - agencyDistItem.NetAmountToApply"/>
+              <RangeCell
+                editable="true"
+                id="Disposition"
+                label="displaykey.Web.AgencyDistributionWizard.DetailsPopup.DistItemsLV.Disposition"
+                required="true"
+                value="agencyDistItem.Disposition"
+                valueRange="DistItemDisposition.getTypeKeys( false )"
+                valueVisible="invoiceItem.Type != InvoiceItemType.TC_COMMISSIONREMAINDER"/>
+              <Cell
+                editable="true"
+                id="Comments"
+                label="displaykey.Web.AgencyDistributionWizard.DetailsPopup.DistItemsLV.Comments"
+                value="agencyDistItem.PaymentComments"/>
+            </Row>
+          </RowIterator>
+        </ListViewPanel>
+      </PanelRef>
+    </Screen>
+    <Code><![CDATA[function clearAllAmounts() {
+  for (var distItem in chargeOwnerView.AgencyDistItems) {
+    distItem.clear()
+  }
+}
+
+function getTitle() : String {
+  if (wizardState.IsPayment) {
+    if (chargeOwnerView.ChargeOwner typeis PolicyPeriod) {
+      return displaykey.Web.AgencyDistributionWizard.DetailsPopup.Title.Payment.PolicyPeriod  
+    } else if (chargeOwnerView.ChargeOwner typeis Collateral) {
+      return displaykey.Web.AgencyDistributionWizard.DetailsPopup.Title.Payment.Collateral
+    } else if (chargeOwnerView.ChargeOwner typeis CollateralRequirement) {
+      return displaykey.Web.AgencyDistributionWizard.DetailsPopup.Title.Payment.CollateralRequirement
+    } else {
+      return displaykey.Web.AgencyDistributionWizard.DetailsPopup.Title.Payment.Account
+    }
+  } else if (wizardState.IsPromise) {
+    if (chargeOwnerView.ChargeOwner typeis PolicyPeriod) {
+      return displaykey.Web.AgencyDistributionWizard.DetailsPopup.Title.Promise.PolicyPeriod
+    } else if (chargeOwnerView.ChargeOwner typeis Collateral) {
+      return displaykey.Web.AgencyDistributionWizard.DetailsPopup.Title.Promise.Collateral
+    } else if (chargeOwnerView.ChargeOwner typeis CollateralRequirement) {
+      return displaykey.Web.AgencyDistributionWizard.DetailsPopup.Title.Promise.CollateralRequirement
+    } else {
+      return displaykey.Web.AgencyDistributionWizard.DetailsPopup.Title.Promise.Account
+    }
+  } else {
+    if (chargeOwnerView.ChargeOwner typeis PolicyPeriod) {
+      return displaykey.Web.AgencyDistributionWizard.DetailsPopup.Title.CreditDistribution.PolicyPeriod
+    } else if (chargeOwnerView.ChargeOwner typeis Collateral) {
+      return displaykey.Web.AgencyDistributionWizard.DetailsPopup.Title.CreditDistribution.Collateral
+    } else if (chargeOwnerView.ChargeOwner typeis CollateralRequirement) {
+      return displaykey.Web.AgencyDistributionWizard.DetailsPopup.Title.CreditDistribution.CollateralRequirement
+    } else {
+      return displaykey.Web.AgencyDistributionWizard.DetailsPopup.Title.CreditDistribution.Account
+    }
+  }
+}]]></Code>
+  </Popup>
+</PCF>

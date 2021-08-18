@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?><subtype xmlns="http://guidewire.com/datamodel" abstract="true" desc="Abstract base type for policy related billing instructions" entity="PlcyBillingInstruction" final="false" subpackage="accounting.billinginstruction" supertype="BillingInstruction">
+  <array arrayentity="PaymentPlanModifier" desc="If there are any modifiers, they are applied to the paymentPlan of the policy period to make a new             overriding paymentPlan for this billing instruction's charges.  The policyPeriod will retain its original             paymentPlan." name="PaymentPlanModifiers" owner="true"/>
+  <foreignkey columnName="PaymentPlanID" desc="The payment plan for the charges in this billing instruction.  The billing instruction initializes this     itself when the billing instruction is executed.  It cannot be set by the creator of the billing instruction." fkentity="PaymentPlan" getterScriptability="doesNotExist" name="PaymentPlan" nullok="true" setterScriptability="doesNotExist"/>
+  <monetaryamount amountColumnName="DepositRequirement"
+    amountRange="nonnegative" desc="Amount of segregated collateral requirements that should exist after the BI is executed" name="DepositRequirement" nullok="true" scaleToCurrency="true"/>
+  <dbcheckbuilder className="com.guidewire.bc.system.database.dbchecks.accounting.billinginstruction.PolicyBillingInstructionPaymentPlanDBCheckBuilder"/>
+</subtype>

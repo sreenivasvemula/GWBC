@@ -1,0 +1,425 @@
+<?xml version="1.0"?>
+<entity
+  xmlns="http://guidewire.com/datamodel"
+  desc="An account"
+  entity="Account"
+  setterScriptability="hidden"
+  subpackage="account"
+  table="account"
+  type="retireable">
+  <implementsEntity
+    name="Validatable"/>
+  <implementsEntity
+    name="TAccountOwner"/>
+  <implementsEntity
+    name="HoldRelatedEntity"/>
+  <implementsEntity
+    name="NoteContainer"/>
+  <implementsEntity
+    name="DocumentContainer"/>
+  <implementsEntity
+    name="HistoryEventContainer"/>
+  <column
+    desc="The name of this account"
+    name="AccountName"
+    nullok="true"
+    supportsLinguisticSearch="true"
+    type="shorttext"/>
+  <column
+    desc="The account number for this account"
+    name="AccountNumber"
+    nullok="false"
+    supportsLinguisticSearch="true"
+    type="shorttext"/>
+  <column
+    desc="Date when the account was closed; null if the account is not closed"
+    name="CloseDate"
+    nullok="true"
+    setterScriptability="hidden"
+    type="datetime"/>
+  <column
+    desc="Doing business as"
+    name="DBA"
+    nullok="true"
+    type="shorttext"/>
+  <column
+    desc="The FEIN number of the company"
+    name="FEIN"
+    nullok="true"
+    supportsLinguisticSearch="true"
+    type="shorttext"/>
+  <column
+    default="false"
+    desc="Denormalized field. True if at least one charge owned by this account or any of its children policies is currently held. Only valid for database queries"
+    name="ChargeHeld"
+    nullok="false"
+    setterScriptability="doesNotExist"
+    type="bit"/>
+  <column
+    default="1"
+    desc="For monthly payment plans, this is the day of the month that the invoice should fall on"
+    name="InvoiceDayOfMonth"
+    nullok="false"
+    type="integer"/>
+  <column
+    columnName="EveryOtherWeekInvoiceAnchor"
+    desc="The base date that defines when the Every Other Week invoices occur."
+    name="EveryOtherWeekInvoiceAnchorDate"
+    nullok="false"
+    type="dateonly"/>
+  <typekey
+    default="Friday"
+    desc="For Every Week payment plans, this is the day of the week that the invoice should fall on."
+    name="InvoiceDayOfWeek"
+    nullok="false"
+    typelist="DayOfWeek"/>
+  <column
+    columnName="FirstTwicePerMthInvoiceDOM"
+    default="1"
+    desc="First day (of two) of the month for twice-per-month invoicing."
+    name="FirstTwicePerMonthInvoiceDayOfMonth"
+    nullok="false"
+    type="integer"/>
+  <column
+    columnName="SecondTwicePerMthInvoiceDOM"
+    default="15"
+    desc="Second day (of two) of the month for twice-per-month invoicing."
+    name="SecondTwicePerMonthInvoiceDayOfMonth"
+    nullok="false"
+    type="integer"/>
+  <typekey
+    default="billdatebilling"
+    desc="Whether the account's invoice days (InvoiceDayOfMonth, InvoiceDayOfWeek, etc.) are the days invoices are sent or due.     If BillDateBilling, the invoice days are the days invoices are sent (Invoice.EventDate).     If DueDateBilling the invoice days are the days invoices are due (Invoice.PaymentDueDate)."
+    name="BillDateOrDueDateBilling"
+    nullok="false"
+    typelist="BillDateOrDueDateBilling"/>
+  <column
+    default="true"
+    desc="True if new policy periods added to this account should be Payment Distributable by default"
+    name="NewPolicyPaymentDistributable"
+    nullok="false"
+    type="bit"/>
+  <!-- Because trouble tickets cannot be loaded, Accounts can only be loaded with HeldForInvoiceSending=false -->
+  <column
+    default="false"
+    desc="Denormalized flag that tracks whether there exists a trouble ticket on this account with a hold with type InvoiceSending."
+    loadable="false"
+    name="HeldForInvoiceSending"
+    nullok="false"
+    setterScriptability="doesNotExist"
+    type="bit"/>
+  <column
+    desc="The company's organization type"
+    name="OrganizationType"
+    nullok="true"
+    supportsLinguisticSearch="true"
+    type="shorttext"/>
+  <column
+    default="false"
+    desc="Flag used to determine whether or not this account is being collected."
+    name="Collecting"
+    nullok="false"
+    type="bit"/>
+  <typekey
+    default="outstanding"
+    deprecated="true"
+    desc="The type of limit the system should impose on payment distribution"
+    name="DistributionLimitType"
+    nullok="false"
+    typelist="DistributionLimitType"/>
+  <typekey
+    desc="Method by which the invoice is delivered"
+    name="InvoiceDeliveryType"
+    nullok="true"
+    typelist="InvoiceDeliveryMethod"/>
+  <typekey
+    default="distributeextra"
+    desc="The method for handling payments directed at a single specific policy period of this account"
+    name="PolicyLevelPaymentOption"
+    nullok="false"
+    typelist="PolicyLevelPaymentOption"/>
+  <typekey
+    desc="The account's segment"
+    name="Segment"
+    nullok="true"
+    typelist="AccountSegment"/>
+  <foreignkey
+    columnName="BillingPlanID"
+    exportasid="true"
+    fkentity="BillingPlan"
+    name="BillingPlan"
+    nullok="false"/>
+  <foreignkey
+    columnName="DelinquencyPlanID"
+    desc="The delinquency plan for this account"
+    exportasid="true"
+    fkentity="DelinquencyPlan"
+    name="DelinquencyPlan"
+    nullok="false"/>
+  <foreignkey
+    columnName="AllocationPlanID"
+    desc="The moneys (payment, excess unapplied, etc) allocation plan for this account"
+    exportable="false"
+    fkentity="PaymentAllocationPlan"
+    name="PaymentAllocationPlan"
+    nullok="false"/>
+  <foreignkey
+    columnName="HiddenTAccountContainerID"
+    exportable="false"
+    fkentity="AcctTAcctContainer"
+    getterScriptability="doesNotExist"
+    importableagainstexistingobject="false"
+    name="HiddenTAccountContainer"
+    nullok="false"
+    setterScriptability="doesNotExist"/>
+  <foreignkey
+    columnName="CollectionAgencyID"
+    desc="The collection agency for this account, if any"
+    exportasid="true"
+    fkentity="CollectionAgency"
+    name="CollectionAgency"
+    nullok="true"/>
+  <foreignkey
+    columnName="SecurityZoneID"
+    desc="The security zone assigned to this account, if any"
+    exportasid="true"
+    fkentity="SecurityZone"
+    name="SecurityZone"
+    nullok="true"/>
+  <edgeForeignKey
+    desc="The parent account"
+    edgeTableName="ParentAcct"
+    fkentity="Account"
+    ignoreforevents="true"
+    loadable="true"
+    name="ParentAccount"
+    nullok="true">
+    <tag
+      name="CanLinkToAnotherSilo"/>
+  </edgeForeignKey>
+  <onetoone
+    desc="The hidden join entity that associates this account with the {@link gw.bc.account.entity.MixedCurrencyAccountGroup MixedCurrencyAccountGroup} to which it belongs. The currency group is not accessible from this entity; use {@link gw.bc.account.entity.Account#getAccountCurrencyGroup AccountCurrencyGroup} instead. This should only be used to access extension fields added to the join entity."
+    exportable="false"
+    fkentity="AccountCurrencyGroup"
+    ignoreforevents="true"
+    name="_AccountCurrencyGroup"
+    nullok="true"
+    setterScriptability="doesNotExist"/>
+  <onetoone
+    desc="The Collateral associated with this account, if any"
+    exportable="false"
+    fkentity="Collateral"
+    name="Collateral"
+    nullok="true"
+    setterScriptability="doesNotExist"/>
+  <array
+    arrayentity="AccountContact"
+    arrayfield="Account"
+    desc="Contacts on this account"
+    name="Contacts"
+    owner="true"/>
+  <onetoone
+    desc="The denormalized insured"
+    fkentity="AccountContact"
+    linkField="InsuredAccount"
+    name="Insured"
+    nullok="true"
+    setterScriptability="hidden"/>
+  <typekey
+    default="insured"
+    desc="Type of this account"
+    name="AccountType"
+    nullok="true"
+    typelist="AccountType"/>
+  <typekey
+    default="ingoodstanding"
+    desc="Delinquency status of this account"
+    name="DelinquencyStatus"
+    nullok="true"
+    setterScriptability="hidden"
+    typelist="DelinquencyStatus"/>
+  <typekey
+    default="account"
+    desc="Billing level of this account"
+    name="BillingLevel"
+    nullok="false"
+    typelist="BillingLevel"/>
+  <typekey
+    desc="Customer service tier for this account"
+    name="ServiceTier"
+    nullok="true"
+    typelist="CustomerServiceTier"/>
+  <array
+    arrayentity="Policy"
+    desc="Policies on this account"
+    exportable="false"
+    name="Policies"
+    setterScriptability="hidden"/>
+  <array
+    arrayentity="AccountHistory"
+    arrayfield="Account"
+    desc="History entries on this account"
+    exportable="false"
+    ignoreforevents="true"
+    name="History"/>
+  <array
+    arrayentity="AccountInvoice"
+    desc="Invoices for this account"
+    name="Invoices"
+    owner="true"
+    setterScriptability="hidden"/>
+  <array
+    arrayentity="TroubleTicketJoinEntity"
+    desc="Join entity that provides relationship with the trouble tickets associated with this account"
+    name="TroubleTicketJoinEntities"
+    setterScriptability="hidden"/>
+  <array
+    arrayentity="DelinquencyProcess"
+    desc="Delinquency processes on this account including Collateral and Policy"
+    name="AccountDelinquencyProcesses"
+    setterScriptability="hidden"/>
+  <array
+    arrayentity="InvoiceStream"
+    name="InvoiceStreams"
+    owner="true"
+    setterScriptability="hidden"/>
+  <array
+    arrayentity="PaymentInstrument"
+    desc="PaymentInstruments that belong to this Account and are usable for initiating billing"
+    getterScriptability="hidden"
+    name="OwnedPaymentInstruments"
+    setterScriptability="hidden"/>
+  <array
+    arrayentity="UnappliedFund"
+    arrayfield="Account"
+    desc="UnappliedFunds that belong to this Account"
+    name="UnappliedFunds"
+    owner="true"
+    setterScriptability="doesNotExist"/>
+  <onetoone
+    desc="Denormalization of the account's default unappliedfund"
+    fkentity="UnappliedFund"
+    linkField="DefaultAccount"
+    name="DefaultUnappliedFund"
+    nullok="true"
+    setterScriptability="doesNotExist"/>
+  <edgeForeignKey
+    desc="The default PaymentInstrument to be used when no specific PaymentInstrument is specified."
+    edgeTableName="acctpmntinst"
+    fkentity="PaymentInstrument"
+    ignoreforevents="true"
+    loadable="true"
+    name="DefaultPaymentInstrument"
+    nullok="false"
+    soapnullok="true"/>
+  <array
+    arrayentity="AccountPaymentPlanJoinEntity"
+    arrayfield="Account"
+    desc="Payment Plans to be used by this account"
+    name="PaymentPlanJoinEntities"
+    owner="true"/>
+  <dbcheckbuilder
+    className="com.guidewire.bc.system.database.dbchecks.account.ClosedAccountDBCheckBuilder"/>
+  <events>
+    <event
+      description="Resync event. Generated only as a result of an application administrator requesting a Resync.                 All pending messages for the account are thrown away and this event is then fired.                 Implementers will generally handle this event and send enough of the account to bring the                 remote system up to date."
+      name="AccountResync"/>
+  </events>
+  <index
+    desc="Ensure that every Account has a unique TAccountContainer"
+    name="taccountcontainer"
+    unique="true">
+    <indexcol
+      keyposition="1"
+      name="HiddenTAccountContainerID"/>
+  </index>
+  <!-- NOTE pdalbora 27-Jul-2006: Intentionally leaving Retired off this index. Each new Account
+    mints a new TAccountContainer. -->
+  <index
+    desc="Covering index to help with writer queries that need fast access to an account's TAccounts"
+    name="tacctcontainercov"
+    unique="true">
+    <indexcol
+      name="HiddenTAccountContainerID"
+      keyposition="1"/>
+    <indexcol
+      name="Retired"
+      keyposition="2"/>
+    <indexcol
+      name="ID"
+      keyposition="3"/>
+  </index>
+  <index
+    desc="Legacy"
+    name="accountnumber"
+    unique="true">
+    <indexcol
+      keyposition="1"
+      name="AccountNumber"/>
+    <indexcol
+      keyposition="2"
+      name="Retired"/>
+  </index>
+  <index
+    desc="Legacy"
+    name="accountnumdenorm">
+    <indexcol
+      keyposition="1"
+      name="AccountNumberDenorm"/>
+    <indexcol
+      keyposition="2"
+      name="Retired"/>
+  </index>
+  <index
+    desc="Legacy"
+    name="accountnamedenorm">
+    <indexcol
+      keyposition="1"
+      name="AccountNameDenorm"/>
+    <indexcol
+      keyposition="2"
+      name="Retired"/>
+  </index>
+  <index
+    desc="Legacy"
+    name="feindenorm">
+    <indexcol
+      keyposition="1"
+      name="FEINDenorm"/>
+    <indexcol
+      keyposition="2"
+      name="Retired"/>
+  </index>
+  <index
+    desc="Legacy"
+    name="orgtypedenorm">
+    <indexcol
+      keyposition="1"
+      name="OrganizationTypeDenorm"/>
+    <indexcol
+      keyposition="2"
+      name="Retired"/>
+  </index>
+  <checkconstraint
+    desc="The InvoiceDayOfMonth field must be between 1 and 31"
+    predicate="InvoiceDayOfMonth &gt; 0 AND InvoiceDayOfMonth &lt;= 31"/>
+  <checkconstraint
+    desc="The FirstTwicePerMonthInvoiceDayOfMonth field must be between 1 and 31"
+    predicate="FirstTwicePerMthInvoiceDOM &gt; 0 AND FirstTwicePerMthInvoiceDOM &lt;= 31"/>
+  <checkconstraint
+    desc="The SecondTwicePerMonthInvoiceDayOfMonth field must be between 1 and 31"
+    predicate="SecondTwicePerMthInvoiceDOM &gt; 0 AND SecondTwicePerMthInvoiceDOM &lt;= 31"/>
+  <dbcheckbuilder
+    className="com.guidewire.bc.system.database.dbchecks.account.AccountPaymentInstrumentsDBCheckBuilder"/>
+  <dbcheckbuilder
+    className="com.guidewire.bc.system.database.dbchecks.account.AccountDenormDBCheckBuilder"/>
+  <dbcheckbuilder
+    className="com.guidewire.bc.system.database.dbchecks.account.AccountCollateralDBCheckBuilder"/>
+  <dbcheckbuilder
+    className="com.guidewire.bc.system.database.dbchecks.account.AccountPrimaryPayerDBCheckBuilder"/>
+  <dbcheckbuilder
+    className="com.guidewire.bc.system.database.dbchecks.account.AccountListBillDBCheckBuilder"/>
+  <!-- TODO: Find a better way to register this generalized consistency check builder -->
+  <dbcheckbuilder
+    className="com.guidewire.bc.system.database.dbchecks.multicurrency.InCurrencySiloDBCheckBuilder"/>
+</entity>

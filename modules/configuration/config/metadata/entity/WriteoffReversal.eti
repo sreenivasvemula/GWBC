@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?><entity xmlns="http://guidewire.com/datamodel" entity="WriteoffReversal" platform="false" subpackage="accounting" table="writeoffreversal" type="retireable">
+  <implementsEntity name="Approvable"/>
+  <implementsEntity name="NotInCurrencySilo"/>
+  <foreignkey columnName="WriteoffID" desc="The object to reverse." fkentity="Writeoff" importableagainstexistingobject="false" name="Writeoff" nullok="false" setterScriptability="hidden"/>
+  <typekey desc="The reason for the reversal." name="Reason" nullok="true" typelist="WriteoffReversalReason"/>
+  <column desc="Date of the reversal. Used primarily for staging table loading." name="ReversalDate" nullok="true" setterScriptability="hidden" type="datetime"/>
+  <array arrayentity="WtoffRevApprActivity" name="ActivitiesCreatedByAppr" setterScriptability="doesNotExist">
+    <link-association>
+      <typelist-map field="Status"/>
+    </link-association>
+  </array>
+</entity>

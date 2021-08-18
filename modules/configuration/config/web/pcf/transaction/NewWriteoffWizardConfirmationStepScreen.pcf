@@ -1,0 +1,41 @@
+<?xml version="1.0"?>
+<PCF
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:noNamespaceSchemaLocation="../../../../../pcf.xsd">
+  <Screen
+    id="NewWriteoffWizardConfirmationStepScreen">
+    <Require
+      name="uiWriteoff"
+      type="web.accounting.UIWriteOffCreation"/>
+    <Variable
+      initialValue="uiWriteoff.WriteOff.getOpenApprovalActivity()"
+      name="approvalActivity"/>
+    <Toolbar>
+      <WizardButtons/>
+    </Toolbar>
+    <AlertBar
+      id="NullAmountAlertBar"
+      label="displaykey.Web.NewWriteoffWizardConfirmationStepScreen.NullAmountErrorMessage"
+      visible="!hasAmount()"/>
+    <AlertBar
+      id="ApprovalActivityAlertBar"
+      label="displaykey.Web.ApprovalActivityAlertBar"
+      visible="approvalActivity != null"/>
+    <DetailViewPanel
+      id="ConfirmDV"
+      visible="hasAmount()">
+      <InputColumn>
+        <Label
+          label="displaykey.Web.NewWriteoffWizard.Confirmation.ClickFinish"/>
+        <Label
+          label="displaykey.Web.NewWriteoffWizard.Confirmation(uiWriteoff.Amount.render(), uiWriteoff.WriteOff.TAccountOwner)"/>
+      </InputColumn>
+    </DetailViewPanel>
+    <PanelRef
+      def="ApprovalActivityDV(approvalActivity)"
+      visible="hasAmount()"/>
+    <Code><![CDATA[function hasAmount() : boolean {
+  return uiWriteoff != null && uiWriteoff.Amount != null
+}]]></Code>
+  </Screen>
+</PCF>

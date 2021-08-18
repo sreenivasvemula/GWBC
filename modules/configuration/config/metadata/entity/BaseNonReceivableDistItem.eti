@@ -1,0 +1,75 @@
+<?xml version="1.0"?>
+<entity
+  xmlns="http://guidewire.com/datamodel"
+  abstract="true"
+  desc="Base class for payment of non-receivables"
+  entity="BaseNonReceivableDistItem"
+  final="false"
+  setterScriptability="hidden"
+  subpackage="payment"
+  table="basenonrecdistitem"
+  type="retireable">
+  <implementsEntity
+    name="Validatable"/>
+  <implementsEntity
+    name="InCurrencySilo"/>
+  <column
+    desc="Date that this suspense item was executed."
+    name="ExecutedDate"
+    nullok="true"
+    setterScriptability="doesNotExist"
+    type="pastdatetime"/>
+  <column
+    desc="Date that this suspense item was reversed. This will be null if the item isn't reversed."
+    name="ReversedDate"
+    nullok="true"
+    setterScriptability="doesNotExist"
+    type="pastdatetime"/>
+  <monetaryamount
+    amountColumnName="GrossAmountToApply"
+    desc="Gross amount entered for this item during distribution"
+    name="GrossAmountToApply"
+    nullok="false"
+    scaleToCurrency="true"/>
+  <monetaryamount
+    amountColumnName="CommissionAmountToApply"
+    desc="Commission amount entered for this item during distribution"
+    name="CommissionAmountToApply"
+    nullok="false"
+    scaleToCurrency="true"/>
+  <column
+    desc="Comments entered for this item during distribution"
+    name="PaymentComments"
+    nullok="true"
+    type="shorttext"/>
+  <foreignkey
+    columnName="ActiveDistID"
+    desc="The Distribution that contains this non receivable Item if this item is active"
+    fkentity="BaseDist"
+    ignoreforevents="true"
+    importableagainstexistingobject="false"
+    name="ActiveDist"
+    nullok="true"
+    setterScriptability="hidden"/>
+  <foreignkey
+    columnName="ReversedDistID"
+    desc="The Distribution that contains this non receivable Item if the item is reversed"
+    fkentity="BaseDist"
+    ignoreforevents="true"
+    importableagainstexistingobject="false"
+    name="ReversedDist"
+    nullok="true"
+    setterScriptability="hidden"/>
+  <checkconstraint
+    desc="Found BaseNonReceivableDistItem with no ExecutedDate in staging table.  Only executed BaseNonReceivableDistItems can be loaded."
+    stagingtablepredicate="ExecutedDate IS NOT NULL"/>
+  <checkconstraint
+    desc="Either ActiveDistID is populated or ReversedDistID is populated "
+    predicate="(ActiveDistID IS NOT NULL and ReversedDistID IS NULL) OR (ActiveDistID IS NULL and ReversedDistID IS NOT NULL) OR Retired != 0"/>
+  <checkconstraint
+    desc="ReversedDate is populated only when ReversedDistID is populated"
+    predicate="(ReversedDistID IS NOT NULL AND ReversedDate IS NOT NULL) OR (ReversedDistID IS NULL AND ReversedDate IS NULL) OR Retired != 0"/>
+  <checkconstraint
+    desc="ReversedDate is populated only when ActiveDistID is not populated, otherwise it is not populated"
+    predicate="(ActiveDistID IS NULL AND ReversedDate IS NOT NULL) OR (ActiveDistID IS NOT NULL AND ReversedDate IS NULL) OR Retired != 0"/>
+</entity>

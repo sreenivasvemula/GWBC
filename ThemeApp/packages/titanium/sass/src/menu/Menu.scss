@@ -1,0 +1,27 @@
+.#{$prefix}columnmenu {
+  .#{$prefix}table-layout {
+    border-collapse: collapse;
+    .#{$prefix}menu-plain {
+      border: none;
+    }
+  }
+  .#{$prefix}table-layout-cell {
+    @if $menu-border-width != null {
+      border-style: $menu-border-style;
+      border-width: $menu-border-width;
+      border-color: $menu-border-color;
+    }
+  }
+  .#{$prefix}menu{
+    border-width: 0;
+  }
+}
+
+/**
+ * header text in a flattened menu
+ */
+.g-menu-header .#{$prefix}menu-item-text {
+  font: $gw-font-weight-bold $menu-item-font-size $menu-item-font-family;
+  line-height: $menu-item-height - vertical($menu-item-border-width) - abs($menu-item-text-vertical-offset);
+}
+

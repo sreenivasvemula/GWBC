@@ -1,0 +1,46 @@
+<?xml version="1.0"?>
+<Entity
+  name="AccountOtherTxn">
+  <Columns>
+    <Column
+      beanPath="Transaction.Subtype"
+      name="Subtype"/>
+    <Column
+      beanPath="Transaction.ReversedTransaction.TransactionNumber"
+      name="ReversedTransactionNumber"/>
+    <Column
+      beanPath="Transaction.Amount"
+      name="Amount"/>
+    <DisplayNameColumn
+      beanPath="AccountOtherTxn.CreditContext.Account"
+      displayName="true"
+      name="Account"/>
+    <Column
+      beanPath="AccountOtherTxn.Reversed"
+      name="Reversed"/>
+  </Columns>
+  <DisplayName><![CDATA[
+gw.api.domain.accounting.ReversibleUtil.formatReversibleDisplayName(gw.api.util.TypeKeyUtil.toDisplayName(Subtype), ReversedTransactionNumber)
+    
+  ]]></DisplayName>
+  <DisplayName
+    type="Short"><![CDATA[
+gw.api.domain.accounting.ReversibleUtil.formatReversibleDisplayName(displaykey.DisplayName.AccountOtherTxn.Short, ReversedTransactionNumber)
+    
+  ]]></DisplayName>
+  <DisplayName
+    type="Long"><![CDATA[
+gw.api.domain.accounting.ReversibleUtil.formatReversibleDisplayName(displaykey.DisplayName.AccountOtherTxn.Long(Amount?.render(), Account), ReversedTransactionNumber)
+    
+  ]]></DisplayName>
+  <DisplayName
+    type="FundsSource"><![CDATA[if(!Reversed){
+  return displaykey.DisplayName.AccountOtherTxn.FundsSource
+} else {
+  return displaykey.DisplayName.AccountOtherTxn.FundsSource.Reversed
+}]]></DisplayName>
+  <DisplayName
+    type="FundsSourceReversal"><![CDATA[displaykey.DisplayName.AccountOtherTxn.FundsSourceReversal]]></DisplayName>
+  <DisplayName
+    type="FundsSourcePredatesFundsTracking"><![CDATA[displaykey.DisplayName.AccountOtherTxn.FundsSource.PredatesFundsTracking]]></DisplayName>
+</Entity>

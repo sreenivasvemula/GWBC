@@ -1,0 +1,44 @@
+<?xml version="1.0"?>
+<entity xmlns="http://guidewire.com/datamodel"
+        entity="FundsAllotment"
+        type="editable"
+        desc="An allotment of money from a fund source to a fund use"
+        subpackage="fundstracking"
+        platform="false"
+        loadable="false"
+        table="fundsallotment"
+        setterScriptability="hidden">
+  <implementsEntity
+        name="InCurrencySilo"/>
+  <monetaryamount name="AmountAllotted" amountColumnName="AmountAllotted"
+          amountRange="nonnegative"
+          desc="The total amount allotted from the fund source to the fund use"
+          scaleToCurrency="true"
+          setterScriptability="doesNotExist"
+          nullok="false"
+          soapnullok="true">
+    <tag name="DefaultValueZero"/>
+  </monetaryamount>
+  <foreignkey name="FundsSourceTracker"
+          desc="The tracker for the source of funds"
+          columnName="FundsSourceTrackerID"
+          fkentity="FundsSourceTracker"
+          nullok="false"
+          setterScriptability="doesNotExist"/>
+  <foreignkey name="FundsUseTracker"
+          desc="The tracker for the use of funds"
+          columnName="FundsUseTrackerID"
+          fkentity="FundsUseTracker"
+          nullok="false"
+          setterScriptability="doesNotExist"/>
+
+  <index
+          desc="There should only be one allotment between a funds source and a funds use"
+          name="uniqueallotment"
+          unique="true">
+    <indexcol name="FundsSourceTrackerID"
+              keyposition="1"/>
+    <indexcol name="FundsUseTrackerID"
+              keyposition="2"/>
+  </index>
+</entity>

@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<Entity
+  name="SnapshotInvoiceItem">
+  <Columns>
+    <Column
+      beanPath="SnapshotInvoiceItem.StatementInvoice.EventDate"
+      name="StatementDate"
+      sortOrder="0"/>
+    <Column
+      beanPath="SnapshotInvoiceItem.InvoiceItem.Amount"
+      name="Amount"
+      sortOrder="1"/>
+    <Column
+      beanPath="SnapshotInvoiceItem.InvoiceItem.Invoice.EventDate"
+      name="OriginalStatementDate"
+      sortOrder="2"/>
+  </Columns>
+  <DisplayName><![CDATA[
+return displaykey.Java.SnapshotInvoiceItem.DisplayName(Amount?.render(), StatementDate?.format("short"), OriginalStatementDate?.format("short"));
+  ]]></DisplayName>
+</Entity>

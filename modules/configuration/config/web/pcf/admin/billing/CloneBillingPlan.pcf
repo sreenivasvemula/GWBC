@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PCF
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:noNamespaceSchemaLocation="../../../../../../pcf.xsd">
+  <Page
+    afterCancel="BillingPlanDetail.go(billingPlan)"
+    afterCommit="BillingPlanDetail.go(clonedBillingPlan)"
+    canEdit="true"
+    id="CloneBillingPlan"
+    parent="BillingPlans()"
+    showUpLink="true"
+    startInEditMode="true"
+    title="displaykey.Web.CloneBillingPlan.Title(billingPlan)">
+    <LocationEntryPoint
+      signature="CloneBillingPlan(billingPlan : BillingPlan)"/>
+    <Variable
+      name="billingPlan"
+      type="BillingPlan"/>
+    <Variable
+      initialValue="billingPlan.makeClone() as BillingPlan"
+      name="clonedBillingPlan"/>
+    <ScreenRef
+      def="BillingPlanDetailScreen(clonedBillingPlan)"/>
+  </Page>
+</PCF>

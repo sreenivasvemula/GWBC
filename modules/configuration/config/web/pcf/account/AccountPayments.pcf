@@ -1,0 +1,64 @@
+<?xml version="1.0"?>
+<PCF
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:noNamespaceSchemaLocation="../../../../../pcf.xsd">
+  <Page
+    autosaveable="false"
+    canEdit="true"
+    canVisit="perm.System.accttabview and perm.System.acctpmntview"
+    id="AccountPayments"
+    showUpLink="true"
+    title="displaykey.Web.AccountPayments.Title">
+    <LocationEntryPoint
+      signature="AccountPayments(account : Account)"/>
+    <LocationEntryPoint
+      signature="AccountPayments(account : Account, initialSelectedMoneyRcvd : DirectBillMoneyRcvd)"/>
+    <Variable
+      name="account"
+      type="Account"/>
+    <Variable
+      name="initialSelectedMoneyRcvd"
+      recalculateOnRefresh="true"
+      type="DirectBillMoneyRcvd"/>
+    <Variable
+      name="selectedPaymentRequest"
+      type="PaymentRequest"/>
+    <Screen
+      id="AccountDetailPaymentsScreen">
+      <ListDetailPanel
+        id="DirectBillPaymentsListDetail"
+        selectionName="moneyReceived"
+        selectionOnEnter="initialSelectedMoneyRcvd"
+        selectionType="DirectBillMoneyRcvd">
+        <PanelRef
+          def="AccountDBPaymentsLV(account, account.findReceivedPaymentMoneysSortedByReceivedDate())">
+          <Toolbar>
+            <ToolbarFilter
+              iterator="MoneyReceivedIterator"
+              label="displaykey.Web.AccountPayments.PaymentsReceivedFilter.Label"
+              name="PaymentsReceivedFilter">
+              <ToolbarFilterOption
+                filter="new gw.payment.BaseMoneyReceivedDateFilter(30)"
+                label="displaykey.Web.AccountPayments.PaymentsReceivedFilter.Last30Days"/>
+              <ToolbarFilterOption
+                filter="new gw.payment.BaseMoneyReceivedDateFilter(60)"
+                label="displaykey.Web.AccountPayments.PaymentsReceivedFilter.Last60Days"/>
+              <ToolbarFilterOption
+                filter="new gw.payment.BaseMoneyReceivedDateFilter(90)"
+                label="displaykey.Web.AccountPayments.PaymentsReceivedFilter.Last90Days"/>
+              <ToolbarFilterOption
+                filter="new filters.StandardQueryFilter(&quot;All&quot;, \ qf -&gt; {})"
+                label="displaykey.Web.AccountPayments.PaymentsReceivedFilter.All"/>
+            </ToolbarFilter>
+          </Toolbar>
+        </PanelRef>
+        <PanelRef
+          def="AccountPaymentDistributionItemsCV(moneyReceived)"/>
+      </ListDetailPanel>
+    </Screen>
+    <Code><![CDATA[function checkInStoppableState(paymentRequest : PaymentRequest) : boolean {
+      return (paymentRequest.Status == PaymentRequestStatus.TC_CREATED || paymentRequest.Status ==
+      PaymentRequestStatus.TC_REQUESTED);
+}]]></Code>
+  </Page>
+</PCF>

@@ -1,0 +1,17 @@
+package rules.Preupdate.ContactPreupdate_dir
+
+
+@gw.rules.RuleName("All Contacts sync by default")
+internal class AllContactssyncbydefault {
+  static function doCondition(contact  :  entity.Contact) : boolean {
+/*start00rule*/
+return contact.AutoSync == null
+/*end00rule*/
+}
+
+  static function doAction(contact  :  entity.Contact, actions : gw.rules.Action) {
+/*start00rule*/
+contact.AutoSync = AutoSync.TC_ALLOW 
+/*end00rule*/
+  }
+}

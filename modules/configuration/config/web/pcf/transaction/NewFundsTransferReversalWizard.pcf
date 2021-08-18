@@ -1,0 +1,24 @@
+<?xml version="1.0"?>
+<PCF
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:noNamespaceSchemaLocation="../../../../../pcf.xsd">
+  <Wizard
+    afterCancel="DesktopGroup.go()"
+    afterFinish="DesktopGroup.go()"
+    beforeCommit="transferFundContext.createReversal()"
+    id="NewFundsTransferReversalWizard">
+    <Variable
+      initialValue="new gw.transaction.TransferFundsReversalWizardContext()"
+      name="transferFundContext"
+      type="gw.transaction.TransferFundsReversalWizardContext"/>
+    <WizardStep
+      allowNext="transferFundContext.getTransferFundTransaction() != null"
+      id="transferSearchStep"
+      screen="NewFundsTransferReversalSearchScreen(transferFundContext)"
+      title="displaykey.Web.NewFundsTransferReversalWizard.TransferSearchStep.Title"/>
+    <WizardStep
+      id="transferConfirmationStep"
+      screen="NewFundsTransferReversalConfirmationScreen(transferFundContext)"
+      title="displaykey.Web.NewFundsTransferReversalWizard.TransferConfirmStep.Title"/>
+  </Wizard>
+</PCF>

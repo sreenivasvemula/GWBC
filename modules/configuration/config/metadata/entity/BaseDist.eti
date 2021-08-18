@@ -1,0 +1,108 @@
+<?xml version="1.0"?>
+<entity
+  xmlns="http://guidewire.com/datamodel"
+  abstract="true"
+  desc="Base class for Agency Cycle Dist and DB Dist"
+  entity="BaseDist"
+  final="false"
+  setterScriptability="hidden"
+  subpackage="payment"
+  table="basedist"
+  type="retireable">
+  <implementsEntity
+    name="Validatable"/>
+  <implementsEntity
+    name="InCurrencySilo"/>
+  <array
+    arrayentity="BaseDistItem"
+    arrayfield="ActiveDist"
+    desc="Set of non-reversed distribution items representing amount to apply to each invoice item being paid or promised by this distribution"
+    name="DistItems"
+    owner="true"
+    setterScriptability="hidden"/>
+  <array
+    arrayentity="BaseDistItem"
+    arrayfield="ReversedDist"
+    desc="Set of reversed distribution items that are associated with this payment"
+    name="ReversedDistItems"
+    owner="true"
+    setterScriptability="hidden"/>
+  <array
+    arrayentity="BaseNonReceivableDistItem"
+    arrayfield="ActiveDist"
+    desc="Set of distribution items representing amount to apply to non-receivables"
+    name="NonReceivableDistItems"
+    owner="true"
+    setterScriptability="hidden"/>
+  <array
+    arrayentity="BaseNonReceivableDistItem"
+    arrayfield="ReversedDist"
+    desc="Set of reversed distribution items representing amount to apply to non-receivables"
+    name="ReversedNonReceivableDistItems"
+    owner="true"
+    setterScriptability="hidden"/>
+  <column
+    desc="The date that this distribution was initially distributed."
+    name="DistributedDate"
+    nullok="true"
+    setterScriptability="hidden"
+    type="datetime"/>
+  <column
+    desc="The date that this distribution was reversed."
+    name="ReversalDate"
+    nullok="true"
+    setterScriptability="hidden"
+    type="pastdatetime"/>
+  <monetaryamount
+    amountColumnName="NetDistributedToInvoiceItems"
+    currencyColumnName="NetDistToInvoiceItems_cur"
+    desc="The total net amount distributed to BaseDistItem payment items excluding BaseSuspDistItem suspense items, which are counted separately. This field only counts the amount distributed on executed items. To get the net amount distributed including non-executed items, use property DistributedAmountForUnexecutedDist."
+    name="NetDistributedToInvoiceItems"
+    nullok="false"
+    overwrittenInStagingTable="true"
+    scaleToCurrency="true"
+    soapnullok="true">
+    <tag
+      name="DefaultValueZero"/>
+  </monetaryamount>
+  <monetaryamount
+    amountColumnName="NetInSuspense"
+    desc="The net suspense amount in this distribution. This field only counts the suspense amount on executed BaseSuspDistItem suspense items. To get the net suspense amount including non-executed suspense items, use property SuspenseAmountForUnexecutedDist."
+    name="NetInSuspense"
+    nullok="false"
+    overwrittenInStagingTable="true"
+    scaleToCurrency="true"
+    soapnullok="true">
+    <tag
+      name="DefaultValueZero"/>
+  </monetaryamount>
+  <edgeForeignKey
+    desc="Reference to the active money of record that was received or promised for this distribution"
+    edgeTableName="activemoneyrcvd"
+    fkentity="BaseMoneyReceived"
+    ignoreforevents="true"
+    loadable="true"
+    name="BaseMoneyReceived"
+    nullok="false"/>
+  <array
+    arrayentity="BaseMoneyReceived"
+    arrayfield="BaseDist"
+    desc="Set of money receiveds relating to this dist"
+    name="BaseMoneyReceiveds"
+    setterScriptability="hidden"/>
+  <edgeForeignKey
+    desc="Points to an existing BaseDist this distribution is modifying."
+    edgeTableName="moddist"
+    fkentity="BaseDist"
+    ignoreforevents="true"
+    name="DistBeingModified"
+    nullok="true"/>
+  <checkconstraint
+    desc="Found BaseDist with subtype that cannot be loaded from staging tables.  Only AgencyCyclePayments and DirectBillPayments can be loaded."
+    stagingtablepredicate="Subtype IN ('AgencyCyclePayment', 'DirectBillPayment')"/>
+  <checkconstraint
+    desc="Found BaseDist with no DistributedDate in staging table.  Only distributed BaseDists can be loaded."
+    stagingtablepredicate="DistributedDate IS NOT NULL"/>
+  <dbcheckbuilder
+    className="com.guidewire.bc.system.database.dbchecks.payment.BaseDistDBCheckBuilder"/>
+</entity>

@@ -1,0 +1,48 @@
+<?xml version="1.0"?>
+<Entity
+  name="TAccountPattern">
+  <Columns>
+    <Column
+      beanPath="TAccountPattern.SubType"
+      name="SubType"/>
+    <Column
+      beanPath="TAccountPattern.TAccountName"
+      name="name"
+      sortOrder="0"/>
+    <Column
+      beanPath="ChargeTAccountPattern.Suffix"
+      name="suffix"
+      sortOrder="1"/>
+    <Column
+      beanPath="SingleTAccountPattern.ChargeRollup"
+      name="chargeRollup"
+      sortOrder="2"/>
+  </Columns>
+  <DisplayName><![CDATA[uses com.guidewire.bc.domain.accounting.config.impl.TAccountPatternImpl
+
+var localizedTAccountName = TAccountPatternImpl.displayKeyMap[name] == null ? name : TAccountPatternImpl.displayKeyMap[name].localize()
+
+var TAccountPattern = displaykey.DisplayName.TAccountPattern
+
+switch (suffix) {
+  case (TAccountPatternSuffix.TC_BILLED):
+      return TAccountPattern.Billed(localizedTAccountName);
+  case (TAccountPatternSuffix.TC_DUE):
+      return TAccountPattern.Due(localizedTAccountName);
+  case (TAccountPatternSuffix.TC_UNBILLED):
+      return TAccountPattern.Unbilled(localizedTAccountName);
+  case (TAccountPatternSuffix.TC_UNEARNED):
+      return TAccountPattern.Unearned(localizedTAccountName);
+  case (TAccountPatternSuffix.TC_EXPENSE):
+      return chargeRollup ? TAccountPattern.Expense.Rollup(localizedTAccountName) : TAccountPattern.Expense(localizedTAccountName);
+  case (TAccountPatternSuffix.TC_NEGATIVEWRITEOFF):
+      return chargeRollup ? TAccountPattern.NegativeWriteoff.Rollup(localizedTAccountName) : TAccountPattern.NegativeWriteoff(localizedTAccountName);
+  case (TAccountPatternSuffix.TC_RESERVE):
+      return chargeRollup ? TAccountPattern.Reserve.Rollup(localizedTAccountName) : TAccountPattern.Reserve(localizedTAccountName);
+  case (TAccountPatternSuffix.TC_REVENUE):
+      return chargeRollup ? TAccountPattern.Revenue.Rollup(localizedTAccountName) : TAccountPattern.Revenue(localizedTAccountName);
+  case (TAccountPatternSuffix.TC_WRITEOFFEXPENSE):
+      return chargeRollup ? TAccountPattern.WriteoffExpense.Rollup(localizedTAccountName) : TAccountPattern.WriteoffExpense(localizedTAccountName);
+  default: return displaykey.DisplayName.TAccountPattern(localizedTAccountName)
+}]]></DisplayName>
+</Entity>

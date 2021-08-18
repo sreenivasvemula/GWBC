@@ -1,0 +1,169 @@
+<?xml version="1.0"?>
+<PCF
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:noNamespaceSchemaLocation="../../../../../pcf.xsd">
+  <Popup
+    beforeCommit="changer.execute()"
+    canEdit="true"
+    id="EditInvoiceItemsPopup"
+    startInEditMode="true"
+    title="displaykey.Web.InvoiceItemsLV.Title">
+    <LocationEntryPoint
+      signature="EditInvoiceItemsPopup(charge : Charge)"/>
+    <Variable
+      name="charge"
+      type="Charge"/>
+    <Variable
+      initialValue="new gw.api.domain.invoice.ChargeInstallmentChanger(charge)"
+      name="changer"
+      type="gw.api.domain.invoice.ChargeInstallmentChanger"/>
+    <Variable
+      initialValue="charge.Currency"
+      name="currency"/>
+    <Variable
+      initialValue="web.invoice.InvoiceUtil.getUserVisibleInvoiceItemTypes()"
+      name="availableTypes"/>
+    <Screen>
+      <Toolbar>
+        <EditButtons
+          editVisible="false"/>
+        <IteratorButtons
+          addVisible="!charge.Reversed &amp;&amp; !charge.Reversal"
+          iterator="InvoiceItemsLV"
+          removeVisible="false"
+          showAddConfirmMessage="false"
+          showRemoveConfirmMessage="false"/>
+      </Toolbar>
+      <DetailViewPanel>
+        <InputColumn>
+          <Input
+            id="itemOwner"
+            label="displaykey.Web.InvoiceItemsLV.Owner"
+            value="charge.OwnerAccount"/>
+          <Input
+            id="Context"
+            label="displaykey.Web.InvoiceItemsLV.Context"
+            value="charge.BillingInstruction"/>
+          <MonetaryAmountInput
+            currency="currency"
+            id="Amount"
+            label="displaykey.Web.InvoiceItemsLV.ChargeAmount"
+            value="charge.Amount"/>
+        </InputColumn>
+      </DetailViewPanel>
+      <ListViewPanel
+        id="InvoiceItemsLV">
+        <RowIterator
+          canPick="false"
+          editable="true"
+          elementName="entry"
+          toCreateAndAdd="changer.newEntry()"
+          value="changer.Entries">
+          <Row
+            editable="entry.canSetAmount()"
+            useArchivedStyle="entry.removesItem() || entry.isInOrphanedState()">
+            <Cell
+              align="right"
+              footerLabel="displaykey.Web.InvoiceItemsLV.Total"
+              id="InstallmentNumber"
+              label="displaykey.Web.InvoiceItemsLV.InstallmentNumber"
+              value="entry.InvoiceItem.InstallmentNumber"
+              visible="true"/>
+            <DateCell
+              editable="entry.addsItem()"
+              id="EventDate"
+              label="displaykey.Web.InvoiceItemsLV.EventDate"
+              required="true"
+              value="entry.EventDate">
+              <PostOnChange
+                target="DATA_ONLY"/>
+            </DateCell>
+            <PickerCell
+              editable="entry.addsItem()"
+              freeInputEnabled="false"
+              id="Invoice"
+              label="displaykey.Web.InvoiceItemsLV.Invoice"
+              pickLocation="ChooseInvoicePlacementPopup.push(entry, charge.DefaultPayer)"
+              required="true"
+              value="entry.Invoice"/>
+            <DateCell
+              id="DueDate"
+              label="displaykey.Web.InvoiceItemsLV.DueDate"
+              value="entry.InvoiceItem.Invoice == null ? entry.Invoice.PaymentDueDate : entry.InvoiceItem.InvoiceDueDate"/>
+            <Cell
+              enableSort="false"
+              id="itemPayer"
+              label="displaykey.Web.InvoiceItemsLV.Payer"
+              value="getPayerDisplay(entry)"/>
+            <RangeCell
+              editable="entry.addsItem()"
+              id="Type"
+              label="displaykey.Web.InvoiceItemsLV.Type"
+              required="true"
+              value="entry.InvoiceItemType"
+              valueRange="availableTypes"/>
+            <MonetaryAmountCell
+              currency="currency"
+              editable="entry.canSetAmount()"
+              footerSumValue="entry.Amount"
+              formatType="currency"
+              id="Amount"
+              label="displaykey.Web.InvoiceItemsLV.Amount"
+              required="true"
+              value="entry.Amount">
+              <PostOnChange
+                target="DATA_ONLY"/>
+            </MonetaryAmountCell>
+            <MonetaryAmountCell
+              align="right"
+              currency="currency"
+              footerSumValue="entry.InvoiceItem.PaidAmount"
+              formatType="currency"
+              id="PaidAmount"
+              label="displaykey.Web.InvoiceItemsLV.PaidAmount"
+              required="false"
+              value="entry.InvoiceItem.PaidAmount"/>
+            <Cell
+              id="EditType"
+              label="displaykey.Web.InvoiceItemsLV.EditType"
+              required="false"
+              value="entry.DisplayName"/>
+            <ButtonCell
+              action="entry.revert()"
+              available="entry.removesItem() || entry.modifiesItem()"
+              id="Revert"
+              value="displaykey.Web.InvoiceItemsLV.Revert"/>
+            <ButtonCell
+              action="removeAndInvalidateIterator(entry)"
+              available="entry.canRemove()"
+              id="Remove"
+              value="displaykey.Web.InvoiceItemsLV.Remove"/>
+          </Row>
+        </RowIterator>
+      </ListViewPanel>
+    </Screen>
+    <Code><![CDATA[function getPayerDisplay(itemEntry : gw.api.domain.invoice.ChargeInstallmentChanger.Entry) : String {
+  var invoiceHolder = itemEntry.Invoice == null ? charge.DefaultPayer : itemEntry.Invoice.Payer
+  
+  if (typeof invoiceHolder == Account) {
+    return invoiceHolder as String
+  } else {
+    var itemProducerCode = itemEntry.InvoiceItem.ActivePrimaryItemCommission.PolicyCommission.ProducerCode
+    var chargeProducerCode = charge.DefaultPrimaryEarningProducerCode
+    
+    return itemProducerCode == null ? formatProducerCodeDisplay(chargeProducerCode) : formatProducerCodeDisplay(itemProducerCode)
+  }
+}
+    
+function formatProducerCodeDisplay(producerCode : ProducerCode) : String {
+  return producerCode.Producer.DisplayName + " " + producerCode.Code
+} 
+
+function removeAndInvalidateIterator(itemEntry:gw.api.domain.invoice.ChargeInstallmentChanger.Entry) {
+  itemEntry.remove()
+  if (itemEntry.isInOrphanedState()) {
+    gw.api.web.PebblesUtil.invalidateIterators(CurrentLocation, gw.api.domain.invoice.ChargeInstallmentChanger.Entry)
+  }
+}]]></Code>
+  </Popup>
+</PCF>

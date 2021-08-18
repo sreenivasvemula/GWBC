@@ -1,0 +1,41 @@
+<?xml version="1.0"?>
+<subtype
+  xmlns="http://guidewire.com/datamodel"
+  abstract="true"
+  desc="Abstract base type for policy related billing instructions which modify an existing Policy Period"
+  entity="ExistingPlcyPeriodBI"
+  subpackage="accounting.billinginstruction"
+  supertype="PlcyBillingInstruction">
+  <column
+    createhistogram="true"
+    desc="Date associated with the BI"
+    name="ModificationDate"
+    nullok="false"
+    type="datetime"/>
+  <foreignkey
+    columnName="AssociatedPolicyPeriodID"
+    desc="The policy period to cancel"
+    exportasid="true"
+    fkentity="PolicyPeriod"
+    name="AssociatedPolicyPeriod"
+    nullok="false"/>
+  <typekey
+    desc="Special Handling for this Billing Instruction, if any"
+    name="SpecialHandling"
+    nullok="true"
+    typelist="SpecialHandling"/>
+  <index
+    desc="Covering index for policy closure batch process"
+    expectedtobecovering="true"
+    name="AssociatedPolPrd">
+    <indexcol
+      keyposition="1"
+      name="AssociatedPolicyPeriodID"/>
+    <indexcol
+      keyposition="2"
+      name="Subtype"/>
+    <indexcol
+      keyposition="3"
+      name="ModificationDate"/>
+  </index>
+</subtype>

@@ -1,0 +1,61 @@
+<?xml version="1.0"?>
+<PCF
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:noNamespaceSchemaLocation="../../../../../pcf.xsd">
+  <Screen
+    id="DirectBillSuspenseItemSearchScreen">
+    <SearchPanel
+      criteriaName="searchCriteria"
+      maxSearchResults="gw.api.system.BCConfigParameters.MaxSearchResults.Value"
+      resultsName="suspenseItems"
+      search="gw.search.SearchMethods.validateAndSearch(searchCriteria)"
+      searchCriteria="new DirectSuspPmntItemSearchCriteria()"
+      searchResultsType="DirectSuspPmntItemSearchViewQuery">
+      <PanelRef
+        def="DirectBillSuspenseItemSearchDV(searchCriteria)">
+        <Toolbar/>
+      </PanelRef>
+      <PanelRef>
+        <Toolbar/>
+        <ListViewPanel
+          editable="false"
+          id="DirectBillSuspenseItemSearchResultsLV">
+          <RowIterator
+            editable="false"
+            elementName="suspenseItem"
+            value="suspenseItems">
+            <Row>
+              <ButtonCell
+                action="editAssociatedDirectBillPayment(suspenseItem)"
+                id="ReleaseSuspenseItem"
+                value="displaykey.Web.DirectBillSuspenseItemSearchResultsLV.ReleaseSuspenseItem"/>
+              <Cell
+                id="PolicyNumber"
+                label="displaykey.Web.DirectBillSuspenseItemSearchResultsLV.PolicyNumber"
+                value="suspenseItem.PolicyNumber"/>
+              <DateCell
+                id="ExecutedDate"
+                label="displaykey.Web.DirectBillSuspenseItemSearchResultsLV.ExecutedDate"
+                value="suspenseItem.ExecutedDate"/>
+              <MonetaryAmountCell
+                currency="suspenseItem.Currency"
+                id="GrossAmountToApply"
+                label="displaykey.Web.DirectBillSuspenseItemSearchResultsLV.GrossAmountToApply"
+                sortBy="suspenseItem.Currency, suspenseItem.GrossAmountToApply"
+                value="suspenseItem.GrossAmountToApply.ofCurrency(suspenseItem.Currency)"/>
+              <Cell
+                id="PaymentComments"
+                label="displaykey.Web.DirectBillSuspenseItemSearchResultsLV.PaymentComments"
+                value="suspenseItem.PaymentComments"/>
+            </Row>
+          </RowIterator>
+        </ListViewPanel>
+      </PanelRef>
+    </SearchPanel>
+    <Code><![CDATA[function editAssociatedDirectBillPayment(suspenseItemView : DirectSuspPmntItemSearchView) {
+  var directBillMoneyReceived = suspenseItemView.BaseDist.BaseMoneyReceived as DirectBillMoneyRcvd;
+  ModifyDirectBillPaymentPopup.push(directBillMoneyReceived.Account, directBillMoneyReceived, 
+                          gw.api.web.payment.WhenModifyingDirectBillMoney.EditDistribution);
+}]]></Code>
+  </Screen>
+</PCF>

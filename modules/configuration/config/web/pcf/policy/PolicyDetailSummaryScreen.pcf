@@ -1,0 +1,518 @@
+<?xml version="1.0"?>
+<PCF
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:noNamespaceSchemaLocation="../../../../../pcf.xsd">
+  <Screen
+    id="PolicyDetailSummaryScreen">
+    <Require
+      name="policyPeriod"
+      type="PolicyPeriod"/>
+    <Variable
+      initialValue="new web.policy.PolicyPeriodBalancesView(policyPeriod)"
+      name="policyPeriodBalances"/>
+    <Variable
+      initialValue="policyPeriod.TotalValueExcludingRollups"
+      name="totalValueToday"
+      recalculateOnRefresh="true"
+      type="gw.pl.currency.MonetaryAmount"/>
+    <Variable
+      initialValue="policyPeriod.getSafeEarnedPremium()"
+      name="earnedPremium"
+      recalculateOnRefresh="true"
+      type="gw.pl.currency.MonetaryAmount"/>
+    <Variable
+      initialValue="policyPeriod.EarnedExcludingRollups"
+      name="totalEarned"
+      recalculateOnRefresh="true"
+      type="gw.pl.currency.MonetaryAmount"/>
+    <Variable
+      initialValue="totalValueToday - policyPeriod.UnbilledAmount"
+      name="totalBilled"
+      recalculateOnRefresh="true"
+      type="gw.pl.currency.MonetaryAmount"/>
+    <Variable
+      initialValue="policyPeriod.PaidAmount"
+      name="paidAmount"
+      recalculateOnRefresh="true"
+      type="gw.pl.currency.MonetaryAmount"/>
+    <Variable
+      initialValue="paidAmount + policyPeriod.getChargeRevenueRollupSum()"
+      name="totalPaid"
+      recalculateOnRefresh="true"
+      type="gw.pl.currency.MonetaryAmount"/>
+    <Variable
+      initialValue="policyPeriod.PaidThroughDate"
+      name="paidThroughDate"
+      recalculateOnRefresh="true"
+      type="DateTime"/>
+    <Variable
+      initialValue="policyPeriod.getDaysTillPaidThruDate(paidThroughDate)"
+      name="daysTillPaidThroughDate"
+      recalculateOnRefresh="true"
+      type="Number"/>
+    <Variable
+      initialValue="policyPeriod.Premium"
+      name="premium"
+      recalculateOnRefresh="true"
+      type="gw.pl.currency.MonetaryAmount"/>
+    <Variable
+      initialValue="policyPeriod.PolicyEquity"
+      name="policyEquity"
+      recalculateOnRefresh="true"
+      type="gw.pl.currency.MonetaryAmount"/>
+    <Variable
+      initialValue="policyPeriod.getPolicyEquityPercentage(premium, policyEquity)"
+      name="policyEquityPercent"
+      recalculateOnRefresh="true"
+      type="Number"/>
+    <Variable
+      initialValue="policyPeriod.Policy.Account"
+      name="account"
+      type="Account"/>
+    <Variable
+      initialValue="policyPeriod.CancellationProcessEvent"
+      name="cancellationEvent"
+      type="DelinquencyProcessEvent"/>
+    <Variable
+      initialValue="policyPeriod.Canceled"
+      name="isCanceled"
+      type="boolean"/>
+    <Variable
+      initialValue="gw.api.database.Query.make(SecurityZone).select()"
+      name="allSecurityZones"
+      recalculateOnRefresh="true"
+      type="SecurityZoneQuery"/>
+    <Toolbar>
+      <ToolbarButton
+        action="StartDelinquencyProcessPopup.push(account.OpenDelinquencyTargets)"
+        available="!CurrentLocation.InEditMode"
+        id="StartDelinquencyButton"
+        label="displaykey.Web.StartDelinquencyProcess.StartDelinquency"/>
+      <EditButtons/>
+    </Toolbar>
+    <AlertBar
+      action="TroubleTicketAlertForward.push(policyPeriod.Policy, policyPeriod)"
+      available="perm.System.plcyttktview"
+      id="PolicyDetailSummary_TroubleTicketAlertAlertBar"
+      label="policyPeriod.Policy.AlertBarDisplayText"
+      visible="policyPeriod.Policy.HasActiveTroubleTickets"/>
+    <AlertBar
+      action="TroubleTicketAlertForward.push(policyPeriod)"
+      available="perm.System.plcyttktview"
+      id="PolicyDetailSummary_TroubleTicketForPolicyPeriod"
+      label="policyPeriod.AlertBarDisplayText"
+      visible="policyPeriod.HasActiveTroubleTickets"/>
+    <AlertBar
+      action="PolicyDetailDelinquencies.go(policyPeriod)"
+      available="perm.System.accttabview and perm.System.acctdelview"
+      id="PolicyDetailSummary_DelinquencyAlertAlertBar"
+      label="displaykey.Web.PolicyDetailSummary.DelinquencyAlert(policyPeriod.getDelinquencyReasons())"
+      visible="policyPeriod.hasActiveDelinquenciesOutOfGracePeriod()"/>
+    <AlertBar
+      action="PolicyDetailCharges.go(policyPeriod)"
+      available="perm.System.plcytabview and perm.System.plcychargesview"
+      id="PolicyDetailSummary_HeldChargesAlertBar"
+      label="displaykey.Web.PolicyDetailSummary.AlertBarChargesHeldText"
+      visible="policyPeriod.hasHeldCharges()"/>
+    <DetailViewPanel
+      id="PolicyDetailDV">
+      <InputColumn>
+        <Label
+          label="displaykey.Web.PolicyDetailDV.PolicyInformation"/>
+        <Input
+          id="PolicyNumber"
+          label="displaykey.Web.PolicyDetailDV.PolicyNumber"
+          value="policyPeriod.DisplayName"/>
+        <Input
+          id="DBA"
+          label="displaykey.Web.PolicyDetailDV.DBA"
+          value="policyPeriod.DBA"/>
+        <TypeKeyInput
+          id="Product"
+          label="displaykey.Web.PolicyDetailDV.Product"
+          value="policyPeriod.Policy.LOBCode"/>
+        <BooleanRadioInput
+          id="AssignedRisk"
+          label="displaykey.Web.PolicyDetailDV.AssignedRisk"
+          value="policyPeriod.AssignedRisk"/>
+        <TypeKeyInput
+          id="RiskJurisdiction"
+          label="displaykey.Web.PolicyDetailDV.RiskJurisdiction"
+          value="policyPeriod.RiskJurisdiction"/>
+        <TypeKeyInput
+          id="UWCompany"
+          label="displaykey.Web.PolicyDetailDV.UWCompany"
+          value="policyPeriod.UWCompany"/>
+        <DateInput
+          id="PolicyPerEffDate"
+          label="displaykey.Web.PolicyDetailDV.PolicyPerEffDate"
+          value="policyPeriod.PolicyPerEffDate"/>
+        <DateInput
+          id="PolicyPerExpirDate"
+          label="displaykey.Web.PolicyDetailDV.PolicyPerExpirDate"
+          value="policyPeriod.PolicyPerExpirDate"/>
+        <TypeKeyInput
+          id="ClosureStatus"
+          label="displaykey.Web.PolicyDetailDV.ClosureStatus"
+          value="policyPeriod.ClosureStatus"/>
+        <BooleanRadioInput
+          id="RequireFinalAudit"
+          label="displaykey.Web.PolicyDetailDV.RequireFinalAudit"
+          value="policyPeriod.RequireFinalAudit"/>
+        <TypeKeyInput
+          id="CancellationStatus"
+          label="displaykey.Web.PolicyDetailDV.CancelStatus"
+          value="policyPeriod.CancelStatus"/>
+        <Input
+          id="CancellationReason"
+          label="displaykey.Web.PolicyDetailDV.CancellationReason"
+          value="policyPeriod.CancelReason"
+          visible="isCanceled"/>
+        <TypeKeyInput
+          id="CancellationDate"
+          label="displaykey.Web.PolicyDetailDV.CancellationType"
+          value="policyPeriod.CancellationType"
+          visible="isCanceled"/>
+        <DateInput
+          id="CancellationType"
+          label="displaykey.Web.PolicyDetailDV.CancellationDate"
+          value="policyPeriod.Cancellation.ModificationDate"
+          visible="isCanceled"/>
+        <Input
+          id="DelinquencyStatus"
+          label="displaykey.Web.PolicyDetailDV.DelinquencyStatus"
+          value="DelinquencyStatus"/>
+        <RangeInput
+          editable="true"
+          id="SecurityZone"
+          label="displaykey.Web.PolicyDetailDV.SecurityZone"
+          value="policyPeriod.SecurityZone"
+          valueRange="allSecurityZones"/>
+        <Input
+          id="Underwriter"
+          label="displaykey.Web.PolicyDetailDV.Underwriter"
+          value="policyPeriod.Underwriter"/>
+        <Label
+          label="displaykey.Web.PolicyDetailDV.AccountInformation"/>
+        <Input
+          action="AccountDetailSummary.go(account)"
+          id="AccountNumber"
+          label="displaykey.Web.PolicyDetailDV.AccountNumber"
+          value="account"/>
+        <Input
+          action="AccountDetailSummary.go(account)"
+          id="AccountName"
+          label="displaykey.Web.PolicyDetailDV.AccountName"
+          value="account.AccountNameLocalized"/>
+        <Input
+          boldLabel="true"
+          hideChildrenIfReadOnly="false"
+          id="ChangeInvoivingOverrides"
+          label="displaykey.Web.PolicyDetailDV.InvoicingOverrides"
+          value="null"
+          visible="!policyPeriod.isAgencyBill()">
+          <MenuItem
+            action="ChangeInvoicingOverridesPopup.push(policyPeriod)"
+            available="!CurrentLocation.InEditMode &amp;&amp; policyPeriod.isDirectBill()"
+            hideIfDisabled="false"
+            id="ChangeDirectBillInvoicingOverrides"
+            label="displaykey.Web.PolicyDetailDV.UpdateInvoicingOverrides"
+            visible="!CurrentLocation.InEditMode &amp;&amp; policyPeriod.isDirectBill()"/>
+          <MenuItem
+            action="ListBillInvoicingOverridesWizard.push(policyPeriod)"
+            id="ChangeListBillInvoicingOverrides"
+            label="displaykey.Web.PolicyDetailDV.UpdateListBill"
+            visible="!CurrentLocation.InEditMode &amp;&amp; policyPeriod.isListBill()"/>
+        </Input>
+        <Input
+          action="AccountDetailSummary.go(policyPeriod.OverridingPayerAccount)"
+          id="OverridingPayerAccount"
+          label="displaykey.Web.PolicyDetailDV.OverridingPayerAccount"
+          value="policyPeriod.OverridingPayerAccount"
+          visible="policyPeriod.OverridingPayerAccount != null "/>
+        <Input
+          id="OverridingInvoiceStream"
+          label="displaykey.Web.PolicyDetailDV.OverridingInvoiceStream"
+          value="policyPeriod.OverridingInvoiceStream"
+          visible="(!policyPeriod.AgencyBill and policyPeriod.OverridingInvoiceStream != null)"/>
+        <Label
+          label="displaykey.Web.PolicyDetailDV.PrimaryInsured"/>
+        <Input
+          id="PrimaryInsured_Name"
+          label="displaykey.Web.PolicyDetailDV.PrimaryInsured.Name"
+          value="policyPeriod.PrimaryInsured"/>
+        <Input
+          id="Address"
+          label="displaykey.Web.NewAccountDV.PrimaryContact.Address"
+          value="new gw.api.address.AddressFormatter().format(policyPeriod.PrimaryInsured.Contact.PrimaryAddress, &quot;\n&quot;)"/>
+        <Input
+          id="PrimaryInsured_Phone"
+          label="displaykey.Web.PolicyDetailDV.PrimaryInsured.Phone"
+          value="policyPeriod.PrimaryInsured.Contact.WorkPhoneValue"/>
+        <Input
+          id="PrimaryInsured_Email"
+          label="displaykey.Web.PolicyDetailDV.PrimaryInsured.Email"
+          value="policyPeriod.PrimaryInsured.Contact.EmailAddress1"/>
+        <Label
+          label="displaykey.Web.PolicyDetailDV.ProducerInformation"/>
+        <Input
+          action="if(policyPeriod.PrimaryPolicyCommission.ProducerCode.Producer != null) { ProducerDetail.go(policyPeriod.PrimaryPolicyCommission.ProducerCode.Producer) }"
+          actionAvailable="policyPeriod.PrimaryPolicyCommission != null"
+          id="Producer"
+          label="displaykey.Web.PolicyDetailDV.Producer"
+          value="policyPeriod.PrimaryPolicyCommission.ProducerCode.Producer"/>
+        <Input
+          id="ProducerCode"
+          label="displaykey.Web.PolicyDetailDV.ProducerCode"
+          value="policyPeriod.PrimaryPolicyCommission.ProducerCode.Code"/>
+        <Label
+          label="displaykey.Web.PolicyDetailDV.BillingInformation"/>
+        <Input
+          hideChildrenIfReadOnly="false"
+          id="BillingMethod"
+          label="displaykey.Web.PolicyDetailDV.BillingMethod"
+          value="policyPeriod.BillingMethod">
+          <MenuItem
+            action="changeBillingMethodToAgencyBill()"
+            available="true"
+            hideIfDisabled="false"
+            id="ChangeToAgencyBillAction"
+            label="displaykey.Web.PolicyDetailDV.BillingMethod.ChangeToAgencyBillButton"
+            visible="!policyPeriod.AgencyBill"/>
+          <MenuItem
+            action="ChangeBillingMethodToDirectBillPopup.push(policyPeriod)"
+            available="true"
+            hideIfDisabled="false"
+            id="ChangeToDirectBillAction"
+            label="displaykey.Web.PolicyDetailDV.BillingMethod.ChangeToDirectBillButton "
+            visible="! policyPeriod.DirectBill"/>
+          <MenuItem
+            action="ListBillInvoicingOverridesWizard.push(policyPeriod)"
+            available="true"
+            hideIfDisabled="false"
+            id="changeToListBill"
+            label="displaykey.Web.PolicyDetailDV.BillingMethod.ChangeToListBillButton "
+            visible="! policyPeriod.ListBill"/>
+        </Input>
+      </InputColumn>
+      <InputColumn>
+        <Label
+          label="displaykey.Web.PolicyDetailDV.Charges"/>
+        <MonetaryAmountInput
+          align="right"
+          currency="policyPeriod.Currency"
+          formatType="currency"
+          id="PolicyCharges"
+          label="displaykey.Web.PolicyDetailDV.PremiumCharges"
+          value="premium"/>
+        <MonetaryAmountInput
+          align="right"
+          currency="policyPeriod.Currency"
+          formatType="currency"
+          id="OtherCharges"
+          label="displaykey.Web.PolicyDetailDV.OtherCharges"
+          value="totalValueToday - premium"/>
+        <MonetaryAmountInput
+          align="right"
+          boldLabel="true"
+          currency="policyPeriod.Currency"
+          formatType="currency"
+          id="TotalCharges"
+          label="displaykey.Web.PolicyDetailDV.TotalCharges"
+          value="totalValueToday"/>
+        <InputDivider/>
+        <Label
+          label="displaykey.Web.PolicyDetailDV.Earnings"/>
+        <MonetaryAmountInput
+          align="right"
+          currency="policyPeriod.Currency"
+          formatType="currency"
+          id="EarnedPremium"
+          label="displaykey.Web.PolicyDetailDV.EarnedPremium"
+          value="earnedPremium"/>
+        <MonetaryAmountInput
+          align="right"
+          currency="policyPeriod.Currency"
+          formatType="currency"
+          id="OtherEarned"
+          label="displaykey.Web.PolicyDetailDV.OtherEarned"
+          value="totalEarned - earnedPremium"/>
+        <MonetaryAmountInput
+          align="right"
+          boldLabel="true"
+          currency="policyPeriod.Currency"
+          formatType="currency"
+          id="TotalEarned"
+          label="displaykey.Web.PolicyDetailDV.TotalEarned"
+          value="totalEarned"/>
+        <Input
+          boldLabel="true"
+          id="PercentEarned"
+          label="displaykey.Web.PolicyDetailDV.PercentEarned"
+          value="gw.api.util.StringUtil.formatPercentagePoints(policyPeriod.getPercentPremiumEarned(totalValueToday, totalEarned), 0)"/>
+        <InputDivider/>
+        <Label
+          label="displaykey.Web.PolicyDetailDV.Payments"/>
+        <Input
+          action="PaymentPlanDetail.go(policyPeriod.PaymentPlan)"
+          id="PaymentPlan"
+          label="displaykey.Web.PolicyDetailDV.PaymentPlan"
+          value="policyPeriod.PaymentPlan.Name"/>
+        <MonetaryAmountInput
+          align="right"
+          boldLabel="true"
+          currency="policyPeriod.Currency"
+          formatType="currency"
+          id="TotalPaid"
+          label="displaykey.Web.PolicyDetailDV.TotalPaid"
+          value="totalPaid"/>
+        <Input
+          id="PaidToBilledRatio"
+          label="displaykey.Web.PolicyDetailDV.PaidToBilledRatio"
+          value="gw.api.util.StringUtil.formatPercentagePoints(policyPeriod.getPaidToBilledRatio(totalBilled, paidAmount), 0)"/>
+        <Input
+          id="PaidToValueRatio"
+          label="displaykey.Web.PolicyDetailDV.PaidToValueRatio"
+          value="gw.api.util.StringUtil.formatPercentagePoints(policyPeriod.getPaidToValueRatio(totalValueToday, paidAmount), 0)"/>
+        <InputDivider/>
+        <Label
+          label="displaykey.Web.PolicyDetailDV.FullPayDiscount"/>
+        <BooleanRadioInput
+          id="Eligible"
+          label="displaykey.Web.PolicyDetailDV.Eligible"
+          value="policyPeriod.EligibleForFullPayDiscount"/>
+        <DateInput
+          id="FullPayDate"
+          label="displaykey.Web.PolicyDetailDV.FullPayDate"
+          value="policyPeriod.FullPayDiscountUntil"
+          visible="policyPeriod.EligibleForFullPayDiscount"/>
+        <MonetaryAmountInput
+          currency="policyPeriod.Currency"
+          formatType="currency"
+          id="DiscountedPayment"
+          label="displaykey.Web.PolicyDetailDV.DiscountedPayment"
+          value="policyPeriod.DiscountedPaymentThreshold"
+          visible="policyPeriod.EligibleForFullPayDiscount"/>
+      </InputColumn>
+      <InputColumn>
+        <Label
+          label="displaykey.Web.PolicyDetailDV.AmountsOutstanding"/>
+        <MonetaryAmountInput
+          align="right"
+          currency="policyPeriod.Currency"
+          formatType="currency"
+          id="PastDue"
+          label="displaykey.Web.PolicyDetailDV.PastDue"
+          value="policyPeriod.DelinquentAmount"/>
+        <MonetaryAmountInput
+          align="right"
+          boldLabel="true"
+          currency="policyPeriod.Currency"
+          formatType="currency"
+          id="TotalOutstanding"
+          label="displaykey.Web.PolicyDetailDV.TotalOutstanding"
+          value="policyPeriodBalances.AdjustedOutstandingAmount"/>
+        <InputDivider/>
+        <Label
+          label="displaykey.Web.PolicyDetailDV.Writeoffs"/>
+        <MonetaryAmountInput
+          align="right"
+          currency="policyPeriod.Currency"
+          formatType="currency"
+          id="WriteoffExpense"
+          label="displaykey.Web.PolicyDetailDV.WriteoffAmount"
+          value="policyPeriod.WriteoffExpense - policyPeriod.NegativeWriteoff"/>
+        <InputDivider
+          visible="not policyPeriod.AgencyBill"/>
+        <Label
+          label="displaykey.Web.PolicyDetailDV.Equity"
+          visible="not policyPeriod.AgencyBill"/>
+        <MonetaryAmountInput
+          currency="policyPeriod.Currency"
+          formatType="currency"
+          id="PolicyEquity"
+          label="displaykey.Web.PolicyDetailDV.PolicyEquity"
+          value="policyEquity"
+          visible="not policyPeriod.AgencyBill"/>
+        <Input
+          id="PolicyEquityPercentage"
+          label="displaykey.Web.PolicyDetailDV.PolicyEquityPercentage"
+          value="gw.api.util.StringUtil.formatPercentagePoints(policyEquityPercent, 2)"
+          visible="not policyPeriod.AgencyBill"/>
+        <DateInput
+          id="PaidThruDate"
+          label="displaykey.Web.PolicyDetailDV.PaidThruDate"
+          value="paidThroughDate"
+          visible="not policyPeriod.AgencyBill"/>
+        <Input
+          id="DaysTillPaidThruDate"
+          label="displaykey.Web.PolicyDetailDV.DaysTillPaidThruDate"
+          value="daysTillPaidThroughDate"
+          visible="not policyPeriod.AgencyBill"/>
+        <DateInput
+          id="CancellationPending"
+          label="displaykey.Web.PolicyDetailDV.CancellationPending"
+          value="cancellationEvent.TargetDate"
+          visible="not isCanceled &amp;&amp; not policyPeriod.AgencyBill"/>
+        <TypeKeyInput
+          id="DelinquencyReason"
+          label="displaykey.Web.PolicyDetailDV.DelinquencyReason"
+          value="cancellationEvent.DelinquencyProcess.Reason"
+          visible="not isCanceled &amp;&amp; not policyPeriod.AgencyBill"/>
+        <InputDivider/>
+        <Label
+          label="displaykey.Web.PolicyDetailDV.History"/>
+        <DateInput
+          id="InitialInception"
+          label="displaykey.Web.PolicyDetailDV.InitialInception"
+          value="policyPeriod.getPolicyInitialInceptionDate()"/>
+        <Input
+          id="TermNumber"
+          label="displaykey.Web.PolicyDetailDV.TermNumber"
+          value="policyPeriod.TermNumber"/>
+        <InputDivider/>
+        <Label
+          label="displaykey.Web.AccountDetailDV.Delinquency"/>
+        <RangeInput
+          action="DelinquencyPlanDetailPopup.push(policyPeriod.PolicyPeriodDelinquencyPlan)"
+          actionAvailable="policyPeriod.PolicyPeriodDelinquencyPlan != null"
+          editable="true"
+          id="DelinquencyPlan"
+          label="displaykey.Web.AccountDetailDV.DelinquencyPlan"
+          required="false"
+          value="policyPeriod.PolicyPeriodDelinquencyPlan"
+          valueRange="policyPeriod.getApplicableDelinquencyPlans()"/>
+      </InputColumn>
+    </DetailViewPanel>
+    <PanelRef
+      def="PremiumReportDueDatesLV(policyPeriod)"
+      visible="policyPeriod.PaymentPlan.Reporting">
+      <TitleBar
+        title="displaykey.Web.PolicyDetailSummaryScreen.PremiumReportDueDatesLV.Title"/>
+    </PanelRef>
+    <PanelRef
+      def="TransactionDetailsLV(policyPeriod)">
+      <TitleBar
+        title="displaykey.Web.PolicyDetailSummaryScreen.RecentTransactionsLV.Title"/>
+      <Toolbar/>
+    </PanelRef>
+    <Code><![CDATA[function changeBillingMethodToAgencyBill() {
+  policyPeriod.validateCanChangeToAgencyBill()  
+  ChangeBillingMethodToAgencyBillPopup.push(policyPeriod)
+}
+
+property get DelinquencyStatus() : String {
+  var earliestProcess = policyPeriod.EarliestActiveDelinquencyProcess
+  var eventApproval = earliestProcess.NextEvent.ApprovalActivity
+  if ( eventApproval.Mandatory and
+       eventApproval.Approved == null ) {
+    var status = eventApproval.ShortSubject
+    if ( status == null ) {
+      status = eventApproval.Subject
+    }
+    return status
+  }
+  return earliestProcess.PreviousEvent.EventName.Description
+}]]></Code>
+  </Screen>
+</PCF>

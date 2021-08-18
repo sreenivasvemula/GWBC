@@ -1,0 +1,43 @@
+<?xml version="1.0"?>
+<PCF
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:noNamespaceSchemaLocation="../../../../../pcf.xsd">
+  <Wizard
+    afterCancel="AccountDetailSummary.go(account)"
+    afterFinish="AccountDetailSummary.go(account)"
+    beforeCommit="gw.api.web.policy.PolicyPeriodUtil.validatePolicyPeriodCreatedFromUI(issuance);issuance.execute();"
+    canVisit="perm.PolicyPeriod.create"
+    id="NewPolicyWizard">
+    <LocationEntryPoint
+      signature="NewPolicyWizard(account : Account)"/>
+    <Variable
+      name="account"
+      type="Account"/>
+    <Variable
+      initialValue="web.policy.NewPolicyUtil.createNewPolicyPeriod(account)"
+      name="policyPeriod"
+      type="PolicyPeriod"/>
+    <Variable
+      initialValue="web.policy.NewPolicyUtil.createIssuance(account, policyPeriod)"
+      name="issuance"
+      type="Issuance"/>
+    <Variable
+      initialValue="new gw.invoice.InvoicingOverridesView(policyPeriod)"
+      name="invoicingOverridesView"/>
+    <Variable
+      initialValue="com.google.common.collect.Maps.newHashMap&lt;gw.api.domain.charge.ChargeInitializer, gw.invoice.InvoicingOverridesView&gt;()"
+      name="chargeToInvoicingOverridesViewMap"/>
+    <WizardStep
+      id="BasicsStep"
+      label="displaykey.Web.NewPolicyWizard.Basics.Label"
+      onExit="invoicingOverridesView.update()"
+      screen="NewPolicyWizardSummaryStepScreen(account, policyPeriod, issuance.ProducerCodes, invoicingOverridesView, issuance)"
+      title="displaykey.Web.NewPolicyWizard.Basics.Title"/>
+    <WizardStep
+      allowFinish="true"
+      id="ChargeStep"
+      label="displaykey.Web.NewPolicyWizard.Charges.Label"
+      screen="NewPolicyWizardChargeStepScreen(account, policyPeriod, issuance, chargeToInvoicingOverridesViewMap)"
+      title="displaykey.Web.NewPolicyWizard.Charges.Title"/>
+  </Wizard>
+</PCF>

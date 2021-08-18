@@ -1,0 +1,36 @@
+<?xml version="1.0"?>
+<!-- Popup chooser page that lists transactions. User can select a transaction on this page. -->
+<PCF
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:noNamespaceSchemaLocation="../../../../../pcf.xsd">
+  <Popup
+    id="TransactionsPopup"
+    returnType="Transaction[]"
+    title="displaykey.Web.TransactionsPopup.SelectTransactions">
+    <LocationEntryPoint
+      signature="TransactionsPopup(transactions:TransactionQuery)"/>
+    <Variable
+      name="transactions"
+      type="TransactionQuery"/>
+    <Screen
+      id="TransactionsPopupScreen">
+      <Toolbar>
+        <!-- Button that can operate on all rows that the user checks via checkboxes -->
+        <CheckedValuesToolbarButton
+          flags="any transaction"
+          id="TransactionsPopup_SelectButton"
+          iterator="TransactionsLV.TransactionsLV"
+          label="displaykey.Button.Select"
+          pickValue="CheckedValues"/>
+        <!-- Cancel Button -->
+        <ToolbarButton
+          action="CurrentLocation.cancel()"
+          id="TransactionsPopup_CancelButton"
+          label="displaykey.Button.Cancel"/>
+      </Toolbar>
+      <!-- List view that lists Transactions -->
+      <PanelRef
+        def="TransactionsLV(transactions, true)"/>
+    </Screen>
+  </Popup>
+</PCF>

@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<Entity
+        name="MultiTAccountPattern">
+    <Columns>
+        <Column
+                beanPath="TAccountPattern.TAccountName"
+                name="name"
+                sortOrder="0"/>
+    </Columns>
+    <DisplayName><![CDATA[
+                uses com.guidewire.bc.domain.accounting.config.impl.TAccountPatternImpl
+
+                var localizedTAccountName = TAccountPatternImpl.displayKeyMap[name] == null
+                        ? name
+                        : TAccountPatternImpl.displayKeyMap[name].localize()
+                return eval("displaykey.DisplayName.TAccountPattern " + "(localizedTAccountName)");
+        ]]></DisplayName>
+</Entity>

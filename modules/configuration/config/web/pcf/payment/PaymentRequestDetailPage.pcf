@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PCF
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:noNamespaceSchemaLocation="../../../../../pcf.xsd">
+  <Page
+    canEdit="true"
+    id="PaymentRequestDetailPage"
+    parent="AccountGroup(oldPaymentRequest.Account)"
+    startInEditMode="shouldStartInEditMode"
+    title="displaykey.Web.PaymentRequestDetailPage.Title">
+    <LocationEntryPoint
+      signature="PaymentRequestDetailPage(oldPaymentRequest : PaymentRequest, shouldStartInEditMode : Boolean)"/>
+    <Variable
+      name="oldPaymentRequest"
+      type="PaymentRequest"/>
+    <Variable
+      name="shouldStartInEditMode"
+      type="Boolean"/>
+    <Variable
+      initialValue="oldPaymentRequest.editPaymentRequest()"
+      name="newPaymentRequest"
+      type="PaymentRequest"/>
+    <Screen>
+      <PanelRef
+        def="PaymentRequestDV(newPaymentRequest)"
+        editable="true">
+        <Toolbar>
+          <EditButtons/>
+        </Toolbar>
+      </PanelRef>
+    </Screen>
+  </Page>
+</PCF>

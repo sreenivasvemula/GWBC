@@ -1,0 +1,159 @@
+<?xml version="1.0"?>
+<PCF
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:noNamespaceSchemaLocation="../../../../../pcf.xsd">
+  <Popup
+    beforeCommit="assignItemsToPayer()"
+    canEdit="true"
+    id="AssignInvoiceItemsToNewProducerPayerPopup"
+    startInEditMode="true"
+    title="displaykey.Web.AssignInvoiceItemsToNewPayerPopup.Title">
+    <LocationEntryPoint
+      signature="AssignInvoiceItemsToNewProducerPayerPopup(invoiceItems : InvoiceItem[], chargesToAssign : Charge[], currentAccount : Account)"/>
+    <Variable
+      name="invoiceItems"
+      type="InvoiceItem[]"/>
+    <Variable
+      name="currentAccount"
+      type="Account"/>
+    <Variable
+      name="newPayerProducer"
+      type="Producer"/>
+    <Variable
+      name="newPayerProducerCode"
+      type="ProducerCode"/>
+    <Variable
+      initialValue="true"
+      name="isAssignAllItemsSelected"
+      type="boolean"/>
+    <Variable
+      initialValue="computeItemsToAssign()"
+      name="itemsToAssign"
+      type="InvoiceItem[]"/>
+    <Variable
+      initialValue="new web.producer.ProducerSearchConverter()"
+      name="producerSearchConverter"
+      type="web.producer.ProducerSearchConverter"/>
+    <Variable
+      initialValue="false"
+      name="isReversePaymentsSelected"
+      type="boolean"/>
+    <Variable
+      name="chargesToAssign"
+      type="Charge[]"/>
+    <Variable
+      name="overridingInvoiceStream"
+      type="InvoiceStream"/>
+    <Screen
+      id="AssignInvoiceItemsToNewPayerScreen">
+      <Toolbar>
+        <EditButtons
+          editVisible="false"
+          updateLabel="displaykey.Button.Execute"
+          updateVisible="newPayerProducerCode != null &amp;&amp; newPayerProducer != null &amp;&amp; !producerHasNoAgblPlan()"/>
+      </Toolbar>
+      <AlertBar
+        id="notOwnerOrPayerWarning"
+        label="displaykey.Web.AssignInvoiceItemsToNewPayerPopup.ProducerNotOwnerOrPayerWarning(newPayerProducer.DisplayName)"
+        visible="hasNonOwnedOrPaidItem()"/>
+      <AlertBar
+        id="producerNotAgblWarning"
+        label="displaykey.Web.AssignInvoiceItemsToNewPayerPopup.ProducerNotAgblWarning(newPayerProducer.DisplayName)"
+        visible="producerHasNoAgblPlan()"/>
+      <DetailViewPanel>
+        <InputColumn>
+          <PickerInput
+            editable="true"
+            id="Producer"
+            inputConversion="producerSearchConverter.getProducer( VALUE )"
+            label="displaykey.Web.AssignInvoiceItemsToNewProducerPayerPopup.NewProducerPayerAccount"
+            onPick="autoSelectSoleProducerCode(); overridingInvoiceStream = null"
+            pickLocation="ProducerSearchPopup.push()"
+            value="newPayerProducer">
+            <PostOnChange
+              onChange="autoSelectSoleProducerCode(); overridingInvoiceStream = null"/>
+          </PickerInput>
+          <RangeInput
+            editable="true"
+            id="ProducerCode"
+            label="displaykey.Web.AssignInvoiceItemsToNewProducerPayerPopup.ProducerCode"
+            optionLabel="VALUE.Code"
+            required="true"
+            value="newPayerProducerCode"
+            valueRange="newPayerProducer.ActiveProducerCodes">
+            <PostOnChange/>
+          </RangeInput>
+          <BooleanRadioInput
+            editable="true"
+            falseLabel="displaykey.Web.AssignInvoiceItemsToNewPayerPopup.AssignOnlyNotFullyPaid"
+            id="WhatItemsToAssign"
+            label="displaykey.Web.AssignInvoiceItemsToNewPayerPopup.WhatItemsToAssign"
+            trueLabel="displaykey.Web.AssignInvoiceItemsToNewPayerPopup.AssignAllItems"
+            value="isAssignAllItemsSelected">
+            <PostOnChange
+              onChange="itemsToAssign = computeItemsToAssign()"/>
+          </BooleanRadioInput>
+          <BooleanRadioInput
+            editable="true"
+            falseLabel="displaykey.Web.AssignInvoiceItemsToNewPayerPopup.ReversePaymentsNo"
+            id="ReversePayments"
+            label="displaykey.Web.AssignInvoiceItemsToNewPayerPopup.ReversePayments"
+            trueLabel="displaykey.Web.AssignInvoiceItemsToNewPayerPopup.ReversePaymentsYes"
+            value="isReversePaymentsSelected"/>
+        </InputColumn>
+      </DetailViewPanel>
+      <CardViewPanel>
+        <Card
+          id="invoiceItemsCard"
+          title="displaykey.Web.AssignInvoiceItemsToNewPayerPopup.InvoiceItemsToAssign">
+          <PanelRef
+            def="InvoiceItemsLV(itemsToAssign, null, false)"
+            editable="false"
+            id="invoiceItemsLV"/>
+        </Card>
+      </CardViewPanel>
+    </Screen>
+    <Code><![CDATA[function hasNonOwnedOrPaidItem() : boolean {
+  return invoiceItems.hasMatch(\ invoiceItem -> ( invoiceItem.getOwner() != currentAccount) and (invoiceItem.getPayer() != currentAccount) )
+}
+
+function producerHasNoAgblPlan() : boolean {
+  if (newPayerProducer == null) {
+    return false
+  } else {
+    return (newPayerProducer.AgencyBillPlan == null)
+  }
+}
+
+function getNotFullyPaidInvoiceItems() : InvoiceItem[] {
+  return invoiceItems.where( \ invoiceItem -> !invoiceItem.FullyConsumed )
+}
+
+function computeItemsToAssign() : InvoiceItem[] {
+  return isAssignAllItemsSelected ? invoiceItems : getNotFullyPaidInvoiceItems( )
+}
+
+function assignItemsToPayer( ) {
+  newPayerProducer.becomePayerOfInvoiceItems( newPayerProducerCode,
+    isReversePaymentsSelected
+      ? gw.api.domain.invoice.ReversePaymentsWhenMovingInvoiceItem.Yes
+      : gw.api.domain.invoice.ReversePaymentsWhenMovingInvoiceItem.No,
+    itemsToAssign)
+
+  makeOverridesDefaultForAllPassedInCharges()
+}
+
+function makeOverridesDefaultForAllPassedInCharges() {
+  for ( chargeToAssign in chargesToAssign) {
+    chargeToAssign.setOverridingProducerPayer(newPayerProducer, newPayerProducerCode, overridingInvoiceStream)
+  }
+}
+
+function autoSelectSoleProducerCode() {
+        var activeProducerCodes = newPayerProducer.ActiveProducerCodes;
+        if (activeProducerCodes.length == 1) {
+          newPayerProducerCode = activeProducerCodes[0];
+        }
+      }]]></Code>
+  </Popup>
+</PCF>

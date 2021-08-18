@@ -1,0 +1,32 @@
+<?xml version="1.0"?>
+<PCF
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:noNamespaceSchemaLocation="../../../../../pcf.xsd">
+  <InputSet
+    id="ChargeInputSet">
+    <Require
+      name="invoiceItem"
+      type="InvoiceItem"/>
+    <TextInput
+      id="owner"
+      label="displaykey.Web.ChargesLV.Owner"
+      value="invoiceItem.Owner"/>
+    <TextInput
+      id="Issured"
+      label="displaykey.Web.ChargesLV.Payer"
+      value="invoiceItem.Payer"/>
+    <TextInput
+      id="Policy"
+      label="displaykey.Web.ChargesLV.Policy"
+      value="invoiceItem.PolicyPeriod.PolicyNumber"
+      visible="invoiceItem.PolicyPeriod != null"/>
+    <DateInput
+      id="ChargeDate"
+      label="displaykey.Web.ChargesLV.ChargeDate"
+      value="invoiceItem.EventDate"/>
+    <Input
+      id="invoice"
+      label="displaykey.Web.InvoiceItemDetailPopup.InvoiceLabel"
+      value="displaykey.Web.InvoiceItemDetailPopup.Invoice((typeof invoiceItem.Invoice).DisplayName, invoiceItem.Invoice.InvoiceNumber, invoiceItem.Invoice.Status, gw.api.util.StringUtil.formatDate(invoiceItem.Invoice.DUEDATE, &quot;short&quot;))"/>
+  </InputSet>
+</PCF>

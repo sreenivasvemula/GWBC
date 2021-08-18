@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xml:lang="en" lang="en" xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+    <meta http-equiv="Content-Style-Type" content="text/css" />
+    <!-- MOTW-DISABLED saved from url=(0014)about:internet -->
+    <title>Add a Suffix to New Display Keys to Avoid Name Conflicts</title>
+    <link rel="StyleSheet" href="css/bp-user-interface.css" type="text/css" media="all" />
+    <link rel="StyleSheet" href="css/webworks.css" type="text/css" media="all" />
+    <link rel="StyleSheet" href="css/css-guidewire-extra.css" type="text/css" media="all" />
+    <script type="text/javascript" language="JavaScript1.2" src="wwhdata/common/context.js"></script>
+    <script type="text/javascript" language="JavaScript1.2" src="wwhdata/common/towwhdir.js"></script>
+    <script type="text/javascript" language="JavaScript1.2" src="wwhdata/common/wwhpagef.js"></script>
+    <script type="text/javascript" language="JavaScript1.2">
+      <!--
+        var  WebWorksRootPath = "";
+      // -->
+    </script>
+    <script type="text/javascript" language="JavaScript1.2">
+      <!--
+        // Set reference to top level help frame
+        //
+        var  WWHFrame = WWHGetWWHFrame("", true);
+      // -->
+    </script>
+    <script type="text/javascript" language="JavaScript1.2" src="scripts/expand.js"></script>
+    <!-- THE FOLLOWING IS A GUIDEWIRE STYLE DEFINITION FOR THE LINK TO THIS FEATURE -->
+    <link rel="StyleSheet" href="css/css-guidewire-extra.css" type="text/css" media="all" />
+    <!-- THE FOLLOWING IS A GUIDEWIRE GSCRIPT FUNCTION FOR THE LINK TO THIS FEATURE -->
+    <script type="text/javascript">
+function guidewire_selectall()
+{
+var text_val=eval("document.linktothisurlform.urlfield");
+text_val.focus();
+text_val.select();
+}
+</script>
+  </head>
+  <body onLoad="WWHUpdate();" onUnload="WWHUnload();" onKeyDown="WWHHandleKeyDown((document.all||document.getElementById||document.layers)?event:null);" onKeyPress="WWHHandleKeyPress((document.all||document.getElementById||document.layers)?event:null);" onKeyUp="WWHHandleKeyUp((document.all||document.getElementById||document.layers)?event:null);">
+    <!-- THE FOLLOWING IS A GUIDEWIRE DIV FOR THE 'LINK TO THIS' FEATURE -->
+    <div id="linkToThisPage" class="popup" style="display: none;">
+      <div class="popupTitle">Link Directly to This Page 
+           <a href="#" onclick="var thePopup = getElementById('linkToThisPage');thePopup.style.display='none';return false;"><img class="popupClosebox" src="wwhelp/wwhimpl/common/images/close.gif" /></a></div>
+      <div style="padding:6px;">
+        <div class="popupText" id="linkToThisPageBookmark">An error has occurred if you see this messsage.</div>
+        <form name="linktothisurlform" method="post" action="" style="width:275px;margin:0px">
+          <input type="text" class="popupURLText" id="linkToThisPageURL" name="urlfield" rows="1" cols="55" onClick="guidewire_selectall();" onFocus="guidewire_selectall();"></input>
+        </form>
+      </div>
+    </div>
+    <br />
+    <div class="WebWorks_Breadcrumbs" style="text-align: left;">
+      <span>BillingCenter Best Practices&nbsp;Guide</span> : 
+    <span class="WebWorks_Breadcrumbs" style="text-align: left;"><a class="WebWorks_Breadcrumb_Link" href="bp-user-interface.4.01.html#2187916">User Interface Best Practices </a> : <a class="WebWorks_Breadcrumb_Link" href="bp-user-interface.4.03.html#2187916">Display Keys Best Practices</a> : Add a Suffix to New Display Keys to Avoid Name Conflicts</span></div>
+    <hr align="left" />
+    <blockquote>
+      <h4 class="H2B_-_Heading_2_Break"><a name="2187916">Add a Suffix to New Display Keys to Avoid Name Conflicts</a></h4>
+      <div class="B_-_Body"><a name="2187487">As a best practice, Guidewire recommends that you append the suffix </a><span class="cv_-_computer_voice">_Ext</span> to your new display key names. Including the suffix helps avoid future naming conflicts when Guidewire adds or changes base display keys.</div>
+      <div class="B_-_Body"><a name="2200846">For example, your BillingCenter instance has a branch of the display key hierarchy for text that relates to contact validation. </a></div>
+      <PRE class="CF_-_Code_First_Line"><a name="2200847">Validation.Contact.ContactDetail</a></PRE>
+      <PRE class="CL_-_Code_Last_Line"><a name="2200848">Validation.Contact.NewContact</a></PRE>
+      <div class="B_-_Body"><a name="2200850">You want to add a display key for the text “Delete Contact.” Add a new display key named </a><span class="cv_-_computer_voice">DeleteContact_Ext</span>. </div>
+      <PRE class="CF_-_Code_First_Line"><a name="2206747">Validation.Contact.ContactDetail</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2206808">Validation.Contact.</a><span class="s_-_strong">DeleteContact_Ext</span></PRE>
+      <PRE class="CL_-_Code_Last_Line"><a name="2206796">Validation.Contact.NewContact</a></PRE>
+      <div class="B_-_Body"><a name="2189192">You can change the text for base display keys to change the text the base application displays. Guidewire recommends that you reuse base display in this way. Do </a><span class="e_-_emphasis">not</span> add a new display key with the suffix <span class="cv_-_computer_voice">_Ext</span>, which then requires you to modify base PCF files to make use of the new value. </div>
+      <script type="text/javascript" language="JavaScript1.2">
+        <!--
+          // Clear related topics
+          //
+          WWHClearRelatedTopics();
+
+          document.writeln(WWHRelatedTopicsInlineHTML());
+        // -->
+      </script>
+    </blockquote>
+    <script type="text/javascript" language="JavaScript1.2">
+      <!--
+        document.write(WWHRelatedTopicsDivTag() + WWHPopupDivTag() + WWHALinksDivTag());
+      // -->
+    </script>
+  </body>
+</html>

@@ -1,0 +1,37 @@
+<?xml version="1.0"?>
+<PCF
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:noNamespaceSchemaLocation="../../../../../pcf.xsd">
+  <Wizard
+    beforeCommit="disbursement.executeDisbursementOrCreateApprovalActivityIfNeeded()"
+    canVisit="perm.Transaction.disbcreate"
+    cancelWarning="displaykey.Web.CreateDisbursementWizard.CancelConfirmation"
+    countsAsWork="false"
+    id="SuspenseCreateDisbursementWizard">
+    <LocationEntryPoint
+      signature="SuspenseCreateDisbursementWizard(suspensePayment : SuspensePayment)"/>
+    <Variable
+      initialValue="newDisbursement()"
+      name="disbursement"
+      type="SuspenseDisbursement"/>
+    <Variable
+      name="suspensePayment"
+      type="SuspensePayment"/>
+    <WizardStep
+      id="Step1"
+      label="displaykey.Web.AccountCreateDisbursementWizard.DetailsStepLabel"
+      onExit="disbursement.initiateApprovalActivityIfUserLacksAuthority()"
+      screen="CreateSuspenseDisbursementDetailScreen(disbursement)"
+      title="displaykey.Web.AccountCreateDisbursementWizard.DetailsStepTitle"/>
+    <WizardStep
+      id="Step2"
+      label="displaykey.Web.AccountCreateDisbursementWizard.ConfirmStepLabel"
+      screen="CreateDisbursementConfirmScreen(disbursement)"
+      title="displaykey.Web.AccountCreateDisbursementWizard.ConfirmStepTitle"/>
+    <Code><![CDATA[function newDisbursement() : SuspenseDisbursement{
+  var disb = new SuspenseDisbursement(suspensePayment.Currency)
+  disb.setSuspensePaymentAndFields(suspensePayment)
+  return disb;
+}]]></Code>
+  </Wizard>
+</PCF>

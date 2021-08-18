@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?><entity xmlns="http://guidewire.com/datamodel" abstract="true" desc="A disbursement" entity="Disbursement" final="false" platform="false" setterScriptability="hidden" subpackage="disbursement" table="disbursement" type="retireable">
+  <implementsEntity name="Validatable"/>
+  <implementsEntity name="Approvable"/>
+  <implementsEntity name="PaymentReceipt"/>
+  <implementsEntity name="InCurrencySilo"/>
+  <column desc="The human-readable number for this disbursement" name="DisbursementNumber" nullok="false" type="shorttext"/>
+  <column desc="Date an outgoing payment is due to be created from this disbursement, also called Effective Date" name="DueDate" nullok="false" type="dateonly"/>
+  <column desc="The date this was sent, rejected, or reapplied" name="CloseDate" nullok="true" type="dateonly"/>
+  <column desc="The name of the payee" name="PayTo" nullok="false" supportsLinguisticSearch="true" type="shorttext"/>
+  <column desc="The name of the recipient; this can be different from PayTo" name="MailTo" nullok="false" type="shorttext"/>
+  <column desc="The address of the recipient" name="Address" nullok="false" type="mediumtext"/>
+  <column desc="internal view only" name="InternalComment" nullok="true" type="shorttext"/>
+  <column desc="memo appearing on the check" name="Memo" nullok="true" type="shorttext"/>
+  <typekey desc="Reason why this disbursement was created" name="Reason" nullok="false" typelist="Reason"/>
+  <typekey default="awaitingapproval" desc="The status of the disbursement" name="Status" nullok="false" typelist="DisbursementStatus"/>
+  <typekey desc="The reason for voiding the disbursement" name="VoidReason" nullok="true" typelist="VoidReason"/>
+  <foreignkey columnName="ReportingGroupID" desc="The reporting group assigned, if any" exportasid="true" fkentity="ReportingGroup" name="ReportingGroup" nullok="true"/>
+  <onetoone desc="The payment issued on this disbursement" fkentity="OutgoingDisbPmnt" name="OutgoingPayment" nullok="true" setterScriptability="doesNotExist"/>
+  <onetoone desc="The associated authority event" fkentity="DisbAuthEvent" name="AuthorityEvent" nullok="true" setterScriptability="doesNotExist"/>
+  <array arrayentity="UserRoleAssignment" desc="Role Assignments for this Disbursement" exportable="false" name="RoleAssignments"/>
+  <array arrayentity="DisbApprActivity" name="ActivitiesCreatedByAppr" setterScriptability="doesNotExist">
+    <link-association>
+      <typelist-map field="Status"/>
+    </link-association>
+  </array>
+  <index desc="Legacy" name="paytodenorm">
+    <indexcol keyposition="1" name="PayToDenorm"/>
+    <indexcol keyposition="2" name="Retired"/>
+  </index>
+  <index desc="Index for DesktopDisbursements.pcf- previous 12 month open and closed" expectedtobecovering="true" name="desktop" unique="true">
+    <indexcol keyposition="1" name="status"/>
+    <indexcol keyposition="2" name="retired"/>
+    <indexcol keyposition="3" name="createtime"/>
+    <indexcol keyposition="4" name="closedate"/>
+    <indexcol keyposition="5" name="id"/>
+    <indexcol keyposition="6" name="subtype"/>
+    <indexcol keyposition="7" name="amount"/>
+  </index>
+  <checkconstraint desc="Amount must always be positive." predicate="Amount &gt;= 0"/>
+  <dbcheckbuilder className="com.guidewire.bc.system.database.dbchecks.disbursement.DisbursementDBCheckBuilder"/>
+</entity>

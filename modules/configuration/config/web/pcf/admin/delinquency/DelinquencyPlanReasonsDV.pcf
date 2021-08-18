@@ -1,0 +1,86 @@
+<?xml version="1.0"?>
+<PCF
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:noNamespaceSchemaLocation="../../../../../../pcf.xsd">
+  <ListDetailPanel
+    desc="Delinquency Plan Reasons defined on a Delinquency Plan"
+    id="DelinquencyPlanReasonsDV"
+    selectionName="currentReason"
+    selectionOnEnter="( dlnqPlan.DelinquencyPlanReasons.length &gt; 0 ? dlnqPlan.DelinquencyPlanReasons[0] : null )"
+    selectionType="DelinquencyPlanReason">
+    <Require
+      name="dlnqPlan"
+      type="DelinquencyPlan"/>
+    <Variable
+      initialValue="not dlnqPlan.InUse"
+      name="notInUse"
+      recalculateOnRefresh="true"
+      type="boolean"/>
+    <PanelRef
+      def="DelinquencyPlanReasonsLV(dlnqPlan, notInUse)"
+      editable="true"
+      id="PlanReasonPanel">
+      <Toolbar>
+        <IteratorButtons
+          addVisible="true"
+          iterator="PlanReasonPanel.DelinquencyPlanReasonsLV"
+          removeFlags="any checkedReasons"
+          removeVisible="true"/>
+      </Toolbar>
+    </PanelRef>
+    <CardViewPanel
+      hideTabIfSingle="true"
+      id="DetailDV">
+      <Card
+        id="PlanReasonDetailCard"
+        title="displaykey.Web.DelinquencyPlanReasonsDV.Events">
+        <DetailViewPanel>
+          <InputColumn>
+            <TypeKeyInput
+              editable="isFieldEditable(currentReason)"
+              hideIfReadOnly="true"
+              id="DelinquencyReason"
+              label="displaykey.Web.DelinquencyPlanReasonsDV.DelinquencyReason"
+              required="true"
+              validationExpression="web.delinquency.DelinquencyPlanUtil.validateDelinquencyPlanReasonUnique(dlnqPlan, currentReason)"
+              value="currentReason.DelinquencyReason"/>
+          </InputColumn>
+          <InputColumn>
+            <RangeInput
+              editable="isFieldEditable(currentReason)"
+              hideIfReadOnly="true"
+              id="WorkflowType"
+              label="displaykey.Web.DelinquencyPlanReasonsDV.WorkflowType"
+              required="true"
+              value="currentReason.WorkflowType"
+              valueRange="web.delinquency.DelinquencyPlanUtil.getDelinquencyWorkflows()"/>
+          </InputColumn>
+          <InputFooterSection>
+            <Label
+              id="EventsLabel"
+              label="displaykey.Web.DelinquencyPlanReasonsDV.Events"/>
+          </InputFooterSection>
+        </DetailViewPanel>
+        <PanelRef
+          def="DelinquencyPlanEventsLV(currentReason)">
+          <Toolbar>
+            <IteratorButtons
+              iterator="DelinquencyPlanEventsLV.DelinquencyPlanEventsLV"
+              removeFlags="any checkedEvents"/>
+          </Toolbar>
+        </PanelRef>
+      </Card>
+    </CardViewPanel>
+    <Code><![CDATA[
+function isFieldEditable(planReason : DelinquencyPlanReason) : Boolean {
+        if (null == planReason) {
+          return false
+        }
+        if (planReason.New) {
+          return true
+        }
+        return notInUse
+      }
+    ]]></Code>
+  </ListDetailPanel>
+</PCF>

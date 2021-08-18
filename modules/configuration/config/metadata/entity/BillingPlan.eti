@@ -1,0 +1,154 @@
+<?xml version="1.0"?>
+<subtype
+  xmlns="http://guidewire.com/datamodel"
+  desc="A plan describing how a policy should be billed"
+  entity="BillingPlan"
+  subpackage="invoice"
+  supertype="Plan">
+  <implementsEntity
+    name="InCurrencySilo"/>
+  <column
+    desc="delay disbursement processing for this many days"
+    name="DelayDisbursement"
+    nullok="false"
+    type="integer"/>
+  <monetaryamount
+    amountColumnName="InvoiceFee"
+    amountRange="nonnegative"
+    desc="the amount of the invoice fee"
+    name="InvoiceFee"
+    nullok="true"
+    scaleToCurrency="true"/>
+  <column
+    default="false"
+    name="SkipInstallmentFees"
+    nullok="false"
+    type="bit"/>
+  <monetaryamount
+    amountColumnName="PaymentReversalFee"
+    desc="the fee associated with a pejorative payment reversal"
+    name="PaymentReversalFee"
+    nullok="true"
+    scaleToCurrency="true"/>
+  <monetaryamount
+    amountColumnName="LowBalanceThreshold"
+    desc="The minumum amount of money to put on invoice, if low balance flag set"
+    name="LowBalanceThreshold"
+    nullok="false"
+    scaleToCurrency="true"
+    soapnullok="true">
+    <tag
+      name="DefaultValueZero"/>
+  </monetaryamount>
+  <column
+    desc="The number of days between the statement date and the payment due date for responsive payment methods"
+    name="PaymentDueInterval"
+    nullok="false"
+    type="integer"/>
+  <column
+    desc="The number of days between the statement date and the payment due date for payment methods that are not responsive"
+    name="NonResponsivePmntDueInterval"
+    nullok="false"
+    type="integer"/>
+  <typekey
+    default="exact"
+    desc="Defines how the due day will be adjusted (if at all) to fall on a business day."
+    name="PaymentDueDayLogic"
+    nullok="false"
+    typelist="DayOfMonthLogic"/>
+  <monetaryamount
+    amountColumnName="ReviewDisbursementOver"
+    desc="Review Disbursements greater than this amount"
+    name="ReviewDisbursementOver"
+    nullok="false"
+    scaleToCurrency="true"/>
+  <monetaryamount
+    amountColumnName="DisbursementOver"
+    desc="Amount over which accounts should automatically create disbursements. This allows users to prevent disbursements for insignificant amounts to be created."
+    name="DisbursementOver"
+    nullok="true"
+    scaleToCurrency="true">
+    <tag
+      name="DefaultValueZero"/>
+  </monetaryamount>
+  <typekey
+    default="unappliedminusauc"
+    desc="Defines how to calculate the amount available to disburse automatically, which is compared to DisbursementOver when deciding whether to create a disbursement."
+    name="AvailableDisbAmtType"
+    nullok="false"
+    typelist="AvailableDisbAmtType"/>
+  <column
+    default="false"
+    name="SuppressLowBalInvoices"
+    nullok="false"
+    type="bit"/>
+  <column
+    default="0"
+    desc="The number of days between the Invoice being billed and the Non responsive payment request"
+    name="RequestInterval"
+    nullok="false"
+    type="integer"/>
+  <column
+    default="0"
+    desc="The number of days before the Draft Date and Invoice due date on a non responsive payment"
+    name="DraftInterval"
+    nullok="false"
+    type="integer"/>
+  <typekey
+    default="exact"
+    desc="Defines how the draft day will be adjusted (if at all) to fall on a business day."
+    name="DraftDayLogic"
+    nullok="false"
+    typelist="DayOfMonthLogic"/>
+  <column
+    default="0"
+    desc="The number of days before the Draft Date a non responsive payment is set in stone"
+    name="ChangeDeadlineInterval"
+    nullok="false"
+    type="integer"/>
+  <typekey
+    default="charges"
+    desc="The amount of granularity on the Transactions as viewed in the invoice"
+    name="Aggregation"
+    nullok="false"
+    typelist="AggregationType"/>
+  <typekey
+    default="carryforward"
+    desc="The method of handling low-balance invoices"
+    name="LowBalanceMethod"
+    nullok="false"
+    typelist="LowBalanceMethod"/>
+  <typekey
+    default="directbill"
+    desc="The type of statement to send"
+    name="Statement"
+    nullok="false"
+    typelist="StatementType"/>
+  <column
+    default="true"
+    desc="Whether or not manually created Disbursements can have their amounts modified"
+    name="AllowModOfManDisb"
+    nullok="false"
+    type="bit"/>
+  <column
+    default="true"
+    desc="Whether Automatic Disbursements should be created with associated approval activities"
+    name="CreateApprActForAutoDisb"
+    nullok="false"
+    type="bit"/>
+  <column
+    default="false"
+    desc="Whether Automatic Disbursements awaiting approval should be sent on their due dates"
+    name="SendAutoDisbAwaitingApproval"
+    nullok="false"
+    type="bit"/>
+  <column
+    default="false"
+    desc="Whether Western Method accounting is used for earned premium calculations, otherwise Standard Method accounting is used."
+    name="WesternMethod"
+    nullok="false"
+    type="bit"/>
+  <checkconstraint
+    desc="The amount of time to go through the payment request process must be less than the paymentDueInterval"
+    predicate="PaymentDueInterval &gt;= (RequestInterval + ChangeDeadlineInterval + DraftInterval)"/>
+</subtype>

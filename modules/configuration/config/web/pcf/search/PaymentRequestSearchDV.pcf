@@ -1,0 +1,109 @@
+<?xml version="1.0"?>
+<PCF
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:noNamespaceSchemaLocation="../../../../../pcf.xsd">
+  <DetailViewPanel
+    id="PaymentRequestSearchDV">
+    <Require
+      name="searchCriteria"
+      type="PaymentRequestSearchCriteria"/>
+    <InputColumn>
+      <Label
+        id="SearchCriteria"
+        label="displaykey.Web.PaymentRequestSearchDV.SearchCriteria"/>
+      <PickerInput
+        conversionExpression="PickedValue.DisplayName"
+        editable="true"
+        id="AccountNumberCriterion"
+        label="displaykey.Web.PaymentRequestSearchDV.AccountNumber"
+        pickLocation="AccountSearchPopup.push()"
+        value="searchCriteria.AccountNumber"/>
+      <TypeKeyInput
+        editable="true"
+        id="StatusCriterion"
+        label="displaykey.Web.PaymentRequestSearchDV.Status"
+        value="searchCriteria.Status"/>
+      <RangeInput
+        editable="true"
+        id="MethodCriterion"
+        label="displaykey.Web.PaymentRequestSearchDV.PaymentMethod"
+        value="searchCriteria.Method"
+        valueRange="getPaymentMethodRange()"/>
+      <Input
+        editable="true"
+        id="TokenCriterion"
+        label="displaykey.Web.PaymentRequestSearchDV.PaymentInstrumentToken"
+        value="searchCriteria.Token"/>
+      <TypeKeyInput
+        editable="true"
+        id="CurrencyCriterion"
+        label="displaykey.Web.PaymentSearchDV.Currency"
+        value="searchCriteria.Currency"
+        visible="gw.api.util.CurrencyUtil.isMultiCurrencyMode()">
+        <PostOnChange
+          onChange="blankMinimumAndMaximumFields()"/>
+      </TypeKeyInput>
+      <MonetaryAmountInput
+        available="(searchCriteria.Currency != null or gw.api.util.CurrencyUtil.isSingleCurrencyMode())"
+        currency="gw.search.SearchHelper.getDefaultCurrencyIfNull(searchCriteria.Currency)"
+        editable="true"
+        id="MinAmountCriterion"
+        label="displaykey.Web.PaymentRequestSearchDV.MinAmount"
+        value="searchCriteria.MinAmount"/>
+      <MonetaryAmountInput
+        available="(searchCriteria.Currency != null or gw.api.util.CurrencyUtil.isSingleCurrencyMode())"
+        currency="gw.search.SearchHelper.getDefaultCurrencyIfNull(searchCriteria.Currency)"
+        editable="true"
+        id="MaxAmountCriterion"
+        label="displaykey.Web.PaymentRequestSearchDV.MaxAmount"
+        value="searchCriteria.MaxAmount"/>
+    </InputColumn>
+    <InputColumn>
+      <DateInput
+        editable="true"
+        id="EarliestDraftDateCriterion"
+        label="displaykey.Web.PaymentRequestSearchDV.EarliestDraftDate"
+        value="searchCriteria.EarliestDraftDate"/>
+      <DateInput
+        editable="true"
+        id="LatestDraftDateCriterion"
+        label="displaykey.Web.PaymentRequestSearchDV.LatestDraftDate"
+        value="searchCriteria.LatestDraftDate"/>
+      <DateInput
+        editable="true"
+        id="EarliestRequestDateCriterion"
+        label="displaykey.Web.PaymentRequestSearchDV.EarliestRequestDate"
+        value="searchCriteria.EarliestRequestDate"/>
+      <DateInput
+        editable="true"
+        id="LatestRequestDateCriterion"
+        label="displaykey.Web.PaymentRequestSearchDV.LatestRequestDate"
+        value="searchCriteria.LatestRequestDate"/>
+      <DateInput
+        editable="true"
+        id="EarliestStatusDateCriterion"
+        label="displaykey.Web.PaymentRequestSearchDV.EarliestStatusDate"
+        value="searchCriteria.EarliestStatusDate"/>
+      <DateInput
+        editable="true"
+        id="LatestStatusDateCriterion"
+        label="displaykey.Web.PaymentRequestSearchDV.LatestStatusDate"
+        value="searchCriteria.LatestStatusDate"/>
+    </InputColumn>
+    <InputFooterSection>
+      <InputSetRef
+        def="SearchAndResetInputSet()"/>
+    </InputFooterSection>
+    <Code><![CDATA[function getPaymentMethodRange() : List<PaymentMethod> {
+  var paymentMethodRange = new java.util.ArrayList<PaymentMethod>();
+  paymentMethodRange.add( PaymentMethod.TC_ACH );
+  paymentMethodRange.add( PaymentMethod.TC_CREDITCARD );
+  return paymentMethodRange;
+}
+
+function blankMinimumAndMaximumFields() {
+  searchCriteria.MinAmount = null
+  searchCriteria.MaxAmount = null
+}]]></Code>
+  </DetailViewPanel>
+</PCF>

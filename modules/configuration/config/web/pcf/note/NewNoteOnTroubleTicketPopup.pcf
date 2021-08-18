@@ -1,0 +1,31 @@
+<?xml version="1.0"?>
+<PCF
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:noNamespaceSchemaLocation="../../../../../pcf.xsd">
+  <!-- This is a page the user will come to when creating a Note on a Trouble Ticket -->
+  <Popup
+    afterEnter="troubleTicket.addNote(note)"
+    canEdit="true"
+    id="NewNoteOnTroubleTicketPopup"
+    startInEditMode="true"
+    title="displaykey.Web.NewNoteOnTroubleTicket.NewNote">
+    <LocationEntryPoint
+      signature="NewNoteOnTroubleTicketPopup(troubleTicket : TroubleTicket)"/>
+    <Variable
+      name="troubleTicket"
+      type="TroubleTicket"/>
+    <Variable
+      initialValue="gw.pcf.note.NoteHelper.createNoteWithCurrentUsersLanguage()"
+      name="note"
+      type="Note"/>
+    <Screen
+      id="NewNoteOnTroubleTicketScreen">
+      <Toolbar>
+        <EditButtons
+          updateLabel="displaykey.Web.NewNoteOnTroubleTicket.CreateNote"/>
+      </Toolbar>
+      <PanelRef
+        def="NewNoteDV(note)"/>
+    </Screen>
+  </Popup>
+</PCF>

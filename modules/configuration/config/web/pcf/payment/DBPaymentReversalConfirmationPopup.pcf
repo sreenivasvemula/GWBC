@@ -1,0 +1,47 @@
+<?xml version="1.0"?>
+<PCF
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:noNamespaceSchemaLocation="../../../../../pcf.xsd">
+  <Popup
+    beforeCommit="reverseMoneyAndDist()"
+    canEdit="true"
+    canVisit="perm.System.acctpmntview and perm.DirectBillMoneyRcvd.pmntreverse"
+    id="DBPaymentReversalConfirmationPopup"
+    startInEditMode="true"
+    title="displaykey.Web.DBPaymentReversalConfirmation.Title">
+    <LocationEntryPoint
+      signature="DBPaymentReversalConfirmationPopup(moneyReceived : DirectBillMoneyRcvd)"/>
+    <Variable
+      name="moneyReceived"
+      type="DirectBillMoneyRcvd"/>
+    <Variable
+      name="reason"
+      type="PaymentReversalReason"/>
+    <Screen>
+      <Toolbar>
+        <EditButtons
+          updateLabel="displaykey.Button.OK"/>
+      </Toolbar>
+      <DetailViewPanel>
+        <InputColumn>
+          <Label
+            id="Confirmation"
+            label="(moneyReceived typeis ZeroDollarDMR) ? displaykey.Web.DBPaymentReversalConfirmation.CreditDistribution((moneyReceived.DirectBillPayment.NetDistributedToInvoiceItems + moneyReceived.DirectBillPayment.NetInSuspense).render()) : displaykey.Web.DBPaymentReversalConfirmation.Confirmation(moneyReceived.Amount.render())"/>
+          <TypeKeyInput
+            editable="true"
+            id="Reason"
+            label="displaykey.Web.DBPaymentReversalConfirmation.Reason"
+            required="true"
+            value="reason"/>
+        </InputColumn>
+      </DetailViewPanel>
+    </Screen>
+    <Code><![CDATA[function reverseMoneyAndDist() {
+  if (moneyReceived.BaseDist != null ) { 
+    moneyReceived.BaseDist.reverse(reason) 
+  } else { 
+    moneyReceived.reverse(reason) 
+  }
+}]]></Code>
+  </Popup>
+</PCF>

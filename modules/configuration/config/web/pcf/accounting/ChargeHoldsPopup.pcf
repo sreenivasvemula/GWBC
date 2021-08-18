@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PCF
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:noNamespaceSchemaLocation="../../../../../pcf.xsd">
+  <!-- This page is a confirmation screen where the user confirms whether they do indeed want to apply a charge
+       hold to a selected set of Charges.  If the user confirms that they do want to do that, the system will apply
+       a hold to all of the selected Charges. -->
+  <Popup
+    beforeCommit="updateHolds()"
+    canEdit="true"
+    canVisit="perm.Transaction.chargeholdcreate"
+    id="ChargeHoldsPopup"
+    startInEditMode="true"
+    title="displaykey.Web.ChargeHoldsPopup.Title">
+    <LocationEntryPoint
+      signature="ChargeHoldsPopup(charges : Charge[])"/>
+    <Variable
+      name="charges"
+      type="Charge[]"/>
+    <Variable
+      initialValue="true"
+      name="carryForwardExceptions"
+      type="boolean"/>
+    <Screen
+      id="ChargeHoldsScreen">
+      <Toolbar>
+        <EditButtons
+          updateLabel="displaykey.Button.OK"/>
+      </Toolbar>
+      <!-- Some explanatory text -->
+      <DetailViewPanel>
+        <InputColumn>
+          <Label
+            label="displaykey.Web.ChargeHoldsPopup.ExplanatoryText"/>
+        </InputColumn>
+      </DetailViewPanel>
+      <DetailViewPanel>
+        <InputColumn>
+          <CheckBoxInput
+            editable="true"
+            id="carryForwardExceptions"
+            label="displaykey.Web.ChargeHoldsPopup.CarryForwardExceptions"
+            value="carryForwardExceptions"
+            visible="hasAgencyBillCharge()"/>
+        </InputColumn>
+      </DetailViewPanel>
+      <!-- List of Charges that have been selected to be held -->
+      <PanelRef
+        def="ChargesLV(charges, false, 1, true, false, true)"/>
+    </Screen>
+    <Code>
+function updateHolds() {
+        for(charge in charges)
+        {
+          charge.updateHold(carryForwardExceptions);
+        }
+      }
+
+function hasAgencyBillCharge() : boolean{
+  for(charge in charges){
+    if(charge.AgencyBill){
+      return true
+    }
+  }
+  return false
+}
+    </Code>
+  </Popup>
+</PCF>

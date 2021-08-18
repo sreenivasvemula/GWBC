@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?><entity xmlns="http://guidewire.com/datamodel" abstract="true" desc="Abstract base type for negative writeoffs" entity="NegativeWriteoff" final="false" platform="false" setterScriptability="hidden" subpackage="accounting" table="negativewriteoff" type="retireable">
+  <implementsEntity name="Validatable"/>
+  <implementsEntity name="Approvable"/>
+  <implementsEntity name="Reversible"/>
+  <implementsEntity name="InCurrencySilo"/>
+  <monetaryamount amountColumnName="Amount" name="Amount" nullok="false" scaleToCurrency="true" setterScriptability="doesNotExist"/>
+  <column desc="The date that the write-off was actually executed.  If the user that created this write-off did not have the authority to execute it, then the execution date may be different from its creation time." name="ExecutionDate" nullok="true" type="datetime"/>
+  <typekey name="Channel" nullok="true" setterScriptability="doesNotExist" typelist="WriteoffChannel"/>
+  <onetoone fkentity="NegativeWriteoffRev" name="NegativeWriteoffRev" nullok="true" setterScriptability="doesNotExist"/>
+  <array arrayentity="NegWrofApprActivity" name="ActivitiesCreatedByAppr" setterScriptability="doesNotExist">
+    <link-association>
+      <typelist-map field="Status"/>
+    </link-association>
+  </array>
+  <edgeForeignKey desc="If non-null, refers to the negative writeoff which is this negative writeoff reversed." edgeTableName="revnegwriteoff" exportable="false" fkentity="NegativeWriteoff" ignoreforevents="true" importableagainstexistingobject="false" loadable="true" name="ReversedLink" nullok="true" overwrittenInStagingTable="true" setterScriptability="doesNotExist"/>
+  <dbcheckbuilder className="com.guidewire.bc.system.database.dbchecks.accounting.NegativeWriteoffDBCheckBuilder"/>
+  <checkconstraint desc="Cannot load NegativeWriteoff with non-positive amount." stagingtablepredicate="Amount &gt; 0"/>
+  <checkconstraint desc="Cannot load NegativeWriteoff with a null execution date" stagingtablepredicate="ExecutionDate IS NOT NULL"/>
+</entity>

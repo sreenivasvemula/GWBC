@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?><entity xmlns="http://guidewire.com/datamodel" abstract="false" desc="Agency Bill Statement Process" entity="AgencyCycleProcess" exportable="false" final="false" platform="false" setterScriptability="hidden" subpackage="producer.agencybill" table="agencycycleprocess" type="retireable">
+  <implementsEntity name="InCurrencySilo"/>
+  <column desc="The date in this cycle to send out a statement.  Calculated from StatementInvoice.EventDate             and AgencyBillPlan.DaysAfterCycleCloseToSendStmt.  Null if no statement should be sent." name="SendStatementDate" nullok="true" type="datetime"/>
+  <column default="false" desc="Defines whether or not a statement has been sent for this cycle." name="StatementSent" nullok="false" type="bit"/>
+  <column desc="The date in this cycle to generate a past due exception.  Calculated from StatementInvoice.EventDate             and AgencyBillPlan.PaymentTermsInDays.  Null if no past due exception should be generated." name="GenPastDueExceptionDate" nullok="true" type="datetime"/>
+  <column default="false" desc="Defines whether or not a past due exception has been generated for this cycle." name="PastDueExceptionGenerated" nullok="false" type="bit"/>
+  <column default="false" desc="True when a payment past due exception has been dismissed for this cycle." name="PastDueExceptionDismissed" nullok="false" type="bit"/>
+  <column desc="The date in this cycle to send a promise reminder if no promise has been received for this cycle.             Calculated from StatementInvoice.EventDate and AgencyBillPlan.PromiseDueInDays.  Null if             no promise reminder should be sent." name="SendPromiseReminderDate" nullok="true" type="datetime"/>
+  <column default="false" desc="Defines whether or not a promise reminder has been sent for this cycle." name="PromiseReminderSent" nullok="false" type="bit"/>
+  <column desc="The date in this cycle to generate a promise exception if no promise has been received for this cycle.             Calculcated from StatementInvoice.EventDate and AgencyBillPlan.DaysUntilPromiseExceptionGen.  Null if             no promise reminder should be sent." name="GenPromiseExceptionDate" nullok="true" type="datetime"/>
+  <column default="false" desc="Defines whether or not a promise exception has been generated for this cycle." name="PromiseExceptionGenerated" nullok="false" type="bit"/>
+  <column default="false" desc="True when a promise exception has been dismissed for this cycle." name="PromiseExceptionDismissed" nullok="false" type="bit"/>
+  <column desc="The date in this cycle to send a dunning1 letter if the statement was not paid.  Calculated from             StatementInvoice.EventDate and AgencyBillPlan.DaysUntilFirstDunningSent.  Null if no dunning1 letter should             be sent." name="SendDunning1Date" nullok="true" type="datetime"/>
+  <column default="false" desc="Defines whether or not a first dunning letter has been sent for this cycle." name="Dunning1Sent" nullok="false" type="bit"/>
+  <column desc="The date in this cycle to send a dunning2 letter if the statement was not paid.  Calculated from             StatementInvoice.EventDate and AgencyBillPlan.DaysUntilSecondDunningSent.  Null if no dunning2 letter should             be sent." name="SendDunning2Date" nullok="true" type="datetime"/>
+  <column default="false" desc="Defines whether or not a second dunning letter has been sent for this cycle." name="Dunning2Sent" nullok="false" type="bit"/>
+  <column desc="User-inputted comments about past due exception" name="PaymentPastDueComments" nullok="true" type="mediumtext"/>
+  <column desc="User-inputted comments about the missing promise exception" name="PromisePastDueComments" nullok="true" type="mediumtext"/>
+  <foreignkey columnName="AgencyBillCycleID" desc="Pointer back to the cycle that this workflow is doing the agency plan processing for." fkentity="AgencyBillCycle" name="AgencyBillCycle" nullok="false"/>
+  <onetoone desc="Workflow" fkentity="AgencyBillWorkflow" linkField="AgencyCycleProcess" name="AgencyBillWorkflow" nullok="true" setterScriptability="hidden"/>
+</entity>

@@ -1,0 +1,64 @@
+<?xml version="1.0"?>
+<PCF
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:noNamespaceSchemaLocation="../../../../../pcf.xsd">
+  <Screen
+    id="CollateralDisbursementConfirmScreen">
+    <Require
+      name="disbursement"
+      type="CollateralDisbursement"/>
+    <Variable
+      initialValue="calculateShortfall()"
+      name="collateralShortfall"
+      type="gw.api.web.collateral.CollateralDrawdownUtil"/>
+    <Variable
+      initialValue="disbursement.getOpenApprovalActivity()"
+      name="approvalActivity"/>
+    <Toolbar>
+      <WizardButtons/>
+    </Toolbar>
+    <AlertBar
+      id="ApprovalActivityAlertBar"
+      label="displaykey.Web.ApprovalActivityAlertBar.CreateDisbursementWizard"
+      visible="approvalActivity != null"/>
+    <DetailViewPanel
+      id="CollateralDisbursementConfirmScreenDV">
+      <InputColumn>
+        <Label
+          label="displaykey.Web.CollateralDisbursementConfirmScreen.ClickToExecute"/>
+        <Label
+          label="displaykey.Web.CollateralDisbursementConfirmScreen.CollateralDisbursement(disbursement.Amount.render(), disbursement.Collateral.Account.AccountNumber, disbursement.DueDate)"/>
+        <InputDivider
+          visible="collateralShortfall.isCheckboxVisible()"/>
+        <Label
+          label="displaykey.Web.CollateralDisbursementConfirmScreen.Warning"
+          visible="collateralShortfall.isCheckboxVisible()"/>
+        <MonetaryAmountInput
+          currency="disbursement.Currency"
+          formatType="currency"
+          id="shortfall"
+          label="displaykey.Web.CollateralDisbursementConfirmScreen.Shortfall"
+          value="collateralShortfall.getShortfall()"
+          visible="collateralShortfall.isCheckboxVisible()"/>
+        <MonetaryAmountInput
+          currency="disbursement.Currency"
+          formatType="currency"
+          id="shortfallCovered"
+          label="displaykey.Web.CollateralDisbursementConfirmScreen.ShortfallCovered"
+          value="collateralShortfall.getShortfallCoveredByLOC()"
+          visible="collateralShortfall.isCheckboxVisible()"/>
+      </InputColumn>
+    </DetailViewPanel>
+    <PanelRef
+      def="CreateDisbursementWizardApprovalActivityDV(approvalActivity)"/>
+    <Code><![CDATA[
+function calculateShortfall(): gw.api.web.collateral.CollateralDrawdownUtil{
+  var collShort = new gw.api.web.collateral.CollateralDrawdownUtil(disbursement.Collateral);
+  
+  collShort.setAmount(disbursement.Amount);
+  collShort.calculateShortfall();
+  return collShort;
+}
+    ]]></Code>
+  </Screen>
+</PCF>

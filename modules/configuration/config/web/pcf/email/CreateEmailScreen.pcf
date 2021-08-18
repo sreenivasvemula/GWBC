@@ -1,0 +1,252 @@
+<?xml version="1.0"?>
+<PCF
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:noNamespaceSchemaLocation="../../../../../pcf.xsd">
+  <Screen
+    editable="true"
+    id="CreateEmailScreen">
+    <Require
+      name="symbolTable"
+      type="java.util.Map&lt;String, Object&gt;"/>
+    <Require
+      name="docContainer"
+      type="DocumentContainer"/>
+    <Require
+      name="emailTemplate"
+      type="String"/>
+    <Require
+      name="documentsToSend"
+      type="Document[]"/>
+    <Variable
+      initialValue="null"
+      name="documentToSave"
+      type="Document"/>
+    <Variable
+      initialValue="emailTemplate == null"
+      name="noDefaultTemplate"
+      type="Boolean"/>
+    <Variable
+      initialValue="gw.api.contact.AddressBookUtil.newAddressBookContactSource()"
+      name="externalContactSource"/>
+    <Variable
+      initialValue="docContainer != null and perm.Document.create"
+      name="saveAsDocument"/>
+    <Variable
+      initialValue="false"
+      name="showCC"/>
+    <Variable
+      initialValue="false"
+      name="showBCC"/>
+    <Variable
+      initialValue="gw.api.util.LocaleUtil.getDefaultLanguageType()"
+      name="language"
+      type="LanguageType"/>
+    <Variable
+      initialValue="initNewEmail()"
+      name="NewEmail"
+      type="gw.api.email.Email"/>
+    <Toolbar>
+      <ToolbarButton
+        action="sendEmailToRecipients(NewEmail)"
+        available="true"
+        id="ToolbarButton0"
+        label="displaykey.Web.Email.SendEmail"
+        visible="true"/>
+      <ToolbarButton
+        action="CurrentLocation.cancel()"
+        available="true"
+        id="ToolbarButton1"
+        label="displaykey.Web.Email.Cancel"
+        visible="true"/>
+      <ToolbarDivider/>
+      <PickerToolbarButton
+        action="PickEmailTemplatePopup.push(new gw.api.email.EmailTemplateSearchCriteria( symbolTable.Keys as String[]))"
+        id="EmailWorksheet_UseTemplateButton"
+        label="displaykey.Web.Email.UseTemplate"
+        onPick="NewEmail.useEmailTemplate(PickedValue, symbolTable );  language = gw.api.util.LocaleUtil.toLanguageType(PickedValue.Locale)"
+        shortcut="P"
+        visible="noDefaultTemplate"/>
+    </Toolbar>
+    <AlertBar
+      id="NoDefaultTemplate"
+      label="displaykey.Web.Email.Template.NotFound(emailTemplate)"
+      showConfirmMessage="false"
+      visible="emailTemplate != null and noDefaultTemplate"/>
+    <DetailViewPanel>
+      <InputColumn>
+        <TypeKeyInput
+          editable="true"
+          id="Language"
+          label="displaykey.Web.EmailTemplateSearch.Language"
+          required="true"
+          value="language"
+          visible="LanguageType.getTypeKeys( false ).Count &gt;  1 and emailTemplate != null">
+          <PostOnChange
+            onChange="executeTemplate(NewEmail)"/>
+        </TypeKeyInput>
+        <InputSetRef
+          def="CreateEmailScreenRecipientInputSet(displaykey.Web.Email.ToRecipients, NewEmail.ToRecipients)"
+          editable="true"
+          id="ToRecipientLVInput"/>
+        <ButtonInput
+          action="showCC = true"
+          id="ShowCCRecipients"
+          labelAbove="true"
+          value="displaykey.Web.Email.AddCCRecipients"
+          visible="!showCC"/>
+        <InputSetRef
+          def="CreateEmailScreenRecipientInputSet(displaykey.Web.Email.CCRecipients, NewEmail.CcRecipients)"
+          editable="true"
+          id="ToCCRecipientLVInput"
+          visible="showCC"/>
+        <ButtonInput
+          action="showBCC = true"
+          id="ShowBCCRecipients"
+          labelAbove="true"
+          value="displaykey.Web.Email.AddBCCRecipients"
+          visible="!showBCC"/>
+        <InputSetRef
+          def="CreateEmailScreenRecipientInputSet(displaykey.Web.Email.BCCRecipients, NewEmail.BccRecipients)"
+          editable="true"
+          id="ToBCCRecipientLVInput"
+          visible="showBCC"/>
+        <InputDivider/>
+        <CheckBoxInput
+          align="left"
+          editable="true"
+          id="SaveAsDocument"
+          labelAbove="true"
+          value="saveAsDocument"
+          valueLabel="displaykey.Web.Email.SaveAsDocument"
+          visible="docContainer != null and perm.Document.create"/>
+      </InputColumn>
+      <InputColumn>
+        <TextInput
+          editable="true"
+          id="SenderName"
+          label="displaykey.Web.Email.SenderName"
+          value="NewEmail.Sender.Name"/>
+        <TextInput
+          editable="true"
+          id="SenderEmail"
+          label="displaykey.Web.Email.SenderEmail"
+          value="NewEmail.Sender.EmailAddress"/>
+        <TextInput
+          editable="true"
+          id="Subject"
+          label="displaykey.Web.Email.Subject"
+          required="true"
+          value="NewEmail.Subject"/>
+        <TextAreaInput
+          editable="true"
+          id="Body"
+          label="displaykey.Web.Email.Body"
+          numRows="10"
+          required="true"
+          value="NewEmail.Body"/>
+        <ListViewInput
+          editable="true"
+          label="displaykey.Web.Email.AttachedDocuments">
+          <Toolbar>
+            <PickerToolbarButton
+              action="PickExistingDocumentPopup.push(docContainer)"
+              id="AddDocumentButton"
+              label="displaykey.Web.Email.Add"
+              onPick="NewEmail.addDocument(PickedValue)"
+              shortcut="A"
+              visible="true"/>
+            <IteratorButtons
+              addVisible="false"
+              iterator="SampleAttachedDocumentsLV"/>
+          </Toolbar>
+          <ListViewPanel
+            editable="true"
+            id="SampleAttachedDocumentsLV">
+            <RowIterator
+              editable="true"
+              elementName="AttachedDocument"
+              toRemove="NewEmail.removeDocument( AttachedDocument )"
+              value="NewEmail.Documents as DocumentBase[]">
+              <Row>
+                <Cell
+                  editable="true"
+                  id="Document"
+                  label="displaykey.Web.Email.DocumentName"
+                  value="AttachedDocument.Name"/>
+              </Row>
+            </RowIterator>
+          </ListViewPanel>
+        </ListViewInput>
+      </InputColumn>
+    </DetailViewPanel>
+    <Code><![CDATA[function initNewEmail() : gw.api.email.Email {
+  var rtn = new gw.api.email.Email()
+  if (emailTemplate != null) {
+    executeTemplate(rtn)
+  }
+  if (documentsToSend != null) {
+    for (document in documentsToSend) {
+      rtn.addDocument( document )
+    }
+  }
+  return rtn
+}
+
+function executeTemplate(rtn : gw.api.email.Email) {
+  var templatePlugin = gw.plugin.Plugins.get(gw.plugin.email.IEmailTemplateSource)
+  var template = templatePlugin.getEmailTemplate(gw.api.util.LocaleUtil.toLanguage(language), emailTemplate)
+  if (template == null) {
+    noDefaultTemplate = true
+    throw new gw.api.util.DisplayableException(displaykey.Web.Activity.EmailTemplate.Language(emailTemplate, language))
+  }
+  else {
+   rtn.useEmailTemplate(template, symbolTable)
+  }
+}
+
+function sendEmailToRecipients(emailToSend : gw.api.email.Email) {
+  var warnings = email.EmailUtil.emailContentsValid(emailToSend)
+  if (warnings.length > 0) {
+    throw new gw.api.util.DisplayableException(warnings)
+  }
+  if (saveAsDocument) {
+    var templatePlugin = gw.plugin.Plugins.get(gw.plugin.document.IDocumentTemplateSource)
+    var template = templatePlugin.getDocumentTemplate("CreateEmailSent.gosu.htm", gw.api.util.LocaleUtil.getDefaultLocale())
+    if (template == null) {
+      throw new gw.api.util.DisplayableException(displaykey.Web.CreateEmailScreen.Error.NoManualEmailSentTemplate)
+    } else {
+      documentToSave = documentToSave != null ? documentToSave : new Document()
+      documentToSave.Name  = emailToSend.Subject
+      documentToSave.MimeType = template.MimeType
+      documentToSave.Type = template.TemplateType
+      documentToSave.Section = template.getMetadataPropertyValue( "section" ) as String // assignment will force it to SectionType
+      documentToSave.SecurityType = template.DefaultSecurityType
+      documentToSave.Status = "final"
+      documentToSave.Recipient = emailToSend.ToRecipients.first().Name
+      documentToSave.Author = User.util.CurrentUser.DisplayName
+      documentToSave.Inbound = false
+      documentToSave.DateCreated = gw.api.util.DateUtil.currentDate()
+      docContainer.addDocument( documentToSave )
+      
+      var paramMap = new java.util.HashMap(symbolTable)
+      paramMap.put("User", User.util.CurrentUser)
+      paramMap.put("Email", emailToSend)
+      paramMap.put("DateSent", gw.api.util.DateUtil.currentDate())
+      gw.document.DocumentProduction.createAndStoreDocumentSynchronously(template, paramMap, documentToSave)
+
+    }
+  } else if (documentToSave != null) {
+    documentToSave.remove()
+  }
+  email.EmailUtil.sendEmailWithBody(docContainer as KeyableBean, emailToSend)
+  // it didn't throw so reset email template so that other templates can be used
+  var actv = symbolTable.get("Activity")
+  if (emailTemplate != null and actv typeis Activity) {
+    if (actv.EmailTemplate == emailTemplate) {
+      actv.EmailTemplate = null
+    }
+  }
+  CurrentLocation.commit()
+}]]></Code>
+  </Screen>
+</PCF>

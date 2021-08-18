@@ -1,0 +1,67 @@
+<?xml version="1.0"?>
+<PCF
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:noNamespaceSchemaLocation="../../../../../pcf.xsd">
+  <Screen
+    id="OutgoingProducerPaymentSearchScreen">
+    <SearchPanel
+      criteriaName="searchCriteria"
+      maxSearchResults="gw.api.system.BCConfigParameters.MaxSearchResults.Value"
+      resultsName="outgoingProducerPmntSearchViews"
+      search="gw.search.SearchMethods.validateAndSearch(searchCriteria)"
+      searchCriteria="new OutgoingProducerPmntSearchCriteria()"
+      searchResultsType="OutgoingProducerPmntSearchViewQuery">
+      <PanelRef
+        def="OutgoingProducerPaymentSearchDV(searchCriteria)">
+        <Toolbar/>
+      </PanelRef>
+      <PanelRef>
+        <Toolbar/>
+        <ListViewPanel
+          editable="false"
+          id="OutgoingProducerPaymentSearchResultsLV">
+          <RowIterator
+            editable="false"
+            elementName="outgoingProducerPmntSearchView"
+            value="outgoingProducerPmntSearchViews">
+            <!-- IMPORTANT: Do not call outgoingProducerPmntSearchView.OutgoingPayment unless as an argument in a go() or push() call.
+              Instead, simply access the field off the viewEntity. To access a field not already on the viewEntity,
+              configure or extend dm_bc_search_view.xml to add the appropriate viewEntityLink/Name/Column/Typekey, etc.
+              Accessing large entities via FK from viewEntities leads to serious performance issues. -->
+            <Row>
+              <DateCell
+                id="IssueDate"
+                label="displaykey.Web.OutgoingProducerPaymentSearchResultsLV.IssueDate"
+                sortOrder="1"
+                value="outgoingProducerPmntSearchView.IssueDate"/>
+              <Cell
+                id="CheckNumber"
+                label="displaykey.Web.OutgoingProducerPaymentSearchResultsLV.CheckNumber"
+                sortBy="outgoingProducerPmntSearchView.CheckNumber"
+                value="outgoingProducerPmntSearchView.PaymentMethod == PaymentMethod.TC_ACH ? &quot;ACH&quot; : outgoingProducerPmntSearchView.CheckNumber"/>
+              <Cell
+                id="Payee"
+                label="displaykey.Web.OutgoingProducerPaymentSearchResultsLV.Payee"
+                value="outgoingProducerPmntSearchView.PayTo"/>
+              <MonetaryAmountCell
+                currency="outgoingProducerPmntSearchView.Currency"
+                id="Amount"
+                label="displaykey.Web.OutgoingProducerPaymentSearchResultsLV.Amount"
+                sortBy="outgoingProducerPmntSearchView.Currency, outgoingProducerPmntSearchView.Amount"
+                value="outgoingProducerPmntSearchView.Amount.ofCurrency(outgoingProducerPmntSearchView.Currency)"/>
+              <TypeKeyCell
+                id="PaymentMethod"
+                label="displaykey.Web.OutgoingProducerPaymentSearchResultsLV.PaymentMethod"
+                value="outgoingProducerPmntSearchView.PaymentMethod"/>
+              <TypeKeyCell
+                action="OutgoingPaymentDetailPopup.push(outgoingProducerPmntSearchView.OutgoingPayment)"
+                id="Status"
+                label="displaykey.Web.OutgoingProducerPaymentSearchResultsLV.Status"
+                value="outgoingProducerPmntSearchView.Status"/>
+            </Row>
+          </RowIterator>
+        </ListViewPanel>
+      </PanelRef>
+    </SearchPanel>
+  </Screen>
+</PCF>

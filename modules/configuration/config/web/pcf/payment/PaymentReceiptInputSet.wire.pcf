@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<PCF
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="../../../../../pcf.xsd">
+    <InputSet
+            id="PaymentReceiptInputSet"
+            mode="wire">
+        <Require
+                name="paymentReceipt"
+                type="PaymentReceipt"/>
+        <InputSetRef
+                def="PaymentInstrumentInputSet(paymentReceipt.PaymentInstrument)"
+                mode="PaymentMethod.TC_CREDITCARD"/>
+        <Input
+                editable="true"
+                id="RefNumber"
+                label="displaykey.Web.PaymentDetails.Wire.RefNumber"
+                value="paymentReceipt.RefNumber"/>
+    </InputSet>
+</PCF>

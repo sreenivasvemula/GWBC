@@ -1,0 +1,39 @@
+<?xml version="1.0"?>
+<QuickJumpConfigFile xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="quickjump-config.xsd">
+  <!-- Navigation -->
+  <StaticNavigationCommandRef commandName="Quickjump.Static.MyActivities" commandTarget="DesktopActivities"/>
+  <StaticNavigationCommandRef commandName="Quickjump.Static.MyApprovals" commandTarget="DesktopApprovals"/>
+  <StaticNavigationCommandRef commandName="Quickjump.Static.MyDelinquencies" commandTarget="DesktopDelinquencies"/>
+  <StaticNavigationCommandRef commandName="Quickjump.Static.MyTroubleTickets" commandTarget="DesktopTroubleTickets"/>
+  <!-- note to implementors: if these are not performant, then replace the commandClasses with the "*WithoutAutoComplete" -->
+  <QuickJumpCommandRef commandClass="gw.api.web.quickjump.AccountNavigationCommandWithAutoComplete" commandName="Quickjump.Parameterized.Account"/>
+  <!-- <QuickJumpCommandRef commandName="Quickjump.Parameterized.Account" commandClass="gw.quickjump.AccountNavigationCommand"/> -->
+  <QuickJumpCommandRef commandClass="gw.api.web.quickjump.PolicyNavigationCommandWithAutoComplete" commandName="Quickjump.Parameterized.Policy"/>
+  <!-- <QuickJumpCommandRef commandName="Quickjump.Parameterized.Policy" commandClass="gw.quickjump.PolicyNavigationCommand"/> -->
+  <QuickJumpCommandRef commandClass="gw.api.web.quickjump.ProducerNavigationCommandWithAutoComplete" commandName="Quickjump.Parameterized.Producer"/>
+  <!-- <QuickJumpCommandRef commandName="Quickjump.Parameterized.Producer" commandClass="gw.quickjump.ProducerNavigationCommand"/> Search -->
+  <StaticNavigationCommandRef commandName="Quickjump.Static.AccountSearch" commandTarget="Accounts"/>
+  <StaticNavigationCommandRef commandName="Quickjump.Static.PolicySearch" commandTarget="Policies"/>
+  <StaticNavigationCommandRef commandName="Quickjump.Static.ProducerSearch" commandTarget="Producers"/>
+  <StaticNavigationCommandRef commandName="Quickjump.Static.ContactSearch" commandTarget="ContactSearch"/>
+  <StaticNavigationCommandRef commandName="Quickjump.Static.InvoiceSearch" commandTarget="InvoiceSearch"/>
+  <StaticNavigationCommandRef commandName="Quickjump.Static.PaymentSearch" commandTarget="PaymentSearch"/>
+  <StaticNavigationCommandRef commandName="Quickjump.Static.ActivitySearch" commandTarget="ActivitySearch"/>
+  <StaticNavigationCommandRef commandName="Quickjump.Static.TroubleTicketSearch" commandTarget="TroubleTicketSearch"/>
+  <!-- New ... -->
+  <StaticNavigationCommandRef commandName="Quickjump.Static.NewDisbursement" commandTarget="CreateDisbursementWizard"/>
+  <StaticNavigationCommandRef commandName="Quickjump.Static.NewActivity" commandTarget="NewActivityWorksheet"/>
+  <QuickJumpCommandRef commandClass="gw.api.web.quickjump.CreateDocumentOnAccountNavigationCommand" commandName="Quickjump.Contextual.NewDocumentOnAccount"/>
+  <QuickJumpCommandRef commandClass="gw.api.web.quickjump.CreateDocumentOnPolicyNavigationCommand" commandName="Quickjump.Contextual.NewDocumentOnPolicy"/>
+  <QuickJumpCommandRef commandClass="gw.api.web.quickjump.CreateDocumentOnProducerNavigationCommand" commandName="Quickjump.Contextual.NewDocumentOnProducer"/>
+  <QuickJumpCommandRef commandClass="gw.api.web.quickjump.NewEmailOnAccount" commandName="Quickjump.Contextual.NewEmailOnAccount"/>
+  <QuickJumpCommandRef commandClass="gw.api.web.quickjump.NewEmailOnPolicy" commandName="Quickjump.Contextual.NewEmailOnPolicy"/>
+  <ContextualNavigationCommandRef commandName="Quickjump.Contextual.NewDirectBillPaymentOnAccount" commandTarget="NewDirectBillPayment" symbolName="account" symbolType="entity.Account"/>
+  <ContextualNavigationCommandRef commandName="Quickjump.Contextual.NewTroubleTicketOnAccount" commandTarget="CreateTroubleTicketWizard" symbolName="account" symbolType="entity.Account"/>
+  <ContextualNavigationCommandRef commandName="Quickjump.Contextual.NewTroubleTicketOnPolicy" commandTarget="CreateTroubleTicketWizard" symbolName="policyPeriod" symbolType="entity.PolicyPeriod"/>
+  <ContextualNavigationCommandRef commandName="Quickjump.Contextual.NewTroubleTicketOnProducer" commandTarget="CreateTroubleTicketWizard" symbolName="producer" symbolType="entity.Producer"/>
+  <!-- note to implementors: if these are not performant, then replace the commandClasses with the "*WithoutAutoComplete" -->
+  <QuickJumpCommandRef commandClass="com.guidewire.pl.quickjump.RunCommand" commandName="Web.QuickJump.Run"/>
+  <!-- note to implementors: if these are not performant, then replace the commandClasses with the "*WithoutAutoComplete" -->
+  <QuickJumpCommandRef commandClass="com.guidewire.pl.web.navigator.commands.RunBatchProcessCommand" commandName="Web.QuickJump.RunBatchProcess"/>
+</QuickJumpConfigFile>

@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xml:lang="en" lang="en" xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+    <meta http-equiv="Content-Style-Type" content="text/css" />
+    <!-- MOTW-DISABLED saved from url=(0014)about:internet -->
+    <title>Get and Display Rule Names in Messages</title>
+    <link rel="StyleSheet" href="css/bp-rules.css" type="text/css" media="all" />
+    <link rel="StyleSheet" href="css/webworks.css" type="text/css" media="all" />
+    <link rel="StyleSheet" href="css/css-guidewire-extra.css" type="text/css" media="all" />
+    <script type="text/javascript" language="JavaScript1.2" src="wwhdata/common/context.js"></script>
+    <script type="text/javascript" language="JavaScript1.2" src="wwhdata/common/towwhdir.js"></script>
+    <script type="text/javascript" language="JavaScript1.2" src="wwhdata/common/wwhpagef.js"></script>
+    <script type="text/javascript" language="JavaScript1.2">
+      <!--
+        var  WebWorksRootPath = "";
+      // -->
+    </script>
+    <script type="text/javascript" language="JavaScript1.2">
+      <!--
+        // Set reference to top level help frame
+        //
+        var  WWHFrame = WWHGetWWHFrame("", true);
+      // -->
+    </script>
+    <script type="text/javascript" language="JavaScript1.2" src="scripts/expand.js"></script>
+    <!-- THE FOLLOWING IS A GUIDEWIRE STYLE DEFINITION FOR THE LINK TO THIS FEATURE -->
+    <link rel="StyleSheet" href="css/css-guidewire-extra.css" type="text/css" media="all" />
+    <!-- THE FOLLOWING IS A GUIDEWIRE GSCRIPT FUNCTION FOR THE LINK TO THIS FEATURE -->
+    <script type="text/javascript">
+function guidewire_selectall()
+{
+var text_val=eval("document.linktothisurlform.urlfield");
+text_val.focus();
+text_val.select();
+}
+</script>
+  </head>
+  <body onLoad="WWHUpdate();" onUnload="WWHUnload();" onKeyDown="WWHHandleKeyDown((document.all||document.getElementById||document.layers)?event:null);" onKeyPress="WWHHandleKeyPress((document.all||document.getElementById||document.layers)?event:null);" onKeyUp="WWHHandleKeyUp((document.all||document.getElementById||document.layers)?event:null);">
+    <!-- THE FOLLOWING IS A GUIDEWIRE DIV FOR THE 'LINK TO THIS' FEATURE -->
+    <div id="linkToThisPage" class="popup" style="display: none;">
+      <div class="popupTitle">Link Directly to This Page 
+           <a href="#" onclick="var thePopup = getElementById('linkToThisPage');thePopup.style.display='none';return false;"><img class="popupClosebox" src="wwhelp/wwhimpl/common/images/close.gif" /></a></div>
+      <div style="padding:6px;">
+        <div class="popupText" id="linkToThisPageBookmark">An error has occurred if you see this messsage.</div>
+        <form name="linktothisurlform" method="post" action="" style="width:275px;margin:0px">
+          <input type="text" class="popupURLText" id="linkToThisPageURL" name="urlfield" rows="1" cols="55" onClick="guidewire_selectall();" onFocus="guidewire_selectall();"></input>
+        </form>
+      </div>
+    </div>
+    <br />
+    <div class="WebWorks_Breadcrumbs" style="text-align: left;">
+      <span>BillingCenter Best Practices&nbsp;Guide</span> : 
+    <span class="WebWorks_Breadcrumbs" style="text-align: left;"><a class="WebWorks_Breadcrumb_Link" href="bp-rules.5.1.html#2164212">Rules Best Practices </a> : <a class="WebWorks_Breadcrumb_Link" href="bp-rules.5.2.html#2164212">Rules Naming Best Practices </a> : Get and Display Rule Names in Messages</span></div>
+    <hr align="left" />
+    <blockquote>
+      <h4 class="H2B_-_Heading_2_Break"><a name="2164212">Get and Display Rule Names in Messages</a></h4>
+      <div class="B_-_Body"><a name="2164320">As a best practice, Guidewire recommends that you get and display rule names in messages. So, following the Guidewire best practices for rule names helps you identify specific rules in messages to users, in print statements for testing, and in log messages. The alphabetic beginning of a rule identifier helps you find the rule set or parent rule that contains the rule. The numeric ending helps you determine the order of a rule in a rule set or parent rule. </a></div>
+      <div class="B_-_Body"><a name="2240026">For example, you want to test a regional validation rule, </a><span class="cv_-_computer_voice">RGV01000 - No zones in lookup</span>. The identifier portion of the rule name begins with <span class="cv_-_computer_voice">RGV</span>. That identifies the rule as a member of the <span class="cv_-_computer_voice">RegionValidationRules</span> rule set. The identifier ends with <span class="cv_-_computer_voice">01000</span>. That indicates that rule is near the beginning of the rule set. The rule has the following definition.</div>
+      <PRE class="CF_-_Code_First_Line"><a name="2240027">RGV01000 - No zones in lookup</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line" style="font-style: normal; font-variant: normal; font-weight: bold; text-transform: none; vertical-align: baseline"><span class="s_-_strong"><a name="2240028">Rule Conditions:</a></span></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2240029">Region.getOrganization() = null</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2240030">&nbsp;</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line" style="font-style: normal; font-variant: normal; font-weight: bold; text-transform: none; vertical-align: baseline"><span class="s_-_strong"><a name="2240031">Rule Actions:</a></span></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2240032">producerCode.reject(null, null, "loadsave",</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2240033">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"There are zones that do not appear in the zone lookup dataset."</a></PRE>
+      <PRE class="CL_-_Code_Last_Line"><a name="2240034">)</a></PRE>
+      <div class="B_-_Body"><a name="2240035">As written, the rejection message that the rule action displays makes it difficult to determine exactly which rule caused an update to fail. To help identify the specific rule in the rejection message, use the </a><span class="cv_-_computer_voice">actions.getRule().DisplayName</span> property to include the identifier portion of the rule name in the message.</div>
+      <PRE class="CF_-_Code_First_Line" style="font-style: normal; font-variant: normal; font-weight: bold; text-transform: none; vertical-align: baseline"><span class="s_-_strong"><a name="2240036">Rule Actions:</a></span></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2240037">Region.reject( null, null, "loadsave"</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2240038">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"There are zones that do not appear in the zone lookup dataset.</a><span class="s_-_strong"> Rule:" +</span> </PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2240039">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a><span class="s_-_strong">actions.getRule().DisplayName.substring(8)</span></PRE>
+      <PRE class="CL_-_Code_Last_Line"><a name="2240040">)</a></PRE>
+      <div class="B_-_Body"><a name="2240041">By including the rule display name in the rule action, users see the following statement in the </a><span class="ui_-_UI_element">Validation</span> window when the rule action executes.</div>
+      <div class="CS_-_Code_Single_Line"><a name="2240042">There are zones that do not appear in the zone lookup dataset. </a><span class="s_-_strong">Rule: RGV01000</span></div>
+      <div class="N_-_Note">
+        <span class="n_-_note">Note: </span><a name="2237912">In actual practice, Guidewire recommends that you make all </a><span class="cv_-_computer_voice">String</span> values into display keys.</div>
+      <script type="text/javascript" language="JavaScript1.2">
+        <!--
+          // Clear related topics
+          //
+          WWHClearRelatedTopics();
+
+          document.writeln(WWHRelatedTopicsInlineHTML());
+        // -->
+      </script>
+    </blockquote>
+    <script type="text/javascript" language="JavaScript1.2">
+      <!--
+        document.write(WWHRelatedTopicsDivTag() + WWHPopupDivTag() + WWHALinksDivTag());
+      // -->
+    </script>
+  </body>
+</html>

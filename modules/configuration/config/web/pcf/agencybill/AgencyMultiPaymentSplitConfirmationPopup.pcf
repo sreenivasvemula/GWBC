@@ -1,0 +1,69 @@
+<?xml version="1.0"?>
+<PCF
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:noNamespaceSchemaLocation="../../../../../pcf.xsd">
+  <Popup
+    beforeCommit="validateSplitPayment();agencySplitPayment.splitMultiPayment()"
+    canEdit="true"
+    id="AgencyMultiPaymentSplitConfirmationPopup"
+    startInEditMode="true"
+    title="displaykey.Web.AgencyPaymentSplitConfirmationPopup.Title">
+    <LocationEntryPoint
+      signature="AgencyMultiPaymentSplitConfirmationPopup(originalPaymentEntry : PaymentEntry)"/>
+    <Variable
+      initialValue="createAgencyPaymentSplit()"
+      name="agencySplitPayment"
+      type="web.producer.agencybill.AgencySplitPayment"/>
+    <Variable
+      name="originalPaymentEntry"
+      type="PaymentEntry"/>
+    <ScreenRef
+      def="AgencyPaymentSplitConfirmationScreen(agencySplitPayment, getTextToDisplayInAlertBar())"/>
+    <Code><![CDATA[/**
+ * Create non persistent AgencySplitPayment object used to manage the split of the multipayment entry in the UI
+ */
+function createAgencyPaymentSplit() : web.producer.agencybill.AgencySplitPayment {
+  return new web.producer.agencybill.AgencySplitPayment(originalPaymentEntry);
+}
+
+/**
+ * If there are not very many empty rows back on the multipayment screen, display an alert bar warning message telling the user that they
+ * may want to cancel out of this screen and go back to the multipayment screen and add some more blank rows there.  Reason we need this is 
+ * that there isn't a way currently in the UI framework to go off to a popup like this split payment popup screen and create multiple NEW
+ * rows and then add them back to an LV on a screen that we came from (like the multipayment screen).  So the workaround is to have the
+ * user go back to the multipayment screen and add some new blank rows
+ */
+function getTextToDisplayInAlertBar() : String {
+  var numberOfAvailableEmptyPaymentRows = getNumberOfEmptyPaymentRowsOnMultiPaymentScreen(originalPaymentEntry.PaymentInstrument.PaymentMethod);
+  if (numberOfAvailableEmptyPaymentRows < 5) {
+    return displaykey.Web.AgencyMultiPaymentSplitConfirmationPopup.AlertBarMessageMaxNumberOfSplitRows( numberOfAvailableEmptyPaymentRows );
+  }
+  else {
+    return null;
+  }
+}
+
+/**
+ * Perform validation on the AgencySplitPayment before we commit.  Throw a UserDisplayableException if validation fails
+ */
+function validateSplitPayment() {
+
+  // The number of unused rows that will be filled back on the multipayment screen by doing a split payment on this screen is equal to the number of split rows minus one.
+  // That's because we re-use the original row on the multipayment screen (the one being split) by overwriting its information with the information in one of the split rows 
+  // (so that doesn't use any new rows) and then we fill up empty rows for the rest of the split payment rows.  So if the split payment would end up using more empty rows
+  // back on the multipayment screen than are available, we will display an error message (because given the ui framework its impossible for us to create new rows)
+  var numberOfSplitRows = agencySplitPayment.getSplit().length
+  if (numberOfSplitRows - 1 > getNumberOfEmptyPaymentRowsOnMultiPaymentScreen(originalPaymentEntry.PaymentInstrument.PaymentMethod)) {
+    throw new com.guidewire.pl.web.controller.UserDisplayableException(displaykey.Web.AgencyMultiPaymentSplitConfirmationPopup.ErrorMessageTooManySplitRows)
+  }
+  
+}
+
+/**
+ * @return the number of blank rows available back on the multipayment screen (screen from which user came to this popup)
+ */
+private function getNumberOfEmptyPaymentRowsOnMultiPaymentScreen(paymentMethod : PaymentMethod) : int {
+  return originalPaymentEntry.NewMultiPayment.Payments.where( \ paymentRow -> paymentMethod == paymentRow.PaymentInstrument.PaymentMethod && paymentRow.isUnusedEntry()).length;
+}]]></Code>
+  </Popup>
+</PCF>

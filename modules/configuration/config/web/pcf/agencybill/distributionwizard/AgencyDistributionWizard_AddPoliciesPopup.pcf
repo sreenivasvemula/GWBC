@@ -1,0 +1,273 @@
+<?xml version="1.0"?>
+<PCF
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:noNamespaceSchemaLocation="../../../../../../pcf.xsd">
+  <Popup
+    id="AgencyDistributionWizard_AddPoliciesPopup"
+    returnType="PolicyPeriod[]"
+    title="displaykey.Web.AgencyDistributionWizard.AddPoliciesPopup.Title">
+    <LocationEntryPoint
+      signature="AgencyDistributionWizard_AddPoliciesPopup(wizardState : gw.agencybill.AgencyDistributionWizardHelper)"/>
+    <Variable
+      name="wizardState"
+      type="gw.agencybill.AgencyDistributionWizardHelper"/>
+    <Variable
+      initialValue="displaykey.Web.AgencyDistributionWizard.AddPoliciesPopup.IncludeFullySettledItems.No"
+      name="shouldIncludeFullySettledItems"
+      type="String"/>
+    <Variable
+      initialValue="AgencyCycleDistPrefill.TC_UNPAID"
+      name="prefill"
+      type="AgencyCycleDistPrefill"/>
+    <Screen>
+      <!-- Regarding SearchMethods.validateAndSearch: The 2nd parameter controls the search mode of all associated contact fields. -->
+      <SearchPanel
+        cachingEnabled="false"
+        criteriaName="searchCriteria"
+        id="SpecificPoliciesPanelSet"
+        resultCachingEnabled="false"
+        resultsName="foundPolicies"
+        search="doSearch(searchCriteria)"
+        searchCriteria="createSearchCriteria()"
+        searchResultsType="PolicyPeriodQuery">
+        <PanelRef>
+          <Toolbar>
+            <CheckedValuesToolbarButton
+              flags="any Row"
+              id="SelectPolicies"
+              iterator="PoliciesIterator"
+              label="displaykey.Web.AgencyDistributionWizard.AddPoliciesPopup.Title"
+              pickValue="CheckedValues"
+              visible="wizardState.AgencyCycleDistView == null"/>
+            <CheckedValuesToolbarButton
+              allCheckedRowsAction="addItemsFromSelectedPolicies(CheckedValues, false, searchCriteria); "
+              flags="any Row"
+              id="AllPoliciesWithAllItems"
+              iterator="PoliciesIterator"
+              label="displaykey.Web.AddPoliciesPopup.AddPoliciesWithAllItems"
+              visible="wizardState.AgencyCycleDistView != null //only visible if coming from DistributionScreen"/>
+            <CheckedValuesToolbarButton
+              allCheckedRowsAction="addItemsFromSelectedPolicies(CheckedValues, true, searchCriteria)"
+              flags="any Row"
+              id="AddPoliciesWithBilledAndDueItems"
+              iterator="PoliciesIterator"
+              label="displaykey.Web.AddPoliciesPopup.AddPoliciesWithBilledAndDueItems"
+              visible="wizardState.AgencyCycleDistView != null //only visible if coming from DistributionScreen"/>
+            <ToolbarButton
+              action="CurrentLocation.cancel()"
+              id="cancel"
+              label="displaykey.Button.Cancel"/>
+          </Toolbar>
+          <DetailViewPanel
+            visible="wizardState.AgencyCycleDistView != null //only visible if coming from DistributionScreen">
+            <InputColumn>
+              <RangeInput
+                editable="true"
+                id="IncludeFullySettledItems"
+                label="displaykey.Web.AgencyDistributionWizard.AddPoliciesPopup.IncludeFullySettledItems"
+                required="true"
+                value="shouldIncludeFullySettledItems"
+                valueRange="{displaykey.Web.AgencyDistributionWizard.AddPoliciesPopup.IncludeFullySettledItems.No, displaykey.Web.AgencyDistributionWizard.AddPoliciesPopup.IncludeFullySettledItems.Yes}"
+                visible="wizardState.AgencyCycleDistView != null //only visible if coming from DistributionScreen"/>
+              <RangeInput
+                editable="true"
+                id="Prefill"
+                label="displaykey.Web.AddInvoiceItemsPopup.Prefill"
+                required="true"
+                value="prefill"
+                valueRange="new AgencyCycleDistPrefill[]{AgencyCycleDistPrefill.TC_UNPAID, AgencyCycleDistPrefill.TC_ZERO}"
+                visible="wizardState.AgencyCycleDistView != null //only visible if coming from DistributionScreen"/>
+              <InputDivider/>
+            </InputColumn>
+            <InputColumn/>
+          </DetailViewPanel>
+        </PanelRef>
+        <DetailViewPanel>
+          <InputColumn>
+            <Label
+              label="displaykey.Web.AddInvoiceItemsPopup.SearchCriteriaHeader"/>
+          </InputColumn>
+        </DetailViewPanel>
+        <DetailViewPanel>
+          <Variable
+            initialValue="new web.account.AccountSearchConverter()"
+            name="accountSearchConverter"
+            type="web.account.AccountSearchConverter"/>
+          <InputColumn>
+            <RangeRadioInput
+              editable="true"
+              id="PayerType"
+              label="displaykey.Web.AddInvoiceItemsPopup.AccountOrProducerPayer"
+              required="false"
+              value="searchCriteria.PayerType"
+              valueRange="gw.search.PolicyPeriodSearchCriteria.PayerTypeEnum.AllValues"
+              visible="wizardState.AgencyCycleDistView != null">
+              <PostOnChange
+                target="PayerInputSet"/>
+            </RangeRadioInput>
+            <InputSet
+              id="PayerInputSet">
+              <PickerInput
+                editable="true"
+                id="PayerAccount"
+                inputConversion="accountSearchConverter.getAccount(VALUE)"
+                label="displaykey.Web.AddInvoiceItemsPopup.PayerAccount"
+                pickLocation="AccountSearchPopup.push()"
+                value="searchCriteria.PayerAccount"
+                visible="searchCriteria.PayerTypeIsAccount"/>
+              <Input
+                id="PayerProducer"
+                label="displaykey.Web.AgencyDistributionWizard.AddPoliciesPopup.PayerProducer"
+                value="searchCriteria.PayerProducer"
+                visible="searchCriteria.PayerTypeIsProducer"/>
+            </InputSet>
+            <PickerInput
+              editable="true"
+              id="OwnerAccount"
+              inputConversion="accountSearchConverter.getAccount(VALUE)"
+              label="displaykey.Web.AgencyDistributionWizard.AddPoliciesPopup.OwnerAccount"
+              pickLocation="AccountSearchPopup.push()"
+              value="searchCriteria.OwnerAccount"/>
+          </InputColumn>
+          <InputColumn>
+            <Input
+              editable="true"
+              id="PolicyNumber"
+              label="displaykey.Web.AgencyDistributionWizard.AddPoliciesPopup.PolicyNumber"
+              value="searchCriteria.PolicyNumber"/>
+            <TypeKeyInput
+              editable="true"
+              id="Product"
+              label="displaykey.Web.AgencyDistributionWizard.AddPoliciesPopup.Product"
+              value="searchCriteria.Product"/>
+          </InputColumn>
+        </DetailViewPanel>
+        <DetailViewPanel>
+          <InputColumn>
+            <!-- DON NOT reference this file directly, but use SearchAndResetInputSet or SearchOnlyInputSet instead -->
+            <InputSet
+              id="SearchLinksInputSet">
+              <ContentInput
+                id="searchBtns"
+                labelAbove="true">
+                <Link
+                  action="util.SearchUtil.search()"
+                  default="true"
+                  id="Search"
+                  label="displaykey.Button.Search"
+                  shortcut="S"
+                  styleClass="bigButton"/>
+                <Link
+                  action="util.SearchUtil.reset()"
+                  id="Reset"
+                  label="displaykey.Button.Reset"
+                  shortcut="R"
+                  styleClass="bigButton"/>
+              </ContentInput>
+            </InputSet>
+          </InputColumn>
+        </DetailViewPanel>
+        <PanelRef>
+          <Toolbar/>
+          <ListViewPanel>
+            <RowIterator
+              editable="false"
+              elementName="policy"
+              hasCheckBoxes="true"
+              id="PoliciesIterator"
+              value="foundPolicies">
+              <ToolbarFlag
+                name="Row"/>
+              <Row>
+                <Cell
+                  action="PolicyDetailSummaryPopup.push(policy)"
+                  id="PolicyNumber"
+                  label="displaykey.Web.AgencyDistributionWizard.AddPoliciesPopup.PoliciesLV.PolicyNumber"
+                  sortOrder="1"
+                  value="policy.PolicyNumberLong"/>
+                <Cell
+                  action="AccountDetailSummaryPopup.push(policy.Policy.Account)"
+                  id="AccountNumber"
+                  label="displaykey.Web.AgencyDistributionWizard.AddPoliciesPopup.PoliciesLV.AccountNumber"
+                  value="policy.Policy.Account.AccountNumber"/>
+                <TypeKeyCell
+                  id="Product"
+                  label="displaykey.Web.AgencyDistributionWizard.AddPoliciesPopup.PoliciesLV.Product"
+                  value="policy.Policy.LOBCode"/>
+                <Cell
+                  id="PaymentStatus"
+                  label="displaykey.Web.AgencyDistributionWizard.AddPoliciesPopup.PoliciesLV.PaymentStatus"
+                  value="getPolicyDelinquencyStatusDescription(policy)"/>
+                <DateCell
+                  enableSort="false"
+                  id="EffectiveDate"
+                  label="displaykey.Web.AgencyDistributionWizard.AddPoliciesPopup.PoliciesLV.EffectiveDate"
+                  value="policy.EffectiveDate"/>
+                <DateCell
+                  enableSort="false"
+                  id="ExpirationDate"
+                  label="displaykey.Web.AgencyDistributionWizard.AddPoliciesPopup.PoliciesLV.ExpirationDate"
+                  value="policy.ExpirationDate"/>
+                <Cell
+                  id="Producer"
+                  label="displaykey.Web.AgencyDistributionWizard.AddPoliciesPopup.PoliciesLV.Producer"
+                  value="policy.PrimaryPolicyCommission.ProducerCode.Producer"/>
+                <Cell
+                  id="ProducerCode"
+                  label="displaykey.Web.AgencyDistributionWizard.AddPoliciesPopup.PoliciesLV.ProducerCode"
+                  value="policy.PrimaryPolicyCommission.ProducerCode.Code"/>
+              </Row>
+            </RowIterator>
+          </ListViewPanel>
+        </PanelRef>
+      </SearchPanel>
+    </Screen>
+    <Code><![CDATA[uses gw.search.InvoiceItemQueryHelper.DistributionTypeEnum
+uses gw.search.PolicyPeriodSearchCriteria.SearchContextEnum
+uses gw.search.PolicyPeriodSearchCriteria
+
+function createSearchCriteria() : gw.search.PolicyPeriodSearchCriteria {
+  var distributionType = wizardState.IsPromise ?
+    DistributionTypeEnum.Promise :
+    DistributionTypeEnum.Payment
+  var searchContext = wizardState.AgencyCycleDistView != null ? 
+    SearchContextEnum.AnyPolicy : //DistributionScreen
+    SearchContextEnum.PoliciesOnGivenStatements //MoneyDetails Screen
+    
+  var searchCriteria = new gw.search.PolicyPeriodSearchCriteria(distributionType, searchContext, wizardState.MoneySetup.Producer)
+  if (wizardState.AgencyCycleDistView != null) { //DistributionScreen
+    searchCriteria.InvoiceItemsToExclude = wizardState.AgencyCycleDistView.AgencyCycleDist.DistItems.map(\ di -> di.InvoiceItem)
+  } else { //MoneyDetails Screen
+    searchCriteria.StatementInvoices = wizardState.MoneySetup.DistributeToStatements
+  }
+  return searchCriteria
+}
+
+function doSearch(searchCriteria : gw.search.PolicyPeriodSearchCriteria) : PolicyPeriodQuery  {
+  return gw.search.SearchMethods.validateAndSearch(searchCriteria) 
+}
+
+function addItemsFromSelectedPolicies(policyPeriods : PolicyPeriod[], filterByStatusIsBilledOrDue : boolean, policyPeriodSearchCriteria : PolicyPeriodSearchCriteria) {
+  var searchCriteria = new gw.search.InvoiceItemSearchCriteria()
+  searchCriteria.IncludeOnlyBilledAndDueItems = filterByStatusIsBilledOrDue
+  searchCriteria.IncludeFullySettledItems = shouldIncludeFullySettledItems == displaykey.Web.AgencyDistributionWizard.AddPoliciesPopup.IncludeFullySettledItems.Yes
+  searchCriteria.PayingProducer = wizardState.MoneySetup.Producer
+  if (policyPeriodSearchCriteria.PayerTypeIsAccount && policyPeriodSearchCriteria.PayerAccount != null) {
+    searchCriteria.PayerIsAnAccount = true
+    searchCriteria.PayerAccountNumber = policyPeriodSearchCriteria.PayerAccount.AccountNumber
+  } else if (policyPeriodSearchCriteria.PayerTypeIsProducer) {
+    searchCriteria.PayerIsAnAccount = false
+    searchCriteria.PayerProducerName = wizardState.MoneySetup.Producer.Name
+  }
+  searchCriteria.DistributionTypeIsPromise = wizardState.IsPromise
+  searchCriteria.restrictToInvoiceItemsOnPolicyPeriods(policyPeriods)
+  var invoiceItems = searchCriteria.performSearch(wizardState.AgencyCycleDistView.AgencyCycleDist).map(\ ii -> ii)
+  wizardState.AgencyCycleDistView.addInvoiceItems(invoiceItems as entity.InvoiceItem[], prefill)
+  CurrentLocation.commit()
+}
+
+function getPolicyDelinquencyStatusDescription(policyPeriod : PolicyPeriod) : String {
+  return policyPeriod.Delinquent ? displaykey.Web.AccountPoliciesLV.PastDue : displaykey.Web.AccountPoliciesLV.GoodStanding
+}]]></Code>
+  </Popup>
+</PCF>

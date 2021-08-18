@@ -1,0 +1,45 @@
+<?xml version="1.0"?>
+<PCF
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:noNamespaceSchemaLocation="../../../../../pcf.xsd">
+  <DetailViewPanel
+    id="NewNegativeWriteoffDetailsDV">
+    <Require
+      name="uiWriteoff"
+      type="web.accounting.UIWriteOffCreation"/>
+    <InputColumn>
+      <Label
+        label="displaykey.Web.NewNegativeWriteoffWizardDetailsStepScreen.NegativeWriteoffDetails"/>
+      <CheckBoxInput
+        editable="uiWriteoff.FullAmount.IsPositive"
+        id="UseFullAmount"
+        label="displaykey.Web.NewNegativeWriteoffWizardDetailsStepScreen.FullAmount(uiWriteoff.FullAmount.render())"
+        value="uiWriteoff.UseFullAmount">
+        <PostOnChange
+          target="Amount"/>
+      </CheckBoxInput>
+      <MonetaryAmountInput
+        available="not uiWriteoff.UseFullAmount"
+        currency="uiWriteoff.WriteOff.TAccountOwner.Currency"
+        editable="true"
+        id="Amount"
+        label="displaykey.Web.NewNegativeWriteoffWizardDetailsStepScreen.Amount"
+        required="true"
+        validationExpression="validateAmount()"
+        value="uiWriteoff.Amount"/>
+    </InputColumn>
+    <Code><![CDATA[// todo EDF unify this with validation in new write-off wizard
+      function validateAmount() : String {
+        var amount = uiWriteoff.Amount;
+
+        // ensure that it is positive and no more than the max allowed
+        if (!amount.IsPositive) {
+          return displaykey.Web.NewNegativeWriteoffWizard.NonPositiveNegativeWriteoffAmount;
+        }
+        if (amount > uiWriteoff.FullAmount) {
+          return displaykey.Web.NewNegativeWriteoffWizard.OverFullNegativeWriteoffAmount(uiWriteoff.FullAmount.render());
+        }
+        return null;
+      }]]></Code>
+  </DetailViewPanel>
+</PCF>

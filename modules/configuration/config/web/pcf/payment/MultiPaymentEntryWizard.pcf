@@ -1,0 +1,36 @@
+<?xml version="1.0"?>
+<PCF
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:noNamespaceSchemaLocation="../../../../../pcf.xsd">
+  <Wizard
+    afterCancel="DesktopGroup.go()"
+    afterFinish="DesktopGroup.go()"
+    beforeCommit="newMultiPayment.createPayments()"
+    canEdit="true"
+    canVisit="perm.DirectBillMoneyRcvd.pmntmanmultproc"
+    id="MultiPaymentEntryWizard"
+    parent="DesktopGroup()">
+    <LocationEntryPoint
+      signature="MultiPaymentEntryWizard(currency : Currency)"/>
+    <Variable
+      initialValue="createNewMultiPayment()"
+      name="newMultiPayment"
+      type="NewMultiPayment"/>
+    <Variable
+      name="currency"
+      type="Currency"/>
+    <WizardStep
+      id="EnterInformation"
+      screen="NewMultiPaymentScreen(newMultiPayment, currency, true)"
+      title="displaykey.Web.MultiPaymentEntryWizard.EnterInformation.Title"/>
+    <WizardStep
+      id="Confirmation"
+      screen="NewMultiPaymentScreen(newMultiPayment, currency, false)"
+      title="displaykey.Web.MultiPaymentEntryWizard.Confirmation.Title"/>
+    <Code><![CDATA[function createNewMultiPayment() : NewMultiPayment {
+  var multiPayment = new NewMultiPayment();
+  multiPayment.addEmptyPaymentRows()  
+  return multiPayment;
+}]]></Code>
+  </Wizard>
+</PCF>

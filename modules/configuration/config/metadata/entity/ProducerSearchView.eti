@@ -1,0 +1,34 @@
+<?xml version="1.0"?>
+<!-- ====================================================================  ProducerSearchView  ==================================================================== -->
+<viewEntity
+  xmlns="http://guidewire.com/datamodel"
+  desc="Supports the efficient creation of Producer lists in BillingCenter's views."
+  entity="ProducerSearchView"
+  exportable="false"
+  primaryEntity="Producer"
+  subpackage="search.view">
+  <viewEntityLink
+    name="Producer"
+    path="ID"/>
+  <viewEntityColumn
+    name="Name"
+    path="Name"/>
+  <viewEntityTypekey
+    name="Currency"
+    path="Currency"/>
+  <viewEntityColumn
+    name="AddressLine1"
+    path="PrimaryContact.Contact.PrimaryAddress.AddressLine1"/>
+  <viewEntityColumn
+    name="City"
+    path="PrimaryContact.Contact.PrimaryAddress.City"/>
+  <viewEntityTypekey
+    name="State"
+    path="PrimaryContact.Contact.PrimaryAddress.State"/>
+  <viewEntityTypekey
+    name="Country"
+    path="PrimaryContact.Contact.PrimaryAddress.Country"/>
+  <viewEntityColumn
+    name="PostalCode"
+    path="PrimaryContact.Contact.PrimaryAddress.PostalCode"/>
+</viewEntity>

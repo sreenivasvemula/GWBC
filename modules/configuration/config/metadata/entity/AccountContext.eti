@@ -1,0 +1,42 @@
+<?xml version="1.0"?>
+<entity
+  xmlns="http://guidewire.com/datamodel"
+  entity="AccountContext"
+  type="editable"
+  desc="Context for account-level transactions."
+  final="false"
+  ignoreForEvents="true"
+  subpackage="accounting.transaction"
+  overwrittenInStagingTable="true"
+  platform="false"
+  table="accountcontext"
+  setterScriptability="hidden">
+  <implementsEntity
+    name="TransactionContext"/>
+  <implementsEntity
+    name="InCurrencySilo"/>
+  <foreignkey
+    name="Account"
+    columnName="AccountID"
+    fkentity="Account"
+    getterScriptability="hidden"
+    ignoreforevents="true"
+    nullok="false"
+    setterScriptability="hidden"/>
+  <foreignkey
+    name="Transaction"
+    desc="Reference to account transaction"
+    columnName="TransactionID"
+    fkentity="AccountTransaction"
+    getterScriptability="doesNotExist"
+    nullok="false"
+    setterScriptability="doesNotExist"/>
+  <foreignkey
+    name="UnappliedFund"
+    columnName="UnappliedFundID"
+    fkentity="UnappliedFund"
+    getterScriptability="hidden"
+    ignoreforevents="true"
+    nullok="false"
+    setterScriptability="hidden"/>
+</entity>

@@ -1,0 +1,71 @@
+<?xml version="1.0"?>
+<PCF
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:noNamespaceSchemaLocation="../../../../../pcf.xsd">
+  <Screen
+    id="NewPolicyWizardChargeStepScreen">
+    <Require
+      name="account"
+      type="Account"/>
+    <Require
+      name="policyPeriod"
+      type="PolicyPeriod"/>
+    <Require
+      name="billingInstruction"
+      type="NewPlcyPeriodBI"/>
+    <Require
+      name="chargeToInvoicingOverridesViewMap"
+      type="java.util.HashMap&lt;gw.api.domain.charge.ChargeInitializer, gw.invoice.InvoicingOverridesView&gt;"/>
+    <Variable
+      initialValue="new web.account.AccountSearchConverter()"
+      name="accountSearchConverter"
+      type="web.account.AccountSearchConverter"/>
+    <Variable
+      initialValue="policyPeriod.DefaultPayer typeis Account ? policyPeriod.DefaultPayer : null"
+      name="payerAccount"
+      type="Account"/>
+    <PanelRef
+      def="PolicyAddChargesLV(billingInstruction, policyPeriod, chargeToInvoicingOverridesViewMap)">
+      <Toolbar>
+        <WizardButtons/>
+        <IteratorButtons
+          iterator="PolicyAddChargesLV.ChargeIterator"/>
+      </Toolbar>
+    </PanelRef>
+    <DetailViewPanel
+      editable="true"
+      id="FullPayDiscountDV"
+      visible="policyPeriod.EligibleForFullPayDiscount">
+      <InputColumn>
+        <Label
+          label="displaykey.Web.NewPolicyReportingChargeDV.FullPayDiscountDetails"/>
+        <DateInput
+          editable="true"
+          id="FullPayDate"
+          label="displaykey.Web.NewPolicyReportingChargeDV.FullPayDate"
+          required="policyPeriod.EligibleForFullPayDiscount"
+          value="policyPeriod.FullPayDiscountUntil"/>
+        <MonetaryAmountInput
+          currency="policyPeriod.Currency"
+          editable="true"
+          formatType="currency"
+          id="DiscountedPayment"
+          label="displaykey.Web.NewPolicyReportingChargeDV.DiscountedPayment"
+          required="policyPeriod.EligibleForFullPayDiscount"
+          validationExpression="isDiscountedPaymentValid() ? null : displaykey.Web.NewPolicyReportingChargeDV.DiscountedPaymentNotValid"
+          value="policyPeriod.DiscountedPaymentThreshold"/>
+      </InputColumn>
+    </DetailViewPanel>
+    <Code><![CDATA[function isDiscountedPaymentValid() : Boolean{
+  if(!policyPeriod.EligibleForFullPayDiscount){
+    return true;
+  }  
+  
+  var totalChargeAmount = 0bd.ofCurrency(policyPeriod.Currency)
+  for(charge in billingInstruction.ChargeInitializers){
+   totalChargeAmount = totalChargeAmount.add(charge.Amount)
+  }
+  return totalChargeAmount > policyPeriod.DiscountedPaymentThreshold
+}]]></Code>
+  </Screen>
+</PCF>

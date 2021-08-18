@@ -1,0 +1,31 @@
+<?xml version="1.0"?>
+<!-- ====================================================================  CommissionRateOverride  ==================================================================== -->
+<subtype
+  xmlns="http://guidewire.com/datamodel"
+  entity="InvoiceItemCommissionRateOverride"
+  desc="Override of commission rate for a particular PolicyRole on an InvoiceItem"
+  subpackage="accounting"
+  supertype="CommissionRateOverride">
+  <foreignkey
+    name="InvoiceItem"
+    columnName="InvoiceItemID"
+    fkentity="InvoiceItem"
+    getterScriptability="doesNotExist"
+    importableagainstexistingobject="false"
+    nullok="false"
+    setterScriptability="doesNotExist"/>
+  <index
+    desc="Legacy"
+    name="ItemUniqueness"
+    unique="true">
+    <indexcol
+      name="Role"
+      keyposition="1"/>
+    <indexcol
+      name="InvoiceItemID"
+      keyposition="2"/>
+    <indexcol
+      name="Retired"
+      keyposition="3"/>
+  </index>
+</subtype>

@@ -1,0 +1,28 @@
+<?xml version="1.0"?>
+<Entity
+  name="InvoiceItem">
+  <Columns>
+    <Column
+      beanPath="InvoiceItem.EventDate"
+      name="EventDate"
+      sortOrder="0"/>
+    <Column
+      beanPath="InvoiceItem.Amount"
+      name="Amount"
+      sortOrder="1"/>
+    <Column
+      beanPath="InvoiceItem.Type"
+      name="TypeName"
+      sortOrder="2"/>
+    <DisplayNameColumn
+      beanPath="InvoiceItem.Charge"
+      displayName="true"
+      name="ChargeName"
+      sortOrder="3"/>
+  </Columns>
+  <DisplayName><![CDATA[return displaykey.Java.InvoiceItem.DisplayName(EventDate?.format("short"), Amount?.render());]]></DisplayName>
+  <DisplayName
+    type="ItemType"><![CDATA[
+    return displaykey.Java.InvoiceItem.DisplayName.ItemType(TypeName, ChargeName);
+  ]]></DisplayName>
+</Entity>

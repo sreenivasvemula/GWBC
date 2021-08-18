@@ -1,0 +1,88 @@
+<?xml version="1.0"?>
+<PCF
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:noNamespaceSchemaLocation="../../../../../pcf.xsd">
+  <DetailViewPanel
+    id="TroubleTicketRelatedEntitiesDV">
+    <Require
+      name="troubleTicket"
+      type="TroubleTicket"/>
+    <Require
+      name="createTroubleTicketHelper"
+      type="CreateTroubleTicketHelper"/>
+    <InputColumn>
+      <ListViewInput
+        editable="true">
+        <Toolbar>
+          <ToolbarButton
+            action="TroubleTicketRelatedEntitiesPopup.push(troubleTicket, createTroubleTicketHelper)"
+            hideIfEditable="true"
+            id="relatedEntities"
+            label="displaykey.Web.TroubleTicketDetailsPopup.RelatedEntities"/>
+          <PickerToolbarButton
+            action="SelectMultipleAccountsPopup.push()"
+            hideIfReadOnly="true"
+            id="TroubleTicketRelatedEntitiesDV_AddAccountsButton"
+            label="displaykey.Web.TroubleTicketTabbedDetailDV.AddAccounts"
+            onPick="createTroubleTicketHelper.linkTroubleTicketWithAccounts(troubleTicket, PickedValue)"/>
+          <PickerToolbarButton
+            action="SelectMultiplePoliciesPopup.push()"
+            hideIfReadOnly="true"
+            id="TroubleTicketRelatedEntitiesDV_AddPoliciesButton"
+            label="displaykey.Web.TroubleTicketTabbedDetailDV.AddPolicies"
+            onPick="createTroubleTicketHelper.linkTroubleTicketWithPolicies(troubleTicket, PickedValue)"/>
+          <PickerToolbarButton
+            action="SelectMultiplePolicyPeriodsPopup.push(new gw.search.PolicySearchCriteria())"
+            hideIfReadOnly="true"
+            id="TroubleTicketRelatedEntitiesDV_AddPolicyPeriodsButton"
+            label="displaykey.Web.TroubleTicketTabbedDetailDV.AddPolicyPeriods"
+            onPick="createTroubleTicketHelper.linkTroubleTicketWithPolicyPeriods(troubleTicket, PickedValue)"/>
+          <PickerToolbarButton
+            action="SelectMultipleProducersPopup.push()"
+            hideIfReadOnly="true"
+            id="TroubleTicketRelatedEntitiesDV_AddProducersButton"
+            label="displaykey.Web.TroubleTicketTabbedDetailDV.AddProducers"
+            onPick="createTroubleTicketHelper.linkTroubleTicketWithProducers(troubleTicket, PickedValue)"/>
+          <IteratorButtons
+            iterator="TroubleTicketRelatedEntitiesLV"/>
+        </Toolbar>
+        <ListViewPanel
+          id="TroubleTicketRelatedEntitiesLV">
+          <RowIterator
+            editable="true"
+            elementName="ticketRelatedEntity"
+            hideCheckBoxesIfReadOnly="true"
+            toRemove="troubleTicket.removeFromTicketRelatedEntities(ticketRelatedEntity)"
+            value="troubleTicket.TicketRelatedEntities">
+            <Row>
+              <Cell
+                desc="Display name of the TYPE of entity - for example, Account"
+                id="EntityTypeDisplayName"
+                label="displaykey.Web.TroubleTicketRelatedEntitiesDV.EntityType"
+                value="web.troubleticket.TroubleTicketUtil.getRelatedEntityTypeDisplayName(ticketRelatedEntity)"/>
+              <Cell
+                action="goToDetailPageForRelatedEntity(ticketRelatedEntity)"
+                desc="Display name for the ENTITY itself - for example My Casualty Policy"
+                id="EntityDisplayName"
+                label="displaykey.Web.TroubleTicketRelatedEntitiesDV.Name"
+                value="web.troubleticket.TroubleTicketUtil.getRelatedEntityDisplayName(ticketRelatedEntity)"/>
+            </Row>
+          </RowIterator>
+        </ListViewPanel>
+      </ListViewInput>
+    </InputColumn>
+    <Code><![CDATA[function goToDetailPageForRelatedEntity(bean : Bean) {
+  if (bean typeis Account) {
+    AccountDetailSummaryPopup.push(bean)
+  } else if (bean typeis PolicyPeriod) {
+    PolicyDetailSummaryPopup.push(bean)
+  }else if (bean typeis Policy) {
+    PolicyDetailSummaryPopup.push(bean.LatestPolicyPeriod)
+  } else if (bean typeis Producer) {
+    ProducerDetailPopup.push(bean)
+  } else {
+    throw displaykey.Web.TroubleTicketRelatedEntitiesDV.ErrorUnexpectedEntityType
+  }
+}]]></Code>
+  </DetailViewPanel>
+</PCF>

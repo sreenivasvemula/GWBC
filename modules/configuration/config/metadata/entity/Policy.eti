@@ -1,0 +1,64 @@
+<?xml version="1.0"?>
+<entity
+  xmlns="http://guidewire.com/datamodel"
+  desc="A container entity for policy periods"
+  entity="Policy"
+  setterScriptability="hidden"
+  subpackage="account"
+  table="policy"
+  type="retireable">
+  <implementsEntity
+    name="Validatable"/>
+  <implementsEntity
+    name="NoteContainer"/>
+  <implementsEntity
+    name="DocumentContainer"/>
+  <implementsEntity
+    name="HoldRelatedEntity"/>
+  <implementsEntity
+    name="InCurrencySilo"/>
+  <typekey
+    desc="The line of business to which this policy belongs"
+    name="LOBCode"
+    nullok="true"
+    typelist="LOBCode"/>
+  <foreignkey
+    columnName="AccountID"
+    desc="The account onto which this policy is attached"
+    fkentity="Account"
+    importableagainstexistingobject="false"
+    name="Account"
+    nullok="false"
+    setterScriptability="doesNotExist"/>
+  <!-- Because trouble tickets cannot be loaded, Policies can only be loaded with HeldForInvoiceSending=false -->
+  <column
+    default="false"
+    desc="Denormalized flag that tracks whether there exists a trouble ticket on this policy with a hold with             type InvoiceSending."
+    loadable="false"
+    name="HeldForInvoiceSending"
+    nullok="false"
+    setterScriptability="doesNotExist"
+    type="bit"/>
+  <column
+    desc="PolicyCenter's public ID of the Policy"
+    name="PCPublicID"
+    nullok="true"
+    type="shorttext"/>
+  <array
+    arrayentity="UnappliedFund"
+    desc="The designated UnappliedFunds for this policy if the account type has policy-level billing with cash separation"
+    name="DesignatedUnappliedFunds"
+    owner="true"/>
+  <array
+    arrayentity="PolicyPeriod"
+    desc="The policy periods associated with this policy"
+    name="PolicyPeriods"
+    owner="true"/>
+  <array
+    arrayentity="TroubleTicketJoinEntity"
+    desc="Join entity that provides relationship with the trouble tickets associated with this policy"
+    name="TroubleTicketJoinEntities"/>
+  <events/>
+  <dbcheckbuilder
+    className="com.guidewire.bc.system.database.dbchecks.account.PolicyHeldForInvoiceSendingDenormDBCheckBuilder"/>
+</entity>

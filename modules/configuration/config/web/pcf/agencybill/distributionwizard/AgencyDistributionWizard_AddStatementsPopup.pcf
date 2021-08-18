@@ -1,0 +1,141 @@
+<?xml version="1.0"?>
+<PCF
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:noNamespaceSchemaLocation="../../../../../../pcf.xsd">
+  <Popup
+    canEdit="true"
+    id="AgencyDistributionWizard_AddStatementsPopup"
+    returnType="StatementInvoice[]"
+    startInEditMode="true"
+    title="displaykey.Web.AgencyDistributionWizard.AddAgencyBillStatementsPopup.Title">
+    <LocationEntryPoint
+      signature="AgencyDistributionWizard_AddStatementsPopup(wizardState : gw.agencybill.AgencyDistributionWizardHelper)"/>
+    <Variable
+      name="wizardState"
+      type="gw.agencybill.AgencyDistributionWizardHelper"/>
+    <Variable
+      initialValue="wizardState.MoneySetup.Producer"
+      name="producer"/>
+    <Screen>
+      <Toolbar>
+        <CheckedValuesToolbarButton
+          flags="any Row"
+          id="SelectStatements"
+          iterator="StatementsIterator"
+          label="displaykey.Web.AgencyDistributionWizard.AddAgencyBillStatementsPopup.Title"
+          pickValue="CheckedValues"/>
+        <ToolbarButton
+          action="CurrentLocation.cancel()"
+          id="cancel"
+          label="displaykey.Button.Cancel"/>
+      </Toolbar>
+      <!-- Regarding SearchMethods.validateAndSearch: The 2nd parameter controls the search mode of all associated contact fields. -->
+      <SearchPanel
+        criteriaName="searchCriteria"
+        id="SpecificStatementsPanelSet"
+        resultsName="foundStatements"
+        search="gw.search.SearchMethods.validateAndSearch(searchCriteria)"
+        searchCriteria="createSearchCriteria()"
+        searchResultsType="StatementInvoiceQuery">
+        <DetailViewPanel>
+          <InputColumn>
+            <Input
+              id="Producer"
+              label="displaykey.Web.AgencyDistributionWizard.AddAgencyBillStatementsPopup.Producer"
+              value="searchCriteria.Producer"/>
+            <Input
+              editable="true"
+              id="StatementNumber"
+              label="displaykey.Web.AgencyDistributionWizard.AddAgencyBillStatementsPopup.StatementNumber"
+              value="searchCriteria.StatementNumber"/>
+            <RangeInput
+              editable="true"
+              id="Status"
+              label="displaykey.Web.AgencyDistributionWizard.AddAgencyBillStatementsPopup.Status"
+              value="searchCriteria.Status"
+              valueRange="gw.agencybill.AgencyDistributionWizardHelper.StatusEnum.values()"/>
+          </InputColumn>
+        </DetailViewPanel>
+        <DetailViewPanel>
+          <InputColumn>
+            <!-- DON NOT reference this file directly, but use SearchAndResetInputSet or SearchOnlyInputSet instead -->
+            <InputSet
+              id="SearchLinksInputSet">
+              <ContentInput
+                id="searchBtns"
+                labelAbove="true">
+                <Link
+                  action="util.SearchUtil.search()"
+                  default="true"
+                  id="Search"
+                  label="displaykey.Button.Search"
+                  shortcut="S"
+                  styleClass="bigButton"/>
+                <Link
+                  action="util.SearchUtil.reset()"
+                  id="Reset"
+                  label="displaykey.Button.Reset"
+                  shortcut="R"
+                  styleClass="bigButton"/>
+              </ContentInput>
+            </InputSet>
+          </InputColumn>
+        </DetailViewPanel>
+        <PanelRef>
+          <Toolbar/>
+          <ListViewPanel>
+            <RowIterator
+              editable="false"
+              elementName="statement"
+              hasCheckBoxes="true"
+              id="StatementsIterator"
+              value="foundStatements">
+              <ToolbarFlag
+                name="Row"/>
+              <Row>
+                <Cell
+                  action="AgencyBillStatementDetailPopup.push(statement)"
+                  id="StatementNumber"
+                  label="displaykey.Web.AgencyDistributionWizard.AddAgencyBillStatementsPopup.StatementsLV.StatementNumber"
+                  value="statement.InvoiceNumber"/>
+                <Cell
+                  enableSort="false"
+                  id="Status"
+                  label="displaykey.Web.AgencyDistributionWizard.AddAgencyBillStatementsPopup.StatementsLV.Status"
+                  value="statement.DisplayStatus"/>
+                <MonetaryAmountCell
+                  currency="producer.Currency"
+                  enableSort="false"
+                  formatType="currency"
+                  id="NetOwed"
+                  label="displaykey.Web.AgencyDistributionWizard.AddAgencyBillStatementsPopup.StatementsLV.NetOwed"
+                  value="statement.NetAmountDue"/>
+                <DateCell
+                  id="BillDate"
+                  label="displaykey.Web.AgencyDistributionWizard.AddAgencyBillStatementsPopup.StatementsLV.BillDate"
+                  sortOrder="1"
+                  value="statement.EventDate"/>
+                <DateCell
+                  enableSort="false"
+                  id="DueDate"
+                  label="displaykey.Web.AgencyDistributionWizard.AddAgencyBillStatementsPopup.StatementsLV.DueDate"
+                  value="statement.DUEDATE"/>
+              </Row>
+            </RowIterator>
+          </ListViewPanel>
+        </PanelRef>
+      </SearchPanel>
+    </Screen>
+    <Code><![CDATA[uses gw.search.StatementInvoiceSearchCriteria
+uses gw.search.InvoiceItemQueryHelper.DistributionTypeEnum
+
+function createSearchCriteria() : StatementInvoiceSearchCriteria {
+  var distributionType = wizardState.IsPromise ? 
+    DistributionTypeEnum.Promise : 
+    DistributionTypeEnum.Payment
+  var searchCriteria = new StatementInvoiceSearchCriteria(distributionType)
+  searchCriteria.Producer = producer
+  return searchCriteria
+}]]></Code>
+  </Popup>
+</PCF>

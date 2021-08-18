@@ -1,0 +1,176 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xml:lang="en" lang="en" xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+    <meta http-equiv="Content-Style-Type" content="text/css" />
+    <!-- MOTW-DISABLED saved from url=(0014)about:internet -->
+    <title>Conversion of Web Services from RPCE to WS-I</title>
+    <link rel="StyleSheet" href="css/801.css" type="text/css" media="all" />
+    <link rel="StyleSheet" href="css/webworks.css" type="text/css" media="all" />
+    <link rel="StyleSheet" href="css/css-guidewire-extra.css" type="text/css" media="all" />
+    <script type="text/javascript" language="JavaScript1.2" src="wwhdata/common/context.js"></script>
+    <script type="text/javascript" language="JavaScript1.2" src="wwhdata/common/towwhdir.js"></script>
+    <script type="text/javascript" language="JavaScript1.2" src="wwhdata/common/wwhpagef.js"></script>
+    <script type="text/javascript" language="JavaScript1.2">
+      <!--
+        var  WebWorksRootPath = "";
+      // -->
+    </script>
+    <script type="text/javascript" language="JavaScript1.2">
+      <!--
+        // Set reference to top level help frame
+        //
+        var  WWHFrame = WWHGetWWHFrame("", true);
+      // -->
+    </script>
+    <script type="text/javascript" language="JavaScript1.2" src="scripts/expand.js"></script>
+    <!-- THE FOLLOWING IS A GUIDEWIRE STYLE DEFINITION FOR THE LINK TO THIS FEATURE -->
+    <link rel="StyleSheet" href="css/css-guidewire-extra.css" type="text/css" media="all" />
+    <!-- THE FOLLOWING IS A GUIDEWIRE GSCRIPT FUNCTION FOR THE LINK TO THIS FEATURE -->
+    <script type="text/javascript">
+function guidewire_selectall()
+{
+var text_val=eval("document.linktothisurlform.urlfield");
+text_val.focus();
+text_val.select();
+}
+</script>
+  </head>
+  <body onLoad="WWHUpdate();" onUnload="WWHUnload();" onKeyDown="WWHHandleKeyDown((document.all||document.getElementById||document.layers)?event:null);" onKeyPress="WWHHandleKeyPress((document.all||document.getElementById||document.layers)?event:null);" onKeyUp="WWHHandleKeyUp((document.all||document.getElementById||document.layers)?event:null);">
+    <!-- THE FOLLOWING IS A GUIDEWIRE DIV FOR THE 'LINK TO THIS' FEATURE -->
+    <div id="linkToThisPage" class="popup" style="display: none;">
+      <div class="popupTitle">Link Directly to This Page 
+           <a href="#" onclick="var thePopup = getElementById('linkToThisPage');thePopup.style.display='none';return false;"><img class="popupClosebox" src="wwhelp/wwhimpl/common/images/close.gif" /></a></div>
+      <div style="padding:6px;">
+        <div class="popupText" id="linkToThisPageBookmark">An error has occurred if you see this messsage.</div>
+        <form name="linktothisurlform" method="post" action="" style="width:275px;margin:0px">
+          <input type="text" class="popupURLText" id="linkToThisPageURL" name="urlfield" rows="1" cols="55" onClick="guidewire_selectall();" onFocus="guidewire_selectall();"></input>
+        </form>
+      </div>
+    </div>
+    <br />
+    <div class="WebWorks_Breadcrumbs" style="text-align: left;">
+      <span>BillingCenter New and Changed Guide</span> : 
+    <span class="WebWorks_Breadcrumbs" style="text-align: left;"><a class="WebWorks_Breadcrumb_Link" href="p-emerald-maint.html#2570758">What’s New and Changed in 8.0 Maintenance Releases</a> : <a class="WebWorks_Breadcrumb_Link" href="801.07.01.html#2570758">New and Changed in BillingCenter 8.0.1</a> : <a class="WebWorks_Breadcrumb_Link" href="801.07.06.html#2570758">Changed in BillingCenter 8.0.1</a> : Conversion of Web Services from RPCE to WS-I</span></div>
+    <hr align="left" />
+    <blockquote>
+      <h4 class="H2B_-_Heading_2_Break"><a name="2570758">Conversion of Web Services from RPCE to WS-I</a></h4>
+      <div class="B_-_Body"><a name="2570702">The following web services were converted from RPCE to WS-I web services in version 8.0.1. WS-I is a newer format of web services. See </a><a href="javascript:WWHClickedPopup('integration', 'webservices.06.1.html#3412469', '');" title="Web Services Introduction">“Web Services Introduction” in the </a><span class="bt_-_book_title"><a href="javascript:WWHClickedPopup('integration', 'webservices.06.1.html#3412469', '');" title="Web Services Introduction">Integration Guide</a></span>.</div>
+      <div class="NI_-_Note_Important">
+        <span class="n_-_note">IMPORTANT   </span><a name="2568063">RPCE web services are deprecated. Convert existing RPCE code to WS-I web services. </a></div>
+      <div class="B_-_Body"><a name="2570529">One important difference in the conversion is the handling of entity instance data. Because WS-I web services do not support entity data directly as method arguments or return values, many APIs now use a separate data transfer object (DTO) to encapsulate entity data. For example, instead of passing an </a><span class="cv_-_computer_voice">Address</span> entity directly, it might pass a Gosu class (the DTO) called <span class="cv_-_computer_voice">AddressDTO</span>. The DTO class contains only the properties in an <span class="cv_-_computer_voice">Address</span> entity instance that are necessary for the web service. For more information about DTOs in general, see <a href="javascript:WWHClickedPopup('integration', 'bc-webservices.09.02.html#3735341', '');" title="Billing Web Services Overview">“BillingCenter Data Transfer Objects (DTOs)” in the </a><span class="bt_-_book_title"><a href="javascript:WWHClickedPopup('integration', 'bc-webservices.09.02.html#3735341', '');" title="Billing Web Services Overview">Integration Guide</a></span>.</div>
+      <div class="B_-_Body"><a name="2568065">If you extend the entity data model with properties that must exist in the web service for sending or receiving data, you must also extend the data transfer object. Add to the set of properties in the corresponding Gosu class with the DTO suffix. For example, if you add an important property to the </a><span class="cv_-_computer_voice">Address</span> entity, also add the property to the Gosu class <span class="cv_-_computer_voice">AddressDTO</span>. </div>
+      <div class="NW_-_Note_Warning">
+        <span class="w_-_warning">WARNING  </span><a name="2570440">Before editing Gosu class DTO files, carefully review the introductory comments at the top of each DTO file.</a></div>
+      <div class="T_-_Table"><a name="2606799">&nbsp;</a></div>
+      <table class="withHeading" style="text-align: left" border="0" cellpadding="10" cellspacing="0" summary="">
+        <caption></caption>
+        <tr>
+          <td style="border-bottom-color: #000000; border-bottom-style: solid; border-bottom-width: 0.5pt; border-top-color: #000000; border-top-style: solid; border-top-width: 0.5pt; padding-bottom: 4pt; padding-left: 2pt; padding-right: 8pt; padding-top: 0pt; vertical-align: bottom">
+            <div class="TH_-_Table_Heading"><a name="2606729">RPCE web service</a></div>
+          </td>
+          <td style="border-bottom-color: #000000; border-bottom-style: solid; border-bottom-width: 0.5pt; border-top-color: #000000; border-top-style: solid; border-top-width: 0.5pt; padding-bottom: 4pt; padding-left: 2pt; padding-right: 8pt; padding-top: 0pt; vertical-align: bottom">
+            <div class="TH_-_Table_Heading"><a name="2606731">Look in this WS-I web service</a></div>
+          </td>
+          <td style="border-bottom-color: #000000; border-bottom-style: solid; border-bottom-width: 0.5pt; border-top-color: #000000; border-top-style: solid; border-top-width: 0.5pt; padding-bottom: 4pt; padding-left: 2pt; padding-right: 8pt; padding-top: 0pt; vertical-align: bottom">
+            <div class="TH_-_Table_Heading"><a name="2606733">For this information</a></div>
+          </td>
+        </tr>
+        <tr>
+          <td style="border-bottom-color: #c0d1d1; border-bottom-style: solid; border-bottom-width: 0.15pt; border-top-color: #000000; border-top-style: solid; border-top-width: 0.5pt; padding-bottom: 4pt; padding-left: 2pt; padding-right: 8pt; padding-top: 0pt; vertical-align: top">
+            <div class="TT_-_Table_Text" style="color: #000000; font-family: &quot;Lucida Sans Typewriter&quot;; font-style: normal; font-variant: normal; font-weight: normal; margin-top: 3.0pt; text-transform: none; vertical-align: baseline"><span class="cvt_-_computer_voice_table"><a name="2606735">IBillingCenterAPI</a></span></div>
+          </td>
+          <td style="border-bottom-color: #c0d1d1; border-bottom-style: solid; border-bottom-width: 0.15pt; border-top-color: #000000; border-top-style: solid; border-top-width: 0.5pt; padding-bottom: 4pt; padding-left: 2pt; padding-right: 8pt; padding-top: 0pt; vertical-align: top">
+            <div class="TT_-_Table_Text" style="color: #000000; font-family: &quot;Lucida Sans Typewriter&quot;; font-style: normal; font-variant: normal; font-weight: normal; margin-top: 3.0pt; text-transform: none; vertical-align: baseline"><span class="cvt_-_computer_voice_table"><a name="2606737">gw.webservice.policycenter.bc800.BillingAPI</a></span></div>
+          </td>
+          <td style="border-bottom-color: #c0d1d1; border-bottom-style: solid; border-bottom-width: 0.15pt; border-top-color: #000000; border-top-style: solid; border-top-width: 0.5pt; padding-bottom: 4pt; padding-left: 2pt; padding-right: 8pt; padding-top: 0pt; vertical-align: top">
+            <div class="TT_-_Table_Text"><a name="2606739">Billing instructions are now handled in the </a><span class="cvt_-_computer_voice_table">BillingAPI</span> WS-I web service. See <a href="javascript:WWHClickedPopup('integration', 'bc-webservices.09.03.html#3712463', '');" title="Policy Administration System Core Web Service APIs (BillingAPI)">“Policy Administration System Core Web Service APIs (BillingAPI)” in the </a><span class="bt_-_book_title"><a href="javascript:WWHClickedPopup('integration', 'bc-webservices.09.03.html#3712463', '');" title="Policy Administration System Core Web Service APIs (BillingAPI)">Integration Guide</a></span></div>
+          </td>
+        </tr>
+        <tr>
+          <td style="border-bottom-color: #c0d1d1; border-bottom-style: solid; border-bottom-width: 0.15pt; border-top-color: #c0d1d1; border-top-style: solid; border-top-width: 0.15pt; padding-bottom: 4pt; padding-left: 2pt; padding-right: 8pt; padding-top: 0pt; vertical-align: top">
+            <div class="TT_-_Table_Text" style="color: #000000; font-family: &quot;Lucida Sans Typewriter&quot;; font-style: normal; font-variant: normal; font-weight: normal; margin-top: 3.0pt; text-transform: none; vertical-align: baseline"><a name="2606744">&nbsp;</a></div>
+          </td>
+          <td style="border-bottom-color: #c0d1d1; border-bottom-style: solid; border-bottom-width: 0.15pt; border-top-color: #c0d1d1; border-top-style: solid; border-top-width: 0.15pt; padding-bottom: 4pt; padding-left: 2pt; padding-right: 8pt; padding-top: 0pt; vertical-align: top">
+            <div class="TT_-_Table_Text" style="color: #000000; font-family: &quot;Lucida Sans Typewriter&quot;; font-style: normal; font-variant: normal; font-weight: normal; margin-top: 3.0pt; text-transform: none; vertical-align: baseline"><span class="cvt_-_computer_voice_table"><a name="2606746">gw.webservice.bc.bc801.InvoiceDetailsAPI</a></span></div>
+          </td>
+          <td style="border-bottom-color: #c0d1d1; border-bottom-style: solid; border-bottom-width: 0.15pt; border-top-color: #c0d1d1; border-top-style: solid; border-top-width: 0.15pt; padding-bottom: 4pt; padding-left: 2pt; padding-right: 8pt; padding-top: 0pt; vertical-align: top">
+            <div class="TT_-_Table_Text"><a name="2606748">For methods related to invoice details, see the </a><span class="cvt_-_computer_voice_table">InvoiceDetailsAPI</span> WS-I web service. See <a href="javascript:WWHClickedPopup('integration', 'bc-webservices.09.15.html#3552477', '');" title="Invoice Details Web Service APIs (InvoiceDetailsAPI)">“Invoice Details Web Service APIs (InvoiceDetailsAPI)” in the </a><span class="bt_-_book_title"><a href="javascript:WWHClickedPopup('integration', 'bc-webservices.09.15.html#3552477', '');" title="Invoice Details Web Service APIs (InvoiceDetailsAPI)">Integration Guide</a></span>.</div>
+          </td>
+        </tr>
+        <tr>
+          <td style="border-bottom-color: #c0d1d1; border-bottom-style: solid; border-bottom-width: 0.15pt; border-top-color: #c0d1d1; border-top-style: solid; border-top-width: 0.15pt; padding-bottom: 4pt; padding-left: 2pt; padding-right: 8pt; padding-top: 0pt; vertical-align: top">
+            <div class="TT_-_Table_Text" style="color: #000000; font-family: &quot;Lucida Sans Typewriter&quot;; font-style: normal; font-variant: normal; font-weight: normal; margin-top: 3.0pt; text-transform: none; vertical-align: baseline"><a name="2606753">&nbsp;</a></div>
+          </td>
+          <td style="border-bottom-color: #c0d1d1; border-bottom-style: solid; border-bottom-width: 0.15pt; border-top-color: #c0d1d1; border-top-style: solid; border-top-width: 0.15pt; padding-bottom: 4pt; padding-left: 2pt; padding-right: 8pt; padding-top: 0pt; vertical-align: top">
+            <div class="TT_-_Table_Text" style="color: #000000; font-family: &quot;Lucida Sans Typewriter&quot;; font-style: normal; font-variant: normal; font-weight: normal; margin-top: 3.0pt; text-transform: none; vertical-align: baseline"><span class="cvt_-_computer_voice_table"><a name="2606755">gw.webservice.bc.bc801.BCAPI</a></span></div>
+          </td>
+          <td style="border-bottom-color: #c0d1d1; border-bottom-style: solid; border-bottom-width: 0.15pt; border-top-color: #c0d1d1; border-top-style: solid; border-top-width: 0.15pt; padding-bottom: 4pt; padding-left: 2pt; padding-right: 8pt; padding-top: 0pt; vertical-align: top">
+            <div class="TT_-_Table_Text"><a name="2606757">For most methods unrelated to billing instructions or invoice details, see the </a><span class="cvt_-_computer_voice_table">BCAPI</span> WS-I web service. See <a href="javascript:WWHClickedPopup('integration', 'bc-webservices.09.03.html#3712463', '');" title="Policy Administration System Core Web Service APIs (BillingAPI)">“Policy Administration System Core Web Service APIs (BillingAPI)” in the </a><span class="bt_-_book_title"><a href="javascript:WWHClickedPopup('integration', 'bc-webservices.09.03.html#3712463', '');" title="Policy Administration System Core Web Service APIs (BillingAPI)">Integration Guide</a></span>.</div>
+          </td>
+        </tr>
+        <tr>
+          <td style="border-bottom-color: #c0d1d1; border-bottom-style: solid; border-bottom-width: 0.15pt; border-top-color: #c0d1d1; border-top-style: solid; border-top-width: 0.15pt; padding-bottom: 4pt; padding-left: 2pt; padding-right: 8pt; padding-top: 0pt; vertical-align: top">
+            <div class="TT_-_Table_Text" style="color: #000000; font-family: &quot;Lucida Sans Typewriter&quot;; font-style: normal; font-variant: normal; font-weight: normal; margin-top: 3.0pt; text-transform: none; vertical-align: baseline"><span class="cvt_-_computer_voice_table"><a name="2606762">ICollateralAPI</a></span></div>
+          </td>
+          <td style="border-bottom-color: #c0d1d1; border-bottom-style: solid; border-bottom-width: 0.15pt; border-top-color: #c0d1d1; border-top-style: solid; border-top-width: 0.15pt; padding-bottom: 4pt; padding-left: 2pt; padding-right: 8pt; padding-top: 0pt; vertical-align: top">
+            <div class="TT_-_Table_Text" style="color: #000000; font-family: &quot;Lucida Sans Typewriter&quot;; font-style: normal; font-variant: normal; font-weight: normal; margin-top: 3.0pt; text-transform: none; vertical-align: baseline"><span class="cvt_-_computer_voice_table"><a name="2606764">gw.webservice.bc.bc801.BCAPI</a></span></div>
+          </td>
+          <td style="border-bottom-color: #c0d1d1; border-bottom-style: solid; border-bottom-width: 0.15pt; border-top-color: #c0d1d1; border-top-style: solid; border-top-width: 0.15pt; padding-bottom: 4pt; padding-left: 2pt; padding-right: 8pt; padding-top: 0pt; vertical-align: top">
+            <div class="TT_-_Table_Text"><a name="2606766">For web service methods related to collateral, see the </a><span class="cvt_-_computer_voice_table">BCAPI</span> WS-I web service. See <a href="javascript:WWHClickedPopup('integration', 'bc-webservices.09.26.html#3686912', '');" title="Other Billing Web Service APIs (BCAPI)">“Other Billing Web Service APIs (BCAPI)” in the </a><span class="bt_-_book_title"><a href="javascript:WWHClickedPopup('integration', 'bc-webservices.09.26.html#3686912', '');" title="Other Billing Web Service APIs (BCAPI)">Integration Guide</a></span></div>
+          </td>
+        </tr>
+        <tr>
+          <td style="border-bottom-color: #c0d1d1; border-bottom-style: solid; border-bottom-width: 0.15pt; border-top-color: #c0d1d1; border-top-style: solid; border-top-width: 0.15pt; padding-bottom: 4pt; padding-left: 2pt; padding-right: 8pt; padding-top: 0pt; vertical-align: top">
+            <div class="TT_-_Table_Text" style="color: #000000; font-family: &quot;Lucida Sans Typewriter&quot;; font-style: normal; font-variant: normal; font-weight: normal; margin-top: 3.0pt; text-transform: none; vertical-align: baseline"><span class="cvt_-_computer_voice_table"><a name="2606771">IPolicyPeriodAPI</a></span></div>
+          </td>
+          <td style="border-bottom-color: #c0d1d1; border-bottom-style: solid; border-bottom-width: 0.15pt; border-top-color: #c0d1d1; border-top-style: solid; border-top-width: 0.15pt; padding-bottom: 4pt; padding-left: 2pt; padding-right: 8pt; padding-top: 0pt; vertical-align: top">
+            <div class="TT_-_Table_Text" style="color: #000000; font-family: &quot;Lucida Sans Typewriter&quot;; font-style: normal; font-variant: normal; font-weight: normal; margin-top: 3.0pt; text-transform: none; vertical-align: baseline"><span class="cvt_-_computer_voice_table"><a name="2606773">gw.webservice.bc.bc801.BCAPI</a></span></div>
+          </td>
+          <td style="border-bottom-color: #c0d1d1; border-bottom-style: solid; border-bottom-width: 0.15pt; border-top-color: #c0d1d1; border-top-style: solid; border-top-width: 0.15pt; padding-bottom: 4pt; padding-left: 2pt; padding-right: 8pt; padding-top: 0pt; vertical-align: top">
+            <div class="TT_-_Table_Text"><a name="2606775">For web service methods related to changing billing methods, see the </a><span class="cvt_-_computer_voice_table">BCAPI</span> WS-I web service. See <a href="javascript:WWHClickedPopup('integration', 'bc-webservices.09.26.html#3686912', '');" title="Other Billing Web Service APIs (BCAPI)">“Other Billing Web Service APIs (BCAPI)” in the </a><span class="bt_-_book_title"><a href="javascript:WWHClickedPopup('integration', 'bc-webservices.09.26.html#3686912', '');" title="Other Billing Web Service APIs (BCAPI)">Integration Guide</a></span>.</div>
+          </td>
+        </tr>
+        <tr>
+          <td style="border-bottom-color: #c0d1d1; border-bottom-style: solid; border-bottom-width: 0.15pt; border-top-color: #c0d1d1; border-top-style: solid; border-top-width: 0.15pt; padding-bottom: 4pt; padding-left: 2pt; padding-right: 8pt; padding-top: 0pt; vertical-align: top">
+            <div class="TT_-_Table_Text" style="color: #000000; font-family: &quot;Lucida Sans Typewriter&quot;; font-style: normal; font-variant: normal; font-weight: normal; margin-top: 3.0pt; text-transform: none; vertical-align: baseline"><span class="cvt_-_computer_voice_table"><a name="2606780">IInvoiceAPI</a></span></div>
+          </td>
+          <td style="border-bottom-color: #c0d1d1; border-bottom-style: solid; border-bottom-width: 0.15pt; border-top-color: #c0d1d1; border-top-style: solid; border-top-width: 0.15pt; padding-bottom: 4pt; padding-left: 2pt; padding-right: 8pt; padding-top: 0pt; vertical-align: top">
+            <div class="TT_-_Table_Text" style="color: #000000; font-family: &quot;Lucida Sans Typewriter&quot;; font-style: normal; font-variant: normal; font-weight: normal; margin-top: 3.0pt; text-transform: none; vertical-align: baseline"><span class="cvt_-_computer_voice_table"><a name="2606782">gw.webservice.bc.bc801.BCAPI</a></span></div>
+          </td>
+          <td style="border-bottom-color: #c0d1d1; border-bottom-style: solid; border-bottom-width: 0.15pt; border-top-color: #c0d1d1; border-top-style: solid; border-top-width: 0.15pt; padding-bottom: 4pt; padding-left: 2pt; padding-right: 8pt; padding-top: 0pt; vertical-align: top">
+            <div class="TT_-_Table_Text"><a name="2606784">There was only one method in the RPCE web service </a><span class="cvt_-_computer_voice_table">IInvoiceAPI</span>. The method previewed an installment schedule. As of version 8.0.1, for this task use the <span class="cvt_-_computer_voice_table">BillingAPI</span> WS-I web service methods <span class="cvt_-_computer_voice_table">previewInstallmentPlanInvoices</span> and <span class="cvt_-_computer_voice_table">previewInstallmentsPlanInvoices</span>. See <a href="javascript:WWHClickedPopup('integration', 'bc-webservices.09.26.html#3686912', '');" title="Other Billing Web Service APIs (BCAPI)">“Other Billing Web Service APIs (BCAPI)” in the </a><span class="bt_-_book_title"><a href="javascript:WWHClickedPopup('integration', 'bc-webservices.09.26.html#3686912', '');" title="Other Billing Web Service APIs (BCAPI)">Integration Guide</a></span>.</div>
+            <div class="TT_-_Table_Text"><a name="2606788">On a related note, there was a WS-I web service </a><span class="cvt_-_computer_voice_table">InvoiceAPI</span> that contained the same methods as the RPCE web service <span class="cvt_-_computer_voice_table">IInvoiceAPI</span>. The <span class="cvt_-_computer_voice_table">InvoiceAPI</span> web service is now deprecated. Use the <span class="cvt_-_computer_voice_table">BillingAPI</span> methods instead.</div>
+          </td>
+        </tr>
+        <tr>
+          <td style="border-bottom-color: #000000; border-bottom-style: solid; border-bottom-width: 0.5pt; border-top-color: #c0d1d1; border-top-style: solid; border-top-width: 0.15pt; padding-bottom: 4pt; padding-left: 2pt; padding-right: 8pt; padding-top: 0pt; vertical-align: top">
+            <div class="TT_-_Table_Text" style="color: #000000; font-family: &quot;Lucida Sans Typewriter&quot;; font-style: normal; font-variant: normal; font-weight: normal; margin-top: 3.0pt; text-transform: none; vertical-align: baseline"><span class="cvt_-_computer_voice_table"><a name="2606790">IStagingTableEncryptionAPI</a></span></div>
+          </td>
+          <td style="border-bottom-color: #000000; border-bottom-style: solid; border-bottom-width: 0.5pt; border-top-color: #c0d1d1; border-top-style: solid; border-top-width: 0.15pt; padding-bottom: 4pt; padding-left: 2pt; padding-right: 8pt; padding-top: 0pt; vertical-align: top">
+            <div class="TT_-_Table_Text" style="color: #000000; font-family: &quot;Lucida Sans Typewriter&quot;; font-style: normal; font-variant: normal; font-weight: normal; margin-top: 3.0pt; text-transform: none; vertical-align: baseline"><span class="cvt_-_computer_voice_table"><a name="2606792">gw.webservice.bc.bc801.BCAPI</a></span></div>
+            <div class="TT_-_Table_Text"><a name="2606793">or </a><span class="cvt_-_computer_voice_table">gw.wsi.pl.TableImportAPI</span></div>
+          </td>
+          <td style="border-bottom-color: #000000; border-bottom-style: solid; border-bottom-width: 0.5pt; border-top-color: #c0d1d1; border-top-style: solid; border-top-width: 0.15pt; padding-bottom: 4pt; padding-left: 2pt; padding-right: 8pt; padding-top: 0pt; vertical-align: top">
+            <div class="TT_-_Table_Text"><a name="2606795">There were only two methods in the RPCE web service </a><span class="cvt_-_computer_voice_table">IStagingTableEncryptionAPI</span>. The methods duplicate the staging table encryption methods in the table import web service. In this release, you can find these methods in both the <span class="cvt_-_computer_voice_table">BCAPI</span> and <span class="cvt_-_computer_voice_table">TableImportAPI</span> web services. They do the same task, although the <span class="cvt_-_computer_voice_table">BCAPI</span> version of the method <span class="cvt_-_computer_voice_table">encryptDataOnStagingTables</span> does not return the result value. See <a href="javascript:WWHClickedPopup('integration', 'bc-webservices.09.26.html#3686912', '');" title="Other Billing Web Service APIs (BCAPI)">“Other Billing Web Service APIs (BCAPI)” in the </a><span class="bt_-_book_title"><a href="javascript:WWHClickedPopup('integration', 'bc-webservices.09.26.html#3686912', '');" title="Other Billing Web Service APIs (BCAPI)">Integration Guide</a></span>.</div>
+          </td>
+        </tr>
+      </table>
+      <script type="text/javascript" language="JavaScript1.2">
+        <!--
+          // Clear related topics
+          //
+          WWHClearRelatedTopics();
+
+          document.writeln(WWHRelatedTopicsInlineHTML());
+        // -->
+      </script>
+    </blockquote>
+    <script type="text/javascript" language="JavaScript1.2">
+      <!--
+        document.write(WWHRelatedTopicsDivTag() + WWHPopupDivTag() + WWHALinksDivTag());
+      // -->
+    </script>
+  </body>
+</html>

@@ -1,0 +1,79 @@
+<?xml version="1.0"?>
+<PCF
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:noNamespaceSchemaLocation="../../../../../pcf.xsd">
+  <ListViewPanel
+    id="ProducerSearchResultsLV">
+    <ExposeIterator
+      valueType="entity.ProducerSearchView"
+      widget="ProducerSearchResultsLV"/>
+    <!-- Query that represents the list of ProducerSearchView beans found via search or other mechanism -->
+    <Require
+      name="producerSearchViews"
+      type="ProducerSearchViewQuery"/>
+    <Require
+      name="tAccountOwnerReference"
+      type="web.accounting.TAccountOwnerReference"/>
+    <!-- true if this is part of a multi-step wizard, which will cause .next() to be called on the wizard when the Select link is clicked -->
+    <Require
+      name="isWizard"
+      type="boolean"/>
+    <Require
+      name="showHyperlinks"
+      type="boolean"/>
+    <Require
+      name="showCheckboxes"
+      type="Boolean"/>
+    <RowIterator
+      canPick="!isWizard"
+      checkBoxVisible="showCheckboxes"
+      editable="false"
+      elementName="producerSearchView"
+      hasCheckBoxes="true"
+      pickValue="gw.api.web.search.SearchPopupUtil.getProducer(producerSearchView)"
+      value="producerSearchViews">
+      <!-- IMPORTANT: Do not call producerSearchView.Producer unless as an argument in a go() or push() call.
+              Instead, simply access the field off the viewEntity. To access a field not already on the viewEntity,
+              configure or extend dm_bc_search_view.xml to add the appropriate viewEntityLink/Name/Column/Typekey, etc.
+              Accessing large entities via FK from viewEntities leads to serious performance issues. -->
+      <Row>
+        <LinkCell
+          id="SelectCell"
+          label="displaykey.Web.ProducerSearchResultsLV.Select"
+          visible="isWizard and !showCheckboxes">
+          <Link
+            action="tAccountOwnerReference.TAccountOwner = producerSearchView.Producer; (CurrentLocation as pcf.api.Wizard).next();"
+            id="Select"
+            label="displaykey.Web.AccountSearchResultsLV.Select"
+            styleClass="miniButton"/>
+        </LinkCell>
+        <!-- Producer name WITH clickable link that will take user to the Producer Details page -->
+        <Cell
+          action="ProducerDetail.go(producerSearchView.Producer)"
+          available="showHyperlinks"
+          id="Name"
+          label="displaykey.Web.ProducerSearchResultsLV.Name"
+          sortBy="producerSearchView.Name"
+          sortOrder="1"
+          value="producerSearchView.NameKanji.HasContent ? producerSearchView.NameKanji : producerSearchView.Name"/>
+        <TypeKeyCell
+          id="Currency"
+          label="displaykey.Web.ProducerSearchResultsLV.Currency"
+          value="producerSearchView.Currency"
+          visible="gw.api.util.CurrencyUtil.isMultiCurrencyMode()"/>
+        <Cell
+          id="Address"
+          label="displaykey.Web.ProducerSearchResultsLV.Address"
+          sortBy="producerSearchView.Country, producerSearchView.State, producerSearchView.City"
+          value="formattedAddress(producerSearchView)"/>
+      </Row>
+    </RowIterator>
+    <Code><![CDATA[uses gw.api.address.AddressFormatter
+
+function formattedAddress(producerSearchView : ProducerSearchView) : String {
+  var af = new AddressFormatter() { :Country = producerSearchView.Country, :State = producerSearchView.State, :City = producerSearchView.City, :CityKanji = producerSearchView.CityKanji,
+                  :AddressLine1 = producerSearchView.AddressLine1, :AddressLine1Kanji = producerSearchView.AddressLine1Kanji, :PostalCode = producerSearchView.PostalCode }
+  return af.format(af, ", ")
+}]]></Code>
+  </ListViewPanel>
+</PCF>

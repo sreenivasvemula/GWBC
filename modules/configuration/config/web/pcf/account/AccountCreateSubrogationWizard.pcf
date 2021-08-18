@@ -1,0 +1,38 @@
+<?xml version="1.0"?>
+<PCF
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:noNamespaceSchemaLocation="../../../../../pcf.xsd">
+  <!-- Wizard flow that should guide the user through the process of creating a trouble ticket -->
+  <Wizard
+    beforeCommit="subrogation.doSubrogation()"
+    canVisit="perm.Transaction.subrtxn"
+    cancelWarning="displaykey.Web.CreateSubrogationWizard.CancelConfirmation"
+    countsAsWork="false"
+    id="AccountCreateSubrogationWizard">
+    <LocationEntryPoint
+      signature="AccountCreateSubrogationWizard(account : Account)"/>
+    <Variable
+      name="account"
+      type="Account"/>
+    <Variable
+      initialValue="new Subrogation(account.Currency)"
+      name="subrogation"
+      type="Subrogation"/>
+    <WizardStep
+      id="Step1"
+      label="displaykey.Web.CreateSubrogationWizard.TargetStepLabel"
+      onFirstEnter="subrogation.SourceAccount = account"
+      screen="AccountCreateSubrogationTargetsScreen(subrogation)"
+      title="displaykey.Web.CreateSubrogationWizard.TargetStepTitle"/>
+    <WizardStep
+      id="Step2"
+      label="displaykey.Web.CreateSubrogationWizard.InfoStepLabel"
+      screen="CreateSubrogationInfoScreen(subrogation)"
+      title="displaykey.Web.CreateSubrogationWizard.InfoStepTitle"/>
+    <WizardStep
+      id="Step3"
+      label="displaykey.Web.CreateSubrogationWizard.ConfirmStepLabel"
+      screen="CreateSubrogationConfirmScreen(subrogation)"
+      title="displaykey.Web.CreateSubrogationWizard.ConfirmStepTitle"/>
+  </Wizard>
+</PCF>

@@ -1,0 +1,24 @@
+<?xml version="1.0"?>
+<typelist
+  xmlns="http://guidewire.com/typelists"
+  name="DistItemDisposition"
+  desc="Options for disposition of an Agency Distribution Item during exception processing when an AgencyCycleDist is executed"
+  final="true"
+  subpackage="producer.agencybill">
+  <typecode
+    name="Automatic"
+    desc="Perform automatic exception processing on the agency distribution item - The InvoiceItem plugin will determine if the Dist Item will result in the Invoice Item becoming an exception."
+    code="autoexception"/>
+  <typecode
+    name="Write Off"
+    desc="Write off the unsettled values on the invoice item targeted by the distribution item."
+    code="writeoff"/>
+  <typecode
+    name="Carry Forward"
+    desc="Sets the carried forward date on the invoice item targeted by the distribution item.  This will keep this invoice item from showing up as an exception, until the carried forward date is cleared."
+    code="carryforward"/>
+  <typecode
+    name="Exception"
+    desc="Explicitly mark the invoice item targeted by the distribution item as an exception, regardless of whether or not it is unsettled.  This will keep the invoice item as an exception, until LockAsException is cleared."
+    code="exception"/>
+</typelist>

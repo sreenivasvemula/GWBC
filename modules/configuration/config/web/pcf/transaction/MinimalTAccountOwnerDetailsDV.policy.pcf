@@ -1,0 +1,93 @@
+<?xml version="1.0"?>
+<PCF
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:noNamespaceSchemaLocation="../../../../../pcf.xsd">
+  <DetailViewPanel
+    editable="false"
+    id="MinimalTAccountOwnerDetailsDV"
+    mode="policy">
+    <Require
+      name="tAccountOwner"
+      type="TAccountOwner"/>
+    <Require
+      name="unapplied"
+      type="UnappliedFund"/>
+    <Variable
+      initialValue="(unapplied == null) ? tAccountOwner as PolicyPeriod : null"
+      name="policyPeriod"
+      type="PolicyPeriod"/>
+    <InputColumn>
+      <InputSet
+        visible="policyPeriod != null">
+        <Label
+          label="displaykey.Web.NewWriteoffWizardDetailsStepScreen.TargetDetails"/>
+        <Input
+          action="pcf.PolicyDetailSummaryPopup.push(policyPeriod)"
+          id="PolicyPeriod"
+          label="displaykey.Web.NewWriteoffWizardDetailsStepScreen.Policy"
+          value="policyPeriod"/>
+        <InputDivider/>
+      </InputSet>
+      <Input
+        action="pcf.AccountDetailSummaryPopup.push(unapplied.Account)"
+        id="Account"
+        label="displaykey.Web.NewWriteoffWizardDetailsStepScreen.Account"
+        value="unapplied.Account"
+        visible="unapplied != null"/>
+      <Input
+        id="Insured"
+        label="displaykey.Web.NewWriteoffWizardDetailsStepScreen.Name"
+        value="unapplied.Account.AccountNameLocalized"
+        visible="unapplied != null"/>
+      <InputSet
+        visible="policyPeriod != null">
+        <Label
+          label="displaykey.Web.MinimalPolicyPeriodDetailsDV.Balances"/>
+        <MonetaryAmountInput
+          align="left"
+          currency="policyPeriod.Currency"
+          formatType="currency"
+          id="BilledAmount"
+          label="displaykey.Web.MinimalPolicyPeriodDetailsDV.BilledAmount"
+          value="policyPeriod.BilledAmount"/>
+        <MonetaryAmountInput
+          align="left"
+          currency="policyPeriod.Currency"
+          formatType="currency"
+          id="PastDueAmount"
+          label="displaykey.Web.MinimalPolicyPeriodDetailsDV.PastDueAmount"
+          value="policyPeriod.DelinquentAmount"/>
+        <MonetaryAmountInput
+          align="left"
+          currency="policyPeriod.Currency"
+          formatType="currency"
+          id="OutstandingAmount"
+          label="displaykey.Web.MinimalPolicyPeriodDetailsDV.OutstandingAmount"
+          value="policyPeriod.OutstandingAmount"/>
+        <MonetaryAmountInput
+          align="left"
+          currency="policyPeriod.Currency"
+          formatType="currency"
+          id="UnbilledAmount"
+          label="displaykey.Web.MinimalPolicyPeriodDetailsDV.UnbilledAmount"
+          value="policyPeriod.UnbilledAmount"/>
+        <MonetaryAmountInput
+          align="left"
+          currency="policyPeriod.Currency"
+          formatType="currency"
+          id="UnpaidAmount"
+          label="displaykey.Web.MinimalPolicyPeriodDetailsDV.UnpaidAmount"
+          value="policyPeriod.UnpaidAmount"/>
+      </InputSet>
+      <MonetaryAmountInput
+        align="left"
+        boldLabel="true"
+        currency="unapplied.Currency"
+        formatType="currency"
+        id="UnappliedAmount"
+        label="displaykey.Web.MinimalAccountDetailsDV.UnappliedAmount"
+        value="unapplied.Balance"
+        visible="unapplied != null"/>
+    </InputColumn>
+  </DetailViewPanel>
+</PCF>

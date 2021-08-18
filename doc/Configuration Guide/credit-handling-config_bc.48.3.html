@@ -1,0 +1,514 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xml:lang="en" lang="en" xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+    <meta http-equiv="Content-Style-Type" content="text/css" />
+    <!-- MOTW-DISABLED saved from url=(0014)about:internet -->
+    <title>Defining New Excess Treatment Settings</title>
+    <link rel="StyleSheet" href="css/credit-handling-config_bc.css" type="text/css" media="all" />
+    <link rel="StyleSheet" href="css/webworks.css" type="text/css" media="all" />
+    <link rel="StyleSheet" href="css/css-guidewire-extra.css" type="text/css" media="all" />
+    <script type="text/javascript" language="JavaScript1.2" src="wwhdata/common/context.js"></script>
+    <script type="text/javascript" language="JavaScript1.2" src="wwhdata/common/towwhdir.js"></script>
+    <script type="text/javascript" language="JavaScript1.2" src="wwhdata/common/wwhpagef.js"></script>
+    <script type="text/javascript" language="JavaScript1.2">
+      <!--
+        var  WebWorksRootPath = "";
+      // -->
+    </script>
+    <script type="text/javascript" language="JavaScript1.2">
+      <!--
+        // Set reference to top level help frame
+        //
+        var  WWHFrame = WWHGetWWHFrame("", true);
+      // -->
+    </script>
+    <script type="text/javascript" language="JavaScript1.2" src="scripts/expand.js"></script>
+    <!-- THE FOLLOWING IS A GUIDEWIRE STYLE DEFINITION FOR THE LINK TO THIS FEATURE -->
+    <link rel="StyleSheet" href="css/css-guidewire-extra.css" type="text/css" media="all" />
+    <!-- THE FOLLOWING IS A GUIDEWIRE GSCRIPT FUNCTION FOR THE LINK TO THIS FEATURE -->
+    <script type="text/javascript">
+function guidewire_selectall()
+{
+var text_val=eval("document.linktothisurlform.urlfield");
+text_val.focus();
+text_val.select();
+}
+</script>
+  </head>
+  <body onLoad="WWHUpdate();" onUnload="WWHUnload();" onKeyDown="WWHHandleKeyDown((document.all||document.getElementById||document.layers)?event:null);" onKeyPress="WWHHandleKeyPress((document.all||document.getElementById||document.layers)?event:null);" onKeyUp="WWHHandleKeyUp((document.all||document.getElementById||document.layers)?event:null);">
+    <!-- THE FOLLOWING IS A GUIDEWIRE DIV FOR THE 'LINK TO THIS' FEATURE -->
+    <div id="linkToThisPage" class="popup" style="display: none;">
+      <div class="popupTitle">Link Directly to This Page 
+           <a href="#" onclick="var thePopup = getElementById('linkToThisPage');thePopup.style.display='none';return false;"><img class="popupClosebox" src="wwhelp/wwhimpl/common/images/close.gif" /></a></div>
+      <div style="padding:6px;">
+        <div class="popupText" id="linkToThisPageBookmark">An error has occurred if you see this messsage.</div>
+        <form name="linktothisurlform" method="post" action="" style="width:275px;margin:0px">
+          <input type="text" class="popupURLText" id="linkToThisPageURL" name="urlfield" rows="1" cols="55" onClick="guidewire_selectall();" onFocus="guidewire_selectall();"></input>
+        </form>
+      </div>
+    </div>
+    <br />
+    <div class="WebWorks_Breadcrumbs" style="text-align: left;">
+      <span>BillingCenter Configuration Guide</span> : 
+    <span class="WebWorks_Breadcrumbs" style="text-align: left;"><a class="WebWorks_Breadcrumb_Link" href="p-BillingCenter.html#1221717">Guidewire BillingCenter Configuration</a> : <a class="WebWorks_Breadcrumb_Link" href="credit-handling-config_bc.48.1.html#1221717">Configuring Credit Handling</a> : Defining New Excess Treatment Settings</span></div>
+    <hr align="left" />
+    <blockquote>
+      <h3 class="H1_-_Heading_1"><a name="1221717">Defining New </a><span class="cvh_-_computer_voice_in_heading">Excess Treatment</span> Settings</h3>
+      <div class="B_-_Body"><a name="1221977">In the base configuration, the handling scheme property </a><span class="cv_-_computer_voice">Excess Treatment</span> supports only the <span class="cv_-_computer_voice">Unapplied</span> setting. To define additional settings, a new typecode must be added to the <span class="cv_-_computer_voice">ReturnPremiumExcessTreatment</span> typelist and program code must be written to recognize and handle the setting in the desired manner. This section provides examples that implement new settings for the <span class="cv_-_computer_voice">Excess Treatment</span> property.</div>
+      <h4 class="H2_-_Heading_2"><a name="1221718">Defining a New </a><span class="cvh_-_computer_voice_in_heading">Excess Treatment</span> Setting: Disbursement</h4>
+      <div class="B_-_Body"><a name="1221720">The following example demonstrates how to define a new </a><span class="cv_-_computer_voice">Excess Treatment</span> setting that creates a disbursement for the remaining credit balance. This handling method is implemented only for credits created because of a policy cancellation.</div>
+      <div class="H3_-_Heading_3_outer" style="margin-left: 36pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <h5 class="H3_-_Heading_3_inner" style="width: 18pt; white-space: nowrap"></h5>
+            </td>
+            <td width="100%">
+              <h5 class="H3_-_Heading_3_inner"><a name="1221721">Add a typecode for the new setting</a></h5>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="B_-_Body"><a name="1221722">The </a><span class="cv_-_computer_voice">ReturnPremiumExcessTreatment</span> typelist must define a typecode for the new setting. The manner in which the typecode is defined depends on whether the typelist has already been extended.</div>
+      <div class="BI_-_Bullet_Item_outer" style="margin-left: 57pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="BI_-_Bullet_Item_inner" style="width: 15pt; white-space: nowrap">
+                <span class="bu_-_bullet">•	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="BI_-_Bullet_Item_inner"><a name="1221723">If this is the first extension to the </a><span class="cv_-_computer_voice">ReturnPremiumExcessTreatment</span> typelist:</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="LS2_-_List_Start_002c_Level_2_outer" style="margin-left: 67pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="LS2_-_List_Start_002c_Level_2_inner" style="width: 15pt; white-space: nowrap">
+                <span class="ri_-_run_in_header">	1.	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="LS2_-_List_Start_002c_Level_2_inner"><a name="1221733">In BillingCenter Studio, in the </a><span class="uis_-_UI_element_Studio">Project</span> window, navigate to <span class="uis_-_UI_element_Studio">configuration</span>&nbsp;→ <span class="uis_-_UI_element_Studio">config</span>&nbsp; → <span class="uis_-_UI_element_Studio">Metadata</span>&nbsp;→ <span class="uis_-_UI_element_Studio">Typelist</span>.</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="LI2_-_List_Item_002c_Level_2_outer" style="margin-left: 67pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="LI2_-_List_Item_002c_Level_2_inner" style="width: 15pt; white-space: nowrap">
+                <span class="ri_-_run_in_header">	2.	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="LI2_-_List_Item_002c_Level_2_inner"><a name="1221737">Right‑click </a><span class="cv_-_computer_voice">ReturnPremiumExcessTreatment.tti</span> and choose <span class="uis_-_UI_element_Studio">New</span>&nbsp;→ <span class="uis_-_UI_element_Studio">Typelist Extension</span> and then click <span class="uis_-_UI_element_Studio">OK</span>.</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="LP2_-_List_Para_002c_Level_2"><a name="1221747">Studio creates </a><span class="cv_-_computer_voice">ReturnPremiumExcessTreatment.ttx</span> in <span class="uis_-_UI_element_Studio">configuration</span>&nbsp;→ <span class="uis_-_UI_element_Studio">config</span>&nbsp;→ <span class="uis_-_UI_element_Studio">Extensions</span>&nbsp;→ <span class="uis_-_UI_element_Studio">Typelist</span> and opens it in the Typelist editor.</div>
+      <div class="BI_-_Bullet_Item_outer" style="margin-left: 57pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="BI_-_Bullet_Item_inner" style="width: 15pt; white-space: nowrap">
+                <span class="bu_-_bullet">•	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="BI_-_Bullet_Item_inner"><a name="1221748">If the </a><span class="cv_-_computer_voice">ReturnPremiumExcessTreatment</span> typelist has already been extended:</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="LS2_-_List_Start_002c_Level_2_outer" style="margin-left: 67pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="LS2_-_List_Start_002c_Level_2_inner" style="width: 15pt; white-space: nowrap">
+                <span class="ri_-_run_in_header">	1.	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="LS2_-_List_Start_002c_Level_2_inner"><a name="1221758">In BillingCenter Studio, in the </a><span class="uis_-_UI_element_Studio">Project</span> window, navigate to <span class="uis_-_UI_element_Studio">configuration</span>&nbsp;→ <span class="uis_-_UI_element_Studio">config</span>&nbsp;→ <span class="uis_-_UI_element_Studio">Extensions</span>&nbsp;→ <span class="uis_-_UI_element_Studio">Typelist</span>.</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="LI2_-_List_Item_002c_Level_2_outer" style="margin-left: 67pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="LI2_-_List_Item_002c_Level_2_inner" style="width: 15pt; white-space: nowrap">
+                <span class="ri_-_run_in_header">	2.	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="LI2_-_List_Item_002c_Level_2_inner"><a name="1221759">Double‑click </a><span class="cv_-_computer_voice">ReturnPremiumExcessTreatment.ttx</span> to open it in the Typelist editor.</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="B_-_Body"><a name="1221760">Continue with the following steps to define the new typecode.</a></div>
+      <div class="LI_-_List_Item_outer" style="margin-left: 57pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="LI_-_List_Item_inner" style="width: 15pt; white-space: nowrap">
+                <span class="ri_-_run_in_header">	1.	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="LI_-_List_Item_inner"><a name="1221764">In </a><span class="cv_-_computer_voice">ReturnPremiumExcessTreatment.ttx</span>, right‑click an existing typecode and choose <span class="uis_-_UI_element_Studio">Add new</span>&nbsp;→ <span class="uis_-_UI_element_Studio">typecode</span>.</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="LI_-_List_Item_outer" style="margin-left: 57pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="LI_-_List_Item_inner" style="width: 15pt; white-space: nowrap">
+                <span class="ri_-_run_in_header">	2.	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="LI_-_List_Item_inner"><a name="1221765">Enter the following values for the new typecode:</a></div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="BI2_-_Bullet_Item_002c_Level_2_outer" style="margin-left: 67pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="BI2_-_Bullet_Item_002c_Level_2_inner" style="width: 15pt; white-space: nowrap">
+                <span class="bu_-_bullet">•	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="BI2_-_Bullet_Item_002c_Level_2_inner"><span class="ri_-_run_in_header"><a name="1221766">code</a></span>&nbsp;– <span class="cv_-_computer_voice">Disbursement</span> </div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="BI2_-_Bullet_Item_002c_Level_2_outer" style="margin-left: 67pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="BI2_-_Bullet_Item_002c_Level_2_inner" style="width: 15pt; white-space: nowrap">
+                <span class="bu_-_bullet">•	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="BI2_-_Bullet_Item_002c_Level_2_inner"><span class="ri_-_run_in_header"><a name="1221767">name</a></span>&nbsp;– <span class="it_-_input_text">Disbursement</span> </div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="BI2_-_Bullet_Item_002c_Level_2_outer" style="margin-left: 67pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="BI2_-_Bullet_Item_002c_Level_2_inner" style="width: 15pt; white-space: nowrap">
+                <span class="bu_-_bullet">•	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="BI2_-_Bullet_Item_002c_Level_2_inner"><span class="ri_-_run_in_header"><a name="1221768">desc</a></span>&nbsp;– <span class="it_-_input_text">Disburse any excess credit</span> </div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="N_-_Note">
+        <span class="n_-_note">Note: </span><a name="1221769">Adding or changing a typecode is a data model change, and therefore requires a restart of the application.</a></div>
+      <div class="H3_-_Heading_3_outer" style="margin-left: 36pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <h5 class="H3_-_Heading_3_inner" style="width: 18pt; white-space: nowrap"></h5>
+            </td>
+            <td width="100%">
+              <h5 class="H3_-_Heading_3_inner"><a name="1221770">Write support code to recognize and handle the new setting</a></h5>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="B_-_Body"><a name="1221771">The disbursement is created after the credit has been allocated in the </a><span class="cv_-_computer_voice">DirectBillPayment</span> plugin method <span class="cv_-_computer_voice">allocateCredits</span>. Append the following code to the end of the method. For information about a particular method, refer to the<span class="e_-_emphasis"> Gosu API Reference</span>.</div>
+      <PRE class="CF_-_Code_First_Line"><a name="1221772">// *** Append to DirectBillPayment.allocateCredits() ***</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="1221773">// Credit must be related to a policy period, not an account or collateral credit</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="1221774">if (policyPeriod != null) {</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="1221775">&nbsp;&nbsp;var excessTreatment = typekey.ReturnPremiumExcessTreatment.TC_UNAPPLIED&nbsp;&nbsp;// default setting</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="1221776">&nbsp;&nbsp;var moneyReceived = payment.BaseMoneyReceived as DirectBillMoneyRcvd</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="1221777">&nbsp;</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="1221778">&nbsp;&nbsp;// If this is a Cancellation credit, retrieve the Excess Treatment setting.</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="1221779">&nbsp;&nbsp;// NOTE: In this example, the Disbursement setting is implemented for Cancellation credits only.</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="1221780">&nbsp;&nbsp;// The Disbursement setting is not implemented for other credit types and will have no effect.</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="1221781">&nbsp;&nbsp;if (moneyReceived.DBPmntDistributionContext == DBPmntDistributionContext.TC_CANCELLATION) {</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="1221782">&nbsp;&nbsp;&nbsp;&nbsp;excessTreatment = policyPeriod.ReturnPremiumHandlingSchemes.firstWhere( \ elt -&gt;</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="1221783">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;elt.HandlingCondition == typekey.ReturnPremiumHandlingCondition.TC_CANCELLATION).ExcessTreatment</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="1221784">&nbsp;&nbsp;}</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="1221785">&nbsp;</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="1221786">&nbsp;&nbsp;// If there is remaining credit and it should be disbursed...</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="1221787">&nbsp;&nbsp;if (amountToAllocate.IsNotZero &amp;&amp;</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="1221788">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;amountToAllocate.IsPositive &amp;&amp;</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="1221789">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;excessTreatment == typekey.ReturnPremiumExcessTreatment.TC_DISBURSEMENT) {</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="1221790">&nbsp;&nbsp;&nbsp;&nbsp;// Perform the disbursement</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="1221791">&nbsp;&nbsp;&nbsp;&nbsp;var disbursement = gw.account.CreateDisbursementWizardHelper.createDisbursement(</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="1221792">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;policyPeriod.Account, amountToAllocate)</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="1221793">&nbsp;&nbsp;&nbsp;&nbsp;disbursement = policyPeriod.getBundle().add(disbursement)</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="1221794">&nbsp;&nbsp;&nbsp;&nbsp;disbursement.executeDisbursementOrCreateApprovalActivityIfNeeded()</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="1221795">&nbsp;&nbsp;}</a></PRE>
+      <PRE class="CL_-_Code_Last_Line"><a name="1221796">}</a></PRE>
+      <div class="B_-_Body"><a name="1221797">The new support code calls a </a><span class="cv_-_computer_voice">createDisbursement</span> method in the <span class="cv_-_computer_voice">CreateDisbursementWizardHelper</span> class. This method must be implemented. Add the following code to the class definition.</div>
+      <PRE class="CF_-_Code_First_Line"><a name="1221798">// *** Add to CreateDisbursementWizardHelper class definition ***</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="1221799">static function createDisbursement(account : Account, amount : MonetaryAmount) : AccountDisbursement {</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="1221800">&nbsp;&nbsp;var disbursement = new AccountDisbursement(account.Currency)</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="1221801">&nbsp;&nbsp;disbursement.setUnappliedFundsAndFields(account.DefaultUnappliedFund)</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="1221802">&nbsp;&nbsp;disbursement.Amount &nbsp;= amount</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="1221803">&nbsp;&nbsp;disbursement.DueDate = gw.api.util.DateUtil.currentDate()</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="1221804">&nbsp;&nbsp;disbursement.Status &nbsp;= typekey.DisbursementStatus.TC_APPROVED</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="1221805">&nbsp;&nbsp;disbursement.Reason &nbsp;= typekey.Reason.TC_OVERPAY</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="1221806">&nbsp;&nbsp;disbursement.Address = account.PrimaryPayer.Contact.PrimaryAddress.toString()</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="1221807">&nbsp;&nbsp;disbursement.MailTo &nbsp;= account.PrimaryPayer.Contact.toString()</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="1221808">&nbsp;&nbsp;disbursement.PayTo &nbsp;&nbsp;= account.PrimaryPayer.Contact.toString()</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="1221809">&nbsp;&nbsp;disbursement.PaymentInstrument = account.DefaultPaymentInstrument</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="1221810">&nbsp;&nbsp;return disbursement</a></PRE>
+      <PRE class="CL_-_Code_Last_Line"><a name="1221811">}</a></PRE>
+      <h4 class="H2_-_Heading_2"><a name="1221812">Defining a New Excess Treatment Setting: Suspense Item</a></h4>
+      <div class="B_-_Body"><a name="1221814">The following example demonstrates how to define a new </a><span class="cv_-_computer_voice">Excess Treatment</span> setting that places the remaining credit balance in a suspense item. This handling method is implemented only for credits created because of a policy cancellation.</div>
+      <div class="H3_-_Heading_3_outer" style="margin-left: 36pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <h5 class="H3_-_Heading_3_inner" style="width: 18pt; white-space: nowrap"></h5>
+            </td>
+            <td width="100%">
+              <h5 class="H3_-_Heading_3_inner"><a name="1221815">Add a typecode for the new setting</a></h5>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="B_-_Body"><a name="1221816">The </a><span class="cv_-_computer_voice">ReturnPremiumExcessTreatment</span> typelist must define a typecode for the new setting. The manner in which the typecode is defined depends on whether the typelist has already been extended.</div>
+      <div class="BI_-_Bullet_Item_outer" style="margin-left: 57pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="BI_-_Bullet_Item_inner" style="width: 15pt; white-space: nowrap">
+                <span class="bu_-_bullet">•	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="BI_-_Bullet_Item_inner"><a name="1221817">If this is the first extension to the </a><span class="cv_-_computer_voice">ReturnPremiumExcessTreatment</span> typelist:</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="LS2_-_List_Start_002c_Level_2_outer" style="margin-left: 67pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="LS2_-_List_Start_002c_Level_2_inner" style="width: 15pt; white-space: nowrap">
+                <span class="ri_-_run_in_header">	1.	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="LS2_-_List_Start_002c_Level_2_inner"><a name="1221827">In BillingCenter Studio, in the </a><span class="uis_-_UI_element_Studio">Project</span> window, navigate to <span class="uis_-_UI_element_Studio">configuration</span>&nbsp;→ <span class="uis_-_UI_element_Studio">config</span>&nbsp; → <span class="uis_-_UI_element_Studio">Metadata</span>&nbsp;→ <span class="uis_-_UI_element_Studio">Typelist</span>.</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="LI2_-_List_Item_002c_Level_2_outer" style="margin-left: 67pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="LI2_-_List_Item_002c_Level_2_inner" style="width: 15pt; white-space: nowrap">
+                <span class="ri_-_run_in_header">	2.	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="LI2_-_List_Item_002c_Level_2_inner"><a name="1221831">Right‑click </a><span class="cv_-_computer_voice">ReturnPremiumExcessTreatment.tti</span> and choose <span class="uis_-_UI_element_Studio">New</span>&nbsp;→ <span class="uis_-_UI_element_Studio">Typelist Extension</span> and then click <span class="uis_-_UI_element_Studio">OK</span>.</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="LP2_-_List_Para_002c_Level_2"><a name="1221841">Studio creates </a><span class="cv_-_computer_voice">ReturnPremiumExcessTreatment.ttx</span> in <span class="uis_-_UI_element_Studio">configuration</span>&nbsp;→ <span class="uis_-_UI_element_Studio">config</span>&nbsp;→ <span class="uis_-_UI_element_Studio">Extensions</span>&nbsp;→ <span class="uis_-_UI_element_Studio">Typelist</span> and opens it in the Typelist editor.</div>
+      <div class="BI_-_Bullet_Item_outer" style="margin-left: 57pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="BI_-_Bullet_Item_inner" style="width: 15pt; white-space: nowrap">
+                <span class="bu_-_bullet">•	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="BI_-_Bullet_Item_inner"><a name="1221842">If the </a><span class="cv_-_computer_voice">ReturnPremiumExcessTreatment</span> typelist has already been extended:</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="LS2_-_List_Start_002c_Level_2_outer" style="margin-left: 67pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="LS2_-_List_Start_002c_Level_2_inner" style="width: 15pt; white-space: nowrap">
+                <span class="ri_-_run_in_header">	1.	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="LS2_-_List_Start_002c_Level_2_inner"><a name="1221852">In BillingCenter Studio, in the </a><span class="uis_-_UI_element_Studio">Project</span> window, navigate to <span class="uis_-_UI_element_Studio">configuration</span>&nbsp;→ <span class="uis_-_UI_element_Studio">config</span>&nbsp;→ <span class="uis_-_UI_element_Studio">Extensions</span>&nbsp;→ <span class="uis_-_UI_element_Studio">Typelist</span>.</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="LI2_-_List_Item_002c_Level_2_outer" style="margin-left: 67pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="LI2_-_List_Item_002c_Level_2_inner" style="width: 15pt; white-space: nowrap">
+                <span class="ri_-_run_in_header">	2.	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="LI2_-_List_Item_002c_Level_2_inner"><a name="1221853">Double‑click </a><span class="cv_-_computer_voice">ReturnPremiumExcessTreatment.ttx</span> to open it in the Typelist editor.</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="B_-_Body"><a name="1221854">Continue with the following steps to define the new typecode.</a></div>
+      <div class="LI_-_List_Item_outer" style="margin-left: 57pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="LI_-_List_Item_inner" style="width: 15pt; white-space: nowrap">
+                <span class="ri_-_run_in_header">	1.	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="LI_-_List_Item_inner"><a name="1221858">In </a><span class="cv_-_computer_voice">ReturnPremiumExcessTreatment.ttx</span>, right‑click an existing typecode and choose <span class="uis_-_UI_element_Studio">Add new</span>&nbsp;→ <span class="uis_-_UI_element_Studio">typecode</span>.</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="LI_-_List_Item_outer" style="margin-left: 57pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="LI_-_List_Item_inner" style="width: 15pt; white-space: nowrap">
+                <span class="ri_-_run_in_header">	2.	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="LI_-_List_Item_inner"><a name="1221859">Enter the following values for the new typecode:</a></div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="BI2_-_Bullet_Item_002c_Level_2_outer" style="margin-left: 67pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="BI2_-_Bullet_Item_002c_Level_2_inner" style="width: 15pt; white-space: nowrap">
+                <span class="bu_-_bullet">•	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="BI2_-_Bullet_Item_002c_Level_2_inner"><span class="ri_-_run_in_header"><a name="1221860">code</a></span>&nbsp;– <span class="cv_-_computer_voice">SuspenseItem</span> </div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="BI2_-_Bullet_Item_002c_Level_2_outer" style="margin-left: 67pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="BI2_-_Bullet_Item_002c_Level_2_inner" style="width: 15pt; white-space: nowrap">
+                <span class="bu_-_bullet">•	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="BI2_-_Bullet_Item_002c_Level_2_inner"><span class="ri_-_run_in_header"><a name="1221861">name</a></span>&nbsp;– <span class="it_-_input_text">SuspenseItem</span> </div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="BI2_-_Bullet_Item_002c_Level_2_outer" style="margin-left: 67pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="BI2_-_Bullet_Item_002c_Level_2_inner" style="width: 15pt; white-space: nowrap">
+                <span class="bu_-_bullet">•	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="BI2_-_Bullet_Item_002c_Level_2_inner"><span class="ri_-_run_in_header"><a name="1221862">desc</a></span>&nbsp;– <span class="it_-_input_text">Create Suspense Item</span> </div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="N_-_Note">
+        <span class="n_-_note">Note: </span><a name="1221863">Adding or changing a typecode is a data model change, and therefore requires a restart of the application.</a></div>
+      <div class="H3_-_Heading_3_outer" style="margin-left: 36pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <h5 class="H3_-_Heading_3_inner" style="width: 18pt; white-space: nowrap"></h5>
+            </td>
+            <td width="100%">
+              <h5 class="H3_-_Heading_3_inner"><a name="1221864">Write support code to recognize and handle the new setting</a></h5>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="B_-_Body"><a name="1221865">The suspense item is created after the credit has been allocated in the </a><span class="cv_-_computer_voice">DirectBillPayment</span> plugin method <span class="cv_-_computer_voice">allocateCredits</span>. Append the following code to the end of the method. For information about a particular method, refer to the<span class="e_-_emphasis"> Gosu API Reference</span>.</div>
+      <PRE class="CF_-_Code_First_Line"><a name="1221866">// *** Append to DirectBillPayment.allocateCredits() ***</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="1221867">// Credit must be related to a policy period, not an account or collateral credit</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="1221868">if (policyPeriod != null) {</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="1221869">&nbsp;&nbsp;var excessTreatment = typekey.ReturnPremiumExcessTreatment.TC_UNAPPLIED&nbsp;&nbsp;// default setting</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="1221870">&nbsp;&nbsp;var moneyReceived = payment.BaseMoneyReceived as DirectBillMoneyRcvd</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="1221871">&nbsp;</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="1221872">&nbsp;&nbsp;// If this is a Cancellation credit, retrieve the Excess Treatment setting.</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="1221873">&nbsp;&nbsp;// NOTE: In this example, the SuspenseItem setting is implemented for Cancellation credits only.</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="1221874">&nbsp;&nbsp;// The SuspenseItem setting is not implemented for other credit types and will have no effect.</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="1221875">&nbsp;&nbsp;if (moneyReceived.DBPmntDistributionContext == DBPmntDistributionContext.TC_CANCELLATION) {</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="1221876">&nbsp;&nbsp;&nbsp;&nbsp;excessTreatment = policyPeriod.ReturnPremiumHandlingSchemes.firstWhere( \ elt -&gt;</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="1221877">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;elt.HandlingCondition == typekey.ReturnPremiumHandlingCondition.TC_CANCELLATION).ExcessTreatment</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="1221878">&nbsp;&nbsp;}</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="1221879">&nbsp;</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="1221880">&nbsp;&nbsp;// If there is remaining credit and it should be placed in a suspense item...</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="1221881">&nbsp;&nbsp;if (amountToAllocate.IsNotZero &amp;&amp;</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="1221882">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;amountToAllocate.IsPositive &amp;&amp;</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="1221883">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;excessTreatment == typekey.ReturnPremiumExcessTreatment.TC_SUSPENSEITEM) {</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="1221884">&nbsp;&nbsp;&nbsp;&nbsp;// Create a suspense item and place the remaining credit in it</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="1221885">&nbsp;&nbsp;&nbsp;&nbsp;var item : BaseSuspDistItem</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="1221886">&nbsp;&nbsp;&nbsp;&nbsp;item = payment.createAndAddSuspDistItem()</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="1221887">&nbsp;&nbsp;&nbsp;&nbsp;item.GrossAmountToApply = amountToAllocate</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="1221888">&nbsp;&nbsp;&nbsp;&nbsp;item.MatchingPolicy &nbsp;&nbsp;&nbsp;&nbsp;= policyPeriod</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="1221889">&nbsp;&nbsp;&nbsp;&nbsp;item.PolicyNumber &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;= policyPeriod.PolicyNumber</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="1221890">&nbsp;&nbsp;}</a></PRE>
+      <PRE class="CL_-_Code_Last_Line"><a name="1221891">}</a></PRE>
+      <script type="text/javascript" language="JavaScript1.2">
+        <!--
+          // Clear related topics
+          //
+          WWHClearRelatedTopics();
+
+          document.writeln(WWHRelatedTopicsInlineHTML());
+        // -->
+      </script>
+    </blockquote>
+    <script type="text/javascript" language="JavaScript1.2">
+      <!--
+        document.write(WWHRelatedTopicsDivTag() + WWHPopupDivTag() + WWHALinksDivTag());
+      // -->
+    </script>
+  </body>
+</html>

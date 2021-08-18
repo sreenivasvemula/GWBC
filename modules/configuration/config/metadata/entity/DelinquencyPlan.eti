@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?><subtype xmlns="http://guidewire.com/datamodel" desc="A delinquency plan containing a set of triggers to execute on a delinquency process.             Also holds information about conditions for delinquency, such as threshold overdue premium amount." entity="DelinquencyPlan" subpackage="delinquency" supertype="Plan">
+  <implementsEntity
+    name="InCurrencySilo"/>
+  <column default="0" name="GracePeriodDays" nullok="false" type="integer"/>
+  <monetaryamount amountColumnName="AcctEnterDelinquencyThreshold" amountRange="nonnegative" currencyColumnName="AcctEnterDelnqThreshold_cur" name="AcctEnterDelinquencyThreshold" nullok="false" scaleToCurrency="true" soapnullok="true">
+    <tag name="DefaultValueZero"/>
+  </monetaryamount>
+  <monetaryamount amountColumnName="CancellationThreshold" amountRange="nonnegative" name="CancellationThreshold" nullok="false" scaleToCurrency="true" soapnullok="true">
+    <tag name="DefaultValueZero"/>
+  </monetaryamount>
+  <monetaryamount amountColumnName="ExitDelinquencyThreshold" amountRange="nonnegative" name="ExitDelinquencyThreshold" nullok="false" scaleToCurrency="true" soapnullok="true">
+    <tag name="DefaultValueZero"/>
+  </monetaryamount>
+  <column default="false" desc="If true, InvoiceItems associated with delinquent policy periods will be held" name="HoldInvoicingOnDlnqPolicies" nullok="false" type="bit"/>
+  <monetaryamount amountColumnName="LateFeeAmount" amountRange="nonnegative" name="LateFeeAmount" nullok="false" scaleToCurrency="true"/>
+  <monetaryamount amountColumnName="PolEnterDelinquencyThreshold" amountRange="nonnegative" currencyColumnName="PolEnterDelnqThreshold_cur" name="PolEnterDelinquencyThreshold" nullok="false" scaleToCurrency="true" soapnullok="true">
+    <tag name="DefaultValueZero"/>
+  </monetaryamount>
+  <monetaryamount amountColumnName="ReinstatementFeeAmount" amountRange="nonnegative" name="ReinstatementFeeAmount" nullok="false" scaleToCurrency="true"/>
+  <monetaryamount amountColumnName="WriteoffThreshold" amountRange="nonnegative" name="WriteoffThreshold" nullok="false" scaleToCurrency="true" soapnullok="true">
+    <tag name="DefaultValueZero"/>
+  </monetaryamount>
+  <typekey desc="The market segments for which this delinquency plan may be used" name="ApplicableSegments" nullok="true" typelist="ApplicableSegments"/>
+  <typekey name="CancellationTarget" nullok="false" typelist="CancellationTarget"/>
+  <array arrayentity="DelinquencyPlanReason" name="DelinquencyPlanReasons" owner="true">
+    <link-association>
+      <typelist-map field="DelinquencyReason"/>
+    </link-association>
+  </array>
+  <checkconstraint
+    desc="The account enter delinquency threshold must be greater than or equal to the writeoff threshold."
+    predicate="AcctEnterDelinquencyThreshold &gt;= WriteoffThreshold"/>
+  <checkconstraint
+    desc="The policy enter delinquency threshold must be greater than or equal to the writeoff threshold."
+    predicate="PolEnterDelinquencyThreshold &gt;= WriteoffThreshold"/>
+  <checkconstraint
+    desc="The account enter delinquency threshold must be greater than or equal to the exit delinquency threshold."
+    predicate="AcctEnterDelinquencyThreshold &gt;= ExitDelinquencyThreshold"/>
+  <checkconstraint
+    desc="The policy enter delinquency threshold must be greater than or equal to the exit delinquency threshold."
+    predicate="PolEnterDelinquencyThreshold &gt;= ExitDelinquencyThreshold"/>
+  <checkconstraint
+    desc="The account enter delinquency threshold must be greater than or equal to the policy enter delinquency threshold."
+    predicate="AcctEnterDelinquencyThreshold &gt;= PolEnterDelinquencyThreshold"/>
+</subtype>

@@ -1,0 +1,37 @@
+<?xml version="1.0"?>
+<!-- ====================================================================  DirectBillMoneyReceivedSearchView  ==================================================================== -->
+<viewEntity
+  xmlns="http://guidewire.com/datamodel"
+  entity="DirectBillMoneyReceivedSearchView"
+  desc="Supports the efficient creation of DirectBillMoneyReceived lists in BillingCenter's views."
+  exportable="false"
+  subpackage="search.view"
+  primaryEntity="DirectBillMoneyRcvd">
+  <viewEntityLink
+    name="DirectBillMoneyRcvd"
+    path="ID"/>
+  <viewEntityLink
+    name="Account"
+    path="Account"/>
+  <viewEntityLink
+    name="UnappliedFund"
+    path="UnappliedFund"/>
+  <viewEntityColumn
+    name="ReceivedDate"
+    path="ReceivedDate"/>
+  <viewEntityColumn
+    name="Amount"
+    path="Amount_amt"/>
+  <viewEntityTypekey
+    name="PaymentMethod"
+    path="PaymentInstrument.PaymentMethod"/>
+  <viewEntityColumn
+    name="Token"
+    path="PaymentInstrument.Token"/>
+  <viewEntityColumn
+    name="RefNumber"
+    path="RefNumber"/>
+  <viewEntityTypekey
+    name="Currency"
+    path="Account.Currency"/>
+</viewEntity>

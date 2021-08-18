@@ -1,0 +1,217 @@
+<?xml version="1.0"?>
+<Workflow subtype="StdAgencyBill" version="1">
+  <Context>
+    <Symbol name="statementInvoice" type="StatementInvoice" value="Workflow.AgencyCycleProcess.StatementInvoice"/>
+    <Symbol name="agencyCycleProcess" type="AgencyCycleProcess" value="Workflow.AgencyCycleProcess"/>
+  </Context>
+  <Start firstStep="CheckShouldSendStatement"/>
+  <AutoStep desc="Step to test if plan defined that we should send out a statement" id="CheckShouldSendStatement" layoutid="28843280">
+    <Go desc="Test if the statement should be sent out." id="ShouldSendStatement" if="agencyCycleProcess.SendStatementStatus != AgencyBillEventStatus.TC_NOTSCHEDULED &amp;&amp; (!agencyCycleProcess.AgencyBillPlan.StatementsWithLowNetSuppressed || statementInvoice.NetAmount.compareTo( agencyCycleProcess.AgencyBillPlan.NetThresholdForSuppressingStmt ) &gt; 0)" layoutid="29759722" nextStep="WaitForSendStatementDate"/>
+    <Go desc="Otherwise skip to the next step" id="SkipToNextEvent" layoutid="28740933" nextStep="CheckShouldSendPromiseReminder"/>
+  </AutoStep>
+  <ManualStep desc="Step to wait for send statement date and then send" id="WaitForSendStatementDate" layoutid="7377874">
+    <Timeout desc="Wait for date to send statement" id="SendStatement" layoutid="5485693" nextStep="CheckShouldSendPromiseReminder" timeAbsolute="agencyCycleProcess.SendStatementDate">agencyCycleProcess.StatementSent = true</Timeout>
+  </ManualStep>
+  <AutoStep desc="Test to see if the plan defined that we should send a promise reminder" id="CheckShouldSendPromiseReminder" layoutid="16701434">
+    <Go desc="Test if we should send a promise reminder" id="ShouldSendPromiseReminder" if="agencyCycleProcess.SendPromiseReminderStatus != AgencyBillEventStatus.TC_NOTSCHEDULED" layoutid="27738150" nextStep="WaitForSendPromiseReminderDate"/>
+    <Go desc="Otherwise skip to the next step" id="SkipToNextEvent" layoutid="23880560" nextStep="CheckShouldGeneratePromiseException"/>
+  </AutoStep>
+  <ManualStep desc="Step to wait for send promise reminder date" id="WaitForSendPromiseReminderDate" layoutid="9370137">
+    <Timeout desc="Wait for date to send promise reminder" id="TimeToSendPromiseReminder" layoutid="10820668" nextStep="CheckIfPromiseReminderNeeded" timeAbsolute="agencyCycleProcess.SendPromiseReminderDate"/>
+  </ManualStep>
+  <AutoStep desc="Check if promise reminder needs sending (promise reminder was not rec'd)" id="CheckIfPromiseReminderNeeded" layoutid="3668135">
+    <Go desc="Check if the promise was received, and if not, send a reminder" id="SendPromiseReminder" if="!statementInvoice.isSufficientlySettledIncludingPromises()" layoutid="765772" nextStep="CheckShouldGeneratePromiseException">agencyCycleProcess.PromiseReminderSent = true</Go>
+    <Go desc="Otherwise the promise was rec'd so we should continue to the next event without sending a reminder" id="ContinueWithoutSending" layoutid="20995893" nextStep="CheckShouldGeneratePromiseException"></Go>
+  </AutoStep>
+  <AutoStep desc="Step to test if the plan defined that we should generate a promise exception" id="CheckShouldGeneratePromiseException" layoutid="29607634">
+    <Go desc="Test if a promise exception should be generated." id="ShouldGeneratePromiseException" if="agencyCycleProcess.GenPromiseExceptionStatus != AgencyBillEventStatus.TC_NOTSCHEDULED" layoutid="16206222" nextStep="WaitForGeneratePromiseExceptionDate"/>
+    <Go desc="Otherwise skip to the next step" id="SkipToNextStep" layoutid="23887193" nextStep="CheckShouldGeneratePastDueException"/>
+  </AutoStep>
+  <ManualStep desc="Step to wait for generate promise exception date and then generate" id="WaitForGeneratePromiseExceptionDate" layoutid="10814970">
+    <Timeout desc="Wait for date to generate promsie exception" id="TimeToGeneratePromiseException" layoutid="11051302" nextStep="CheckIfPromiseExceptionNeeded" timeAbsolute="agencyCycleProcess.GenPromiseExceptionDate"/>
+  </ManualStep>
+  <AutoStep desc="Check if promise exception needs generating (sufficient promise was not rec'd)" id="CheckIfPromiseExceptionNeeded" layoutid="20108676">
+    <Go desc="Check if sufficient promise was received, and if not, generate an exception" id="GeneratePromiseException" if="!statementInvoice.isSufficientlySettledIncludingPromises()" layoutid="19862813" nextStep="CheckShouldGeneratePastDueException">agencyCycleProcess.PromiseExceptionGenerated = true</Go>
+    <Go desc="Otherwise the promise was rec'd so we should continue to the next event without generating an exception" id="ContinueWithoutGenerating" layoutid="25162015" nextStep="CheckShouldGeneratePastDueException"></Go>
+  </AutoStep>
+  <AutoStep desc="Step to test if the plan defined that we should generate a past due exception" id="CheckShouldGeneratePastDueException" layoutid="1354337">
+    <Go desc="Test if a past due exception should be generated." id="ShouldGeneratePastDueException" if="agencyCycleProcess.GenPastDueExceptionStatus != AgencyBillEventStatus.TC_NOTSCHEDULED" layoutid="5589094" nextStep="WaitForGeneratePastDueExceptionDate"/>
+    <Go desc="Otherwise skip to the next step" id="SkipToNextEvent" layoutid="10930936" nextStep="CheckShouldSendDunning1"/>
+  </AutoStep>
+  <ManualStep desc="Step to wait for generate past due excption date and then generate" id="WaitForGeneratePastDueExceptionDate" layoutid="9573433">
+    <Timeout desc="Wait for date to generate past due exception" id="TimeToGeneratePastDueException" layoutid="17242225" nextStep="CheckIfPastDueExceptionNeeded" timeAbsolute="agencyCycleProcess.GenPastDueExceptionDate"/>
+  </ManualStep>
+  <AutoStep desc="Check if past due exception needs generating (statement is not sufficiently settled)" id="CheckIfPastDueExceptionNeeded" layoutid="14186075">
+    <Go desc="Check if the statement is sufficiently settled, and if not, generate an exception" id="GeneratePastDueException" if="!statementInvoice.isSufficientlySettled()" layoutid="14369888" nextStep="CheckShouldSendDunning1">agencyCycleProcess.PastDueExceptionGenerated = true;
+</Go>
+    <Go desc="Otherwise the statement is paid so we should continue to the next event without generating an exception" id="ContinueWithoutGenerating" layoutid="22032481" nextStep="CheckShouldSendDunning1"></Go>
+  </AutoStep>
+  <AutoStep desc="Step to test if the plan defined that we should send out a first dunning letter" id="CheckShouldSendDunning1" layoutid="7825177">
+    <Go desc="Test if a first dunning letter should be sent out." id="ShouldSendDunning1" if="agencyCycleProcess.SendDunning1Status != AgencyBillEventStatus.TC_NOTSCHEDULED" layoutid="9422105" nextStep="WaitForSendDunning1Date"/>
+    <Go desc="Otherwise skip to the next step" id="SkipToNextEvent" layoutid="10137523" nextStep="CheckShouldSendDunning2"/>
+  </AutoStep>
+  <ManualStep desc="Step to wait for send dunning letter 1 date and then send" id="WaitForSendDunning1Date" layoutid="26418146">
+    <Timeout desc="Wait for date to send dunning letter 1" id="TimeToSendDunning1" layoutid="7627867" nextStep="CheckDunning1Needed" timeAbsolute="agencyCycleProcess.SendDunning1Date"/>
+  </ManualStep>
+  <AutoStep id="CheckDunning1Needed" layoutid="11206399">
+    <Go desc="Check if the statement is unpaid, and if not, send the dunning 1" id="SendDunning1" if="!statementInvoice.Paid" layoutid="30485791" nextStep="CheckShouldSendDunning2">agencyCycleProcess.Dunning1Sent = true</Go>
+    <Go desc="Otherwise the statement is paid so we should continue to the next event without sending a dunning 1" id="ContinueWithoutSending" layoutid="8467249" nextStep="CheckShouldSendDunning2"/>
+  </AutoStep>
+  <AutoStep desc="Step to test if we should send out a second dunning letter" id="CheckShouldSendDunning2" layoutid="9200654">
+    <Go desc="Test if a second dunning letter should be sent out." id="ShouldSendDunning2" if="agencyCycleProcess.SendDunning2Status != AgencyBillEventStatus.TC_NOTSCHEDULED" layoutid="20868070" nextStep="WaitForSendDunning2Date"/>
+    <Go desc="Otherwise skip to the next step" id="SkipToNextEvent" layoutid="28996683" nextStep="Done"/>
+  </AutoStep>
+  <ManualStep desc="Step to wait for send dunning letter 2 date and then send" id="WaitForSendDunning2Date" layoutid="703488">
+    <Timeout desc="Wait for date to send dunning letter 2" id="TimeToSendDunning2" layoutid="31839681" nextStep="CheckDunning2Needed" timeAbsolute="agencyCycleProcess.SendDunning2Date"/>
+  </ManualStep>
+  <AutoStep id="CheckDunning2Needed" layoutid="443451">
+    <Go desc="Check if the statement is unpaid, and if not, send the dunning 2" id="SendDunning2" if="!statementInvoice.Paid" layoutid="16264737" nextStep="Done">agencyCycleProcess.Dunning2Sent = true</Go>
+    <Go desc="Otherwise the statement is paid so we should continue to the next event without sending a dunning 2" id="ContinueWithoutSending" layoutid="29041312" nextStep="Done"/>
+  </AutoStep>
+  <Outcome id="Done" layoutid="24819218"/>
+  <Layout>
+    <BoxUI height="6" layoutid="24819218" width="20" x="-12" y="68"/>
+    <BoxUI height="4" layoutid="7377874" width="12" x="13" y="6"/>
+    <ArrowUI layoutid="2683140" visible="false">
+      <PointUI x="21" y="17"/>
+      <PointUI x="35" y="82"/>
+    </ArrowUI>
+    <BoxUI height="6" layoutid="28843280" width="20" x="-12" y="2"/>
+    <ArrowUI layoutid="29759722" visible="true">
+      <PointUI x="8" y="7"/>
+      <PointUI x="13" y="7"/>
+    </ArrowUI>
+    <ArrowUI layoutid="17035775" visible="true">
+      <PointUI x="30" y="8"/>
+      <PointUI x="30" y="25"/>
+    </ArrowUI>
+    <BoxUI height="6" layoutid="1354337" width="20" x="-12" y="35"/>
+    <ArrowUI layoutid="5589094" visible="true">
+      <PointUI x="8" y="40"/>
+      <PointUI x="13" y="40"/>
+    </ArrowUI>
+    <ArrowUI layoutid="28740933" visible="true">
+      <PointUI x="-2" y="8"/>
+      <PointUI x="-2" y="13"/>
+    </ArrowUI>
+    <BoxUI height="4" layoutid="26788492" width="8" x="23" y="20"/>
+    <ArrowUI layoutid="15082598" visible="true">
+      <PointUI x="23" y="22"/>
+      <PointUI x="4" y="29"/>
+    </ArrowUI>
+    <ArrowUI layoutid="5485693" visible="true">
+      <PointUI x="13" y="9"/>
+      <PointUI x="8" y="16"/>
+    </ArrowUI>
+    <BoxUI height="4" layoutid="9573433" width="12" x="13" y="39"/>
+    <ArrowUI layoutid="17242225" visible="true">
+      <PointUI x="25" y="42"/>
+      <PointUI x="33" y="44"/>
+    </ArrowUI>
+    <BoxUI height="6" layoutid="7825177" width="20" x="-12" y="46"/>
+    <ArrowUI layoutid="9422105" visible="true">
+      <PointUI x="8" y="51"/>
+      <PointUI x="13" y="51"/>
+    </ArrowUI>
+    <BoxUI height="4" layoutid="26418146" width="12" x="13" y="50"/>
+    <ArrowUI layoutid="7627867" visible="true">
+      <PointUI x="25" y="54"/>
+      <PointUI x="33" y="55"/>
+    </ArrowUI>
+    <BoxUI height="6" layoutid="9200654" width="20" x="-12" y="57"/>
+    <ArrowUI layoutid="20868070" visible="true">
+      <PointUI x="8" y="62"/>
+      <PointUI x="13" y="62"/>
+    </ArrowUI>
+    <BoxUI height="4" layoutid="703488" width="12" x="13" y="61"/>
+    <ArrowUI layoutid="31839681" visible="true">
+      <PointUI x="25" y="65"/>
+      <PointUI x="33" y="66"/>
+    </ArrowUI>
+    <BoxUI height="6" layoutid="16701434" width="20" x="-12" y="13"/>
+    <ArrowUI layoutid="27738150" visible="true">
+      <PointUI x="8" y="18"/>
+      <PointUI x="13" y="18"/>
+    </ArrowUI>
+    <BoxUI height="4" layoutid="9370137" width="12" x="13" y="17"/>
+    <ArrowUI layoutid="10820668" visible="true">
+      <PointUI x="25" y="20"/>
+      <PointUI x="33" y="21"/>
+    </ArrowUI>
+    <BoxUI height="6" layoutid="29607634" width="20" x="-12" y="24"/>
+    <ArrowUI layoutid="16206222" visible="true">
+      <PointUI x="8" y="29"/>
+      <PointUI x="13" y="29"/>
+    </ArrowUI>
+    <BoxUI height="4" layoutid="10814970" width="12" x="13" y="28"/>
+    <ArrowUI layoutid="11051302" visible="true">
+      <PointUI x="25" y="31"/>
+      <PointUI x="33" y="33"/>
+    </ArrowUI>
+    <ArrowUI layoutid="23880560" visible="true">
+      <PointUI x="-2" y="19"/>
+      <PointUI x="-2" y="24"/>
+    </ArrowUI>
+    <ArrowUI layoutid="23887193" visible="true">
+      <PointUI x="-2" y="30"/>
+      <PointUI x="-2" y="35"/>
+    </ArrowUI>
+    <ArrowUI layoutid="10930936" visible="true">
+      <PointUI x="-2" y="41"/>
+      <PointUI x="-2" y="46"/>
+    </ArrowUI>
+    <ArrowUI layoutid="10137523" visible="true">
+      <PointUI x="-2" y="52"/>
+      <PointUI x="-2" y="57"/>
+    </ArrowUI>
+    <ArrowUI layoutid="28996683" visible="true">
+      <PointUI x="-2" y="63"/>
+      <PointUI x="-2" y="68"/>
+    </ArrowUI>
+    <BoxUI height="5" layoutid="3668135" width="20" x="33" y="20"/>
+    <ArrowUI layoutid="765772" visible="true">
+      <PointUI x="33" y="22"/>
+      <PointUI x="8" y="25"/>
+    </ArrowUI>
+    <ArrowUI layoutid="20995893" visible="true">
+      <PointUI x="33" y="24"/>
+      <PointUI x="8" y="27"/>
+    </ArrowUI>
+    <BoxUI height="5" layoutid="20108676" width="20" x="33" y="32"/>
+    <ArrowUI layoutid="19862813" visible="true">
+      <PointUI x="33" y="34"/>
+      <PointUI x="8" y="36"/>
+    </ArrowUI>
+    <ArrowUI layoutid="25162015" visible="true">
+      <PointUI x="33" y="36"/>
+      <PointUI x="8" y="38"/>
+    </ArrowUI>
+    <BoxUI height="5" layoutid="14186075" width="20" x="33" y="43"/>
+    <ArrowUI layoutid="14369888" visible="true">
+      <PointUI x="33" y="45"/>
+      <PointUI x="8" y="47"/>
+    </ArrowUI>
+    <ArrowUI layoutid="22032481" visible="true">
+      <PointUI x="33" y="47"/>
+      <PointUI x="8" y="49"/>
+    </ArrowUI>
+    <BoxUI height="5" layoutid="11206399" width="20" x="33" y="54"/>
+    <ArrowUI layoutid="30485791" visible="true">
+      <PointUI x="33" y="56"/>
+      <PointUI x="8" y="58"/>
+    </ArrowUI>
+    <ArrowUI layoutid="8467249" visible="true">
+      <PointUI x="33" y="58"/>
+      <PointUI x="8" y="60"/>
+    </ArrowUI>
+    <BoxUI height="5" layoutid="443451" width="20" x="33" y="65"/>
+    <ArrowUI layoutid="16264737" visible="true">
+      <PointUI x="33" y="67"/>
+      <PointUI x="8" y="70"/>
+    </ArrowUI>
+    <ArrowUI layoutid="29041312" visible="true">
+      <PointUI x="33" y="69"/>
+      <PointUI x="8" y="72"/>
+    </ArrowUI>
+  </Layout>
+</Workflow>

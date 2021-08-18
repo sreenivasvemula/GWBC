@@ -1,0 +1,29 @@
+<?xml version="1.0"?>
+<PCF
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:noNamespaceSchemaLocation="../../../../../pcf.xsd">
+  <ListViewPanel
+    id="PoliciesLV">
+    <Require
+      name="policies"
+      type="gw.api.database.IQueryBeanResult&lt;Policy&gt;"/>
+    <RowIterator
+      editable="false"
+      elementName="policy"
+      type="Policy"
+      value="policies">
+      <Row>
+        <Cell
+          enableSort="false"
+          id="Number"
+          label="displaykey.Web.AccountDetailPolicyPeriodsLV.PolicyNumber"
+          value="policy.DisplayName"/>
+        <Cell
+          enableSort="false"
+          id="Insured"
+          label="displaykey.Web.AccountDetailPolicyPeriodsLV.PrimaryInsured"
+          value="policy.LatestPolicyPeriod.PrimaryInsured"/>
+      </Row>
+    </RowIterator>
+  </ListViewPanel>
+</PCF>

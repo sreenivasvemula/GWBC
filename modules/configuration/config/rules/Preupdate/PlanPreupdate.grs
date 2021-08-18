@@ -1,0 +1,13 @@
+package rules.Preupdate
+
+@gw.rules.RuleName("Plan Pre-update")
+@gw.rules.RuleSetDescription("This is the Plan post-validation/pre-update rule set to permit modification of the agency bill plan and related entities.  Exceptions will cause the bounding database transaction to roll back, effectively vetoing the update.")
+class PlanPreupdate extends gw.rules.RuleSetBase {
+  static function invoke(bean : entity.Plan) : gw.rules.ExecutionSession {
+    return invoke( new gw.rules.ExecutionSession(), bean )
+  }
+
+  static function invoke(exeSession : gw.rules.ExecutionSession, bean : entity.Plan) : gw.rules.ExecutionSession {
+    return _invoke( exeSession, bean, "Plan Pre-update", PlanPreupdate )
+  }
+}

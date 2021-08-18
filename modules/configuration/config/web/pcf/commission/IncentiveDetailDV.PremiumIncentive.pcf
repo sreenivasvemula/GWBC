@@ -1,0 +1,32 @@
+<?xml version="1.0"?>
+<PCF
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:noNamespaceSchemaLocation="../../../../../pcf.xsd">
+  <DetailViewPanel
+    id="IncentiveDetailDV"
+    mode="PremiumIncentive">
+    <Require
+      name="incentive"
+      type="Incentive"/>
+    <InputColumn>
+      <Input
+        editable="true"
+        id="BonusPercentage"
+        label="displaykey.Web.IncentiveDetail.BonusPercentage"
+        required="true"
+        value="PremiumIncentive.BonusPercentage"/>
+      <MonetaryAmountInput
+        currency="incentive.Currency"
+        editable="true"
+        id="Threshold"
+        label="displaykey.Web.IncentiveDetail.Threshold"
+        required="true"
+        value="PremiumIncentive.Threshold"/>
+    </InputColumn>
+    <Code><![CDATA[
+property get PremiumIncentive() : PremiumIncentive {
+        return incentive as PremiumIncentive;
+      }
+    ]]></Code>
+  </DetailViewPanel>
+</PCF>

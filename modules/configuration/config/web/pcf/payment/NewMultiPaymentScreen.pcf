@@ -1,0 +1,186 @@
+<?xml version="1.0"?>
+<PCF
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:noNamespaceSchemaLocation="../../../../../pcf.xsd">
+  <Screen
+    editable="editing"
+    id="NewMultiPaymentScreen">
+    <Require
+      name="newMultiPayment"
+      type="NewMultiPayment"/>
+    <Require
+      name="currency"
+      type="Currency"/>
+    <Variable
+      initialValue="new web.payment.SuspensePaymentUtil()"
+      name="suspensePaymentUtil"/>
+    <Variable
+      initialValue="new web.account.AccountSearchConverter()"
+      name="accountSearchConverter"
+      type="web.account.AccountSearchConverter"/>
+    <Variable
+      initialValue="new web.policy.PolicySearchConverter()"
+      name="policySearchConverter"
+      type="web.policy.PolicySearchConverter"/>
+    <Require
+      name="editing"
+      type="boolean"/>
+    <Variable
+      initialValue="new gw.payment.PaymentInstrumentRange( getMultiPaymentInstruments() )"
+      name="paymentInstrumentRange"
+      type="gw.payment.PaymentInstrumentRange"/>
+    <Toolbar>
+      <AddButton
+        id="AddEmptyPayments"
+        iterator="NewMultiPaymentLV"
+        label="displaykey.Button.Add"
+        toCreateAndAdd="newMultiPayment.addEmptyPaymentRows()"/>
+      <IteratorButtons
+        iterator="NewMultiPaymentLV"/>
+      <ToolbarDivider/>
+      <CheckedValuesToolbarButton
+        allCheckedRowsAction="validateRowOkToSplit(CheckedValues[0]);AgencyMultiPaymentSplitConfirmationPopup.push(CheckedValues[0])"
+        flags="one Row"
+        id="SplitMultiPayment"
+        iterator="NewMultiPaymentLV"
+        label="displaykey.Web.NewMultiPaymentScreen.Split"
+        visible="editing"/>
+      <ToolbarDivider/>
+      <WizardButtons/>
+    </Toolbar>
+    <ListViewPanel
+      editable="true"
+      id="NewMultiPaymentLV">
+      <RowIterator
+        checkBoxVisible="editing"
+        editable="true"
+        elementName="newPayment"
+        hasCheckBoxes="true"
+        toRemove="newMultiPayment.removeFromPayments(newPayment)"
+        value="editing ? newMultiPayment.Payments : newMultiPayment.NonBlankPaymentEntries">
+        <ToolbarFlag
+          name="Row"/>
+        <Row>
+          <PickerCell
+            editable="newPayment.PolicyNumber == null and newPayment.Invoice == null and newPayment.Producer == null"
+            footerLabel="displaykey.Web.NewMultiPaymentLV.Total"
+            id="Account"
+            label="displaykey.Web.NewMultiPaymentLV.AccountNumber"
+            numCols="17"
+            pickLocation="AccountSearchPopup.push()"
+            validationExpression="newPayment.UnusedEntry ? null : newPayment.verifyAccount()"
+            value="newPayment.AccountNumber">
+            <PostOnChange/>
+          </PickerCell>
+          <PickerCell
+            editable="newPayment.AccountNumber == null and newPayment.PolicyNumber == null and newPayment.Producer == null and newPayment.SuspensePayment == MultiPaymentType.TC_PAYMENT"
+            id="Invoice"
+            inputConversion="PaymentEntry.findInvoiceFromInvoiceNumber(VALUE)"
+            label="displaykey.Web.NewMultiPaymentLV.InvoiceNumber"
+            numCols="17"
+            outputConversion="newPayment.Invoice.InvoiceNumber"
+            pickLocation="InvoiceSearchPopup.push()"
+            validationExpression="newPayment.UnusedEntry ? null : newPayment.verifyInvoice()"
+            value="newPayment.Invoice">
+            <PostOnChange/>
+          </PickerCell>
+          <PickerCell
+            editable="newPayment.AccountNumber == null and newPayment.Invoice == null and newPayment.Producer == null"
+            id="PolicyPeriod"
+            label="displaykey.Web.NewMultiPaymentLV.PolicyNumber"
+            numCols="17"
+            pickLocation="PolicySearchPopup.push()"
+            validationExpression="newPayment.UnusedEntry ? null : newPayment.verifyPolicy()"
+            value="newPayment.PolicyNumber">
+            <PostOnChange/>
+          </PickerCell>
+          <PickerCell
+            editable="newPayment.AccountNumber == null and newPayment.PolicyNumber == null and newPayment.Invoice == null and newPayment.SuspensePayment == MultiPaymentType.TC_PAYMENT"
+            id="Producer"
+            inputConversion="PaymentEntry.findProducerFromName(VALUE)"
+            label="displaykey.Web.NewMultiPaymentLV.Producer"
+            pickLocation="ProducerSearchPopup.push()"
+            validationExpression="newPayment.UnusedEntry ? null : newPayment.verifyProducer()"
+            value="newPayment.Producer">
+            <PostOnChange/>
+          </PickerCell>
+          <TypeKeyCell
+            editable="true"
+            id="PaymentType"
+            label="displaykey.Web.NewMultiPaymentLV.SuspensePayment"
+            value="newPayment.SuspensePayment">
+            <PostOnChange
+              onChange="if (newPayment.SuspensePayment == MultiPaymentType.TC_SUSPENSE) { newPayment.Invoice = null; newPayment.Producer = null }"
+              target="NewMultiPaymentLV"/>
+          </TypeKeyCell>
+          <DateCell
+            editable="true"
+            id="PaymentDate"
+            label="displaykey.Web.NewMultiPaymentLV.PaymentDate"
+            required="true"
+            value="newPayment.PaymentDate"/>
+          <RangeCell
+            editable="true"
+            id="PaymentInstrument"
+            label="displaykey.Web.NewMultiPaymentLV.PaymentInstrument"
+            required="true"
+            sortValueRange="false"
+            value="newPayment.PaymentInstrument"
+            valueRange="paymentInstrumentRange.AvailableInstruments">
+            <PostOnChange
+              target="DATA_ONLY"/>
+          </RangeCell>
+          <TextCell
+            available="newPayment.PaymentInstrument.PaymentMethod == typekey.PaymentMethod.TC_CHECK"
+            editable="true"
+            id="RefNumber"
+            label="displaykey.Web.NewMultiPaymentLV.RefNumber"
+            numCols="10"
+            value="newPayment.RefNumber"/>
+          <MonetaryAmountCell
+            currency="currency"
+            editable="true"
+            footerSumValue="newPayment.Amount"
+            id="Amount"
+            label="displaykey.Web.NewMultiPaymentLV.Amount"
+            numCols="7"
+            required="false"
+            validationExpression="newPayment.isUnusedEntry() ? null : newPayment.verifyAmount()"
+            value="newPayment.Amount"/>
+          <TextCell
+            editable="true"
+            id="Description"
+            label="displaykey.Web.NewMultiPaymentLV.Description"
+            value="newPayment.Description"/>
+        </Row>
+      </RowIterator>
+    </ListViewPanel>
+    <Code><![CDATA[uses gw.api.util.DisplayableException
+
+function validateRowOkToSplit(rowToBeValidated : PaymentEntry) {
+  if (!String.isEmpty(rowToBeValidated.AccountNumber)) {
+    throw new DisplayableException(displaykey.Web.NewMultiPaymentScreen.CanNotSplitRowWithAccountNumber)
+  }
+  else if (rowToBeValidated.IsSuspensePayment) {
+    throw new DisplayableException(displaykey.Web.NewMultiPaymentScreen.CanNotSplitRowWithSuspensePayment)
+  }
+  else if (rowToBeValidated.Producer == null) {
+      throw new DisplayableException(displaykey.Web.NewMultiPaymentScreen.CanNotSplitRowNotForProducer)
+  }
+  else if (rowToBeValidated.Amount == null || rowToBeValidated.Amount.signum() <=0) {
+    throw new DisplayableException(displaykey.Web.NewMultiPaymentScreen.CanNotSplitRowWithNonPositiveAmount)    
+  }
+  else if (newMultiPayment.Payments.where( \ paymentEntry -> paymentEntry.isUnusedEntry()).length == 0) {
+    throw new DisplayableException(displaykey.Web.NewMultiPaymentScreen.CanNotSplitRowIfNoEmptyRowsAvailable)
+  }
+}
+
+function getMultiPaymentInstruments() : List<PaymentInstrument> {
+  var instruments = new java.util.ArrayList<PaymentInstrument>() { 
+    gw.api.web.payment.PaymentInstrumentFactory.getCashPaymentInstrument(),
+    gw.api.web.payment.PaymentInstrumentFactory.getCheckPaymentInstrument()
+  }
+  return instruments
+}]]></Code>
+  </Screen>
+</PCF>

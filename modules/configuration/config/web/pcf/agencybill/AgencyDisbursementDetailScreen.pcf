@@ -1,0 +1,77 @@
+<?xml version="1.0"?>
+<PCF
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:noNamespaceSchemaLocation="../../../../../pcf.xsd">
+  <Screen
+    id="AgencyDisbursementDetailScreen">
+    <Require
+      name="disbursementVar"
+      type="AgencyDisbursement"/>
+    <Variable
+      initialValue="util.DateUtil.currentDate()"
+      name="today"/>
+    <Variable
+      initialValue="perm.Transaction.disbpayeeedit"
+      name="CanEditDisbursementPayee"
+      type="Boolean"/>
+    <Require
+      name="payCommissionReference"
+      type="boolean[]"/>
+    <Require
+      name="invoiceItems"
+      type="List&lt;InvoiceItem&gt;"/>
+    <Require
+      name="fromCreditItems"
+      type="boolean"/>
+    <Toolbar>
+      <WizardButtons/>
+    </Toolbar>
+    <DetailViewPanel
+      id="AgencyDisbursementDV">
+      <InputColumn>
+        <Label
+          label="displaykey.Web.AgencyDisbursementDetailScreen.Details"/>
+        <Input
+          id="producer"
+          label="displaykey.Web.AgencyDisbursementDetailScreen.Producer"
+          value="disbursementVar.Producer"/>
+        <MonetaryAmountInput
+          align="right"
+          currency="disbursementVar.Currency"
+          formatType="currency"
+          id="unapplied"
+          label="displaykey.Web.AgencyDisbursementDetailScreen.ProducerUnapplied"
+          value="disbursementVar.Producer.UnappliedAmount"/>
+        <MonetaryAmountInput
+          align="right"
+          currency="disbursementVar.Currency"
+          formatType="currency"
+          id="pending"
+          label="displaykey.Web.AgencyDisbursementDetailScreen.DisbursementsPending"
+          value="disbursementVar.Producer.PendingDisbursement"/>
+      </InputColumn>
+    </DetailViewPanel>
+    <DetailViewPanel
+      id="DisbursementMethodDV"
+      visible="fromCreditItems">
+      <InputColumn>
+        <Label
+          label="displaykey.Web.AgencyDisbursementDetailScreen.DisbursementSectionLabel"/>
+        <RangeRadioInput
+          editable="true"
+          id="payCommission"
+          label="displaykey.Web.AgencyDisbursementDetailScreen.DisburseLabel"
+          optionLabel="VALUE ? displaykey.Web.AgencyDisbursementDetailScreen.DisburseNetValue : displaykey.Web.AgencyDisbursementDetailScreen.DisburseGrossValue"
+          sortValueRange="false"
+          stacked="true"
+          value="payCommissionReference[0]"
+          valueRange="new Boolean[] {true, false}">
+          <PostOnChange
+            onChange="disbursementVar.Amount = disbursementVar.computeDisbursementAmount( invoiceItems,  payCommissionReference[0])"/>
+        </RangeRadioInput>
+      </InputColumn>
+    </DetailViewPanel>
+    <PanelRef
+      def="CreateDisbursementDetailDV(disbursementVar, !fromCreditItems)"/>
+  </Screen>
+</PCF>

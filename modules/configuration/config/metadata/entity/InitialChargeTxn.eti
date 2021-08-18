@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<subtype
+  xmlns="http://guidewire.com/datamodel"
+  entity="InitialChargeTxn"
+  desc="Issued when a new charge is added to a policy or account. For immediate charges, adds the charge amount to the charge type's &quot;Revenue&quot; and &quot;Unbilled&quot; T-Accounts. For pass-through charges, additionally adds the charge amount to the charge type's &quot;Expense&quot; and &quot;Reserve&quot; T-Accounts. For pro-rata charges, adds the charge amount to the charge type's &quot;Unearned&quot; and &quot;Unbilled&quot; T-Accounts."
+  displayName="Initial Charge"
+  subpackage="accounting.transaction"
+  supertype="ChargeInstanceTxn">
+  <monetaryamount
+    name="CommissionAmount"
+    amountColumnName="CommissionAmount"
+    desc="The total commission percentage of this transaction."
+    scaleToCurrency="true"
+    nullok="false"
+    soapnullok="true"
+    setterScriptability="doesNotExist">
+    <tag name="DefaultValueZero"/>
+  </monetaryamount>
+</subtype>

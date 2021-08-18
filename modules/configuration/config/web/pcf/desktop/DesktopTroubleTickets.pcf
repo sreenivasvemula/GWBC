@@ -1,0 +1,111 @@
+<?xml version="1.0"?>
+<PCF
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:noNamespaceSchemaLocation="../../../../../pcf.xsd">
+  <Page
+    canEdit="true"
+    canVisit="perm.System.myttktview and perm.System.viewdesktop"
+    id="DesktopTroubleTickets"
+    title="displaykey.Web.DesktopTroubleTickets">
+    <LocationEntryPoint
+      signature="DesktopTroubleTickets()"/>
+    <Variable
+      initialValue="User.util.CurrentUser.TroubleTickets"
+      name="troubleTickets"
+      type="TroubleTicketQuery"/>
+    <Screen
+      id="DesktopTroubleTicketsScreen">
+      <TitleBar
+        appendListViewPaging="true"
+        title="displaykey.Web.DesktopTroubleTickets"/>
+      <Toolbar>
+        <ToolbarDivider/>
+        <CheckedValuesToolbarButton
+          allCheckedRowsAction="AssignTroubleTicketsPopup.push(new web.troubleticket.TroubleTicketAssignmentPopup(CheckedValues))"
+          id="DesktopTroubleTickets_AssignButton"
+          iterator="DesktopTroubleTicketsLV"
+          label="displaykey.Web.DesktopTroubleTickets.Assign"
+          shortcut="A"
+          visible="perm.System.ttktassignown"/>
+        <ToolbarDivider/>
+        <CheckedValuesToolbarButton
+          checkedRowAction="CheckedValue.close()"
+          confirmMessage="displaykey.Web.DesktopTroubleTickets.ConfirmClose"
+          id="DesktopTroubleTickets_CloseButton"
+          iterator="DesktopTroubleTicketsLV"
+          label="displaykey.Button.Close"
+          shortcut="O"/>
+        <ToolbarDivider/>
+        <ToolbarButton
+          action="CreateTroubleTicketWizard.push(null)"
+          id="NewTroubleTicket"
+          label="displaykey.Web.DesktopTroubleTickets.NewButton"
+          visible="perm.TroubleTicket.create"/>
+      </Toolbar>
+      <ListViewPanel
+        id="DesktopTroubleTicketsLV">
+        <RowIterator
+          editable="false"
+          elementName="troubleTicket"
+          hasCheckBoxes="true"
+          value="troubleTickets">
+          <ToolbarFilter
+            name="Filter">
+            <ToolbarFilterOption
+              filter="new gw.api.util.CoreFilters.AllFilter()"/>
+            <ToolbarFilterOption
+              filter="new web.troubleticket.TroubleTicketListFilterSet.AllOpen()"
+              selectOnEnter="true"/>
+            <ToolbarFilterOption
+              filter="new web.troubleticket.TroubleTicketListFilterSet.AllOpenedThisWeek()"/>
+            <ToolbarFilterOption
+              filter="new web.troubleticket.TroubleTicketListFilterSet.AllOpenUrgent()"/>
+            <ToolbarFilterOption
+              filter="new web.troubleticket.TroubleTicketListFilterSet.AllOpenLastYear()"/>
+            <ToolbarFilterOption
+              filter="new web.troubleticket.TroubleTicketListFilterSet.AllClosedInLast30Days()"/>
+            <ToolbarFilterOption
+              filter="new web.troubleticket.TroubleTicketListFilterSet.AllClosedLastYear()"/>
+          </ToolbarFilter>
+          <Row>
+            <Cell
+              icon="&quot;escalated.png&quot;"
+              iconLabel="displaykey.Web.TroubleTicketsLV.EscalatedIconLabel"
+              id="Escalated"
+              tooltip="displaykey.Web.TroubleTicketsLV.EscalatedIconLabel"
+              value="troubleTicket.Escalated"/>
+            <Cell
+              action="TroubleTicketDetailsPopup.push(troubleTicket)"
+              enableSort="false"
+              id="Number"
+              label="displaykey.Web.TroubleTicketsLV.TicketNumber"
+              sortOrder="1"
+              value="troubleTicket.TroubleTicketNumber"/>
+            <DateCell
+              id="CreateTime"
+              label="displaykey.Web.TroubleTicketsLV.DateOpened"
+              value="troubleTicket.CreateTime"/>
+            <DateCell
+              fontColor="troubleTicket.Overdue == true ? &quot;Red&quot; : &quot;&quot;"
+              id="DueDate"
+              label="displaykey.Web.TroubleTicketsLV.DueDate"
+              value="troubleTicket.TargetDate"/>
+            <TypeKeyCell
+              id="Priority"
+              label="displaykey.Web.TroubleTicketsLV.Priority"
+              value="troubleTicket.Priority"/>
+            <Cell
+              id="Status"
+              label="displaykey.Web.TroubleTicketsLV.Status"
+              sortBy="troubleTicket.closeDate"
+              value="troubleTicket.TicketStatus"/>
+            <Cell
+              id="Title"
+              label="displaykey.Web.TroubleTicketsLV.Subject"
+              value="troubleTicket.Title"/>
+          </Row>
+        </RowIterator>
+      </ListViewPanel>
+    </Screen>
+  </Page>
+</PCF>

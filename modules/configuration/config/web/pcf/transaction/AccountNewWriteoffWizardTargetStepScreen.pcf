@@ -1,0 +1,85 @@
+<?xml version="1.0"?>
+<PCF
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:noNamespaceSchemaLocation="../../../../../pcf.xsd">
+  <Screen
+    id="AccountNewWriteoffWizardTargetStepScreen">
+    <Require
+      name="account"
+      type="Account"/>
+    <Require
+      name="targetOfWriteoff"
+      type="web.accounting.TAccountOwnerReference"/>
+    <Toolbar>
+      <WizardButtons/>
+    </Toolbar>
+    <DetailViewPanel
+      id="TransferSourceDV">
+      <InputColumn>
+        <Input
+          boldLabel="true"
+          id="SourceAccount"
+          label="displaykey.Web.AccountNewWriteoffWizardTargetStepScreen.Account"
+          value="targetOfWriteoff.TAccountOwner typeis Account ? targetOfWriteoff : null"/>
+        <Input
+          boldLabel="true"
+          id="SourcePolicy"
+          label="displaykey.Web.AccountNewWriteoffWizardTargetStepScreen.Policy"
+          value="targetOfWriteoff.TAccountOwner typeis PolicyPeriod ? targetOfWriteoff : null"/>
+        <InputDivider/>
+        <ListViewInput
+          boldLabel="true"
+          label="displaykey.Web.AccountNewWriteoffWizardTargetStepScreen.SelectTarget"
+          labelAbove="true">
+          <Toolbar>
+            <ToolbarButton
+              action="setAccountAsTargetOfWriteoff()"
+              id="AccountTAccountOwner"
+              label="displaykey.Web.AccountNewWriteoffWizardTargetStepScreen.AccountTAccountOwner.Button"/>
+          </Toolbar>
+          <ListViewPanel
+            id="AccountPolicyPeriodsLV">
+            <RowIterator
+              editable="false"
+              elementName="policyPeriod"
+              value="account.OpenPolicyPeriods">
+              <Row>
+                <LinkCell
+                  id="SelectCell"
+                  label="displaykey.Web.AccountPolicyPeriodsLV.Select">
+                  <Link
+                    action="setPolicyAsTargetOfWriteoff( policyPeriod )"
+                    available="perm.Transaction.plcywo"
+                    id="Select"
+                    label="displaykey.Web.AccountPolicyPeriodsLV.Select"
+                    styleClass="miniButton"/>
+                </LinkCell>
+                <Cell
+                  id="Number"
+                  label="displaykey.Web.AccountPolicyPeriodsLV.PolicyNumber"
+                  sortBy="policyPeriod.PolicyNumber"
+                  sortOrder="1"
+                  value="policyPeriod.DisplayName"/>
+                <DateCell
+                  id="PolicyPerEffDate"
+                  label="displaykey.Web.AccountPolicyPeriodsLV.PolicyPerEffDate"
+                  value="policyPeriod.PolicyPerEffDate"/>
+                <DateCell
+                  id="PolicyPerExpirDate"
+                  label="displaykey.Web.AccountPolicyPeriodsLV.PolicyPerExpirDate"
+                  value="policyPeriod.PolicyPerExpirDate"/>
+              </Row>
+            </RowIterator>
+          </ListViewPanel>
+        </ListViewInput>
+      </InputColumn>
+    </DetailViewPanel>
+    <Code><![CDATA[function setAccountAsTargetOfWriteoff() {
+  targetOfWriteoff.TAccountOwner = account
+}
+
+function setPolicyAsTargetOfWriteoff(policyPeriod : PolicyPeriod) {
+  targetOfWriteoff.TAccountOwner = policyPeriod
+}]]></Code>
+  </Screen>
+</PCF>

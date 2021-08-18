@@ -1,0 +1,38 @@
+<?xml version="1.0"?>
+<!-- ====================================================================  PaymentMoneyReceived  ==================================================================== -->
+<subtype
+  xmlns="http://guidewire.com/datamodel"
+  desc="Money received from an external source as a payment."
+  entity="DirectBillMoneyRcvd"
+  subpackage="payment"
+  supertype="PaymentMoneyReceived">
+  <foreignkey
+    columnName="AccountID"
+    desc="Reference to the paying Account."
+    fkentity="Account"
+    name="Account"
+    nullok="false"
+    setterScriptability="doesNotExist"/>
+  <foreignkey
+    columnName="PolicyPeriodID"
+    desc="Reference to the PolicyPeriod to target during initial distribution."
+    fkentity="PolicyPeriod"
+    importableagainstexistingobject="false"
+    name="PolicyPeriod"
+    nullok="true"/>
+  <foreignkey
+    columnName="InvoiceID"
+    desc="Reference to the Invoice to target during initial distribution."
+    fkentity="Invoice"
+    importableagainstexistingobject="false"
+    name="Invoice"
+    nullok="true"/>
+  <foreignkey
+    columnName="UnappliedFundID"
+    desc="The UnappliedFund associated with this money received"
+    exportable="false"
+    fkentity="UnappliedFund"
+    importableagainstexistingobject="false"
+    name="UnappliedFund"
+    nullok="false"/>
+</subtype>

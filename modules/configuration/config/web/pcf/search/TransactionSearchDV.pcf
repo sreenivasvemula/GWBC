@@ -1,0 +1,68 @@
+<?xml version="1.0"?>
+<PCF
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:noNamespaceSchemaLocation="../../../../../pcf.xsd">
+  <DetailViewPanel
+    id="TransactionSearchDV">
+    <Require
+      name="searchCriteria"
+      type="TransactionSearchCrit"/>
+    <InputColumn>
+      <Label
+        id="SearchCriteria"
+        label="displaykey.Web.TransactionSearchDV.SearchCriteria"/>
+      <Input
+        editable="true"
+        id="TransactionNumberCriterion"
+        label="displaykey.Web.TransactionSearchDV.TransactionNumber"
+        value="searchCriteria.TransactionNumber"/>
+      <RangeInput
+        editable="true"
+        id="TransactionTypeCriterion"
+        label="displaykey.Web.TransactionSearchDV.TransactionType"
+        value="searchCriteria.TransactionType"
+        valueRange="web.transaction.TransactionUtil.getNonAbstractTypes()"/>
+      <DateInput
+        editable="true"
+        id="EarliestDateCriterion"
+        label="displaykey.Web.TransactionSearchDV.EarliestDate"
+        value="searchCriteria.EarliestDate"/>
+      <DateInput
+        editable="true"
+        id="LatestDateCriterion"
+        label="displaykey.Web.TransactionSearchDV.LatestDate"
+        value="searchCriteria.LatestDate"/>
+      <TypeKeyInput
+        editable="true"
+        id="CurrencyCriterion"
+        label="displaykey.Web.ProducerSearchDV.Currency"
+        value="searchCriteria.Currency"
+        visible="gw.api.util.CurrencyUtil.isMultiCurrencyMode()">
+        <PostOnChange
+          onChange="blankMinimumAndMaximumFields()"/>
+      </TypeKeyInput>
+      <MonetaryAmountInput
+        available="(searchCriteria.Currency != null or gw.api.util.CurrencyUtil.isSingleCurrencyMode())"
+        currency="gw.search.SearchHelper.getDefaultCurrencyIfNull(searchCriteria.Currency)"
+        editable="true"
+        id="MinAmountCriterion"
+        label="displaykey.Web.TransactionSearchDV.MinAmount"
+        value="searchCriteria.MinAmount"/>
+      <MonetaryAmountInput
+        available="(searchCriteria.Currency != null or gw.api.util.CurrencyUtil.isSingleCurrencyMode())"
+        currency="gw.search.SearchHelper.getDefaultCurrencyIfNull(searchCriteria.Currency)"
+        editable="true"
+        id="MaxAmountCriterion"
+        label="displaykey.Web.TransactionSearchDV.MaxAmount"
+        value="searchCriteria.MaxAmount"/>
+    </InputColumn>
+    <InputFooterSection>
+      <InputSetRef
+        def="SearchAndResetInputSet()"/>
+    </InputFooterSection>
+    <Code><![CDATA[function blankMinimumAndMaximumFields() {
+  searchCriteria.MinAmount = null
+  searchCriteria.MaxAmount = null
+}]]></Code>
+  </DetailViewPanel>
+</PCF>

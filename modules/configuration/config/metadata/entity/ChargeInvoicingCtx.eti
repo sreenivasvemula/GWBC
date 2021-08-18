@@ -1,0 +1,33 @@
+<?xml version="1.0"?>
+<subtype
+  xmlns="http://guidewire.com/datamodel"
+  desc="Context for charge invoicing transactions"
+  entity="ChargeInvoicingCtx"
+  subpackage="accounting.transaction"
+  supertype="ChargeInstanceCtx">
+  <foreignkey
+    columnName="InvoiceItemID"
+    fkentity="InvoiceItem"
+    getterScriptability="hidden"
+    ignoreforevents="true"
+    name="InvoiceItem"
+    nullok="false"
+    setterScriptability="hidden"/>
+  <index
+    desc="For performance on summing ChargePaids by list of Charges"
+    name="chargepaidsum"
+    unique="true">
+    <indexcol
+      keyposition="1"
+      name="InvoiceItemID"/>
+    <indexcol
+      keyposition="2"
+      name="Retired"/>
+    <indexcol
+      keyposition="3"
+      name="Subtype"/>
+    <indexcol
+      keyposition="4"
+      name="TransactionID"/>
+  </index>
+</subtype>

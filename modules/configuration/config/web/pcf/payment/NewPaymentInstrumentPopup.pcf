@@ -1,0 +1,91 @@
+<?xml version="1.0"?>
+<PCF
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:noNamespaceSchemaLocation="../../../../../pcf.xsd">
+  <Popup
+    beforeCommit="handleOneTime()"
+    canEdit="true"
+    id="NewPaymentInstrumentPopup"
+    returnType="PaymentInstrument"
+    startInEditMode="true"
+    title="displaykey.Web.NewPaymentInstrument.Title">
+    <LocationEntryPoint
+      signature="NewPaymentInstrumentPopup(paymentMethodOptions : List&lt;PaymentMethod&gt;, oneTimeIsEditable : boolean)"/>
+    <LocationEntryPoint
+      signature="NewPaymentInstrumentPopup(paymentMethodOptions : List&lt;PaymentMethod&gt;,account : Account, oneTimeIsEditable : boolean)"/>
+    <LocationEntryPoint
+      signature="NewPaymentInstrumentPopup(paymentMethodOptions : List&lt;PaymentMethod&gt;, producer : Producer, oneTimeIsEditable : boolean)"/>
+    <Variable
+      initialValue="new PaymentInstrument()"
+      name="paymentInstrument"
+      type="PaymentInstrument"/>
+    <Variable
+      name="paymentMethodOptions"
+      type="List&lt;PaymentMethod&gt;"/>
+    <Variable
+      name="account"
+      type="Account"/>
+    <Variable
+      name="producer"
+      type="Producer"/>
+    <Variable
+      name="oneTimeIsEditable"
+      type="boolean"/>
+    <Variable
+      initialValue="initializeOneTime()"
+      name="oneTime"
+      type="boolean"/>
+    <Screen>
+      <Toolbar>
+        <EditButtons
+          editVisible="false"
+          pickValue="paymentInstrument"/>
+      </Toolbar>
+      <DetailViewPanel>
+        <InputColumn>
+          <RangeInput
+            editable="true"
+            id="PaymentMethod"
+            label="displaykey.Web.NewPaymentInstrument.Method"
+            required="true"
+            value="paymentInstrument.PaymentMethod"
+            valueRange="paymentMethodOptions">
+            <PostOnChange/>
+          </RangeInput>
+          <Input
+            editable="true"
+            id="Token"
+            label="displaykey.Web.NewPaymentInstrument.Token"
+            required="false"
+            value="paymentInstrument.Token"/>
+          <CheckBoxInput
+            available="oneTimeIsEditable"
+            editable="true"
+            id="OneTime"
+            label="displaykey.Web.NewPaymentInstrument.OneTime"
+            required="false"
+            value="oneTime"/>
+        </InputColumn>
+      </DetailViewPanel>
+    </Screen>
+    <Code><![CDATA[function initializeOneTime() : boolean {
+    var initialOneTimeValue = false
+    if (!oneTimeIsEditable && (account == null && producer == null)) {
+        initialOneTimeValue = true
+    }  
+    return initialOneTimeValue
+}
+
+function handleOneTime() {
+  if (!oneTime) {
+    if (account != null) {
+      paymentInstrument.Account = account
+    } else if (producer != null) {
+      paymentInstrument.Producer = producer
+    } else {
+      throw displaykey.Web.NewPaymentInstrument.OneTime.Error
+    }
+  }
+}]]></Code>
+  </Popup>
+</PCF>

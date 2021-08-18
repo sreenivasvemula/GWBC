@@ -1,0 +1,38 @@
+<?xml version="1.0"?>
+<PCF
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:noNamespaceSchemaLocation="../../../../../pcf.xsd">
+  <InputSet
+    id="NewTemplateDocumentInputSet"
+    mode="default">
+    <Require
+      name="documentCreationInfo"
+      type="gw.document.DocumentCreationInfo"/>
+    <Require
+      name="document"
+      type="Document"/>
+    <Require
+      name="documentContainer"
+      type="DocumentContainer"/>
+    <Require
+      name="dynamicWidgetInfo"
+      type="gw.document.DocumentCreationInfo.DynamicWidgetInfo"/>
+    <RangeInput
+      editable="true"
+      id="DynamicInput"
+      label="dynamicWidgetInfo.DisplayName"
+      optionLabel="getLabel(VALUE)"
+      required="!dynamicWidgetInfo.ShowNoneSelected"
+      value="documentCreationInfo.ContextObjectValueMap[dynamicWidgetInfo.Name]"
+      valueRange="documentCreationInfo.getPossibleContextObjectValues(dynamicWidgetInfo.Name)"
+      visible="true"/>
+    <Code><![CDATA[
+function getLabel(value : Object) : String {
+  var typeinfo = (typeof value).TypeInfo
+  var name = ((typeinfo.getProperty("Name") == null) ? value : value["Name"]) 
+  var displayName = ((typeinfo.getProperty("DisplayName") == null) ? name : value["DisplayName"]) as String
+  return value == null ? null : displayName
+}
+    ]]></Code>
+  </InputSet>
+</PCF>

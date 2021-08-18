@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PCF
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:noNamespaceSchemaLocation="../../../../../pcf.xsd">
+  <Forward
+    action="ActivityDetailWorksheet.goInWorkspace(activity)"
+    id="ActivityDetailForward"
+    onBeforeForward="gw.api.web.activity.ActivityUtil.markActivityAsViewed(activity)">
+    <LocationEntryPoint
+      signature="ActivityDetailForward(activity : Activity)"/>
+    <Variable
+      name="activity"
+      type="Activity"/>
+  </Forward>
+</PCF>

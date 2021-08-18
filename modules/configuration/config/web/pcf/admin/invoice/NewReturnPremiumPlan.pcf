@@ -1,0 +1,29 @@
+<?xml version="1.0"?>
+<PCF
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:noNamespaceSchemaLocation="../../../../../../pcf.xsd">
+  <Page
+    afterCancel="ReturnPremiumPlans.go()"
+    afterCommit="ReturnPremiumPlans.go()"
+    canEdit="true"
+    canVisit="perm.System.admintabview and perm.System.retpremplancreate"
+    id="NewReturnPremiumPlan"
+    parent="ReturnPremiumPlans()"
+    showUpLink="true"
+    startInEditMode="true"
+    title="displaykey.Web.NewReturnPremiumPlan.Title">
+    <LocationEntryPoint
+      signature="NewReturnPremiumPlan()"/>
+    <Variable
+      initialValue="initReturnPremiumPlan()"
+      name="returnPremiumPlan"
+      type="ReturnPremiumPlan"/>
+    <ScreenRef
+      def="ReturnPremiumPlanDetailScreen(returnPremiumPlan)"/>
+    <Code><![CDATA[function initReturnPremiumPlan() : ReturnPremiumPlan {
+    var newReturnPremiumPlan = new ReturnPremiumPlan(CurrentLocation)
+    newReturnPremiumPlan.EffectiveDate = util.DateUtil.currentDate()
+    return newReturnPremiumPlan
+}]]></Code>
+  </Page>
+</PCF>

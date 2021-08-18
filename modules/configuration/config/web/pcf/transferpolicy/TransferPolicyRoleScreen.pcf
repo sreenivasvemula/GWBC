@@ -1,0 +1,47 @@
+<?xml version="1.0"?>
+<PCF
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:noNamespaceSchemaLocation="../../../../../pcf.xsd">
+  <Screen
+    id="TransferPolicyRoleScreen">
+    <Require
+      name="policyTransfer"
+      type="PolTransferByRole"/>
+    <Toolbar>
+      <WizardButtons/>
+    </Toolbar>
+    <DetailViewPanel
+      id="TransferPolicyRoleDV">
+      <InputColumn>
+        <Label
+          label="displaykey.Web.TransferPolicyProducer.SourceProducerCode"/>
+        <TypeKeyInput
+          editable="true"
+          filter="not policyTransfer.PolicyPeriod.AgencyBill || PolicyRole.TC_PRIMARY != null"
+          id="Role"
+          label="displaykey.Web.TransferPolicyProducer.Role"
+          value="policyTransfer.RoleToTransfer">
+          <PostOnChange
+            target="DATA_ONLY"/>
+        </TypeKeyInput>
+        <Input
+          id="Producer"
+          label="displaykey.Web.TransferPolicyProducer.Producer"
+          value="getCurrentProducer(policyTransfer.RoleToTransfer)"/>
+        <Input
+          id="Code"
+          label="displaykey.Web.TransferPolicyProducer.Code"
+          value="getCurrentCode(policyTransfer.RoleToTransfer)"/>
+      </InputColumn>
+    </DetailViewPanel>
+    <Code><![CDATA[function getCurrentProducer(role : PolicyRole) : String {
+  var currentProducer = policyTransfer.PolicyPeriod.getDefaultProducerCodeForRole(role)
+  return (currentProducer == null) ? displaykey.Web.TransferPolicyProducer.None : currentProducer.Producer.DisplayName
+}
+
+function getCurrentCode(role : PolicyRole) : String {
+  var currentProducer = policyTransfer.PolicyPeriod.getDefaultProducerCodeForRole(role)
+  return (currentProducer == null) ? displaykey.Web.TransferPolicyProducer.None : currentProducer.Code
+}]]></Code>
+  </Screen>
+</PCF>

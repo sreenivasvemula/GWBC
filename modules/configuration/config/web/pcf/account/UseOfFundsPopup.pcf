@@ -1,0 +1,30 @@
+<?xml version="1.0"?>
+<PCF
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:noNamespaceSchemaLocation="../../../../../pcf.xsd">
+  <Popup
+    id="UseOfFundsPopup"
+    title="displaykey.Web.UseOfFundsPopup.Title">
+    <LocationEntryPoint
+      signature="UseOfFundsPopup(fundsUseTracker :  FundsUseTracker)"/>
+    <Variable
+      name="fundsUseTracker"
+      type="FundsUseTracker"/>
+    <Screen>
+      <DetailViewPanel>
+        <InputColumn>
+          <TextInput
+            action="fundsUseTracker.openTrackableDetails()"
+            actionAvailable="fundsUseTracker.TypeBeingTracked != FundsUseType.TC_UNAPPLIEDFUND"
+            boldValue="true"
+            id="source"
+            value="displaykey.Web.FundsUse.LongDescription(fundsUseTracker.Description, fundsUseTracker.EventDate.format(&quot;short&quot;), fundsUseTracker.TotalAmount.render())"/>
+        </InputColumn>
+      </DetailViewPanel>
+      <PanelRef
+        def="FundsAllotmentLV(fundsUseTracker)">
+        <Toolbar/>
+      </PanelRef>
+    </Screen>
+  </Popup>
+</PCF>

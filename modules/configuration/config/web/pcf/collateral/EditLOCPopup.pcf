@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PCF
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:noNamespaceSchemaLocation="../../../../../pcf.xsd">
+  <Popup
+    autosaveable="true"
+    canEdit="true"
+    countsAsWork="true"
+    id="EditLOCPopup"
+    startInEditMode="true"
+    title="displaykey.Web.EditLOCPopup.Title"
+    validateOnBundleCommit="true">
+    <LocationEntryPoint
+      signature="EditLOCPopup(loc:LetterOfCredit)"/>
+    <Variable
+      name="loc"
+      recalculateOnRefresh="false"
+      type="LetterOfCredit"/>
+    <Screen
+      id="EditLOCScreen">
+      <Toolbar>
+        <EditButtons
+          cancelShortcut="L"
+          editShortcut="E"
+          showUpdateConfirmMessage="true"
+          updateShortcut="U"/>
+      </Toolbar>
+      <PanelRef
+        def="LOCDV(loc)"/>
+    </Screen>
+  </Popup>
+</PCF>

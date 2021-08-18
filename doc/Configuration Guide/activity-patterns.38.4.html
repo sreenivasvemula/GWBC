@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xml:lang="en" lang="en" xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+    <meta http-equiv="Content-Style-Type" content="text/css" />
+    <!-- MOTW-DISABLED saved from url=(0014)about:internet -->
+    <title>Using Activity Patterns in Gosu</title>
+    <link rel="StyleSheet" href="css/activity-patterns.css" type="text/css" media="all" />
+    <link rel="StyleSheet" href="css/webworks.css" type="text/css" media="all" />
+    <link rel="StyleSheet" href="css/css-guidewire-extra.css" type="text/css" media="all" />
+    <script type="text/javascript" language="JavaScript1.2" src="wwhdata/common/context.js"></script>
+    <script type="text/javascript" language="JavaScript1.2" src="wwhdata/common/towwhdir.js"></script>
+    <script type="text/javascript" language="JavaScript1.2" src="wwhdata/common/wwhpagef.js"></script>
+    <script type="text/javascript" language="JavaScript1.2">
+      <!--
+        var  WebWorksRootPath = "";
+      // -->
+    </script>
+    <script type="text/javascript" language="JavaScript1.2">
+      <!--
+        // Set reference to top level help frame
+        //
+        var  WWHFrame = WWHGetWWHFrame("", true);
+      // -->
+    </script>
+    <script type="text/javascript" language="JavaScript1.2" src="scripts/expand.js"></script>
+    <!-- THE FOLLOWING IS A GUIDEWIRE STYLE DEFINITION FOR THE LINK TO THIS FEATURE -->
+    <link rel="StyleSheet" href="css/css-guidewire-extra.css" type="text/css" media="all" />
+    <!-- THE FOLLOWING IS A GUIDEWIRE GSCRIPT FUNCTION FOR THE LINK TO THIS FEATURE -->
+    <script type="text/javascript">
+function guidewire_selectall()
+{
+var text_val=eval("document.linktothisurlform.urlfield");
+text_val.focus();
+text_val.select();
+}
+</script>
+  </head>
+  <body onLoad="WWHUpdate();" onUnload="WWHUnload();" onKeyDown="WWHHandleKeyDown((document.all||document.getElementById||document.layers)?event:null);" onKeyPress="WWHHandleKeyPress((document.all||document.getElementById||document.layers)?event:null);" onKeyUp="WWHHandleKeyUp((document.all||document.getElementById||document.layers)?event:null);">
+    <!-- THE FOLLOWING IS A GUIDEWIRE DIV FOR THE 'LINK TO THIS' FEATURE -->
+    <div id="linkToThisPage" class="popup" style="display: none;">
+      <div class="popupTitle">Link Directly to This Page 
+           <a href="#" onclick="var thePopup = getElementById('linkToThisPage');thePopup.style.display='none';return false;"><img class="popupClosebox" src="wwhelp/wwhimpl/common/images/close.gif" /></a></div>
+      <div style="padding:6px;">
+        <div class="popupText" id="linkToThisPageBookmark">An error has occurred if you see this messsage.</div>
+        <form name="linktothisurlform" method="post" action="" style="width:275px;margin:0px">
+          <input type="text" class="popupURLText" id="linkToThisPageURL" name="urlfield" rows="1" cols="55" onClick="guidewire_selectall();" onFocus="guidewire_selectall();"></input>
+        </form>
+      </div>
+    </div>
+    <br />
+    <div class="WebWorks_Breadcrumbs" style="text-align: left;">
+      <span>BillingCenter Configuration Guide</span> : 
+    <span class="WebWorks_Breadcrumbs" style="text-align: left;"><a class="WebWorks_Breadcrumb_Link" href="p-workflow.html#1969727">Workflow and Activity Configuration</a> : <a class="WebWorks_Breadcrumb_Link" href="activity-patterns.38.1.html#1969727">Defining Activity Patterns</a> : Using Activity Patterns in Gosu</span></div>
+    <hr align="left" />
+    <blockquote>
+      <h3 class="H1_-_Heading_1"><a name="1969727">Using Activity Patterns in Gosu</a></h3>
+      <div class="B_-_Body"><a name="2160638">An activity pattern is a group of properties used to initialize a newly-created activity. The activity pattern acts as a starting template from which activity properties are initialized.</a></div>
+      <div class="N_-_Note">
+        <span class="n_-_note">Note: </span><a name="2160639">Activity patterns can also be used to initialize shared activities (that is, activities having no single owner). This section improves readability by referring only to activities. However, all operations and behaviors of activity patterns apply equally to shared activities.</a></div>
+      <div class="B_-_Body"><a name="2160640">When an activity is created, it can optionally be associated with an activity pattern. If associated with a pattern, the property settings of the activity are initialized to the settings defined in the pattern.</a></div>
+      <div class="B_-_Body"><a name="2160641">The use of an activity pattern is optional. Alternatively, the properties of an activity can be set individually, without the use of an activity pattern. An activity pattern is simply a convenient method of initializing activity properties to common default values.</a></div>
+      <div class="B_-_Body"><a name="2160642">Each activity can be associated with one activity pattern. Multiple activity objects may be initialized using the same activity pattern.</a></div>
+      <div class="B_-_Body"><a name="2160643">Activity patterns are created in the BillingCenter application. Each activity pattern is identified by a unique text string stored in the object’s </a><span class="cv_-_computer_voice">Code</span> property.</div>
+      <div class="B_-_Body"><a name="2160644">Gosu code can retrieve an existing activity pattern by referencing the pattern’s unique </a><span class="cv_-_computer_voice">Code</span> property. The retrieved pattern can then be associated with an activity to initialize the activity’s properties, as demonstrated in the following code segment.</div>
+      <PRE class="CF_-_Code_First_Line"><a name="2160645">/* Functional method to retrieve an activity pattern */</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2160646">var act = new Activity()</a></PRE>
+      <PRE class="CL_-_Code_Last_Line"><a name="2160647">act.ActivityPattern = gw.api.web.admin.ActivityPatternsUtil.getActivityPattern( “approval” )</a></PRE>
+      <div class="B_-_Body"><a name="2160648">An equivalent, but best practice, method to retrieve the activity pattern is to isolate the call to the </a><span class="cv_-_computer_voice">getActivityPattern</span> method in a Gosu enhancement, as shown below.</div>
+      <PRE class="CF_-_Code_First_Line"><a name="2160649">/* Best practice method to retrieve an activity pattern */</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2160650">/* Define an enhancement to retrieve the pattern */</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2160651">enhancement getActivityPatternByCode( code : String ) : ActivityPattern {</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2160652">&nbsp;&nbsp;var activityPattern = gw.api.web.admin.ActivityPatternsUtil.getActivityPattern( code )</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2160653">&nbsp;&nbsp;return activityPattern</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2160654">}</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2160655">/* Call the enhancement to get the pattern */</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2160656">var act = new Activity()</a></PRE>
+      <PRE class="CL_-_Code_Last_Line"><a name="2160657">act.ActivityPattern = getActivityPatternByCode( “approval” )</a></PRE>
+      <div class="B_-_Body"><a name="2160658">After an activity has been initialized by a pattern, any of the activity properties set by the pattern can be reset to other values, as shown below.</a></div>
+      <PRE class="CF_-_Code_First_Line"><a name="2160659">/* Initialize an activity with a pattern (Uses the enhancement defined above) */</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2160660">/* Note: Assume the pattern sets the Priority property to Priority.TC_URGENT */</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2160661">act.ActivityPattern = getActivityPatternByCode( “approval” )</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2160662">/* Reset the Priority property to the desired value for this activity */</a></PRE>
+      <PRE class="CL_-_Code_Last_Line"><a name="2160663">act.Priority = Priority.TC_NORMAL</a></PRE>
+      <div class="B_-_Body"><a name="2160664">As mentioned earlier, an activity pattern can also be used to initialize a shared activity, as shown below.</a></div>
+      <PRE class="CF_-_Code_First_Line"><a name="2160665">/* Create a shared activity */</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2160666">var sharedAct = new SharedActivity()</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2160667">/* Initialize it with an activity pattern, using the enhancement defined above */</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2160668">sharedAct.ActivityPattern = getActivityPatternByCode( “approval” )</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2160669">/* Properties initialized by the pattern can be reset, just as with an Activity object */</a></PRE>
+      <PRE class="CL_-_Code_Last_Line"><a name="2160670">sharedAct.Priority = Priority.TC_LOW</a></PRE>
+      <script type="text/javascript" language="JavaScript1.2">
+        <!--
+          // Clear related topics
+          //
+          WWHClearRelatedTopics();
+
+          document.writeln(WWHRelatedTopicsInlineHTML());
+        // -->
+      </script>
+    </blockquote>
+    <script type="text/javascript" language="JavaScript1.2">
+      <!--
+        document.write(WWHRelatedTopicsDivTag() + WWHPopupDivTag() + WWHALinksDivTag());
+      // -->
+    </script>
+  </body>
+</html>

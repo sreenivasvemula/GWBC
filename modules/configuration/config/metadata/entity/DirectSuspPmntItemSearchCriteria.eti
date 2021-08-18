@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?><nonPersistentEntity xmlns="http://guidewire.com/datamodel" desc="Search criteria for direct bill suspense items" entity="DirectSuspPmntItemSearchCriteria" extendable="true" subpackage="search">
+  <implementsEntity name="NotInCurrencySilo"/>
+  <column desc="Earliest executed date to search" name="EarliestDate" nullok="true" type="datetime"/>
+  <column desc="Latest executed date to search" name="LatestDate" nullok="true" type="datetime"/>
+  <typekey desc="The currency unit to restrict the search to" name="Currency" nullok="true" typelist="Currency"/>
+  <monetaryamount amountColumnName="MinAmount" amountRange="nonnegative" desc="The minimum amount to search for" name="MinAmount" nullok="true" scaleToCurrency="true"/>
+  <monetaryamount amountColumnName="MaxAmount" amountRange="nonnegative" desc="The maximum amount to search for" name="MaxAmount" nullok="true" scaleToCurrency="true"/>
+</nonPersistentEntity>

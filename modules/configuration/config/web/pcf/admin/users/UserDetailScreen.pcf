@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PCF
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:noNamespaceSchemaLocation="../../../../../../pcf.xsd">
+  <Screen
+    id="UserDetailScreen">
+    <Require
+      name="User"
+      type="User"/>
+    <Toolbar>
+      <ToolbarButtonSetRef
+        toolbarButtonSet="UserDetailToolbarButtonSet(User)"/>
+    </Toolbar>
+    <CardViewPanel>
+      <Card
+        id="UserDetail_BasicCard"
+        title="displaykey.Web.Admin.UserDetail.Basic">
+        <PanelRef
+          def="UserDetailDV(User, false)">
+          <Toolbar/>
+        </PanelRef>
+      </Card>
+      <Card
+        id="UserDetail_AuthorityLimitsCard"
+        title="displaykey.Web.Admin.UserDetail.AuthorityLimits">
+        <PanelRef
+          def="UserAuthorityLimitsDV(User)">
+          <Toolbar/>
+        </PanelRef>
+      </Card>
+      <Card
+        id="UserDetail_ProfileCard"
+        title="displaykey.Web.Admin.UserDetail.Profile">
+        <PanelRef
+          def="UserProfileDV(User)">
+          <Toolbar/>
+        </PanelRef>
+      </Card>
+    </CardViewPanel>
+  </Screen>
+</PCF>

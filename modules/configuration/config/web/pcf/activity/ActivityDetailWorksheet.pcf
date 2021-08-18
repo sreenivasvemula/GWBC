@@ -1,0 +1,50 @@
+<?xml version="1.0"?>
+<PCF
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:noNamespaceSchemaLocation="../../../../../pcf.xsd">
+  <Worksheet
+    canEdit="activity.canEdit()"
+    id="ActivityDetailWorksheet"
+    startInEditMode="activity.canEdit()"
+    tabLabel="displaykey.Web.Activity.ActivityDetailTab"
+    title="displaykey.Web.Activity.ActivityDetailTitle">
+    <LocationEntryPoint
+      signature="ActivityDetailWorksheet(activity : Activity)"/>
+    <Scope
+      location="AccountGroup(getAccountForAccountGroupLocation())"/>
+    <Scope
+      location="ActivitySearch()"/>
+    <Scope
+      location="DelinquencyProcessDetailPopup(activity.DelinquencyProcess)"/>
+    <Scope
+      location="DesktopGroup()"/>
+    <Scope
+      location="TroubleTicketDetailsPopup(activity.TroubleTicket)"/>
+    <Scope
+      location="PolicyGroup(getPolicyPeriodForPolicyGroupLocation())"/>
+    <Variable
+      name="activity"
+      type="Activity"/>
+    <Variable
+      initialValue="activity.InitialAssigneeForPicker"
+      name="assigneeHolder"
+      type="assignment.Assignee[]"/>
+    <ScreenRef
+      def="ActivityDetailScreen(activity, assigneeHolder)"/>
+    <Code><![CDATA[function getAccountForAccountGroupLocation() : Account {
+  if (activity typeis DisbApprActivity) {
+    var disbursementActivity = activity
+    if (disbursementActivity.Disbursement typeis AccountDisbursement) {
+      return disbursementActivity.Disbursement.Account
+    } else if (disbursementActivity.Disbursement typeis CollateralDisbursement) {
+      return disbursementActivity.Disbursement.Collateral.Account
+    }
+  }
+  return activity.DelinquencyProcess.Account  
+}
+
+function getPolicyPeriodForPolicyGroupLocation() : PolicyPeriod {
+  return (activity.DelinquencyProcess as PolicyDlnqProcess).PolicyPeriod
+}]]></Code>
+  </Worksheet>
+</PCF>

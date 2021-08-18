@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?><entity xmlns="http://guidewire.com/datamodel" desc="Represents the details of a payment from a producer." entity="IncomingProducerPayment" platform="false" setterScriptability="hidden" subpackage="producer" table="incomingproducerpayment" type="retireable">
+    <implementsEntity name="PaymentReceipt"/>
+    <implementsEntity name="InCurrencySilo"/>
+    <column desc="The date on which the payment was reversed, if any. Null if the payment has not been reversed." exportable="false" name="ReversalDate" nullok="true" setterScriptability="hidden" type="datetime"/>
+    <typekey desc="Reason why the payment has been reversed, if any. Null indicates that the payment has not been reversed." exportable="false" loadable="false" name="ReversalReason" nullok="true" setterScriptability="hidden" typelist="PaymentReversalReason"/>
+    <foreignkey columnName="ProducerID" fkentity="Producer" name="Producer" nullok="false"/>
+    <dbcheckbuilder className="com.guidewire.bc.system.database.dbchecks.producer.IncomingProducerPaymentDBCheckBuilder"/>
+</entity>

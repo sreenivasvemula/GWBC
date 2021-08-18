@@ -1,0 +1,111 @@
+<?xml version="1.0"?>
+<PCF
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:noNamespaceSchemaLocation="../../../../../pcf.xsd">
+  <Page
+    canVisit="perm.System.accttabview and perm.System.accthistview"
+    id="AccountDetailHistory"
+    showUpLink="true"
+    title="displaykey.Web.AccountDetailHistory.Title">
+    <LocationEntryPoint
+      signature="AccountDetailHistory(account : Account)"/>
+    <Variable
+      name="account"
+      type="Account"/>
+    <Screen
+      id="AccountDetailHistoryScreen">
+      <Toolbar/>
+      <ListViewPanel
+        id="AccountDetailHistoryLV">
+        <RowIterator
+          editable="false"
+          elementName="accountHistory"
+          value="getAccountHistories()">
+          <ToolbarFilter
+            label="displaykey.Web.AccountDetailHistoryLV.FilterByEventDate"
+            name="DateFilter">
+            <ToolbarFilterOption
+              filter="new web.history.AccountHistoriesFilters.Last30Days()"/>
+            <ToolbarFilterOption
+              filter="new web.history.AccountHistoriesFilters.Last60Days()"/>
+            <ToolbarFilterOption
+              filter="new web.history.AccountHistoriesFilters.Last90Days()"/>
+            <ToolbarFilterOption
+              filter="new web.history.AccountHistoriesFilters.Last120Days()"/>
+            <ToolbarFilterOption
+              filter="new web.history.AccountHistoriesFilters.Last180Days()"
+              selectOnEnter="true"/>
+            <ToolbarFilterOption
+              filter="new web.history.AccountHistoriesFilters.LastYear()"/>
+            <ToolbarFilterOption
+              filter="new web.history.AccountHistoriesFilters.Last3Years()"/>
+            <ToolbarFilterOption
+              filter="new web.history.AccountHistoriesFilters.All()"/>
+          </ToolbarFilter>
+          <ToolbarFilter
+            label="displaykey.Web.AccountDetailHistoryLV.FilterByEventType"
+            name="HistoryEventTypeFilter">
+            <ToolbarFilterOptionGroup
+              filters="new gw.api.filters.TypeKeyFilterSet( History.Type.TypeInfo.getProperty( &quot;EventType&quot; ) ).getFilterOptions()"/>
+          </ToolbarFilter>
+          <Row>
+            <DateCell
+              id="Date"
+              label="displaykey.Web.AccountDetailHistoryLV.Date"
+              sortOrder="1"
+              value="accountHistory.EventDate"/>
+            <Cell
+              action="TransactionDetailPopup.push(accountHistory.Transaction)"
+              id="Transaction"
+              label="displaykey.Web.AccountDetailHistoryLV.Transaction"
+              value="accountHistory.Transaction.TransactionNumber"/>
+            <Cell
+              action="goToPolicyTransferDetail(accountHistory)"
+              available="isPolicyTransfer(accountHistory)"
+              id="Description"
+              label="displaykey.Web.AccountDetailHistoryLV.Description"
+              sortOrder="2"
+              value="accountHistory.Description"/>
+            <Cell
+              id="RefNumber"
+              label="displaykey.Web.AccountDetailHistoryLV.RefNumber"
+              value="accountHistory.RefNumber"/>
+            <MonetaryAmountCell
+              align="left"
+              currency="account.Currency"
+              enableSort="false"
+              formatType="currency"
+              id="TransactionAmount"
+              label="displaykey.Web.AccountDetailHistoryLV.TransactionAmount"
+              value="accountHistory.Amount"/>
+            <TextCell
+              action="UserDetailPage.push(accountHistory.User)"
+              id="User"
+              label="displaykey.Web.AccountDetailHistoryLV.User"
+              value="accountHistory.User"/>
+          </Row>
+        </RowIterator>
+      </ListViewPanel>
+    </Screen>
+    <Code><![CDATA[uses gw.api.database.IQueryBeanResult
+uses gw.api.database.Query
+
+function goToPolicyTransferDetail(item : AccountHistory) {
+  PolicyTransferDetail.go(item as PolicyHistory);
+}
+
+function isPolicyTransfer(item : AccountHistory) : Boolean {
+  return (item.EventType == "policytransferred")
+}
+
+function getAccountHistories() : IQueryBeanResult<AccountHistory> {
+  var accountQuery = Query.make(AccountHistory)
+  accountQuery.compare("Subtype", NotEquals, typekey.History.TC_POLICYHISTORY)
+  accountQuery.or(\ restriction -> {
+    restriction.compare("Account", Equals, account)
+    restriction.compare("OtherAccount", Equals, account)
+  })  
+  return accountQuery.select()
+}]]></Code>
+  </Page>
+</PCF>

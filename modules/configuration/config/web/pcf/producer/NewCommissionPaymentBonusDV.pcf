@@ -1,0 +1,70 @@
+<?xml version="1.0"?>
+<PCF
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:noNamespaceSchemaLocation="../../../../../pcf.xsd">
+  <DetailViewPanel
+    editable="canEdit"
+    id="NewCommissionPaymentBonusDV">
+    <Require
+      name="bonusPayment"
+      type="BonusCmsnPayment"/>
+    <Require
+      name="producer"
+      type="Producer"/>
+    <Require
+      name="canEdit"
+      type="Boolean"/>
+    <Variable
+      name="selectedPolicyPeriod"
+      type="PolicyPeriod"/>
+    <Variable
+      initialValue="new web.policy.PolicySearchConverter()"
+      name="policySearchConverter"
+      type="web.policy.PolicySearchConverter"/>
+    <InputColumn>
+      <Label
+        id="BonusDetails"
+        label="displaykey.Web.NewCommissionPaymentBonusDV.Details"/>
+      <MonetaryAmountInput
+        currency="bonusPayment.Currency"
+        editable="true"
+        id="Amount"
+        label="displaykey.Web.NewCommissionPaymentBonusDV.Amount"
+        required="true"
+        value="bonusPayment.Amount"/>
+      <RangeInput
+        editable="true"
+        id="ProducerCode"
+        label="displaykey.Web.NewCommissionPaymentBonusDV.ProducerCode"
+        value="bonusPayment.ProducerCode"
+        valueRange="producer.ProducerCodes"/>
+      <Input
+        editable="true"
+        id="Policy"
+        inputConversion="policySearchConverter.getPolicyPeriod(VALUE)"
+        label="displaykey.Web.NewCommissionPaymentBonusDV.PolicyPeriod"
+        value="selectedPolicyPeriod">
+        <MenuItem
+          action="PolicySearchPopup.push()"
+          icon="&quot;search.png&quot;"
+          id="PolicyPicker"/>
+        <PostOnChange/>
+      </Input>
+      <RangeInput
+        editable="true"
+        id="PolicyCommission"
+        label="displaykey.Web.NewCommissionPaymentBonusDV.PolicyCommission"
+        value="bonusPayment.PolicyCommission"
+        valueRange="PolicyCommissionsForThisProducer">
+        <PostOnChange/>
+      </RangeInput>
+    </InputColumn>
+    <Code><![CDATA[property get PolicyCommissionsForThisProducer() : PolicyCommission[] {
+  if (selectedPolicyPeriod != null) {
+    return selectedPolicyPeriod.PolicyCommissions.where( \ elt -> elt.ProducerCode.Producer.equals(producer))
+  }
+  
+  return null
+}]]></Code>
+  </DetailViewPanel>
+</PCF>

@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PCF
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:noNamespaceSchemaLocation="../../../../../pcf.xsd">
+  <!-- Note: This is called in BCConstructors.java -->
+  <Forward
+    canVisit="perm.System.prodtabview and perm.System.prodsummview and producer.ViewableByCurrentUser"
+    id="ProducerDetailForward">
+    <LocationEntryPoint
+      signature="ProducerDetailForward(producer : Producer)"/>
+    <Variable
+      name="producer"
+      type="Producer"/>
+    <ForwardCondition
+      action="ProducerDetail.go(producer)"/>
+  </Forward>
+</PCF>

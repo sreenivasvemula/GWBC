@@ -1,0 +1,46 @@
+<?xml version="1.0"?>
+<entity
+  xmlns="http://guidewire.com/datamodel"
+  entity="SnapshotInvoiceItem"
+  type="retireable"
+  desc="Captures information about an invoice item at the time an agency bill statement is billed"
+  ignoreForEvents="true"
+  subpackage="invoice"
+  platform="false"
+  table="snapshotinvoiceitem"
+  setterScriptability="hidden">
+  <implementsEntity
+    name="ItemState"/>
+  <implementsEntity
+    name="InCurrencySilo"/>
+  <monetaryamount
+    name="PaidAmount"
+    amountColumnName="PaidAmount"
+    desc="Total gross amount paid on the invoice item as of this snapshot"
+    scaleToCurrency="true"
+    nullok="false"
+    soapnullok="true"
+    setterScriptability="doesNotExist">
+    <tag name="DefaultValueZero"/>
+  </monetaryamount>
+  <foreignkey
+    name="StatementInvoice"
+    desc="The agency bill statement invoice to which this snapshot invoice item is attached."
+    columnName="StatementInvoiceID"
+    fkentity="StatementInvoice"
+    nullok="false"
+    setterScriptability="hidden"/>
+  <foreignkey
+    name="InvoiceItem"
+    desc="The invoice item for which we are storing snapshot information"
+    columnName="InvoiceItemID"
+    fkentity="InvoiceItem"
+    nullok="false"
+    setterScriptability="doesNotExist"/>
+  <typekey
+    name="Status"
+    typelist="InvoiceStatus"
+    desc="Status of the invoice item as of the snapshot"
+    nullok="false"
+    setterScriptability="doesNotExist"/>
+</entity>

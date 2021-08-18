@@ -1,0 +1,59 @@
+<?xml version="1.0"?>
+<PCF
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:noNamespaceSchemaLocation="../../../../../pcf.xsd">
+  <Popup
+    beforeCommit="reversePayment()"
+    canEdit="true"
+    id="OutgoingProducerPaymentReversalConfirmationPopup"
+    startInEditMode="true"
+    title="displaykey.Web.PaymentReversalConfirmation.Title">
+    <LocationEntryPoint
+      signature="OutgoingProducerPaymentReversalConfirmationPopup(payment : ProducerPaymentSent)"/>
+    <Variable
+      name="payment"
+      type="ProducerPaymentSent"/>
+    <Variable
+      name="reason"
+      type="PaymentReversalReason"/>
+    <Variable
+      initialValue="false"
+      name="reverseOnlyPaymentSent"
+      type="boolean"/>
+    <Screen
+      id="NSFConfirmationScreen">
+      <Toolbar>
+        <EditButtons
+          updateLabel="displaykey.Button.OK"/>
+      </Toolbar>
+      <DetailViewPanel>
+        <InputColumn>
+          <Label
+            id="Confirmation"
+            label="displaykey.Web.PaymentReversalConfirmation.Confirmation(payment.Amount.render())"/>
+          <TypeKeyInput
+            editable="true"
+            id="Reason"
+            label="displaykey.Web.PaymentReversalConfirmation.Reason"
+            required="true"
+            value="reason"/>
+          <RangeInput
+            editable="true"
+            id="PaidCommissionReversalType"
+            label="displaykey.Web.PaymentReversalConfirmation.ReverseOption"
+            optionLabel="VALUE ? displaykey.Web.PaymentReversalConfirmation.PaymentSentOnly : displaykey.Web.PaymentReversalConfirmation.PaymentSentAndPayableTxn"
+            required="true"
+            value="reverseOnlyPaymentSent"
+            valueRange="{false, true}"/>
+        </InputColumn>
+      </DetailViewPanel>
+    </Screen>
+    <Code><![CDATA[function reversePayment() {
+  if (reverseOnlyPaymentSent) {
+    payment.ProducerPayment.handlePaymentReversalOnlyReversingPaymentSent(reason)
+  } else {
+    payment.ProducerPayment.handlePaymentReversal(reason)
+  }
+}]]></Code>
+  </Popup>
+</PCF>

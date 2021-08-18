@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PCF
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:noNamespaceSchemaLocation="../../../../../pcf.xsd">
+  <Worksheet
+    afterCancel="DesktopActivities.go()"
+    afterCommit="gw.api.web.activity.ActivityUtil.markActivityAsViewed(activity)"
+    canEdit="true"
+    id="NewActivityWorksheet"
+    startInEditMode="true"
+    tabLabel="displaykey.Web.Activity.ActivityDetailTab"
+    title="displaykey.Web.NewActivity.Title">
+    <LocationEntryPoint
+      signature="NewActivityWorksheet()"/>
+    <Scope
+      location="*"/>
+    <Variable
+      initialValue="new Activity()"
+      name="activity"
+      type="Activity"/>
+    <Variable
+      initialValue="activity.InitialAssigneeForPicker"
+      name="assigneeHolder"
+      type="assignment.Assignee[]"/>
+    <Screen
+      id="NewActivityScreen">
+      <Toolbar>
+        <ToolbarButton
+          action="assigneeHolder[0].assignToThis(activity); CurrentLocation.commit()"
+          id="NewActivityScreen_CreateActivityButton"
+          label="displaykey.Web.NewActivityScreen.CreateActivity"/>
+        <ToolbarButton
+          action="CurrentLocation.cancel()"
+          id="NewActivityWorksheet_CancelButton"
+          label="displaykey.Button.Cancel"/>
+      </Toolbar>
+      <PanelRef
+        def="ActivityDetailDV(activity, assigneeHolder)"/>
+    </Screen>
+  </Worksheet>
+</PCF>

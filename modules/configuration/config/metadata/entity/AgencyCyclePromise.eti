@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="UTF-8"?><subtype xmlns="http://guidewire.com/datamodel" desc="An agency promise made against a agency bill cycle" entity="AgencyCyclePromise" subpackage="producer.agencybill" supertype="AgencyCycleDist">
+    <column desc="Date this promise was applied." name="AppliedDate" nullok="true" type="pastdatetime"/>
+    <checkconstraint desc="The promise must be executed (distributed) before it is applied." predicate="(AppliedDate IS NOT NULL AND DistributedDate IS NOT NULL) OR AppliedDate IS NULL"/>
+    <dbcheckbuilder className="com.guidewire.bc.system.database.dbchecks.producer.agencybill.AgencyCyclePromiseDBCheckBuilder"/>
+</subtype>

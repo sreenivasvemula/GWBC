@@ -1,0 +1,86 @@
+<?xml version="1.0"?>
+<PCF
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="../../../../../pcf.xsd">
+    <Page
+            canEdit="perm.ProducerContact.edit"
+            canVisit="perm.System.prodtabview and perm.System.prodcontview"
+            id="ProducerContacts"
+            showUpLink="true"
+            title="displaykey.Web.ProducerContacts.Title">
+        <LocationEntryPoint
+                signature="ProducerContacts(producer : Producer)"/>
+        <Variable
+                name="producer"
+                type="Producer"/>
+        <Screen
+                id="ProducerContactsScreen">
+            <Toolbar>
+                <EditButtons/>
+                <AddButton
+                        hideIfReadOnly="true"
+                        id="addNewContact"
+                        label="displaykey.Button.Add">
+                    <AddMenuItem
+                            id="addNewCompany"
+                            iterator="producerContactIterator"
+                            label="displaykey.Web.PolicyDetailContacts.AddNewCompany"
+                            pickLocation="NewProducerContactPopup.push(producer, Company)"/>
+                    <AddMenuItem
+                            id="addNewPerson"
+                            iterator="producerContactIterator"
+                            label="displaykey.Web.PolicyDetailContacts.AddNewPerson"
+                            pickLocation="NewProducerContactPopup.push(producer, Person)"/>
+                </AddButton>
+                <IteratorButtons
+                        addVisible="false"
+                        iterator="ProducerContactsLV"/>
+                <PickerToolbarButton
+                        action="ContactSearchPopup.push(true)"
+                        available="true"
+                        hideIfReadOnly="true"
+                        id="addExistingContact"
+                        label="displaykey.Web.ProducerContacts.AddExistingContact"
+                        onPick="gw.contact.ContactConnection.connectContactToProducer(PickedValue, producer)"/>
+            </Toolbar>
+            <ListDetailPanel
+                    id="DetailPanel"
+                    selectionName="contact"
+                    selectionType="ProducerContact">
+                <ListViewPanel
+                        id="ProducerContactsLV">
+                    <RowIterator
+                            editable="true"
+                            elementName="producerContact"
+                            id="producerContactIterator"
+                            toRemove="producer.removeFromContacts(producerContact)"
+                            value="producer.Contacts">
+                        <Row>
+                            <Cell
+                                    id="ContactName"
+                                    label="displaykey.Web.ProducerContacts.Name"
+                                    sortOrder="1"
+                                    value="producerContact"/>
+                            <Cell
+                                    id="ContactAddress"
+                                    label="displaykey.Web.ProducerContacts.Address"
+                                    value="producerContact.Contact.PrimaryAddress"/>
+                            <Cell
+                                    id="ContactRoles"
+                                    label="displaykey.Web.ProducerContacts.Roles"
+                                    value="gw.api.web.producer.ProducerUtil.getRolesForDisplay(producerContact)"/>
+                        </Row>
+                    </RowIterator>
+                </ListViewPanel>
+                <CardViewPanel>
+                    <Card
+                            id="ContactDetailCard"
+                            title="displaykey.Web.ProducerContacts.ContactDetail(contact.Contact.Name != null ? contact.Contact.Name : displaykey.Web.ProducerContacts.NewContact)">
+                        <PanelRef
+                                def="ProducerContactDetailDV(contact, false)"/>
+                    </Card>
+                </CardViewPanel>
+            </ListDetailPanel>
+        </Screen>
+    </Page>
+</PCF>

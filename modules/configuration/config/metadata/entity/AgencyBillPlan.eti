@@ -1,0 +1,198 @@
+<?xml version="1.0"?>
+<subtype
+  xmlns="http://guidewire.com/datamodel"
+  desc="An Agency Bill Plan. Specifies details about the agency billing cycle such as whether and when statements get sent to a producer."
+  entity="AgencyBillPlan"
+  subpackage="producer.agencybill"
+  supertype="Plan">
+  <implementsEntity
+    name="InCurrencySilo"/>
+  <typekey
+    desc="The workflow to use for processing this agency bill plan."
+    name="WorkflowPlan"
+    nullok="false"
+    typelist="Workflow"/>
+  <column
+    default="15"
+    desc="Preferred day of the month on which billing cycle should close (no invoice items with dates after this day show up on statement).             Use StandardCycleCloseDayOfMonth to get a standard CycleCloseDayOfMonth that is useful outside the UI.  (It ensures that the day of             month is correct when the CycleCloseDayOfMonthLogic is first or last business day.)"
+    name="CycleCloseDayOfMonth"
+    nullok="false"
+    type="integer"/>
+  <typekey
+    default="lastbusinessday"
+    desc="Defines how the cycle close day of month will be adjusted (if at all) to fall on a business day.  Use             StandardCycleCloseDayOfMonthLogic to get a standard CycleCloseDayOfMonthLogic that is useful outside the UI.  (It ensures that the day of             month logic works with the cycle close day of month when the CycleCloseDayOfMonthLogic is first or last business day.)"
+    name="CycleCloseDayOfMonthLogic"
+    nullok="false"
+    typelist="DayOfMonthLogic"/>
+  <column
+    default="45"
+    desc="Number of days between close date of cycle and due date for statement associated with that cycle"
+    name="PaymentTermsInDays"
+    nullok="false"
+    type="integer"/>
+  <column
+    default="true"
+    desc="True means an exception item will be generated for a past due statement"
+    name="ExceptionForPastDueStatement"
+    nullok="false"
+    type="bit"/>
+  <column
+    default="true"
+    desc="True means that BillingCenter will send a statement invoice to the producer after the billing cycle has closed.  False means no statement is sent"
+    name="StatementSentAfterCycleClose"
+    nullok="false"
+    type="bit"/>
+  <column
+    default="0"
+    desc="Number of days after the close of a billing cycle that a statement invoice should be sent to the producer"
+    name="DaysAfterCycleCloseToSendStmnt"
+    nullok="false"
+    type="integer"/>
+  <column
+    default="false"
+    desc="True means that any statement which has a net amount below a specified threshold will be blocked from being sent to the producer. If true, the plan cannot be committed unless NetThresholdForSuppressingStmt has a value."
+    name="StatementsWithLowNetSuppressed"
+    nullok="false"
+    type="bit"/>
+  <monetaryamount
+    amountColumnName="NetThresholdForSuppressingStmt"
+    currencyColumnName="NetThresholdSuppressStmt_cur"
+    desc="If StatementsWithLowNetSuppressed is true, then any statement with a net amount less than this field is not sent to the producer"
+    name="NetThresholdForSuppressingStmt"
+    nullok="true"
+    scaleToCurrency="true"/>
+  <column
+    default="false"
+    desc="True means that a reminder notice will be sent to the producer if they have not sent in their Account Current Promise to Pay"
+    name="ReminderSentIfPromiseNotRcvd"
+    nullok="false"
+    type="bit"/>
+  <column
+    default="10"
+    desc="If promise to pay hasn't been received by this number of days after cycle close, reminder will be sent to producer."
+    name="DaysUntilPromiseReminderSent"
+    nullok="false"
+    type="integer"/>
+  <column
+    default="false"
+    desc="True means that a exception will be generated if the producer has not sent in their Account Current Promise to Pay."
+    name="ExceptionIfPromiseNotReceived"
+    nullok="false"
+    type="bit"/>
+  <column
+    default="15"
+    desc="The number of days after the cycle close at which the promise is considered due."
+    name="PromiseDueInDays"
+    nullok="true"
+    type="integer"/>
+  <column
+    default="false"
+    desc="True means that a statement of exceptions will be sent to the producer after the Promise is processed."
+    name="PromiseExceptionsSent"
+    nullok="false"
+    type="bit"/>
+  <column
+    default="true"
+    desc="Automatically apply payment if the payment matches either the statement or promise as appropriate."
+    name="AutoProcessWhenPaymentMatches"
+    nullok="false"
+    type="bit"/>
+  <column
+    default="false"
+    desc="Send First Dunning Notice if payment not received within DaysUntilFirstDunningSent after Due Date."
+    name="FirstDunningSentIfNotPaid"
+    nullok="false"
+    type="bit"/>
+  <column
+    default="true"
+    desc="True means that a statement of exceptions will be sent to the producer after the Payment is processed."
+    name="PaymentExceptionsSent"
+    nullok="false"
+    type="bit"/>
+  <column
+    default="0"
+    desc="If FirstDunningSentIfNotPaid is true, then send a first Dunning Notice if payment not received within this number of days after the due date."
+    name="DaysUntilFirstDunningSent"
+    nullok="false"
+    type="integer"/>
+  <column
+    default="false"
+    desc="Send Second Dunning Notice if payment not received within DaysUntilSecondDunningSent after Due Date."
+    name="SecondDunningSentIfNotPaid"
+    nullok="false"
+    type="bit"/>
+  <column
+    default="0"
+    desc="If SecondDunningSentIfNotPaid is true, then send a second Dunning Notice if payment not received within this number of days after the due date."
+    name="DaysUntilSecondDunningSent"
+    nullok="false"
+    type="integer"/>
+  <column
+    default="true"
+    desc="Automatically writeoff commission differences less than ClearCommissionThreshold. If true, the plan cannot be committed unless ClearCommissionThreshold has a value."
+    name="LowCommissionCleared"
+    nullok="false"
+    type="bit"/>
+  <monetaryamount
+    amountColumnName="ClearCommisionThreshold"
+    desc="Automatically write off commission differences if LowCommissionCleared is true and they are less than this threshold."
+    name="ClearCommisionThreshold"
+    nullok="true"
+    scaleToCurrency="true"/>
+  <column
+    default="true"
+    desc="Automatically writeoff gross differences less than ClearGrossThreshold. If true, the plan cannot be committed unless ClearGrossThreshold has a value."
+    name="LowGrossCleared"
+    nullok="false"
+    type="bit"/>
+  <monetaryamount
+    amountColumnName="ClearGrossThreshold"
+    desc="Automatically write off gross differences if LowGrossCleared is true and they are less than this threshold."
+    name="ClearGrossThreshold"
+    nullok="true"
+    scaleToCurrency="true"/>
+  <monetaryamount
+    amountColumnName="ProducerWriteoffThreshold"
+    desc="Writeoff threshold at producer level."
+    name="ProducerWriteoffThreshold"
+    nullok="false"
+    scaleToCurrency="true"/>
+  <typekey
+    default="payments"
+    desc="Clearing Logic will be applied on this."
+    name="ClearingLogicTarget"
+    nullok="false"
+    typelist="ClearingLogicTarget"/>
+  <column
+    default="true"
+    desc="True means that when a StatementInvoice is billed, we will snapshot all unpaid invoice items from the previous statement, whether they are past due or not.  False means we will only snapshot those unpaid invoice items from the previous statement that are actually past due."
+    name="SnapshotNonPastDueItems"
+    nullok="false"
+    type="bit"/>
+  <column
+    default="false"
+    desc="True means when an offset is created for moving or holding a billed item, the offset will be created on the same (billed) invoice.  False means it will be created on the next planned invoice."
+    name="CreateOffsetsOnBilledInvoices"
+    nullok="false"
+    type="bit"/>
+  <column
+    default="false"
+    desc="True means, during a payment schedule change, when an offset is created for a payment on a billed item, the offset will be created on the same (billed) invoice.  False means it will be created on the next planned invoice."
+    name="PmntSchdChngOffsetsOnBilled"
+    nullok="false"
+    type="bit"/>
+  <checkconstraint
+    desc="The DaysUntilSecondDunningSent field must be greater than the DaysUntilFirstDunningSentField"
+    predicate="DaysUntilSecondDunningSent &gt; DaysUntilFirstDunningSent OR DaysUntilFirstDunningSent = 0"/>
+  <checkconstraint
+    desc="The SecondDunningSentIfNotPaid cannot be set unless the FirstDunningSentIfNotPaid is set."
+    predicate="SecondDunningSentIfNotPaid = 0 OR FirstDunningSentIfNotPaid=1"/>
+  <checkconstraint
+    desc="The CycleCloseDayOfMonth field must be between 1 and 31"
+    predicate="CycleCloseDayOfMonth &gt; 0 AND CycleCloseDayOfMonth &lt;= 31"/>
+  <checkconstraint
+    desc="The PaymentTermsInDays field must be greater than zero"
+    predicate="PaymentTermsInDays &gt; 0"/>
+  <dbcheckbuilder
+    className="com.guidewire.bc.system.database.dbchecks.producer.agencybill.AgencyBillPlanDBCheckBuilder"/>
+</subtype>

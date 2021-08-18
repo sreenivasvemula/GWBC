@@ -1,0 +1,77 @@
+<?xml version="1.0"?>
+<PCF
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:noNamespaceSchemaLocation="../../../../../pcf.xsd">
+  <Wizard
+    beforeCommit="disburse(payCommissionReference[0])"
+    canVisit="perm.Transaction.disbcreate"
+    cancelWarning="displaykey.Web.CreateDisbursementWizard.CancelConfirmation"
+    countsAsWork="false"
+    id="AgencyDisbursementWizard">
+    <LocationEntryPoint
+      signature="AgencyDisbursementWizard(producer : Producer, fromCreditItems : boolean)"/>
+    <Variable
+      name="producer"
+      type="Producer"/>
+    <Variable
+      name="fromCreditItems"
+      type="boolean"/>
+    <Variable
+      initialValue="newDisbursement()"
+      name="disbursement"
+      type="AgencyDisbursement"/>
+    <Variable
+      initialValue="new java.util.ArrayList&lt;InvoiceItem&gt;()"
+      name="invoiceItems"/>
+    <Variable
+      initialValue="new boolean[]{true}"
+      name="payCommissionReference"
+      type="boolean[]"/>
+    <WizardStep
+      available="fromCreditItems"
+      id="SelectCreditItems"
+      label="displaykey.Web.AgencyDisbursementWizard.CreditItemsStepLabel"
+      onExit="disbursement.Amount = disbursement.computeDisbursementAmount(invoiceItems, payCommissionReference[0])"
+      screen="SelectCreditItemsScreen(producer, invoiceItems, disbursement, payCommissionReference)"
+      title="displaykey.Web.AgencyDisbursementWizard.SelectCreditItems"/>
+    <WizardStep
+      id="Step1"
+      label="displaykey.Web.AgencyDisbursementWizard.DetailsStepLabel"
+      onExit="disbursement.initiateApprovalActivityIfUserLacksAuthority()"
+      screen="AgencyDisbursementDetailScreen(disbursement, payCommissionReference, invoiceItems, fromCreditItems)"
+      title="displaykey.Web.AgencyDisbursementWizard.DetailsStepTitle"/>
+    <WizardStep
+      id="Step2"
+      label="displaykey.Web.AgencyDisbursementWizard.ConfirmStepLabel"
+      screen="CreateDisbursementConfirmScreen(disbursement)"
+      title="displaykey.Web.AgencyDisbursementWizard.ConfirmStepTitle"/>
+    <Code><![CDATA[uses gw.api.web.producer.agencybill.AgencyBillMoneySetupFactory
+
+function newDisbursement() : AgencyDisbursement{
+        var disb = new AgencyDisbursement(producer.Currency)
+        disb.setProducerAndFields(producer);
+        disb.PayTo = producer.PrimaryContact.Contact.Name
+        disb.MailTo = producer.PrimaryContact.Contact.Name
+        disb.Address = producer.PrimaryContact.Contact.PrimaryAddress as String
+        return disb;
+      }
+      
+function disburse(payCommission : boolean){
+  if(fromCreditItems){
+    var moneySetup = AgencyBillMoneySetupFactory.createNewZeroDollarMoney(producer, CurrentLocation)
+    moneySetup.setPrefill(AgencyCycleDistPrefill.TC_UNPAID)
+    var payment = moneySetup.prepareDistribution()
+    payment.addInvoiceItems(invoiceItems)
+    
+    payment.DistItems.each( \ distItem -> {
+      distItem.GrossAmountToApply = distItem.GrossAmountOwed
+      distItem.CommissionAmountToApply = payCommission ? distItem.CommissionAmountOwed : 0bd.ofCurrency(producer.Currency)
+    })
+    
+    payment.execute()
+    disbursement.AgencyCyclePayment = payment
+  }
+  disbursement.executeDisbursementOrCreateApprovalActivityIfNeeded()
+}]]></Code>
+  </Wizard>
+</PCF>

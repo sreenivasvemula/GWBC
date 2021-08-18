@@ -1,0 +1,42 @@
+<?xml version="1.0"?>
+<entity
+  xmlns="http://guidewire.com/datamodel"
+  entity="NegativeWriteoffRev"
+  type="retireable"
+  desc="type for negative writeoff reversals"
+  subpackage="accounting"
+  platform="false"
+  table="negativewriteoffrev">
+  <implementsEntity
+    name="Approvable"/>
+  <implementsEntity
+    name="NotInCurrencySilo"/>
+  <foreignkey
+    name="NegativeWriteoff"
+    desc="The object to reverse."
+    columnName="NegativeWriteoffID"
+    fkentity="NegativeWriteoff"
+    importableagainstexistingobject="false"
+    nullok="false"
+    setterScriptability="hidden"/>
+  <column
+    name="ReversalDate"
+    type="pastdatetime"
+    desc="Date of the reversal. Used primarily for staging table loading."
+    setterScriptability="hidden"
+    nullok="true"/>
+  <array
+    name="ActivitiesCreatedByAppr"
+    arrayentity="NegWoffRevApprActivity"
+    setterScriptability="doesNotExist">
+    <link-association>
+      <typelist-map
+        field="Status"/>
+    </link-association>
+  </array>
+    <dbcheckbuilder className="com.guidewire.bc.system.database.dbchecks.accounting.NegativeWriteoffRevDBCheckBuilder"/>
+  <checkconstraint
+    desc="Cannot load NegativeWriteoff with null ReversalDate."
+    stagingtablepredicate="ReversalDate IS NOT NULL"/>
+
+</entity>

@@ -1,0 +1,24 @@
+<?xml version="1.0"?>
+<entity
+  xmlns="http://guidewire.com/datamodel"
+  entity="TAccountContainer"
+  type="editable"
+  desc="Provides an array of t-accounts to a TAccountOwner."
+  abstract="true"
+  final="false"
+  subpackage="accounting"
+  platform="false"
+  table="TAccountContainer"
+  setterScriptability="hidden">
+  <implementsEntity
+    name="InCurrencySilo"/>
+  <array
+    name="TAccounts"
+    desc="Set of directly owned t-accounts"
+    arrayentity="TAccount"
+    exportable="false"
+    owner="true"
+    setterScriptability="doesNotExist"/>
+    <dbcheckbuilder
+            className="com.guidewire.bc.system.database.dbchecks.accounting.TAccountContainerHasOwnerEntityDBCheckBuilder"/>
+</entity>

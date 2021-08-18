@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?><entity xmlns="http://guidewire.com/datamodel" desc="A financial snapshot of the policies on an invoice's account, taken at the time the invoice is billed" entity="AccountInvoicePolicyPeriodSnapshot" platform="false" setterScriptability="hidden" subpackage="invoice" table="acctinvcpolpersnapshot" type="retireable">
+  <implementsEntity name="InCurrencySilo"/>
+  <monetaryamount amountColumnName="OutstandingAmount" desc="The outstanding amount on the invoice's account at the moment the invoice is billed.  Immutable field" name="OutstandingAmount" nullok="true" scaleToCurrency="true"/>
+  <monetaryamount amountColumnName="RemainingBalance" desc="The remaining balance on the invoice's account at the moment the invoice is billed.  Immutable field" name="RemainingBalance" nullok="true" scaleToCurrency="true"/>
+  <foreignkey columnName="AccountInvoiceID" desc="The invoice associated with this snapshot" fkentity="AccountInvoice" name="AccountInvoice" nullok="false" setterScriptability="doesNotExist"/>
+  <foreignkey columnName="PolicyPeriodID" desc="The policy period associated with this snapshot" fkentity="PolicyPeriod" name="PolicyPeriod" nullok="false" setterScriptability="doesNotExist"/>
+  <index desc="Legacy" name="policyperiod" unique="true">
+    <indexcol keyposition="1" name="AccountInvoiceID"/>
+    <indexcol keyposition="2" name="PolicyPeriodID"/>
+  </index>
+</entity>

@@ -1,0 +1,27 @@
+<?xml version="1.0"?>
+<PCF
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:noNamespaceSchemaLocation="../../../../../pcf.xsd">
+  <!-- Wizard flow that should guide the user through the process of creating a generic charge -->
+  <Wizard
+    beforeCommit="helper.getBillingInstruction().execute()"
+    canVisit="perm.Transaction.gentxn"
+    cancelWarning="displaykey.Web.NewRecaptureWizard.CancelConfirmation"
+    countsAsWork="false"
+    id="AccountNewRecaptureWizard">
+    <LocationEntryPoint
+      signature="AccountNewRecaptureWizard(account : Account)"/>
+    <Variable
+      name="account"
+      type="Account"/>
+    <Variable
+      initialValue="new gw.accounting.NewRecaptureChargeHelper(account)"
+      name="helper"/>
+    <!-- Specify the steps of the New Recapture Wizard -->
+    <WizardStep
+      id="Step1"
+      label="displaykey.Web.NewRecaptureWizard.Charges.Label"
+      screen="RecaptureDetailsScreen(helper, account)"
+      title="displaykey.Web.NewRecaptureWizard.Charges.Title"/>
+  </Wizard>
+</PCF>

@@ -1,0 +1,241 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xml:lang="en" lang="en" xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+    <meta http-equiv="Content-Style-Type" content="text/css" />
+    <!-- MOTW-DISABLED saved from url=(0014)about:internet -->
+    <title>Agency Cycle Distribution Pre-fill Customization Plugin</title>
+    <link rel="StyleSheet" href="css/bc-plugins.css" type="text/css" media="all" />
+    <link rel="StyleSheet" href="css/webworks.css" type="text/css" media="all" />
+    <link rel="StyleSheet" href="css/css-guidewire-extra.css" type="text/css" media="all" />
+    <script type="text/javascript" language="JavaScript1.2" src="wwhdata/common/context.js"></script>
+    <script type="text/javascript" language="JavaScript1.2" src="wwhdata/common/towwhdir.js"></script>
+    <script type="text/javascript" language="JavaScript1.2" src="wwhdata/common/wwhpagef.js"></script>
+    <script type="text/javascript" language="JavaScript1.2">
+      <!--
+        var  WebWorksRootPath = "";
+      // -->
+    </script>
+    <script type="text/javascript" language="JavaScript1.2">
+      <!--
+        // Set reference to top level help frame
+        //
+        var  WWHFrame = WWHGetWWHFrame("", true);
+      // -->
+    </script>
+    <script type="text/javascript" language="JavaScript1.2" src="scripts/expand.js"></script>
+    <!-- THE FOLLOWING IS A GUIDEWIRE STYLE DEFINITION FOR THE LINK TO THIS FEATURE -->
+    <link rel="StyleSheet" href="css/css-guidewire-extra.css" type="text/css" media="all" />
+    <!-- THE FOLLOWING IS A GUIDEWIRE GSCRIPT FUNCTION FOR THE LINK TO THIS FEATURE -->
+    <script type="text/javascript">
+function guidewire_selectall()
+{
+var text_val=eval("document.linktothisurlform.urlfield");
+text_val.focus();
+text_val.select();
+}
+</script>
+  </head>
+  <body onLoad="WWHUpdate();" onUnload="WWHUnload();" onKeyDown="WWHHandleKeyDown((document.all||document.getElementById||document.layers)?event:null);" onKeyPress="WWHHandleKeyPress((document.all||document.getElementById||document.layers)?event:null);" onKeyUp="WWHHandleKeyUp((document.all||document.getElementById||document.layers)?event:null);">
+    <!-- THE FOLLOWING IS A GUIDEWIRE DIV FOR THE 'LINK TO THIS' FEATURE -->
+    <div id="linkToThisPage" class="popup" style="display: none;">
+      <div class="popupTitle">Link Directly to This Page 
+           <a href="#" onclick="var thePopup = getElementById('linkToThisPage');thePopup.style.display='none';return false;"><img class="popupClosebox" src="wwhelp/wwhimpl/common/images/close.gif" /></a></div>
+      <div style="padding:6px;">
+        <div class="popupText" id="linkToThisPageBookmark">An error has occurred if you see this messsage.</div>
+        <form name="linktothisurlform" method="post" action="" style="width:275px;margin:0px">
+          <input type="text" class="popupURLText" id="linkToThisPageURL" name="urlfield" rows="1" cols="55" onClick="guidewire_selectall();" onFocus="guidewire_selectall();"></input>
+        </form>
+      </div>
+    </div>
+    <br />
+    <div class="WebWorks_Breadcrumbs" style="text-align: left;">
+      <span>BillingCenter Integration Guide</span> : 
+    <span class="WebWorks_Breadcrumbs" style="text-align: left;"><a class="WebWorks_Breadcrumb_Link" href="p-plugins.html#3435071">Plugins</a> : <a class="WebWorks_Breadcrumb_Link" href="bc-plugins.13.01.html#3435071">Billing Plugins</a> : Agency Cycle Distribution Pre-fill Customization Plugin</span></div>
+    <hr align="left" />
+    <blockquote>
+      <h3 class="H1_-_Heading_1"><a name="3435071">Agency Cycle Distribution Pre-fill Customization Plugin</a></h3>
+      <div class="B_-_Body"><a name="3435072">BillingCenter supports </a><span class="e_-_emphasis">agency billing</span>. With agency billing, the carrier does not interact directly with the insured. Instead, an intermediary called a <span class="e_-_emphasis">producer</span> exists between the carrier and the insured. The producer bills the insured for any charges associated with an account or a policy, and the insured makes payments directly to the producer. The producer then pays the carrier, minus the amount owed to the producer for commission. Alternatively, the insured promises to pay the producer sometime in the future. </div>
+      <h6 class="HS_-_Head_Sub"><a name="3532049">See also</a></h6>
+      <div class="BI_-_Bullet_Item_outer" style="margin-left: 57pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="BI_-_Bullet_Item_inner" style="width: 15pt; white-space: nowrap">
+                <span class="bu_-_bullet">•	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="BI_-_Bullet_Item_inner"><a href="javascript:WWHClickedPopup('app', 'ab_process_overview.html#1002171', '');" title="Agency Bill Processing Overview" name="3532062">“Agency Bill Processing Overview” in the </a><span class="bt_-_book_title"><a href="javascript:WWHClickedPopup('app', 'ab_process_overview.html#1002171', '');" title="Agency Bill Processing Overview">Application Guide</a></span></div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <h4 class="H2_-_Heading_2"><a name="3531797">Agency Bill Payments versus Agency Bill Promises</a></h4>
+      <div class="B_-_Body"><a name="3531992">BillingCenter represents an agency bill payment made by an insured to a producer with an </a><span class="cv_-_computer_voice">AgencyCyclePayment</span> instance. BillingCenter represents an agency bill promise with an <span class="cv_-_computer_voice">AgencyCyclePromise</span> instance. Both entity types descend from the abstract supertype <span class="cv_-_computer_voice">AgencyCycleDist</span>. Some BillingCenter APIs and plugin interfaces operate on the supertype to support both payments and promises.</div>
+      <h4 class="H2_-_Heading_2"><a name="3435076">How The BillingCenter Agency Payment Wizard Uses the Pre-fill Plugin</a></h4>
+      <div class="B_-_Body"><a name="3532452">In BillingCenter, agency bill payments are handled manually. The </a><span class="ui_-_UI_element">Agency Payment Wizard</span> lets a user manually enter a payment amount from a producer and specify how to disburse the funds to statements, promises, and invoice items. For example, a producer might send one large check without specifying how the funds correspond to individual invoice items. </div>
+      <div class="B_-_Body"><a name="3532433">The wizard checks whether the payment amount from a producer matches the total payment amount expected, based on adding all individual invoice items. Before BillingCenter displays the </a><span class="ui_-_UI_element">Agency Payment Wizard</span>, BillingCenter calls the <span class="cv_-_computer_voice">IAgencyCycleDist</span> plugin to pre-fill the wizard with agency cycle properties, such as gross, commission, and net amounts. </div>
+      <div class="B_-_Body"><a name="3435078">Typically, you do not need to override the default pre-fill behavior with your own implementation of the </a><span class="cv_-_computer_voice">IAgencyCycleDist</span> plugin interface. Implement your own version of this plugin for any of these reasons:</div>
+      <div class="BI_-_Bullet_Item_outer" style="margin-left: 57pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="BI_-_Bullet_Item_inner" style="width: 15pt; white-space: nowrap">
+                <span class="bu_-_bullet">•	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="BI_-_Bullet_Item_inner"><a name="3533209">You have a good reason to change the standard pre-fill behavior.</a></div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="BI_-_Bullet_Item_outer" style="margin-left: 57pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="BI_-_Bullet_Item_inner" style="width: 15pt; white-space: nowrap">
+                <span class="bu_-_bullet">•	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="BI_-_Bullet_Item_inner"><a name="3533230">You add pre-fill options to the wizard. For example, you extend the </a><span class="cv_-_computer_voice">AgencyCycleDistPreFill</span> typelist with more choices. </div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <h4 class="H2_-_Heading_2"><a name="3552642">Implementing Your Own Agency Cycle Distribution Plugin</a></h4>
+      <div class="B_-_Body"><a name="3532449">Your own plugin implementation must implement the </a><span class="cv_-_computer_voice">preFillAgencyCycleDist</span> plugin method. Its main parameter is an <span class="cv_-_computer_voice">AgencyCycleDist</span> instance, an abstract type with concrete subtypes for agency bill payments (<span class="cv_-_computer_voice">AgencyCyclePayment)</span> and agency bill promises (<span class="cv_-_computer_voice">AgencyCyclePromise</span>). Your plugin must support both agency bill payments and agency bill promises. You can implement different pre-fill behavior for payments and promises based on the subtypes <span class="cv_-_computer_voice">AgencyCyclePayment</span> and <span class="cv_-_computer_voice">AgencyCyclePromise</span>.</div>
+      <div class="H3_-_Heading_3_outer" style="margin-left: 36pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <h5 class="H3_-_Heading_3_inner" style="width: 18pt; white-space: nowrap"></h5>
+            </td>
+            <td width="100%">
+              <h5 class="H3_-_Heading_3_inner"><a name="3552889">Pre-filling the Agency Payment Wizard for Agency Bill Payments</a></h5>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="B_-_Body"><a name="3553394">The </a><span class="cv_-_computer_voice">AgencyCyclePayment</span> entity represents a producer that sends the carrier a large check for all the money the producer collected from a set of insured customers. This entity indicates the total amount of the actual payment. The entity also provides details about the payment and what it represents. Specifically, it contains an array of payment (<span class="cv_-_computer_voice">AgencyPaymentItem</span>) and promise (<span class="cv_-_computer_voice">AgencyPaymentItem</span>) agency invoice item entities. Both entities are concrete subtypes of the <span class="cv_-_computer_voice">AgencyDistItem</span> entity. Plugin method signatures take <span class="cv_-_computer_voice">AgencyDistItem</span> entities to support both types. </div>
+      <div class="B_-_Body"><a name="3558012">Each payment or promise indicates the amount of funds from the total payment to apply to specific invoice items, broken out in the following properties:</a></div>
+      <div class="BI_-_Bullet_Item_outer" style="margin-left: 57pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="BI_-_Bullet_Item_inner" style="width: 15pt; white-space: nowrap">
+                <span class="bu_-_bullet">•	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="BI_-_Bullet_Item_inner"><span class="ri_-_run_in_header"><a name="3553395">Net amount for this invoice item – </a></span>The amount the produce pays to the carrier.</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="BI_-_Bullet_Item_outer" style="margin-left: 57pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="BI_-_Bullet_Item_inner" style="width: 15pt; white-space: nowrap">
+                <span class="bu_-_bullet">•	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="BI_-_Bullet_Item_inner"><span class="ri_-_run_in_header"><a name="3553396">Commission for this invoice item – </a></span>The amount the producer keeps as commission.</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="BI_-_Bullet_Item_outer" style="margin-left: 57pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="BI_-_Bullet_Item_inner" style="width: 15pt; white-space: nowrap">
+                <span class="bu_-_bullet">•	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="BI_-_Bullet_Item_inner"><span class="ri_-_run_in_header"><a name="3435084">Gross amount for this invoice item</a></span> – The mount the insured paid the producer. Typically, the gross amount is the same as the unpaid amount on the invoice item.</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="B_-_Body"><a name="3435085">Your plugin determines and sets these amounts for each </a><span class="cv_-_computer_voice">AgencyDistItem</span> entity in the array that is the <span class="cv_-_computer_voice">AgencyDistItems</span> property of the <span class="cv_-_computer_voice">AgencyCycleDist</span> instance passed to your method. Your plugin returns the <span class="cv_-_computer_voice">AgencyDistItem</span> instances with new values in an <span class="cv_-_computer_voice">AgencyCycleDist</span> instance. The instance that your plugin returns does not have to be the same instance passed to your method. However, returning the same instance as the parameter is generally your best approach.</div>
+      <div class="H3_-_Heading_3_outer" style="margin-left: 36pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <h5 class="H3_-_Heading_3_inner" style="width: 18pt; white-space: nowrap"></h5>
+            </td>
+            <td width="100%">
+              <h5 class="H3_-_Heading_3_inner"><a name="3435086">Pre-filling the Agency Payment Wizard for Agency Bill Promises</a></h5>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="B_-_Body"><a name="3552790">The </a><span class="cv_-_computer_voice">AgencyCyclePromise</span> entity does not represent an actual payment from a producer to the carrier. Instead, an <span class="cv_-_computer_voice">AgencyCyclePromise</span> instance represents a producer’s promise to pay a carrier in advance of sending an actual payment. The producer sends this promise to the carrier as an estimate for what the producer owes the carrier for the agency cycle periodicity. The carrier often examines the promise to assure consistency with the expected future payment.</div>
+      <div class="H3_-_Heading_3_outer" style="margin-left: 36pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <h5 class="H3_-_Heading_3_inner" style="width: 18pt; white-space: nowrap"></h5>
+            </td>
+            <td width="100%">
+              <h5 class="H3_-_Heading_3_inner"><a name="3553773">Responding to the Pre-fill Typecode Parameter</a></h5>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="B_-_Body"><a name="3435087">The </a><span class="cv_-_computer_voice">preFillAgencyCycleDist</span> method takes a second parameter, <span class="cv_-_computer_voice">prefill</span>, of type <span class="cv_-_computer_voice">AgencyCycleDistPreFill</span>. The <span class="cv_-_computer_voice">prefill</span> parameter is a code that indicates the type of pre-fill behavior requested by BillingCenter. In the default configuration, BillingCenter calls the method with the these codes for specific pre-fill behaviors:</div>
+      <div class="BI_-_Bullet_Item_outer" style="margin-left: 57pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="BI_-_Bullet_Item_inner" style="width: 15pt; white-space: nowrap">
+                <span class="bu_-_bullet">•	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="BI_-_Bullet_Item_inner"><span class="cv_-_computer_voice"><a name="3557831">unpaid</a></span> – Set distribution items to appropriate amounts due.</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="BI_-_Bullet_Item_outer" style="margin-left: 57pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="BI_-_Bullet_Item_inner" style="width: 15pt; white-space: nowrap">
+                <span class="bu_-_bullet">•	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="BI_-_Bullet_Item_inner"><span class="cv_-_computer_voice"><a name="3557844">zero</a></span> – Set all distribution item amounts to zero. </div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="B_-_Body"><a name="3553985">You can extend the </a><span class="cv_-_computer_voice">AgencyCycleDistPreFill</span> typelist with additional pre-fill types. If you do extend the typelist, your plugin must implement corresponding new pre-fill behavior. </div>
+      <div class="N_-_Note">
+        <span class="n_-_note">Note: </span><a name="3558082">In the default configuration, BillingCenter never calls the </a><span class="cv_-_computer_voice">preFillAgencyCycleDist</span> method with the <span class="cv_-_computer_voice">save</span> code from the <span class="cv_-_computer_voice">AgencyCycleDistPreFill</span> typelist. </div>
+      <script type="text/javascript" language="JavaScript1.2">
+        <!--
+          // Clear related topics
+          //
+          WWHClearRelatedTopics();
+
+          document.writeln(WWHRelatedTopicsInlineHTML());
+        // -->
+      </script>
+    </blockquote>
+    <script type="text/javascript" language="JavaScript1.2">
+      <!--
+        document.write(WWHRelatedTopicsDivTag() + WWHPopupDivTag() + WWHALinksDivTag());
+      // -->
+    </script>
+  </body>
+</html>

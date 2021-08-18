@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?><entity xmlns="http://guidewire.com/datamodel" desc="type for credit reversals" entity="CreditReversal" loadable="true" platform="false" subpackage="accounting" table="creditreversal" type="retireable">
+  <implementsEntity name="NotInCurrencySilo"/>
+  <implementsEntity name="Approvable"/>
+  <foreignkey columnName="CreditID" desc="The credit to reverse." fkentity="Credit" importableagainstexistingobject="false" name="Credit" nullok="false" setterScriptability="hidden"/>
+  <column name="CreditReversalDate" nullok="true" type="datetime"/>
+  <array arrayentity="CreditReversalApprActivity" name="ActivitiesCreatedByAppr" setterScriptability="doesNotExist">
+    <link-association>
+      <typelist-map field="Status"/>
+    </link-association>
+  </array>
+  <dbcheckbuilder className="com.guidewire.bc.system.database.dbchecks.accounting.CreditReversalDBCheckBuilder"/>
+</entity>

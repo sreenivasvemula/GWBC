@@ -1,0 +1,34 @@
+<?xml version="1.0"?>
+<entity
+  xmlns="http://guidewire.com/datamodel"
+  entity="SuspPymtContext"
+  type="editable"
+  desc="Context for suspense payment-level transactions."
+  final="false"
+  ignoreForEvents="true"
+  subpackage="accounting.transaction"
+  overwrittenInStagingTable="true"
+  platform="false"
+  table="susppymtcontext"
+  setterScriptability="hidden">
+  <implementsEntity
+    name="TransactionContext"/>
+  <implementsEntity
+    name="InCurrencySilo"/>
+  <foreignkey
+    name="SuspensePayment"
+    columnName="SuspensePaymentID"
+    fkentity="SuspensePayment"
+    getterScriptability="hidden"
+    ignoreforevents="true"
+    nullok="false"
+    setterScriptability="hidden"/>
+  <foreignkey
+    name="Transaction"
+    desc="Reference to suspense payment transaction"
+    columnName="TransactionID"
+    fkentity="SuspPymtTransaction"
+    getterScriptability="doesNotExist"
+    nullok="false"
+    setterScriptability="doesNotExist"/>
+</entity>

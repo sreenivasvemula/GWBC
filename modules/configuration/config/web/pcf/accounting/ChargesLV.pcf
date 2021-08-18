@@ -1,0 +1,175 @@
+<?xml version="1.0"?>
+<PCF
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:noNamespaceSchemaLocation="../../../../../pcf.xsd">
+  <ListViewPanel
+    id="ChargesLV">
+    <ExposeIterator
+      flags="hasPrimaryProducerCode"
+      valueType="entity.Charge"
+      widget="ChargesLV"/>
+    <Require
+      name="charges"
+      type="Charge[]"/>
+    <Require
+      name="showCheckboxes"
+      type="Boolean"/>
+    <Require
+      name="field"
+      type="Number"/>
+    <Require
+      name="showPolicyColumn"
+      type="Boolean"/>
+    <Require
+      name="showAccount"
+      type="Boolean"/>
+    <Variable
+      initialValue="0"
+      name="NONE"/>
+    <Variable
+      initialValue="1"
+      name="HOLD"/>
+    <Variable
+      initialValue="2"
+      name="COMMISSION_RATE"/>
+    <Variable
+      initialValue="util.DateUtil.currentDate()"
+      name="currentDate"/>
+    <Require
+      name="showHoldColumn"
+      type="Boolean"/>
+    <RowIterator
+      checkBoxVisible="showCheckboxes"
+      editable="field != NONE"
+      elementName="charge"
+      hasCheckBoxes="true"
+      type="Charge"
+      value="charges">
+      <Variable
+        initialValue="new gw.api.web.accounting.ChargeView(charge)"
+        name="chargeView"/>
+      <Variable
+        initialValue="chargeView.PolicyPeriod"
+        name="policyPeriod"/>
+      <Variable
+        initialValue="chargeView.PrimaryProducerCode"
+        name="primaryProducerCode"/>
+      <ToolbarFlag
+        condition="primaryProducerCode != null"
+        name="hasPrimaryProducerCode"/>
+      <Row>
+        <ButtonCell
+          hideIfDisabled="false"
+          id="ActionButton"
+          value="displaykey.Web.AccountPaymentsLV.Actions">
+          <MenuItem
+            action="ChargeTransactionDetailsForward.push(charge)"
+            hideIfDisabled="true"
+            id="ViewTransaction"
+            label="displaykey.Web.AccountPaymentsLV.Transaction"/>
+        </ButtonCell>
+        <DateCell
+          id="ChargeDate"
+          label="displaykey.Web.ChargesLV.ChargeDate"
+          value="charge.ChargeDate"/>
+        <Cell
+          action="AccountDetailSummary.push(chargeView.Account)"
+          id="Account"
+          label="displaykey.Web.ChargesLV.Account"
+          value="chargeView.Account"
+          visible="showAccount"/>
+        <Cell
+          action="goToPayer(charge)"
+          id="DefaultPayer"
+          label="displaykey.Web.ChargesLV.DefaultPayer"
+          value="charge.DefaultPayer"/>
+        <Cell
+          id="ChargeType"
+          label="displaykey.Web.ChargesLV.ChargeType"
+          value="charge"/>
+        <Cell
+          id="ChargeContext"
+          label="displaykey.Web.ChargesLV.Context"
+          value="charge.BillingInstruction"/>
+        <Cell
+          id="ChargeGroup"
+          label="displaykey.Web.ChargesLV.ChargeGroup"
+          value="charge.ChargeGroup"/>
+        <RangeCell
+          editable="chargeView.canEditHold(field as int)"
+          fontColor="charge.isHeld() ? &quot;Red&quot; : &quot;&quot;"
+          id="ChargeHoldStatus"
+          label="displaykey.Web.ChargesLV.HoldStatus"
+          value="charge.HoldStatus"
+          valueRange="ChargeHoldStatus.getTypeKeys(false).where(\ c -&gt; charge.canBeHeld(c))"
+          visible="showHoldColumn">
+          <PostOnChange/>
+        </RangeCell>
+        <DateCell
+          editable="chargeView.canEditHoldReleaseDate(field as int)"
+          fontColor="charge.Held ? &quot;Red&quot; : &quot;&quot;"
+          id="HoldReleaseDate"
+          label="displaykey.Web.ChargesLV.HoldReleaseDate"
+          requestValidationExpression="currentDate &gt;= VALUE ? displaykey.Web.ChargesLV.HoldReleaseDate.Invalid : null"
+          value="charge.HoldReleaseDate"
+          visible="field == HOLD"/>
+        <Cell
+          action="PolicyDetailSummaryPopup.push(policyPeriod)"
+          actionAvailable="policyPeriod.ViewableByCurrentUser"
+          id="ChargePolicyPeriod"
+          label="displaykey.Web.ChargesLV.Policy"
+          value="policyPeriod"
+          valueVisible="policyPeriod != null"
+          visible="showPolicyColumn"/>
+        <MonetaryAmountCell
+          align="right"
+          currency="charge.Currency"
+          enableSort="false"
+          formatType="currency"
+          id="Amount"
+          label="displaykey.Web.ChargesLV.Amount"
+          value="charge.Amount"/>
+        <Cell
+          action="ProducerDetailPopup.push(primaryProducerCode.Producer)"
+          id="PrimaryProducer"
+          label="displaykey.Web.ChargesLV.PrimaryProducer"
+          value="primaryProducerCode"
+          visible="field == NONE or field == COMMISSION_RATE"/>
+        <TextCell
+          editable="chargeView.canEditPrimaryRate(field as int)"
+          format="displaykey.Web.AgencyBill.CommissionPercentFormat"
+          id="CommissionRate"
+          label="displaykey.Web.ChargesLV.CommissionRate"
+          numCols="5"
+          requestValidationExpression="VALUE &lt; 0 ? displaykey.Web.ChargesLV.CommissionRate.Invalid : null"
+          validationExpression="chargeView.isValidTotal() ? null : displaykey.Web.ChargesLV.CommissionRate.InvalidTotal"
+          value="chargeView.PrimaryCommissionRate"
+          visible="field == NONE or field == COMMISSION_RATE"/>
+        <TextCell
+          editable="chargeView.canEditSecondaryRate(field as int)"
+          id="CommissionRate1"
+          label="displaykey.Web.ChargesLV.CommissionRate.Secondary"
+          numCols="5"
+          requestValidationExpression="VALUE &lt; 0 ? displaykey.Web.ChargesLV.CommissionRate.Invalid : null"
+          value="chargeView.SecondaryCommissionRate"
+          visible="field == COMMISSION_RATE"/>
+        <TextCell
+          editable="chargeView.canEditReferrerRate(field as int)"
+          id="CommissionRate2"
+          label="displaykey.Web.ChargesLV.CommissionRate.Referrer"
+          numCols="5"
+          requestValidationExpression="VALUE &lt; 0 ? displaykey.Web.ChargesLV.CommissionRate.Invalid : null"
+          value="chargeView.ReferrerCommissionRate"
+          visible="field == COMMISSION_RATE"/>
+      </Row>
+    </RowIterator>
+    <Code><![CDATA[function goToPayer( charge : Charge ) {
+  var payer = charge.DefaultPayer
+  if ( payer typeis Producer ) {
+    ProducerDetail.push(payer)
+  } else {
+    AccountDetailSummary.push(payer as Account)
+  }
+}]]></Code>
+  </ListViewPanel>
+</PCF>

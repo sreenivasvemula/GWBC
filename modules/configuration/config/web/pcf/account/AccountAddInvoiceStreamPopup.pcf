@@ -1,0 +1,29 @@
+<?xml version="1.0"?>
+<PCF
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:noNamespaceSchemaLocation="../../../../../pcf.xsd">
+  <Popup
+    canEdit="true"
+    id="AccountAddInvoiceStreamPopup"
+    returnType="InvoiceStream"
+    startInEditMode="true"
+    title="displaykey.Web.AccountAddInvoiceStreamPopup.Title">
+    <LocationEntryPoint
+      signature="AccountAddInvoiceStreamPopup(account: Account)"/>
+    <Variable
+      name="account"
+      type="Account"/>
+    <Variable
+      initialValue="gw.api.domain.invoice.InvoiceStreamFactory.createInvoiceStreamFor(account.DefaultUnappliedFund, Periodicity.TC_MONTHLY)"
+      name="invoiceStream"
+      type="InvoiceStream"/>
+    <Screen>
+      <Toolbar>
+        <EditButtons
+          pickValue="invoiceStream"/>
+      </Toolbar>
+      <PanelRef
+        def="AccountInvoiceStreamDetailDV(account, new gw.api.web.invoice.InvoiceStreamView(invoiceStream))"/>
+    </Screen>
+  </Popup>
+</PCF>

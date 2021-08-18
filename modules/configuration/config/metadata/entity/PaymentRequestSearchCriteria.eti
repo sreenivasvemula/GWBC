@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?><nonPersistentEntity xmlns="http://guidewire.com/datamodel" desc="Search criteria for payment request" entity="PaymentRequestSearchCriteria" extendable="true" subpackage="search">
+  <implementsEntity name="NotInCurrencySilo"/>
+  <monetaryamount amountColumnName="MinAmount"
+    amountRange="nonnegative" desc="The minimum amount to search for" name="MinAmount" nullok="true" scaleToCurrency="true"/>
+  <monetaryamount amountColumnName="MaxAmount"
+    amountRange="nonnegative" desc="The maximum amount to search for" name="MaxAmount" nullok="true" scaleToCurrency="true"/>
+  <column desc="Earliest draft date to search" name="EarliestDraftDate" nullok="true" type="datetime"/>
+  <column desc="Latest draft date to search" name="LatestDraftDate" nullok="true" type="datetime"/>
+  <column desc="Earliest request date to search" name="EarliestRequestDate" nullok="true" type="datetime"/>
+  <column desc="Latest request date to search" name="LatestRequestDate" nullok="true" type="datetime"/>
+  <column desc="Earliest status date to search" name="EarliestStatusDate" nullok="true" type="datetime"/>
+  <column desc="Latest status date to search" name="LatestStatusDate" nullok="true" type="datetime"/>
+  <column desc="The related account number" name="AccountNumber" nullok="true" type="shorttext"/>
+  <typekey desc="The payment method being requested" name="Method" nullok="true" typelist="PaymentMethod"/>
+  <column desc="The Token associated with the PaymentInstrument that was used to make the PaymentRequest" name="Token" nullok="true" type="shorttext"/>
+  <typekey desc="The currency unit to restrict the search to" name="Currency" nullok="true" typelist="Currency"/>
+  <typekey desc="Status of the payment request." name="Status" nullok="true" typelist="PaymentRequestStatus"/>
+</nonPersistentEntity>

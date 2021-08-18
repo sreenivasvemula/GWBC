@@ -1,0 +1,75 @@
+<?xml version="1.0"?>
+<PCF
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:noNamespaceSchemaLocation="../../../../../../pcf.xsd">
+  <Page
+    canEdit="true"
+    canVisit="perm.System.admintabview and perm.System.delplanview"
+    id="DelinquencyPlans"
+    title="displaykey.Web.DelinquencyPlans.Title">
+    <Variable
+      initialValue="new web.plan.PlanHelper()"
+      name="PlanHelper"/>
+    <Screen
+      id="DelinquencyPlansScreen">
+      <Toolbar/>
+      <ListViewPanel
+        id="DelinquencyPlansLV">
+        <RowIterator
+          editable="false"
+          elementName="delinquencyPlan"
+          value="gw.api.database.Query.make(DelinquencyPlan).select()">
+          <ToolbarFilter
+            label="displaykey.Web.DelinquencyPlansLV.Show"
+            name="Filter">
+            <ToolbarFilterOptionGroup
+              filters="new web.plan.PlanListFilterSet().FilterOptions"/>
+          </ToolbarFilter>
+          <Row>
+            <Cell
+              align="left"
+              id="PlanOrder"
+              label="displaykey.Web.DelinquencyPlansLV.PlanOrder"
+              sortOrder="1"
+              value="delinquencyPlan.PlanOrder"/>
+            <Cell
+              action="DelinquencyPlanDetail.go(delinquencyPlan)"
+              id="Name"
+              label="displaykey.Web.DelinquencyPlansLV.Name"
+              value="delinquencyPlan.Name"/>
+            <TypeKeyCell
+              id="Segments"
+              label="displaykey.Web.DelinquencyPlansLV.ApplicableSegments"
+              value="delinquencyPlan.ApplicableSegments"/>
+            <DateCell
+              id="EffectiveDate"
+              label="displaykey.Web.DelinquencyPlansLV.EffectiveDate"
+              value="delinquencyPlan.EffectiveDate"/>
+            <DateCell
+              id="ExpirationDate"
+              label="displaykey.Web.DelinquencyPlansLV.ExpirationDate"
+              value="delinquencyPlan.ExpirationDate"/>
+            <LinkCell
+              id="MovePriority"
+              label="displaykey.Web.DelinquencyPlansLV.PlanOrder.MovePriority">
+              <Link
+                action="PlanHelper.moveUp(delinquencyPlan);"
+                available="perm.System.delplanedit"
+                icon="&quot;arrow_up.png&quot;"
+                id="MoveUp"
+                tooltip="displaykey.Web.DelinquencyPlansLV.PlanOrder.MoveUp"
+                visible="delinquencyPlan.PlanOrder &gt; 1"/>
+              <Link
+                action="PlanHelper.moveDown(delinquencyPlan);"
+                available="perm.System.delplanedit"
+                icon="&quot;arrow_down.png&quot;"
+                id="MoveDown"
+                tooltip="displaykey.Web.DelinquencyPlansLV.PlanOrder.MoveDown"
+                visible="!delinquencyPlan.hasHighestPlanOrder()"/>
+            </LinkCell>
+          </Row>
+        </RowIterator>
+      </ListViewPanel>
+    </Screen>
+  </Page>
+</PCF>

@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<subtype
+  xmlns="http://guidewire.com/datamodel"
+  entity="PolTransferByRole"
+  desc="Describes the transfer of a role on a policy period to another producer code."
+  subpackage="account"
+  supertype="PolicyTransfer">
+  <typekey
+    name="RoleToTransfer"
+    typelist="PolicyRole"
+    desc="The role to transfer"
+    nullok="false"/>
+  <foreignkey
+    name="PolicyPeriod"
+    desc="The policy period to transfer"
+    columnName="PolicyPeriodID"
+    fkentity="PolicyPeriod"
+    nullok="false"/>
+</subtype>

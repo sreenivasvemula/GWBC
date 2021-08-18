@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+<PCF
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:noNamespaceSchemaLocation="../../../../../pcf.xsd">
+  <!-- Note: This Forward exists to achieve performance improvement. This Forward defers the fetching of the initial charge transaction until the point when a user actually clicks on a link to view that transaction. In that way, the pcf page that calls this Forward does not have to fetch the transaction ahead of time (fetching the transaction ahead of time would be a waste if the user never ends up clicking on the link to view the transaction.) -->
+  <Forward
+    id="ChargeTransactionDetailsForward">
+    <LocationEntryPoint
+      signature="ChargeTransactionDetailsForward(charge : Charge)"/>
+    <Variable
+      name="charge"
+      type="Charge"/>
+    <ForwardCondition
+      action="TransactionDetailPopup.push(charge.ChargeInitialTxn)"/>
+  </Forward>
+</PCF>

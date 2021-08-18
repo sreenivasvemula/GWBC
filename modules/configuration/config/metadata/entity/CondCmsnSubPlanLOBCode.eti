@@ -1,0 +1,40 @@
+<?xml version="1.0"?>
+<entity
+  xmlns="http://guidewire.com/datamodel"
+  entity="CondCmsnSubPlanLOBCode"
+  type="versionable"
+  desc="Represents an entry in the CondCmsnSubPlan's ExcludedLOBCodes table. Each entry represents a LOBCode                 excluded by the sub-plan."
+  admin="true"
+  subpackage="commission"
+  loadable="false"
+  platform="false"
+  table="condcmsnsubplanlobcode">
+  <implementsEntity
+    name="NotInCurrencySilo"/>
+  <foreignkey
+    name="CondCmsnSubPlan"
+    desc="FK to container."
+    columnName="CondCmsnSubPlanID"
+    fkentity="CondCmsnSubPlan"
+    getterScriptability="doesNotExist"
+    nullok="false"
+    setterScriptability="doesNotExist"/>
+  <typekey
+    name="LOBCode"
+    typelist="LOBCode"
+    desc="The LOB."
+    getterScriptability="doesNotExist"
+    nullok="false"
+    setterScriptability="doesNotExist"/>
+  <index
+    desc="Legacy"
+    name="commsubplanlob"
+    unique="true">
+    <indexcol
+      name="CondCmsnSubPlanID"
+      keyposition="1"/>
+    <indexcol
+      name="LOBCode"
+      keyposition="2"/>
+  </index>
+</entity>

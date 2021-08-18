@@ -1,0 +1,232 @@
+<?xml version="1.0"?>
+<entity
+        xmlns="http://guidewire.com/datamodel"
+        desc="A producer"
+        entity="Producer"
+        setterScriptability="hidden"
+        subpackage="producer"
+        table="producer"
+        type="retireable">
+  <implementsEntity
+          name="Validatable"/>
+  <implementsEntity
+          name="TAccountOwner"/>
+  <implementsEntity
+          name="HoldRelatedEntity"/>
+  <implementsEntity
+          name="NoteContainer"/>
+  <implementsEntity
+          name="DocumentContainer"/>
+  <implementsEntity
+          name="HistoryEventContainer"/>
+  <column
+          default="false"
+          desc="Whether combined statements are allowed"
+          name="CombinedStatements"
+          nullok="false"
+          type="bit"/>
+  <column
+          desc="The name of this producer"
+          name="Name"
+          nullok="false"
+          supportsLinguisticSearch="true"
+          type="shorttext"/>
+  <column
+          desc="Determines whether or not to suspend negative accounts"
+          name="SuspendNegativeAmounts"
+          nullok="false"
+          type="bit"/>
+  <typekey
+          desc="The Tier of the producer"
+          name="Tier"
+          nullok="false"
+          typelist="ProducerTier"/>
+  <foreignkey
+          columnName="HiddenTAccountContainerID"
+          exportable="false"
+          fkentity="ProducerTAcctContainer"
+          getterScriptability="doesNotExist"
+          importableagainstexistingobject="false"
+          name="HiddenTAccountContainer"
+          nullok="false"
+          setterScriptability="doesNotExist"/>
+  <foreignkey
+          columnName="SecurityZoneID"
+          desc="The security zone assigned to this producer, if any"
+          exportasid="true"
+          fkentity="SecurityZone"
+          name="SecurityZone"
+          nullok="true"/>
+  <array
+          arrayentity="AgencyBillCycle"
+          desc="Agency Bill Cycles for this Producer"
+          name="AgencyBillCycles"
+          setterScriptability="hidden"/>
+  <array
+          arrayentity="ProducerCode"
+          desc="The producer codes for this producer"
+          name="ProducerCodes"
+          owner="true"/>
+  <array
+          arrayentity="TroubleTicketJoinEntity"
+          desc="Join entity that provides relationship with the trouble tickets associated with this producer"
+          name="TroubleTicketJoinEntities"/>
+  <array
+          arrayentity="ProducerStatement"
+          desc="Statements for this Producer"
+          name="Statements"
+          setterScriptability="hidden"/>
+  <array
+          arrayentity="ProducerContact"
+          arrayfield="Producer"
+          desc="Contacts on this producer"
+          name="Contacts"
+          owner="true"/>
+  <array
+          arrayentity="ProducerHistory"
+          arrayfield="Producer"
+          desc="History entries on this account"
+          ignoreforevents="true"
+          name="History"/>
+  <array
+          arrayentity="InvoiceStream"
+          name="InvoiceStreams"
+          owner="true"
+          setterScriptability="hidden"/>
+  <onetoone
+          desc="The denormalized primary contact"
+          fkentity="ProducerContact"
+          linkField="PrimaryProducer"
+          name="PrimaryContact"
+          nullok="true"
+          setterScriptability="hidden"/>
+  <edgeForeignKey
+          desc="The internal BillingCenter user who manages all billing and payment related issues associated with this particular producer."
+          edgeTableName="produceracctrep"
+          fkentity="User"
+          ignoreforevents="true"
+          name="AccountRep"
+          nullok="true"/>
+  <array
+          arrayentity="PaymentInstrument"
+          desc="PaymentInstruments that belong to this Account and are usable for initiating billing"
+          getterScriptability="hidden"
+          name="OwnedPaymentInstruments"
+          setterScriptability="hidden"/>
+  <edgeForeignKey
+          desc="The default PaymentInstrument to be used when no specific PaymentInstrument is specified."
+          edgeTableName="prodpmntinst"
+          fkentity="PaymentInstrument"
+          ignoreforevents="true"
+          loadable="true"
+          name="DefaultPaymentInstrument"
+          nullok="false"
+          soapnullok="true"/>
+  <!-- ProducerPaymentRecurrable is an implementation of Recurrable that takes care
+of paying this Producer commission on a recurring basis (for Direct Bill) -->
+  <onetoone
+          desc="Recurrable that pays this producer's commissions on a recurring basis"
+          exportable="false"
+          fkentity="ProducerPaymentRecurrable"
+          name="ProducerPaymentRecurrable"
+          nullok="true"
+          setterScriptability="doesNotExist"/>
+  <foreignkey
+          columnName="AgencyBillPlanID"
+          desc="Plan that governs how agency billing occurs.  If null, this is a direct bill."
+          fkentity="AgencyBillPlan"
+          name="AgencyBillPlan"
+          nullok="true"/>
+  <foreignkey
+          columnName="ReportingGroupID"
+          desc="The reporting group assigned, if any"
+          exportasid="true"
+          fkentity="ReportingGroup"
+          name="ReportingGroup"
+          nullok="true"/>
+  <!-- Denormalized Commission Fields -->
+  <monetaryamount
+          amountColumnName="TotalCommissionReserve"
+          desc="Denormalized value for Total Commission Reserve"
+          name="TotalCommissionReserve"
+          nullok="false"
+          overwrittenInStagingTable="true"
+          scaleToCurrency="true"
+          setterScriptability="hidden"
+          soapnullok="true">
+    <tag
+            name="DefaultValueZero"/>
+  </monetaryamount>
+  <monetaryamount
+          amountColumnName="TotalCommissionPayable"
+          desc="Denormalized value for Total Commission Payable"
+          name="TotalCommissionPayable"
+          nullok="false"
+          overwrittenInStagingTable="true"
+          scaleToCurrency="true"
+          setterScriptability="hidden"
+          soapnullok="true">
+    <tag
+            name="DefaultValueZero"/>
+  </monetaryamount>
+  <monetaryamount
+          amountColumnName="TotalCommissionExpense"
+          desc="Denormalized value for Total Commission Expense"
+          name="TotalCommissionExpense"
+          nullok="false"
+          overwrittenInStagingTable="true"
+          scaleToCurrency="true"
+          setterScriptability="hidden"
+          soapnullok="true">
+    <tag
+            name="DefaultValueZero"/>
+  </monetaryamount>
+  <events>
+    <event
+            description="Resync event. Generated only as a result of an application administrator requesting a Resync.             All pending messages for the producer are thrown away and this event is then fired.             Implementers will generally handle this event and send enough of the producer to bring the             remote system up to date."
+            name="ProducerResync"/>
+  </events>
+  <index
+          desc="Legacy"
+          name="namedenorm">
+    <indexcol
+            keyposition="1"
+            name="NameDenorm"/>
+    <indexcol
+            keyposition="2"
+            name="Retired"/>
+  </index>
+  <index
+          desc="Legacy"
+          name="taccountcontainer"
+          unique="true">
+    <indexcol
+            keyposition="1"
+            name="HiddenTAccountContainerID"/>
+  </index>
+  <!-- NOTE pdalbora 27-Jul-2006: Intentionally leaving Retired off this index. Each new ProducerCode
+mints a new TAccountContainer. -->
+  <dbcheckbuilder
+          className="com.guidewire.bc.system.database.dbchecks.producer.ProducerPaymentInstrumentsDBCheckBuilder"/>
+  <dbcheckbuilder
+          className="com.guidewire.bc.system.database.dbchecks.producer.ProducerPrimaryContactDBCheckBuilder"/>
+  <dbcheckbuilder
+          className="com.guidewire.bc.system.database.dbchecks.producer.ProducerPaymentRecurrableDBCheckBuilder"/>
+  <dbcheckbuilder
+          className="com.guidewire.bc.system.database.dbchecks.producer.ProducerTotalCommissionExpenseDBCheckBuilder"/>
+  <dbcheckbuilder
+          className="com.guidewire.bc.system.database.dbchecks.producer.ProducerTotalCommissionPayableDBCheckBuilder"/>
+  <dbcheckbuilder
+          className="com.guidewire.bc.system.database.dbchecks.producer.ProducerTotalCommissionReserveDBCheckBuilder"/>
+  <dbcheckbuilder
+          className="com.guidewire.bc.system.database.dbchecks.commission.UpgradeStatementDBCheckBuilder"/>
+  <onetoone
+          cascadeDelete="true"
+          desc="The hidden join entity that associates this producer with the {@link gw.bc.producer.entity.MixedCurrencyProducerGroup MixedCurrencyProducerGroup} to which it belongs. The currency group is not accessible from this entity; use {@link gw.bc.account.entity.Producer#getProducerCurrencyGroup ProducerCurrencyGroup} instead. This should only be used to access extension fields added to the join entity."
+          exportable="false"
+          fkentity="ProducerCurrencyGroup"
+          ignoreforevents="true"
+          name="_ProducerCurrencyGroup"
+          nullok="true"
+          setterScriptability="doesNotExist"/>
+</entity>

@@ -1,0 +1,162 @@
+<?xml version="1.0"?>
+<PCF
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:noNamespaceSchemaLocation="../../../../../../pcf.xsd">
+  <Screen
+    id="AgencyDistributionWizard_DispositionsScreen">
+    <Require
+      name="wizardState"
+      type="gw.agencybill.AgencyDistributionWizardHelper"/>
+    <Variable
+      initialValue="wizardState.MoneySetup.Producer"
+      name="producer"/>
+    <Variable
+      initialValue="wizardState.ExceptionDistItems"
+      name="exceptionDistItems"/>
+    <Toolbar>
+      <WizardButtons/>
+      <ToolbarDivider/>
+      <ToolbarButton
+        action="wizardState.save(CurrentLocation as pcf.api.Wizard)"
+        available="!wizardState.AgencyCycleDistView.AgencyCycleDist.Modifying"
+        id="SavePayment"
+        label="displaykey.Button.Save"
+        shortcut="S"/>
+    </Toolbar>
+    <AlertBar
+      allowDismiss="false"
+      id="ExceptionsDescription"
+      label="wizardState.getExceptionsDescription(exceptionDistItems)"
+      visible="!exceptionDistItems.IsEmpty"/>
+    <PanelRef
+      def="AgencyDistributionWizard_DistributionInfoPanelSet(wizardState)"/>
+    <PanelRef
+      id="WriteOffPanel"
+      visible="wizardState.Remaining.IsNotZero &amp;&amp; (wizardState.IsPayment || wizardState.IsCreditDistribution)">
+      <TitleBar
+        id="WriteOffHeader"
+        title="displaykey.Web.AgencyDistributionWizard.Step.Dispositions.WriteOffHeader"/>
+      <DetailViewPanel
+        id="WriteOffDV">
+        <Variable
+          initialValue="wizardState.MoneySetup"
+          name="moneySetup"/>
+        <InputHeaderSection>
+          <RangeRadioInput
+            editable="true"
+            id="DistributionDifferenceMethod"
+            label="getDistributionDifferenceMethodLabel(moneySetup.DistributionTypeName)"
+            labelAbove="true"
+            required="true"
+            stacked="true"
+            value="wizardState.DistributionDifferenceMethod"
+            valueRange="wizardState.DistributionDifferenceMethodValues">
+            <PostOnChange
+              target="WriteOffDV"/>
+          </RangeRadioInput>
+        </InputHeaderSection>
+        <InputColumn>
+          <Label
+            label="displaykey.Web.AgencyDistributionWizard.Step.Distribution.WriteOffDV.UnappliedBalance"/>
+          <MonetaryAmountInput
+            currency="producer.Currency"
+            formatType="currency"
+            id="BeforeThisPayment"
+            label="displaykey.Web.AgencyDistributionWizard.Step.Distribution.WriteOffDV.BeforeThisDistribution(moneySetup.DistributionTypeName)"
+            value="producer.UnappliedAmount - wizardState.ModifiedUnappliedAmount"/>
+          <Input
+            formatType="currency"
+            id="UnappliedBalanceThisPayment"
+            label="displaykey.Web.AgencyDistributionWizard.Step.Distribution.WriteOffDV.UnappliedBalanceThisDistribution(moneySetup.DistributionTypeName)"
+            value="wizardState.AdjustProducerUnapplied ? wizardState.Remaining : 0bd.ofCurrency(producer.Currency)"/>
+          <MonetaryAmountInput
+            currency="producer.Currency"
+            formatType="currency"
+            id="AfterThisPayment"
+            label="displaykey.Web.AgencyDistributionWizard.Step.Distribution.WriteOffDV.AfterThisDistribution(moneySetup.DistributionTypeName)"
+            value="(wizardState.AdjustProducerUnapplied ? (producer.UnappliedAmount - (wizardState.Remaining.negate())) : producer.UnappliedAmount) - wizardState.ModifiedUnappliedAmount // remaining is a postive value if there is money left to distribute, so we need to negate it to subtract it from unapplied"/>
+        </InputColumn>
+        <InputColumn>
+          <Label
+            label="displaykey.Web.AgencyDistributionWizard.Step.Distribution.WriteOffDV.WriteOffExpense"/>
+          <Input
+            formatType="currency"
+            id="WriteOffExpenseThisPayment"
+            label="displaykey.Web.AgencyDistributionWizard.Step.Distribution.WriteOffDV.WriteOffExpenseThisDistribution(moneySetup.DistributionTypeName)"
+            value="wizardState.AdjustProducerUnapplied ? 0bd.ofCurrency(producer.Currency) : wizardState.Remaining.negate()"/>
+        </InputColumn>
+      </DetailViewPanel>
+    </PanelRef>
+    <PanelRef
+      id="ExceptionsPanel"
+      visible="!exceptionDistItems.IsEmpty">
+      <TitleBar
+        title="displaykey.Web.AgencyDistributionWizard.Step.Distribution.ExceptionsLV.Title"/>
+      <Toolbar/>
+      <ListViewPanel
+        id="ExceptionsLV">
+        <RowIterator
+          canPick="false"
+          editable="true"
+          elementName="exceptionDistItem"
+          type="BaseDistItem"
+          value="exceptionDistItems">
+          <Variable
+            initialValue="exceptionDistItem.InvoiceItem"
+            name="invoiceItem"/>
+          <Row
+            editable="invoiceItem.Type != InvoiceItemType.TC_COMMISSIONREMAINDER">
+            <Cell
+              action="invoiceItem.StatementInvoiceDetailViewAction()"
+              actionAvailable="invoiceItem.Invoice typeis StatementInvoice"
+              id="StatementNumber"
+              label="displaykey.Web.AgencyDistributionWizard.Step.Distribution.ExceptionsLV.StatementNumber"
+              value="invoiceItem.Invoice.InvoiceNumber"/>
+            <DateCell
+              id="StatementDate"
+              label="displaykey.Web.AgencyDistributionWizard.Step.Distribution.ExceptionsLV.StatementDate"
+              value="invoiceItem.Invoice.EventDate"/>
+            <Cell
+              action="PolicyDetailSummaryPopup.push(invoiceItem.PolicyPeriod)"
+              id="PolicyNumber"
+              label="displaykey.Web.AgencyDistributionWizard.Step.Distribution.ExceptionsLV.PolicyNumber"
+              value="invoiceItem.PolicyPeriod.PolicyNumberLong"/>
+            <Cell
+              action="InvoiceItemHistoryPopup.push(invoiceItem)"
+              id="Item"
+              label="displaykey.Web.AgencyDistributionWizard.Step.Distribution.ExceptionsLV.Item"
+              value="invoiceItem.DisplayNameAsItemType"/>
+            <Cell
+              id="Issue"
+              label="displaykey.Web.AgencyDistributionWizard.Step.Distribution.ExceptionsLV.Issue"
+              value="exceptionDistItem.ExceptionDescription"/>
+            <MonetaryAmountCell
+              currency="producer.Currency"
+              formatType="currency"
+              id="Difference"
+              label="displaykey.Web.AgencyDistributionWizard.Step.Distribution.ExceptionsLV.Difference"
+              value="exceptionDistItem.NetDifferenceAmount"/>
+            <RangeCell
+              editable="true"
+              id="Disposition"
+              label="displaykey.Web.AgencyDistributionWizard.Step.Distribution.ExceptionsLV.Disposition"
+              required="true"
+              value="exceptionDistItem.Disposition"
+              valueRange="DistItemDisposition.getTypeKeys( false )"
+              valueVisible="invoiceItem.Type != InvoiceItemType.TC_COMMISSIONREMAINDER"/>
+            <Cell
+              action="AccountDetailSummaryPopup.push(invoiceItem.Owner)"
+              id="OwnerAccount"
+              label="displaykey.Web.AgencyDistributionWizard.Step.Distribution.ExceptionsLV.OwnerAccount"
+              value="invoiceItem.Owner"/>
+          </Row>
+        </RowIterator>
+      </ListViewPanel>
+    </PanelRef>
+    <Code><![CDATA[function getDistributionDifferenceMethodLabel(moneySetupType : String) : String {
+ return wizardState.Remaining.IsNegative ?  
+   displaykey.Web.AgencyDistributionWizard.Step.Dispositions.WriteOffDV.DistributionDifferenceMethod.DepleteUnapplied(moneySetupType, wizardState.Remaining.negate().render()) :
+   displaykey.Web.AgencyDistributionWizard.Step.Dispositions.WriteOffDV.DistributionDifferenceMethod.LeaveInUnapplied(moneySetupType, wizardState.Remaining.render())
+}]]></Code>
+  </Screen>
+</PCF>

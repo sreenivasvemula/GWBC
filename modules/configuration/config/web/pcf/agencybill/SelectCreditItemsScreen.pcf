@@ -1,0 +1,78 @@
+<?xml version="1.0"?>
+<PCF
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:noNamespaceSchemaLocation="../../../../../pcf.xsd">
+  <Screen
+    id="SelectCreditItemsScreen">
+    <Require
+      name="producer"
+      type="Producer"/>
+    <Require
+      name="currentInvoiceItems"
+      type="java.util.List&lt;InvoiceItem&gt;"/>
+    <Variable
+      initialValue="new java.util.HashSet&lt;PolicyPeriod&gt;()"
+      name="policyPeriods"/>
+    <Variable
+      initialValue="getNotExactlyPaidItems()"
+      name="invoiceItems"
+      recalculateOnRefresh="true"/>
+    <Variable
+      initialValue="0bd.ofCurrency(producer.Currency)"
+      name="totalNetAmount"/>
+    <Require
+      name="disbursement"
+      type="AgencyDisbursement"/>
+    <Require
+      name="payCommissionReference"
+      type="boolean[]"/>
+    <Toolbar>
+      <CheckedValuesToolbarButton
+        allCheckedRowsAction="selectItems(CheckedValues.toList())"
+        flags="any Row"
+        id="SelectInvoiceItems"
+        iterator="AgencyInvoiceItemsLV.AgencyInvoiceItemsLV"
+        label="displaykey.Web.SelectCreditItemsScreen.AddSelectedInvoiceItems"/>
+      <ToolbarButton
+        action="(CurrentLocation as pcf.api.Wizard).cancel()"
+        id="Cancel"
+        label="displaykey.Button.Cancel"/>
+    </Toolbar>
+    <PanelRef
+      def="AgencyInvoiceItemsLV(invoiceItems)">
+      <TitleBar
+        title="displaykey.Web.AddInvoiceItemsPopupWizard.AvailableInvoiceItems"/>
+      <Toolbar>
+        <PickerToolbarButton
+          action="SelectMultiplePolicyPeriodsPopup.push(createPolicySearchCriteria())"
+          id="AddPolicyPeriods"
+          label="displaykey.Web.AddInvoiceItemsPopup.AddPolicyPeriods"
+          onPick="currentInvoiceItems.clear(); policyPeriods.addAll( PickedValue.toList() )"/>
+      </Toolbar>
+    </PanelRef>
+    <Code><![CDATA[function selectItems(items : List<InvoiceItem>){
+  var amount = disbursement.computeDisbursementAmount( items, payCommissionReference[0] ).negate()
+  if(amount.signum() < 0){
+    currentInvoiceItems.addAll(items.toList()); 
+    (CurrentLocation as pcf.api.Wizard).next()
+  }else{
+    throw new gw.api.util.DisplayableException(displaykey.Web.SelectCreditItemsScreen.InsufficientCredit(amount.render()))
+  }
+}
+
+function getNotExactlyPaidItems() : InvoiceItem[]{
+  var items = new java.util.ArrayList<InvoiceItem>()
+  for ( policy in policyPeriods ) {
+    items.addAll( policy.InvoiceItems.where( \ invoiceItem -> !invoiceItem.Settled ).toList() )
+  }
+  return items.toTypedArray()
+}
+
+function createPolicySearchCriteria() : gw.search.PolicySearchCriteria {
+  var criteria = new gw.search.PolicySearchCriteria()
+  criteria.Producer = producer
+  criteria.BillingMethod = PolicyPeriodBillingMethod.TC_AGENCYBILL
+  return criteria
+}]]></Code>
+  </Screen>
+</PCF>

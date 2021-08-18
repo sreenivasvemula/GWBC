@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xml:lang="en" lang="en" xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+    <meta http-equiv="Content-Style-Type" content="text/css" />
+    <!-- MOTW-DISABLED saved from url=(0014)about:internet -->
+    <title>Associative Array Syntax for Property Access</title>
+    <link rel="StyleSheet" href="css/datatypes.css" type="text/css" media="all" />
+    <link rel="StyleSheet" href="css/webworks.css" type="text/css" media="all" />
+    <link rel="StyleSheet" href="css/css-guidewire-extra.css" type="text/css" media="all" />
+    <script type="text/javascript" language="JavaScript1.2" src="wwhdata/common/context.js"></script>
+    <script type="text/javascript" language="JavaScript1.2" src="wwhdata/common/towwhdir.js"></script>
+    <script type="text/javascript" language="JavaScript1.2" src="wwhdata/common/wwhpagef.js"></script>
+    <script type="text/javascript" language="JavaScript1.2">
+      <!--
+        var  WebWorksRootPath = "";
+      // -->
+    </script>
+    <script type="text/javascript" language="JavaScript1.2">
+      <!--
+        // Set reference to top level help frame
+        //
+        var  WWHFrame = WWHGetWWHFrame("", true);
+      // -->
+    </script>
+    <script type="text/javascript" language="JavaScript1.2" src="scripts/expand.js"></script>
+    <!-- THE FOLLOWING IS A GUIDEWIRE STYLE DEFINITION FOR THE LINK TO THIS FEATURE -->
+    <link rel="StyleSheet" href="css/css-guidewire-extra.css" type="text/css" media="all" />
+    <!-- THE FOLLOWING IS A GUIDEWIRE GSCRIPT FUNCTION FOR THE LINK TO THIS FEATURE -->
+    <script type="text/javascript">
+function guidewire_selectall()
+{
+var text_val=eval("document.linktothisurlform.urlfield");
+text_val.focus();
+text_val.select();
+}
+</script>
+  </head>
+  <body onLoad="WWHUpdate();" onUnload="WWHUnload();" onKeyDown="WWHHandleKeyDown((document.all||document.getElementById||document.layers)?event:null);" onKeyPress="WWHHandleKeyPress((document.all||document.getElementById||document.layers)?event:null);" onKeyUp="WWHHandleKeyUp((document.all||document.getElementById||document.layers)?event:null);">
+    <!-- THE FOLLOWING IS A GUIDEWIRE DIV FOR THE 'LINK TO THIS' FEATURE -->
+    <div id="linkToThisPage" class="popup" style="display: none;">
+      <div class="popupTitle">Link Directly to This Page 
+           <a href="#" onclick="var thePopup = getElementById('linkToThisPage');thePopup.style.display='none';return false;"><img class="popupClosebox" src="wwhelp/wwhimpl/common/images/close.gif" /></a></div>
+      <div style="padding:6px;">
+        <div class="popupText" id="linkToThisPageBookmark">An error has occurred if you see this messsage.</div>
+        <form name="linktothisurlform" method="post" action="" style="width:275px;margin:0px">
+          <input type="text" class="popupURLText" id="linkToThisPageURL" name="urlfield" rows="1" cols="55" onClick="guidewire_selectall();" onFocus="guidewire_selectall();"></input>
+        </form>
+      </div>
+    </div>
+    <br />
+    <div class="WebWorks_Breadcrumbs" style="text-align: left;">
+      <span>Gosu Reference Guide</span> : 
+    <span class="WebWorks_Breadcrumbs" style="text-align: left;"><a class="WebWorks_Breadcrumb_Link" href="datatypes.04.01.html#1535394">Types</a> : <a class="WebWorks_Breadcrumb_Link" href="datatypes.04.07.html#1535394">Array Types</a> : Associative Array Syntax for Property Access</span></div>
+    <hr align="left" />
+    <blockquote>
+      <h4 class="H2B_-_Heading_2_Break"><a name="1535394">Associative Array Syntax for Property Access</a></h4>
+      <div class="B_-_Body"><a name="1536263">For most types other than Gosu arrays, you can use </a><span class="e_-_emphasis">associative array syntax</span> to access the elements, or properties, of an object. With associative array syntax, you access an object property with a <span class="cv_-_computer_voice">String</span> value in square brackets that contains the property name instead of an index number. </div>
+      <div class="B_-_Body"><a name="1612632">The following code uses associative array syntax to get the postal code of a contact.</a></div>
+      <div class="CS_-_Code_Single_Line"><a name="1612634">contact</a><span class="s_-_strong">["PostalCode"]</span> </div>
+      <div class="B_-_Body"><a name="1612626">Use associative array syntax if a property name is unknown at compile but can be determined at run time with input from users. If the property name does not exist at run time, Gosu throws an exception. </a></div>
+      <div class="NW_-_Note_Warning">
+        <span class="w_-_warning">WARNING  </span><a name="1539561">Gosu cannot check associative array syntax at compile time to be certain that a property name is accurate or that the property exists. Be careful whenever you use associate array syntax to catch unexpected run time errors. Use property path expressions, which provide typesafe property access, instead of associative array syntax whenever possible.</a></div>
+      <div class="B_-_Body"><a name="1535430">Associative arrays on objects in Gosu are similar to instances of the Java map class </a><span class="cv_-_computer_voice">java.util.Map</span>. Associative array syntax for property access works with most classes, including the <span class="cv_-_computer_voice">Map</span> class and types that do not take array-style index numbers. </div>
+      <div class="B_-_Body"><a name="1612830">You cannot use associative array syntax with </a><span class="cv_-_computer_voice">String</span> objects in Gosu. A <span class="cv_-_computer_voice">String</span> object behaves like an ordered list of characters and requires array index notation to access its individual character elements.</div>
+      <h6 class="HS_-_Head_Sub"><a name="1539182">Examples</a></h6>
+      <div class="B_-_Body"><a name="1600709">The following code demonstrates single associative array syntax to get the </a><span class="cv_-_computer_voice">StreetAddress</span> property on a <span class="cv_-_computer_voice">Person</span> object. At run time, the code is equivalent to the property path expression <span class="cv_-_computer_voice">person.StreetAddress</span>. The code might evaluate to <span class="cv_-_computer_voice">123 Main Street</span>. </div>
+      <div class="CS_-_Code_Single_Line"><a name="1602193">person["StreetAddress"] </a></div>
+      <div class="B_-_Body"><a name="1602254">The following code demonstrates double associative array syntax to get the </a><span class="cv_-_computer_voice">City</span> property on the <span class="cv_-_computer_voice">Address</span> object that is a property of a <span class="cv_-_computer_voice">Person</span> object. At runtime, the code is equivalent to the property path expression <span class="cv_-_computer_voice">person.Address.City</span>. The code might evaluate to <span class="cv_-_computer_voice">Birmingham</span>.</div>
+      <div class="CS_-_Code_Single_Line"><a name="1612430">person["Address"]["City"] </a></div>
+      <div class="B_-_Body"><a name="1539543">The following code uses single associative array syntax to set the </a><span class="cv_-_computer_voice">City</span> property on an <span class="cv_-_computer_voice">Address</span> object. </div>
+      <div class="CS_-_Code_Single_Line"><a name="1635969">newAddress["City"] = "Birmingham"</a></div>
+      <div class="CS_-_Code_Single_Line"><a name="1612477">newAddress[“City"] = "Birmingham"</a></div>
+      <h6 class="HS_-_Head_Sub"><a name="1601088">See also. </a></h6>
+      <div class="BI_-_Bullet_Item_outer" style="margin-left: 57pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="BI_-_Bullet_Item_inner" style="width: 15pt; white-space: nowrap">
+                <span class="bu_-_bullet">•	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="BI_-_Bullet_Item_inner"><a name="1601952">For information about property path expressions, see </a><a href="javascript:WWHClickedPopup('gosu', 'expressions.05.20.html#1655840', '');" title="Handling Null Values In Expressions">Null-safe Property Access</a>.</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="BI_-_Bullet_Item_outer" style="margin-left: 57pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="BI_-_Bullet_Item_inner" style="width: 15pt; white-space: nowrap">
+                <span class="bu_-_bullet">•	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="BI_-_Bullet_Item_inner"><a name="1613229">For information about maps and other collection types, see </a><a href="javascript:WWHClickedPopup('gosu', 'collections.20.1.html#1448766', '');" title="Collections">“Collections”</a>.</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="BI_-_Bullet_Item_outer" style="margin-left: 57pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="BI_-_Bullet_Item_inner" style="width: 15pt; white-space: nowrap">
+                <span class="bu_-_bullet">•	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="BI_-_Bullet_Item_inner"><a name="1601393">For information about how to acquire property names at run time, see </a><a href="javascript:WWHClickedPopup('gosu', 'typesystem.24.5.html#1455649', '');" title="Using Reflection">“Using Reflection”</a>.</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <script type="text/javascript" language="JavaScript1.2">
+        <!--
+          // Clear related topics
+          //
+          WWHClearRelatedTopics();
+
+          document.writeln(WWHRelatedTopicsInlineHTML());
+        // -->
+      </script>
+    </blockquote>
+    <script type="text/javascript" language="JavaScript1.2">
+      <!--
+        document.write(WWHRelatedTopicsDivTag() + WWHPopupDivTag() + WWHALinksDivTag());
+      // -->
+    </script>
+  </body>
+</html>

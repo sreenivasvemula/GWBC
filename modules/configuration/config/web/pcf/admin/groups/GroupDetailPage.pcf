@@ -1,0 +1,35 @@
+<?xml version="1.0"?>
+<PCF
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:noNamespaceSchemaLocation="../../../../../../pcf.xsd">
+  <Page
+    canEdit="perm.Group.edit"
+    canVisit="perm.Group.edit"
+    id="GroupDetailPage"
+    parent="Admin()"
+    title="displaykey.Web.Admin.GroupDetail(Group.DisplayName)">
+    <LocationEntryPoint
+      signature="GroupDetailPage(Group : Group)"/>
+    <Variable
+      name="Group"
+      type="Group"/>
+    <Screen
+      id="GroupDetailScreen">
+      <Toolbar>
+        <EditButtons/>
+        <ToolbarButton
+          action="gw.api.admin.BaseAdminUtil.deleteGroup(Group); Admin.go()"
+          available="Group.SafeToDelete"
+          confirmMessage="displaykey.Web.Admin.GroupDetail.DeleteConfirm"
+          hideIfEditable="true"
+          id="GroupDetailPage_BasicCard_DeleteButton"
+          label="displaykey.Web.Admin.GroupDetail.DeleteGroup"
+          visible="perm.Group.delete"/>
+      </Toolbar>
+      <PanelRef
+        def="GroupDetailDV(Group)"/>
+      <PanelRef
+        def="LocalizedValuesDV(Group, { &quot;Name&quot; }, { (gw.api.util.LocaleUtil.CurrentLocaleType == LocaleType.TC_JA_JP) ? displaykey.Web.Admin.GroupDetail.BasicDV.NamePhonetic : displaykey.Web.Admin.GroupDetail.BasicDV.Name })"/>
+    </Screen>
+  </Page>
+</PCF>

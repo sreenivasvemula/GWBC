@@ -1,0 +1,56 @@
+<?xml version="1.0"?>
+<Entity
+  name="InvoiceStream">
+  <Columns>
+    <Column
+      beanPath="InvoiceStream.Producer"
+      name="Producer"
+      sortOrder="3"/>
+    <Column
+      beanPath="InvoiceStream.Periodicity"
+      name="StreamPeriodicity"
+      sortOrder="2"/>
+    <Column
+      beanPath="InvoiceStream.Policy"
+      displayName="true"
+      name="Policy"
+      sortOrder="1"/>
+    <Column
+      beanPath="InvoiceStream.PolicyLevelStream"
+      name="IsPolicyLevelStream"
+      sortOrder=""/>
+    <Column
+      beanPath="InvoiceStream.InvoicePayer.PolicyLevelBilling"
+      name="IsPolicyLevelBilling"/>
+    <Column
+      beanPath="InvoiceStream.UniqueForPeriodicityAndPayer"
+      name="IsUnique"/>
+    <Column
+      beanPath="InvoiceStream.CreationOrder"
+      name="CreationOrder"/>
+    <Column
+      beanPath="InvoiceStream.Description"
+      name="Description"/>
+  </Columns>
+  <DisplayName><![CDATA[var isProducerStream = Producer != null
+var displayName = ""
+if (isProducerStream) {
+  displayName = displaykey.DisplayName.InvoiceStream.ProducerStreamName
+} else if (IsPolicyLevelStream) {
+  displayName = displaykey.DisplayName.InvoiceStream.PolicyLevelStreamName(Policy, StreamPeriodicity)
+} else if (IsPolicyLevelBilling && StreamPeriodicity == Periodicity.TC_MONTHLY) {
+  displayName = displaykey.DisplayName.InvoiceStream.AccountChargeStreamNameForPolicyLevelBilling
+} else {
+  displayName = StreamPeriodicity.DisplayName
+}
+
+if (!IsUnique) {
+  if (Description == null) {
+    displayName += " (" + CreationOrder + ")"
+  } else {
+    displayName += " (" + Description + ")"
+  }
+}
+
+return displayName]]></DisplayName>
+</Entity>

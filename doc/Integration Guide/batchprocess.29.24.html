@@ -1,0 +1,218 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xml:lang="en" lang="en" xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+    <meta http-equiv="Content-Style-Type" content="text/css" />
+    <!-- MOTW-DISABLED saved from url=(0014)about:internet -->
+    <title>Example Batch Process for Unit of Work Processing</title>
+    <link rel="StyleSheet" href="css/batchprocess.css" type="text/css" media="all" />
+    <link rel="StyleSheet" href="css/webworks.css" type="text/css" media="all" />
+    <link rel="StyleSheet" href="css/css-guidewire-extra.css" type="text/css" media="all" />
+    <script type="text/javascript" language="JavaScript1.2" src="wwhdata/common/context.js"></script>
+    <script type="text/javascript" language="JavaScript1.2" src="wwhdata/common/towwhdir.js"></script>
+    <script type="text/javascript" language="JavaScript1.2" src="wwhdata/common/wwhpagef.js"></script>
+    <script type="text/javascript" language="JavaScript1.2">
+      <!--
+        var  WebWorksRootPath = "";
+      // -->
+    </script>
+    <script type="text/javascript" language="JavaScript1.2">
+      <!--
+        // Set reference to top level help frame
+        //
+        var  WWHFrame = WWHGetWWHFrame("", true);
+      // -->
+    </script>
+    <script type="text/javascript" language="JavaScript1.2" src="scripts/expand.js"></script>
+    <!-- THE FOLLOWING IS A GUIDEWIRE STYLE DEFINITION FOR THE LINK TO THIS FEATURE -->
+    <link rel="StyleSheet" href="css/css-guidewire-extra.css" type="text/css" media="all" />
+    <!-- THE FOLLOWING IS A GUIDEWIRE GSCRIPT FUNCTION FOR THE LINK TO THIS FEATURE -->
+    <script type="text/javascript">
+function guidewire_selectall()
+{
+var text_val=eval("document.linktothisurlform.urlfield");
+text_val.focus();
+text_val.select();
+}
+</script>
+  </head>
+  <body onLoad="WWHUpdate();" onUnload="WWHUnload();" onKeyDown="WWHHandleKeyDown((document.all||document.getElementById||document.layers)?event:null);" onKeyPress="WWHHandleKeyPress((document.all||document.getElementById||document.layers)?event:null);" onKeyUp="WWHHandleKeyUp((document.all||document.getElementById||document.layers)?event:null);">
+    <!-- THE FOLLOWING IS A GUIDEWIRE DIV FOR THE 'LINK TO THIS' FEATURE -->
+    <div id="linkToThisPage" class="popup" style="display: none;">
+      <div class="popupTitle">Link Directly to This Page 
+           <a href="#" onclick="var thePopup = getElementById('linkToThisPage');thePopup.style.display='none';return false;"><img class="popupClosebox" src="wwhelp/wwhimpl/common/images/close.gif" /></a></div>
+      <div style="padding:6px;">
+        <div class="popupText" id="linkToThisPageBookmark">An error has occurred if you see this messsage.</div>
+        <form name="linktothisurlform" method="post" action="" style="width:275px;margin:0px">
+          <input type="text" class="popupURLText" id="linkToThisPageURL" name="urlfield" rows="1" cols="55" onClick="guidewire_selectall();" onFocus="guidewire_selectall();"></input>
+        </form>
+      </div>
+    </div>
+    <br />
+    <div class="WebWorks_Breadcrumbs" style="text-align: left;">
+      <span>BillingCenter Integration Guide</span> : 
+    <span class="WebWorks_Breadcrumbs" style="text-align: left;"><a class="WebWorks_Breadcrumb_Link" href="p-claims.html#2362109">Other Integration Topics</a> : <a class="WebWorks_Breadcrumb_Link" href="batchprocess.29.01.html#2362109">Custom Batch Processing</a> : <a class="WebWorks_Breadcrumb_Link" href="batchprocess.29.22.html#2362109">Example Batch Processes</a> : Example Batch Process for Unit of Work Processing</span></div>
+    <hr align="left" />
+    <blockquote>
+      <h4 class="H2B_-_Heading_2_Break"><a name="2362109">Example Batch Process for Unit of Work Processing</a></h4>
+      <div class="B_-_Body"><a name="2362110">The following Gosu code is an example of a custom batch process as a type of batch processing that processes units of work rather than operating as background task. Its process history tracks the number of items that processed successfully or that failed. Its units of work are urgent activities. </a></div>
+      <div class="B_-_Body"><a name="2362111">The following Gosu batch process implements a notification scheme such that any urgent activities must be handled within 30 minutes. If it is not handled within that time range, the batch process notifies a supervisor. If still not resolved in 60 minutes, it sends a message further up the supervisor chain.</a></div>
+      <div class="B_-_Body"><a name="2362112">If there are no qualified activities, it returns false so that it will not create a process history. If there are items to handle, it increments the count. The application uses this count to display batch process status </a><span class="cv_-_computer_voice">"n of t"</span> or a progress bar. If there are no contact email addresses, the task fails and the application flags it as a failure.</div>
+      <div class="B_-_Body"><a name="2362113">This example checks </a><span class="cv_-_computer_voice">TerminateRequested</span> to terminate the loop if the user or the application requested to terminate the process.</div>
+      <div class="B_-_Body"><a name="2362114">In this Gosu example, it does not actually send the email. Instead it prints to the console. You can change this to use the real email APIs if desired.</a></div>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2362115">package sample.processes</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2362116">uses gw.processes.BatchProcessBase</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2362117">uses java.util.Map</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2362118">uses gw.api.util.DateUtil</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2362119">uses java.lang.StringBuilder</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2362120">uses java.util.HashMap</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2362121">uses gw.api.profiler.Profiler</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2362122">&nbsp;</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2362123">class TestBatch extends BatchProcessBase</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2362124">{</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2362125">  static var tag = new gw.api.profiler.ProfilerTag("TestBatchTag1","A sample tag")</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2362126">  var work : ActivityQuery</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2362127">  </a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2362128">  construct() {</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2362129">    super( "TestBatch")</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2362131">  }</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2362132">&nbsp;</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2362133">&nbsp;&nbsp;override function requestTermination() :Boolean {</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2362134">&nbsp;&nbsp;&nbsp;&nbsp;super.requestTermination() // set the TerminationRequested flag</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2362135">&nbsp;&nbsp;&nbsp;&nbsp;return true // return true to signal that we will attempt to terminate in our doWork method</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2362136">&nbsp;&nbsp;&nbsp;}</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2362137">&nbsp;</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2362138">&nbsp;</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2362139">  override function doWork() : void { // no bundle</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2362140">    var frame = Profiler.push(tag);</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2362141">    try {    </a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2362142">      work = find(a in Activity where a.Priority == "urgent" and a.Status == "open" </a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2362143">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;and a.CreateTime &lt; DateUtil.currentDate().addMinutes( -30 ) )</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2362144">      OperationsExpected = work.getCount()</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2362145">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;var map = new HashMap&lt;Contact, StringBuilder&gt;()</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2362146">for (activity in work) {</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2362147">        if (TerminateRequested) {</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2362148">          return;</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2362149">        }</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2362150">        incrementOperationsCompleted()</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2362151">        var haveContact = false</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2362152">        var msgFragment = constructFragment(activity)</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2362153">        haveContact = addFragmentToUser(map, activity.AssignedUser, msgFragment) or haveContact</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2362154">        var group = activity.AssignedGroup</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2362155">        haveContact = addFragmentToUser(map, group.Supervisor, msgFragment) or haveContact</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2362156">        if (activity.CreateTime &lt; DateUtil.currentDate().addMinutes( -60 )) {</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2362157">          while (group != null) {</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2362158">            group = group.Parent</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2362159">            haveContact = addFragmentToUser(map, group.Supervisor, msgFragment) or haveContact</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2362160">          }</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2362161">        }</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2362162">        if (!haveContact) {</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2362163">          incrementOperationsFailed()</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2362164">          addFragmentToUser(map, User.util.UnrestrictedUser, msgFragment)</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2362165">        }</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2362166">      }</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2362167">      if (not TerminateRequested) {</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2362168">        for (addressee in map.Keys) {</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2362169">          sendMail(addressee, "Urgent activities still open", map.get(addressee).toString())</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2362170">        }</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2362171">      }</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2362172">    } </a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2362173">    finally {</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2362174">       Profiler.pop(frame)</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2362175">    }</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2362176">  }</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2362177">&nbsp;</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2362178">  private function constructFragment(activity : Activity) : String {</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2362179">    return formatAsURL(activity) + "\n\t"</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2362180">      + " Subject: " + activity.Subject </a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2362181">      + " AssignedTo: " + activity.AssignedUser</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2362182">      + " Group: " + activity.AssignedGroup</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2362183">      + " Supervisor: " + activity.AssignedGroup.Supervisor</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2362184">      + "\n\t" + activity.Description</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2362185">  }</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2362186">  </a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2362187">  private function formatAsURL(activity : Activity) : String {</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2362191">    return "http://localhost:8080/bc/Activity.go(${activity.id})</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2362192">&nbsp;</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2362193">&nbsp;&nbsp;&nbsp;&nbsp;// TODO: you must ADD A PCF ENTRYPOINT THAT CORRESPONDS TO THIS URL TO DISPLAY THE ACTIVITY.</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2362195">  }</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2362196">    </a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2362197">  private function addFragmentToUser(map : Map&lt;String, StringBuilder&gt;, user : User, </a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2362198">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;msgFragment : String) : boolean { </a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2362199">    if (user != null) {</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2362200">      var email = user.Contact.EmailAddress1</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2362201">      if (email != null and email.trim().length &gt; 0) {</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2362202">        var sb = map.get(email)</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2362203">        if (sb == null) {</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2362204">          sb = new StringBuilder()</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2362205">          map.put(email, sb)</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2362206">        }</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2362207">        sb.append(msgFragment)</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2362208">        return true</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2362209">      }</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2362210">    }</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2362211">    return false;</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2362212">  }</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2362213">  </a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2362214">&nbsp;</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2362215">  private function sendMail(contact : Contact, subject : String, body : String) {</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2362216">    var email = new Email()</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2362217">    email.Subject = subject</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2362218">    email.Body = "&lt;!DOCTYPE html PUBLIC \"-//W3C//DTD HTML 4.01 Transitional//EN\"&gt;\n" +</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2362219">                 "&lt;html&gt;\n" +</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2362220">                 "  &lt;head&gt;\n" +</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2362221">                 "  &lt;meta http-equiv=\"content-type\"\n" +</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2362222">                 "    content=\"text/html; charset=UTF-8\"&gt;\n" +</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2362223">                 "    &lt;title&gt;${subject}&lt;/title&gt;\n" +</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2362224">                 "  &lt;/head&gt;\n" +</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2362225">                 "  &lt;body&gt;\n" +</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2362226">                 "    &lt;table&gt;\n" +</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2362227">                 "     &lt;tr&gt;&lt;th&gt;Subject&lt;/th&gt;&lt;th&gt;User&lt;/th&gt;&lt;th&gt;Group&lt;/td&gt;&lt;th&gt;Supervisor&lt;/th&gt;&lt;/tr&gt;" +</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2362228">                 body +</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2362229">                 "    &lt;/table&gt;" +</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2362230">                 "  &lt;/body&gt;" +</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2362231">                 "&lt;/html&gt;" </a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2362232">    email.addToRecipient(new EmailContact(contact))</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2362233">    EmailUtil.sendEmailWithBody(null, email);</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2362234">  }</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2362235">&nbsp;</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2362236">}</a></PRE>
+      <div class="B_-_Body"><a name="2362240">To use this entry point, use the following PCF entry point in the file </a><span class="cv_-_computer_voice">BillingCenter/modules/configuration/pcf/EntryPoints/Activity.pcf</span>:</div>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2362241">&lt;PCF&gt;</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2362242">&lt;EntryPoint authenticationRequired="true" id="Activity" location="ActivityForward(actvtIdNum)"&gt;</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2362243">&lt;EntryPointParameter locationParam="actvtIdNum" type="int"/&gt;</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2362244">&nbsp; &lt;/EntryPoint&gt;</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2362245">&lt;/PCF&gt;</a></PRE>
+      <div class="B_-_Body"><a name="2362246">Also include the following </a><span class="cv_-_computer_voice">ActivityForward</span> PCF file as the <span class="cv_-_computer_voice">ActivityForward.pcf</span> in each place in the PCF hierarchy that you would like it:</div>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2362247">&lt;PCF&gt;</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2362248">&nbsp; &lt;Forward id="ActivityForward"&gt;</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2362249">&nbsp;&nbsp;&nbsp; &lt;LocationEntryPoint signature="ActivityForward(actvtIdNum : int)"/&gt;</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2362250">&nbsp;&nbsp;&nbsp; &lt;Variable name="actvtIdNum" type="int"/&gt;</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2362251">&lt;Variable</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2362252">&nbsp; initialValue="find(a in Activity where a.ID == new Key(Activity, actvtIdNum))"</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2362253">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; name="actvt"</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2362254">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; type="Activity"/&gt;</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2362261">&nbsp;&nbsp;&nbsp; &lt;ForwardCondition action="AccountForward.go(actvt.Account);</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2362263">&nbsp;&nbsp;&nbsp;ActivityDetailWorksheet.goInWorkspace(actvt)"/&gt;</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2362264">&nbsp; &lt;/Forward&gt;</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2362265">&lt;/PCF&gt;</a></PRE>
+      <div class="NI_-_Note_Important">
+        <span class="n_-_note">IMPORTANT   </span><a name="2362266">You must use the </a><span class="cv_-_computer_voice">runWithNewBundle</span> API if want to modify entity data in your custom batch process. For more information, see <a href="javascript:WWHClickedPopup('gosu', 'transactions.22.11.html#1634152', '');" title="Running Code in an Entirely New Bundle">“Running Code in an Entirely New Bundle” in the </a><span class="bt_-_book_title"><a href="javascript:WWHClickedPopup('gosu', 'transactions.22.11.html#1634152', '');" title="Running Code in an Entirely New Bundle">Gosu Reference Guide</a></span>.</div>
+      <script type="text/javascript" language="JavaScript1.2">
+        <!--
+          // Clear related topics
+          //
+          WWHClearRelatedTopics();
+
+          document.writeln(WWHRelatedTopicsInlineHTML());
+        // -->
+      </script>
+    </blockquote>
+    <script type="text/javascript" language="JavaScript1.2">
+      <!--
+        document.write(WWHRelatedTopicsDivTag() + WWHPopupDivTag() + WWHALinksDivTag());
+      // -->
+    </script>
+  </body>
+</html>

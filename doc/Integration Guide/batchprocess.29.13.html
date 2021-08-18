@@ -1,0 +1,187 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xml:lang="en" lang="en" xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+    <meta http-equiv="Content-Style-Type" content="text/css" />
+    <!-- MOTW-DISABLED saved from url=(0014)about:internet -->
+    <title>Developing the Workers for Your Custom Work Queue</title>
+    <link rel="StyleSheet" href="css/batchprocess.css" type="text/css" media="all" />
+    <link rel="StyleSheet" href="css/webworks.css" type="text/css" media="all" />
+    <link rel="StyleSheet" href="css/css-guidewire-extra.css" type="text/css" media="all" />
+    <script type="text/javascript" language="JavaScript1.2" src="wwhdata/common/context.js"></script>
+    <script type="text/javascript" language="JavaScript1.2" src="wwhdata/common/towwhdir.js"></script>
+    <script type="text/javascript" language="JavaScript1.2" src="wwhdata/common/wwhpagef.js"></script>
+    <script type="text/javascript" language="JavaScript1.2">
+      <!--
+        var  WebWorksRootPath = "";
+      // -->
+    </script>
+    <script type="text/javascript" language="JavaScript1.2">
+      <!--
+        // Set reference to top level help frame
+        //
+        var  WWHFrame = WWHGetWWHFrame("", true);
+      // -->
+    </script>
+    <script type="text/javascript" language="JavaScript1.2" src="scripts/expand.js"></script>
+    <!-- THE FOLLOWING IS A GUIDEWIRE STYLE DEFINITION FOR THE LINK TO THIS FEATURE -->
+    <link rel="StyleSheet" href="css/css-guidewire-extra.css" type="text/css" media="all" />
+    <!-- THE FOLLOWING IS A GUIDEWIRE GSCRIPT FUNCTION FOR THE LINK TO THIS FEATURE -->
+    <script type="text/javascript">
+function guidewire_selectall()
+{
+var text_val=eval("document.linktothisurlform.urlfield");
+text_val.focus();
+text_val.select();
+}
+</script>
+  </head>
+  <body onLoad="WWHUpdate();" onUnload="WWHUnload();" onKeyDown="WWHHandleKeyDown((document.all||document.getElementById||document.layers)?event:null);" onKeyPress="WWHHandleKeyPress((document.all||document.getElementById||document.layers)?event:null);" onKeyUp="WWHHandleKeyUp((document.all||document.getElementById||document.layers)?event:null);">
+    <!-- THE FOLLOWING IS A GUIDEWIRE DIV FOR THE 'LINK TO THIS' FEATURE -->
+    <div id="linkToThisPage" class="popup" style="display: none;">
+      <div class="popupTitle">Link Directly to This Page 
+           <a href="#" onclick="var thePopup = getElementById('linkToThisPage');thePopup.style.display='none';return false;"><img class="popupClosebox" src="wwhelp/wwhimpl/common/images/close.gif" /></a></div>
+      <div style="padding:6px;">
+        <div class="popupText" id="linkToThisPageBookmark">An error has occurred if you see this messsage.</div>
+        <form name="linktothisurlform" method="post" action="" style="width:275px;margin:0px">
+          <input type="text" class="popupURLText" id="linkToThisPageURL" name="urlfield" rows="1" cols="55" onClick="guidewire_selectall();" onFocus="guidewire_selectall();"></input>
+        </form>
+      </div>
+    </div>
+    <br />
+    <div class="WebWorks_Breadcrumbs" style="text-align: left;">
+      <span>BillingCenter Integration Guide</span> : 
+    <span class="WebWorks_Breadcrumbs" style="text-align: left;"><a class="WebWorks_Breadcrumb_Link" href="p-claims.html#2381013">Other Integration Topics</a> : <a class="WebWorks_Breadcrumb_Link" href="batchprocess.29.01.html#2381013">Custom Batch Processing</a> : <a class="WebWorks_Breadcrumb_Link" href="batchprocess.29.07.html#2381013">Developing Custom Work Queues</a> : Developing the Workers for Your Custom Work Queue</span></div>
+    <hr align="left" />
+    <blockquote>
+      <h4 class="H2B_-_Heading_2_Break"><a name="2381013">Developing the Workers for Your Custom Work Queue</a></h4>
+      <div class="B_-_Body"><a name="2294764">You provide the programming logic for a worker thread by overriding the </a><span class="cv_-_computer_voice">processWorkItem</span> method that your custom work queue class inherits from <span class="cv_-_computer_voice">WorkQueueBase</span>. The workers of a work queue are inherently single threaded. Do not attempt to improve the processing rate of individual workers by spawning threads from within your <span class="cv_-_computer_voice">processWorkItem</span> method. </div>
+      <div class="B_-_Body"><a name="2354672">The </a><span class="cv_-_computer_voice">processWorkItem</span> has a work item as its single parameter. You access the target, or unit of work, for the worker through the <span class="cv_-_computer_voice">WorkItem.Target</span> property. The work item is the type and the target type are the types that yosu specified in the constructor of your custom work queue class derived from <span class="cv_-_computer_voice">WorkQueueBase</span>. At the time BillingCenter calls the <span class="cv_-_computer_voice">processWorkItem</span> method, the The <span class="cv_-_computer_voice">Status</span> field of the work item is set to <span class="cv_-_computer_voice">checkedout</span>. </div>
+      <div class="H3_-_Heading_3_outer" style="margin-left: 36pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <h5 class="H3_-_Heading_3_inner" style="width: 18pt; white-space: nowrap"></h5>
+            </td>
+            <td width="100%">
+              <h5 class="H3_-_Heading_3_inner"><a name="2366376">Successful Work Items</a></h5>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="B_-_Body"><a name="2354496">When your worker finishes operating on a target instance, return from the </a><span class="cv_-_computer_voice">processWorkItem</span> method. BillingCenter then deletes the work item from the work queue. </div>
+      <div class="B_-_Body"><a name="2355857">The following example code extracts the targeted unit of work, an </a><span class="cv_-_computer_voice">Activity</span> instance, from the work item parameter. Then, the code sends the assigned user an email message. </div>
+      <PRE class="CF_-_Code_First_Line"><a name="2356888">override function processWorkItem (WorkItem : StandardWorkItem): void  {</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2356889">&nbsp;</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2356890">&nbsp;&nbsp;// Extract the unit of work: an Activity instance</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2356891">&nbsp;&nbsp;var activity = extractTarget(WorkItem)</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2356892">&nbsp;</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2356894">&nbsp;&nbsp;if (activity.AssignedUser.Contact.EmailAddress1 != null) {</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2357174">&nbsp;</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2357193">&nbsp;&nbsp;&nbsp;&nbsp;// Send an email to the user assigned to the Activity.</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2356895">&nbsp;&nbsp;&nbsp;&nbsp;mailUtil.sendEmailWithBody(null,</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2356896">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;activity.AssignedUser.Contact,&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;// To:</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2356897">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;null,&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;// From:</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2356898">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"Activity not viewed for five days",&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;// Subject:</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2356899">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"Take a look at activity " + target.Subject + ", due on " + target.TargetDate + ".")&nbsp;// Body:</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2356900">&nbsp;</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2402729">&nbsp;&nbsp;return</a></PRE>
+      <PRE class="CL_-_Code_Last_Line"><a name="2356901">}</a></PRE>
+      <div class="B_-_Body"><a name="2356935">In your override of the </a><span class="cv_-_computer_voice">processWorkItem</span> method, specify the same work item entity type that you specified in the constructor of you custom work queue class. </div>
+      <div class="H3_-_Heading_3_outer" style="margin-left: 36pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <h5 class="H3_-_Heading_3_inner" style="width: 18pt; white-space: nowrap"></h5>
+            </td>
+            <td width="100%">
+              <h5 class="H3_-_Heading_3_inner"><a name="2402442">Updating Entity Data</a></h5>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="B_-_Body"><a name="2402443">The </a><span class="cv_-_computer_voice">processWorkItem</span> method does not have a bundle to manage database transactions related to targeted units of work. A bundle exists at the time BillingCenter calls your <span class="cv_-_computer_voice">processWorkItem</span> method, but that bundle is for updates that BillingCenter makes to the work item. To modify entity data, you must use the <span class="cv_-_computer_voice">Transaction.runWithNewBundle</span> API to create a bundle. </div>
+      <div class="NI_-_Note_Important">
+        <span class="n_-_note">IMPORTANT   </span><a name="2402451">You must use the </a><span class="cv_-_computer_voice">runWithNewBundle</span> API to modify entity data with your custom work queue. For more information, see <a href="javascript:WWHClickedPopup('gosu', 'transactions.22.11.html#1634152', '');" title="Running Code in an Entirely New Bundle">“Running Code in an Entirely New Bundle” in the </a><span class="bt_-_book_title"><a href="javascript:WWHClickedPopup('gosu', 'transactions.22.11.html#1634152', '');" title="Running Code in an Entirely New Bundle">Gosu Reference Guide</a></span>. </div>
+      <div class="B_-_Body"><a name="2402472">The following example code uses the </a><span class="cv_-_computer_voice">runWithNewBundle</span> transaction method to update the <span class="cv_-_computer_voice">EscalationDate</span> on the <span class="cv_-_computer_voice">Activity</span> instance from the work items that is processes. </div>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2402456">uses gw.transaction.Transaction</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2402457">...</a></PRE>
+      <PRE class="CF_-_Code_First_Line"><a name="2402663">override function processWorkItem (WorkItem : StandardWorkItem): void  {</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2402664">&nbsp;</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2402665">&nbsp;&nbsp;// Extract the unit of work: an Activity instance</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2402666">&nbsp;&nbsp;var activity = extractTarget(WorkItem)</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2402812">&nbsp;</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2402667">&nbsp;&nbsp;// Update the activity escalation date</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2402458">&nbsp;&nbsp;Transaction.</a><span class="s_-_strong">runWithNewBundle</span>( \ bundle -&gt; { </PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2406860">&nbsp;&nbsp;&nbsp;&nbsp;activity = bundle.add(activity) &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;// add the activity to the new bundle</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2406846">&nbsp;&nbsp;&nbsp;&nbsp;activity.EscalationDate = java.util.Date.Today } ) // update the escalation date</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2402857">&nbsp;</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2402859">&nbsp;&nbsp;return</a></PRE>
+      <PRE class="CL_-_Code_Last_Line"><a name="2402870">}</a></PRE>
+      <div class="H3_-_Heading_3_outer" style="margin-left: 36pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <h5 class="H3_-_Heading_3_inner" style="width: 18pt; white-space: nowrap"></h5>
+            </td>
+            <td width="100%">
+              <h5 class="H3_-_Heading_3_inner"><a name="2366211">Failed Work Items</a></h5>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="B_-_Body"><a name="2377001">If your worker code encounters an error while operating on a target instance, throw an exception. Some types of exceptions are thrown automatically, such as a concurrent data change exception (CDCE). They generally resolve themselves quickly and automatically. Other logic errors that your code can detect may require human intervention to resolve. If so, implement a custom exception and throw it whenever your worker code detects the exceptional situation. </a></div>
+      <div class="B_-_Body"><a name="2377195">BillingCenter catches exceptions thrown by code within the scope of your </a><span class="cv_-_computer_voice">processWorkItem</span> method. Whenever BillingCenter catches an exception, it increments the <span class="cv_-_computer_voice">Attempts</span> property on the work item. If the value of the <span class="cv_-_computer_voice">Attempts</span> property then exceeds the value of <span class="cv_-_computer_voice">WorkItemRetryLimit</span> in <span class="cv_-_computer_voice">config.xml</span>, BillingCenter sets the <span class="cv_-_computer_voice">Status</span> property to <span class="cv_-_computer_voice">available</span>, otherwise it sets to <span class="cv_-_computer_voice">failed</span>. </div>
+      <h6 class="HS_-_Head_Sub"><a name="2391465">Work Item Retry Interval</a></h6>
+      <div class="B_-_Body"><a name="2377873">BillingCenter makes work items that trigger exceptions available again on the work queue, because many exceptions resolve themselves quickly. For example, a CDCE exception often occurs when two worker threads attempt to update common data related to their two separate units of work. By the time BillingCenter gives a work item that encountered an exception to another worker thread, the exceptional condition often is resolved. The second worker then process the work item to completion successfully. </a></div>
+      <h6 class="HS_-_Head_Sub"><a name="2391425">Failing Work Items Immediately</a></h6>
+      <div class="B_-_Body"><a name="2379243">You can provide an implementation of the </a><span class="cv_-_computer_voice">handleException</span> method inherited from the base class to augment the actions that BillingCenter takes when code in the <span class="cv_-_computer_voice">processWorkItem</span> throws an exception. For example, your worker code might throw a custom exception when it encounters a logic error that cannot resolve itself without human intervention. In your implementation of the <span class="cv_-_computer_voice">handleException</span> method, you can check the exception type. If the type is your custom exception, your code sets the <span class="cv_-_computer_voice">Status</span> property to <span class="cv_-_computer_voice">failed</span> regardless of the number of retry attempts. If the exception is any other type, call the super class. </div>
+      <PRE class="CF_-_Code_First_Line"><a name="2379262">override function handleException (W workItem, java.lang.Throwable exception, </a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2386750">&nbsp;&nbsp;int consecutiveExceptions): void  {</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2379349">&nbsp;</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2379351">&nbsp;&nbsp;// Fail immediately for a custom work queue exception</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2379393">&nbsp;&nbsp;if (exception typeis myCustomWorkQueueException) {</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2379462">&nbsp;&nbsp;&nbsp;&nbsp;workItem.Status = failed</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2379496">&nbsp;&nbsp;&nbsp;&nbsp;return true</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2379525">&nbsp;</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2379516">&nbsp;&nbsp;// Fail only for other exceptions if attempts exceeds retry count&nbsp;&nbsp;</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2379583">&nbsp;&nbsp;else</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2379312">&nbsp;&nbsp;&nbsp;&nbsp;return super (workItem, exception, consecutiveExceptions)</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2379538">&nbsp;</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2379542">&nbsp;&nbsp;}</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2379549">&nbsp;</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2379551">&nbsp;</a></PRE>
+      <PRE class="CL_-_Code_Last_Line"><a name="2379543">}</a></PRE>
+      <h6 class="HS_-_Head_Sub"><a name="2391614">See also</a></h6>
+      <div class="BI_-_Bullet_Item_outer" style="margin-left: 57pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="BI_-_Bullet_Item_inner" style="width: 15pt; white-space: nowrap">
+                <span class="bu_-_bullet">•	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="BI_-_Bullet_Item_inner"><a name="2402432">To configure how BillingCenter handles work items that trigger exceptions, see </a><a href="javascript:WWHClickedPopup('admin', 'batch.11.06.html#2166105', '');" title="Scheduling Work Queue Writers and Batch Processes">“Scheduling Work Queue Writers and Batch Processes” in the </a><span class="bt_-_book_title"><a href="javascript:WWHClickedPopup('admin', 'batch.11.06.html#2166105', '');" title="Scheduling Work Queue Writers and Batch Processes">System Administration Guide</a></span></div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <script type="text/javascript" language="JavaScript1.2">
+        <!--
+          // Clear related topics
+          //
+          WWHClearRelatedTopics();
+
+          document.writeln(WWHRelatedTopicsInlineHTML());
+        // -->
+      </script>
+    </blockquote>
+    <script type="text/javascript" language="JavaScript1.2">
+      <!--
+        document.write(WWHRelatedTopicsDivTag() + WWHPopupDivTag() + WWHALinksDivTag());
+      // -->
+    </script>
+  </body>
+</html>

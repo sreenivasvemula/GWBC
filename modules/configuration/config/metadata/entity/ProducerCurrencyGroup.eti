@@ -1,0 +1,51 @@
+<?xml version="1.0"?>
+<entity
+  xmlns="http://guidewire.com/datamodel"
+  desc="A hidden join entity owned by Producer that associates it with a {@link MixedCurrencyProducerGroup} (implements an explicit edge foreign key for currency denormalization)."
+  entity="ProducerCurrencyGroup"
+  setterScriptability="doesNotExist"
+  subpackage="producer"
+  table="prodcurrencygrp"
+  type="retireable">
+  <implementsEntity
+    name="NotInCurrencySilo"/>
+  <foreignkey
+    columnName="OwnerID"
+    desc="The owning producer."
+    fkentity="Producer"
+    getterScriptability="doesNotExist"
+    ignoreforevents="true"
+    loadable="false"
+    name="Owner"
+    nullok="true"
+    setterScriptability="doesNotExist"/>
+  <foreignkey
+    columnName="ForeignEntityID"
+    desc="The mixed currency producer group (if any) to which the owning producer belongs."
+    exportable="false"
+    fkentity="MixedCurrencyProducerGroup"
+    getterScriptability="doesNotExist"
+    ignoreforevents="true"
+    loadable="false"
+    name="ForeignEntity"
+    nullok="true"
+    setterScriptability="doesNotExist"/>
+  <typekey
+    desc="The de-normalized currency of the edge owner account, which is the unique currency in the group defined by the linked (foreign entity) MixedCurrencyAccountGroup."
+    getterScriptability="doesNotExist"
+    name="CurrencyInGroup"
+    nullok="false"
+    setterScriptability="doesNotExist"
+    typelist="Currency"/>
+  <index
+    desc="Implements the currency uniqueness constraint for mixed currency splinter producer groups."
+    name="ProdGrpCurRestrict"
+    unique="true">
+    <indexcol
+      keyposition="1"
+      name="ForeignEntityID"/>
+    <indexcol
+      keyposition="2"
+      name="CurrencyInGroup"/>
+  </index>
+</entity>

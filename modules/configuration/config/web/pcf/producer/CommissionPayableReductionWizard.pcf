@@ -1,0 +1,45 @@
+<?xml version="1.0"?>
+<PCF
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:noNamespaceSchemaLocation="../../../../../pcf.xsd">
+  <Wizard
+    id="CommissionPayableReductionWizard">
+    <LocationEntryPoint
+      signature="CommissionPayableReductionWizard(producerID : Key)"/>
+    <Variable
+      name="producerID"
+      type="Key"/>
+    <Variable
+      initialValue="new web.accounting.TAccountOwnerReference()"
+      name="tAccountOwnerReference"
+      type="web.accounting.TAccountOwnerReference"/>
+    <Variable
+      name="currency"
+      type="Currency"/>
+    <Variable
+      name="chargeCommissions"
+      type="ChargeCommission[]"/>
+    <Variable
+      initialValue="{false}"
+      name="approvalRequiredForWriteoff"
+      type="List&lt;Boolean&gt;"/>
+    <WizardStep
+      allowNext="tAccountOwnerReference.TAccountOwner != null"
+      id="PolicySearchStep"
+      label="displaykey.Web.CommissionPayableReductionWizard.PolicySearch.Label"
+      onExit="chargeCommissions = (tAccountOwnerReference.TAccountOwner as PolicyPeriod).getCommissionableCharges(); currency = (tAccountOwnerReference.TAccountOwner as PolicyPeriod).Account.Currency"
+      screen="CommissionReductionWizardPolicySearchScreen(tAccountOwnerReference)"
+      title="displaykey.Web.CommissionPayableReductionWizard.PolicySearch.Title"/>
+    <WizardStep
+      id="TargetStep"
+      label="displaykey.Web.CommissionPayableReductionWizard.Targets.Label"
+      screen="CommissionPayableReductionWizardTargetsStepScreen(chargeCommissions, approvalRequiredForWriteoff)"
+      title="displaykey.Web.CommissionPayableReductionWizard.Targets.Title"/>
+    <WizardStep
+      allowFinish="true"
+      id="ConfirmationStep"
+      label="displaykey.Web.CommissionPayableReductionWizard.Confirmation.Label"
+      screen="CommissionPayableReductionWizardConfirmationStepScreen(chargeCommissions, currency, approvalRequiredForWriteoff.first())"
+      title="displaykey.Web.CommissionPayableReductionWizard.Confirmation.Title"/>
+  </Wizard>
+</PCF>

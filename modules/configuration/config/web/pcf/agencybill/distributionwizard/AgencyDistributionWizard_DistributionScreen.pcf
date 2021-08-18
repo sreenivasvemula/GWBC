@@ -1,0 +1,72 @@
+<?xml version="1.0"?>
+<PCF
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:noNamespaceSchemaLocation="../../../../../../pcf.xsd">
+  <Screen
+    id="AgencyDistributionWizard_DistributionScreen">
+    <Require
+      name="wizardState"
+      type="gw.agencybill.AgencyDistributionWizardHelper"/>
+    <Toolbar>
+      <WizardButtons/>
+      <ToolbarDivider/>
+      <ToolbarButton
+        action="validateAmountToApply(); wizardState.save(CurrentLocation as pcf.api.Wizard);"
+        available="!wizardState.AgencyCycleDistView.AgencyCycleDist.Modifying"
+        id="SavePayment"
+        label="displaykey.Button.Save"
+        shortcut="S"/>
+      <ToolbarDivider/>
+      <ToolbarButton
+        action="AgencySuspenseItemsPopup.push( wizardState.AgencyCycleDistView.AgencyCycleDist, true )"
+        id="SuspenseItems"
+        label="displaykey.Web.AgencyDistributionWizard.Step.Distribution.SuspenseItems"
+        shortcut="P"/>
+    </Toolbar>
+    <PanelRef
+      def="AgencyDistributionWizard_DistributionInfoPanelSet(wizardState)"/>
+    <PanelRef
+      def="AgencyDistItemsLV(wizardState.AgencyCycleDistView, wizardState)"
+      id="AgencyDistItemsPanel"
+      mode="wizardState.DistributeBy == gw.agencybill.AgencyDistributionWizardHelper.DistributeByEnum.ITEM ? &quot;item&quot; : &quot;policy&quot;">
+      <Toolbar>
+        <ToolbarButton
+          action="invalidateDistItemsIterator(); AgencyBillAddInvoiceItemsPopup.push(wizardState)"
+          id="AddItems"
+          label="displaykey.Web.AgencyDistributionWizard.AddItems"
+          shortcut="A"
+          visible="gw.agencybill.AgencyDistributionWizardHelper.DistributeByEnum.ITEM.equals(wizardState.DistributeBy)"/>
+        <ToolbarButton
+          action="invalidateDistItemsIterator(); AgencyDistributionWizard_AddPoliciesPopup.push(wizardState)"
+          id="AddPolicies"
+          label="displaykey.Web.AgencyDistributionWizard.AddPolicies"
+          shortcut="A"
+          visible="gw.agencybill.AgencyDistributionWizardHelper.DistributeByEnum.POLICY.equals(wizardState.DistributeBy) "/>
+        <ToolbarRangeInput
+          id="DistributeBy"
+          label="displaykey.Web.AgencyDistributionWizard.Step.Distribution.Toolbar.DistributeBy"
+          required="true"
+          value="wizardState.DistributeBy"
+          valueRange="wizardState.DistributeByValues">
+          <PostOnChange
+            target="AgencyDistItemsPanel"/>
+        </ToolbarRangeInput>
+      </Toolbar>
+    </PanelRef>
+    <Code><![CDATA[function invalidateDistItemsIterator() {
+  web.PebblesUtil.invalidateIterators(CurrentLocation, gw.api.web.producer.agencybill.distributionwizard.AgencyCycleDistChargeOwnerView)
+}
+
+function validateAmountToApply() {
+  var agencyCyleDistChargeOwnerViews = wizardState.AgencyCycleDistView.ChargeOwners
+  for (var agencyCycleDistChargeOwnerView in agencyCyleDistChargeOwnerViews) {
+    var agencyDistItems = agencyCycleDistChargeOwnerView.AgencyDistItems
+    for (var agencyDistItem in agencyDistItems) {
+      if (wizardState.isNetAmountToApplyInvalid(agencyDistItem)) {
+        throw new gw.api.util.DisplayableException(displaykey.Java.Error.AgencyCycleDistChargeOwnerView.InvalidGrossAndCommissionDistributionAmount);
+      } 
+    }
+  }
+}]]></Code>
+  </Screen>
+</PCF>

@@ -1,0 +1,38 @@
+<?xml version="1.0"?>
+<PCF
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:noNamespaceSchemaLocation="../../../../../pcf.xsd">
+  <Popup
+    beforeCommit="disbursement.voidDisbursement()"
+    canEdit="true"
+    id="VoidDisbursementPopup"
+    returnType="Disbursement"
+    startInEditMode="true"
+    title="displaykey.Web.VoidDisbursement.Title">
+    <LocationEntryPoint
+      signature="VoidDisbursementPopup(disbursement : Disbursement)"/>
+    <Variable
+      name="disbursement"
+      type="Disbursement"/>
+    <Screen
+      id="VoidDisbursementScreen">
+      <Toolbar>
+        <EditButtons/>
+      </Toolbar>
+      <DetailViewPanel
+        id="VoidDisbursementDV">
+        <InputColumn>
+          <Label
+            label="displaykey.Web.VoidDisbursement.VoidConfirm"/>
+          <TypeKeyInput
+            editable="true"
+            id="VoidReason"
+            label="displaykey.Web.VoidDisbursement.VoidReason"
+            value="disbursement.VoidReason"/>
+        </InputColumn>
+      </DetailViewPanel>
+      <PanelRef
+        def="DisbursementDetailDV(disbursement)"/>
+    </Screen>
+  </Popup>
+</PCF>

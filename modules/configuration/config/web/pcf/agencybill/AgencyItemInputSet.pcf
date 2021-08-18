@@ -1,0 +1,37 @@
+<?xml version="1.0"?>
+<PCF
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:noNamespaceSchemaLocation="../../../../../pcf.xsd">
+  <InputSet
+    id="AgencyItemInputSet">
+    <Require
+      name="invoiceItem"
+      type="InvoiceItem"/>
+    <MonetaryAmountInput
+      align="right"
+      currency="invoiceItem.Currency"
+      id="GrossAmount"
+      label="displaykey.Web.InvoiceItemHistoryPopup.Gross"
+      value="invoiceItem.Amount"/>
+    <MonetaryAmountInput
+      align="right"
+      currency="invoiceItem.Currency"
+      formatType="currency"
+      id="CommissionAmount"
+      label="displaykey.Web.InvoiceItemHistoryPopup.Commission"
+      value="invoiceItem.PrimaryCommissionAmount"/>
+    <TextInput
+      align="right"
+      format="displaykey.Web.AgencyBill.CommissionPercentFormat"
+      id="CommissionPercentage"
+      label="displaykey.Web.InvoiceItemHistoryPopup.CommissionPercentage"
+      value="invoiceItem.PrimaryCommissionAmount.percentageOfAsBigDecimal(invoiceItem.Amount) "/>
+    <MonetaryAmountInput
+      align="right"
+      currency="invoiceItem.Currency"
+      formatType="currency"
+      id="NetAmount"
+      label="displaykey.Web.InvoiceItemHistoryPopup.Net"
+      value="invoiceItem.NetAmount"/>
+  </InputSet>
+</PCF>

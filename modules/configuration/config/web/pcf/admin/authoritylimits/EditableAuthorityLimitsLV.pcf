@@ -1,0 +1,64 @@
+<?xml version="1.0"?>
+<PCF
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:noNamespaceSchemaLocation="../../../../../../pcf.xsd">
+  <ListViewPanel
+    id="EditableAuthorityLimitsLV">
+    <ExposeIterator
+      valueType="entity.AuthorityLimit"
+      widget="EditableAuthorityLimitsLV"/>
+    <Require
+      name="user"
+      type="User"/>
+    <RowIterator
+      editable="true"
+      elementName="authorityLimit"
+      pageSize="20"
+      toAdd="user.AuthorityProfile.addToLimits(createAuthorityLimit(authorityLimit))"
+      toRemove="user.AuthorityProfile.removeFromLimits(authorityLimit)"
+      value="user.AuthorityProfile.Limits">
+      <Variable
+        initialValue="new gw.admin.AuthorityLimitWrapper(authorityLimit)"
+        name="authorityLimitWrapper"
+        type="gw.admin.AuthorityLimitWrapper"/>
+      <Row>
+        <TypeKeyCell
+          editable="true"
+          id="LimitType"
+          label="displaykey.Web.Admin.AuthorityLimitProfileDV.LimitType"
+          required="true"
+          value="authorityLimit.LimitType"/>
+        <TypeKeyCell
+          editable="true"
+          id="LimitCurrency"
+          label="displaykey.Web.Admin.AuthorityLimitProfileDV.LimitCurrency"
+          required="true"
+          value="authorityLimitWrapper.Currency"
+          visible="gw.api.util.CurrencyUtil.isMultiCurrencyMode()">
+          <PostOnChange
+            target="DATA_ONLY"/>
+        </TypeKeyCell>
+        <Cell
+          editable="true"
+          id="LimitAmount"
+          inputConversion="VALUE == null ? 0 : VALUE"
+          label="displaykey.Web.Admin.AuthorityLimitProfileDV.LimitNumber"
+          value="authorityLimitWrapper.Amount"
+          visible="CurrentLocation.InEditMode">
+          <PostOnChange
+            target="DATA_ONLY"/>
+        </Cell>
+        <MonetaryAmountCell
+          formatType="currency"
+          id="LimitMonetaryAmount"
+          label="displaykey.Web.Admin.AuthorityLimitProfileDV.LimitAmount"
+          value="authorityLimit.LimitAmount"/>
+      </Row>
+    </RowIterator>
+    <Code><![CDATA[function createAuthorityLimit(authorityLimit : AuthorityLimit) : AuthorityLimit {
+  var defautCurrency = gw.api.util.CurrencyUtil.getDefaultCurrency()
+  authorityLimit.LimitAmount = gw.api.financials.MonetaryAmounts.zeroIfNull(authorityLimit.LimitAmount, defautCurrency)
+  return authorityLimit
+}]]></Code>
+  </ListViewPanel>
+</PCF>

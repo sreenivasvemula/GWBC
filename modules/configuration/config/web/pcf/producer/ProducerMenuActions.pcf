@@ -1,0 +1,103 @@
+<?xml version="1.0"?>
+<PCF
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:noNamespaceSchemaLocation="../../../../../pcf.xsd">
+  <MenuActions
+    id="ProducerMenuActions">
+    <Require
+      name="producer"
+      type="Producer"/>
+    <MenuItem
+      id="ProducerMenuActions_NewCommissionPayment"
+      label="displaykey.Web.ProducerMenuActions.NewCommissionPayment"
+      shortcut="C">
+      <MenuItem
+        action="NewCommissionPaymentStandardPopup.push(producer)"
+        id="ProducerMenuActions_NewCommissionPaymentStandard"
+        label="displaykey.Web.ProducerMenuActions.NewCommissionPaymentStandard"
+        visible="perm.Producer.prodpmntstndman"/>
+      <MenuItem
+        action="NewCommissionPaymentBonusWizard.push(producer)"
+        id="ProducerMenuActions_NewCommissionPaymentBonus"
+        label="displaykey.Web.ProducerMenuActions.NewCommissionPaymentBonus"
+        visible="perm.Producer.prodpmntbonusman"/>
+      <MenuItem
+        action="NewCommissionPaymentAdvanceWizard.push(producer)"
+        id="ProducerMenuActions_NewCommissonPaymentAdvanced"
+        label="displaykey.Web.ProducerMenuActions.NewCommissionPaymentAdvance"
+        visible="perm.Producer.prodpmntadvman"/>
+    </MenuItem>
+    <MenuItem
+      action="CommissionPayableReductionWizard.push(producer.ID)"
+      id="ProducerMenuActions_CommissionWriteoff"
+      label="displaykey.Web.ProducerMenuActions.CommissionWriteoff"/>
+    <MenuItem
+      action="CommissionReceivableReductionWizard.push(producer)"
+      id="ProducerMenuActions_CommissionRecoveryWriteoff"
+      label="displaykey.Web.ProducerMenuActions.CommissionRecoveryWriteoff"/>
+    <MenuItem
+      action="AgencyCommissionPaymentWizard.push(producer)"
+      id="ProducerMenuActions_ReturnCommission"
+      label="displaykey.Web.ProducerMenuActions.ReturnCommission"/>
+    <MenuItem
+      action="AgencyDistributionWizard.go( producer, gw.agencybill.AgencyDistributionWizardHelper.DistributionTypeEnum.PAYMENT )"
+      id="ProducerMenuActions_NewAgencyPayment"
+      label="displaykey.Web.ProducerMenuActions.AgencyPayment"/>
+    <MenuItem
+      action="AgencyDistributionWizard.go( producer, gw.agencybill.AgencyDistributionWizardHelper.DistributionTypeEnum.PROMISE )"
+      available="producer.AgencyBillCycles.length &gt; 0"
+      id="ProducerMenuActions_NewAgencyPromise"
+      label="displaykey.Web.ProducerMenuActions.AgencyPromise"/>
+    <MenuItem
+      action="AgencyDistributionWizard.go( producer, gw.agencybill.AgencyDistributionWizardHelper.DistributionTypeEnum.CREDIT_DISTRIBUTION )"
+      available="producer.AgencyBillCycles.length &gt; 0"
+      id="NewCreditDistribution"
+      label="displaykey.Web.ProducerMenuActions.ZeroDollarAMR"/>
+    <MenuItem
+      action="AgencyDisbursementWizard.push(producer, false)"
+      available="producer.AgencyBillCycles.length &gt; 0"
+      id="ProducerMenuActions_Disbursement"
+      label="displaykey.Web.ProducerMenuActions.Disbursement"
+      visible="perm.Transaction.disbcreate"/>
+    <MenuItem
+      action="AgencyDisbursementWizard.push(producer, true)"
+      available="producer.AgencyBillCycles.length &gt; 0"
+      id="ProducerMenuActions_DisburseCreditItems"
+      label="displaykey.Web.ProducerMenuActions.DisburseCreditItems"
+      visible="perm.Transaction.disbcreate"/>
+    <MenuItem
+      action="ProducerNewNoteWorksheet.goInWorkspace(producer)"
+      id="ProducerMenuActions_NewNote"
+      label="displaykey.Web.ProducerMenuActions.Note"
+      shortcut="N"
+      visible="perm.Note.create"/>
+    <MenuItem
+      id="NewDocument"
+      label="displaykey.Web.AccountDetailMenuActions.NewDocument"
+      visible="perm.Document.create">
+      <MenuItem
+        action="NewDocumentFromTemplateWorksheet.goInWorkspace(producer)"
+        id="NewDocumentFromTemplate"
+        label="displaykey.Web.AccountDetailMenuActions.NewDocumentFromTemplate"/>
+      <MenuItem
+        action="NewDocumentLinkedWorksheet.goInWorkspace(producer)"
+        id="NewDocumentByUpload"
+        label="displaykey.Web.AccountDetailMenuActions.NewDocumentByUpload"/>
+    </MenuItem>
+    <MenuItem
+      action="ProducerTransferFundsWizard.push( producer )"
+      id="ProducerMenuActions_TransferFunds"
+      label="displaykey.Web.ProducerMenuActions.TransferFunds"
+      visible="true"/>
+    <MenuItem
+      action="ProducerWriteoffWizard.push(producer)"
+      id="ProducerMenuActions_Writeoff"
+      label="displaykey.Web.ProducerMenuActions.NewTransaction.Writeoff"
+      visible="perm.System.agencywo"/>
+    <MenuItem
+      action="ProducerNegativeWriteoffWizard.push(producer)"
+      id="ProducerMenuActions_NegativeWriteoff"
+      label="displaykey.Web.ProducerMenuActions.NewTransaction.NegativeWriteoff"
+      visible="perm.System.agencywo"/>
+  </MenuActions>
+</PCF>

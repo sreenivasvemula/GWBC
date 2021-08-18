@@ -1,0 +1,203 @@
+<?xml version="1.0"?>
+<PCF
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:noNamespaceSchemaLocation="pcf.xsd">
+  <Screen
+    id="PaymentAllocationPlanDetailScreen">
+    <Require
+      name="paymentAllocationPlan"
+      type="PaymentAllocationPlan"/>
+    <Variable
+      initialValue="gw.api.util.LocaleUtil.getAllLanguages().Count &gt; 1"
+      name="hasMultipleLanguages"/>
+    <Toolbar>
+      <EditButtons/>
+      <ToolbarButton
+        action="ClonePaymentAllocationPlan.go(paymentAllocationPlan)"
+        hideIfEditable="true"
+        id="Clone"
+        label="displaykey.Web.PaymentAllocationPlanDetailScreen.Clone"
+        visible="perm.System.payallocplancreate"/>
+    </Toolbar>
+    <DetailViewPanel
+      editable="true"
+      id="PaymentAllocationPlanDetailDV">
+      <InputColumn>
+        <Label
+          id="PaymentAllocationPlanLabel"
+          label="displaykey.Web.PaymentAllocationPlanDetailDV.PaymentAllocationPlan"/>
+        <Input
+          editable="true"
+          id="Name"
+          label="displaykey.Web.PaymentAllocationPlanDetailDV.Name"
+          required="true"
+          value="paymentAllocationPlan.Name">
+          <PostOnChange/>
+        </Input>
+        <Input
+          editable="true"
+          id="Description"
+          label="displaykey.Web.PaymentAllocationPlanDetailDV.Description"
+          value="paymentAllocationPlan.Description">
+          <PostOnChange/>
+        </Input>
+        <DateInput
+          editable="true"
+          id="EffectiveDate"
+          label="displaykey.Web.PaymentAllocationPlanDetailDV.EffectiveDate"
+          required="true"
+          value="paymentAllocationPlan.EffectiveDate"/>
+        <DateInput
+          editable="true"
+          id="ExpirationDate"
+          label="displaykey.Web.PaymentAllocationPlanDetailDV.ExpirationDate"
+          validationExpression="paymentAllocationPlan.hasValidExpirationDate() ? null : displaykey.Web.Plan.ExpirationDate.ValidationError"
+          value="paymentAllocationPlan.ExpirationDate"/>
+      </InputColumn>
+    </DetailViewPanel>
+    <PanelRef>
+      <TitleBar
+        title="displaykey.Web.PaymentAllocationPlanDetailScreen.Filters"/>
+      <Toolbar
+        visible="true">
+        <ToolbarButton
+          action="AddDistributionFilterPopup.push(paymentAllocationPlan)"
+          available="!areAllAvailableFiltersAdded()"
+          hideIfReadOnly="true"
+          id="AddDistributionFilter"
+          label="displaykey.Web.PaymentAllocationPlanDetailScreen.AddFilter"/>
+        <RemoveButton
+          hideIfReadOnly="true"
+          id="RemoveDistributionFilter"
+          iterator="DistributionFilterLV"
+          label="displaykey.Web.PaymentAllocationPlanDetailScreen.RemoveFilter"/>
+      </Toolbar>
+      <ListViewPanel
+        id="DistributionFilterLV">
+        <RowIterator
+          checkBoxVisible="CurrentLocation.InEditMode"
+          editable="true"
+          elementName="distributionFilter"
+          hasCheckBoxes="true"
+          id="DistributionFilterIterator"
+          toRemove="paymentAllocationPlan.removeDistributionCriteriaFilter(distributionFilter)"
+          value="paymentAllocationPlan.DistributionFilters.toList()">
+          <Row>
+            <Cell
+              id="DistributionFilterName"
+              label="displaykey.Web.PaymentAllocationPlanDetailDV.DistributionFilterLV.Name"
+              value="distributionFilter.DisplayName"/>
+            <Cell
+              id="DistributionFilterDescription"
+              label="displaykey.Web.PaymentAllocationPlanDetailDV.DistributionFilterLV.Description"
+              value="distributionFilter.Description"
+              width="600"/>
+          </Row>
+        </RowIterator>
+      </ListViewPanel>
+    </PanelRef>
+    <PanelRef>
+      <TitleBar
+        title="displaykey.Web.PaymentAllocationPlanDetailScreen.Orderings"/>
+      <Toolbar
+        visible="true">
+        <ToolbarButton
+          action="AddInvoiceItemOrderingPopup.push(paymentAllocationPlan)"
+          available="!areAllAvailableOrderingsAdded()"
+          hideIfReadOnly="true"
+          id="AddInvoiceItemOrdering"
+          label="displaykey.Web.PaymentAllocationPlanDetailScreen.AddOrdering"/>
+        <RemoveButton
+          hideIfReadOnly="true"
+          id="RemoveInvoiceItemOrdering"
+          iterator="InvoiceItemOrderingLV"
+          label="displaykey.Web.PaymentAllocationPlanDetailScreen.RemoveOrdering"/>
+      </Toolbar>
+      <ListViewPanel
+        id="InvoiceItemOrderingLV">
+        <RowIterator
+          checkBoxVisible="CurrentLocation.InEditMode"
+          editable="true"
+          elementName="invoiceItemOrdering"
+          hasCheckBoxes="true"
+          id="InvoiceItemOrderingIterator"
+          toRemove="paymentAllocationPlan.removeInvoiceItemOrderingFor(invoiceItemOrdering)"
+          value="paymentAllocationPlan.InvoiceItemOrderings.toList()">
+          <Row>
+            <Cell
+              id="Priority"
+              label="displaykey.Web.PaymentAllocationPlanDetailDV.InvoiceItemOrderingLV.Priority"
+              sortOrder="1"
+              value="paymentAllocationPlan.getInvoiceItemOrderingFor(invoiceItemOrdering).Priority"/>
+            <Cell
+              id="InvoiceItemOrderingName"
+              label="displaykey.Web.PaymentAllocationPlanDetailDV.InvoiceItemOrderingLV.Name"
+              value="invoiceItemOrdering.DisplayName"/>
+            <Cell
+              id="InvoiceItemOrderingDescription"
+              label="displaykey.Web.PaymentAllocationPlanDetailDV.InvoiceItemOrderingLV.Description"
+              value="invoiceItemOrdering.Description"
+              width="500"/>
+            <LinkCell
+              id="MovePriority"
+              label="displaykey.Web.PaymentAllocationPlanDetailDV.InvoiceItemOrderingLV.MovePriority">
+              <Link
+                action="moveUp(invoiceItemOrdering)"
+                available="perm.System.payallocplanedit &amp;&amp; CurrentLocation.InEditMode"
+                icon="CurrentLocation.InEditMode ? &quot;arrow_up.png&quot; : &quot;arrow_up_disabled.png&quot;"
+                id="MoveUp"
+                tooltip="displaykey.Web.PaymentAllocationPlanDetailDV.InvoiceItemOrderingLV.PriorityOrder.MoveUp"
+                visible="paymentAllocationPlan.getInvoiceItemOrderingFor(invoiceItemOrdering).Priority &gt; 1"/>
+              <Link
+                action="moveDown(invoiceItemOrdering)"
+                available="perm.System.payallocplanedit &amp;&amp; CurrentLocation.InEditMode"
+                icon="CurrentLocation.InEditMode ? &quot;arrow_down.png&quot; : &quot;arrow_down_disabled.png&quot;"
+                id="MoveDown"
+                tooltip="displaykey.Web.PaymentAllocationPlanDetailDV.InvoiceItemOrderingLV.PriorityOrder.MoveDown"
+                visible="canMoveDown(invoiceItemOrdering)"/>
+            </LinkCell>
+          </Row>
+        </RowIterator>
+      </ListViewPanel>
+    </PanelRef>
+    <PanelRef
+      def="LocalizedValuesDV(paymentAllocationPlan, { &quot;Name&quot;, &quot;Description&quot; }, { displaykey.Web.PaymentAllocationPlanDetailDV.Name, displaykey.Web.PaymentAllocationPlanDetailDV.Description })"/>
+    <Code><![CDATA[private function moveUp(invoiceItemOrdering : InvoiceItemOrderingType) {
+  paymentAllocationPlan.increaseInvoiceItemOrderingPriority(invoiceItemOrdering)
+}
+
+private function moveDown(invoiceItemOrdering : InvoiceItemOrderingType) {
+  paymentAllocationPlan.decreaseInvoiceItemOrderingPriority(invoiceItemOrdering)
+}
+
+private function canMoveDown(invoiceItemOrdering : InvoiceItemOrderingType) : boolean {
+  final var orderings = paymentAllocationPlan.InvoiceItemOrderings
+  
+  var sortedOrderings = orderings.toList().sortBy(\ ordering -> paymentAllocationPlan.getInvoiceItemOrderingFor(ordering).Priority)
+  
+  return !(sortedOrderings.last() == invoiceItemOrdering)
+}
+
+private function areAllAvailableOrderingsAdded() : boolean {
+  var orderingsOnPlan = paymentAllocationPlan.InvoiceItemOrderings
+  var availableOrderings = InvoiceItemOrderingType.getTypeKeys(false)
+  
+  foreach (orderingType in availableOrderings) {
+    if (!orderingsOnPlan.contains(orderingType)) return false
+  }
+  
+  return true
+}
+
+private function areAllAvailableFiltersAdded() : boolean {
+  var filtersOnPlan = paymentAllocationPlan.DistributionFilters
+  var availableFilters = DistributionFilterType.getTypeKeys(false)
+
+  foreach (filterType in availableFilters) {
+    if (!filtersOnPlan.contains(filterType)) return false
+  }
+
+  return true
+}]]></Code>
+  </Screen>
+</PCF>

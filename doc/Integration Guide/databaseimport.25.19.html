@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xml:lang="en" lang="en" xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+    <meta http-equiv="Content-Style-Type" content="text/css" />
+    <!-- MOTW-DISABLED saved from url=(0014)about:internet -->
+    <title>Loading Disbursements</title>
+    <link rel="StyleSheet" href="css/databaseimport.css" type="text/css" media="all" />
+    <link rel="StyleSheet" href="css/webworks.css" type="text/css" media="all" />
+    <link rel="StyleSheet" href="css/css-guidewire-extra.css" type="text/css" media="all" />
+    <script type="text/javascript" language="JavaScript1.2" src="wwhdata/common/context.js"></script>
+    <script type="text/javascript" language="JavaScript1.2" src="wwhdata/common/towwhdir.js"></script>
+    <script type="text/javascript" language="JavaScript1.2" src="wwhdata/common/wwhpagef.js"></script>
+    <script type="text/javascript" language="JavaScript1.2">
+      <!--
+        var  WebWorksRootPath = "";
+      // -->
+    </script>
+    <script type="text/javascript" language="JavaScript1.2">
+      <!--
+        // Set reference to top level help frame
+        //
+        var  WWHFrame = WWHGetWWHFrame("", true);
+      // -->
+    </script>
+    <script type="text/javascript" language="JavaScript1.2" src="scripts/expand.js"></script>
+    <!-- THE FOLLOWING IS A GUIDEWIRE STYLE DEFINITION FOR THE LINK TO THIS FEATURE -->
+    <link rel="StyleSheet" href="css/css-guidewire-extra.css" type="text/css" media="all" />
+    <!-- THE FOLLOWING IS A GUIDEWIRE GSCRIPT FUNCTION FOR THE LINK TO THIS FEATURE -->
+    <script type="text/javascript">
+function guidewire_selectall()
+{
+var text_val=eval("document.linktothisurlform.urlfield");
+text_val.focus();
+text_val.select();
+}
+</script>
+  </head>
+  <body onLoad="WWHUpdate();" onUnload="WWHUnload();" onKeyDown="WWHHandleKeyDown((document.all||document.getElementById||document.layers)?event:null);" onKeyPress="WWHHandleKeyPress((document.all||document.getElementById||document.layers)?event:null);" onKeyUp="WWHHandleKeyUp((document.all||document.getElementById||document.layers)?event:null);">
+    <!-- THE FOLLOWING IS A GUIDEWIRE DIV FOR THE 'LINK TO THIS' FEATURE -->
+    <div id="linkToThisPage" class="popup" style="display: none;">
+      <div class="popupTitle">Link Directly to This Page 
+           <a href="#" onclick="var thePopup = getElementById('linkToThisPage');thePopup.style.display='none';return false;"><img class="popupClosebox" src="wwhelp/wwhimpl/common/images/close.gif" /></a></div>
+      <div style="padding:6px;">
+        <div class="popupText" id="linkToThisPageBookmark">An error has occurred if you see this messsage.</div>
+        <form name="linktothisurlform" method="post" action="" style="width:275px;margin:0px">
+          <input type="text" class="popupURLText" id="linkToThisPageURL" name="urlfield" rows="1" cols="55" onClick="guidewire_selectall();" onFocus="guidewire_selectall();"></input>
+        </form>
+      </div>
+    </div>
+    <br />
+    <div class="WebWorks_Breadcrumbs" style="text-align: left;">
+      <span>BillingCenter Integration Guide</span> : 
+    <span class="WebWorks_Breadcrumbs" style="text-align: left;"><a class="WebWorks_Breadcrumb_Link" href="p-importingbillingandaccounts.fm.html#2270790">Importing Billing and Account Data</a> : <a class="WebWorks_Breadcrumb_Link" href="databaseimport.25.01.html#2270790">Importing from Database Staging Tables</a> : <a class="WebWorks_Breadcrumb_Link" href="databaseimport.25.09.html#2270790">Loading BillingCenter-specific Entities</a> : Loading Disbursements</span></div>
+    <hr align="left" />
+    <blockquote>
+      <h4 class="H2B_-_Heading_2_Break"><a name="2270790">Loading Disbursements</a></h4>
+      <div class="B_-_Body"><a name="2274879">The way you load disbursements depends on the nature of specific disbursements:</a></div>
+      <div class="BI_-_Bullet_Item_outer" style="margin-left: 57pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="BI_-_Bullet_Item_inner" style="width: 15pt; white-space: nowrap">
+                <span class="bu_-_bullet">•	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="BI_-_Bullet_Item_inner"><a name="2275030">Account disbursements</a></div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="BI_-_Bullet_Item_outer" style="margin-left: 57pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="BI_-_Bullet_Item_inner" style="width: 15pt; white-space: nowrap">
+                <span class="bu_-_bullet">•	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="BI_-_Bullet_Item_inner"><a name="2275057">Agency disbursements</a></div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="N_-_Note">
+        <span class="n_-_note">Note: </span><a name="2270795">Collateral and suspense disbursements are not loadable. </a></div>
+      <h6 class="HS_-_Head_Sub"><a name="2270796">Account Disbursements</a></h6>
+      <div class="B_-_Body"><a name="2275093">For account disbursements that are paid already, set </a><span class="cv_-_computer_voice">CloseDate</span> to occur in the past, set <span class="cv_-_computer_voice">Status</span> to <span class="cv_-_computer_voice">Sent</span>, and relate an <span class="cv_-_computer_voice">OutgoingPayment</span> with any status to them. BillingCenter creates <span class="cv_-_computer_voice">DisbursementPaid</span> transactions for these disbursements to move funds from <span class="cv_-_computer_voice">Account.Unapplied</span> to <span class="cv_-_computer_voice">Account.Cash</span>.</div>
+      <div class="B_-_Body"><a name="2275095">An integrity check verifies that </a><span class="cv_-_computer_voice">CloseDate</span> occurs in the past only if <span class="cv_-_computer_voice">Status</span> is set to <span class="cv_-_computer_voice">Sent</span>. Another integrity check verifies that account disbursements with <span class="cv_-_computer_voice">Status</span> set to <span class="cv_-_computer_voice">Sent</span> are referenced by an <span class="cv_-_computer_voice">OutgoingPayment</span>. </div>
+      <div class="B_-_Body"><a name="2275099">For voided account disbursements, set </a><span class="cv_-_computer_voice">CloseDate</span> to occur in the past and set <span class="cv_-_computer_voice">Status</span> to <span class="cv_-_computer_voice">Voided</span>. BillingCenter does not create disbursement transactions or reversals. It simply loads voided disbursements. </div>
+      <h6 class="HS_-_Head_Sub"><a name="2270797">Agency Disbursements</a></h6>
+      <div class="B_-_Body"><a name="2275654">For agency disbursements that are paid already, set </a><span class="cv_-_computer_voice">CloseDate</span> to occur in the past, set <span class="cv_-_computer_voice">Status</span> to <span class="cv_-_computer_voice">Sent</span>, and relate an <span class="cv_-_computer_voice">OutgoingPayment</span> with any status to them. BillingCenter creates <span class="cv_-_computer_voice">AgencyDisbursementPaid</span> transactions for these disbursements to move funds from <span class="cv_-_computer_voice">Producer.Unapplied</span> to <span class="cv_-_computer_voice">Producer.Cash</span>.</div>
+      <div class="B_-_Body"><a name="2275760">An integrity check verifies that </a><span class="cv_-_computer_voice">CloseDate</span> occurs in the past only if <span class="cv_-_computer_voice">Status</span> is set to <span class="cv_-_computer_voice">Sent</span>. Another integrity check verifies that agency disbursements with <span class="cv_-_computer_voice">Status</span> set to <span class="cv_-_computer_voice">Sent</span> are referenced by an <span class="cv_-_computer_voice">OutgoingPayment</span>. </div>
+      <div class="B_-_Body"><a name="2275681">For voided agency disbursements, set </a><span class="cv_-_computer_voice">CloseDate</span> to occur in the past and set <span class="cv_-_computer_voice">Status</span> to <span class="cv_-_computer_voice">Voided</span>. BillingCenter does not create disbursement transactions or reversals. It simply loads voided disbursements. </div>
+      <script type="text/javascript" language="JavaScript1.2">
+        <!--
+          // Clear related topics
+          //
+          WWHClearRelatedTopics();
+
+          document.writeln(WWHRelatedTopicsInlineHTML());
+        // -->
+      </script>
+    </blockquote>
+    <script type="text/javascript" language="JavaScript1.2">
+      <!--
+        document.write(WWHRelatedTopicsDivTag() + WWHPopupDivTag() + WWHALinksDivTag());
+      // -->
+    </script>
+  </body>
+</html>

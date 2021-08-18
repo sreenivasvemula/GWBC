@@ -1,0 +1,30 @@
+<?xml version="1.0"?>
+<Entity
+  name="PaymentInstrument">
+  <Columns>
+    <Column
+      beanPath="PaymentInstrument.PublicID"
+      name="PublicID"/>
+    <Column
+      beanPath="PaymentInstrument.PaymentMethod"
+      name="PaymentMethod"/>
+    <Column
+      beanPath="PaymentInstrument.Token"
+      name="Token"/>
+  </Columns>
+  <DisplayName><![CDATA[if(PaymentMethod == typekey.PaymentMethod.TC_RESPONSIVE) {
+  return typekey.PaymentMethod.TC_RESPONSIVE.DisplayName 
+} else if (PaymentMethod == typekey.PaymentMethod.TC_CASH) {
+  return typekey.PaymentMethod.TC_CASH.DisplayName
+} else if (PaymentMethod == typekey.PaymentMethod.TC_CHECK) {
+  return typekey.PaymentMethod.TC_CHECK.DisplayName  
+} else if (PaymentMethod == typekey.PaymentMethod.TC_ACCOUNTUNAPPLIED) {
+  return typekey.PaymentMethod.TC_ACCOUNTUNAPPLIED.DisplayName
+} else if (PaymentMethod == typekey.PaymentMethod.TC_PRODUCERUNAPPLIED) {
+  return typekey.PaymentMethod.TC_PRODUCERUNAPPLIED.DisplayName
+} else if (Token != null) {
+  return displaykey.DisplayName.PaymentInstrument(PaymentMethod, Token)
+} else {
+  return displaykey.DisplayName.PaymentInstrument(PaymentMethod, PublicID)
+}]]></DisplayName>
+</Entity>

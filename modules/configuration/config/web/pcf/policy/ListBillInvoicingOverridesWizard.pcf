@@ -1,0 +1,27 @@
+<?xml version="1.0"?>
+<PCF
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:noNamespaceSchemaLocation="../../../../../pcf.xsd">
+  <Wizard
+    beforeCommit="listBillHelper.update()"
+    id="ListBillInvoicingOverridesWizard">
+    <LocationEntryPoint
+      signature="ListBillInvoicingOverridesWizard(policyPeriod : PolicyPeriod)"/>
+    <Variable
+      name="policyPeriod"
+      type="PolicyPeriod"/>
+    <Variable
+      initialValue="new gw.api.web.policy.ListBillInvoicingOverridesHelper(policyPeriod)"
+      name="listBillHelper"/>
+    <WizardStep
+      allowFinish="false"
+      id="ListBillChooseInvoicingOverridesStep"
+      screen="ListBillChooseInvoicingOverridesStepScreen(policyPeriod, listBillHelper)"
+      title="displaykey.Web.ChangeBillingMethodToListBillWizard.OverridesStepTitle"/>
+    <WizardStep
+      allowFinish="true"
+      id="ListBillInvoicingOverridesInvoiceItemsStep"
+      screen="ListBillInvoicingOverridesInvoiceItemsStepScreen(policyPeriod, listBillHelper)"
+      title="displaykey.Web.ChangeBillingMethodToListBillWizard.InvoiceItemsStepTitle"/>
+  </Wizard>
+</PCF>

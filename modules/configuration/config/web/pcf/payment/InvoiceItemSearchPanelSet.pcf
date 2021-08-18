@@ -1,0 +1,261 @@
+<?xml version="1.0"?>
+<PCF
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:noNamespaceSchemaLocation="../../../../../pcf.xsd">
+  <PanelSet
+    id="InvoiceItemSearchPanelSet">
+    <ExposeIterator
+      flags="Row"
+      valueType="entity.InvoiceItem"
+      widget="InvoiceItemsLV"/>
+    <Require
+      name="baseDist"
+      type="BaseDist"/>
+    <Require
+      name="initialPayerAccount"
+      type="Account"/>
+    <Require
+      name="initialPayerProducer"
+      type="Producer"/>
+    <Variable
+      initialValue="new web.account.AccountSearchConverter()"
+      name="accountSearchConverter"/>
+    <Variable
+      initialValue="new web.producer.ProducerSearchConverter()"
+      name="producerSearchConverter"/>
+    <SearchPanel
+      cachingEnabled="false"
+      criteriaName="searchCriteria"
+      resultCachingEnabled="false"
+      resultsName="invoiceItemSearchViews"
+      search="gw.search.SearchMethods.validateAndSearch(searchCriteria, baseDist)"
+      searchCriteria="createNewSearchCriteria()"
+      searchResultsType="InvoiceItemQuery">
+      <DetailViewPanel
+        id="InvoiceItemSearchDV">
+        <InputColumn>
+          <BooleanRadioInput
+            editable="true"
+            falseLabel="displaykey.Web.AddInvoiceItemsPopup.AccountOrProducerPayer.Producer"
+            id="AccountOrProducerPayer"
+            label="displaykey.Web.AddInvoiceItemsPopup.AccountOrProducerPayer"
+            required="true"
+            trueLabel="displaykey.Web.AddInvoiceItemsPopup.AccountOrProducerPayer.Account"
+            value="searchCriteria.PayerIsAnAccount">
+            <PostOnChange/>
+          </BooleanRadioInput>
+          <PickerInput
+            editable="true"
+            id="PayerAccount"
+            inputConversion="accountSearchConverter.getAccount(VALUE)"
+            label="displaykey.Web.AddInvoiceItemsPopup.PayerAccount"
+            pickLocation="AccountSearchPopup.push()"
+            value="searchCriteria.PayerAccountNumber"
+            visible="searchCriteria.PayerIsAnAccount"/>
+          <PickerInput
+            editable="baseDist typeis DirectBillPayment"
+            id="PayerProducer"
+            inputConversion="producerSearchConverter.getProducer(VALUE)"
+            label="gw.api.util.LocaleUtil.CurrentLocaleType == LocaleType.TC_JA_JP ? displaykey.Web.AddInvoiceItemsPopup.PayerProducerPhonetic : displaykey.Web.AddInvoiceItemsPopup.PayerProducer"
+            pickLocation="ProducerSearchPopup.push()"
+            value="searchCriteria.PayerProducerName"
+            visible="!searchCriteria.PayerIsAnAccount"/>
+          <PickerInput
+            editable="baseDist typeis DirectBillPayment"
+            id="PayerProducerKanji"
+            inputConversion="producerSearchConverter.getProducer(VALUE)"
+            label="displaykey.Web.AddInvoiceItemsPopup.PayerProducer"
+            pickLocation="ProducerSearchPopup.push()"
+            value="searchCriteria.PayerProducerNameKanji"
+            visible="gw.api.util.LocaleUtil.CurrentLocaleType == LocaleType.TC_JA_JP and !searchCriteria.PayerIsAnAccount"/>
+          <PickerInput
+            editable="true"
+            id="OwnerAccount"
+            label="displaykey.Web.AddInvoiceItemsPopup.OwnerAccount"
+            pickLocation="AccountSearchPopup.push()"
+            value="searchCriteria.OwnerAccount"/>
+          <PickerInput
+            editable="true"
+            id="PolicyPeriod"
+            label="displaykey.Web.AddInvoiceItemsPopup.PolicyPeriod"
+            pickLocation="PolicySearchPopup.push()"
+            value="searchCriteria.PolicyPeriod"/>
+        </InputColumn>
+        <InputColumn>
+          <TextInput
+            editable="true"
+            id="ChargeGroup"
+            label="displaykey.Web.AddInvoiceItemsPopup.ChargeGroup"
+            value="searchCriteria.ChargeGroup"/>
+          <RangeInput
+            editable="true"
+            id="ChargePattern"
+            label="displaykey.Web.AddInvoiceItemsPopup.ChargePattern"
+            value="searchCriteria.ChargePattern"
+            valueRange="gw.api.database.Query.make(ChargePattern).select()"/>
+          <TypeKeyInput
+            editable="true"
+            filter="filterBilledStatus(VALUE)"
+            id="InvoiceStatus"
+            label="displaykey.Web.AddInvoiceItemsPopup.InvoiceStatus"
+            value="searchCriteria.BilledStatus"/>
+          <CheckBoxInput
+            editable="true"
+            id="IncludeFullySettledItems"
+            label="displaykey.Web.AddInvoiceItemsPopup.IncludeFullySettledItems"
+            value="searchCriteria.IncludeFullySettledItems"
+            visible="baseDist typeis AgencyCycleDist"/>
+        </InputColumn>
+      </DetailViewPanel>
+      <DetailViewPanel>
+        <InputFooterSection>
+          <InputSetRef
+            def="SearchAndResetInputSet()"/>
+        </InputFooterSection>
+      </DetailViewPanel>
+      <ListViewPanel
+        id="InvoiceItemsLV">
+        <RowIterator
+          editable="false"
+          elementName="invoiceItemSearchView"
+          hasCheckBoxes="true"
+          pageSize="30"
+          value="invoiceItemSearchViews">
+          <ToolbarFlag
+            name="Row"/>
+          <Row>
+            <Cell
+              enableSort="false"
+              hasCheckBox="true"
+              id="Item"
+              label="displaykey.Web.AddInvoiceItemsPopup.InvoiceItemsLV.Item"
+              value="invoiceItemSearchView.DisplayNameAsItemType"/>
+            <Cell
+              hasCheckBox="true"
+              id="ItemContext"
+              label="displaykey.Web.AddInvoiceItemsPopup.InvoiceItemsLV.Context"
+              value="invoiceItemSearchView.Charge.BillingInstruction"
+              visible="baseDist typeis AgencyCycleDist"/>
+            <Cell
+              action="PolicyDetailSummaryPopup.push(invoiceItemSearchView.PolicyPeriod)"
+              actionAvailable="invoiceItemSearchView.PolicyPeriod != null"
+              hasCheckBox="true"
+              id="PolicyPeriod"
+              label="PolicyPeriodLabel"
+              sortOrder="1"
+              value="invoiceItemSearchView.PolicyPeriod"/>
+            <Cell
+              action="AccountDetailSummaryPopup.push(invoiceItemSearchView.Owner)"
+              enableSort="false"
+              hasCheckBox="true"
+              id="Owner"
+              label="OwnerLabel"
+              value="invoiceItemSearchView.Owner"/>
+            <Cell
+              enableSort="false"
+              hasCheckBox="true"
+              id="Payer"
+              label="displaykey.Web.AddInvoiceItemsPopup.InvoiceItemsLV.Payer"
+              value="invoiceItemSearchView.Payer"
+              visible="baseDist typeis DirectBillPayment"/>
+            <Cell
+              enableSort="false"
+              hasCheckBox="true"
+              id="Producer"
+              label="displaykey.Web.AddInvoiceItemsPopup.InvoiceItemsLV.Producer"
+              value="getProducerCode(invoiceItemSearchView).Producer.DisplayName"
+              visible="baseDist typeis AgencyCycleDist"/>
+            <Cell
+              enableSort="false"
+              hasCheckBox="true"
+              id="ProducerCode"
+              label="displaykey.Web.AddInvoiceItemsPopup.InvoiceItemsLV.ProducerCode"
+              value="getProducerCode(invoiceItemSearchView).Code"
+              visible="baseDist typeis AgencyCycleDist"/>
+            <TypeKeyCell
+              enableSort="false"
+              hasCheckBox="true"
+              id="InvoiceStatus"
+              label="displaykey.Web.AddInvoiceItemsPopup.InvoiceItemsLV.InvoiceStatus"
+              value="invoiceItemSearchView.Invoice.Status"/>
+            <DateCell
+              enableSort="false"
+              hasCheckBox="true"
+              id="InvoiceDate"
+              label="InvoiceDateLabel"
+              sortOrder="2"
+              value="invoiceItemSearchView.Invoice.EventDate"/>
+            <DateCell
+              enableSort="false"
+              hasCheckBox="true"
+              id="DueDate"
+              label="displaykey.Web.AddInvoiceItemsPopup.InvoiceItemsLV.DueDate"
+              value="invoiceItemSearchView.Invoice.DUEDATE"/>
+            <MonetaryAmountCell
+              currency="invoiceItemSearchView.Invoice.Currency"
+              hasCheckBox="true"
+              id="GrossAmount"
+              label="displaykey.Web.AddInvoiceItemsPopup.InvoiceItemsLV.GrossAmount"
+              value="invoiceItemSearchView.Amount"/>
+            <MonetaryAmountCell
+              currency="invoiceItemSearchView.Invoice.Currency"
+              enableSort="false"
+              hasCheckBox="true"
+              id="NetAmount"
+              label="displaykey.Web.AddInvoiceItemsPopup.InvoiceItemsLV.NetAmount"
+              value="invoiceItemSearchView.NetAmount"/>
+            <MonetaryAmountCell
+              currency="invoiceItemSearchView.Invoice.Currency"
+              hasCheckBox="true"
+              id="CommissionAmount"
+              label="CommissionLabel"
+              value="invoiceItemSearchView.PrimaryCommissionAmount"/>
+            <MonetaryAmountCell
+              currency="invoiceItemSearchView.Invoice.Currency"
+              enableSort="false"
+              hasCheckBox="true"
+              id="AmountPaid"
+              label="displaykey.Web.AddInvoiceItemsPopup.InvoiceItemsLV.NetOwed"
+              value="invoiceItemSearchView.Amount - (baseDist typeis AgencyCyclePayment ? invoiceItemSearchView.PaidAmount : invoiceItemSearchView.PromisedAndPaidAmount) - invoiceItemSearchView.GrossAmountWrittenOff - invoiceItemSearchView.UnsettledCommission"/>
+          </Row>
+        </RowIterator>
+      </ListViewPanel>
+    </SearchPanel>
+    <Code><![CDATA[function createNewSearchCriteria() : gw.search.InvoiceItemSearchCriteria {
+  var criteria = new gw.search.InvoiceItemSearchCriteria()
+  criteria.PayingAccount = initialPayerAccount
+  criteria.PayerAccountNumber = initialPayerAccount as String
+  criteria.PayingProducer = initialPayerProducer
+  criteria.PayerProducerName = initialPayerProducer as String
+  return criteria
+}
+
+property get PolicyPeriodLabel() : String {
+  return baseDist typeis DirectBillPayment ? displaykey.Web.AddInvoiceItemsPopup.InvoiceItemsLV.PolicyPeriod : displaykey.Web.AddInvoiceItemsPopup.InvoiceItemsLV.Policy
+}
+
+property get OwnerLabel() : String {
+  return baseDist typeis DirectBillPayment ?  displaykey.Web.AddInvoiceItemsPopup.InvoiceItemsLV.Owner : displaykey.Web.AddInvoiceItemsPopup.InvoiceItemsLV.Account
+}
+
+property get InvoiceDateLabel() : String {
+  return baseDist typeis DirectBillPayment ? displaykey.Web.AddInvoiceItemsPopup.InvoiceItemsLV.InvoiceDate : displaykey.Web.AddInvoiceItemsPopup.InvoiceItemsLV.StatementDate
+}
+
+property get CommissionLabel() : String {
+  return baseDist typeis DirectBillPayment ? displaykey.Web.AddInvoiceItemsPopup.InvoiceItemsLV.CommissionAmount : displaykey.Web.AddInvoiceItemsPopup.InvoiceItemsLV.Commission
+}
+
+function getProducerCode (invoiceItem : InvoiceItem) : ProducerCode {
+  return baseDist typeis gw.bc.payment.entity.DirectBillPayment ? invoiceItem.PolicyPeriod.PrimaryPolicyCommission.ProducerCode : invoiceItem.ActivePrimaryItemCommission.PolicyCommission.ProducerCode;        
+}
+
+function filterBilledStatus(value : InvoiceStatus) : boolean {
+  if (baseDist typeis AgencyCycleDist) {
+    return (value != InvoiceStatus.TC_CARRIEDFORWARD && value != InvoiceStatus.TC_WRITTENOFF)  
+  } else {
+    return true 
+  }
+}]]></Code>
+  </PanelSet>
+</PCF>

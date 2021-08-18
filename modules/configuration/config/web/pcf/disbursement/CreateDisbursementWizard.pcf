@@ -1,0 +1,57 @@
+<?xml version="1.0"?>
+<PCF
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:noNamespaceSchemaLocation="../../../../../pcf.xsd">
+  <Wizard
+    afterCancel="DesktopDisbursements.go()"
+    afterFinish="DesktopDisbursements.go()"
+    beforeCommit="disbursement.executeDisbursementOrCreateApprovalActivityIfNeeded()"
+    canVisit="perm.Transaction.disbcreate"
+    cancelWarning="displaykey.Web.CreateDisbursementWizard.CancelConfirmation"
+    countsAsWork="false"
+    id="CreateDisbursementWizard">
+    <LocationEntryPoint
+      signature="CreateDisbursementWizard()"/>
+    <Variable
+      name="relatedEntity"
+      type="KeyableBean"/>
+    <Variable
+      initialValue="new web.accounting.TAccountOwnerReference()"
+      name="tAccountOwnerReference"
+      type="web.accounting.TAccountOwnerReference"/>
+    <Variable
+      name="disbursement"
+      type="AccountDisbursement"/>
+    <WizardStep
+      allowNext="tAccountOwnerReference.TAccountOwner != null"
+      id="Step1"
+      label="displaykey.Web.CreateDisbursementWizard.AccountStepLabel"
+      onExit="setUpDisbursement()"
+      screen="WizardsStep1AccountPolicySearchScreen(tAccountOwnerReference, TAccountOwnerType.TC_ACCOUNT, false, true)"
+      title="displaykey.Web.CreateDisbursementWizard.AccountStepTitle"/>
+    <WizardStep
+      id="Step2"
+      label="displaykey.Web.CreateDisbursementWizard.DetailsStepLabel"
+      onExit="disbursement.initiateApprovalActivityIfUserLacksAuthority()"
+      screen="CreateDisbursementDetailScreen(disbursement)"
+      title="displaykey.Web.CreateDisbursementWizard.DetailsStepTitle"/>
+    <WizardStep
+      id="Step3"
+      label="displaykey.Web.CreateDisbursementWizard.ConfirmStepLabel"
+      screen="CreateDisbursementConfirmScreen(disbursement)"
+      title="displaykey.Web.CreateDisbursementWizard.ConfirmStepTitle"/>
+    <Code><![CDATA[uses gw.account.CreateDisbursementWizardHelper
+
+function setUpDisbursement() {
+  var account = tAccountOwnerReference.TAccountOwner as Account
+  if (disbursement == null) {
+    disbursement = CreateDisbursementWizardHelper.createDisbursement(account)
+  }
+  else if (disbursement.Currency != account.Currency)
+  {
+    disbursement.remove()
+    disbursement = CreateDisbursementWizardHelper.createDisbursement(account)
+  }
+}]]></Code>
+  </Wizard>
+</PCF>

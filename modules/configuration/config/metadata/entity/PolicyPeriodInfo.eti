@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?><nonPersistentEntity xmlns="http://guidewire.com/datamodel" desc="Holds status information about a single Policy Period" entity="PolicyPeriodInfo" subpackage="account">
+  <implementsEntity name="NotInCurrencySilo"/>
+  <column desc="Date when this policy period takes effect." name="EffectiveDate" nullok="true" type="datetime"/>
+  <column desc="Date when this policy period expires." name="ExpirationDate" nullok="true" type="datetime"/>
+  <column desc="The date and time that this snapshot of the PolicyPeriod Info was taken." name="InfoDate" nullok="true" type="datetime"/>
+  <foreignkey columnName="PolicyPeriodID" desc="The policy period itself" exportasid="true" fkentity="PolicyPeriod" name="PolicyPeriod" nullok="false"/>
+  <foreignkey columnName="AccountID" desc="Owning account for this policy period." exportasid="true" fkentity="Account" name="Account" nullok="true"/>
+</nonPersistentEntity>

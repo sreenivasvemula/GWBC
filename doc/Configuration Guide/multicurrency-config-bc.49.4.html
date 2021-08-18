@@ -1,0 +1,409 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xml:lang="en" lang="en" xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+    <meta http-equiv="Content-Style-Type" content="text/css" />
+    <!-- MOTW-DISABLED saved from url=(0014)about:internet -->
+    <title>Enabling Multicurrency Integration</title>
+    <link rel="StyleSheet" href="css/multicurrency-config-bc.css" type="text/css" media="all" />
+    <link rel="StyleSheet" href="css/webworks.css" type="text/css" media="all" />
+    <link rel="StyleSheet" href="css/css-guidewire-extra.css" type="text/css" media="all" />
+    <script type="text/javascript" language="JavaScript1.2" src="wwhdata/common/context.js"></script>
+    <script type="text/javascript" language="JavaScript1.2" src="wwhdata/common/towwhdir.js"></script>
+    <script type="text/javascript" language="JavaScript1.2" src="wwhdata/common/wwhpagef.js"></script>
+    <script type="text/javascript" language="JavaScript1.2">
+      <!--
+        var  WebWorksRootPath = "";
+      // -->
+    </script>
+    <script type="text/javascript" language="JavaScript1.2">
+      <!--
+        // Set reference to top level help frame
+        //
+        var  WWHFrame = WWHGetWWHFrame("", true);
+      // -->
+    </script>
+    <script type="text/javascript" language="JavaScript1.2" src="scripts/expand.js"></script>
+    <!-- THE FOLLOWING IS A GUIDEWIRE STYLE DEFINITION FOR THE LINK TO THIS FEATURE -->
+    <link rel="StyleSheet" href="css/css-guidewire-extra.css" type="text/css" media="all" />
+    <!-- THE FOLLOWING IS A GUIDEWIRE GSCRIPT FUNCTION FOR THE LINK TO THIS FEATURE -->
+    <script type="text/javascript">
+function guidewire_selectall()
+{
+var text_val=eval("document.linktothisurlform.urlfield");
+text_val.focus();
+text_val.select();
+}
+</script>
+  </head>
+  <body onLoad="WWHUpdate();" onUnload="WWHUnload();" onKeyDown="WWHHandleKeyDown((document.all||document.getElementById||document.layers)?event:null);" onKeyPress="WWHHandleKeyPress((document.all||document.getElementById||document.layers)?event:null);" onKeyUp="WWHHandleKeyUp((document.all||document.getElementById||document.layers)?event:null);">
+    <!-- THE FOLLOWING IS A GUIDEWIRE DIV FOR THE 'LINK TO THIS' FEATURE -->
+    <div id="linkToThisPage" class="popup" style="display: none;">
+      <div class="popupTitle">Link Directly to This Page 
+           <a href="#" onclick="var thePopup = getElementById('linkToThisPage');thePopup.style.display='none';return false;"><img class="popupClosebox" src="wwhelp/wwhimpl/common/images/close.gif" /></a></div>
+      <div style="padding:6px;">
+        <div class="popupText" id="linkToThisPageBookmark">An error has occurred if you see this messsage.</div>
+        <form name="linktothisurlform" method="post" action="" style="width:275px;margin:0px">
+          <input type="text" class="popupURLText" id="linkToThisPageURL" name="urlfield" rows="1" cols="55" onClick="guidewire_selectall();" onFocus="guidewire_selectall();"></input>
+        </form>
+      </div>
+    </div>
+    <br />
+    <div class="WebWorks_Breadcrumbs" style="text-align: left;">
+      <span>BillingCenter Configuration Guide</span> : 
+    <span class="WebWorks_Breadcrumbs" style="text-align: left;"><a class="WebWorks_Breadcrumb_Link" href="p-BillingCenter.html#1185761">Guidewire BillingCenter Configuration</a> : <a class="WebWorks_Breadcrumb_Link" href="multicurrency-config-bc.49.1.html#1185761">Configuring Multicurrency</a> : Enabling Multicurrency Integration</span></div>
+    <hr align="left" />
+    <blockquote>
+      <h3 class="H1_-_Heading_1"><a name="1185761">Enabling Multicurrency Integration</a></h3>
+      <div class="B_-_Body"><a name="1185762">You must perform certain tasks to enable multicurrency integration appropriately.</a></div>
+      <div class="BI_-_Bullet_Item_outer" style="margin-left: 57pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="BI_-_Bullet_Item_inner" style="width: 15pt; white-space: nowrap">
+                <span class="bu_-_bullet">•	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="BI_-_Bullet_Item_inner"><a href="javascript:WWHClickedPopup('config', 'multicurrency-config-bc.49.4.html#1185784', '');" title="Enabling Multicurrency Integration" name="1185774">Set up Currency‑Specific Plans and Authority Limits</a></div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <h4 class="H2_-_Heading_2"><a name="1185784">Set up Currency‑Specific Plans and Authority Limits</a></h4>
+      <div class="B_-_Body"><a name="1185785">One of the administrative tasks you must perform when setting up BillingCenter is to create plans. Several of these plans are currency specific, and therefore you must set up at least one plan for each currency. There are monetary values that reflect various applicable fees and financial thresholds. For example, billing plans contain an invoice fee. A Euro account must define the fee in euros. As another example, delinquency plans have monetary thresholds that control when BillingCenter makes a policy delinquent. Such thresholds must be defined for each currency.</a></div>
+      <div class="B_-_Body"><a name="1185786">These currency specific administrative entities that need to be created in BillingCenter are:</a></div>
+      <div class="BI_-_Bullet_Item_outer" style="margin-left: 57pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="BI_-_Bullet_Item_inner" style="width: 15pt; white-space: nowrap">
+                <span class="bu_-_bullet">•	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="BI_-_Bullet_Item_inner"><a name="1185787">Billing plans</a></div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="BI_-_Bullet_Item_outer" style="margin-left: 57pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="BI_-_Bullet_Item_inner" style="width: 15pt; white-space: nowrap">
+                <span class="bu_-_bullet">•	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="BI_-_Bullet_Item_inner"><a name="1185788">Payment plans</a></div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="BI_-_Bullet_Item_outer" style="margin-left: 57pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="BI_-_Bullet_Item_inner" style="width: 15pt; white-space: nowrap">
+                <span class="bu_-_bullet">•	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="BI_-_Bullet_Item_inner"><a name="1185789">Commission plans</a></div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="BI_-_Bullet_Item_outer" style="margin-left: 57pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="BI_-_Bullet_Item_inner" style="width: 15pt; white-space: nowrap">
+                <span class="bu_-_bullet">•	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="BI_-_Bullet_Item_inner"><a name="1185790">Delinquency plans</a></div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="BI_-_Bullet_Item_outer" style="margin-left: 57pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="BI_-_Bullet_Item_inner" style="width: 15pt; white-space: nowrap">
+                <span class="bu_-_bullet">•	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="BI_-_Bullet_Item_inner"><a name="1185791">Agency bill plans</a></div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="BI_-_Bullet_Item_outer" style="margin-left: 57pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="BI_-_Bullet_Item_inner" style="width: 15pt; white-space: nowrap">
+                <span class="bu_-_bullet">•	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="BI_-_Bullet_Item_inner"><a name="1185792">Authority limits</a></div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="B_-_Body"><a name="1185793">BillingCenter requires all of these be defined to issue a policy in a given currency, except agency bill plans. You must define agency bill plans for each currency in which you plan on issuing policies with agency billing. If you do not define an agency bill plan for a given currency, </a><span class="ui_-_UI_element">Agency Bill</span> will not appear in PolicyCenter as a choice for billing method.</div>
+      <h6 class="HS_-_Head_Sub"><a name="1185794">See also</a></h6>
+      <div class="BI_-_Bullet_Item_outer" style="margin-left: 57pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="BI_-_Bullet_Item_inner" style="width: 15pt; white-space: nowrap">
+                <span class="bu_-_bullet">•	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="BI_-_Bullet_Item_inner"><a href="javascript:WWHClickedPopup('app', 'plans_overview.19.2.html#1026939', '');" title="Plan Types" name="1185798">“Plan Types” in the </a><span class="bt_-_book_title"><a href="javascript:WWHClickedPopup('app', 'plans_overview.19.2.html#1026939', '');" title="Plan Types">Application Guide</a></span> </div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="H3_-_Heading_3_outer" style="margin-left: 36pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <h5 class="H3_-_Heading_3_inner" style="width: 18pt; white-space: nowrap"></h5>
+            </td>
+            <td width="100%">
+              <h5 class="H3_-_Heading_3_inner"><a name="1185800">Set up Billing Plans in BillingCenter for Multicurrency Accounts</a></h5>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="B_-_Body"><a name="1185801">In BillingCenter, each account must have an associated billing plan. Billing plans determine how BillingCenter handles automatic distributions, special circumstances such as low balance, and invoicing at the account level. Billing plans are currency specific and therefore you must set up at least one billing plan in BillingCenter for each currency.</a></div>
+      <h6 class="HS_-_Head_Sub"><a name="1185802">See also</a></h6>
+      <div class="BI_-_Bullet_Item_outer" style="margin-left: 57pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="BI_-_Bullet_Item_inner" style="width: 15pt; white-space: nowrap">
+                <span class="bu_-_bullet">•	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="BI_-_Bullet_Item_inner"><a href="javascript:WWHClickedPopup('app', 'billing_plan.20.3.html#1191908', '');" title="Working with Billing Plans" name="1185806">“Working with Billing Plans” in the </a><span class="bt_-_book_title"><a href="javascript:WWHClickedPopup('app', 'billing_plan.20.3.html#1191908', '');" title="Working with Billing Plans">Application Guide</a></span> </div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="H3_-_Heading_3_outer" style="margin-left: 36pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <h5 class="H3_-_Heading_3_inner" style="width: 18pt; white-space: nowrap"></h5>
+            </td>
+            <td width="100%">
+              <h5 class="H3_-_Heading_3_inner"><a name="1185808">Set up Payment Plans in BillingCenter for Multicurrency Accounts</a></h5>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="B_-_Body"><a name="1185809">In BillingCenter, each policy must have an associated payment plan. Payment plans determine how payments are set up and spread over the term of the policy. Payment plans are currency specific and therefore you must set up at least one billing plan in BillingCenter for each currency. The payment plans that match the currency of a policy appear in PolicyCenter as a list of choices for how to bill a policy.</a></div>
+      <h6 class="HS_-_Head_Sub"><a name="1185810">See also</a></h6>
+      <div class="BI_-_Bullet_Item_outer" style="margin-left: 57pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="BI_-_Bullet_Item_inner" style="width: 15pt; white-space: nowrap">
+                <span class="bu_-_bullet">•	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="BI_-_Bullet_Item_inner"><a href="javascript:WWHClickedPopup('app', 'payment_plan.21.5.html#1034756', '');" title="Working with Payment Plans" name="1185814">“Working with Payment Plans” in the </a><span class="bt_-_book_title"><a href="javascript:WWHClickedPopup('app', 'payment_plan.21.5.html#1034756', '');" title="Working with Payment Plans">Application Guide</a></span> </div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="H3_-_Heading_3_outer" style="margin-left: 36pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <h5 class="H3_-_Heading_3_inner" style="width: 18pt; white-space: nowrap"></h5>
+            </td>
+            <td width="100%">
+              <h5 class="H3_-_Heading_3_inner"><a name="1185816">Set up Agency Bill Plans in BillingCenter for Multicurrency Producer Organizations</a></h5>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="B_-_Body"><a name="1185817">In PolicyCenter you set the currency for producer organizations through agency bill plans. PolicyCenter retrieves the agency bill plans from BillingCenter. In a single currency system, you select an </a><span class="ui_-_UI_element">Agency Bill Plan</span> on the <span class="ui_-_UI_element">Basics</span> tab of the <span class="ui_-_UI_element">Organization</span> screen. In a multicurrency system, you select one or more agency bill plans on the <span class="ui_-_UI_element">Agency Bill</span> tab. Each agency bill plan specifies a currency.</div>
+      <div class="B_-_Body"><a name="1185822">When entering the </a><span class="ui_-_UI_element">Organizations </span>or the <span class="ui_-_UI_element">New Organizations</span> screens, PolicyCenter synchronizes with BillingCenter to refresh the agency bill plans.</div>
+      <h6 class="HS_-_Head_Sub"><a name="1185823">See also</a></h6>
+      <div class="BI_-_Bullet_Item_outer" style="margin-left: 57pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="BI_-_Bullet_Item_inner" style="width: 15pt; white-space: nowrap">
+                <span class="bu_-_bullet">•	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="BI_-_Bullet_Item_inner"><a href="javascript:WWHClickedPopup('app', 'agency_bill_plan.24.3.html#1002400', '');" title="Working with Agency Bill Plans" name="1185827">“Working with Agency Bill Plans” in the </a><span class="bt_-_book_title"><a href="javascript:WWHClickedPopup('app', 'agency_bill_plan.24.3.html#1002400', '');" title="Working with Agency Bill Plans">Application Guide</a></span> </div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="BI_-_Bullet_Item_outer" style="margin-left: 57pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="BI_-_Bullet_Item_inner" style="width: 15pt; white-space: nowrap">
+                <span class="bu_-_bullet">•	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="BI_-_Bullet_Item_inner"><a name="1185828">“Organizations and Producer Codes Overview” in the </a><span class="bt_-_book_title">PolicyCenter Application Guide</span></div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="H3_-_Heading_3_outer" style="margin-left: 36pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <h5 class="H3_-_Heading_3_inner" style="width: 18pt; white-space: nowrap"></h5>
+            </td>
+            <td width="100%">
+              <h5 class="H3_-_Heading_3_inner"><a name="1185834">Set up Delinquency Plans in BillingCenter for Multicurrency Accounts</a></h5>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="B_-_Body"><a name="1185835">A BillingCenter delinquency plan defines a sequence of events to execute when a policy becomes past due. The delinquency plan can be applied to the past‑due policy only or to all policies in the account.</a></div>
+      <div class="B_-_Body"><a name="1185836">A special case exists when all policies in the account are considered delinquent and the account supports multiple currencies. In this situation, the delinquency plan is applied only to the policies that use the same currency as the policy that initiated the delinquency. In other words, only policies contained in the initiating policy’s currency silo are considered to be delinquent. Other policies in the account that use a different currency (and are therefore in a different currency silo) are not considered delinquent. This behavior describes the operation of the BillingCenter base configuration. If you wish all policies in the multicurrency account to be considered delinquent, regardless of their currency, BillingCenter can be configured to support that behavior.</a></div>
+      <div class="B_-_Body"><a name="1185837">Similarly, when a delinquent account is reinstated, the base configuration reinstates only the policies that reside in the relevant currency silo. To reinstate all policies in the account, regardless of their currency, configuration can be written to support that behavior.</a></div>
+      <h6 class="HS_-_Head_Sub"><a name="1185838">See also</a></h6>
+      <div class="BI_-_Bullet_Item_outer" style="margin-left: 57pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="BI_-_Bullet_Item_inner" style="width: 15pt; white-space: nowrap">
+                <span class="bu_-_bullet">•	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="BI_-_Bullet_Item_inner"><a href="javascript:WWHClickedPopup('app', 'delinquency_plans.23.03.html#2617431', '');" title="Working with Delinquency Plans" name="1185842">“Working with Delinquency Plans” in the </a><span class="bt_-_book_title"><a href="javascript:WWHClickedPopup('app', 'delinquency_plans.23.03.html#2617431', '');" title="Working with Delinquency Plans">Application Guide</a></span> </div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="H3_-_Heading_3_outer" style="margin-left: 36pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <h5 class="H3_-_Heading_3_inner" style="width: 18pt; white-space: nowrap"></h5>
+            </td>
+            <td width="100%">
+              <h5 class="H3_-_Heading_3_inner"><a name="1185844">Set up Commission Plans in BillingCenter in for Multicurrency Producer Codes</a></h5>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="B_-_Body"><a name="1185847">In PolicyCenter, producer codes are associated with commission plans. Each commission plan is associated with a currency. PolicyCenter retrieves the commission plans from BillingCenter. In a single currency system, each producer code has a single commission plan. In a multicurrency system, a producer code must have multiple commission plans, one for each currency.</a></div>
+      <div class="B_-_Body"><a name="1185856">When entering the </a><span class="ui_-_UI_element">Producer Codes</span> or the <span class="ui_-_UI_element">New Producer Code</span> screens, PolicyCenter synchronizes with BillingCenter to refresh the commission plans for the current producer code.</div>
+      <h6 class="HS_-_Head_Sub"><a name="1185857">See also</a></h6>
+      <div class="BI_-_Bullet_Item_outer" style="margin-left: 57pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="BI_-_Bullet_Item_inner" style="width: 15pt; white-space: nowrap">
+                <span class="bu_-_bullet">•	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="BI_-_Bullet_Item_inner"><a href="javascript:WWHClickedPopup('app', 'commission_plans.25.6.html#2754972', '');" title="Working with Commission Plans" name="1185861">“Working with Commission Plans” in the </a><span class="bt_-_book_title"><a href="javascript:WWHClickedPopup('app', 'commission_plans.25.6.html#2754972', '');" title="Working with Commission Plans">Application Guide</a></span> </div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="BI_-_Bullet_Item_outer" style="margin-left: 57pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="BI_-_Bullet_Item_inner" style="width: 15pt; white-space: nowrap">
+                <span class="bu_-_bullet">•	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="BI_-_Bullet_Item_inner"><a name="1185862">“Organizations and Producer Codes Overview” in the </a><span class="bt_-_book_title">PolicyCenter Application Guide</span></div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="H3_-_Heading_3_outer" style="margin-left: 36pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <h5 class="H3_-_Heading_3_inner" style="width: 18pt; white-space: nowrap"></h5>
+            </td>
+            <td width="100%">
+              <h5 class="H3_-_Heading_3_inner"><a name="1185868">Set up Authority Limits in BillingCenter for Multicurrency Integration</a></h5>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="B_-_Body"><a name="1185869">Each user in BillingCenter needs to be associated to an authority limit profile. BillingCenter supports multicurrency Authority Limit Profiles. Authority Limit Profiles are composed of authority limits, and an authority limit must be defined separately for each currency. For example, one authority limit specifies the maximum amount a user has the authority to write off. If your integration includes Japanese yen, European Union euros, and U.S. dollars, a separate write-off authority limit must be created for each of these currencies. All three of these currency specific authority limits are associated to the same authority limit profile.</a></div>
+      <h6 class="HS_-_Head_Sub"><a name="1185870">See also</a></h6>
+      <div class="BI_-_Bullet_Item_outer" style="margin-left: 57pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="BI_-_Bullet_Item_inner" style="width: 15pt; white-space: nowrap">
+                <span class="bu_-_bullet">•	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="BI_-_Bullet_Item_inner"><a href="javascript:WWHClickedPopup('app', 'security.72.4.html#1156063', '');" title="Authority Limits and Authority Limit Profiles" name="1185874">“Authority Limits and Authority Limit Profiles” in the </a><span class="bt_-_book_title"><a href="javascript:WWHClickedPopup('app', 'security.72.4.html#1156063', '');" title="Authority Limits and Authority Limit Profiles">Application Guide</a></span></div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <h6 class="HS_-_Head_Sub"><a name="1156587">See also</a></h6>
+      <div class="BI_-_Bullet_Item_outer" style="margin-left: 57pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="BI_-_Bullet_Item_inner" style="width: 15pt; white-space: nowrap">
+                <span class="bu_-_bullet">•	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="BI_-_Bullet_Item_inner"><a href="javascript:WWHClickedPopup('integration', 'multicurrency-bc-pc.28.1.html#1141219', '');" title="Multicurrency Integration between BillingCenter and PolicyCenter" name="1157041">“Multicurrency Integration between BillingCenter and PolicyCenter” in the </a><span class="bt_-_book_title"><a href="javascript:WWHClickedPopup('integration', 'multicurrency-bc-pc.28.1.html#1141219', '');" title="Multicurrency Integration between BillingCenter and PolicyCenter">Integration Guide</a></span></div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="B_-_Body"><a name="1156825">&nbsp;</a></div>
+      <script type="text/javascript" language="JavaScript1.2">
+        <!--
+          // Clear related topics
+          //
+          WWHClearRelatedTopics();
+
+          document.writeln(WWHRelatedTopicsInlineHTML());
+        // -->
+      </script>
+    </blockquote>
+    <script type="text/javascript" language="JavaScript1.2">
+      <!--
+        document.write(WWHRelatedTopicsDivTag() + WWHPopupDivTag() + WWHALinksDivTag());
+      // -->
+    </script>
+  </body>
+</html>

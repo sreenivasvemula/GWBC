@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PCF
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:noNamespaceSchemaLocation="../../../../../pcf.xsd">
+  <Forward
+    canVisit="perm.System.prodtabview"
+    id="ProducerForward">
+    <LocationEntryPoint
+      signature="ProducerForward()"/>
+    <!-- Set gotoMostRecentProducer variable to true to have this forward go to the most recently viewed producer,
+         false to have this forward go to the Producers search page -->
+    <Variable
+      initialValue="false"
+      name="gotoMostRecentProducer"
+      type="Boolean"/>
+    <ForwardCondition
+      action="gw.api.web.producer.ProducerUtil.getMostRecentlyViewedProducer().getDestination().go()"
+      condition="gotoMostRecentProducer and (gw.api.web.producer.ProducerUtil.getMostRecentlyViewedProducer() != null)"/>
+    <ForwardCondition
+      action="ProducersGroup.go()"/>
+  </Forward>
+</PCF>

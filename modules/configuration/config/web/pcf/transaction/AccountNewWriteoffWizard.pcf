@@ -1,0 +1,64 @@
+<?xml version="1.0"?>
+<PCF
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="../../../../../pcf.xsd">
+  <Wizard
+          beforeCommit="uiWriteoff.WriteOff.doWriteOffWithApproval()"
+          cancelWarning="displaykey.Web.NewWriteoffWizard.CancelConfirmation"
+          id="AccountNewWriteoffWizard">
+    <LocationEntryPoint
+            signature="AccountNewWriteoffWizard(account : Account)"/>
+    <Variable
+            name="account"
+            type="Account"/>
+    <Variable
+            initialValue="createTargetOfWriteOff()"
+            name="targetOfWriteoff"
+            type="web.accounting.TAccountOwnerReference"/>
+    <Variable
+            name="uiWriteoff"
+            type="gw.api.web.accounting.UIWriteOffCreation"/>
+    <WizardStep
+            allowNext="targetOfWriteoff != null"
+            available="!account.isListBill()"
+            id="TargetStep"
+            label="displaykey.Web.NewWriteoffWizard.Target.Label"
+            screen="AccountNewWriteoffWizardTargetStepScreen(account, targetOfWriteoff)"
+            title="displaykey.Web.NewWriteoffWizard.Target.Title"
+            visible="!account.isListBill()"/>
+    <WizardStep
+            id="DetailsStep"
+            label="displaykey.Web.NewWriteoffWizard.Details.Label"
+            onEnter="createUIWriteOff()"
+            onExit="onExitFromDetailsStep()"
+            screen="NewWriteoffWizardDetailsStepScreen(uiWriteoff)"
+            title="displaykey.Web.NewWriteoffWizard.Details.Title"/>
+    <WizardStep
+            allowFinish="uiWriteoff != null &amp;&amp; uiWriteoff.Amount != null"
+            id="ConfirmationStep"
+            label="displaykey.Web.NewWriteoffWizard.Confirmation.Label"
+            screen="NewWriteoffWizardConfirmationStepScreen(uiWriteoff)"
+            title="displaykey.Web.NewWriteoffWizard.Confirmation.Title"/>
+    <Code><![CDATA[
+              function onExitFromDetailsStep() {
+                uiWriteoff.initiateApprovalActivityIfUserLacksAuthority()
+              }
+
+              function createUIWriteOff() {
+                if (uiWriteoff == null || uiWriteoff.WriteOff.TAccountOwner != targetOfWriteoff.TAccountOwner) {
+                  if (uiWriteoff != null) {
+                    uiWriteoff.cleanupBeforeDiscard()
+                  }
+                  var writeOff = new gw.api.web.accounting.WriteOffFactory(CurrentLocation).createChargePatternWriteOff(targetOfWriteoff.TAccountOwner)
+                  uiWriteoff = new gw.api.web.accounting.UIWriteOffCreation(writeOff)
+                }
+              }
+
+              function createTargetOfWriteOff(): web.accounting.TAccountOwnerReference {
+                var reference = new web.accounting.TAccountOwnerReference()
+                reference.TAccountOwner = account
+                return reference
+              }
+      ]]></Code>
+  </Wizard>
+</PCF>

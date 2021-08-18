@@ -1,0 +1,24 @@
+function FileData_Pairs(x)
+{
+x.t("text_val.select","link");
+x.t("guidewire","billingcenter");
+x.t("link","directly");
+x.t("messsage","billingcenter");
+x.t("guide","guidewire");
+x.t("directly","page");
+x.t("text_val.focus","text_val.select");
+x.t("part","viii");
+x.t("text_val=eval","document.linktothisurlform.urlfield");
+x.t("error","occurred");
+x.t("guidewire_selectall","var");
+x.t("function","guidewire_selectall");
+x.t("occurred","messsage");
+x.t("configuration","guide");
+x.t("configuration","part");
+x.t("configuration","function");
+x.t("document.linktothisurlform.urlfield","text_val.focus");
+x.t("page","error");
+x.t("viii","guidewire");
+x.t("billingcenter","configuration");
+x.t("var","text_val=eval");
+}

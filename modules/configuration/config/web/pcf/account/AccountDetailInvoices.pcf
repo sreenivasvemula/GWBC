@@ -1,0 +1,301 @@
+<?xml version="1.0"?>
+<PCF
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:noNamespaceSchemaLocation="../../../../../pcf.xsd">
+  <Page
+    beforeCommit="invoices = account.InvoicesSortedByDate; canEditNextInvoiceDate = (account.NextInvoice != null);"
+    canEdit="perm.System.invcdateedit"
+    canVisit="perm.System.accttabview and perm.System.acctinvcview"
+    id="AccountDetailInvoices"
+    showUpLink="true"
+    title="displaykey.Web.AccountDetailInvoices.Title">
+    <LocationEntryPoint
+      signature="AccountDetailInvoices(account : Account)"/>
+    <LocationEntryPoint
+      signature="AccountDetailInvoices(account : Account, selectedInvoice : AccountInvoice)"/>
+    <Variable
+      initialValue="util.DateUtil.currentDate()"
+      name="today"
+      type="DateTime"/>
+    <Variable
+      name="account"
+      type="Account"/>
+    <Variable
+      initialValue="account.InvoicesSortedByDate"
+      name="invoices"/>
+    <Variable
+      name="selectedInvoice"
+      type="AccountInvoice"/>
+    <Variable
+      initialValue="null"
+      name="invoiceResent"
+      type="String"/>
+    <Variable
+      initialValue="account.BillingPlan.Aggregation"
+      name="aggregation"
+      type="AggregationType"/>
+    <Variable
+      initialValue="account.NextInvoice != null"
+      name="canEditNextInvoiceDate"/>
+    <Variable
+      initialValue="null"
+      name="selectedInvoiceStream"
+      type="InvoiceStream"/>
+    <Screen
+      id="AccountDetailInvoicesScreen">
+      <AlertBar
+        action="invoiceResent = null"
+        id="AccountDetailInvoices_InvoiceSentAlertBar"
+        label="displaykey.Web.AccountDetailInvoices.InvoiceSent(invoiceResent)"
+        visible="invoiceResent != null"/>
+      <ListDetailPanel
+        id="DetailPanel"
+        selectionName="invoice"
+        selectionOnEnter="selectedInvoice"
+        selectionType="AccountInvoice">
+        <PanelRef>
+          <Toolbar>
+            <ToolbarRangeInput
+              id="InvoiceStreamFilter"
+              label="displaykey.Web.AccountDetailInvoices.InvoiceStreamFilter"
+              noneSelectedLabel="displaykey.Web.AccountDetailInvoices.ShowAllInvoices"
+              value="selectedInvoiceStream"
+              valueRange="account.InvoiceStreams.sort(\ invoiceStream1, invoiceStream2 -&gt; invoiceStream1.DisplayName &lt;= invoiceStream2.DisplayName)">
+              <PostOnChange
+                onChange="updateInvoices()"/>
+            </ToolbarRangeInput>
+            <ToolbarButton
+              action="NewInvoice.go(account, selectedInvoiceStream)"
+              available="perm.Account.invccreate and  selectedInvoiceStream != null"
+              id="AccountDetailInvoices_NewInvoiceButton"
+              label="displaykey.Web.AccountDetailInvoices.NewInvoice"
+              visible="true"/>
+            <CheckedValuesToolbarButton
+              allCheckedRowsAction="web.invoice.InvoiceUtil.deleteInvoices(CheckedValues); invoices = account.InvoicesSortedByDate; canEditNextInvoiceDate = (account.NextInvoice != null);"
+              available="perm.Account.invcremove"
+              confirmMessage="displaykey.Web.AccountDetailInvoices.DeleteInvoices.Confirm"
+              flags="all DeleteableInvoice"
+              id="AccountDetailInvoices_RemoveInvoicesButton"
+              iterator="AccountInvoicesLV"
+              label="displaykey.Web.AccountDetailInvoices.DeleteInvoices"
+              visible="true"/>
+          </Toolbar>
+          <ListViewPanel
+            id="AccountInvoicesLV">
+            <RowIterator
+              editable="false"
+              elementName="invoiceRow"
+              hasCheckBoxes="true"
+              pageSize="0"
+              value="invoices">
+              <ToolbarFlag
+                condition="!invoiceRow.isSent() and invoiceRow.InvoiceItems.length == 0"
+                name="DeleteableInvoice"/>
+              <Row>
+                <DateCell
+                  footerLabel="displaykey.Web.AccountInvoicesLV.Total"
+                  id="InvoiceDate"
+                  label="displaykey.Web.AccountInvoicesLV.InvoiceDate"
+                  value="invoiceRow.EventDate"/>
+                <DateCell
+                  id="InvoiceDueDate"
+                  label="displaykey.Web.AccountInvoicesLV.PaymentDueDate"
+                  value="invoiceRow.PaymentDueDate"/>
+                <Cell
+                  id="InvoiceNumber"
+                  label="displaykey.Web.AccountInvoicesLV.InvoiceNumber"
+                  value="invoiceRow.InvoiceNumber"/>
+                <Cell
+                  id="InvoiceStream"
+                  label="displaykey.Web.AccountInvoicesLV.InvoiceStream"
+                  value="invoiceRow.InvoiceStream"/>
+                <TypeKeyCell
+                  id="Status"
+                  label="displaykey.Web.AccountInvoicesLV.Status"
+                  value="invoiceRow.Status"/>
+                <MonetaryAmountCell
+                  currency="account.Currency"
+                  footerSumValue="invoiceRow.Amount"
+                  formatType="currency"
+                  id="Amount"
+                  label="displaykey.Web.AccountInvoicesLV.Amount"
+                  value="invoiceRow.Amount"/>
+                <MonetaryAmountCell
+                  currency="account.Currency"
+                  footerSumValue="invoiceRow.getAmountDue()"
+                  formatType="currency"
+                  id="CurrentAmountDue"
+                  label="displaykey.Web.AccountInvoicesLV.CurrentAmountDue"
+                  value="invoiceRow.getAmountDue()"/>
+              </Row>
+            </RowIterator>
+          </ListViewPanel>
+        </PanelRef>
+        <CardViewPanel>
+          <Variable
+            initialValue="invoice.PreviousInvoice"
+            name="previousInvoice"/>
+          <Card
+            id="InvoiceDetailCard"
+            title="displaykey.Web.AccountDetailInvoices.InvoiceDetail.Title(util.StringUtil.formatDate(invoice.EventDate,&quot;short&quot;))">
+            <PanelRef>
+              <Toolbar>
+                <EditButtons
+                  editLabel="displaykey.Web.AccountDetailInvoices.EditInvoiceDates"
+                  editVisible="invoice.Status == &quot;planned&quot; and perm.Account.invcdateedit"/>
+                <ToolbarButton
+                  action="web.invoice.InvoiceUtil.resendInvoice(invoice);invoiceResent = invoice.InvoiceNumber"
+                  available="invoice.Status != &quot;planned&quot; and perm.Account.invcresend and !CurrentLocation.InEditMode"
+                  id="InvoiceDetailDV_ResendInvoice"
+                  label="displaykey.Web.AccountDetailInvoices.ResendInvoice"/>
+              </Toolbar>
+              <DetailViewPanel
+                id="InvoiceDetailDV">
+                <InputColumn>
+                  <Label
+                    label="displaykey.Web.InvoiceDetailDV.InvoiceInfo"/>
+                  <DateInput
+                    editable="invoice.Status == &quot;planned&quot; and perm.Account.invcdateedit"
+                    id="InvoiceDate"
+                    label="displaykey.Web.InvoiceDetailDV.InvoiceDate"
+                    required="true"
+                    validationExpression="web.invoice.InvoiceUtil.validateInvoiceDate(invoice)"
+                    value="invoice.EventDate">
+                    <PostOnChange
+                      target="DATA_ONLY"/>
+                  </DateInput>
+                  <DateInput
+                    editable="invoice.Status == &quot;planned&quot; and perm.Account.invcdateedit"
+                    id="PaymentDueDate"
+                    label="displaykey.Web.InvoiceDetailDV.PaymentDueDate"
+                    required="true"
+                    validationExpression="web.invoice.InvoiceUtil.validatePaymentDueDate(invoice)"
+                    value="invoice.PaymentDueDate">
+                    <PostOnChange
+                      target="DATA_ONLY"/>
+                  </DateInput>
+                  <TypeKeyInput
+                    id="Status"
+                    label="displaykey.Web.InvoiceDetailDV.Status"
+                    value="invoice.getStatus()"/>
+                </InputColumn>
+                <InputColumn>
+                  <Label
+                    label="displaykey.Web.InvoiceDetailDV.Statement"/>
+                  <MonetaryAmountInput
+                    align="right"
+                    currency="account.Currency"
+                    formatType="currency"
+                    id="PriorAmountDue"
+                    label="displaykey.Web.InvoiceDetailDV.PriorAmountDue"
+                    value="previousInvoice.OutstandingAmount"/>
+                  <MonetaryAmountInput
+                    align="right"
+                    currency="account.Currency"
+                    formatType="currency"
+                    id="TotalCharges"
+                    label="displaykey.Web.InvoiceDetailDV.TotalCharges"
+                    value="invoice.Status != &quot;planned&quot; ? invoice.Amount : null"/>
+                  <MonetaryAmountInput
+                    align="right"
+                    currency="account.Currency"
+                    formatType="currency"
+                    id="TotalAmountDue"
+                    label="displaykey.Web.InvoiceDetailDV.TotalAmountDue"
+                    value="invoice.OutstandingAmount"/>
+                </InputColumn>
+              </DetailViewPanel>
+            </PanelRef>
+            <PanelRef>
+              <TitleBar
+                title="displaykey.Web.InvoiceDetailDV.InvoiceCharges"/>
+              <Toolbar>
+                <ToolbarRangeInput
+                  id="AggregationTypeSelector"
+                  label="displaykey.Web.InvoiceItemsLV.AggregationType"
+                  required="true"
+                  value="aggregation"
+                  valueRange="typekey.AggregationType.getTypeKeys(false)">
+                  <PostOnChange/>
+                </ToolbarRangeInput>
+              </Toolbar>
+              <ListViewPanel
+                id="InvoiceItemsLV">
+                <RowIterator
+                  editable="false"
+                  elementName="invoiceItem"
+                  pageSize="0"
+                  value="invoice.getAggregatedInvoiceItems(aggregation)">
+                  <Row>
+                    <Cell
+                      align="center"
+                      footerLabel="displaykey.Web.InvoiceItemsLV.Total"
+                      id="InvoiceItemsLV_InstallmentNumber"
+                      label="displaykey.Web.InvoiceItemsLV.InstallmentNumber"
+                      value="invoiceItem.InstallmentNumber"/>
+                    <DateCell
+                      id="InvoiceItemsLV_EventDate"
+                      label="displaykey.Web.InvoiceItemsLV.EventDate"
+                      sortDirection="descending"
+                      sortOrder="1"
+                      value="invoiceItem.Date"
+                      visible="aggregation==AggregationType.TC_CHARGES"/>
+                    <Cell
+                      action="PolicyDetailSummaryPopup.push(invoiceItem.PolicyPeriod)"
+                      actionAvailable="invoiceItem.PolicyPeriod != null"
+                      enableSort="false"
+                      id="InvoiceItemsLV_Policy"
+                      label="displaykey.Web.InvoiceItemsLV.Policy"
+                      value="invoiceItem.PolicyPeriod == null ? displaykey.Web.InvoiceItemsLV.AccountCharge : invoiceItem.PolicyPeriod.DisplayName"/>
+                    <Cell
+                      id="InvoiceItemsLV_Charge"
+                      label="displaykey.Web.InvoiceItemsLV.Category"
+                      value="invoiceItem.Charge"
+                      visible="aggregation==AggregationType.TC_CATEGORIES or aggregation==AggregationType.TC_CHARGES"/>
+                    <Cell
+                      id="InvoiceItemsLV_Context"
+                      label="displaykey.Web.InvoiceItemsLV.Context"
+                      value="invoiceItem.Charge.BillingInstruction"
+                      visible="aggregation==AggregationType.TC_CONTEXTS or aggregation==AggregationType.TC_CATEGORIES or aggregation==AggregationType.TC_CHARGES"/>
+                    <Cell
+                      id="InvoiceItemsLV_ChargeGroup"
+                      label="displaykey.Web.InvoiceItemsLV.ChargeGroup"
+                      value="invoiceItem.Charge.ChargeGroup"
+                      visible="aggregation==AggregationType.TC_CHARGEGROUPS"/>
+                    <TypeKeyCell
+                      id="InvoiceItemsLV_Description"
+                      label="displaykey.Web.InvoiceItemsLV.Description"
+                      value="invoiceItem.Type"
+                      visible="aggregation==AggregationType.TC_CHARGES"/>
+                    <TypeKeyCell
+                      id="InvoiceItemsLV_Product"
+                      label="displaykey.Web.InvoiceItemsLV.Product"
+                      value="invoiceItem.PolicyPeriod.Policy.LOBCode"
+                      visible="aggregation != AggregationType.TC_CATEGORIES &amp;&amp; aggregation != AggregationType.TC_CONTEXTS"/>
+                    <MonetaryAmountCell
+                      currency="account.Currency"
+                      footerSumValue="invoiceItem.Amount"
+                      formatType="currency"
+                      id="InvoiceItemsLV_Amount"
+                      label="displaykey.Web.InvoiceItemsLV.Amount"
+                      value="invoiceItem.Amount"/>
+                    <MonetaryAmountCell
+                      currency="account.Currency"
+                      id="InvoiceItemsLV_PaidAmount"
+                      label="displaykey.Web.InvoiceItemsLV.PaidAmount"
+                      value="invoiceItem.PaidAmount"/>
+                  </Row>
+                </RowIterator>
+              </ListViewPanel>
+            </PanelRef>
+          </Card>
+        </CardViewPanel>
+      </ListDetailPanel>
+    </Screen>
+    <Code><![CDATA[function updateInvoices() {
+    invoices = selectedInvoiceStream != null 
+      ? account.InvoicesSortedByDate.where(\ i -> i.InvoiceStream == selectedInvoiceStream) 
+      : account.InvoicesSortedByDate
+}]]></Code>
+  </Page>
+</PCF>

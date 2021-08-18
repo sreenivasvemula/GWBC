@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PCF
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:noNamespaceSchemaLocation="../../../../../../pcf.xsd">
+  <Page
+    canEdit="true"
+    canVisit="perm.System.admintabview and perm.System.commplanview"
+    id="CommissionPlans"
+    title="displaykey.Web.CommissionPlans.Title">
+    <Variable
+      initialValue="gw.api.database.Query.make(CommissionPlan).select()"
+      name="commissionPlans"/>
+    <Screen
+      id="CommissionPlansScreen">
+      <Toolbar/>
+      <PanelRef
+        def="CommissionPlansLV(commissionPlans)"/>
+    </Screen>
+  </Page>
+</PCF>

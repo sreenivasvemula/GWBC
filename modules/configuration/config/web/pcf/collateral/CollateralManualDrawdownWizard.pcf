@@ -1,0 +1,39 @@
+<?xml version="1.0"?>
+<PCF
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:noNamespaceSchemaLocation="../../../../../pcf.xsd">
+  <Wizard
+    beforeCommit="collateralDrawdown.createDrawdownAndCharge()"
+    cancelWarning="displaykey.Web.CollateralManualDrawdownWizard.CancelConfirmation"
+    id="CollateralManualDrawdownWizard">
+    <LocationEntryPoint
+      signature="CollateralManualDrawdownWizard(collateral : Collateral)"/>
+    <Variable
+      name="collateral"
+      type="Collateral"/>
+    <Variable
+      initialValue="new gw.api.web.collateral.CollateralDrawdownUtil(collateral)"
+      name="collateralDrawdown"
+      type="gw.api.web.collateral.CollateralDrawdownUtil"/>
+    <WizardStep
+      allowNext="collateralDrawdown.getAmount().IsNotZero"
+      id="amountStep"
+      label="displaykey.Web.CollateralManualDrawdownWizard.AmountStepLabel"
+      refreshStepsOnExit="true"
+      screen="CollateralManualDrawdownAmountScreen(collateralDrawdown)"
+      title="displaykey.Web.CollateralManualDrawdownWizard.AmountStepTitle"/>
+    <WizardStep
+      allowNext="collateralDrawdown.isChargeAmountValid()"
+      available="collateralDrawdown.isCheckboxVisible()"
+      id="chargeStep"
+      label="displaykey.Web.CollateralManualDrawdownWizard.ChargeStepLabel"
+      refreshStepsOnExit="true"
+      screen="CollateralManualDrawdownChargeScreen(collateralDrawdown)"
+      title="displaykey.Web.CollateralManualDrawdownWizard.ChargeStepTitle"/>
+    <WizardStep
+      id="confirmStep"
+      label="displaykey.Web.CollateralManualDrawdownWizard.ConfirmStepLabel"
+      screen="CollateralManualDrawdownConfirmScreen(collateralDrawdown)"
+      title="displaykey.Web.CollateralManualDrawdownWizard.ConfirmStepTitle"/>
+  </Wizard>
+</PCF>

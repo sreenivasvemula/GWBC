@@ -1,0 +1,74 @@
+<?xml version="1.0"?>
+<PCF
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:noNamespaceSchemaLocation="../../../../../pcf.xsd">
+  <Screen
+    id="PaymentRequestSearchScreen">
+    <!-- Regarding SearchMethods.validateAndSearch: The 2nd parameter controls whether to clear the bundle before querying. -->
+    <SearchPanel
+      criteriaName="searchCriteria"
+      maxSearchResults="gw.api.system.BCConfigParameters.MaxSearchResults.Value"
+      resultsName="paymentRequestSearchViews"
+      search="gw.search.SearchMethods.validateAndSearch(searchCriteria, true)"
+      searchCriteria="new PaymentRequestSearchCriteria()"
+      searchResultsType="PaymentRequestSearchViewQuery">
+      <PanelRef
+        def="PaymentRequestSearchDV(searchCriteria)">
+        <Toolbar/>
+      </PanelRef>
+      <PanelRef>
+        <Toolbar/>
+        <ListViewPanel
+          editable="false"
+          id="PaymentRequestSearchResultsLV">
+          <RowIterator
+            editable="false"
+            elementName="paymentRequestSearchView"
+            value="paymentRequestSearchViews">
+            <Row>
+              <DateCell
+                id="CreateTime"
+                label="displaykey.Web.PaymentRequestSearchResultsLV.CreateTime"
+                value="paymentRequestSearchView.CreateTime"/>
+              <Cell
+                id="AccountNumber"
+                label="displaykey.Web.PaymentRequestSearchResultsLV.AccountNumber"
+                value="paymentRequestSearchView.AccountNumber"/>
+              <Cell
+                id="AccountName"
+                label="displaykey.Web.PaymentRequestSearchResultsLV.AccountName"
+                value="paymentRequestSearchView.AccountName"/>
+              <MonetaryAmountCell
+                currency="paymentRequestSearchView.Currency"
+                id="Amount"
+                label="displaykey.Web.PaymentRequestSearchResultsLV.Amount"
+                sortBy="paymentRequestSearchView.Currency, paymentRequestSearchView.Amount"
+                value="paymentRequestSearchView.Amount.ofCurrency(paymentRequestSearchView.Currency)"/>
+              <TypeKeyCell
+                id="PaymentMethod"
+                label="displaykey.Web.PaymentRequestSearchResultsLV.PaymentMethod"
+                value="paymentRequestSearchView.PaymentMethod"/>
+              <TypeKeyCell
+                action="PaymentRequestDetailPage.go(paymentRequestSearchView.PaymentRequest, false)"
+                id="Status"
+                label="displaykey.Web.PaymentRequestSearchResultsLV.Status"
+                value="paymentRequestSearchView.Status"/>
+              <DateCell
+                id="DraftDate"
+                label="displaykey.Web.PaymentRequestSearchResultsLV.DraftDate"
+                value="paymentRequestSearchView.DraftDate"/>
+              <DateCell
+                id="RequestDate"
+                label="displaykey.Web.PaymentRequestSearchResultsLV.RequestDate"
+                value="paymentRequestSearchView.RequestDate"/>
+              <DateCell
+                id="StatusDate"
+                label="displaykey.Web.PaymentRequestSearchResultsLV.StatusDate"
+                value="paymentRequestSearchView.StatusDate"/>
+            </Row>
+          </RowIterator>
+        </ListViewPanel>
+      </PanelRef>
+    </SearchPanel>
+  </Screen>
+</PCF>

@@ -1,0 +1,36 @@
+<?xml version="1.0"?>
+<PCF
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:noNamespaceSchemaLocation="../../../../../pcf.xsd">
+  <Wizard
+    beforeCommit="credit.execute()"
+    canVisit="perm.Transaction.gentxn"
+    cancelWarning="displaykey.Web.NewCreditWizard.CancelConfirmation"
+    id="AccountNewCreditWizard">
+    <LocationEntryPoint
+      signature="AccountNewCreditWizard(account : Account)"/>
+    <Variable
+      name="account"
+      type="Account"/>
+    <Variable
+      initialValue="createCredit()"
+      name="credit"
+      type="Credit"/>
+    <WizardStep
+      id="Step1"
+      label="displaykey.Web.NewCreditWizard.Charges.Label"
+      onExit="credit.initiateApprovalActivityIfUserLacksAuthority()"
+      screen="CreditDetailsScreen(account, credit)"
+      title="displaykey.Web.NewCreditWizard.Credit.Title"/>
+    <WizardStep
+      id="Step2"
+      label="displaykey.Web.NewCreditWizard.Confirmation.Label"
+      screen="CreditDetailsConfirmationScreen(account, credit)"
+      title="displaykey.Web.NewCreditWizard.Confirmation.Title"/>
+    <Code><![CDATA[function createCredit() : Credit {
+  var theCredit = new entity.Credit(account.Currency)
+  theCredit.Account = account
+  return theCredit
+  }]]></Code>
+  </Wizard>
+</PCF>

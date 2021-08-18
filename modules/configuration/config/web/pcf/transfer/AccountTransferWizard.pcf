@@ -1,0 +1,44 @@
+<?xml version="1.0"?>
+<PCF
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:noNamespaceSchemaLocation="../../../../../pcf.xsd">
+  <Wizard
+    beforeCommit="accountTransfer.doTransfer()"
+    id="AccountTransferWizard">
+    <LocationEntryPoint
+      signature="AccountTransferWizard(accountID : Key)"/>
+    <Variable
+      name="accountID"
+      type="Key"/>
+    <Variable
+      initialValue="loadAccount(accountID)"
+      name="account"
+      type="Account"/>
+    <Variable
+      initialValue="new web.accounting.TAccountOwnerReference()"
+      name="tAccountOwnerReference"
+      type="web.accounting.TAccountOwnerReference"/>
+    <Variable
+      initialValue="new AccountTransfer()"
+      name="accountTransfer"
+      type="AccountTransfer"/>
+    <WizardStep
+      id="AccountSearchStep"
+      label="displaykey.Web.AccountTransferWizard.AccountSearch.Label"
+      onExit="accountTransfer.ToAccount = tAccountOwnerReference.TAccountOwner as Account"
+      onFirstEnter="accountTransfer.FromAccount = account"
+      screen="WizardsStep1AccountPolicySearchScreen(tAccountOwnerReference, TAccountOwnerType.TC_ACCOUNT, false, true)"
+      title="displaykey.Web.AccountTransferWizard.AccountSearch.Title"/>
+    <WizardStep
+      allowFinish="!accountTransfer.ToAccount.ListBill "
+      id="TransferStep"
+      label="displaykey.Web.AccountTransferWizard.Transfer.Label"
+      screen="AccountTransferWizardTransferScreen(accountTransfer)"
+      title="displaykey.Web.AccountTransferWizard.Transfer.Title"/>
+    <Code><![CDATA[uses gw.api.database.Query
+
+function loadAccount(id : Key) : Account{
+  return Query<Account>.make(entity.Account).compare("ID", Equals, id).select().AtMostOneRow
+}]]></Code>
+  </Wizard>
+</PCF>

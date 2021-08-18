@@ -1,0 +1,45 @@
+<?xml version="1.0"?>
+<PCF
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:noNamespaceSchemaLocation="../../../../../pcf.xsd">
+  <Wizard
+    beforeCommit="validateTransferAmount(); fundsTransferUtil.createTransfers()"
+    cancelWarning="displaykey.Web.ProducerFundsTransferWizard.CancelConfirmation"
+    countsAsWork="false"
+    id="ProducerTransferFundsWizard">
+    <LocationEntryPoint
+      signature="ProducerTransferFundsWizard(producer : Producer)"/>
+    <Variable
+      name="producer"
+      type="Producer"/>
+    <Variable
+      initialValue="createFundTransferUtil()"
+      name="fundsTransferUtil"
+      type="gw.api.web.transaction.FundsTransferUtil"/>
+    <WizardStep
+      id="Step1"
+      label="displaykey.Web.NewTransferWizard.TransferDetails.Label"
+      onExit="fundsTransferUtil.setSourcesAndApprovalActivitiesIfRequired()"
+      screen="TransferDetailsScreen(fundsTransferUtil)"
+      title="displaykey.Web.NewTransferWizard.TransferDetails.Title"/>
+    <WizardStep
+      id="Step2"
+      label="displaykey.Web.NewTransferWizard.TransferConfirmation.Label"
+      screen="TransferConfirmationScreen(fundsTransferUtil)"
+      title="displaykey.Web.NewTransferWizard.TransferConfirmation.Title"/>
+    <Code><![CDATA[
+public static function createFundTransferUtil() : web.transaction.FundsTransferUtil{
+  var transferUtil = new web.transaction.FundsTransferUtil()
+  transferUtil.SourceOwner = producer
+  transferUtil.TargetType = TAccountOwnerType.TC_PRODUCER
+  transferUtil.addToTransfers(new FundsTransfer(producer.Currency))
+  return transferUtil;
+}
+
+function validateTransferAmount() {
+  if (!fundsTransferUtil.validateAmounts()) {
+    throw new util.DisplayableException(displaykey.Web.NewTransferWizard.InsufficientUnappliedFundsForTransfer)
+  }
+}]]></Code>
+  </Wizard>
+</PCF>

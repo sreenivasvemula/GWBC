@@ -1,0 +1,182 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xml:lang="en" lang="en" xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+    <meta http-equiv="Content-Style-Type" content="text/css" />
+    <!-- MOTW-DISABLED saved from url=(0014)about:internet -->
+    <title>Premium Report Customization Plugin</title>
+    <link rel="StyleSheet" href="css/bc-plugins.css" type="text/css" media="all" />
+    <link rel="StyleSheet" href="css/webworks.css" type="text/css" media="all" />
+    <link rel="StyleSheet" href="css/css-guidewire-extra.css" type="text/css" media="all" />
+    <script type="text/javascript" language="JavaScript1.2" src="wwhdata/common/context.js"></script>
+    <script type="text/javascript" language="JavaScript1.2" src="wwhdata/common/towwhdir.js"></script>
+    <script type="text/javascript" language="JavaScript1.2" src="wwhdata/common/wwhpagef.js"></script>
+    <script type="text/javascript" language="JavaScript1.2">
+      <!--
+        var  WebWorksRootPath = "";
+      // -->
+    </script>
+    <script type="text/javascript" language="JavaScript1.2">
+      <!--
+        // Set reference to top level help frame
+        //
+        var  WWHFrame = WWHGetWWHFrame("", true);
+      // -->
+    </script>
+    <script type="text/javascript" language="JavaScript1.2" src="scripts/expand.js"></script>
+    <!-- THE FOLLOWING IS A GUIDEWIRE STYLE DEFINITION FOR THE LINK TO THIS FEATURE -->
+    <link rel="StyleSheet" href="css/css-guidewire-extra.css" type="text/css" media="all" />
+    <!-- THE FOLLOWING IS A GUIDEWIRE GSCRIPT FUNCTION FOR THE LINK TO THIS FEATURE -->
+    <script type="text/javascript">
+function guidewire_selectall()
+{
+var text_val=eval("document.linktothisurlform.urlfield");
+text_val.focus();
+text_val.select();
+}
+</script>
+  </head>
+  <body onLoad="WWHUpdate();" onUnload="WWHUnload();" onKeyDown="WWHHandleKeyDown((document.all||document.getElementById||document.layers)?event:null);" onKeyPress="WWHHandleKeyPress((document.all||document.getElementById||document.layers)?event:null);" onKeyUp="WWHHandleKeyUp((document.all||document.getElementById||document.layers)?event:null);">
+    <!-- THE FOLLOWING IS A GUIDEWIRE DIV FOR THE 'LINK TO THIS' FEATURE -->
+    <div id="linkToThisPage" class="popup" style="display: none;">
+      <div class="popupTitle">Link Directly to This Page 
+           <a href="#" onclick="var thePopup = getElementById('linkToThisPage');thePopup.style.display='none';return false;"><img class="popupClosebox" src="wwhelp/wwhimpl/common/images/close.gif" /></a></div>
+      <div style="padding:6px;">
+        <div class="popupText" id="linkToThisPageBookmark">An error has occurred if you see this messsage.</div>
+        <form name="linktothisurlform" method="post" action="" style="width:275px;margin:0px">
+          <input type="text" class="popupURLText" id="linkToThisPageURL" name="urlfield" rows="1" cols="55" onClick="guidewire_selectall();" onFocus="guidewire_selectall();"></input>
+        </form>
+      </div>
+    </div>
+    <br />
+    <div class="WebWorks_Breadcrumbs" style="text-align: left;">
+      <span>BillingCenter Integration Guide</span> : 
+    <span class="WebWorks_Breadcrumbs" style="text-align: left;"><a class="WebWorks_Breadcrumb_Link" href="p-plugins.html#3435089">Plugins</a> : <a class="WebWorks_Breadcrumb_Link" href="bc-plugins.13.01.html#3435089">Billing Plugins</a> : Premium Report Customization Plugin</span></div>
+    <hr align="left" />
+    <blockquote>
+      <h3 class="H1_-_Heading_1"><a name="3435089">Premium Report Customization Plugin</a></h3>
+      <div class="B_-_Body"><a name="3435091">BillingCenter includes a billing instruction called a premium report billing instruction (</a><span class="cv_-_computer_voice">PremiumReportBI</span>). This billing instruction notifies the associated policy period of a premium report. Policy administration systems periodically provide these reports to detail the actual exposure for an insured, which changes over time. BillingCenter can use this information to provide the insured with accurate invoices instead of a bill for an estimated amount. There is a plugin interface called <span class="cv_-_computer_voice">IPremiumReport</span> that you can implement to customize how BillingCenter handles these billing instructions.</div>
+      <div class="B_-_Body"><a name="3435092">The base configuration provides a default implementation of the plugin interface. The methods are implemented in the </a><span class="cv_-_computer_voice">PremiumReport</span> class in the package <span class="cv_-_computer_voice">gw.plugin.premiumreporting.impl</span>. These methods can be modified if special handling is required.</div>
+      <h6 class="HS_-_Head_Sub"><a name="3556514">See also</a></h6>
+      <div class="BI_-_Bullet_Item_outer" style="margin-left: 57pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="BI_-_Bullet_Item_inner" style="width: 15pt; white-space: nowrap">
+                <span class="bu_-_bullet">•	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="BI_-_Bullet_Item_inner"><a name="3556531">For detailed information about the integration of PolicyCenter and BillingCenter, see “Billing Integration” in the </a><span class="e_-_emphasis">PolicyCenter Integration Guide</span>.</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <h4 class="H2_-_Heading_2"><a name="3435093">Matching Due Dates for Premium Reports</a></h4>
+      <div class="B_-_Body"><a name="3435094">When a </a><span class="cv_-_computer_voice">PremiumReportBI</span> billing instruction object is executed, BillingCenter matches the instruction to an existing due date. The due date is necessary to properly process the instruction. The logic that selects a matching due date is implemented in the plugin <span class="cv_-_computer_voice">findMatchingPremiumReportDueDate</span> method. The method accepts a <span class="cv_-_computer_voice">PremiumReportBI</span> object parameter. It returns a <span class="cv_-_computer_voice">PremiumReportDueDate</span> object with the matching due date.</div>
+      <div class="B_-_Body"><a name="3779095">When searching for a due date, the base configuration method compares the billing instruction’s due date to the following fields.</a></div>
+      <div class="BI_-_Bullet_Item_outer" style="margin-left: 57pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="BI_-_Bullet_Item_inner" style="width: 15pt; white-space: nowrap">
+                <span class="bu_-_bullet">•	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="BI_-_Bullet_Item_inner"><a name="3779598">premium report due date for the associated policy period</a></div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="BI_-_Bullet_Item_outer" style="margin-left: 57pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="BI_-_Bullet_Item_inner" style="width: 15pt; white-space: nowrap">
+                <span class="bu_-_bullet">•	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="BI_-_Bullet_Item_inner"><a name="3779604">start date for the policy period</a></div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="BI_-_Bullet_Item_outer" style="margin-left: 57pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="BI_-_Bullet_Item_inner" style="width: 15pt; white-space: nowrap">
+                <span class="bu_-_bullet">•	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="BI_-_Bullet_Item_inner"><a name="3779614">end date for the policy period</a></div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="B_-_Body"><a name="3779646">The method can be modified to implement special handling. For example, suppose you want to create a new property in the billing instruction that contained the public ID of the due date object. Use a find query that looks up the </a><span class="cv_-_computer_voice">PremiumReportDueDate</span> entity with that public ID. For example:</div>
+      <PRE class="CF_-_Code_First_Line"><a name="3435100">override function findMatchingPremiumReportDueDate(prbi : PremiumReportBI) : PremiumReportDueDate {</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="3435101">    return find (var prdd in PremiumReportDueDate where </a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="3435102">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;prdd.PremiumReportID == prbi.ID).getAtMostOneRow()</a></PRE>
+      <PRE class="CL_-_Code_Last_Line"><a name="3435103">  }</a></PRE>
+      <div class="B_-_Body"><a name="3435104">Because BillingCenter can find the due date object associated with this premium report, BillingCenter can mark that due date as satisfied so that delinquency does not happen. </a></div>
+      <div class="B_-_Body"><a name="3435105">The following is similar to the default implementation of this plugin method:</a></div>
+      <PRE class="CF_-_Code_First_Line"><a name="3435106">override function findMatchingPremiumReportDueDate(newPremiumReportBI : PremiumReportBI) :</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="3435107">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;PremiumReportDueDate</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="3435108">  {</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="3435109">    return find (var prdd in PremiumReportDueDate where </a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="3435110">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;prdd.PremiumReportDDPolicyPeriod == newPremiumReportBI.PremiumReportPolicyPeriod &amp;&amp;</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="3435111">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;prdd.PeriodStartDate == newPremiumReportBI.PeriodStartDate &amp;&amp;</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="3435112">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;prdd.PeriodEndDate ==  newPremiumReportBI.PeriodEndDate).getAtMostOneRow();      </a></PRE>
+      <PRE class="CL_-_Code_Last_Line"><a name="3435113">  } </a></PRE>
+      <h4 class="H2_-_Heading_2"><a name="3435114">Customizing Failure to Report Delinquency for Premium Reports</a></h4>
+      <div class="B_-_Body"><a name="3435115">If a premium report is not added by its due date, BillingCenter can begin a “Failure to Report” delinquency process. You can customize how BillingCenter starts and stops the delinquency process by modifying the appropriate plugin methods.</a></div>
+      <div class="BI_-_Bullet_Item_outer" style="margin-left: 57pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="BI_-_Bullet_Item_inner" style="width: 15pt; white-space: nowrap">
+                <span class="bu_-_bullet">•	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="BI_-_Bullet_Item_inner"><span class="cv_-_computer_voice"><a name="3780527">shouldStartFailureToReportDelinquency</a></span> – Determines whether to start a “Failure to Report” delinquency process. Returns <span class="cv_-_computer_voice">true</span> to start the process, else <span class="cv_-_computer_voice">false</span>. The base configuration returns <span class="cv_-_computer_voice">true</span> if no <span class="cv_-_computer_voice">PremiumReportBI</span> has been received by the due date. The method is called by the Premium Reporting Report Due batch process.</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="BI_-_Bullet_Item_outer" style="margin-left: 57pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="BI_-_Bullet_Item_inner" style="width: 15pt; white-space: nowrap">
+                <span class="bu_-_bullet">•	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="BI_-_Bullet_Item_inner"><span class="cv_-_computer_voice"><a name="3780520">shouldStopFailureToReportDelinquency</a></span> – Determines whether to stop an active “Failure to Report” delinquency process. Returns <span class="cv_-_computer_voice">true</span> to stop the process, else <span class="cv_-_computer_voice">false</span>. The base configuration always returns <span class="cv_-_computer_voice">true</span>. The method is called whenever a <span class="cv_-_computer_voice">PremiumReportBI</span> billing instruction is received.</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <script type="text/javascript" language="JavaScript1.2">
+        <!--
+          // Clear related topics
+          //
+          WWHClearRelatedTopics();
+
+          document.writeln(WWHRelatedTopicsInlineHTML());
+        // -->
+      </script>
+    </blockquote>
+    <script type="text/javascript" language="JavaScript1.2">
+      <!--
+        document.write(WWHRelatedTopicsDivTag() + WWHPopupDivTag() + WWHALinksDivTag());
+      // -->
+    </script>
+  </body>
+</html>

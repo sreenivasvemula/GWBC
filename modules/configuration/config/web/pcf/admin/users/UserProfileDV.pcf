@@ -1,0 +1,65 @@
+<?xml version="1.0"?>
+<PCF
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:noNamespaceSchemaLocation="../../../../../../pcf.xsd">
+  <DetailViewPanel
+    id="UserProfileDV">
+    <Require
+      name="User"
+      type="User"/>
+    <Variable
+      initialValue="new gw.api.address.ContactAddressOwner(User.Contact) { :Editable = true }"
+      name="addressOwner"
+      type="gw.api.address.AddressOwner"/>
+    <InputColumn>
+      <Label
+        label="displaykey.Web.Admin.UserProfileDV.UserProfile"/>
+      <Input
+        editable="perm.User.edit"
+        id="EmployeeNumber"
+        label="displaykey.Web.Admin.UserProfileDV.EmployeeNumber"
+        value="User.Contact.EmployeeNumber"/>
+      <InputSetRef
+        def="GlobalAddressInputSet(addressOwner)"
+        id="globalAddressContainer"
+        mode="address.AddressCountrySettings.getSettings(addressOwner.SelectedCountry).PCFMode"
+        widgets="globalAddressContainer"/>
+      <InputDivider
+        visible="CurrentLocation.InEditMode"/>
+      <TypeKeyInput
+        editable="perm.User.edit"
+        id="PrimaryPhone"
+        label="displaykey.Web.Admin.UserProfileDV.PrimaryPhone"
+        required="true"
+        value="User.Contact.PrimaryPhone">
+        <PostOnChange/>
+      </TypeKeyInput>
+      <InputSetRef
+        def="GlobalPhoneInputSet(new phone.StandardPhoneOwner(new phone.ContactPhoneDelegate(User.Contact, Contact#HomePhone), displaykey.Web.Admin.UserProfileDV.HomePhone, User.Contact.PrimaryPhone == PrimaryPhoneType.TC_HOME))"
+        editable="perm.User.edit"
+        id="HomePhone"/>
+      <InputSetRef
+        def="GlobalPhoneInputSet(new phone.BusinessPhoneOwner(new phone.ContactPhoneDelegate(User.Contact, Contact#WorkPhone), displaykey.Web.Admin.UserProfileDV.WorkPhone, User.Contact.PrimaryPhone == PrimaryPhoneType.TC_WORK))"
+        editable="perm.User.edit"
+        id="WorkPhone"/>
+      <InputSetRef
+        def="GlobalPhoneInputSet(new phone.StandardPhoneOwner(new phone.ContactPhoneDelegate(User.Contact, Person#CellPhone), displaykey.Web.Admin.UserProfileDV.CellPhone, User.Contact.PrimaryPhone == PrimaryPhoneType.TC_MOBILE))"
+        editable="perm.User.edit"
+        id="CellPhone"/>
+      <InputSetRef
+        def="GlobalPhoneInputSet(new phone.StandardPhoneOwner(new phone.ContactPhoneDelegate(User.Contact, Contact#FaxPhone), false))"
+        editable="perm.User.edit"
+        id="FaxPhone"/>
+      <Input
+        editable="perm.User.edit"
+        id="EmailAddress1"
+        label="displaykey.Web.Admin.UserProfileDV.EmailAddress1"
+        value="User.Contact.EmailAddress1"/>
+      <Input
+        editable="perm.User.edit"
+        id="EmailAddress2"
+        label="displaykey.Web.Admin.UserProfileDV.EmailAddress2"
+        value="User.Contact.EmailAddress2"/>
+    </InputColumn>
+  </DetailViewPanel>
+</PCF>

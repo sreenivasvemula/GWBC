@@ -1,0 +1,197 @@
+<?xml version="1.0"?>
+<entity
+  xmlns="http://guidewire.com/datamodel"
+  desc="A charge against a policy"
+  entity="Charge"
+  setterScriptability="hidden"
+  subpackage="accounting"
+  table="charge"
+  type="editable">
+  <implementsEntity
+    name="Validatable"/>
+  <implementsEntity
+    name="Reversible"/>
+  <implementsEntity
+    name="InCurrencySilo"/>
+  <monetaryamount
+    amountColumnName="Amount"
+    desc="The amount of the charge"
+    name="Amount"
+    nullok="false"
+    scaleToCurrency="true"
+    setterScriptability="hidden"/>
+  <column
+    desc="The date the charge is sent to BillingCenter"
+    exportable="false"
+    name="ChargeDate"
+    nullok="false"
+    setterScriptability="doesNotExist"
+    type="pastdatetime"/>
+  <column
+    desc="The date the charge was sent by PAS"
+    name="WrittenDate"
+    nullok="true"
+    type="datetime"/>
+  <column
+    desc="A String that logically groups this charge, e.g., 'collision', 'comprehensive'; this is unrelated to the charge's ChargePattern"
+    name="ChargeGroup"
+    nullok="true"
+    type="shorttext"/>
+  <column
+    desc="Release date for the hold"
+    name="HoldReleaseDate"
+    nullok="true"
+    type="datetime"/>
+  <column
+    default="0"
+    desc="The total number of Installment Items that have been numbered with InvoiceItem.InstallmentNumber"
+    exportable="false"
+    name="TotalInstallments"
+    nullok="true"
+    setterScriptability="hidden"
+    type="integer"/>
+  <column
+    default="false"
+    desc="If true, no invoice items will be created by the internal code for this charge, assumes that items will be created in Payment Plan plugin or passed in with the Billing Instruction. If false, invoice items are created by the internal code."
+    name="SkipInvoiceItemCreation"
+    nullok="false"
+    setterScriptability="hidden"
+    type="bit"/>
+  <typekey
+    default="none"
+    desc="The hold status of this charge."
+    name="HoldStatus"
+    nullok="false"
+    typelist="ChargeHoldStatus"/>
+  <foreignkey
+    columnName="BillingInstructionID"
+    desc="Link to containing BillingInstruction"
+    exportable="false"
+    fkentity="BillingInstruction"
+    ignoreforevents="true"
+    name="BillingInstruction"
+    nullok="false"
+    setterScriptability="hidden"/>
+  <foreignkey
+    columnName="OverridingInvoiceStreamID"
+    desc="The overriding invoice stream for this charge."
+    exportasid="true"
+    fkentity="InvoiceStream"
+    name="OverridingInvoiceStream"
+    nullok="true"
+    setterScriptability="doesNotExist"/>
+  <foreignkey
+    columnName="ChargePatternID"
+    desc="The pattern which created this charge"
+    exportasid="true"
+    fkentity="ChargePattern"
+    ignoreforevents="true"
+    name="ChargePattern"
+    nullok="false"
+    setterScriptability="hidden"/>
+  <foreignkey
+    columnName="TAccountContainerID"
+    desc="Link to related T-Account"
+    exportable="false"
+    fkentity="ChargeTAcctContainer"
+    ignoreforevents="true"
+    importableagainstexistingobject="false"
+    name="TAccountContainer"
+    nullok="false"
+    setterScriptability="doesNotExist"/>
+  <array
+    arrayentity="InvoiceItem"
+    name="InvoiceItems"
+    setterScriptability="hidden"/>
+  <array
+    arrayentity="ChargeCommission"
+    exportable="false"
+    name="ChargeCommissions"
+    setterScriptability="hidden"/>
+  <array
+    arrayentity="ChargeProRataTx"
+    desc="Optional set of non-dynamic pro-rata transactions"
+    exportable="false"
+    getterScriptability="doesNotExist"
+    name="ProRataTxs"
+    setterScriptability="doesNotExist"/>
+  <array
+    arrayentity="ChargeCommissionRateOverride"
+    name="CommissionRateOverrides"
+    owner="true"
+    setterScriptability="hidden">
+    <link-association>
+      <typelist-map
+        field="Role"/>
+    </link-association>
+  </array>
+  <edgeForeignKey
+    desc="If non-null, refers to the charge which this charge reversed."
+    edgeTableName="revcharge"
+    exportable="false"
+    fkentity="Charge"
+    ignoreforevents="true"
+    importableagainstexistingobject="false"
+    loadable="true"
+    name="ReversedCharge"
+    nullok="true"
+    setterScriptability="doesNotExist"/>
+  <foreignkey
+    columnName="OverridingPayerContainerID"
+    desc="InvoicePayer that is used instead of the charge's owner as the default payer for the charge's invoice items"
+    exportasid="true"
+    fkentity="TAccountContainer"
+    getterScriptability="doesNotExist"
+    ignoreforevents="true"
+    name="OverridingPayerContainer"
+    nullok="true"
+    setterScriptability="doesNotExist"/>
+  <foreignkey
+    columnName="OverridingPrimaryCmsnRcvrID"
+    desc="Commission Receiver that is used instead of the default PolicyCommission for this charge's primary invoice items."
+    fkentity="ProducerCode"
+    ignoreforevents="true"
+    name="OverridingPrimaryCommissionReceiver"
+    nullok="true"
+    setterScriptability="doesNotExist"/>
+  <events/>
+  <index
+    desc="Index for Charge held queries"
+    name="chargeheld"
+    unique="true">
+    <indexcol
+      keyposition="1"
+      name="HoldStatus"/>
+    <indexcol
+      keyposition="2"
+      name="id"/>
+  </index>
+  <index
+    desc="Index for getting ChargePatterns by owner's Charges"
+    name="OwnerToPattern"
+    unique="true">
+    <indexcol
+      keyposition="1"
+      name="TAccountContainerID"/>
+    <indexcol
+      keyposition="2"
+      name="ChargePatternID"/>
+    <indexcol
+      keyposition="3"
+      name="ID"/>
+  </index>
+  <checkconstraint
+    desc="Amount must not be zero"
+    predicate="Amount != 0"
+    stagingtablepredicate="Amount != 0"/>
+  <dbcheckbuilder
+    className="com.guidewire.bc.system.database.dbchecks.accounting.ChargeAmountDBCheckBuilder"/>
+  <dbcheckbuilder
+    className="com.guidewire.bc.system.database.dbchecks.accounting.ChargeItemEventDBCheckBuilder"/>
+  <dbcheckbuilder
+    className="com.guidewire.bc.system.database.dbchecks.accounting.ChargeReversalDBCheckBuilder"/>
+  <dbcheckbuilder
+    className="com.guidewire.bc.system.database.dbchecks.accounting.ChargePatternTAccountDBCheckBuilder"/>
+  <dbcheckbuilder
+    className="com.guidewire.bc.system.database.dbchecks.accounting.RecaptureChargeAmountDBCheckBuilder"/>
+</entity>

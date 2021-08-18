@@ -1,0 +1,447 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xml:lang="en" lang="en" xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+    <meta http-equiv="Content-Style-Type" content="text/css" />
+    <!-- MOTW-DISABLED saved from url=(0014)about:internet -->
+    <title>Obtaining Configurations and Tools</title>
+    <link rel="StyleSheet" href="css/procedure-config-e.css" type="text/css" media="all" />
+    <link rel="StyleSheet" href="css/webworks.css" type="text/css" media="all" />
+    <link rel="StyleSheet" href="css/css-guidewire-extra.css" type="text/css" media="all" />
+    <script type="text/javascript" language="JavaScript1.2" src="wwhdata/common/context.js"></script>
+    <script type="text/javascript" language="JavaScript1.2" src="wwhdata/common/towwhdir.js"></script>
+    <script type="text/javascript" language="JavaScript1.2" src="wwhdata/common/wwhpagef.js"></script>
+    <script type="text/javascript" language="JavaScript1.2">
+      <!--
+        var  WebWorksRootPath = "";
+      // -->
+    </script>
+    <script type="text/javascript" language="JavaScript1.2">
+      <!--
+        // Set reference to top level help frame
+        //
+        var  WWHFrame = WWHGetWWHFrame("", true);
+      // -->
+    </script>
+    <script type="text/javascript" language="JavaScript1.2" src="scripts/expand.js"></script>
+    <!-- THE FOLLOWING IS A GUIDEWIRE STYLE DEFINITION FOR THE LINK TO THIS FEATURE -->
+    <link rel="StyleSheet" href="css/css-guidewire-extra.css" type="text/css" media="all" />
+    <!-- THE FOLLOWING IS A GUIDEWIRE GSCRIPT FUNCTION FOR THE LINK TO THIS FEATURE -->
+    <script type="text/javascript">
+function guidewire_selectall()
+{
+var text_val=eval("document.linktothisurlform.urlfield");
+text_val.focus();
+text_val.select();
+}
+</script>
+  </head>
+  <body onLoad="WWHUpdate();" onUnload="WWHUnload();" onKeyDown="WWHHandleKeyDown((document.all||document.getElementById||document.layers)?event:null);" onKeyPress="WWHHandleKeyPress((document.all||document.getElementById||document.layers)?event:null);" onKeyUp="WWHHandleKeyUp((document.all||document.getElementById||document.layers)?event:null);">
+    <!-- THE FOLLOWING IS A GUIDEWIRE DIV FOR THE 'LINK TO THIS' FEATURE -->
+    <div id="linkToThisPage" class="popup" style="display: none;">
+      <div class="popupTitle">Link Directly to This Page 
+           <a href="#" onclick="var thePopup = getElementById('linkToThisPage');thePopup.style.display='none';return false;"><img class="popupClosebox" src="wwhelp/wwhimpl/common/images/close.gif" /></a></div>
+      <div style="padding:6px;">
+        <div class="popupText" id="linkToThisPageBookmark">An error has occurred if you see this messsage.</div>
+        <form name="linktothisurlform" method="post" action="" style="width:275px;margin:0px">
+          <input type="text" class="popupURLText" id="linkToThisPageURL" name="urlfield" rows="1" cols="55" onClick="guidewire_selectall();" onFocus="guidewire_selectall();"></input>
+        </form>
+      </div>
+    </div>
+    <br />
+    <div class="WebWorks_Breadcrumbs" style="text-align: left;">
+      <span>BillingCenter Upgrade Guide</span> : 
+    <span class="WebWorks_Breadcrumbs" style="text-align: left;"><a class="WebWorks_Breadcrumb_Link" href="p-upgrade-e.html#1920179">Upgrading from 8.0.x</a> : <a class="WebWorks_Breadcrumb_Link" href="procedure-config-e.06.01.html#1920179">Upgrading the BillingCenter 8.0.x Configuration</a> : Obtaining Configurations and Tools</span></div>
+    <hr align="left" />
+    <blockquote>
+      <h3 class="H1_-_Heading_1"><a name="1920179">Obtaining Configurations and Tools</a></h3>
+      <div class="B_-_Body"><a name="1920180">Configuration refers to everything related to the application except the database. This includes configuration files such as typelists and PCF files, the file structure, web resources, Gosu classes, rules, plugins, libraries, localization files, and application server files.</a></div>
+      <div class="B_-_Body"><a name="1920181">The upgrade process involves three configurations. This guide defines and refers to these configurations as base, customer, and</a><span class="ri_-_run_in_header"> </span>target.</div>
+      <div class="B_-_Body"><span class="ri_-_run_in_header"><a name="1920182">Base</a></span> – The unedited, original configuration on which you based your customer configuration. The base configuration is included in directories within <span class="cv_-_computer_voice">/modules</span> other than <span class="cv_-_computer_voice">/configuration</span>.</div>
+      <div class="B_-_Body"><span class="ri_-_run_in_header"><a name="1920183">Customer</a></span> – The configuration you are now using and will upgrade. This is the base configuration of the BillingCenter version that you currently run with your custom configuration applied. Custom configuration files are stored in the <span class="cv_-_computer_voice">modules/configuration</span> directory. The Configuration Upgrade Tool compares your customized versions of files in the <span class="cv_-_computer_voice">modules/configuration</span> directory and its subdirectories with files in the target BillingCenter version. If you have customized files outside of <span class="cv_-_computer_voice">modules/configuration</span> and its subdirectories, manually upgrade those files by comparing them with versions of those files in the target BillingCenter version. </div>
+      <div class="B_-_Body"><span class="ri_-_run_in_header"><a name="1920199">Target</a></span> – The unedited, original configuration of BillingCenter 8.0.4 on which your upgraded configuration will be based. Guidewire grants you access to the Guidewire Resource Portal, from which you download the target configuration ZIP file. Unzip the target BillingCenter 8.0.4 configuration into another directory. Download the latest patch release for the target version that you are downloading. Follow the instructions with the patch release to install it after you unzip the target version. Do not make any modifications to the target configuration prior to completing the configuration upgrade. Do not start Guidewire Studio for the target configuration until you have completed the configuration upgrade.</div>
+      <div class="NI_-_Note_Important">
+        <span class="n_-_note">IMPORTANT   </span><a name="1920206">Set all files in the base, customer, and target configurations to writable before beginning the upgrade.</a></div>
+      <div class="BKN_-_Body_002c_Keep_Next"><a name="1920207">The following figure shows how you use these configurations to create a merged configuration. The merged configuration combines your changes to the original base configuration (the customer configuration) and Guidewire changes to the base configuration (the target configuration). The original base configuration provides a basis for comparison.</a></div>
+      <div class="F_-_Figure"><a name="1920211"><img class="Default" src="images/procedure-config-e.06.03.1.png" style="display: block; float: none; left: 0.0; top: 0.0" alt="" /></a></div>
+      <h4 class="H2_-_Heading_2"><a name="1920213">Viewing Differences Between Base and Target Releases</a></h4>
+      <div class="B_-_Body"><a name="1920214">To view an inventory of the differences between the base release and the target release, download and carefully review the </a><span class="bt_-_book_title">Upgrade Diffs Report</span> from the Guidewire Resource Portal.</div>
+      <div class="LS_-_List_Start_outer" style="margin-left: 57pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="LS_-_List_Start_inner" style="width: 15pt; white-space: nowrap">
+                <span class="ri_-_run_in_header">	1.	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="LS_-_List_Start_inner"><a name="1920216">Open a browser to </a><span class="cv_-_computer_voice"><a href="https://guidewire.hivelive.com/pages/home" target="external_window">https://guidewire.hivelive.com/pages/home</a></span>.</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="LI_-_List_Item_outer" style="margin-left: 57pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="LI_-_List_Item_inner" style="width: 15pt; white-space: nowrap">
+                <span class="ri_-_run_in_header">	2.	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="LI_-_List_Item_inner"><a name="1920220">Click </a><span class="ui_-_UI_element">Project Center</span> → <span class="ui_-_UI_element">Upgrade Services</span>.</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="LI_-_List_Item_outer" style="margin-left: 57pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="LI_-_List_Item_inner" style="width: 15pt; white-space: nowrap">
+                <span class="ri_-_run_in_header">	3.	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="LI_-_List_Item_inner"><a name="1920221">Click </a><span class="ui_-_UI_element">Review the Upgrade Diff Reports</span>.</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="LI_-_List_Item_outer" style="margin-left: 57pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="LI_-_List_Item_inner" style="width: 15pt; white-space: nowrap">
+                <span class="ri_-_run_in_header">	4.	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="LI_-_List_Item_inner"><a name="1920225">Click BillingCenter.</a></div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="LI_-_List_Item_outer" style="margin-left: 57pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="LI_-_List_Item_inner" style="width: 15pt; white-space: nowrap">
+                <span class="ri_-_run_in_header">	5.	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="LI_-_List_Item_inner"><a name="1920229">Click </a><span class="ui_-_UI_element">Upgrade Diff Reports - BillingCenter</span> or <span class="ui_-_UI_element">Upgrade Diff Reports - ContactManager</span>.</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="LI_-_List_Item_outer" style="margin-left: 57pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="LI_-_List_Item_inner" style="width: 15pt; white-space: nowrap">
+                <span class="ri_-_run_in_header">	6.	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="LI_-_List_Item_inner"><a name="1920230">Click </a><span class="ui_-_UI_element">Upgrade From </span><span class="p_-_parameter">base version</span>.</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="LI_-_List_Item_outer" style="margin-left: 57pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="LI_-_List_Item_inner" style="width: 15pt; white-space: nowrap">
+                <span class="ri_-_run_in_header">	7.	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="LI_-_List_Item_inner"><a name="1920234">Click </a><span class="ui_-_UI_element">Upgrade To 8.0.4</span>.</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <h4 class="H2_-_Heading_2"><a name="1920235">Specifying Configuration and Tool Locations</a></h4>
+      <div class="BKN_-_Body_002c_Keep_Next"><a name="1920242">The BillingCenter 8.0.4 Configuration Upgrade Tool depends on the following tools:</a></div>
+      <div class="BI_-_Bullet_Item_outer" style="margin-left: 57pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="BI_-_Bullet_Item_inner" style="width: 15pt; white-space: nowrap">
+                <span class="bu_-_bullet">•	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="BI_-_Bullet_Item_inner"><span class="ri_-_run_in_header"><a name="1920243">Text Editor</a></span> – An ASCII text editor you use to edit programs and similar files, for example, Notepad, WordPad or Textpad. This editor must not put additional characters in files, as Word does.</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="BI_-_Bullet_Item_outer" style="margin-left: 57pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="BI_-_Bullet_Item_inner" style="width: 15pt; white-space: nowrap">
+                <span class="bu_-_bullet">•	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="BI_-_Bullet_Item_inner"><span class="ri_-_run_in_header"><a name="1920244">Merge Tool</a></span> – An editor which displays two or three versions of a file, highlights the differences between them, and allows you to perform basic editing functions on them. Also known as a “diff tool.” Examples include Araxis Merge Professional and Beyond Compare Professional. If using Beyond Compare Professional, see <a href="javascript:WWHClickedPopup('upgrade', 'procedure-config-e.06.03.html#1920336', '');" title="Obtaining Configurations and Tools">“Considerations for Using Beyond Compare Professional”</a>. Configure the merge tool to ignore end of line characters to reduce the number of potential false positives during the configuration upgrade step.</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="NI_-_Note_Important">
+        <span class="n_-_note">IMPORTANT   </span><a name="1920248">The merge tool that you use must support three-way file comparison and merging. During the configuration upgrade, for some files you will need to compare three versions: the original base version, the new version and your customized version.</a></div>
+      <div class="B_-_Body"><a name="1920252">The Configuration Upgrade Tool needs the location of the BillingCenter environment that you will upgrade. The tool stores all versions of files to be merged and merge results in a </a><span class="cv_-_computer_voice">tmp</span> directory that it creates within the target environment. Define paths to the configuration and tools in the <span class="cv_-_computer_voice">BillingCenter/modules/ant/upgrade.properties</span> file of the target BillingCenter 8.0.4 environment. Remove the pound sign, ‘#’, preceding each property to uncomment the line and then specify values. Use double backslashes in paths. For example, <span class="cv_-_computer_voice">C:\\BillingCenter</span>. You do not need to use quotes for paths that include spaces.</div>
+      <div class="B_-_Body"><a name="1920334">The following properties are configurable in </a><span class="cv_-_computer_voice">upgrade.properties</span>.</div>
+      <table class="Shading" style="text-align: left" border="0" cellpadding="10" cellspacing="0" summary="">
+        <caption></caption>
+        <tr>
+          <td style="border-bottom-color: #000000; border-bottom-style: solid; border-bottom-width: 0.5pt; border-top-color: #000000; border-top-style: solid; border-top-width: 0.5pt; padding-bottom: 2pt; padding-left: 2pt; padding-right: 8pt; padding-top: 2pt; vertical-align: bottom">
+            <div class="TH_-_Table_Heading"><a name="1920267">Property</a></div>
+          </td>
+          <td style="border-bottom-color: #000000; border-bottom-style: solid; border-bottom-width: 0.5pt; border-top-color: #000000; border-top-style: solid; border-top-width: 0.5pt; padding-bottom: 2pt; padding-left: 2pt; padding-right: 8pt; padding-top: 2pt; vertical-align: bottom">
+            <div class="TH_-_Table_Heading"><a name="1920269">Description</a></div>
+          </td>
+        </tr>
+        <tr>
+          <td style="border-bottom-color: #c0d1d1; border-bottom-style: solid; border-bottom-width: 0.15pt; border-top-color: #000000; border-top-style: solid; border-top-width: 0.5pt; padding-bottom: 2pt; padding-left: 2pt; padding-right: 8pt; padding-top: 2pt; vertical-align: top">
+            <div class="TT_-_Table_Text" style="color: #000000; font-family: &quot;Lucida Sans Typewriter&quot;; font-style: normal; font-variant: normal; font-weight: normal; margin-top: 3.0pt; text-transform: none; vertical-align: baseline"><span class="cvt_-_computer_voice_table"><a name="1920271">upgrader.priorversion.dir</a></span></div>
+          </td>
+          <td style="border-bottom-color: #c0d1d1; border-bottom-style: solid; border-bottom-width: 0.15pt; border-top-color: #000000; border-top-style: solid; border-top-width: 0.5pt; padding-bottom: 2pt; padding-left: 2pt; padding-right: 8pt; padding-top: 2pt; vertical-align: top">
+            <div class="TT_-_Table_Text"><a name="1920276">Path to the top-level BillingCenter directory of the current customer environment. This directory contains </a><span class="cvt_-_computer_voice_table">/bin</span> and other BillingCenter directories.</div>
+          </td>
+        </tr>
+        <tr>
+          <td style="border-bottom-color: #c0d1d1; border-bottom-style: solid; border-bottom-width: 0.15pt; border-top-color: #c0d1d1; border-top-style: solid; border-top-width: 0.15pt; padding-bottom: 2pt; padding-left: 2pt; padding-right: 8pt; padding-top: 2pt; vertical-align: top">
+            <div class="TT_-_Table_Text" style="color: #000000; font-family: &quot;Lucida Sans Typewriter&quot;; font-style: normal; font-variant: normal; font-weight: normal; margin-top: 3.0pt; text-transform: none; vertical-align: baseline"><span class="cvt_-_computer_voice_table"><a name="1920281">upgrader.editor.tool</a></span></div>
+          </td>
+          <td style="border-bottom-color: #c0d1d1; border-bottom-style: solid; border-bottom-width: 0.15pt; border-top-color: #c0d1d1; border-top-style: solid; border-top-width: 0.15pt; padding-bottom: 2pt; padding-left: 2pt; padding-right: 8pt; padding-top: 2pt; vertical-align: top">
+            <div class="TT_-_Table_Text"><a name="1920283">Path to an executable editing tool.</a></div>
+          </td>
+        </tr>
+        <tr>
+          <td style="border-bottom-color: #c0d1d1; border-bottom-style: solid; border-bottom-width: 0.15pt; border-top-color: #c0d1d1; border-top-style: solid; border-top-width: 0.15pt; padding-bottom: 2pt; padding-left: 2pt; padding-right: 8pt; padding-top: 2pt; vertical-align: top">
+            <div class="TT_-_Table_Text" style="color: #000000; font-family: &quot;Lucida Sans Typewriter&quot;; font-style: normal; font-variant: normal; font-weight: normal; margin-top: 3.0pt; text-transform: none; vertical-align: baseline"><span class="cvt_-_computer_voice_table"><a name="1920285">upgrader.diff.tool</a></span></div>
+          </td>
+          <td style="border-bottom-color: #c0d1d1; border-bottom-style: solid; border-bottom-width: 0.15pt; border-top-color: #c0d1d1; border-top-style: solid; border-top-width: 0.15pt; padding-bottom: 2pt; padding-left: 2pt; padding-right: 8pt; padding-top: 2pt; vertical-align: top">
+            <div class="TT_-_Table_Text"><a name="1920287">Path to an executable difference editor tool, such as Araxis Merge Professional or Beyond Compare Professional, also known as a merge tool, used for two-way merges. If your difference editor supports both two and three-way merges, you can use the same value for </a><span class="cvt_-_computer_voice_table">upgrader.diff.tool</span> and <span class="cvt_-_computer_voice_table">upgrader.merge.tool</span>.</div>
+          </td>
+        </tr>
+        <tr>
+          <td style="border-bottom-color: #c0d1d1; border-bottom-style: solid; border-bottom-width: 0.15pt; border-top-color: #c0d1d1; border-top-style: solid; border-top-width: 0.15pt; padding-bottom: 2pt; padding-left: 2pt; padding-right: 8pt; padding-top: 2pt; vertical-align: top">
+            <div class="TT_-_Table_Text" style="color: #000000; font-family: &quot;Lucida Sans Typewriter&quot;; font-style: normal; font-variant: normal; font-weight: normal; margin-top: 3.0pt; text-transform: none; vertical-align: baseline"><span class="cvt_-_computer_voice_table"><a name="1920289">upgrader.merge.tool</a></span></div>
+          </td>
+          <td style="border-bottom-color: #c0d1d1; border-bottom-style: solid; border-bottom-width: 0.15pt; border-top-color: #c0d1d1; border-top-style: solid; border-top-width: 0.15pt; padding-bottom: 2pt; padding-left: 2pt; padding-right: 8pt; padding-top: 2pt; vertical-align: top">
+            <div class="TT_-_Table_Text"><a name="1920291">Path to an executable difference editor tool, such as Araxis Merge Professional or Beyond Compare Professional, also known as a merge tool, used for three-way merges. The merge tool specified for </a><span class="cvt_-_computer_voice_table">upgrader.merge.tool</span> must support three-way file comparison and merging. If your difference editor supports both two and three-way merges, you can use the same value for <span class="cvt_-_computer_voice_table">upgrader.diff.tool</span> and <span class="cvt_-_computer_voice_table">upgrader.merge.tool</span>.</div>
+            <div class="TT_-_Table_Text"><a name="1920292">You might need to configure the display of your merge tool to show three panels.</a></div>
+          </td>
+        </tr>
+        <tr>
+          <td style="border-bottom-color: #c0d1d1; border-bottom-style: solid; border-bottom-width: 0.15pt; border-top-color: #c0d1d1; border-top-style: solid; border-top-width: 0.15pt; padding-bottom: 2pt; padding-left: 2pt; padding-right: 8pt; padding-top: 2pt; vertical-align: top">
+            <div class="TT_-_Table_Text" style="color: #000000; font-family: &quot;Lucida Sans Typewriter&quot;; font-style: normal; font-variant: normal; font-weight: normal; margin-top: 3.0pt; text-transform: none; vertical-align: baseline"><span class="cvt_-_computer_voice_table"><a name="1920294">upgrader.merge.tool.arg.order</a></span></div>
+          </td>
+          <td style="border-bottom-color: #c0d1d1; border-bottom-style: solid; border-bottom-width: 0.15pt; border-top-color: #c0d1d1; border-top-style: solid; border-top-width: 0.15pt; padding-bottom: 2pt; padding-left: 2pt; padding-right: 8pt; padding-top: 2pt; vertical-align: top">
+            <div class="TT_-_Table_Text"><a name="1920296">The order of command line arguments to the difference editor tool specified by </a><span class="cvt_-_computer_voice_table">upgrader.merge.tool</span>. </div>
+            <div class="TT_-_Table_Text"><a name="1920297">The command line arguments available to the difference editor typically include the display order, from left to right, for versions of a file viewed in the difference editor. </a></div>
+            <div class="TT_-_Table_Text"><a name="1920298">The available options are:</a></div>
+            <div class="TT_-_Table_Text"><span class="cvt_-_computer_voice_table"><a name="1920305">NewBase</a></span> is the unmodified target version provided with BillingCenter 8.0.4.</div>
+            <div class="TT_-_Table_Text"><span class="cvt_-_computer_voice_table"><a name="1920306">PriorBase</a></span> is the original base version.</div>
+            <div class="TT_-_Table_Text"><span class="cvt_-_computer_voice_table"><a name="1920307">PriorCustom</a></span> is your configured version.</div>
+            <div class="TT_-_Table_Text"><span class="cvt_-_computer_voice_table"><a name="1920308">Resulting</a></span> is the merged output file.</div>
+            <div class="TT_-_Table_Text"><a name="1920309">The order of these values controls the display order in the difference editor tool. If the tool displays just two versions, it uses the same relative order.</a></div>
+            <div class="TT_-_Table_Text"><a name="1920310">By default, the display order places the old base version of a file in the center. The old base version is the common ground between the new uncustomized version and the old customized version. Guidewire changed the old base version to create the new target version, and you changed the old base version to create the customized version in your configuration. With the old base version in the center, you can incorporate both sets of changes to create a customized target version.</a></div>
+            <div class="TT_-_Table_Text"><a name="1920311">The default order enables you to merge changes from the left and right to the center and save the merged version. If you use another difference editor, you might need a different order to achieve the same result. Samples are shown below for various difference engines:</a></div>
+            <div class="TT_-_Table_Text" style="color: #000000; font-family: Arial; font-style: normal; font-variant: normal; font-weight: bold; text-transform: none; vertical-align: baseline"><span class="s_-_strong"><a name="1920312">Araxis Merge Professional</a></span></div>
+            <div class="TT_-_Table_Text" style="color: #000000; font-family: &quot;Lucida Sans Typewriter&quot;; font-style: normal; font-variant: normal; font-weight: normal; margin-top: 3.0pt; text-transform: none; vertical-align: baseline"><span class="cvt_-_computer_voice_table"><a name="1920313">upgrader.merge.tool.arg.order = NewBase PriorBase PriorCustom</a></span></div>
+            <div class="TT_-_Table_Text" style="color: #000000; font-family: Arial; font-style: normal; font-variant: normal; font-weight: bold; text-transform: none; vertical-align: baseline"><span class="s_-_strong"><a name="1920314">Beyond Compare Professional</a></span></div>
+            <div class="TT_-_Table_Text" style="color: #000000; font-family: &quot;Lucida Sans Typewriter&quot;; font-style: normal; font-variant: normal; font-weight: normal; margin-top: 3.0pt; text-transform: none; vertical-align: baseline"><span class="cvt_-_computer_voice_table"><a name="1920315">upgrader.merge.tool.arg.order = NewBase PriorCustom PriorBase Resulting</a></span></div>
+            <div class="TT_-_Table_Text" style="color: #000000; font-family: Arial; font-style: normal; font-variant: normal; font-weight: bold; text-transform: none; vertical-align: baseline"><span class="s_-_strong"><a name="1920316">P4Merge</a></span></div>
+            <div class="TT_-_Table_Text" style="color: #000000; font-family: &quot;Lucida Sans Typewriter&quot;; font-style: normal; font-variant: normal; font-weight: normal; margin-top: 3.0pt; text-transform: none; vertical-align: baseline"><span class="cvt_-_computer_voice_table"><a name="1920317">upgrader.merge.tool.arg.order = PriorBase NewBase PriorCustom</a></span></div>
+            <div class="TT_-_Table_Text"><a name="1920318">You might need to configure the display of your merge tool to show three panels.</a></div>
+          </td>
+        </tr>
+        <tr>
+          <td style="border-bottom-color: #c0d1d1; border-bottom-style: solid; border-bottom-width: 0.15pt; border-top-color: #c0d1d1; border-top-style: solid; border-top-width: 0.15pt; padding-bottom: 2pt; padding-left: 2pt; padding-right: 8pt; padding-top: 2pt; vertical-align: top">
+            <div class="TT_-_Table_Text" style="color: #000000; font-family: &quot;Lucida Sans Typewriter&quot;; font-style: normal; font-variant: normal; font-weight: normal; margin-top: 3.0pt; text-transform: none; vertical-align: baseline"><span class="cvt_-_computer_voice_table"><a name="1920320">upgrader.steps.class</a></span></div>
+          </td>
+          <td style="border-bottom-color: #c0d1d1; border-bottom-style: solid; border-bottom-width: 0.15pt; border-top-color: #c0d1d1; border-top-style: solid; border-top-width: 0.15pt; padding-bottom: 2pt; padding-left: 2pt; padding-right: 8pt; padding-top: 2pt; vertical-align: top">
+            <div class="TT_-_Table_Text"><a name="1920322">The class to run to execute the configuration upgrade automated steps. If you are upgrading BillingCenter </a>3.0 or newer, then leave this property commented out.</div>
+          </td>
+        </tr>
+        <tr>
+          <td style="border-bottom-color: #000000; border-bottom-style: solid; border-bottom-width: 0.5pt; border-top-color: #c0d1d1; border-top-style: solid; border-top-width: 0.15pt; padding-bottom: 2pt; padding-left: 2pt; padding-right: 8pt; padding-top: 2pt; vertical-align: top">
+            <div class="TT_-_Table_Text" style="color: #000000; font-family: &quot;Lucida Sans Typewriter&quot;; font-style: normal; font-variant: normal; font-weight: normal; margin-top: 3.0pt; text-transform: none; vertical-align: baseline"><span class="cvt_-_computer_voice_table"><a name="1920327">exclude.pattern</a></span></div>
+          </td>
+          <td style="border-bottom-color: #000000; border-bottom-style: solid; border-bottom-width: 0.5pt; border-top-color: #c0d1d1; border-top-style: solid; border-top-width: 0.15pt; padding-bottom: 2pt; padding-left: 2pt; padding-right: 8pt; padding-top: 2pt; vertical-align: top">
+            <div class="TT_-_Table_Text"><a name="1920329">A regular expression pattern for paths of files for the Configuration Upgrade Tool to mark as unmergeable. Typically, you use </a><span class="cvt_-_computer_voice_table">exclude.pattern</span> to specify source control metadata files. Samples are provided in <span class="cvt_-_computer_voice_table">upgrade.properties</span> for CVS and SVN.</div>
+          </td>
+        </tr>
+      </table>
+      <div class="H3_-_Heading_3_outer" style="margin-left: 36pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <h5 class="H3_-_Heading_3_inner" style="width: 18pt; white-space: nowrap"></h5>
+            </td>
+            <td width="100%">
+              <h5 class="H3_-_Heading_3_inner"><a name="1920336">Considerations for Using Beyond Compare Professional</a></h5>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="B_-_Body"><a name="1920337">By including the </a><span class="cvt_-_computer_voice_table">Resulting</span> parameter on the <span class="cv_-_computer_voice">upgrader.merge.tool.arg.order</span> property for Beyond Compare, you can avoid an extra manual step to specify the output file on each merge. </div>
+      <h6 class="HS_-_Head_Sub"><a name="1920338">To configure the Configuration Upgrade Tool for Beyond Compare Professional</a></h6>
+      <div class="LI_-_List_Item_outer" style="margin-left: 57pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="LI_-_List_Item_inner" style="width: 15pt; white-space: nowrap">
+                <span class="ri_-_run_in_header">	1.	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="LI_-_List_Item_inner"><a name="1920339">Create a new file in a text editor.</a></div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="LI_-_List_Item_outer" style="margin-left: 57pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="LI_-_List_Item_inner" style="width: 15pt; white-space: nowrap">
+                <span class="ri_-_run_in_header">	2.	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="LI_-_List_Item_inner"><a name="1920340">Add the following text to the new file, modifying the location of the Beyond Compare Professional executable if necessary.</a></div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <PRE class="CF_-_Code_First_Line"><a name="1920341">@echo off</a></PRE>
+      <PRE class="CL_-_Code_Last_Line"><a name="1920342">"C:\Program Files (x86)\Beyond Compare 3\BCompare.exe" %1 %2 %3 %4</a></PRE>
+      <div class="LI_-_List_Item_outer" style="margin-left: 57pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="LI_-_List_Item_inner" style="width: 15pt; white-space: nowrap">
+                <span class="ri_-_run_in_header">	3.	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="LI_-_List_Item_inner"><a name="1920346">Save the file as </a><span class="cv_-_computer_voice">merge.cmd</span> in the <span class="cv_-_computer_voice">BillingCenter/modules/ant</span> directory.</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="LI_-_List_Item_outer" style="margin-left: 57pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="LI_-_List_Item_inner" style="width: 15pt; white-space: nowrap">
+                <span class="ri_-_run_in_header">	4.	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="LI_-_List_Item_inner"><a name="1920356">Open the </a><span class="cv_-_computer_voice">BillingCenter/modules/ant/upgrade.properties</span> file of the target BillingCenter 8.0.4 environment. </div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="LI_-_List_Item_outer" style="margin-left: 57pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="LI_-_List_Item_inner" style="width: 15pt; white-space: nowrap">
+                <span class="ri_-_run_in_header">	5.	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="LI_-_List_Item_inner"><a name="1920357">Set the </a><span class="cv_-_computer_voice">upgrader.diff.tool</span> property to the location of the Beyond Compare Professional executable. For example:</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="CS_-_Code_Single_Line"><a name="1920358">upgrader.diff.tool = "C:\\Program Files (x86)\\Beyond Compare 3\\BCompare.exe"</a></div>
+      <div class="LI_-_List_Item_outer" style="margin-left: 57pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="LI_-_List_Item_inner" style="width: 15pt; white-space: nowrap">
+                <span class="ri_-_run_in_header">	6.	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="LI_-_List_Item_inner"><a name="1920359">Set the </a><span class="cv_-_computer_voice">upgrader.merge.tool</span> property to a command line script file. For example:</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="CS_-_Code_Single_Line"><a name="1920360">upgrader.merge.tool = ".\\modules\\ant\\merge.cmd"</a></div>
+      <div class="LI_-_List_Item_outer" style="margin-left: 57pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="LI_-_List_Item_inner" style="width: 15pt; white-space: nowrap">
+                <span class="ri_-_run_in_header">	7.	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="LI_-_List_Item_inner"><a name="1920361">Set the </a><span class="cv_-_computer_voice">upgrader.merge.tool.arg.order</span> property:</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="CS_-_Code_Single_Line"><a name="1920362">upgrader.merge.tool.arg.order = NewBase PriorCustom PriorBase Resulting</a></div>
+      <div class="LI_-_List_Item_outer" style="margin-left: 57pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="LI_-_List_Item_inner" style="width: 15pt; white-space: nowrap">
+                <span class="ri_-_run_in_header">	8.	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="LI_-_List_Item_inner"><a name="1920363">Set the remaining properties in </a><span class="cv_-_computer_voice">upgrade.properties</span> as described in the table.</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="LI_-_List_Item_outer" style="margin-left: 57pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="LI_-_List_Item_inner" style="width: 15pt; white-space: nowrap">
+                <span class="ri_-_run_in_header">	9.	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="LI_-_List_Item_inner"><a name="1920364">Save </a><span class="cv_-_computer_voice">upgrade.properties</span>.</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <script type="text/javascript" language="JavaScript1.2">
+        <!--
+          // Clear related topics
+          //
+          WWHClearRelatedTopics();
+
+          document.writeln(WWHRelatedTopicsInlineHTML());
+        // -->
+      </script>
+    </blockquote>
+    <script type="text/javascript" language="JavaScript1.2">
+      <!--
+        document.write(WWHRelatedTopicsDivTag() + WWHPopupDivTag() + WWHALinksDivTag());
+      // -->
+    </script>
+  </body>
+</html>

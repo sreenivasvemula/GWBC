@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?><nonPersistentEntity xmlns="http://guidewire.com/datamodel" desc="The aggregation line item for an invoice" entity="InvoiceLineItem" subpackage="invoice">
+  <implementsEntity name="NotInCurrencySilo"/>
+  <monetaryamount amountColumnName="Amount" desc="The amount of the line item" name="Amount" nullok="false" scaleToCurrency="true"/>
+  <column desc="the date of the line item" name="Date" nullok="true" type="dateonly"/>
+  <column desc="The installment number of this invoice item on the payment schedule" name="InstallmentNumber" nullok="true" type="integer"/>
+  <monetaryamount amountColumnName="PaidAmount" desc="The paid amount of the line item" name="PaidAmount" nullok="false" scaleToCurrency="true"/>
+  <column desc="The charge group of the line item" name="ChargeGroup" nullok="false" type="shorttext"/>
+  <foreignkey columnName="ChargeID" desc="The charge associated with this item" fkentity="Charge" name="Charge" nullok="false" setterScriptability="hidden"/>
+  <foreignkey columnName="InvoiceID" desc="the invoice to put these line items on" fkentity="AccountInvoice" name="Invoice" nullok="true"/>
+  <foreignkey columnName="InvoiceItemID" desc="the invoice item associated with this line item" fkentity="InvoiceItem" name="InvoiceItem" nullok="true"/>
+  <foreignkey columnName="PolicyPeriodID" fkentity="PolicyPeriod" name="PolicyPeriod" nullok="true"/>
+  <typekey default="charges" desc="The amount of granularity on the Transactions as viewed in the invoice" name="Aggregation" nullok="false" typelist="AggregationType"/>
+  <typekey desc="The type of the invoice item" name="Type" nullok="false" typelist="InvoiceItemType"/>
+</nonPersistentEntity>

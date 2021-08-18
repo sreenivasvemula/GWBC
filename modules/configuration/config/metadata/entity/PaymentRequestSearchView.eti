@@ -1,0 +1,43 @@
+<?xml version="1.0"?>
+<!-- ====================================================================  PaymentRequestSearchView  ==================================================================== -->
+<viewEntity
+  xmlns="http://guidewire.com/datamodel"
+  entity="PaymentRequestSearchView"
+  desc="Supports the efficient creation of PaymentRequest lists in BillingCenter's views."
+  exportable="false"
+  subpackage="search.view"
+  primaryEntity="PaymentRequest">
+  <viewEntityLink
+    name="PaymentRequest"
+    path="ID"/>
+  <viewEntityColumn
+    name="CreateTime"
+    path="CreateTime"/>
+  <viewEntityColumn
+    name="AccountNumber"
+    path="Account.AccountNumber"/>
+  <viewEntityColumn
+    name="AccountName"
+    path="Account.AccountName"/>
+  <viewEntityColumn
+    name="Amount"
+    path="Amount_amt"/>
+  <viewEntityTypekey
+    name="PaymentMethod"
+    path="PaymentInstrument.PaymentMethod"/>
+  <viewEntityTypekey
+    name="Status"
+    path="Status"/>
+  <viewEntityColumn
+    name="DraftDate"
+    path="DraftDate"/>
+  <viewEntityColumn
+    name="RequestDate"
+    path="RequestDate"/>
+  <viewEntityColumn
+    name="StatusDate"
+    path="StatusDate"/>
+  <viewEntityTypekey
+    name="Currency"
+    path="Account.Currency"/>
+</viewEntity>

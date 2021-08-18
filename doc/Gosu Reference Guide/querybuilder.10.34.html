@@ -1,0 +1,298 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xml:lang="en" lang="en" xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+    <meta http-equiv="Content-Style-Type" content="text/css" />
+    <!-- MOTW-DISABLED saved from url=(0014)about:internet -->
+    <title>Performance Differences Between Entity and Row Queries</title>
+    <link rel="StyleSheet" href="css/querybuilder.css" type="text/css" media="all" />
+    <link rel="StyleSheet" href="css/webworks.css" type="text/css" media="all" />
+    <link rel="StyleSheet" href="css/css-guidewire-extra.css" type="text/css" media="all" />
+    <script type="text/javascript" language="JavaScript1.2" src="wwhdata/common/context.js"></script>
+    <script type="text/javascript" language="JavaScript1.2" src="wwhdata/common/towwhdir.js"></script>
+    <script type="text/javascript" language="JavaScript1.2" src="wwhdata/common/wwhpagef.js"></script>
+    <script type="text/javascript" language="JavaScript1.2">
+      <!--
+        var  WebWorksRootPath = "";
+      // -->
+    </script>
+    <script type="text/javascript" language="JavaScript1.2">
+      <!--
+        // Set reference to top level help frame
+        //
+        var  WWHFrame = WWHGetWWHFrame("", true);
+      // -->
+    </script>
+    <script type="text/javascript" language="JavaScript1.2" src="scripts/expand.js"></script>
+    <!-- THE FOLLOWING IS A GUIDEWIRE STYLE DEFINITION FOR THE LINK TO THIS FEATURE -->
+    <link rel="StyleSheet" href="css/css-guidewire-extra.css" type="text/css" media="all" />
+    <!-- THE FOLLOWING IS A GUIDEWIRE GSCRIPT FUNCTION FOR THE LINK TO THIS FEATURE -->
+    <script type="text/javascript">
+function guidewire_selectall()
+{
+var text_val=eval("document.linktothisurlform.urlfield");
+text_val.focus();
+text_val.select();
+}
+</script>
+  </head>
+  <body onLoad="WWHUpdate();" onUnload="WWHUnload();" onKeyDown="WWHHandleKeyDown((document.all||document.getElementById||document.layers)?event:null);" onKeyPress="WWHHandleKeyPress((document.all||document.getElementById||document.layers)?event:null);" onKeyUp="WWHHandleKeyUp((document.all||document.getElementById||document.layers)?event:null);">
+    <!-- THE FOLLOWING IS A GUIDEWIRE DIV FOR THE 'LINK TO THIS' FEATURE -->
+    <div id="linkToThisPage" class="popup" style="display: none;">
+      <div class="popupTitle">Link Directly to This Page 
+           <a href="#" onclick="var thePopup = getElementById('linkToThisPage');thePopup.style.display='none';return false;"><img class="popupClosebox" src="wwhelp/wwhimpl/common/images/close.gif" /></a></div>
+      <div style="padding:6px;">
+        <div class="popupText" id="linkToThisPageBookmark">An error has occurred if you see this messsage.</div>
+        <form name="linktothisurlform" method="post" action="" style="width:275px;margin:0px">
+          <input type="text" class="popupURLText" id="linkToThisPageURL" name="urlfield" rows="1" cols="55" onClick="guidewire_selectall();" onFocus="guidewire_selectall();"></input>
+        </form>
+      </div>
+    </div>
+    <br />
+    <div class="WebWorks_Breadcrumbs" style="text-align: left;">
+      <span>Gosu Reference Guide</span> : 
+    <span class="WebWorks_Breadcrumbs" style="text-align: left;"><a class="WebWorks_Breadcrumb_Link" href="querybuilder.10.01.html#2901711">Query Builder APIs</a> : <a class="WebWorks_Breadcrumb_Link" href="querybuilder.10.33.html#2901711">Testing and Optimizing Queries</a> : Performance Differences Between Entity and Row Queries</span></div>
+    <hr align="left" />
+    <blockquote>
+      <h4 class="H2B_-_Heading_2_Break"><a name="2901711">Performance Differences Between Entity and Row Queries</a></h4>
+      <div class="B_-_Body"><a name="3563696">The query builder APIs support two types of queries:</a></div>
+      <div class="BI_-_Bullet_Item_outer" style="margin-left: 57pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="BI_-_Bullet_Item_inner" style="width: 15pt; white-space: nowrap">
+                <span class="bu_-_bullet">•	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="BI_-_Bullet_Item_inner"><span class="ri_-_run_in_header"><a name="3563697">Entity queries</a></span> – Result objects contain a list of references to instances of the primary entity type for the query. You set up an entity query with the <span class="cv_-_computer_voice">select</span> method that takes no arguments. For example:</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="CS_-_Code_Single_Line"><a name="3563698">&nbsp;&nbsp;&nbsp;query.select()</a></div>
+      <div class="BI_-_Bullet_Item_outer" style="margin-left: 57pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="BI_-_Bullet_Item_inner" style="width: 15pt; white-space: nowrap">
+                <span class="bu_-_bullet">•	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="BI_-_Bullet_Item_inner"><span class="ri_-_run_in_header"><a name="3563699">Row queries</a></span> – Result objects contain a set of row-like structures with values fetched from or computed by the relational database. You set up a row query with the select method that takes a Gosu block of column selections. For example:</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="CS_-_Code_Single_Line"><a name="3563700">&nbsp;&nbsp;&nbsp;query.select(</a><span class="pc_-_parameter_in_code">columnSelectionBlock</span>)</div>
+      <div class="B_-_Body"><a name="2901815">Some situations require entity queries. For example in page configuration, you must use entity queries as the data sources for list views and detail panels. Other situations require row queries. For example, you must use row queries to produce the results of SQL aggregate queries or outer joins. In yet other cases, you can use either type of query. For example, you can use either entity or row queries in Gosu code that runs in batch processes. </a></div>
+      <div class="H3_-_Heading_3_outer" style="margin-left: 36pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <h5 class="H3_-_Heading_3_inner" style="width: 18pt; white-space: nowrap"></h5>
+            </td>
+            <td width="100%">
+              <h5 class="H3_-_Heading_3_inner"><a name="2902979">Use Entity Queries for Easier Code Understanding and Maintenance</a></h5>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="B_-_Body"><a name="2902441">Generally, use an entity query unless performance proves to be an issue. The query builder code for entity queries is easier to understand and to maintain than for row queries. Easier understanding and maintenance is especially true with entity queries if you access the query builder APIs from Java instead of Gosu. </a></div>
+      <div class="H3_-_Heading_3_outer" style="margin-left: 36pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <h5 class="H3_-_Heading_3_inner" style="width: 18pt; white-space: nowrap"></h5>
+            </td>
+            <td width="100%">
+              <h5 class="H3_-_Heading_3_inner"><a name="2901768">Use Row Queries to Overcome Performance Issue with Entity Queries</a></h5>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="B_-_Body"><a name="2903032">Generally, use a row query instead of an entity query if performance issues with an entity query arise. Entity queries sometimes fetch unused data or execute additional queries whenever you navigate object path expressions in the result. Row queries can improve performance in these cases. Row queries fetch only the data you need. Like entity queries, row queries let you join tables to the primary entity so you can include data from related tables in the result. </a></div>
+      <div class="H3_-_Heading_3_outer" style="margin-left: 36pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <h5 class="H3_-_Heading_3_inner" style="width: 18pt; white-space: nowrap"></h5>
+            </td>
+            <td width="100%">
+              <h5 class="H3_-_Heading_3_inner"><a name="2906130">Performance Issues with Entity Queries</a></h5>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="B_-_Body"><a name="2906132">Performance issues with entity queries can occur with the code that processes the results. Navigating object path expressions that span arrays and foreign keys to get to the data that you need can cause additional, implicit database queries to fetch the data. Row queries generally avoid these additional queries. </a></div>
+      <div class="B_-_Body"><a name="3504465">For example, the following entity query suffers performance problems in the code that processes the result. Setting values of the </a><span class="cv_-_computer_voice">charge</span> and <span class="cv_-_computer_voice">producer</span> variables has a high performance impact, because the object path expressions span arrays and foreign keys to access the <span class="cv_-_computer_voice">Charge</span> and <span class="cv_-_computer_voice">Producer</span> objects.</div>
+      <PRE class="CF_-_Code_First_Line"><a name="3504466">uses gw.api.database.Query</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="3504467">&nbsp;</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="3504468">// Query for invoice items.</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="3504469">var queryInvoiceItems = Query.make(InvoiceItem)</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="3504470">var resultInvoiceItems = queryInvoiceItems.select()</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="3504471">&nbsp;</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="3504472">for (invoiceItem in resultInvoiceItems) {</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="3504473">&nbsp;</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="3504474">&nbsp;&nbsp;// Accessing values in the result can cause execution of additional queries. </a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="3504475">&nbsp;&nbsp;var </a><span class="s_-_strong">charge</span> = invoiceItem.<span class="s_-_strong">Charge</span></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="3504476">&nbsp;&nbsp;var </a><span class="s_-_strong">producer</span> = invoiceItem.PolicyPeriod.PrimaryPolicyCommission.ProducerCode.<span class="s_-_strong">Producer</span></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="3504477">&nbsp;</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="3504478">&nbsp;&nbsp;// Use the variables for charge and producer in this processing block</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="3504479">&nbsp;&nbsp;print(</a><span class="s_-_strong">charge</span>.Amount + " charged to producer " + <span class="s_-_strong">Producer</span>.Name)</PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="3504480">&nbsp;</a></PRE>
+      <PRE class="CL_-_Code_Last_Line"><a name="3504481">}</a></PRE>
+      <div class="B_-_Body"><a name="3504482">The preceding sample Gosu code invokes only one query builder API query. However, the code that processes the result potentially can execute these additional relational database queries, if the necessary data does not reside already in the application cache: </a></div>
+      <div class="BI_-_Bullet_Item_outer" style="margin-left: 57pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="BI_-_Bullet_Item_inner" style="width: 15pt; white-space: nowrap">
+                <span class="bu_-_bullet">•	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="BI_-_Bullet_Item_inner"><span class="cv_-_computer_voice"><a name="3504483">InvoiceItem.Charge</a></span> executes one query to get a single <span class="cv_-_computer_voice">Charge</span>.</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="BI_-_Bullet_Item_outer" style="margin-left: 57pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="BI_-_Bullet_Item_inner" style="width: 15pt; white-space: nowrap">
+                <span class="bu_-_bullet">•	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="BI_-_Bullet_Item_inner"><span class="cv_-_computer_voice"><a name="3504484">InvoiceItem.PolicyPeriod.PrimaryPolicyCommission.ProducerCode.Producer</a></span> executes three queries to get the <span class="cv_-_computer_voice">Producer</span>.</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="B_-_Body"><a name="3504485">Another performance issue arises with the preceding example because it does not process any of the properties on </a><span class="cv_-_computer_voice">InvoiceItem</span>, the primary entity type of the query. Regardless, BillingCenter fetches from the database all the properties on all the selected invoice items and loads the fetched data into the application cache. Unnecessary loading of the cache can cause performance issues in other parts of a running system. </div>
+      <div class="H3_-_Heading_3_outer" style="margin-left: 36pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <h5 class="H3_-_Heading_3_inner" style="width: 18pt; white-space: nowrap"></h5>
+            </td>
+            <td width="100%">
+              <h5 class="H3_-_Heading_3_inner"><a name="2906213">Improving Performance with Row Queries that Fetch Only the Data that You Need</a></h5>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="B_-_Body"><a name="2907404">For entity queries that suffer performance issues, like fetching unused data from the database or navigating object path expression in results, row queries can be a better choice. Row queries retrieve only the data that you need from the database. And, row queries do not cause additional queries to execute at the time you get data from the result. </a></div>
+      <h6 class="HS_-_Head_Sub"><a name="3504506">Row Queries Can Select Entity Instances </a></h6>
+      <div class="B_-_Body"><a name="3504507">The following row query improves performance problems suffered by the previous example of an entity query. The query returns only the necessary entity instances for charges and producers rather than the entire object graphs of invoice items. </a></div>
+      <PRE class="CF_-_Code_First_Line"><a name="3504508">uses gw.api.database.Query</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="3504509">&nbsp;</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="3504510">// Query for invoice items.</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="3504511">var queryInvoiceItems = Query.make(InvoiceItem)</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="3504512">&nbsp;</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="3504513">// Pass a Gosu block of column selections to the select method to set up a row query. </a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="3504514">var resultInvoiceItems = queryInvoiceItems.select( </a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="3504515">&nbsp;&nbsp;</a><span class="s_-_strong">\ invoiceItem -&gt;</span> ({  // Columm selections from result rows are elements in a hash map.</PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="3504516">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a><span class="s_-_strong">"Charge"  -&gt; </span>invoiceItem.<span class="s_-_strong">Charge</span>, </PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="3504517">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"</a><span class="s_-_strong">Producer" -&gt; </span>invoiceItem.PolicyPeriod.PrimaryPolicyCommission.ProducerCode.<span class="s_-_strong">Producer</span></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="3504518">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;})</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="3504519">&nbsp;&nbsp;) </a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="3504520">                         </a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="3504521">// With a row query, the result contains only the data you need. </a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="3504522">for (row in resultInvoiceItems) {</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="3504523">&nbsp;</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="3504524">&nbsp;&nbsp;var </a><span class="s_-_strong">charge</span> = row.get(<span class="s_-_strong">"Charge"</span>)</PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="3504525">  var </a><span class="s_-_strong">producer</span> = row.get(<span class="s_-_strong">"Producer"</span>) </PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="3504526">&nbsp;</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="3504527">  print(</a><span class="s_-_strong">charge</span> + " charged to producer " + <span class="s_-_strong">producer</span>)</PRE>
+      <PRE class="CL_-_Code_Last_Line"><a name="3504528">}</a></PRE>
+      <div class="B_-_Body"><a name="3504529">The preceding sample Gosu code invokes only one query builder API query. However, the code that processes the result potentially can execute these additional relational database queries, if the necessary data does not reside already in the application cache.</a></div>
+      <div class="BI_-_Bullet_Item_outer" style="margin-left: 57pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="BI_-_Bullet_Item_inner" style="width: 15pt; white-space: nowrap">
+                <span class="bu_-_bullet">•	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="BI_-_Bullet_Item_inner"><span class="cv_-_computer_voice"><a name="3504530">resultInvoiceItems</a></span> executes a query to select the IDs of the matching producers and charges.</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="BI_-_Bullet_Item_outer" style="margin-left: 57pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="BI_-_Bullet_Item_inner" style="width: 15pt; white-space: nowrap">
+                <span class="bu_-_bullet">•	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="BI_-_Bullet_Item_inner"><span class="cv_-_computer_voice"><a name="3504531">resultInvoiceItems</a></span> executes a query to select the producers of the selected producer IDs.</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="BI_-_Bullet_Item_outer" style="margin-left: 57pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="BI_-_Bullet_Item_inner" style="width: 15pt; white-space: nowrap">
+                <span class="bu_-_bullet">•	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="BI_-_Bullet_Item_inner"><span class="cv_-_computer_voice"><a name="3504532">resultInvoiceItems</a></span> executes a query to select the charges of the selected charge IDs.</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <h6 class="HS_-_Head_Sub"><a name="3504533">Row Queries Can Select Fields </a></h6>
+      <div class="B_-_Body"><a name="3069186">You can reduce the number of queries implicitly executed by row queries if you select specific fields rather than entity instances. If you specify fields rather than instances, the relational database fetches and computes values in response to the SQL query that the query builder expression submits to the database.</a></div>
+      <div class="B_-_Body"><a name="3504538">For example, the following example improves performance of the preceding row query. Instead of selecting </a><span class="cv_-_computer_voice">Charge</span> and <span class="cv_-_computer_voice">Producer</span> entity types, the following example selects specific fields on the entity types.</div>
+      <PRE class="CF_-_Code_First_Line"><a name="3504539">uses gw.api.database.Query</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="3504540">&nbsp;</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="3504541">// Query for invoice items.</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="3504542">var queryInvoiceItems = Query.make(InvoiceItem)</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="3504543">&nbsp;</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="3504544">// Pass a Gosu block of column selections to the select method to set up a row query. </a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="3504545">var resultInvoiceItems = queryInvoiceItems.select( </a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="3504546">&nbsp;&nbsp;</a><span class="s_-_strong">\ invoiceItem -&gt;</span> ({  // Columm selections are elements in a hash map.</PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="3504547">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a><span class="s_-_strong">"ChargeAmount"  -&gt; </span>invoiceItem.Charge.<span class="s_-_strong">Amount</span>, </PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="3504548">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"</a><span class="s_-_strong">ProducerName" -&gt; </span>invoiceItem.PolicyPeriod.PrimaryPolicyCommission.ProducerCode.Producer.<span class="s_-_strong">Name</span></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="3504549">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;})</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="3504550">&nbsp;&nbsp;) </a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="3504551">                         </a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="3504552">// With a row query that selects only instance properties, no additional queries occur. </a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="3504553">for (</a><span class="s_-_strong">row</span> in resultInvoiceItems) {</PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="3504554">&nbsp;</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="3504555">&nbsp;&nbsp;var chargeAmount = </a><span class="s_-_strong">row</span>.get("<span class="s_-_strong">ChargeAmount</span>")</PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="3504556">  var producerName = </a><span class="s_-_strong">row</span>.get("<span class="s_-_strong">ProducerName</span>") </PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="3504557">&nbsp;</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="3504558">  print(</a><span class="s_-_strong">chargeAmount</span> + " charged to producer " + <span class="s_-_strong">producerName</span>)</PRE>
+      <PRE class="CL_-_Code_Last_Line"><a name="3504559">}</a></PRE>
+      <h6 class="HS_-_Head_Sub"><a name="3069730">See also</a></h6>
+      <div class="B_-_Body"><a href="javascript:WWHClickedPopup('gosu', 'querybuilder.10.25.html#2913624', '');" title="Limitations of Row Queries" name="3069743">“Limitations of Row Queries”</a></div>
+      <script type="text/javascript" language="JavaScript1.2">
+        <!--
+          // Clear related topics
+          //
+          WWHClearRelatedTopics();
+
+          document.writeln(WWHRelatedTopicsInlineHTML());
+        // -->
+      </script>
+    </blockquote>
+    <script type="text/javascript" language="JavaScript1.2">
+      <!--
+        document.write(WWHRelatedTopicsDivTag() + WWHPopupDivTag() + WWHALinksDivTag());
+      // -->
+    </script>
+  </body>
+</html>

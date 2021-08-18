@@ -1,0 +1,33 @@
+<?xml version="1.0"?>
+<import xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://www.guidewire.com/ab/import/ab_import.xsd">
+<!-- Default ReturnPremiumPlan -->
+  <ReturnPremiumPlan public-id="ret_premium_plan:1">
+    <Description>The default plan for returned premium distribution.</Description>
+    <EffectiveDate>2013-01-01 00:00:00.000</EffectiveDate>
+    <ExpirationDate/>
+    <InUse>true</InUse>
+    <Name>Default Return Premium Plan</Name>
+    <Name_L10N_ARRAY>default return premium plan</Name_L10N_ARRAY>
+    <PlanOrder>1</PlanOrder>
+    <ReturnPremiumHandlingSchemes>
+        <ReturnPremiumHandlingScheme public-id="ret_premium_scheme:1">
+            <AllocateTiming>receipt</AllocateTiming>
+            <HandlingCondition>Cancellation</HandlingCondition>
+            <ExcessTreatment>Unapplied</ExcessTreatment>
+            <AllocateMethod>LastToFirst</AllocateMethod>
+            <ReturnPremiumPlan public-id="ret_premium_plan:1"/>
+            <StartDateOption>NotRestricted</StartDateOption>
+            <Priority>1</Priority>
+        </ReturnPremiumHandlingScheme>
+        <ReturnPremiumHandlingScheme public-id="ret_premium_scheme:2">
+            <AllocateTiming>receipt</AllocateTiming>
+            <HandlingCondition>Other</HandlingCondition>
+            <ExcessTreatment>Unapplied</ExcessTreatment>
+            <AllocateMethod>Proportional</AllocateMethod>
+            <ReturnPremiumPlan public-id="ret_premium_plan:1"/>
+            <StartDateOption>ChargeEffectiveDate</StartDateOption>
+            <Priority>2</Priority>
+        </ReturnPremiumHandlingScheme>
+    </ReturnPremiumHandlingSchemes>
+  </ReturnPremiumPlan>
+</import>

@@ -1,0 +1,183 @@
+<?xml version="1.0"?>
+<PCF
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:noNamespaceSchemaLocation="../../../../../pcf.xsd">
+  <Popup
+    beforeCommit="execute()"
+    canEdit="perm.PolicyPeriod.pmntscheplcyedit"
+    canVisit="perm.System.plcytabview and perm.System.plcypmntview"
+    id="ChangePaymentPlanPopup"
+    startInEditMode="true"
+    title="displaykey.Web.ChangePaymentPlan.Title">
+    <LocationEntryPoint
+      signature="ChangePaymentPlanPopup(policyPeriod : PolicyPeriod)"/>
+    <Variable
+      name="policyPeriod"
+      type="PolicyPeriod"/>
+    <Variable
+      initialValue="policyPeriod.PaymentPlan"
+      name="paymentPlan"/>
+    <Variable
+      initialValue="policyPeriod.AgencyBill ? gw.api.domain.invoice.PaymentHandlingDuringPaymentPlanChange.ReverseOnly : gw.api.domain.invoice.PaymentHandlingDuringPaymentPlanChange.ReverseAndRedistribute"
+      name="redistributePayments"/>
+    <Variable
+      initialValue="InvoiceItemFilterType.TC_ALLITEMS"
+      name="itemFilterType"/>
+    <Variable
+      initialValue="false"
+      name="includeDownPaymentItems"/>
+    <Variable
+      initialValue="new gw.api.domain.invoice.PaymentPlanChanger(policyPeriod, paymentPlan, redistributePayments, gw.invoice.InvoiceItemFilter.getFilter(itemFilterType, includeDownPaymentItems))"
+      name="changer"/>
+    <Variable
+      initialValue="changer.InstallmentPreview"
+      name="entries"/>
+    <Screen>
+      <Toolbar>
+        <EditButtons
+          editVisible="false"
+          showUpdateConfirmMessage="redistributePayments == gw.api.domain.invoice.PaymentHandlingDuringPaymentPlanChange.ReverseAndRedistribute"
+          updateConfirmMessage="changer.LocalizedSummaryOfUndistributablePayments"
+          updateLabel="displaykey.Web.ChangePaymentPlan.Execute"
+          updateVisible="true"/>
+      </Toolbar>
+      <DetailViewPanel>
+        <InputColumn>
+          <RangeRadioInput
+            editable="true"
+            id="InvoiceItemFilterType"
+            label="displaykey.Web.PolicyDetailPayments.ItemsToProcess"
+            required="true"
+            value="itemFilterType"
+            valueRange="InvoiceItemFilterType.getTypeKeys(false)">
+            <PostOnChange
+              onChange="updateEntries()"/>
+          </RangeRadioInput>
+          <CheckBoxInput
+            available="itemFilterType != InvoiceItemFilterType.TC_ALLITEMS"
+            editable="true"
+            id="IncludeDownPaymentItems"
+            label="displaykey.Web.ChangePaymentPlan.IncludeDownPaymentItems"
+            value="includeDownPaymentItems">
+            <PostOnChange
+              onChange="updateEntries()"/>
+          </CheckBoxInput>
+          <RangeRadioInput
+            editable="true"
+            id="RedistributePayments"
+            label="displaykey.Web.PolicyDetailPayments.RedistributePaymentsOption"
+            required="true"
+            value="redistributePayments"
+            valueRange="gw.api.domain.invoice.PaymentHandlingDuringPaymentPlanChange.values()">
+            <PostOnChange
+              onChange="updateEntries()"/>
+          </RangeRadioInput>
+          <Input
+            id="OriginalPlan"
+            label="displaykey.Web.ChangePaymentPlan.OriginalPLan"
+            value="policyPeriod.PaymentPlan"/>
+          <RangeInput
+            editable="true"
+            id="PaymentPlan"
+            label="displaykey.Web.ChangePaymentPlan.NewPlan"
+            required="true"
+            value="paymentPlan"
+            valueRange="gw.api.web.plan.PaymentPlans.findEligibleVisiblePaymentPlansForPolicyPeriod(policyPeriod)">
+            <PostOnChange
+              onChange="updateEntries()"/>
+          </RangeInput>
+        </InputColumn>
+      </DetailViewPanel>
+      <ListViewPanel
+        id="InvoiceItemsLV">
+        <RowIterator
+          canPick="false"
+          editable="false"
+          elementName="entry"
+          value="entries">
+          <Row
+            editable="entry.canSetAmount()"
+            useArchivedStyle="entry.removesItem() || entry.isInOrphanedState()">
+            <Cell
+              align="right"
+              footerLabel="displaykey.Web.InvoiceItemsLV.Total"
+              id="InstallmentNumber"
+              label="displaykey.Web.InvoiceItemsLV.InstallmentNumber"
+              value="entry.InvoiceItem.InstallmentNumber"
+              visible="true"/>
+            <DateCell
+              id="EventDate"
+              label="displaykey.Web.InvoiceItemsLV.EventDate"
+              required="true"
+              value="entry.EventDate"/>
+            <Cell
+              id="Invoice"
+              label="displaykey.Web.InvoiceItemsLV.Invoice"
+              required="false"
+              value="entry.InvoiceItem.Invoice"/>
+            <DateCell
+              id="DueDate"
+              label="displaykey.Web.InvoiceItemsLV.DueDate"
+              value="entry.InvoiceItem.InvoiceDueDate"/>
+            <Cell
+              enableSort="false"
+              id="itemPayer"
+              label="displaykey.Web.InvoiceItemsLV.Payer"
+              value="getPayerDisplay(entry.InvoiceItem)"/>
+            <TypeKeyCell
+              id="Type"
+              label="displaykey.Web.InvoiceItemsLV.Type"
+              value="entry.InvoiceItemType"/>
+            <MonetaryAmountCell
+              currency="entry.Amount.Currency"
+              footerSumValue="entry.Amount"
+              formatType="currency"
+              id="Amount"
+              label="displaykey.Web.InvoiceItemsLV.Amount"
+              required="true"
+              value="entry.Amount">
+              <PostOnChange
+                target="DATA_ONLY"/>
+            </MonetaryAmountCell>
+            <Cell
+              id="EditType"
+              label="displaykey.Web.PolicyDetailPayments.EditType"
+              required="false"
+              value="entry.DisplayName"/>
+          </Row>
+        </RowIterator>
+      </ListViewPanel>
+    </Screen>
+    <Code><![CDATA[uses gw.invoice.InvoiceItemFilter
+
+function updateEntries() {
+  changer.cleanup()
+  changer = new gw.api.domain.invoice.PaymentPlanChanger(policyPeriod, paymentPlan, redistributePayments, InvoiceItemFilter.getFilter(itemFilterType, includeDownPaymentItems))
+  entries = changer.InstallmentPreview
+  invalidateIterator()
+}
+
+function execute() {
+  changer.execute() 
+}
+
+function getPayerDisplay(invoiceItem : InvoiceItem) : String {
+  var invoiceHolder = invoiceItem.getPayer()
+  if (invoiceHolder == null) {
+    return invoiceItem.Charge.ChargeAccount as String
+  }
+  if (typeof invoiceHolder == Account or not invoiceItem.PolicyPeriodItem) {
+    return invoiceHolder as String
+  }
+  var itemCommission = invoiceItem.ActivePrimaryItemCommission
+  var producerCode = itemCommission.PolicyCommission.ProducerCode
+  var producer = producerCode.Producer
+  return producer.DisplayName + " " + producerCode.Code
+}
+
+
+function invalidateIterator() {
+  gw.api.web.PebblesUtil.invalidateIterators(CurrentLocation, gw.api.domain.invoice.ChargeInstallmentChanger.Entry)
+}]]></Code>
+  </Popup>
+</PCF>

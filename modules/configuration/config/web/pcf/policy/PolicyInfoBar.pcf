@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+<PCF
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:noNamespaceSchemaLocation="../../../../../pcf.xsd">
+  <InfoBar
+    id="PolicyInfoBar">
+    <Require
+      name="policyPeriod"
+      type="PolicyPeriod"/>
+    <InfoBarElement
+      id="PolicyNumber"
+      value="displaykey.Web.PolicyInfoBar.PolicyNumber(policyPeriod.DisplayName)"/>
+    <InfoBarElement
+      action="AccountDetailSummary.push(policyPeriod.Account)"
+      id="AccountNumber"
+      value="displaykey.Web.PolicyInfoBar.AccountNumber(policyPeriod.Account.AccountNumber, policyPeriod.Account.AccountNameLocalized)"/>
+    <InfoBarElement
+      id="CurrentDate"
+      nullString="-"
+      value="util.DateUtil.currentDate()"/>
+  </InfoBar>
+</PCF>

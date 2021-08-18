@@ -1,0 +1,25 @@
+package rules.Assignment.GlobalTroubleTicketAssignmentRules_dir
+
+@gw.rules.RuleName("Default")
+internal class Default_ {
+  static function doCondition(troubleTicket : entity.TroubleTicket) : boolean {
+    
+/*start00rule*/
+return true
+/*end00rule*/
+
+  }
+
+  static function doAction(troubleTicket : entity.TroubleTicket, actions : gw.rules.Action) {
+
+/*start00rule*/
+if (troubleTicket.CurrentAssignment.assignGroupByRoundRobin(GroupType.TC_GENERAL, false, troubleTicket.AssignedGroup)) {
+  actions.exit();
+} else {
+  gw.api.system.BCLoggerCategory.RULES.debug("Global Activity Assignment rules could not assign Trouble Ticket");
+}
+
+/*end00rule*/
+
+  }
+}

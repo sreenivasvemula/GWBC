@@ -1,0 +1,32 @@
+<?xml version="1.0"?>
+<PCF
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:noNamespaceSchemaLocation="../../../../../pcf.xsd">
+  <Popup
+    beforeCommit="agencyPaymentSplit.splitPayment(CurrentLocation)"
+    canEdit="true"
+    id="AgencyPaymentSplitConfirmationPopup"
+    startInEditMode="true"
+    title="displaykey.Web.AgencyPaymentSplitConfirmationPopup.Title">
+    <LocationEntryPoint
+      signature="AgencyPaymentSplitConfirmationPopup(moneyReceived : AgencyBillMoneyRcvd)"/>
+    <Variable
+      name="moneyReceived"
+      type="AgencyBillMoneyRcvd"/>
+    <Variable
+      initialValue="createAgencyPaymentSplit()"
+      name="agencyPaymentSplit"
+      type="web.producer.agencybill.AgencySplitPayment"/>
+    <ScreenRef
+      def="AgencyPaymentSplitConfirmationScreen(agencyPaymentSplit, null)"/>
+    <Code><![CDATA[// Create non persistent AgencySplitPayment object used to manage the split of the payment in the UI
+function createAgencyPaymentSplit() : web.producer.agencybill.AgencySplitPayment {
+  if (moneyReceived.DistributedDenorm) {
+    return new web.producer.agencybill.AgencySplitPayment(moneyReceived.AgencyCyclePayment);
+  }
+  else {
+    return new web.producer.agencybill.AgencySplitPayment(moneyReceived);
+  }
+}]]></Code>
+  </Popup>
+</PCF>

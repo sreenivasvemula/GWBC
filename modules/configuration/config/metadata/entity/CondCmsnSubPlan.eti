@@ -1,0 +1,88 @@
+<?xml version="1.0"?>
+<subtype
+  xmlns="http://guidewire.com/datamodel"
+  desc="Represents a conditional sub-plan. A conditional sub-plan's conditions must be satisfied by a policy in order to apply."
+  entity="CondCmsnSubPlan"
+  subpackage="commission"
+  supertype="CommissionSubPlan">
+  <column
+    desc="If true, indicates that this sub-plan applies to all account evaluations."
+    name="AllEvaluations"
+    nullok="false"
+    type="bit"/>
+  <column
+    desc="If true, indicates that this sub-plan applies to all LOBs."
+    name="AllLOBCodes"
+    nullok="false"
+    type="bit"/>
+  <column
+    desc="If true, indicates that this sub-plan applies to all segments."
+    name="AllSegments"
+    nullok="false"
+    type="bit"/>
+  <column
+    desc="If true, indicates that this sub-plan applies to all jurisdictions."
+    name="AllJurisdictions"
+    nullok="false"
+    type="bit"/>
+  <column
+    desc="If true, indicates that this sub-plan applies to all terms."
+    name="AllTerms"
+    nullok="false"
+    type="bit"/>
+  <column
+    desc="If true, indicates that this sub-plan applies to all UW company types."
+    name="AllUWCompanies"
+    nullok="false"
+    type="bit"/>
+  <typekey
+    desc="The assigned risk restriction for this sub-plan."
+    name="AssignedRisk"
+    nullok="false"
+    typelist="AssignedRiskRestriction"/>
+  <array
+    arrayentity="CondCmsnSubPlanEvaluation"
+    desc="If AllEvaluations is false, then an entry in this array excludes the account evaluation from this                  sub-plan's set of allowed account evaluations."
+    exportable="false"
+    getterScriptability="doesNotExist"
+    name="ExcludedEvaluations"
+    owner="true"
+    setterScriptability="doesNotExist"/>
+  <array
+    arrayentity="CondCmsnSubPlanLOBCode"
+    desc="If AllLOBCodes is false, then an entry in this array excludes the LOB from this sub-plan's set                  of allowed LOBs."
+    exportable="false"
+    getterScriptability="doesNotExist"
+    name="ExcludedLOBCodes"
+    owner="true"
+    setterScriptability="doesNotExist"/>
+  <array
+    arrayentity="CondCmsnSubPlanSegment"
+    desc="If AllSegments is false, then an entry in this array excludes the segment from this sub-plan's set                  of allowed segments."
+    exportable="false"
+    getterScriptability="doesNotExist"
+    name="ExcludedSegments"
+    owner="true"
+    setterScriptability="doesNotExist"/>
+  <array
+    arrayentity="CondCmsnSubPlanUWCompany"
+    desc="If AllUWCompanies is false, then an entry in this array excludes the segment from this sub-plan's set                  of allowed UW companies."
+    exportable="false"
+    getterScriptability="doesNotExist"
+    name="ExcludedUWCompanies"
+    owner="true"
+    setterScriptability="doesNotExist"/>
+  <array
+    arrayentity="CondCmsnSubPlanJurisdiction"
+    desc="If AllJurisdictions is false, then an entry in this array includes the jurisdiction from this sub-plan's set of allowed jurisdictions."
+    name="IncludedJurisdictions"
+    owner="true"/>
+  <column
+    default="0"
+    desc="The bitset of renewal numbers to which this conditional sub-plan applies. Bits [0, 62] correspond to            the respective renewal number. If bit 63 is set, it means that all subsequent renewals are included."
+    getterScriptability="doesNotExist"
+    name="RenewalSet"
+    nullok="false"
+    setterScriptability="doesNotExist"
+    type="longint"/>
+</subtype>

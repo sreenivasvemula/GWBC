@@ -1,0 +1,30 @@
+<?xml version="1.0"?>
+<PCF
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:noNamespaceSchemaLocation="../../../../../pcf.xsd">
+  <Screen
+    id="DisbursementSearchScreen"
+    mode="SuspenseDisbursement">
+    <Require
+      name="disbursementSubtypeHolder"
+      type="gw.bc.disbursement.typekey.Disbursement[]"/>
+    <SearchPanel
+      criteriaName="searchCriteria"
+      maxSearchResults="gw.api.system.BCConfigParameters.MaxSearchResults.Value"
+      resultsName="disbursementSearchViews"
+      search="gw.search.SearchMethods.validateAndSearch(searchCriteria)"
+      searchCriteria="new SuspDisbSearchCriteria()"
+      searchResultsType="SuspDisbSearchViewQuery">
+      <PanelRef
+        def="DisbursementSearchDV(searchCriteria, disbursementSubtypeHolder)"
+        mode="disbursementSubtypeHolder[0]">
+        <Toolbar/>
+      </PanelRef>
+      <PanelRef
+        def="DisbursementSearchResultsLV(disbursementSearchViews)"
+        mode="disbursementSubtypeHolder[0]">
+        <Toolbar/>
+      </PanelRef>
+    </SearchPanel>
+  </Screen>
+</PCF>

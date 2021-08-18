@@ -1,0 +1,27 @@
+<?xml version="1.0"?>
+<!-- ====================================================================  PolicyPeriodContactRole  ==================================================================== -->
+<entity
+  xmlns="http://guidewire.com/datamodel"
+  entity="PolPeriodContactRole"
+  type="retireable"
+  desc="A role for a particular policy period contact"
+  displayName="Policy Period Contact Role"
+  exportable="true"
+  subpackage="account"
+  platform="false"
+  table="polperiodcontactrole">
+  <implementsEntity
+    name="NotInCurrencySilo"/>
+  <typekey
+    name="Role"
+    typelist="PolicyPeriodRole"
+    desc="The role"
+    nullok="false"/>
+  <foreignkey
+    name="PolicyPeriodContact"
+    desc="The related policy period contact"
+    columnName="PolicyPeriodContactID"
+    fkentity="PolicyPeriodContact"
+    importableagainstexistingobject="false"
+    nullok="false"/>
+</entity>

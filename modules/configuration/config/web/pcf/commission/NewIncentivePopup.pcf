@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PCF
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:noNamespaceSchemaLocation="../../../../../pcf.xsd">
+  <Popup
+    canEdit="true"
+    id="NewIncentivePopup"
+    returnType="Incentive"
+    startInEditMode="true"
+    title="displaykey.Web.NewIncentive.Title(incentiveType)">
+    <LocationEntryPoint
+      signature="NewIncentivePopup(commissionSubPlan : CommissionSubPlan, incentiveType : typekey.Incentive)"/>
+    <Variable
+      name="commissionSubPlan"
+      type="CommissionSubPlan"/>
+    <Variable
+      name="incentiveType"
+      type="typekey.Incentive"/>
+    <Variable
+      initialValue="commissionSubPlan.newIncentive(incentiveType)"
+      name="incentive"/>
+    <Screen
+      id="NewIncentiveScreen">
+      <Toolbar>
+        <EditButtons
+          pickValue="incentive"/>
+      </Toolbar>
+      <PanelRef
+        def="IncentiveDetailDV(incentive)"
+        mode="incentive.Subtype"/>
+    </Screen>
+  </Popup>
+</PCF>

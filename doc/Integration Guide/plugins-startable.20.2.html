@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xml:lang="en" lang="en" xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+    <meta http-equiv="Content-Style-Type" content="text/css" />
+    <!-- MOTW-DISABLED saved from url=(0014)about:internet -->
+    <title>Startable Plugins Overview</title>
+    <link rel="StyleSheet" href="css/plugins-startable.css" type="text/css" media="all" />
+    <link rel="StyleSheet" href="css/webworks.css" type="text/css" media="all" />
+    <link rel="StyleSheet" href="css/css-guidewire-extra.css" type="text/css" media="all" />
+    <script type="text/javascript" language="JavaScript1.2" src="wwhdata/common/context.js"></script>
+    <script type="text/javascript" language="JavaScript1.2" src="wwhdata/common/towwhdir.js"></script>
+    <script type="text/javascript" language="JavaScript1.2" src="wwhdata/common/wwhpagef.js"></script>
+    <script type="text/javascript" language="JavaScript1.2">
+      <!--
+        var  WebWorksRootPath = "";
+      // -->
+    </script>
+    <script type="text/javascript" language="JavaScript1.2">
+      <!--
+        // Set reference to top level help frame
+        //
+        var  WWHFrame = WWHGetWWHFrame("", true);
+      // -->
+    </script>
+    <script type="text/javascript" language="JavaScript1.2" src="scripts/expand.js"></script>
+    <!-- THE FOLLOWING IS A GUIDEWIRE STYLE DEFINITION FOR THE LINK TO THIS FEATURE -->
+    <link rel="StyleSheet" href="css/css-guidewire-extra.css" type="text/css" media="all" />
+    <!-- THE FOLLOWING IS A GUIDEWIRE GSCRIPT FUNCTION FOR THE LINK TO THIS FEATURE -->
+    <script type="text/javascript">
+function guidewire_selectall()
+{
+var text_val=eval("document.linktothisurlform.urlfield");
+text_val.focus();
+text_val.select();
+}
+</script>
+  </head>
+  <body onLoad="WWHUpdate();" onUnload="WWHUnload();" onKeyDown="WWHHandleKeyDown((document.all||document.getElementById||document.layers)?event:null);" onKeyPress="WWHHandleKeyPress((document.all||document.getElementById||document.layers)?event:null);" onKeyUp="WWHHandleKeyUp((document.all||document.getElementById||document.layers)?event:null);">
+    <!-- THE FOLLOWING IS A GUIDEWIRE DIV FOR THE 'LINK TO THIS' FEATURE -->
+    <div id="linkToThisPage" class="popup" style="display: none;">
+      <div class="popupTitle">Link Directly to This Page 
+           <a href="#" onclick="var thePopup = getElementById('linkToThisPage');thePopup.style.display='none';return false;"><img class="popupClosebox" src="wwhelp/wwhimpl/common/images/close.gif" /></a></div>
+      <div style="padding:6px;">
+        <div class="popupText" id="linkToThisPageBookmark">An error has occurred if you see this messsage.</div>
+        <form name="linktothisurlform" method="post" action="" style="width:275px;margin:0px">
+          <input type="text" class="popupURLText" id="linkToThisPageURL" name="urlfield" rows="1" cols="55" onClick="guidewire_selectall();" onFocus="guidewire_selectall();"></input>
+        </form>
+      </div>
+    </div>
+    <br />
+    <div class="WebWorks_Breadcrumbs" style="text-align: left;">
+      <span>BillingCenter Integration Guide</span> : 
+    <span class="WebWorks_Breadcrumbs" style="text-align: left;"><a class="WebWorks_Breadcrumb_Link" href="p-plugins.html#2422299">Plugins</a> : <a class="WebWorks_Breadcrumb_Link" href="plugins-startable.20.1.html#2422299">Startable Plugins</a> : Startable Plugins Overview</span></div>
+    <hr align="left" />
+    <blockquote>
+      <h3 class="H1_-_Heading_1"><a name="2422299">Startable Plugins Overview</a></h3>
+      <div class="B_-_Body"><a name="2422301">You can register custom code that runs at server startup in the form of a startable plugin implementation. You can use a startable plugin as a daemon, such as listener to a JMS queue. You can use a startable plugin for periodic batch processing, such as deleting expired files from a file system folder. You can use a startable plugin as an initializer, such as loading configuration data into the application database. </a></div>
+      <div class="B_-_Body"><a name="2424502">You can start and stop startable plugins as circumstances require. You cannot start or stop standard types of plugins. Instead, code in a standard Guidewire plugin executes only when other code invokes its methods. </a></div>
+      <h4 class="H2_-_Heading_2"><a name="2422306">Startable Plugins as Background Processes</a></h4>
+      <div class="B_-_Body"><a name="2423692">Typically, a startable plugin behaves as a daemon, such as a listener that runs continuously as a background process. Startable plugins have similarities with the messaging reply plugin. A messaging transport’s main task is to send a message to an external system and listen for the reply acknowledgment. This metaphor might not apply to integrations that do not need to send outgoing messages about data changes using the event and messaging system. However, if you need listener code and it must initialize with server startup, use a startable plugin. </a></div>
+      <div class="N_-_Note">
+        <span class="n_-_note">Note: </span><a name="2422310">Some integrations require external code to trigger an action within BillingCenter but do not need custom listener code. Depending on your needs, consider publishing a BillingCenter web service instead of a startable plugin. For more information, see </a><a href="javascript:WWHClickedPopup('integration', 'webservices.06.1.html#3412469', '');" title="Web Services Introduction">“Web Services Introduction”</a>.</div>
+      <h4 class="H2_-_Heading_2"><a name="2423910">Registering Startable Plugins</a></h4>
+      <div class="B_-_Body"><a name="2423911">Register your startable plugin in the Plugins Registry in Studio, just like you register standard plugins. In the </a><span class="uis_-_UI_element_Studio">Project</span> window, navigate to <span class="uis_-_UI_element_Studio">configuration → config → Plugins → registry</span>. All startable plugin implementations that you register in the Plugins Registry and that are enabled are listed on the <span class="ui_-_UI_element">Server Tools</span> → <span class="ui_-_UI_element">Startable&nbsp;Plugin</span> page. </div>
+      <h6 class="HS_-_Head_Sub"><a name="2443760">See also</a></h6>
+      <div class="BI_-_Bullet_Item_outer" style="margin-left: 57pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="BI_-_Bullet_Item_inner" style="width: 15pt; white-space: nowrap">
+                <span class="bu_-_bullet">•	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="BI_-_Bullet_Item_inner"><a name="2443773">For details on how to register a startable plugin, see </a><a href="javascript:WWHClickedPopup('config', 'studio_plugins.13.3.html#3634953', '');" title="Working with Plugins">“Working with Plugins” in the </a><span class="bt_-_book_title"><a href="javascript:WWHClickedPopup('config', 'studio_plugins.13.3.html#3634953', '');" title="Working with Plugins">Configuration Guide</a></span>. </div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <h4 class="H2_-_Heading_2"><a name="2442288">Starting, Stopping, and Managing Startable Plugins</a></h4>
+      <div class="B_-_Body"><a name="2442328">If you have administration privileges, you can view the operational status of registered startable plugins on the </a><span class="ui_-_UI_element">Server Tools</span> → <span class="ui_-_UI_element">Startable&nbsp;Plugin</span> page. In the Actions column, use the <span class="ui_-_UI_element">Start</span> and <span class="ui_-_UI_element">Stop</span> buttons to start and stop startable plugins. You can modify the PCF files for the <span class="ui_-_UI_element">Startable&nbsp;Plugin</span> page to show additional information about your startable plugins, their underlying transport mechanisms, or any other information.</div>
+      <h6 class="HS_-_Head_Sub"><a name="2442362">See also</a></h6>
+      <div class="BI_-_Bullet_Item_outer" style="margin-left: 57pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="BI_-_Bullet_Item_inner" style="width: 15pt; white-space: nowrap">
+                <span class="bu_-_bullet">•	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="BI_-_Bullet_Item_inner"><a name="2442291">For information on using a web service to start and stop startable plugins, see </a><a href="javascript:WWHClickedPopup('integration', 'webservices-general.10.4.html#3451346', '');" title="Maintenance Tools Web Service">“Stopping Startable Plugins Using Web Services”</a>.</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <h4 class="H2_-_Heading_2"><a name="2424787">Startable Plugins in a Clustered Configuration</a></h4>
+      <div class="B_-_Body"><a name="2423750">By default for a cluster, startable plugins operate only on the batch server. However, you can configure a startable plugin to run on all servers in the cluster. </a></div>
+      <h6 class="HS_-_Head_Sub"><a name="2423946">See also</a></h6>
+      <div class="BI_-_Bullet_Item_outer" style="margin-left: 57pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="BI_-_Bullet_Item_inner" style="width: 15pt; white-space: nowrap">
+                <span class="bu_-_bullet">•	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="BI_-_Bullet_Item_inner"><a href="javascript:WWHClickedPopup('integration', 'plugins-startable.20.5.html#2422484', '');" title="Configuring Startable Plugins to Run on All Servers" name="2423948">“Configuring Startable Plugins to Run on All Servers”</a></div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <script type="text/javascript" language="JavaScript1.2">
+        <!--
+          // Clear related topics
+          //
+          WWHClearRelatedTopics();
+
+          document.writeln(WWHRelatedTopicsInlineHTML());
+        // -->
+      </script>
+    </blockquote>
+    <script type="text/javascript" language="JavaScript1.2">
+      <!--
+        document.write(WWHRelatedTopicsDivTag() + WWHPopupDivTag() + WWHALinksDivTag());
+      // -->
+    </script>
+  </body>
+</html>

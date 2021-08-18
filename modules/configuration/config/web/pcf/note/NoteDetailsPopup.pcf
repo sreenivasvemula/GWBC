@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PCF
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:noNamespaceSchemaLocation="../../../../../pcf.xsd">
+  <!-- This page displays the details of a Note -->
+  <Popup
+    canEdit="perm.Note.edit(Note)"
+    canVisit="perm.Note.view(Note)"
+    id="NoteDetailsPopup"
+    title="displaykey.Web.NoteDetails.Note">
+    <LocationEntryPoint
+      signature="NoteDetailsPopup(Note : Note)"/>
+    <Variable
+      name="Note"
+      type="Note"/>
+    <Screen
+      id="NoteDetailsScreen">
+      <Toolbar>
+        <EditButtons/>
+      </Toolbar>
+      <PanelRef
+        def="NewNoteDV(Note)"/>
+    </Screen>
+  </Popup>
+</PCF>

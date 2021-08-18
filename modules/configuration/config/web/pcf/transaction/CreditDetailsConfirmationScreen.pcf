@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PCF
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:noNamespaceSchemaLocation="../../../../../pcf.xsd">
+  <Screen
+    id="CreditDetailsConfirmationScreen">
+    <Require
+      name="account"
+      type="Account"/>
+    <Require
+      name="credit"
+      type="Credit"/>
+    <Variable
+      initialValue="credit.getOpenApprovalActivity()"
+      name="approvalActivity"/>
+    <Toolbar>
+      <WizardButtons/>
+    </Toolbar>
+    <AlertBar
+      id="ApprovalActivityAlertBar"
+      label="displaykey.Web.ApprovalActivityAlertBar"
+      visible="approvalActivity != null"/>
+    <DetailViewPanel
+      id="ConfirmDV">
+      <InputColumn>
+        <Label
+          label="displaykey.Web.NewWriteoffWizard.Confirmation.ClickFinish"/>
+        <Label
+          label="displaykey.Web.Credit.Confirmation(gw.api.financials.MonetaryAmounts.render(credit.Amount), account)"/>
+      </InputColumn>
+    </DetailViewPanel>
+    <PanelRef
+      def="ApprovalActivityDV(approvalActivity)"/>
+  </Screen>
+</PCF>

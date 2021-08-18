@@ -1,0 +1,309 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xml:lang="en" lang="en" xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+    <meta http-equiv="Content-Style-Type" content="text/css" />
+    <!-- MOTW-DISABLED saved from url=(0014)about:internet -->
+    <title>Batch Process Implementation Using the Batch Process Base Class</title>
+    <link rel="StyleSheet" href="css/batchprocess.css" type="text/css" media="all" />
+    <link rel="StyleSheet" href="css/webworks.css" type="text/css" media="all" />
+    <link rel="StyleSheet" href="css/css-guidewire-extra.css" type="text/css" media="all" />
+    <script type="text/javascript" language="JavaScript1.2" src="wwhdata/common/context.js"></script>
+    <script type="text/javascript" language="JavaScript1.2" src="wwhdata/common/towwhdir.js"></script>
+    <script type="text/javascript" language="JavaScript1.2" src="wwhdata/common/wwhpagef.js"></script>
+    <script type="text/javascript" language="JavaScript1.2">
+      <!--
+        var  WebWorksRootPath = "";
+      // -->
+    </script>
+    <script type="text/javascript" language="JavaScript1.2">
+      <!--
+        // Set reference to top level help frame
+        //
+        var  WWHFrame = WWHGetWWHFrame("", true);
+      // -->
+    </script>
+    <script type="text/javascript" language="JavaScript1.2" src="scripts/expand.js"></script>
+    <!-- THE FOLLOWING IS A GUIDEWIRE STYLE DEFINITION FOR THE LINK TO THIS FEATURE -->
+    <link rel="StyleSheet" href="css/css-guidewire-extra.css" type="text/css" media="all" />
+    <!-- THE FOLLOWING IS A GUIDEWIRE GSCRIPT FUNCTION FOR THE LINK TO THIS FEATURE -->
+    <script type="text/javascript">
+function guidewire_selectall()
+{
+var text_val=eval("document.linktothisurlform.urlfield");
+text_val.focus();
+text_val.select();
+}
+</script>
+  </head>
+  <body onLoad="WWHUpdate();" onUnload="WWHUnload();" onKeyDown="WWHHandleKeyDown((document.all||document.getElementById||document.layers)?event:null);" onKeyPress="WWHHandleKeyPress((document.all||document.getElementById||document.layers)?event:null);" onKeyUp="WWHHandleKeyUp((document.all||document.getElementById||document.layers)?event:null);">
+    <!-- THE FOLLOWING IS A GUIDEWIRE DIV FOR THE 'LINK TO THIS' FEATURE -->
+    <div id="linkToThisPage" class="popup" style="display: none;">
+      <div class="popupTitle">Link Directly to This Page 
+           <a href="#" onclick="var thePopup = getElementById('linkToThisPage');thePopup.style.display='none';return false;"><img class="popupClosebox" src="wwhelp/wwhimpl/common/images/close.gif" /></a></div>
+      <div style="padding:6px;">
+        <div class="popupText" id="linkToThisPageBookmark">An error has occurred if you see this messsage.</div>
+        <form name="linktothisurlform" method="post" action="" style="width:275px;margin:0px">
+          <input type="text" class="popupURLText" id="linkToThisPageURL" name="urlfield" rows="1" cols="55" onClick="guidewire_selectall();" onFocus="guidewire_selectall();"></input>
+        </form>
+      </div>
+    </div>
+    <br />
+    <div class="WebWorks_Breadcrumbs" style="text-align: left;">
+      <span>BillingCenter Integration Guide</span> : 
+    <span class="WebWorks_Breadcrumbs" style="text-align: left;"><a class="WebWorks_Breadcrumb_Link" href="p-claims.html#2228504">Other Integration Topics</a> : <a class="WebWorks_Breadcrumb_Link" href="batchprocess.29.01.html#2228504">Custom Batch Processing</a> : <a class="WebWorks_Breadcrumb_Link" href="batchprocess.29.18.html#2228504">Developing Custom Batch Processes</a> : Batch Process Implementation Using the Batch Process Base Class</span></div>
+    <hr align="left" />
+    <blockquote>
+      <h4 class="H2B_-_Heading_2_Break"><a name="2228504">Batch Process Implementation Using the Batch Process Base Class</a></h4>
+      <div class="B_-_Body"><a name="2228505">Your custom batch process must extend the </a><span class="cv_-_computer_voice">BatchProcessBase</span> Gosu class. You must override the <span class="cv_-_computer_voice">doWork</span> method, which takes no arguments. You can override other methods, but the base class defines meaningful defaults. </div>
+      <div class="B_-_Body"><a name="2228517">The </a><span class="cv_-_computer_voice">doWork</span> method does not have a bundle to track the database transaction. To modify data, you must use the <span class="cv_-_computer_voice">Transaction.runWithNewBundle(...)</span> API to create a bundle. </div>
+      <div class="NI_-_Note_Important">
+        <span class="n_-_note">IMPORTANT   </span><a name="2228519">To modify entity data in your batch process, you must use the </a><span class="cv_-_computer_voice">runWithNewBundle</span> API. For more information about creating bundles, see <a href="javascript:WWHClickedPopup('gosu', 'transactions.22.11.html#1634152', '');" title="Running Code in an Entirely New Bundle">“Running Code in an Entirely New Bundle” in the </a><span class="bt_-_book_title"><a href="javascript:WWHClickedPopup('gosu', 'transactions.22.11.html#1634152', '');" title="Running Code in an Entirely New Bundle">Gosu Reference Guide</a></span>.</div>
+      <div class="B_-_Body"><a name="2228523">Ensure that your main </a><span class="cv_-_computer_voice">doWork</span> method frequently checks the <span class="cv_-_computer_voice">TerminateRequested</span> flag. If it is <span class="cv_-_computer_voice">true</span>, exit from your code. For example, if you are looping across a database query, exit from the loop. For more information, see <a href="javascript:WWHClickedPopup('integration', 'batchprocess.29.21.html#2228547', '');" title="Batch Process Implementation Using the Batch Process Base Class">“Request Termination”</a>.</div>
+      <div class="NI_-_Note_Important">
+        <span class="n_-_note">IMPORTANT   </span><a name="2228530">BillingCenter calls the </a><span class="cv_-_computer_voice">requestTermination</span> method in a different thread from the thread that runs your batch process <span class="cv_-_computer_voice">doWork</span> method.</div>
+      <div class="B_-_Body"><a name="2228531">The following subtopics list other property getters or methods that you can call or override.</a></div>
+      <div class="H3_-_Heading_3_outer" style="margin-left: 36pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <h5 class="H3_-_Heading_3_inner" style="width: 18pt; white-space: nowrap"></h5>
+            </td>
+            <td width="100%">
+              <h5 class="H3_-_Heading_3_inner"><a name="2228532">Check Initial Conditions</a></h5>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="B_-_Body"><a name="2325844">BillingCenter instantiates batch process classes at server startup. Later, BillingCenter calls the </a><span class="cv_-_computer_voice">checkInitialConditions</span> method to determine whether to start your batch process. If the method returns <span class="cv_-_computer_voice">true</span>, BillingCenter starts your batch process by calling its <span class="cv_-_computer_voice">doWork</span> method. If the method returns false, initial conditions are not met and BillingCenter does not call the <span class="cv_-_computer_voice">doWork</span> method, skipping the batch process for the time being. </div>
+      <div class="B_-_Body"><a name="2325851">The batch process base class always returns </a><span class="cv_-_computer_voice">true</span> from <span class="cv_-_computer_voice">checkInitialConditions</span>. Override this method if you want to provide a conditional response. If you override <span class="cv_-_computer_voice">checkInitialConditions</span>, be certain your code completes and returns quickly. Do not include long running code, such as queries of the database. The intent of the method is to determine environmental conditions, such as server run level. If you want to check initial conditions of data in the database, perform the query in the <span class="cv_-_computer_voice">doWork</span> method.</div>
+      <div class="B_-_Body"><a name="2325852">The batch process base class automatically ensures the server is at the maintenance run level if you configure your batch process typecode with the </a><span class="cv_-_computer_voice">MaintenanceOnly</span> category. You can perform additional checks on the current server run level by overriding the <span class="cv_-_computer_voice">checkInitialConditions</span> method. </div>
+      <div class="B_-_Body"><a name="2325853">If you override the </a><span class="cv_-_computer_voice">checkInitialConditions</span> method, forward the call to the superclass before returning. If the superclass returns <span class="cv_-_computer_voice">false</span>, you must return <span class="cv_-_computer_voice">false</span>. If the superclass returns <span class="cv_-_computer_voice">true</span>, then perform your additional checks of environmental conditions and return <span class="cv_-_computer_voice">true</span> or <span class="cv_-_computer_voice">false</span> appropriately. </div>
+      <div class="H3_-_Heading_3_outer" style="margin-left: 36pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <h5 class="H3_-_Heading_3_inner" style="width: 18pt; white-space: nowrap"></h5>
+            </td>
+            <td width="100%">
+              <h5 class="H3_-_Heading_3_inner"><a name="2228547">Request Termination</a></h5>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="B_-_Body"><a name="2228548">If a user clicks the </a><span class="ui_-_UI_element">Stop</span> button on the Batch Process Info page, this requests the batch process to terminate. BillingCenter calls the batch process <span class="cv_-_computer_voice">requestTermination</span> method to terminate a batch process if possible. </div>
+      <div class="B_-_Body"><a name="2228552">Your batch process must shut down any necessary systems and stop your batch process if you receive this message. If you cannot terminate your batch process, return </a><span class="cv_-_computer_voice">false</span> from this method. The batch process base class always returns <span class="cv_-_computer_voice">false</span>, which means that the request did not succeed. The base class also sets an internal <span class="cv_-_computer_voice">TerminateRequested</span> flag that you can check to see if a terminate request was received.</div>
+      <div class="NI_-_Note_Important">
+        <span class="n_-_note">IMPORTANT   </span><a name="2228556">BillingCenter calls the </a><span class="cv_-_computer_voice">requestTermination</span> method in a different thread from the thread that runs your batch process <span class="cv_-_computer_voice">doWork</span> method.</div>
+      <div class="B_-_Body"><a name="2228557">For typical implementations, use the following pattern:</a></div>
+      <div class="BI_-_Bullet_Item_outer" style="margin-left: 57pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="BI_-_Bullet_Item_inner" style="width: 15pt; white-space: nowrap">
+                <span class="bu_-_bullet">•	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="BI_-_Bullet_Item_inner"><a name="2228558">Override the </a><span class="cv_-_computer_voice">requestTermination</span> method and have it return <span class="cv_-_computer_voice">true</span>. When the user requests termination of the batch process, the application calls your overridden version of the method. </div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="BI_-_Bullet_Item_outer" style="margin-left: 57pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="BI_-_Bullet_Item_inner" style="width: 15pt; white-space: nowrap">
+                <span class="bu_-_bullet">•	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="BI_-_Bullet_Item_inner"><a name="2228559">Ensure that your main </a><span class="cv_-_computer_voice">doWork</span> method frequently checks the <span class="cv_-_computer_voice">TerminateRequested</span> flag. In your <span class="cv_-_computer_voice">doWork</span> code, exit from your code if that flag is set. For example, if you are looping across a database query, exit from the loop and return. </div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="B_-_Body"><a name="2228560">Override the </a><span class="cv_-_computer_voice">requestTermination</span> method and return <span class="cv_-_computer_voice">false</span> if you genuinely cannot terminate the process soon. Be warned that if you do this, you risk the server shutting down before your process completes. </div>
+      <div class="NW_-_Note_Warning">
+        <span class="w_-_warning">WARNING  </span><a name="2228561">Although you can return </a><span class="cv_-_computer_voice">false</span> from <span class="cv_-_computer_voice">requestTermination</span>, Guidewire strongly recommends you design your batch process so that you actually can terminate the action. It is critical to understand that returning either value does <span class="s_-_strong">not</span> prevent the application from shutting down or reducing run level. BillingCenter delays shutdown or change in run level for a period of time. However, eventually the application shuts down or reduces run level independent of this batch process setting. For maximum reliability and data integrity, design your code to frequently check and respect the <span class="cv_-_computer_voice">TerminateRequested</span> property.</div>
+      <div class="B_-_Body"><a name="2228568">BillingCenter writes a line to the system log to indicate whether the batch process says it could terminate. In other words, the log line includes the result of your </a><span class="cv_-_computer_voice">requestTermination</span> method.</div>
+      <div class="B_-_Body"><a name="2228569">If your batch process can only run one instance at a time, returning </a><span class="cv_-_computer_voice">true</span> does not remove the batch process from the internal table of running batch processes. This means that another instance cannot run until the previous one completes.</div>
+      <div class="H3_-_Heading_3_outer" style="margin-left: 36pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <h5 class="H3_-_Heading_3_inner" style="width: 18pt; white-space: nowrap"></h5>
+            </td>
+            <td width="100%">
+              <h5 class="H3_-_Heading_3_inner"><a name="2228574">Exclusive</a></h5>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="B_-_Body"><a name="2228575">The property getter for the </a><span class="cv_-_computer_voice">Exclusive</span> property for a batch process determines whether another instance of this batch process can start while this process is running. The base class implementation always returns <span class="cv_-_computer_voice">true</span>. Override this method if you need to customize this behavior. This value does not affect whether other batch process classes can run. It only affects the current batch process class.</div>
+      <div class="B_-_Body"><a name="2228576">For maximum performance, be sure to set this </a><span class="cv_-_computer_voice">false</span> if possible. For example, if your batch process takes arguments in its constructor, it might be specific to one entity such as only a single <span class="cv_-_computer_voice">Account</span> entity. If you want to permit multiple instances of your batch process to run in parallel, you must ensure your batch process class implementation returns <span class="cv_-_computer_voice">false</span>. For example, </div>
+      <PRE class="CF_-_Code_First_Line"><a name="2228580">override property get Exclusive() : boolean { </a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2228581">&nbsp;&nbsp;return false </a></PRE>
+      <PRE class="CL_-_Code_Last_Line"><a name="2228582">} </a></PRE>
+      <div class="N_-_Note">
+        <span class="n_-_note">Note: </span><a name="2228583">For Java implementations, you must implement this property getter as the method </a><span class="cv_-_computer_voice">isExclusive</span>, which takes no arguments.</div>
+      <div class="H3_-_Heading_3_outer" style="margin-left: 36pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <h5 class="H3_-_Heading_3_inner" style="width: 18pt; white-space: nowrap"></h5>
+            </td>
+            <td width="100%">
+              <h5 class="H3_-_Heading_3_inner"><a name="2228584">Description</a></h5>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="B_-_Body"><a name="2228585">The </a><span class="cv_-_computer_voice">getDescription</span> method gets the batch type’s description. The base class gets this string from the batch type typecode description. Override this method if you need to customize this behavior.</div>
+      <div class="H3_-_Heading_3_outer" style="margin-left: 36pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <h5 class="H3_-_Heading_3_inner" style="width: 18pt; white-space: nowrap"></h5>
+            </td>
+            <td width="100%">
+              <h5 class="H3_-_Heading_3_inner"><a name="2228586">Detail Status</a></h5>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="B_-_Body"><a name="2228587">The property getter for the </a><span class="cv_-_computer_voice">DetailStatus</span> property gets the batch type’s detailed status. The base class defines a default simple implementation. Override the default property getter to provide more useful detail information about the status of your batch process for the Administration user interface. The details might be important if your class experiences any error conditions.</div>
+      <div class="N_-_Note">
+        <span class="n_-_note">Note: </span><a name="2228588">For Java implementations, you must implement this property getter as the method </a><span class="cv_-_computer_voice">getDetailStatus</span>, which takes no arguments.</div>
+      <div class="H3_-_Heading_3_outer" style="margin-left: 36pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <h5 class="H3_-_Heading_3_inner" style="width: 18pt; white-space: nowrap"></h5>
+            </td>
+            <td width="100%">
+              <h5 class="H3_-_Heading_3_inner"><a name="2228589">Progress Handling</a></h5>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="B_-_Body"><a name="2228590">The </a><span class="cv_-_computer_voice">Progress</span> property in the batch process dynamically returns the progress of the batch process. The base class returns text in the form <span class="cv_-_computer_voice">"x of y"</span> where <span class="cv_-_computer_voice">x</span> is the amount of work completed and <span class="cv_-_computer_voice">y</span> is the total amount of work. If <span class="cv_-_computer_voice">y</span> is unknown, returns just <span class="cv_-_computer_voice">"x"</span>. These values are determined from the <span class="cv_-_computer_voice">OperationsExpected</span> and <span class="cv_-_computer_voice">OperationsCompleted </span>properties. From Java, this is the <span class="cv_-_computer_voice">getProgress</span> method.</div>
+      <div class="B_-_Body"><a name="2228591">The following list includes related properties and methods you can use that the base class implements:</a></div>
+      <div class="BI_-_Bullet_Item_outer" style="margin-left: 57pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="BI_-_Bullet_Item_inner" style="width: 15pt; white-space: nowrap">
+                <span class="bu_-_bullet">•	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="BI_-_Bullet_Item_inner"><span class="cv_-_computer_voice"><a name="2228592">OperationsExpected</a></span> property - a counter for how many operations are expected, as an <span class="cv_-_computer_voice">int</span> value. From Java this counter is the <span class="cv_-_computer_voice">getOperationsExpected</span> method.</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="BI_-_Bullet_Item_outer" style="margin-left: 57pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="BI_-_Bullet_Item_inner" style="width: 15pt; white-space: nowrap">
+                <span class="bu_-_bullet">•	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="BI_-_Bullet_Item_inner"><span class="cv_-_computer_voice"><a name="2228593">OperationsCompleted</a></span> property - a counter for how many operations are complete, as an <span class="cv_-_computer_voice">int</span> value. From Java this counter is the <span class="cv_-_computer_voice">getOperationsCompleted</span> method.</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="BI_-_Bullet_Item_outer" style="margin-left: 57pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="BI_-_Bullet_Item_inner" style="width: 15pt; white-space: nowrap">
+                <span class="bu_-_bullet">•	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="BI_-_Bullet_Item_inner"><span class="cv_-_computer_voice"><a name="2228594">incrementOperationsCompleted</a></span> method - this no-argument method increments an internal counter for how many operations completed. For example, suppose your batch process iterates across entities of some type with special conditions and specially handle each found item. For each entity you modify, call this method once to track the progress of this batch process. The user interface can display this number or debugging code can track this number to see the progress. This method returns the current number of operations completed. For each entity for which you have an error condition, call this method once to track the progress of this batch process.</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="BI_-_Bullet_Item_outer" style="margin-left: 57pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="BI_-_Bullet_Item_inner" style="width: 15pt; white-space: nowrap">
+                <span class="bu_-_bullet">•	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="BI_-_Bullet_Item_inner"><span class="cv_-_computer_voice"><a name="2228595">OperationsFailed</a></span> property - an internal counter for the number of operations that failed. From Java this counter is the <span class="cv_-_computer_voice">getOperationsFailed</span> method.</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="BI_-_Bullet_Item_outer" style="margin-left: 57pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="BI_-_Bullet_Item_inner" style="width: 15pt; white-space: nowrap">
+                <span class="bu_-_bullet">•	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="BI_-_Bullet_Item_inner"><span class="cv_-_computer_voice"><a name="2228596">incrementOperationsFailed</a></span> method - this method increments an internal counter for how many operations failed. For example, suppose your batch process iterates across entities of some type with special conditions and specially handle each found item. For each entity for which you have an error condition, call this method once to track the progress of this batch process. The user interface can display this number or debugging code can track this number to see the progress. This method returns the current number of operations failed. You must also call the <span class="cv_-_computer_voice">incrementOperationsCompleted</span> method.</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="NI_-_Note_Important">
+        <span class="n_-_note">IMPORTANT   </span><a name="2228597">For any operations that fail, call both the </a><span class="cv_-_computer_voice">incrementOperationsFailed</span> method and the <span class="cv_-_computer_voice">incrementOperationsCompleted</span> method<span class="cv_-_computer_voice">.</span></div>
+      <div class="BI_-_Bullet_Item_outer" style="margin-left: 57pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="BI_-_Bullet_Item_inner" style="width: 15pt; white-space: nowrap">
+                <span class="bu_-_bullet">•	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="BI_-_Bullet_Item_inner"><span class="cv_-_computer_voice"><a name="2228598">Finished</a></span> property - return a Boolean value to indicate whether the process completed. Completion says nothing about the errors if any. From Java, this is the <span class="cv_-_computer_voice">isFinished</span> method.</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="H3_-_Heading_3_outer" style="margin-left: 36pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <h5 class="H3_-_Heading_3_inner" style="width: 18pt; white-space: nowrap"></h5>
+            </td>
+            <td width="100%">
+              <h5 class="H3_-_Heading_3_inner"><a name="2228599">Type</a></h5>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="B_-_Body"><a name="2228600">The base class maintains a </a><span class="cv_-_computer_voice">Type</span> property, which contains the batch process type, as a <span class="cv_-_computer_voice">BatchProcessType</span> typecode. From Java this property is the <span class="cv_-_computer_voice">getType</span> method.</div>
+      <script type="text/javascript" language="JavaScript1.2">
+        <!--
+          // Clear related topics
+          //
+          WWHClearRelatedTopics();
+
+          document.writeln(WWHRelatedTopicsInlineHTML());
+        // -->
+      </script>
+    </blockquote>
+    <script type="text/javascript" language="JavaScript1.2">
+      <!--
+        document.write(WWHRelatedTopicsDivTag() + WWHPopupDivTag() + WWHALinksDivTag());
+      // -->
+    </script>
+  </body>
+</html>

@@ -1,0 +1,45 @@
+<?xml version="1.0"?>
+<entity
+  xmlns="http://guidewire.com/datamodel"
+  entity="ProducerPayableTransfer"
+  type="retireable"
+  desc="Wrapper entity for ProducerPayableTransferTxn transaction that debits CommissionsPayable of one Producer and credits Cash of another producer"
+  subpackage="producer"
+  platform="false"
+  table="producerpayabletransfer"
+  setterScriptability="hidden">
+  <implementsEntity
+    name="Approvable"/>
+  <implementsEntity
+    name="InCurrencySilo"/>
+  <monetaryamount
+    name="Amount"
+    amountColumnName="Amount"
+    amountRange="nonnegative"
+    scaleToCurrency="true"
+    desc="The amount to debit from CommissionsPayable of one producer and credit to Cash of another producer"
+    nullok="false"/>
+  <foreignkey
+    name="DebitsPayableOf"
+    desc="The producer whose CommissionsPayable t-account will be debited"
+    columnName="DebitsPayableOfID"
+    fkentity="Producer"
+    nullok="false"/>
+  <foreignkey
+    name="CreditsPayableOf"
+    desc="The producer whose CommissionsPayable t-account will be credited"
+    columnName="CreditsPayableOfID"
+    fkentity="Producer"
+    nullok="false"/>
+  <array
+    name="ActivitiesCreatedByApproval"
+    arrayentity="ProducerPayableTransferApprovalActivity"
+    setterScriptability="doesNotExist">
+    <link-association>
+      <typelist-map
+        field="Status"/>
+    </link-association>
+  </array>
+  <dbcheckbuilder
+    className="com.guidewire.bc.system.database.dbchecks.accounting.ProducerPayableTransferDBCheckBuilder"/>
+</entity>

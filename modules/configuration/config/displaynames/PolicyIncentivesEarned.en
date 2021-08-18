@@ -1,0 +1,28 @@
+<?xml version="1.0"?>
+<Entity
+  name="PolicyIncentivesEarned">
+  <Columns>
+    <Column
+      beanPath="Transaction.Subtype"
+      name="Subtype"/>
+    <Column
+      beanPath="Transaction.ReversedTransaction.TransactionNumber"
+      name="ReversedTransactionNumber"/>
+    <Column
+      beanPath="Transaction.Amount"
+      name="Amount"/>
+    <DisplayNameColumn
+      beanPath="PolicyIncentivesEarned.PolicyCommission.ProducerCode"
+      displayName="true"
+      name="ProducerCode"/>
+    <DisplayNameColumn
+      beanPath="PolicyIncentivesEarned.PolicyCommission.PolicyPeriod"
+      displayName="true"
+      name="PolicyPeriod"/>
+  </Columns>
+  <DisplayName><![CDATA[gw.api.domain.accounting.ReversibleUtil.formatReversibleDisplayName(gw.api.util.TypeKeyUtil.toDisplayName(Subtype), ReversedTransactionNumber)]]></DisplayName>
+  <DisplayName
+    type="Short"><![CDATA[gw.api.domain.accounting.ReversibleUtil.formatReversibleDisplayName(displaykey.DisplayName.PolicyIncentivesEarned.Short, ReversedTransactionNumber)]]></DisplayName>
+  <DisplayName
+    type="Long"><![CDATA[gw.api.domain.accounting.ReversibleUtil.formatReversibleDisplayName(displaykey.DisplayName.PolicyIncentivesEarned.Long(Amount?.render(), ProducerCode, PolicyPeriod), ReversedTransactionNumber)]]></DisplayName>
+</Entity>

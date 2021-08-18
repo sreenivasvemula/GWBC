@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PCF
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:noNamespaceSchemaLocation="../../../../../pcf.xsd">
+  <InputSet
+          id="DocumentTemplateContextObjectInputSet"
+    mode="default">
+    <Require
+      name="DocumentCreationInfo"
+      type="gw.document.DocumentCreationInfo"/>
+    <Require
+      name="Document"
+      type="Document"/>
+    <Require
+      name="documentContainer"
+      type="DocumentContainer"/>
+    <InputIterator
+      elementName="DynamicWidgetInfo"
+      value="DocumentCreationInfo.getDynamicWidgetInformation()">
+      <InputSetRef
+        def="NewTemplateDocumentInputSet(DocumentCreationInfo, Document, DocumentContainer, DynamicWidgetInfo)"
+        mode="getMode(DynamicWidgetInfo)"/>
+    </InputIterator>
+    <Code>
+function getMode(dynamicWidgetInfo : gw.document.DocumentCreationInfo.DynamicWidgetInfo) : String {
+        return dynamicWidgetInfo.Type.toLowerCase();
+      }
+    </Code>
+  </InputSet>
+</PCF>

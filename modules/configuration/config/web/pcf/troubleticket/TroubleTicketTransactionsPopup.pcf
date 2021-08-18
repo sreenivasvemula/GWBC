@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PCF
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:noNamespaceSchemaLocation="../../../../../pcf.xsd">
+  <!-- Displays a list of the transactions associated with a trouble ticket. Has add button that when clicked
+       takes user off to popup where they can select one or more transactions to associate with the trouble ticket. -->
+  <Popup
+    canEdit="true"
+    id="TroubleTicketTransactionsPopup"
+    startInEditMode="true"
+    title="displaykey.Web.TroubleTicketTransactionsPopup.Title">
+    <LocationEntryPoint
+      signature="TroubleTicketTransactionsPopup(TroubleTicket : TroubleTicket)"/>
+    <Variable
+      name="TroubleTicket"
+      type="TroubleTicket"/>
+    <Screen
+      id="TroubleTicketsTransactionsScreen">
+      <Toolbar>
+        <EditButtons/>
+      </Toolbar>
+      <DetailViewPanel
+        id="TroubleTicketWarningMessageDV">
+        <InputColumn>
+          <Label
+            label="displaykey.Web.TroubleTicketTabbedDetailDV.Warning"/>
+        </InputColumn>
+      </DetailViewPanel>
+      <PanelRef
+        def="TroubleTicketRelatedTransactionsDV(TroubleTicket)"/>
+    </Screen>
+  </Popup>
+</PCF>

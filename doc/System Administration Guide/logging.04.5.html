@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xml:lang="en" lang="en" xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+    <meta http-equiv="Content-Style-Type" content="text/css" />
+    <!-- MOTW-DISABLED saved from url=(0014)about:internet -->
+    <title>Setting Logging Levels by Category</title>
+    <link rel="StyleSheet" href="css/logging.css" type="text/css" media="all" />
+    <link rel="StyleSheet" href="css/webworks.css" type="text/css" media="all" />
+    <link rel="StyleSheet" href="css/css-guidewire-extra.css" type="text/css" media="all" />
+    <script type="text/javascript" language="JavaScript1.2" src="wwhdata/common/context.js"></script>
+    <script type="text/javascript" language="JavaScript1.2" src="wwhdata/common/towwhdir.js"></script>
+    <script type="text/javascript" language="JavaScript1.2" src="wwhdata/common/wwhpagef.js"></script>
+    <script type="text/javascript" language="JavaScript1.2">
+      <!--
+        var  WebWorksRootPath = "";
+      // -->
+    </script>
+    <script type="text/javascript" language="JavaScript1.2">
+      <!--
+        // Set reference to top level help frame
+        //
+        var  WWHFrame = WWHGetWWHFrame("", true);
+      // -->
+    </script>
+    <script type="text/javascript" language="JavaScript1.2" src="scripts/expand.js"></script>
+    <!-- THE FOLLOWING IS A GUIDEWIRE STYLE DEFINITION FOR THE LINK TO THIS FEATURE -->
+    <link rel="StyleSheet" href="css/css-guidewire-extra.css" type="text/css" media="all" />
+    <!-- THE FOLLOWING IS A GUIDEWIRE GSCRIPT FUNCTION FOR THE LINK TO THIS FEATURE -->
+    <script type="text/javascript">
+function guidewire_selectall()
+{
+var text_val=eval("document.linktothisurlform.urlfield");
+text_val.focus();
+text_val.select();
+}
+</script>
+  </head>
+  <body onLoad="WWHUpdate();" onUnload="WWHUnload();" onKeyDown="WWHHandleKeyDown((document.all||document.getElementById||document.layers)?event:null);" onKeyPress="WWHHandleKeyPress((document.all||document.getElementById||document.layers)?event:null);" onKeyUp="WWHHandleKeyUp((document.all||document.getElementById||document.layers)?event:null);">
+    <!-- THE FOLLOWING IS A GUIDEWIRE DIV FOR THE 'LINK TO THIS' FEATURE -->
+    <div id="linkToThisPage" class="popup" style="display: none;">
+      <div class="popupTitle">Link Directly to This Page 
+           <a href="#" onclick="var thePopup = getElementById('linkToThisPage');thePopup.style.display='none';return false;"><img class="popupClosebox" src="wwhelp/wwhimpl/common/images/close.gif" /></a></div>
+      <div style="padding:6px;">
+        <div class="popupText" id="linkToThisPageBookmark">An error has occurred if you see this messsage.</div>
+        <form name="linktothisurlform" method="post" action="" style="width:275px;margin:0px">
+          <input type="text" class="popupURLText" id="linkToThisPageURL" name="urlfield" rows="1" cols="55" onClick="guidewire_selectall();" onFocus="guidewire_selectall();"></input>
+        </form>
+      </div>
+    </div>
+    <br />
+    <div class="WebWorks_Breadcrumbs" style="text-align: left;">
+      <span>BillingCenter System Administration Guide</span> : 
+    <span class="WebWorks_Breadcrumbs" style="text-align: left;"><a class="WebWorks_Breadcrumb_Link" href="logging.04.1.html#1338944">Configuring Logging</a> : Setting Logging Levels by Category</span></div>
+    <hr align="left" />
+    <blockquote>
+      <h3 class="H1_-_Heading_1"><a name="1338944">Setting Logging Levels by Category</a></h3>
+      <div class="B_-_Body"><a name="1338945">The </a><span class="cv_-_computer_voice">RootLogger</span> category is the parent of all other logging categories. Setting the logging level on <span class="cv_-_computer_voice">RootLogger</span> causes all categories to inherit the same level, provided those categories do not set a different logging level. Set the logging level property of the different logging entries to set how much information you want sent to each type of log. </div>
+      <div class="B_-_Body"><a name="1338946">Logging levels inherit from parent categories unless the child category defines a different level. For example, setting </a><span class="cv_-_computer_voice">Messaging</span> to <span class="cv_-_computer_voice">DEBUG</span> also sets <span class="cv_-_computer_voice">Messaging.Email</span> and <span class="cv_-_computer_voice">Messaging.Events</span> to <span class="cv_-_computer_voice">DEBUG</span>, unless those categories individually define another logging level. </div>
+      <div class="B_-_Body"><a name="1338947">In the base configuration, Guidewire sets the value of </a><span class="cv_-_computer_voice">rootCategory</span> to <span class="cv_-_computer_voice">INFO</span>:</div>
+      <div class="CS_-_Code_Single_Line"><a name="1338948">log4j.rootCategory=INFO</a></div>
+      <h6 class="HS_-_Head_Sub"><a name="1338949">See also</a></h6>
+      <div class="BI_-_Bullet_Item_outer" style="margin-left: 57pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="BI_-_Bullet_Item_inner" style="width: 15pt; white-space: nowrap">
+                <span class="bu_-_bullet">•	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="BI_-_Bullet_Item_inner"><a name="1338952">For information on the logging categories contained in </a><span class="cv_-_computer_voice">logging.properties</span>, see <a href="javascript:WWHClickedPopup('admin', 'logging.04.4.html#1337610', '');" title="Understanding Logging Categories">“Understanding Logging Categories”</a>.</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="BI_-_Bullet_Item_outer" style="margin-left: 57pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="BI_-_Bullet_Item_inner" style="width: 15pt; white-space: nowrap">
+                <span class="bu_-_bullet">•	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="BI_-_Bullet_Item_inner"><a name="1338954">For a complete discussion of logging levels and inheritance, refer to the Apache log4j documentation at </a><span class="cv_-_computer_voice"><a href="https://logging.apache.org/" target="external_window">https://logging.apache.org/</a></span>.</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <h4 class="H2_-_Heading_2"><a name="1338956">Setting Logging Levels by System Component</a></h4>
+      <div class="B_-_Body"><a name="1338957">The </a><span class="cv_-_computer_voice">logging.properties</span> file contains additional logging categories for other system components such as plugins or integration code. In the base configuration, Guidewire comments out these entries by default. To enable a logging category, uncomment the appropriate <span class="cv_-_computer_voice">log4j.category.*</span> entry. For example, the following line turns on debugging for all integration code:</div>
+      <div class="CS_-_Code_Single_Line"><a name="1338958">log4j.category.Integration=DEBUG, IntegrationLog</a></div>
+      <div class="B_-_Body"><a name="1338959">Just as with the daily log, the locations for these log files must exist. The most important settings to change are the location of the logs and the logging threshold. For example, the following entry in </a><span class="cv_-_computer_voice">logging.properties</span> directs BillingCenter to write more detailed logging related to the rule engine to an output point called <span class="cv_-_computer_voice">RuleEngineLog</span>:</div>
+      <div class="CS_-_Code_Single_Line"><a name="1338966">log4j.category.com.guidewire.bc.server.rule=DEBUG, RuleEngineLog</a></div>
+      <div class="B_-_Body"><a name="1338969">You can then configure the parameters related to the </a><span class="cv_-_computer_voice">RuleEngineLog</span> appender to set up a log file specifically for troubleshooting rules.</div>
+      <script type="text/javascript" language="JavaScript1.2">
+        <!--
+          // Clear related topics
+          //
+          WWHClearRelatedTopics();
+
+          document.writeln(WWHRelatedTopicsInlineHTML());
+        // -->
+      </script>
+    </blockquote>
+    <script type="text/javascript" language="JavaScript1.2">
+      <!--
+        document.write(WWHRelatedTopicsDivTag() + WWHPopupDivTag() + WWHALinksDivTag());
+      // -->
+    </script>
+  </body>
+</html>

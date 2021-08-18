@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<PCF
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:noNamespaceSchemaLocation="../../../../../pcf.xsd">
+  <Forward
+    id="AgencyChargeOwnerDetailForward">
+    <LocationEntryPoint
+      signature="AgencyChargeOwnerDetailForward(chargeOwnerView : gw.api.web.producer.agencybill.distributionwizard.AgencyCycleDistChargeOwnerView)"/>
+    <Variable
+      name="chargeOwnerView"
+      type="gw.api.web.producer.agencybill.distributionwizard.AgencyCycleDistChargeOwnerView"/>
+    <ForwardCondition
+      action="PolicyDetailSummaryPopup.push(chargeOwnerView.ChargeOwner as PolicyPeriod)"
+      condition="chargeOwnerView.ChargeOwner typeis PolicyPeriod"/>
+    <ForwardCondition
+      action="AccountDetailSummaryPopup.push(chargeOwnerView.Account)"
+      condition="chargeOwnerView.ChargeOwner typeis Account"/>
+  </Forward>
+</PCF>

@@ -1,0 +1,32 @@
+<?xml version="1.0"?>
+<PCF
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:noNamespaceSchemaLocation="../../../../../pcf.xsd">
+  <!-- Wizard flow that should guide the user through the process of creating a generic charge -->
+  <Wizard
+    beforeCommit="helper.BillingInstruction.execute()"
+    canVisit="perm.Transaction.gentxn"
+    cancelWarning="displaykey.Web.NewTransactionWizard.CancelConfirmation"
+    countsAsWork="false"
+    id="AccountNewTransactionWizard">
+    <LocationEntryPoint
+      signature="AccountNewTransactionWizard(account : Account)"/>
+    <Variable
+      name="account"
+      type="Account"/>
+    <Variable
+      initialValue="new gw.accounting.NewGeneralSingleChargeHelper (account, gw.transaction.UserTransactionType.FEE_OR_GENERAL)"
+      name="helper"/>
+    <!-- Specify the steps of the New Transaction Wizard -->
+    <WizardStep
+      id="Step1"
+      label="displaykey.Web.NewTransactionWizard.AccountPolicySearch.Label"
+      screen="NewTransactionAccountPoliciesScreen(helper)"
+      title="displaykey.Web.NewTransactionWizard.AccountPolicySearch.Title"/>
+    <WizardStep
+      id="Step2"
+      label="displaykey.Web.NewTransactionWizard.Charges.Label"
+      screen="ChargeDetailsScreen(helper)"
+      title="displaykey.Web.NewTransactionWizard.Charges.Title"/>
+  </Wizard>
+</PCF>

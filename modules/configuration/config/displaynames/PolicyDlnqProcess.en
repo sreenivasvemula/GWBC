@@ -1,0 +1,48 @@
+<?xml version="1.0"?>
+<Entity
+  name="PolicyDlnqProcess">
+  <Columns>
+    <Column
+      beanPath="PolicyDlnqProcess.PolicyPeriod.PolicyNumberLong"
+      name="targetID"
+      sortOrder="0"/>
+    <Column
+      beanPath="PolicyDlnqProcess.StartDate"
+      name="startDate"
+      sortOrder="1"/>
+    <Column
+      beanPath="PolicyDlnqProcess.CurrentEventDenorm"
+      name="currentEvent"
+      sortOrder="2"/>
+  </Columns>
+  <DisplayName><![CDATA[
+// DelinquencyProcess for: 
+// keep DelinquencyProcess and DelinquencyProcess in sync
+      var sb = new java.lang.StringBuilder()
+          .append("PolicyDlnqProcess for: ")
+          .append(targetID)
+          .append(" started ")
+          .append( startDate?.format("short"))
+          .append(": ")
+      if (currentEvent == null) {
+        sb.append("<no current event>")
+      } else {
+        sb.append(currentEvent.EventName.DisplayName)
+          .append("@")
+          .append(currentEvent.TriggerBasis)
+        if (currentEvent.TargetDate == null) {
+          sb.append("+")
+            .append(currentEvent.OffsetDays as int) // Gosu casting bug
+        } else {
+          sb.append(":")
+          sb.append(currentEvent.TargetDate?.format("short"))
+        }
+        if (currentEvent.CompletionTime != null) {
+          sb.append(" (")
+            .append(currentEvent.CompletionTime)
+            .append(")")
+        }
+      }
+      return sb.toString()
+  ]]></DisplayName>
+</Entity>

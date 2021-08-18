@@ -1,0 +1,164 @@
+<?xml version="1.0"?>
+<PCF
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:noNamespaceSchemaLocation="../../../../../pcf.xsd">
+  <Popup
+    afterCancel="displayWarningIfUserCanceledOutOfPageWithoutSelectingAnything()"
+    id="DuplicateContactsPopup"
+    title="displaykey.Web.DuplicateContactsPopup.Title">
+    <LocationEntryPoint
+      signature="DuplicateContactsPopup(duplicateContactsPopupNavigator : gw.pcf.duplicatecontacts.DuplicateContactsPopupNavigator)"/>
+    <Variable
+      name="duplicateContactsPopupNavigator"
+      type="gw.pcf.duplicatecontacts.DuplicateContactsPopupNavigator"/>
+    <Variable
+      initialValue="duplicateContactsPopupNavigator.ContactBeingCreatedThroughUI"
+      name="originalContact"
+      type="Contact"/>
+    <Variable
+      initialValue="new gw.pcf.duplicatecontacts.PotentialMatchChecker(duplicateContactsPopupNavigator.DuplicateResultsContainer)"
+      name="potentialMatchChecker"/>
+    <Variable
+      initialValue="false"
+      name="selectionWarningAlreadyIssued"/>
+    <Variable
+      initialValue="new gw.api.address.ContactAddressOwner(originalContact)"
+      name="addressOwner"
+      type="gw.api.address.AddressOwner"/>
+    <Screen
+      id="DuplicateContactsScreen">
+      <Toolbar/>
+      <Verbatim
+        id="SearchCriteria"
+        label="displaykey.Web.DuplicateContactsPopup.SearchCriteria"/>
+      <DetailViewPanel
+        editable="false">
+        <InputColumn>
+          <InputSetRef
+            def="ContactNameInputSet(originalContact)"
+            mode="originalContact.Subtype.Code"/>
+        </InputColumn>
+        <InputColumn>
+          <Label
+            label="displaykey.Web.DuplicateContactsPopup.Address"/>
+          <InputSetRef
+            def="GlobalAddressInputSet(addressOwner)"
+            id="globalAddressContainer"
+            mode="address.AddressCountrySettings.getSettings(addressOwner.SelectedCountry).PCFMode"
+            widgets="globalAddressContainer"/>
+          <TypeKeyInput
+            editable="true"
+            id="AddressType"
+            label="displaykey.Web.AddressDetail.AddressType"
+            required="true"
+            value="originalContact.PrimaryAddress.AddressType"/>
+          <Input
+            editable="true"
+            id="AddressDescription"
+            label="displaykey.Web.AddressDetail.Description"
+            value="originalContact.PrimaryAddress.Description"/>
+        </InputColumn>
+      </DetailViewPanel>
+      <PanelDivider/>
+      <PanelSet>
+        <Verbatim
+          label="getInstructionsText()"/>
+      </PanelSet>
+      <PanelSet>
+        <Verbatim
+          label="displaykey.Web.DuplicateContactsPopup.Warning.Overwrite"
+          warning="true"/>
+      </PanelSet>
+      <ListViewPanel
+        id="ResultsLV">
+        <RowIterator
+          editable="false"
+          elementName="duplicateResult"
+          id="ResultsList"
+          value="duplicateContactsPopupNavigator.DuplicateResultsContainer.Results">
+          <Row>
+            <Cell
+              action="importContactData(duplicateResult)"
+              id="Select"
+              sortOrder="1"
+              value="displaykey.Web.DuplicateContactsPopup.Select"/>
+            <Cell
+              id="Name"
+              label="displaykey.Web.DuplicateContactsPopup.Name"
+              sortOrder="3"
+              value="duplicateResult.DisplayName"/>
+            <Cell
+              align="center"
+              id="Exact"
+              label="displaykey.Web.DuplicateContactsPopup.MatchType.Title"
+              sortOrder="2"
+              value="duplicateResult.MatchType"/>
+            <Cell
+              id="Address"
+              label="displaykey.Web.DuplicateContactsPopup.PrimaryAddress"
+              value="duplicateResult.DisplayAddress"/>
+            <Cell
+              id="PrimaryPhone"
+              label="displaykey.Web.DuplicateContactsPopup.PrimaryPhoneNumber"
+              value="duplicateResult.PrimaryPhoneValue"/>
+            <DateCell
+              id="DOB"
+              label="displaykey.Web.DuplicateContactsPopup.DateOfBirth"
+              value="duplicateResult.DateOfBirth"
+              visible="typeof(originalContact) == Person"/>
+          </Row>
+        </RowIterator>
+      </ListViewPanel>
+    </Screen>
+    <Code><![CDATA[uses gw.api.util.LocationUtil
+uses gw.plugin.contact.DuplicateContactResult
+uses java.lang.Throwable
+
+
+function importContactData(duplicate : DuplicateContactResult) {
+  
+  if (duplicateContactsPopupNavigator.selectedDuplicateContactMatchesContactThatAlreadyExistsOnAccountOrPolicy(duplicate)) {
+    displayErrorInformingUserTheyAttemptedToAddContactThatWasAlreadyOnThePolicyOrAccount()
+    return
+  }
+  
+  if (not selectionWarningAlreadyIssued and potentialMatchChecker.userSelectedNonExactMatchEvenThoughExactMatchesWereAvailable(duplicate)) {
+    warnUserTheySelectedNonExactMatchEvenThoughExactMatchWasAvailable()
+    return
+  }
+  
+  try {
+    duplicateContactsPopupNavigator.copyDataFromDuplicateABContactToBCContact(duplicate)
+  } catch (e : Throwable) {
+    LocationUtil.addRequestScopedErrorMessage(e.Message)
+  }
+  
+  CurrentLocation.commit() // have to do this to roll the change up to the parent page and close this popup
+}
+
+function displayWarningIfUserCanceledOutOfPageWithoutSelectingAnything() {
+  if (originalContact.AddressBookUID == null) {
+    LocationUtil.addRequestScopedWarningMessage(displaykey.Web.DuplicateContactsPopup.Warning.NoSelection)
+  }
+}
+
+function warnUserTheySelectedNonExactMatchEvenThoughExactMatchWasAvailable() {
+  LocationUtil.addRequestScopedWarningMessage(displaykey.Web.DuplicateContactsPopup.Warning.ExactNotSelected)
+  selectionWarningAlreadyIssued = true
+}
+
+function displayErrorInformingUserTheyAttemptedToAddContactThatWasAlreadyOnThePolicyOrAccount() {
+  LocationUtil.addRequestScopedWarningMessage(displaykey.Web.DuplicateContactsPopup.ErrorContactAlreadyExistsOnContactHolder(originalContact, duplicateContactsPopupNavigator.ContactHolderType))
+}
+
+function getInstructionsText() : String {
+  if (duplicateContactsPopupNavigator.ContactHolderType == Account) {
+    return displaykey.Web.DuplicateContactsPopup.InstructionsForAccountContact
+  } else if (duplicateContactsPopupNavigator.ContactHolderType == PolicyPeriod) {
+    return displaykey.Web.DuplicateContactsPopup.InstructionsForPolicyPeriodContact
+  } else {
+    throw displaykey.Web.DuplicateContactsPopup.ErrorUnsupportedContactHolderType
+  }
+}]]></Code>
+  </Popup>
+</PCF>

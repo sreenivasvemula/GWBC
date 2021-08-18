@@ -1,0 +1,237 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xml:lang="en" lang="en" xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+    <meta http-equiv="Content-Style-Type" content="text/css" />
+    <!-- MOTW-DISABLED saved from url=(0014)about:internet -->
+    <title>Configuring Work Queues</title>
+    <link rel="StyleSheet" href="css/batch.css" type="text/css" media="all" />
+    <link rel="StyleSheet" href="css/webworks.css" type="text/css" media="all" />
+    <link rel="StyleSheet" href="css/css-guidewire-extra.css" type="text/css" media="all" />
+    <script type="text/javascript" language="JavaScript1.2" src="wwhdata/common/context.js"></script>
+    <script type="text/javascript" language="JavaScript1.2" src="wwhdata/common/towwhdir.js"></script>
+    <script type="text/javascript" language="JavaScript1.2" src="wwhdata/common/wwhpagef.js"></script>
+    <script type="text/javascript" language="JavaScript1.2">
+      <!--
+        var  WebWorksRootPath = "";
+      // -->
+    </script>
+    <script type="text/javascript" language="JavaScript1.2">
+      <!--
+        // Set reference to top level help frame
+        //
+        var  WWHFrame = WWHGetWWHFrame("", true);
+      // -->
+    </script>
+    <script type="text/javascript" language="JavaScript1.2" src="scripts/expand.js"></script>
+    <!-- THE FOLLOWING IS A GUIDEWIRE STYLE DEFINITION FOR THE LINK TO THIS FEATURE -->
+    <link rel="StyleSheet" href="css/css-guidewire-extra.css" type="text/css" media="all" />
+    <!-- THE FOLLOWING IS A GUIDEWIRE GSCRIPT FUNCTION FOR THE LINK TO THIS FEATURE -->
+    <script type="text/javascript">
+function guidewire_selectall()
+{
+var text_val=eval("document.linktothisurlform.urlfield");
+text_val.focus();
+text_val.select();
+}
+</script>
+  </head>
+  <body onLoad="WWHUpdate();" onUnload="WWHUnload();" onKeyDown="WWHHandleKeyDown((document.all||document.getElementById||document.layers)?event:null);" onKeyPress="WWHHandleKeyPress((document.all||document.getElementById||document.layers)?event:null);" onKeyUp="WWHHandleKeyUp((document.all||document.getElementById||document.layers)?event:null);">
+    <!-- THE FOLLOWING IS A GUIDEWIRE DIV FOR THE 'LINK TO THIS' FEATURE -->
+    <div id="linkToThisPage" class="popup" style="display: none;">
+      <div class="popupTitle">Link Directly to This Page 
+           <a href="#" onclick="var thePopup = getElementById('linkToThisPage');thePopup.style.display='none';return false;"><img class="popupClosebox" src="wwhelp/wwhimpl/common/images/close.gif" /></a></div>
+      <div style="padding:6px;">
+        <div class="popupText" id="linkToThisPageBookmark">An error has occurred if you see this messsage.</div>
+        <form name="linktothisurlform" method="post" action="" style="width:275px;margin:0px">
+          <input type="text" class="popupURLText" id="linkToThisPageURL" name="urlfield" rows="1" cols="55" onClick="guidewire_selectall();" onFocus="guidewire_selectall();"></input>
+        </form>
+      </div>
+    </div>
+    <br />
+    <div class="WebWorks_Breadcrumbs" style="text-align: left;">
+      <span>BillingCenter System Administration Guide</span> : 
+    <span class="WebWorks_Breadcrumbs" style="text-align: left;"><a class="WebWorks_Breadcrumb_Link" href="batch.11.01.html#2178785">Batch Processing</a> : Configuring Work Queues</span></div>
+    <hr align="left" />
+    <blockquote>
+      <h3 class="H1_-_Heading_1"><a name="2178785">Configuring Work Queues</a></h3>
+      <div class="B_-_Body"><a name="2178786">You may want to modify the configuration of Guidewire-provided work queues to improve performance. You configure attributes of a work queue and its workers in the </a><span class="cv_-_computer_voice">work-queue.xml</span> file. For custom work queues, you must modify <span class="cv_-_computer_voice">work-queue.xml</span> to enable your work queue to operate. </div>
+      <div class="B_-_Body"><a name="2178796">Each work queue has its own configuration structure in </a><span class="cv_-_computer_voice">work-queue.xml</span>. </div>
+      <PRE class="CF_-_Code_First_Line"><a name="2178797">&lt;</a><span class="s_-_strong">work-queue</span> workQueueClass="<span class="pc_-_parameter_in_code">string</span>" progressinterval="<span class="pc_-_parameter_in_code">decimal</span>"&gt;</PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2178798">&nbsp;&nbsp;&lt;</a><span class="s_-_strong">worker</span> instances="in<span class="pc_-_parameter_in_code">teger</span>" throttleinterval="<span class="pc_-_parameter_in_code">decimal</span>" env="<span class="pc_-_parameter_in_code">string</span>" server="<span class="pc_-_parameter_in_code">string</span>"/&gt;</PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2178799">&nbsp;&nbsp;...</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2178800">&nbsp;&nbsp;&lt;</a><span class="s_-_strong">worker</span> instances="i<span class="pc_-_parameter_in_code">nteger</span>" throttleinterval="<span class="pc_-_parameter_in_code">decimal</span>" env="<span class="pc_-_parameter_in_code">string</span>" server="<span class="pc_-_parameter_in_code">string</span>"/&gt;</PRE>
+      <PRE class="CL_-_Code_Last_Line"><a name="2178801">&lt;/work-queue&gt;</a></PRE>
+      <div class="B_-_Body"><a name="2186374">The </a><span class="cv_-_computer_voice">&lt;work-queue&gt;</span> element has attributes to configure a work queue generally. The <span class="cv_-_computer_voice">&lt;worker&gt;</span> subelement has attributes to configure worker threads on specific servers. You can declare as many worker instances as you want for a work queue by specifying on which servers the workers run. </div>
+      <div class="B_-_Body"><a name="2187247">You can locate </a><span class="cv_-_computer_voice">work-queue.xml</span> in Guidewire Studio at <span class="uis_-_UI_element_Studio">configuration</span> → <span class="uis_-_UI_element_Studio">config </span><span class="ui_-_UI_element">→</span><span class="uis_-_UI_element_Studio"> workqueue</span>. After you edit <span class="cv_-_computer_voice">work-queue.xml</span>, you must rebuild and redeploy BillingCenter.</div>
+      <h6 class="HS_-_Head_Sub"><a name="2187097">See also</a></h6>
+      <div class="BI_-_Bullet_Item_outer" style="margin-left: 57pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="BI_-_Bullet_Item_inner" style="width: 15pt; white-space: nowrap">
+                <span class="bu_-_bullet">•	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="BI_-_Bullet_Item_inner"><a href="javascript:WWHClickedPopup('integration', 'webservices-general.10.4.html#3429410', '');" title="Maintenance Tools Web Service" name="2187100">“Manipulating Work Queues Using Web Services” in the </a><span class="bt_-_book_title"><a href="javascript:WWHClickedPopup('integration', 'webservices-general.10.4.html#3429410', '');" title="Maintenance Tools Web Service">Integration Guide</a></span>.</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <h4 class="H2_-_Heading_2"><a name="2178802">General Work Queue Configuration</a></h4>
+      <div class="B_-_Body"><a name="2186197">The </a><span class="cv_-_computer_voice">&lt;work-queue&gt;</span> element has attributes for configuring the general characteristics of a work queue. </div>
+      <div class="T_-_Table"><a name="2178853">&nbsp;</a></div>
+      <table class="withHeading" style="text-align: left" border="0" cellpadding="10" cellspacing="0" summary="">
+        <caption></caption>
+        <tr>
+          <td style="border-bottom-color: #000000; border-bottom-style: solid; border-bottom-width: 0.5pt; border-top-color: #000000; border-top-style: solid; border-top-width: 0.5pt; padding-bottom: 4pt; padding-left: 2pt; padding-right: 8pt; padding-top: 0pt; vertical-align: bottom">
+            <div class="TH_-_Table_Heading"><a name="2178805">Attribute</a></div>
+          </td>
+          <td style="border-bottom-color: #000000; border-bottom-style: solid; border-bottom-width: 0.5pt; border-top-color: #000000; border-top-style: solid; border-top-width: 0.5pt; padding-bottom: 4pt; padding-left: 2pt; padding-right: 8pt; padding-top: 0pt; vertical-align: bottom">
+            <div class="TH_-_Table_Heading"><a name="2178807">Description</a></div>
+          </td>
+        </tr>
+        <tr>
+          <td style="border-bottom-color: #c0d1d1; border-bottom-style: solid; border-bottom-width: 0.15pt; border-top-color: #000000; border-top-style: solid; border-top-width: 0.5pt; padding-bottom: 4pt; padding-left: 2pt; padding-right: 8pt; padding-top: 0pt; vertical-align: top">
+            <div class="TT_-_Table_Text" style="color: #000000; font-family: &quot;Lucida Sans Typewriter&quot;; font-style: normal; font-variant: normal; font-weight: normal; margin-top: 3.0pt; text-transform: none; vertical-align: baseline"><span class="cvt_-_computer_voice_table"><a name="2178809">workQueueClass</a></span></div>
+          </td>
+          <td style="border-bottom-color: #c0d1d1; border-bottom-style: solid; border-bottom-width: 0.15pt; border-top-color: #000000; border-top-style: solid; border-top-width: 0.5pt; padding-bottom: 4pt; padding-left: 2pt; padding-right: 8pt; padding-top: 0pt; vertical-align: top">
+            <div class="TT_-_Table_Text"><span class="s_-_strong"><a name="2178811">Required. </a></span>The <span class="cvt_-_computer_voice_table">workQueueClass</span> must be one of the Guidewire-provided work queue classes listed in the base version of <span class="cvt_-_computer_voice_table">work-queue.xml</span> or a custom work queue class derived from the Gosu class <span class="cvt_-_computer_voice_table">WorkQueueBase</span>. You cannot configure Guidewire-provided batch processes or custom batch processes derived from the Gosu class <span class="cvt_-_computer_voice_table">BatchProcessBase</span>.</div>
+          </td>
+        </tr>
+        <tr>
+          <td style="border-bottom-color: #c0d1d1; border-bottom-style: solid; border-bottom-width: 0.15pt; border-top-color: #c0d1d1; border-top-style: solid; border-top-width: 0.15pt; padding-bottom: 4pt; padding-left: 2pt; padding-right: 8pt; padding-top: 0pt; vertical-align: top">
+            <div class="TT_-_Table_Text" style="color: #000000; font-family: &quot;Lucida Sans Typewriter&quot;; font-style: normal; font-variant: normal; font-weight: normal; margin-top: 3.0pt; text-transform: none; vertical-align: baseline"><span class="cvt_-_computer_voice_table"><a name="2178813">progressinterval</a></span></div>
+          </td>
+          <td style="border-bottom-color: #c0d1d1; border-bottom-style: solid; border-bottom-width: 0.15pt; border-top-color: #c0d1d1; border-top-style: solid; border-top-width: 0.15pt; padding-bottom: 4pt; padding-left: 2pt; padding-right: 8pt; padding-top: 0pt; vertical-align: top">
+            <div class="TT_-_Table_Text"><span class="s_-_strong"><a name="2178815">Required. </a></span>The <span class="cvt_-_computer_voice_table">progressinterval</span> value is the amount of time, in milliseconds, that BillingCenter allots for a worker to process <span class="cvt_-_computer_voice_table">batchsize</span> work items. If the time a worker has held a batch of items exceeds the <span class="cvt_-_computer_voice_table">progressinterval</span>, then BillingCenter considers the work items to be orphans. BillingCenter reassigns orphaned work items to a new worker instance. The <span class="cvt_-_computer_voice_table">progressinterval</span> must be greater than the time to process the slowest work item, or that work item will never be completed. Also, Guidewire recommends that you set <span class="cvt_-_computer_voice_table">progressinterval</span> greater than the processing time for an entire <span class="cvt_-_computer_voice_table">batchsize</span> of work items. If a worker takes more time than <span class="cvt_-_computer_voice_table">progressinterval</span> to processes its assigned work items, BillingCenter reverts the remaining work items to <span class="cvt_-_computer_voice_table">available</span> from <span class="cvt_-_computer_voice_table">checkedout</span>. If many worker batches take longer than <span class="cvt_-_computer_voice_table">progressinterval</span>, the repeated checking out and reverting to available of work items can impact performance negatively.</div>
+          </td>
+        </tr>
+        <tr>
+          <td style="border-bottom-color: #c0d1d1; border-bottom-style: solid; border-bottom-width: 0.15pt; border-top-color: #c0d1d1; border-top-style: solid; border-top-width: 0.15pt; padding-bottom: 4pt; padding-left: 2pt; padding-right: 8pt; padding-top: 0pt; vertical-align: top">
+            <div class="TT_-_Table_Text" style="color: #000000; font-family: &quot;Lucida Sans Typewriter&quot;; font-style: normal; font-variant: normal; font-weight: normal; margin-top: 3.0pt; text-transform: none; vertical-align: baseline"><span class="cvt_-_computer_voice_table"><a name="2178829">retryInterval</a></span></div>
+          </td>
+          <td style="border-bottom-color: #c0d1d1; border-bottom-style: solid; border-bottom-width: 0.15pt; border-top-color: #c0d1d1; border-top-style: solid; border-top-width: 0.15pt; padding-bottom: 4pt; padding-left: 2pt; padding-right: 8pt; padding-top: 0pt; vertical-align: top">
+            <div class="TT_-_Table_Text"><span class="s_-_strong"><a name="2178831">Optional.</a></span> How long in milliseconds to wait before retrying a work item that threw an exception. The default value is <span class="cvt_-_computer_voice_table">0</span>, meaning BillingCenter retries processing the item immediately.</div>
+          </td>
+        </tr>
+        <tr>
+          <td style="border-bottom-color: #c0d1d1; border-bottom-style: solid; border-bottom-width: 0.15pt; border-top-color: #c0d1d1; border-top-style: solid; border-top-width: 0.15pt; padding-bottom: 4pt; padding-left: 2pt; padding-right: 8pt; padding-top: 0pt; vertical-align: top">
+            <div class="TT_-_Table_Text" style="color: #000000; font-family: &quot;Lucida Sans Typewriter&quot;; font-style: normal; font-variant: normal; font-weight: normal; margin-top: 3.0pt; text-transform: none; vertical-align: baseline"><span class="cvt_-_computer_voice_table"><a name="2178836">retryLimit</a></span></div>
+          </td>
+          <td style="border-bottom-color: #c0d1d1; border-bottom-style: solid; border-bottom-width: 0.15pt; border-top-color: #c0d1d1; border-top-style: solid; border-top-width: 0.15pt; padding-bottom: 4pt; padding-left: 2pt; padding-right: 8pt; padding-top: 0pt; vertical-align: top">
+            <div class="TT_-_Table_Text"><span class="s_-_strong"><a name="2178841">Optional.</a></span> How many times BillingCenter retries a work item that threw an exception or became an orphan for this work queue. </div>
+            <div class="TT_-_Table_Text"><a name="2178845">If you do not specify a </a><span class="cvt_-_computer_voice_table">retryLimit</span> value for a work queue, BillingCenter uses the value of the <span class="cvt_-_computer_voice_table">WorkItemRetryLimit</span> configuration parameter in <span class="cvt_-_computer_voice_table">config.xml</span> as the default value.</div>
+            <div class="TT_-_Table_Text"><span style="font-weight: bold"><a name="2196112">IMPORTANT:</a></span> Guidewire generally recommends that you increase, never decrease, the number of retries for a work queue. </div>
+          </td>
+        </tr>
+        <tr>
+          <td style="border-bottom-color: #000000; border-bottom-style: solid; border-bottom-width: 0.5pt; border-top-color: #c0d1d1; border-top-style: solid; border-top-width: 0.15pt; padding-bottom: 4pt; padding-left: 2pt; padding-right: 8pt; padding-top: 0pt; vertical-align: top">
+            <div class="TT_-_Table_Text" style="color: #000000; font-family: &quot;Lucida Sans Typewriter&quot;; font-style: normal; font-variant: normal; font-weight: normal; margin-top: 3.0pt; text-transform: none; vertical-align: baseline"><span class="cvt_-_computer_voice_table"><a name="2178847">logRetryableCDCEsAtDebugLevel</a></span></div>
+          </td>
+          <td style="border-bottom-color: #000000; border-bottom-style: solid; border-bottom-width: 0.5pt; border-top-color: #c0d1d1; border-top-style: solid; border-top-width: 0.15pt; padding-bottom: 4pt; padding-left: 2pt; padding-right: 8pt; padding-top: 0pt; vertical-align: top">
+            <div class="TT_-_Table_Text"><span class="s_-_strong"><a name="2178849">Optional.</a></span> If <span class="cvt_-_computer_voice_table">logRetryableCDCEsAtDebugLevel</span> is set to <span class="cvt_-_computer_voice_table">true</span> for a work queue, BillingCenter logs any retryable Concurrent Data Change Exception (CDCE) at the DEBUG level. The log message includes a prepended string indicating that the error is considered to be non-fatal. Any CDCE that pushes the retry count over the <span class="cvt_-_computer_voice_table">retryLimit</span>, or <span class="cvt_-_computer_voice_table">workItemRetryLimit</span> if <span class="cvt_-_computer_voice_table">retryLimit</span> is not set, is logged at the ERROR level.</div>
+          </td>
+        </tr>
+      </table>
+      <h4 class="H2_-_Heading_2"><a name="2186328">Worker Thread Configuration</a></h4>
+      <div class="B_-_Body"><a name="2187048">The </a><span class="cv_-_computer_voice">&lt;worker&gt;</span> subelements of the <span class="cv_-_computer_voice">&lt;work-queue&gt;</span> element has attributes for configuring workers on specific servers. </div>
+      <div class="T_-_Table"><a name="2178895">&nbsp;</a></div>
+      <table class="withHeading" style="text-align: left" border="0" cellpadding="10" cellspacing="0" summary="">
+        <caption></caption>
+        <tr>
+          <td style="border-bottom-color: #c0d1d1; border-bottom-style: solid; border-bottom-width: 0.15pt; border-top-color: #000000; border-top-style: solid; border-top-width: 0.5pt; padding-bottom: 4pt; padding-left: 2pt; padding-right: 8pt; padding-top: 0pt; vertical-align: bottom">
+            <div class="TH_-_Table_Heading"><a name="2178864">Attribute</a></div>
+          </td>
+          <td style="border-bottom-color: #c0d1d1; border-bottom-style: solid; border-bottom-width: 0.15pt; border-top-color: #000000; border-top-style: solid; border-top-width: 0.5pt; padding-bottom: 4pt; padding-left: 2pt; padding-right: 8pt; padding-top: 0pt; vertical-align: bottom">
+            <div class="TH_-_Table_Heading"><a name="2178866">Description</a></div>
+          </td>
+        </tr>
+        <tr>
+          <td style="border-bottom-color: #c0d1d1; border-bottom-style: solid; border-bottom-width: 0.15pt; border-top-color: #c0d1d1; border-top-style: solid; border-top-width: 0.15pt; padding-bottom: 4pt; padding-left: 2pt; padding-right: 8pt; padding-top: 0pt; vertical-align: top">
+            <div class="TT_-_Table_Text" style="color: #000000; font-family: &quot;Lucida Sans Typewriter&quot;; font-style: normal; font-variant: normal; font-weight: normal; margin-top: 3.0pt; text-transform: none; vertical-align: baseline"><span class="cvt_-_computer_voice_table"><a name="2178868">instances</a></span></div>
+          </td>
+          <td style="border-bottom-color: #c0d1d1; border-bottom-style: solid; border-bottom-width: 0.15pt; border-top-color: #c0d1d1; border-top-style: solid; border-top-width: 0.15pt; padding-bottom: 4pt; padding-left: 2pt; padding-right: 8pt; padding-top: 0pt; vertical-align: top">
+            <div class="TT_-_Table_Text"><span class="s_-_strong"><a name="2178873">Optional.</a></span> The number of workers to create. By default, BillingCenter always creates at least one worker. Guidewire recommends an upper limit of 100 instances per server.</div>
+          </td>
+        </tr>
+        <tr>
+          <td style="border-bottom-color: #c0d1d1; border-bottom-style: solid; border-bottom-width: 0.15pt; border-top-color: #c0d1d1; border-top-style: solid; border-top-width: 0.15pt; padding-bottom: 4pt; padding-left: 2pt; padding-right: 8pt; padding-top: 0pt; vertical-align: top">
+            <div class="TT_-_Table_Text" style="color: #000000; font-family: &quot;Lucida Sans Typewriter&quot;; font-style: normal; font-variant: normal; font-weight: normal; margin-top: 3.0pt; text-transform: none; vertical-align: baseline"><span class="cvt_-_computer_voice_table"><a name="2178875">maxpollinterval</a></span></div>
+          </td>
+          <td style="border-bottom-color: #c0d1d1; border-bottom-style: solid; border-bottom-width: 0.15pt; border-top-color: #c0d1d1; border-top-style: solid; border-top-width: 0.15pt; padding-bottom: 4pt; padding-left: 2pt; padding-right: 8pt; padding-top: 0pt; vertical-align: top">
+            <div class="TT_-_Table_Text"><span class="s_-_strong"><a name="2178877">Optional.</a></span> How often a worker will wake up automatically and query for work items, even if the worker receives no notification. If a worker wakes up and detects work items, it will check out those work items. If there are more work items than the <span class="cvt_-_computer_voice_table">batchsize</span>, the worker will start another worker. Each worker will check out up to <span class="cvt_-_computer_voice_table">batchsize</span> work items and then start another worker if there are more work items remaining until the number of <span class="cvt_-_computer_voice_table">instances</span> is reached.</div>
+            <div class="TT_-_Table_Text"><a name="2178878">You might need to increase </a><span class="cvt_-_computer_voice_table">maxpollinterval</span> to prevent excessive numbers of queries for work items. The default <span class="cvt_-_computer_voice_table">maxpollinterval</span> is 60,000 milliseconds.</div>
+          </td>
+        </tr>
+        <tr>
+          <td style="border-bottom-color: #c0d1d1; border-bottom-style: solid; border-bottom-width: 0.15pt; border-top-color: #c0d1d1; border-top-style: solid; border-top-width: 0.15pt; padding-bottom: 4pt; padding-left: 2pt; padding-right: 8pt; padding-top: 0pt; vertical-align: top">
+            <div class="TT_-_Table_Text" style="color: #000000; font-family: &quot;Lucida Sans Typewriter&quot;; font-style: normal; font-variant: normal; font-weight: normal; margin-top: 3.0pt; text-transform: none; vertical-align: baseline"><span class="cvt_-_computer_voice_table"><a name="2178880">throttleinterval</a></span></div>
+          </td>
+          <td style="border-bottom-color: #c0d1d1; border-bottom-style: solid; border-bottom-width: 0.15pt; border-top-color: #c0d1d1; border-top-style: solid; border-top-width: 0.15pt; padding-bottom: 4pt; padding-left: 2pt; padding-right: 8pt; padding-top: 0pt; vertical-align: top">
+            <div class="TT_-_Table_Text"><span class="s_-_strong"><a name="2178882">Optional.</a></span> The delay between processing work items in milliseconds. The value controls how long the process sleeps. A value of <span class="cvt_-_computer_voice_table">0</span> (zero) means worker threads process work items as rapidly as possible. To reduce the CPU load, set the <span class="cvt_-_computer_voice_table">throttleinterval</span> to a positive value.</div>
+          </td>
+        </tr>
+        <tr>
+          <td style="border-bottom-color: #c0d1d1; border-bottom-style: solid; border-bottom-width: 0.15pt; border-top-color: #c0d1d1; border-top-style: solid; border-top-width: 0.15pt; padding-bottom: 4pt; padding-left: 2pt; padding-right: 8pt; padding-top: 0pt; vertical-align: top">
+            <div class="TT_-_Table_Text" style="color: #000000; font-family: &quot;Lucida Sans Typewriter&quot;; font-style: normal; font-variant: normal; font-weight: normal; margin-top: 3.0pt; text-transform: none; vertical-align: baseline"><span class="cvt_-_computer_voice_table"><a name="2178884">batchsize</a></span></div>
+          </td>
+          <td style="border-bottom-color: #c0d1d1; border-bottom-style: solid; border-bottom-width: 0.15pt; border-top-color: #c0d1d1; border-top-style: solid; border-top-width: 0.15pt; padding-bottom: 4pt; padding-left: 2pt; padding-right: 8pt; padding-top: 0pt; vertical-align: top">
+            <div class="TT_-_Table_Text"><span class="s_-_strong"><a name="2178886">Optional.</a></span> How many work items the worker attempts to check out while searching for more work items. Larger batch sizes are more efficient, but might not result in good load distribution. The default <span class="cvt_-_computer_voice_table">batchsize</span> is <span class="cvt_-_computer_voice_table">10</span>.</div>
+          </td>
+        </tr>
+        <tr>
+          <td style="border-bottom-color: #c0d1d1; border-bottom-style: solid; border-bottom-width: 0.15pt; border-top-color: #c0d1d1; border-top-style: solid; border-top-width: 0.15pt; padding-bottom: 4pt; padding-left: 2pt; padding-right: 8pt; padding-top: 0pt; vertical-align: top">
+            <div class="TT_-_Table_Text" style="color: #000000; font-family: &quot;Lucida Sans Typewriter&quot;; font-style: normal; font-variant: normal; font-weight: normal; margin-top: 3.0pt; text-transform: none; vertical-align: baseline"><span class="cvt_-_computer_voice_table"><a name="2178888">env</a></span></div>
+          </td>
+          <td style="border-bottom-color: #c0d1d1; border-bottom-style: solid; border-bottom-width: 0.15pt; border-top-color: #c0d1d1; border-top-style: solid; border-top-width: 0.15pt; padding-bottom: 4pt; padding-left: 2pt; padding-right: 8pt; padding-top: 0pt; vertical-align: top">
+            <div class="TT_-_Table_Text"><span class="s_-_strong"><a name="2178890">Optional.</a></span> The environment in which this particular worker is active.</div>
+          </td>
+        </tr>
+        <tr>
+          <td style="border-bottom-color: #000000; border-bottom-style: solid; border-bottom-width: 0.5pt; border-top-color: #c0d1d1; border-top-style: solid; border-top-width: 0.15pt; padding-bottom: 4pt; padding-left: 2pt; padding-right: 8pt; padding-top: 0pt; vertical-align: top">
+            <div class="TT_-_Table_Text" style="color: #000000; font-family: &quot;Lucida Sans Typewriter&quot;; font-style: normal; font-variant: normal; font-weight: normal; margin-top: 3.0pt; text-transform: none; vertical-align: baseline"><span class="cvt_-_computer_voice_table"><a name="2178892">server</a></span></div>
+          </td>
+          <td style="border-bottom-color: #000000; border-bottom-style: solid; border-bottom-width: 0.5pt; border-top-color: #c0d1d1; border-top-style: solid; border-top-width: 0.15pt; padding-bottom: 4pt; padding-left: 2pt; padding-right: 8pt; padding-top: 0pt; vertical-align: top">
+            <div class="TT_-_Table_Text"><span class="s_-_strong"><a name="2178894">Optional.</a></span> The server on which this particular worker is active.</div>
+          </td>
+        </tr>
+      </table>
+      <div class="N_-_Note">
+        <span class="n_-_note">Note: </span><a name="2187036">If you do not specify workers for a queue, or you do not specify the </a><span class="cv_-_computer_voice">env</span> and <span class="cv_-_computer_voice">server</span> attributes, BillingCenter starts a single instance on the batch server.</div>
+      <h6 class="HS_-_Head_Sub"><a name="2187208">See also</a></h6>
+      <div class="BI_-_Bullet_Item_outer" style="margin-left: 57pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="BI_-_Bullet_Item_inner" style="width: 15pt; white-space: nowrap">
+                <span class="bu_-_bullet">•	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="BI_-_Bullet_Item_inner"><a name="2187211">For information about the </a><span class="cv_-_computer_voice">env</span> and <span class="cv_-_computer_voice">server</span> attributes, see <a href="javascript:WWHClickedPopup('admin', 'configndeploy.03.4.html#1179772', '');" title="Defining the Application Server Environment">Specifying Environment Properties in the &lt;registry&gt; Element</a>.</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <h4 class="H2_-_Heading_2"><a name="2178902">Worker Thread Management</a></h4>
+      <div class="B_-_Body"><a name="2178903">An </a><span class="e_-_emphasis">executor</span> manages the worker threads on each server. One executor is created per work queue per server. The executor creates a single worker at server start up, regardless how many workers are configured for that server. The lone worker then periodically checks the work queue for work items on the configured frequency. If the worker finds work items, the executor creates additional worker threads until all configured workers are active or the work queue has no non-failed work items. After the work queue is exhausted, the executor shuts down all workers except one.</div>
+      <script type="text/javascript" language="JavaScript1.2">
+        <!--
+          // Clear related topics
+          //
+          WWHClearRelatedTopics();
+
+          document.writeln(WWHRelatedTopicsInlineHTML());
+        // -->
+      </script>
+    </blockquote>
+    <script type="text/javascript" language="JavaScript1.2">
+      <!--
+        document.write(WWHRelatedTopicsDivTag() + WWHPopupDivTag() + WWHALinksDivTag());
+      // -->
+    </script>
+  </body>
+</html>

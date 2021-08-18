@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PCF
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:noNamespaceSchemaLocation="../../../../../../pcf.xsd">
+  <ToolbarButtonSet
+    id="UserDetailToolbarButtonSet">
+    <Require
+      name="User"
+      type="User"/>
+    <EditButtons/>
+    <ToolbarButton
+      action="web.admin.UserUtil.delete(User); Admin.go()"
+      available="User.SafeToDelete"
+      confirmMessage="displaykey.Web.Admin.UserDetail.DeleteConfirm"
+      hideIfEditable="true"
+      id="UserDetailToolbarButtons_DeleteUserButton"
+      label="displaykey.Button.DeleteUser"
+      shortcut="U"
+      visible="perm.User.delete and perm.System.useradmin"/>
+  </ToolbarButtonSet>
+</PCF>

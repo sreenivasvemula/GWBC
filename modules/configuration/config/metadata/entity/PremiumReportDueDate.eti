@@ -1,0 +1,46 @@
+<?xml version="1.0"?>
+<!-- ===================================================================  Premium Report Due Date Billing Instruction                                   =================================================================== -->
+<subtype
+  xmlns="http://guidewire.com/datamodel"
+  entity="PremiumReportDueDate"
+  desc="Billing instruction used to notify the associated policy period of the next premium report's due date"
+  displayName="Premium Report Due Date"
+  subpackage="accounting.billinginstruction"
+  supertype="PlcyBillingInstruction">
+  <foreignkey
+    name="PremiumReportDDPolicyPeriod"
+    desc="The policy period that this due date is for"
+    columnName="PremiumReportDDPolicyPeriodID"
+    exportasid="true"
+    fkentity="PolicyPeriod"
+    nullok="false"
+    setterScriptability="all"/>
+  <foreignkey
+    name="DelinquencyProcess"
+    desc="The delinquency process, if any, which results from missing this due date."
+    columnName="DelinquencyProcessID"
+    exportasid="true"
+    fkentity="DelinquencyProcess"
+    nullok="true"/>
+  <array
+    name="PremiumReportBIPremiumReportDueDates"
+    desc="The Premium Report BIs, if any, that matches this Due Date (via join table)."
+    arrayentity="PremiumReportBIPremiumReportDueDate"
+    getterScriptability="doesNotExist"
+    setterScriptability="doesNotExist"/>
+  <column
+    name="PeriodStartDate"
+    type="datetime"
+    desc="The start date of the billing period of the expected premium report"
+    nullok="false"/>
+  <column
+    name="PeriodEndDate"
+    type="datetime"
+    desc="The end date of the billing period of the expected premium report"
+    nullok="true"/>
+  <column
+    name="DueDate"
+    type="datetime"
+    desc="The due date of the premium report"
+    nullok="false"/>
+</subtype>

@@ -1,0 +1,36 @@
+<?xml version="1.0"?>
+<PCF
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:noNamespaceSchemaLocation="../../../../../pcf.xsd">
+  <Page
+    canVisit="perm.System.accttabview and perm.System.acctjournalview"
+    id="AccountDetailJournal"
+    showUpLink="true"
+    title="displaykey.Web.AccountDetailJournal.Title">
+    <LocationEntryPoint
+      signature="AccountDetailJournal(account : Account)"/>
+    <Variable
+      name="account"
+      type="Account"/>
+    <Variable
+      initialValue="AllRelatedTAccountOwners"
+      name="relatedTAccountOwner"
+      type="TAccountOwner[]"/>
+    <ScreenRef
+      def="JournalScreen(account, relatedTAccountOwner)"/>
+    <Code><![CDATA[uses gw.api.database.Query
+
+property get AllRelatedTAccountOwners() : TAccountOwner[]{
+  var result = new java.util.ArrayList()
+  result.add(account.Collateral)
+  var q = Query.make(CollateralRequirement)
+  q.compare("Collateral", Equals, account.Collateral)
+  q.compare("Segregated", Equals, true)
+  var segregatedCashCollatealRequirements = q.select()
+  for (requirement in segregatedCashCollatealRequirements) {
+    result.add(requirement)
+  }
+  return result as TAccountOwner[]
+}]]></Code>
+  </Page>
+</PCF>

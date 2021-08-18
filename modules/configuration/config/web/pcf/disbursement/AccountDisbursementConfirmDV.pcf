@@ -1,0 +1,35 @@
+<?xml version="1.0"?>
+<PCF
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:noNamespaceSchemaLocation="pcf.xsd">
+  <DetailViewPanel
+    id="AccountDisbursementConfirmDV">
+    <Require
+      name="accountDisbursement"
+      type="AccountDisbursement"/>
+    <InputColumn>
+      <TextInput
+        id="Account"
+        label="displaykey.Web.AccountDisbursementConfirmDV.Account"
+        value="accountDisbursement.Account.AccountNameLocalized"/>
+      <TextInput
+        id="AccountNumber"
+        label="displaykey.Web.AccountDisbursementConfirmDV.AccountNumber"
+        value="accountDisbursement.Account.AccountNumber"/>
+      <TextInput
+        id="UnappliedFund"
+        label="displaykey.Web.AccountDisbursementConfirmDV.UnappliedFund"
+        value="accountDisbursement.UnappliedFund"
+        visible="accountDisbursement.Account.DesignatedUnappliedFundsOrdered.HasElements"/>
+      <MonetaryAmountInput
+        currency="accountDisbursement.Currency"
+        id="DisbursementAmount"
+        label="displaykey.Web.AccountDisbursementConfirmDV.DisbursementAmount"
+        value="accountDisbursement.Amount"/>
+      <DateInput
+        id="DueDate"
+        label="displaykey.Web.AccountDisbursementConfirmDV.DueDate"
+        value="accountDisbursement.DueDate"/>
+    </InputColumn>
+  </DetailViewPanel>
+</PCF>

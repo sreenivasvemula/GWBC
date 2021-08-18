@@ -1,0 +1,113 @@
+<?xml version="1.0"?>
+<PCF
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:noNamespaceSchemaLocation="../../../../../pcf.xsd">
+  <ListViewPanel
+    id="DesktopDisbursementsLV">
+    <Require
+      name="disbursements"
+      type="DisbursementQuery"/>
+    <Variable
+      initialValue="new gw.api.web.payment.SuspensePaymentUtil()"
+      name="suspensePaymentUtil"/>
+    <RowIterator
+      editable="false"
+      elementName="disbursementVar"
+      numEntriesRequired="0"
+      type="Disbursement"
+      value="disbursements">
+      <Row>
+        <DateCell
+          footerLabel="displaykey.Web.DesktopDisbursement.Total"
+          id="trigger"
+          label="displaykey.Web.DesktopDisbursement.CreateTime"
+          value="disbursementVar.CreateTime"/>
+        <DateCell
+          id="due"
+          label="displaykey.Web.DesktopDisbursement.Due"
+          sortBy="disbursementVar.DueDate"
+          value="((disbursementVar.Status != &quot;Rejected&quot;) and (disbursementVar.Status != &quot;Reapplied&quot;)) ? disbursementVar.DueDate : null"/>
+        <TypeKeyCell
+          id="status"
+          label="displaykey.Web.DesktopDisbursement.Status"
+          sortBy="disbursementVar.Status"
+          value="disbursementVar.Status"/>
+        <TypeKeyCell
+          action="DisbursementDetail.go(disbursementVar, true)"
+          id="reason"
+          label="displaykey.Web.DesktopDisbursement.Reason"
+          value="disbursementVar.Reason"/>
+        <MonetaryAmountCell
+          currency="disbursementVar.Currency"
+          footerSumValue="disbursementVar.Amount"
+          formatType="currency"
+          id="amount"
+          label="displaykey.Web.DesktopDisbursement.Amount"
+          value="disbursementVar.Amount"/>
+        <Cell
+          id="refNumber"
+          label="displaykey.Web.DesktopDisbursement.RefNumber"
+          sortBy="disbursementVar.OutgoingPayment.RefNumber"
+          value="disbursementVar.OutgoingPayment.RefNumber"/>
+        <Cell
+          enableSort="false"
+          id="age"
+          label="displaykey.Web.DesktopDisbursement.Age"
+          value="disbursementVar.Age"/>
+        <Cell
+          action="AccountDetailSummary.push((disbursementVar as AccountDisbursement).Account)"
+          available="disbursementVar typeis AccountDisbursement"
+          enableSort="false"
+          id="account"
+          label="displaykey.Web.DesktopDisbursement.AccountNumber"
+          value="disbursementVar typeis AccountDisbursement ? disbursementVar.Account.AccountNumber : null"/>
+        <Cell
+          enableSort="false"
+          id="unappliedFunds"
+          label="displaykey.Web.DesktopDisbursement.UnappliedFund"
+          value="disbursementVar typeis AccountDisbursement ? disbursementVar.UnappliedFund : null"/>
+        <Cell
+          action="suspenseTransactionNumberAction(disbursementVar as SuspenseDisbursement)"
+          available="disbursementVar typeis SuspenseDisbursement"
+          enableSort="false"
+          id="suspenseTransactionNumber"
+          label="displaykey.Web.DesktopDisbursement.SuspenseTransactionNumber"
+          value="suspensePaymentUtil.getDesktopTransactionDisplayValue( (disbursementVar as SuspenseDisbursement).SuspensePayment)"
+          valueVisible="disbursementVar typeis SuspenseDisbursement"/>
+        <Cell
+          action="AccountCollateral.push((disbursementVar as CollateralDisbursement).Collateral.Account)"
+          available="disbursementVar typeis CollateralDisbursement"
+          enableSort="false"
+          id="collateral"
+          label="displaykey.Web.DesktopDisbursement.Collateral"
+          value="disbursementVar typeis CollateralDisbursement  ? disbursementVar.Collateral.Account.AccountNumber : null"/>
+        <Cell
+          action="ProducerDetail.push((disbursementVar as AgencyDisbursement).Producer)"
+          available="disbursementVar typeis AgencyDisbursement"
+          enableSort="false"
+          id="producer"
+          label="displaykey.Web.DesktopDisbursement.Producer"
+          value="disbursementVar typeis AgencyDisbursement ? disbursementVar.Producer : null"/>
+        <Cell
+          enableSort="false"
+          id="assignedUser"
+          label="displaykey.Web.DesktopDisbursement.AssignedUser"
+          value="getAssignedUser( disbursementVar )"/>
+      </Row>
+    </RowIterator>
+    <Code><![CDATA[function getAssignedUser(disbursementVar : Disbursement) : String{
+  if(disbursementVar.OpenApprovalActivity != null){
+    return disbursementVar.OpenApprovalActivity.AssignedUser.DisplayName
+  }
+  return null
+}
+
+function suspenseTransactionNumberAction(disbursement : SuspenseDisbursement) {
+  if (suspensePaymentUtil.getDesktopTransaction(disbursement.SuspensePayment) != null) {
+    TransactionDetailPopup.push(suspensePaymentUtil.getDesktopTransaction(disbursement.SuspensePayment))
+  } else {
+    SuspensePaymentMultipleTransactionsPopup.push(disbursement.SuspensePayment)
+  }
+}]]></Code>
+  </ListViewPanel>
+</PCF>

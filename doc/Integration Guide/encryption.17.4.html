@@ -1,0 +1,239 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xml:lang="en" lang="en" xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+    <meta http-equiv="Content-Style-Type" content="text/css" />
+    <!-- MOTW-DISABLED saved from url=(0014)about:internet -->
+    <title>Encryption Features for Staging Tables</title>
+    <link rel="StyleSheet" href="css/encryption.css" type="text/css" media="all" />
+    <link rel="StyleSheet" href="css/webworks.css" type="text/css" media="all" />
+    <link rel="StyleSheet" href="css/css-guidewire-extra.css" type="text/css" media="all" />
+    <script type="text/javascript" language="JavaScript1.2" src="wwhdata/common/context.js"></script>
+    <script type="text/javascript" language="JavaScript1.2" src="wwhdata/common/towwhdir.js"></script>
+    <script type="text/javascript" language="JavaScript1.2" src="wwhdata/common/wwhpagef.js"></script>
+    <script type="text/javascript" language="JavaScript1.2">
+      <!--
+        var  WebWorksRootPath = "";
+      // -->
+    </script>
+    <script type="text/javascript" language="JavaScript1.2">
+      <!--
+        // Set reference to top level help frame
+        //
+        var  WWHFrame = WWHGetWWHFrame("", true);
+      // -->
+    </script>
+    <script type="text/javascript" language="JavaScript1.2" src="scripts/expand.js"></script>
+    <!-- THE FOLLOWING IS A GUIDEWIRE STYLE DEFINITION FOR THE LINK TO THIS FEATURE -->
+    <link rel="StyleSheet" href="css/css-guidewire-extra.css" type="text/css" media="all" />
+    <!-- THE FOLLOWING IS A GUIDEWIRE GSCRIPT FUNCTION FOR THE LINK TO THIS FEATURE -->
+    <script type="text/javascript">
+function guidewire_selectall()
+{
+var text_val=eval("document.linktothisurlform.urlfield");
+text_val.focus();
+text_val.select();
+}
+</script>
+  </head>
+  <body onLoad="WWHUpdate();" onUnload="WWHUnload();" onKeyDown="WWHHandleKeyDown((document.all||document.getElementById||document.layers)?event:null);" onKeyPress="WWHHandleKeyPress((document.all||document.getElementById||document.layers)?event:null);" onKeyUp="WWHHandleKeyUp((document.all||document.getElementById||document.layers)?event:null);">
+    <!-- THE FOLLOWING IS A GUIDEWIRE DIV FOR THE 'LINK TO THIS' FEATURE -->
+    <div id="linkToThisPage" class="popup" style="display: none;">
+      <div class="popupTitle">Link Directly to This Page 
+           <a href="#" onclick="var thePopup = getElementById('linkToThisPage');thePopup.style.display='none';return false;"><img class="popupClosebox" src="wwhelp/wwhimpl/common/images/close.gif" /></a></div>
+      <div style="padding:6px;">
+        <div class="popupText" id="linkToThisPageBookmark">An error has occurred if you see this messsage.</div>
+        <form name="linktothisurlform" method="post" action="" style="width:275px;margin:0px">
+          <input type="text" class="popupURLText" id="linkToThisPageURL" name="urlfield" rows="1" cols="55" onClick="guidewire_selectall();" onFocus="guidewire_selectall();"></input>
+        </form>
+      </div>
+    </div>
+    <br />
+    <div class="WebWorks_Breadcrumbs" style="text-align: left;">
+      <span>BillingCenter Integration Guide</span> : 
+    <span class="WebWorks_Breadcrumbs" style="text-align: left;"><a class="WebWorks_Breadcrumb_Link" href="p-plugins.html#2428243">Plugins</a> : <a class="WebWorks_Breadcrumb_Link" href="encryption.17.1.html#2428243">Encryption Integration</a> :   Encryption Features for Staging Tables</span></div>
+    <hr align="left" />
+    <blockquote>
+      <h3 class="H1_-_Heading_1"><span style="color: #000000; font-family: &quot;Times New Roman&quot;; font-size: 10.0pt"><a name="2428243">  </a></span>Encryption Features for Staging Tables</h3>
+      <div class="B_-_Body"><a name="2431790">If you need to import records using staging tables and any data has encrypted properties, you must encrypt those properties before importing them into operational tables. To support this feature, there is a special tool that encrypts any encrypted fields in staging tables before import. This tool encrypts only the columns in the data model marked as encrypted.</a></div>
+      <div class="B_-_Body"><a name="2432903">During upgrades, be careful about the order that you make data model modifications. Before beginning staging table import work, do any data model changes including changing encryption settings. Next, let the server upgrade the database. After you modify the data model and increment the data model version number, BillingCenter automatically encrypts data in the operational tables during server launch as part of upgrade routines. During upgrade, BillingCenter drops (deletes) all staging tables.</a></div>
+      <div class="B_-_Body"><a name="2432247">Guidewire strongly recommends you encrypt your staging table data after you complete all work on your data conversion tools and your data passes all integrity checks. Note that staging table integrity checks never depend on the encryption status of encrypted properties. You can run integrity checks independent of whether the encrypted properties are currently encrypted.</a></div>
+      <div class="B_-_Body"><a name="2431802">There are several ways to encrypt your data:</a></div>
+      <div class="BI_-_Bullet_Item_outer" style="margin-left: 57pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="BI_-_Bullet_Item_inner" style="width: 15pt; white-space: nowrap">
+                <span class="bu_-_bullet">•	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="BI_-_Bullet_Item_inner"><a name="2431803">Synchronously with web services using </a><span class="cv_-_computer_voice">TableImportAPI.encryptDataOnStagingTables()</span>. This method takes no arguments and returns nothing.</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="BI_-_Bullet_Item_outer" style="margin-left: 57pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="BI_-_Bullet_Item_inner" style="width: 15pt; white-space: nowrap">
+                <span class="bu_-_bullet">•	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="BI_-_Bullet_Item_inner"><a name="2430316">Synchronously with the command line tool </a><span class="cv_-_computer_voice">table_import</span> with the option <span class="cv_-_computer_voice">-encryptstagingtbls</span>. For more information, see <a href="javascript:WWHClickedPopup('admin', 'commandsref.15.09.html#1782787', '');" title="Table Import Command">“Table Import Command” in the </a><span class="bt_-_book_title"><a href="javascript:WWHClickedPopup('admin', 'commandsref.15.09.html#1782787', '');" title="Table Import Command">System Administration Guide</a></span>.</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="BI_-_Bullet_Item_outer" style="margin-left: 57pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="BI_-_Bullet_Item_inner" style="width: 15pt; white-space: nowrap">
+                <span class="bu_-_bullet">•	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="BI_-_Bullet_Item_inner"><a name="2435622">Asynchronously with web services using the </a><span class="cv_-_computer_voice">TableImportAPI</span> web service method <span class="cv_-_computer_voice">encryptDataOnStagingTablesAsBatchProcess</span>. This method takes no arguments and returns a process ID (<span class="cv_-_computer_voice">ProcessID</span>). Use the returned process ID to check the status of the encryption batch process or to terminate the encryption batch process. Use this process ID with methods on the web service <span class="cv_-_computer_voice">MaintenanceToolsAPI</span>. See <a href="javascript:WWHClickedPopup('integration', 'webservices-general.10.4.html#2586381', '');" title="Maintenance Tools Web Service">“Maintenance Tools Web Service”</a> for details.</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <h6 class="HS_-_Head_Sub"><a name="2429034">To encrypt any encrypted properties in staging tables</a></h6>
+      <div class="LS_-_List_Start_outer" style="margin-left: 57pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="LS_-_List_Start_inner" style="width: 15pt; white-space: nowrap">
+                <span class="ri_-_run_in_header">	1.	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="LS_-_List_Start_inner"><a name="2434366">Write and register an encryption plugin as discussed in </a><a href="javascript:WWHClickedPopup('integration', 'encryption.17.2.html#2389258', '');" title="Encryption Integration Overview">“Encryption Integration Overview”</a>. Carefully upgrade your existing production data after your data model change. </div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="LI_-_List_Item_outer" style="margin-left: 57pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="LI_-_List_Item_inner" style="width: 15pt; white-space: nowrap">
+                <span class="ri_-_run_in_header">	2.	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="LI_-_List_Item_inner"><a name="2434376">Perform integrity checks until they all pass. During development of conversion programs that populate the staging tables, you may need to repeatedly run integrity checks and modify your code.</a></div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="LI_-_List_Item_outer" style="margin-left: 57pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="LI_-_List_Item_inner" style="width: 15pt; white-space: nowrap">
+                <span class="ri_-_run_in_header">	3.	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="LI_-_List_Item_inner"><a name="2434378">Use one of the web service APIs or command line tools that encrypt columns in staging tables, as discussed earlier in this topic.</a></div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="NW_-_Note_Warning">
+        <span class="w_-_warning">WARNING  </span><a name="2434379">If the encryption process succeeds, be careful not to run the process a second time because you would corrupt your data by encrypting already-encrypted data. You can mitigate this problem by careful design of your encryption code. See </a><a href="javascript:WWHClickedPopup('integration', 'encryption.17.2.html#2432989', '');" title="Encryption Integration Overview">“Detecting Accidental Duplication of Encryption or Decryption”</a></div>
+      <div class="LP_-_List_Para"><a name="2429050">If the encryption process fails in any way, no changes are committed to the database. All changes happen in one database transaction. If an exception or other error occurs, partial work is undone. You can safely repeat the process after you fix any errors. For example, if the encryption plugin changes the length of the data field, this process could fail at the database level and throw an exception, which rolls back all changes. Be careful when fixing problems. See the earlier discussion about performing data model changes and upgrades before beginning encryption work.</a></div>
+      <div class="LI_-_List_Item_outer" style="margin-left: 57pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="LI_-_List_Item_inner" style="width: 15pt; white-space: nowrap">
+                <span class="ri_-_run_in_header">	4.	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="LI_-_List_Item_inner"><a name="2434272">After the encryption process succeeds, use regular staging table loading web service APIs or command line tools. For example, the web service method </a><span class="cv_-_computer_voice">integrityCheckStagingTableContentsAndLoadSourceTables</span> or the <span class="cv_-_computer_voice">table_import</span> command line tool. These methods run integrity checks again. Integrity checks do not behave differently with encrypted properties.</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="LI_-_List_Item_outer" style="margin-left: 57pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="LI_-_List_Item_inner" style="width: 15pt; white-space: nowrap">
+                <span class="ri_-_run_in_header">	5.	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="LI_-_List_Item_inner"><a name="2434276">If you need to change your encryption algorithm later, see </a><a href="javascript:WWHClickedPopup('integration', 'encryption.17.3.html#2388115', '');" title="Changing Your Encryption Algorithm Later">“Changing Your Encryption Algorithm Later”</a>.</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <h6 class="HS_-_Head_Sub"><a name="2432206">For related information, see these sections:</a></h6>
+      <div class="BI_-_Bullet_Item_outer" style="margin-left: 57pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="BI_-_Bullet_Item_inner" style="width: 15pt; white-space: nowrap">
+                <span class="bu_-_bullet">•	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="BI_-_Bullet_Item_inner"><a name="2432209">For general information about staging table import, see </a><a href="javascript:WWHClickedPopup('integration', 'databaseimport.25.01.html#1896426', '');" title="Importing from Database Staging Tables">“Importing from Database Staging Tables”</a>.</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="BI_-_Bullet_Item_outer" style="margin-left: 57pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="BI_-_Bullet_Item_inner" style="width: 15pt; white-space: nowrap">
+                <span class="bu_-_bullet">•	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="BI_-_Bullet_Item_inner"><a name="2432213">If you need to change your encryption algorithm after data is encrypted, see </a><a href="javascript:WWHClickedPopup('integration', 'encryption.17.3.html#2388115', '');" title="Changing Your Encryption Algorithm Later">“Changing Your Encryption Algorithm Later”</a>.</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="BI_-_Bullet_Item_outer" style="margin-left: 57pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="BI_-_Bullet_Item_inner" style="width: 15pt; white-space: nowrap">
+                <span class="bu_-_bullet">•	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="BI_-_Bullet_Item_inner"><a href="javascript:WWHClickedPopup('admin', 'commandsref.15.09.html#1782787', '');" title="Table Import Command" name="2432218">“Table Import Command” in the </a><span class="bt_-_book_title"><a href="javascript:WWHClickedPopup('admin', 'commandsref.15.09.html#1782787', '');" title="Table Import Command">System Administration Guide</a></span></div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="B_-_Body"><a name="2386780">&nbsp;</a></div>
+      <script type="text/javascript" language="JavaScript1.2">
+        <!--
+          // Clear related topics
+          //
+          WWHClearRelatedTopics();
+
+          document.writeln(WWHRelatedTopicsInlineHTML());
+        // -->
+      </script>
+    </blockquote>
+    <script type="text/javascript" language="JavaScript1.2">
+      <!--
+        document.write(WWHRelatedTopicsDivTag() + WWHPopupDivTag() + WWHALinksDivTag());
+      // -->
+    </script>
+  </body>
+</html>

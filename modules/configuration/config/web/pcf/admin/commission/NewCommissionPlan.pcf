@@ -1,0 +1,32 @@
+<?xml version="1.0"?>
+<PCF
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:noNamespaceSchemaLocation="../../../../../../pcf.xsd">
+  <Page
+    afterCancel="CommissionPlans.go()"
+    afterCommit="CommissionPlans.go()"
+    canEdit="true"
+    canVisit="perm.System.admintabview and perm.System.commplancreate"
+    id="NewCommissionPlan"
+    parent="CommissionPlans()"
+    showUpLink="true"
+    startInEditMode="true"
+    title="displaykey.Web.NewCommissionPlan.Title">
+    <LocationEntryPoint
+      signature="NewCommissionPlan(currency : Currency)"/>
+    <Variable
+      initialValue="initCommissionPlan()"
+      name="commissionPlan"
+      type="CommissionPlan"/>
+    <Variable
+      name="currency"
+      type="Currency"/>
+    <ScreenRef
+      def="CommissionPlanDetailScreen(commissionPlan)"/>
+    <Code><![CDATA[function initCommissionPlan() : CommissionPlan {
+  var newCommissionPlan =  new CommissionPlan(currency, CurrentLocation)
+  newCommissionPlan.EffectiveDate = util.DateUtil.currentDate();
+  return newCommissionPlan;
+}]]></Code>
+  </Page>
+</PCF>

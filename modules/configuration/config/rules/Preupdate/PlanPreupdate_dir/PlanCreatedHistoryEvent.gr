@@ -1,0 +1,22 @@
+package rules.Preupdate.PlanPreupdate_dir
+
+@gw.rules.RuleName("Plan Created History Event")
+internal class PlanCreatedHistoryEvent {
+  static function doCondition(plan : entity.Plan) : boolean {
+    
+/*start00rule*/
+return plan.New
+/*end00rule*/
+
+  }
+
+  static function doAction(plan : entity.Plan, actions : gw.rules.Action) {
+
+/*start00rule*/
+plan.addHistoryFromGosu(DateTime.CurrentDate,
+                              HistoryEventType.TC_PLANCREATED,
+                              displaykey.Java.PlanHistory.PlanCreated, null, null, true);
+/*end00rule*/
+
+  }
+}

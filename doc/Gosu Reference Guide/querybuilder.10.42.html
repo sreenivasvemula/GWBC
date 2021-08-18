@@ -1,0 +1,406 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xml:lang="en" lang="en" xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+    <meta http-equiv="Content-Style-Type" content="text/css" />
+    <!-- MOTW-DISABLED saved from url=(0014)about:internet -->
+    <title>Paths and Restriction Builders</title>
+    <link rel="StyleSheet" href="css/querybuilder.css" type="text/css" media="all" />
+    <link rel="StyleSheet" href="css/webworks.css" type="text/css" media="all" />
+    <link rel="StyleSheet" href="css/css-guidewire-extra.css" type="text/css" media="all" />
+    <script type="text/javascript" language="JavaScript1.2" src="wwhdata/common/context.js"></script>
+    <script type="text/javascript" language="JavaScript1.2" src="wwhdata/common/towwhdir.js"></script>
+    <script type="text/javascript" language="JavaScript1.2" src="wwhdata/common/wwhpagef.js"></script>
+    <script type="text/javascript" language="JavaScript1.2">
+      <!--
+        var  WebWorksRootPath = "";
+      // -->
+    </script>
+    <script type="text/javascript" language="JavaScript1.2">
+      <!--
+        // Set reference to top level help frame
+        //
+        var  WWHFrame = WWHGetWWHFrame("", true);
+      // -->
+    </script>
+    <script type="text/javascript" language="JavaScript1.2" src="scripts/expand.js"></script>
+    <!-- THE FOLLOWING IS A GUIDEWIRE STYLE DEFINITION FOR THE LINK TO THIS FEATURE -->
+    <link rel="StyleSheet" href="css/css-guidewire-extra.css" type="text/css" media="all" />
+    <!-- THE FOLLOWING IS A GUIDEWIRE GSCRIPT FUNCTION FOR THE LINK TO THIS FEATURE -->
+    <script type="text/javascript">
+function guidewire_selectall()
+{
+var text_val=eval("document.linktothisurlform.urlfield");
+text_val.focus();
+text_val.select();
+}
+</script>
+  </head>
+  <body onLoad="WWHUpdate();" onUnload="WWHUnload();" onKeyDown="WWHHandleKeyDown((document.all||document.getElementById||document.layers)?event:null);" onKeyPress="WWHHandleKeyPress((document.all||document.getElementById||document.layers)?event:null);" onKeyUp="WWHHandleKeyUp((document.all||document.getElementById||document.layers)?event:null);">
+    <!-- THE FOLLOWING IS A GUIDEWIRE DIV FOR THE 'LINK TO THIS' FEATURE -->
+    <div id="linkToThisPage" class="popup" style="display: none;">
+      <div class="popupTitle">Link Directly to This Page 
+           <a href="#" onclick="var thePopup = getElementById('linkToThisPage');thePopup.style.display='none';return false;"><img class="popupClosebox" src="wwhelp/wwhimpl/common/images/close.gif" /></a></div>
+      <div style="padding:6px;">
+        <div class="popupText" id="linkToThisPageBookmark">An error has occurred if you see this messsage.</div>
+        <form name="linktothisurlform" method="post" action="" style="width:275px;margin:0px">
+          <input type="text" class="popupURLText" id="linkToThisPageURL" name="urlfield" rows="1" cols="55" onClick="guidewire_selectall();" onFocus="guidewire_selectall();"></input>
+        </form>
+      </div>
+    </div>
+    <br />
+    <div class="WebWorks_Breadcrumbs" style="text-align: left;">
+      <span>Gosu Reference Guide</span> : 
+    <span class="WebWorks_Breadcrumbs" style="text-align: left;"><a class="WebWorks_Breadcrumb_Link" href="querybuilder.10.01.html#3504630">Query Builder APIs</a> : Paths and Restriction Builders</span></div>
+    <hr align="left" />
+    <blockquote>
+      <h3 class="H1_-_Heading_1"><a name="3504630">Paths and Restriction Builders</a></h3>
+      <div class="B_-_Body"><a name="3504632">BillingCenter offers a supplementary query API in addition to the standard Guidewire query builder APIs. The </a><span class="cv_-_computer_voice">Path</span> and <span class="cv_-_computer_voice">RestrictionBuilder</span> APIs make it easier to create queries with lower memory usage, faster execution, and less chance of programmer errors in query code. Additionally, a restriction object allows you to create either a query or a predicate object. Predicate objects are used internally to search the in-memory cache of objects loaded from the database and local uncommitted changes. Using the restriction API, it is easy to write code that searches the database and the in-memory cache and have the searches consistent with each other.</div>
+      <div class="B_-_Body"><a name="3504633">The elements of the supplementary query API are:</a></div>
+      <div class="BI_-_Bullet_Item_outer" style="margin-left: 57pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="BI_-_Bullet_Item_inner" style="width: 15pt; white-space: nowrap">
+                <span class="bu_-_bullet">•	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="BI_-_Bullet_Item_inner"><a name="3504634">Property references</a></div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="BI_-_Bullet_Item_outer" style="margin-left: 57pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="BI_-_Bullet_Item_inner" style="width: 15pt; white-space: nowrap">
+                <span class="bu_-_bullet">•	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="BI_-_Bullet_Item_inner"><a name="3504635">Paths</a></div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="BI_-_Bullet_Item_outer" style="margin-left: 57pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="BI_-_Bullet_Item_inner" style="width: 15pt; white-space: nowrap">
+                <span class="bu_-_bullet">•	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="BI_-_Bullet_Item_inner"><a name="3504636">Restrictions</a></div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="BI_-_Bullet_Item_outer" style="margin-left: 57pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="BI_-_Bullet_Item_inner" style="width: 15pt; white-space: nowrap">
+                <span class="bu_-_bullet">•	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="BI_-_Bullet_Item_inner"><a name="3504637">Restriction builders</a></div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <h4 class="H2_-_Heading_2"><a name="3504638">Property References</a></h4>
+      <div class="B_-_Body"><a name="3504639">A property reference is a type-safe reference to a property in the Gosu type system. A property reference consists of two parts:</a></div>
+      <div class="BI_-_Bullet_Item_outer" style="margin-left: 57pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="BI_-_Bullet_Item_inner" style="width: 15pt; white-space: nowrap">
+                <span class="bu_-_bullet">•	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="BI_-_Bullet_Item_inner"><span class="ri_-_run_in_header"><a name="3504640">Owning type</a></span> – the type on which the property appears</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="BI_-_Bullet_Item_outer" style="margin-left: 57pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="BI_-_Bullet_Item_inner" style="width: 15pt; white-space: nowrap">
+                <span class="bu_-_bullet">•	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="BI_-_Bullet_Item_inner"><span class="ri_-_run_in_header"><a name="3504641">Feature</a></span> – the property name and type of the property </div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="B_-_Body"><a name="3504642">For use with the query system, only create property references to persistent fields in the database. </a></div>
+      <div class="B_-_Body"><a name="3504643">To declare a property reference in Gosu, use standard Gosu feature literal syntax </a><span class="pst_-_parameter_in_code_snippets_table">type</span><span class="cv_-_computer_voice">#</span><span class="pst_-_parameter_in_code_snippets_table">feature</span>. For more information about feature literal syntax, see <a href="javascript:WWHClickedPopup('gosu', 'typesystem.24.5.html#1487207', '');" title="Using Reflection">“Feature Literals”</a>.</div>
+      <div class="B_-_Body"><a name="3504647">For example:</a></div>
+      <div class="CS_-_Code_Single_Line"><a name="3504648">var firstNameProp = Person#FirstName</a></div>
+      <h4 class="H2_-_Heading_2"><a name="3504651">Paths</a></h4>
+      <div class="B_-_Body"><a name="3504652">A path is essentially a type-safe list of property references encapsulated in an object of type </a><span class="cv_-_computer_voice">gw.api.path.Path</span>. Each element of the path must have an owning type that is the same type or subtype of the feature type of the immediately previous element in the path. In other words, starting at element 2, the left side of the literal must match the right side of the literal in the previous element in the path. </div>
+      <div class="B_-_Body"><a name="3504653">From a programming perspective, </a><span class="cv_-_computer_voice">Path</span> is an interface. For use with the query builder APIs, the only relevant implementing class is <span class="cv_-_computer_voice">PersistentPath</span>, which contains only persistent property references.</div>
+      <h6 class="HS_-_Head_Sub"><a name="3504655">Making a Path</a></h6>
+      <div class="B_-_Body"><a name="3504656">To create a path, use the </a><span class="cv_-_computer_voice">gw.api.path.Paths</span> class, which has a static method called <span class="cv_-_computer_voice">make</span>. Pass each property reference in order as separate ordered method arguments. The <span class="cv_-_computer_voice">make</span> method has method signatures that support paths of length 1, 2, 3, 4, and 5. The <span class="cv_-_computer_voice">make</span> method only works with property references that represent <span class="e_-_emphasis">persistent properties</span>, which are properties that directly map to database fields.</div>
+      <div class="B_-_Body"><a name="3504657">The following example creates a path with two property references</a></div>
+      <div class="CS_-_Code_Single_Line"><a name="3504658">var path = Paths.make(User#Contact, UserContact#PrimaryAddress)</a></div>
+      <h6 class="HS_-_Head_Sub"><a name="3504659">Appending a Path</a></h6>
+      <div class="B_-_Body"><a name="3504660">You can append a property with the </a><span class="cv_-_computer_voice">append</span> method:</div>
+      <div class="CS_-_Code_Single_Line"><a name="3504661">path = path.append(Address#PostalCode)</a></div>
+      <h6 class="HS_-_Head_Sub"><a name="3504662">Converting Path to List</a></h6>
+      <div class="B_-_Body"><a name="3504663">You can convert a path to an immutable list that implements </a><span class="cv_-_computer_voice">java.util.List</span>:</div>
+      <div class="CS_-_Code_Single_Line"><a name="3504664">var pathAsList = path.asList()</a></div>
+      <h6 class="HS_-_Head_Sub"><a name="3504665">Get Leaf Value from a Path and an Object</a></h6>
+      <div class="B_-_Body"><a name="3504666">Given an object and a path, you can get the leaf value (the final and rightmost property in the path) using the </a><span class="cv_-_computer_voice">getLeafValue</span> method:</div>
+      <div class="CS_-_Code_Single_Line"><a name="3504667">var postalCode = path.getLeafValue(user)</a></div>
+      <h4 class="H2_-_Heading_2"><a name="3504668">Restrictions</a></h4>
+      <div class="B_-_Body"><a name="3504669">A restriction object allows you to define a query well suited to searching both the database and the in-memory cache of objects and local uncommitted changes. A </a><span class="e_-_emphasis">query</span> searches the database. An internal object called a <span class="e_-_emphasis">predicate</span> searches the in-memory cache of objects and uncommitted changes. </div>
+      <div class="B_-_Body"><a name="3504670">You can create a query directly with the </a><span class="cv_-_computer_voice">makeQuery</span> method on a restriction. There are no supported customer APIs that directly use the predicate. However, there are BillingCenter APIs that require a <span class="cv_-_computer_voice">Restriction</span> object. The <span class="cv_-_computer_voice">Restriction</span> defines a search that uses a database query and predicate in combination to search both sets of objects. In typical code, the main use of a Restriction object is to pass it to built-in APIs that require a <span class="cv_-_computer_voice">Restriction</span>. The built-in code combines the results of the query and predicate for you.</div>
+      <div class="B_-_Body"><a name="3504671">In typical code, never create the restriction objects directly. Instead use the </a><span class="cv_-_computer_voice">RestrictionBuilder</span> class and methods on it to create restriction objects. See <a href="javascript:WWHClickedPopup('gosu', 'querybuilder.10.42.html#3504688', '');" title="Paths and Restriction Builders">“Restriction Builder”</a>.</div>
+      <div class="B_-_Body"><a name="3504675">The </a><span class="cv_-_computer_voice">Restriction</span> type is an interface. Two classes directly implement this interface: <span class="cv_-_computer_voice">NonUnionRestriction</span> and <span class="cv_-_computer_voice">UnionRestriction</span>, described in the following topics.</div>
+      <div class="H3_-_Heading_3_outer" style="margin-left: 36pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <h5 class="H3_-_Heading_3_inner" style="width: 18pt; white-space: nowrap"></h5>
+            </td>
+            <td width="100%">
+              <h5 class="H3_-_Heading_3_inner"><a name="3504676">Non-Union Restrictions</a></h5>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="B_-_Body"><a name="3504677">A </a><span class="cv_-_computer_voice">NonUnionRestriction</span> restriction represents a non-union restriction. </div>
+      <div class="B_-_Body"><a name="3504678">The abstract class </a><span class="cv_-_computer_voice">NonUnionRestriction</span> implements <span class="cv_-_computer_voice">makeQuery</span> by calling a new abstract method: <span class="cv_-_computer_voice">filterQuery(ISelectQueryBuilder)</span>. This method is capable of filtering a given query. <span class="cv_-_computer_voice">CompoundRestriction</span> objects use this capability to combine <span class="cv_-_computer_voice">NonUnionRestriction</span> objects together with <span class="cv_-_computer_voice">AND</span> operators.</div>
+      <div class="B_-_Body"><a name="3504679">There are four subclasses of </a><span class="cv_-_computer_voice">NonUnionRestriction</span>: </div>
+      <div class="BI_-_Bullet_Item_outer" style="margin-left: 57pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="BI_-_Bullet_Item_inner" style="width: 15pt; white-space: nowrap">
+                <span class="bu_-_bullet">•	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="BI_-_Bullet_Item_inner"><span class="cv_-_computer_voice"><a name="3504680">PathRestriction</a></span> – Path restrictions are restrictions that operate on the value at the end of a path</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="BI_-_Bullet_Item_outer" style="margin-left: 57pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="BI_-_Bullet_Item_inner" style="width: 15pt; white-space: nowrap">
+                <span class="bu_-_bullet">•	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="BI_-_Bullet_Item_inner"><span class="cv_-_computer_voice"><a name="3504681">SetRestriction</a></span> – Set restrictions filter queries based on the presence or absence of a value in a set of possible values. <span class="cv_-_computer_voice">SetRestriction</span> is a subclass of <span class="cv_-_computer_voice">PathRestriction</span>.</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="BI_-_Bullet_Item_outer" style="margin-left: 57pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="BI_-_Bullet_Item_inner" style="width: 15pt; white-space: nowrap">
+                <span class="bu_-_bullet">•	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="BI_-_Bullet_Item_inner"><span class="cv_-_computer_voice"><a name="3504682">RelopRestriction</a></span> – Relative operator restrictions compare the result of evaluating the path to a single value using one of the relative operators such as equals, not-equals, greater than, or less than. <span class="cv_-_computer_voice">RelopRestriction</span> is a subclass of <span class="cv_-_computer_voice">PathRestriction</span>.</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="BI_-_Bullet_Item_outer" style="margin-left: 57pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="BI_-_Bullet_Item_inner" style="width: 15pt; white-space: nowrap">
+                <span class="bu_-_bullet">•	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="BI_-_Bullet_Item_inner"><span class="cv_-_computer_voice"><a name="3504683">CompoundRestriction</a></span> – compound restriction is the equivalent to combining two <span class="cv_-_computer_voice">NonUnionRestriction</span> objects with a logical <span class="cv_-_computer_voice">AND</span> operator.</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="H3_-_Heading_3_outer" style="margin-left: 36pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <h5 class="H3_-_Heading_3_inner" style="width: 18pt; white-space: nowrap"></h5>
+            </td>
+            <td width="100%">
+              <h5 class="H3_-_Heading_3_inner"><a name="3504684">Union Restrictions</a></h5>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="B_-_Body"><a name="3504685">A </a><span class="cv_-_computer_voice">UnionRestriction</span> restriction represents the union set of the two <span class="cv_-_computer_voice">Restriction</span> objects that you pass to its constructor. </div>
+      <div class="B_-_Body"><a name="3504686">You cannot use </a><span class="cv_-_computer_voice">CompoundRestriction</span> to combine a <span class="cv_-_computer_voice">UnionRestriction</span> object and a <span class="cv_-_computer_voice">NonUnionRestriction</span> object. However, you can use a <span class="cv_-_computer_voice">UnionRestriction</span> restriction to combine a <span class="cv_-_computer_voice">UnionRestriction</span> restriction with anything else. Create a new <span class="cv_-_computer_voice">UnionRestriction</span> with the original union as one of the <span class="cv_-_computer_voice">make</span> method arguments. </div>
+      <div class="H3_-_Heading_3_outer" style="margin-left: 36pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <h5 class="H3_-_Heading_3_inner" style="width: 18pt; white-space: nowrap"></h5>
+            </td>
+            <td width="100%">
+              <h5 class="H3_-_Heading_3_inner"><a name="3504688">Restriction Builder</a></h5>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="B_-_Body"><a name="3504689">You can use the restriction builder class </a><span class="cv_-_computer_voice">RestrictionBuilder</span> to create a new <span class="cv_-_computer_voice">Restriction</span> object. To construct a new <span class="cv_-_computer_voice">RestrictionBuilder</span>, you must call its <span class="cv_-_computer_voice">make</span> method. For example:</div>
+      <div class="CS_-_Code_Single_Line"><a name="3504690">var restrictionBuilder = RestrictionBuilder.make(User)</a></div>
+      <div class="B_-_Body"><a name="3504691">There are two subclasses of the </a><span class="cv_-_computer_voice">RestrictionBuilder</span> abstract class:</div>
+      <div class="BI_-_Bullet_Item_outer" style="margin-left: 57pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="BI_-_Bullet_Item_inner" style="width: 15pt; white-space: nowrap">
+                <span class="bu_-_bullet">•	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="BI_-_Bullet_Item_inner"><span class="cv_-_computer_voice"><a name="3504692">SimpleRestrictionBuilder</a></span> – Simple restriction builders create <span class="cv_-_computer_voice">CompoundRestriction</span> objects</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="BI_-_Bullet_Item_outer" style="margin-left: 57pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="BI_-_Bullet_Item_inner" style="width: 15pt; white-space: nowrap">
+                <span class="bu_-_bullet">•	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="BI_-_Bullet_Item_inner"><span class="cv_-_computer_voice"><a name="3504693">UnionRestrictionBuilder</a></span> – Union restriction builders create <span class="cv_-_computer_voice">UnionRestriction</span> objects.</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <h6 class="HS_-_Head_Sub"><a name="3504694">Compare Values with </a><span class="cvh_-_computer_voice_in_heading">Relop</span> Operators</h6>
+      <div class="B_-_Body"><a name="3504695">You can compare the result of a path to a specified value using the </a><span class="cv_-_computer_voice">compare</span> method:</div>
+      <div class="CS_-_Code_Single_Line"><a name="3504696">restrictionBuilder.compare(Paths.make(User#Contact, UserContact#EmployeeNumber), Equals, "100-01234")</a></div>
+      <div class="B_-_Body"><a name="3504819">The </a><span class="cv_-_computer_voice">compare</span> method supports all of the relational operator (<span class="cv_-_computer_voice">Relop</span>) enumeration values: <span class="cv_-_computer_voice">Equals</span>, <span class="cv_-_computer_voice">NotEquals</span>, <span class="cv_-_computer_voice">LessThan</span>, <span class="cv_-_computer_voice">GreaterThan</span>, <span class="cv_-_computer_voice">LessThanOrEquals</span>, and <span class="cv_-_computer_voice">GreaterThanOrEquals</span>.</div>
+      <h6 class="HS_-_Head_Sub"><a name="3504820">Compare Set Membership</a></h6>
+      <div class="B_-_Body"><a name="3504821">You can check if the result of a path is a member (</a><span class="cv_-_computer_voice">CompareIn</span>) or not a member (<span class="cv_-_computer_voice">CompareNotIn</span>) of a specified set. Represent the set of items using any <span class="cv_-_computer_voice">Iterable</span> object such as a list. </div>
+      <div class="B_-_Body"><a name="3504822">For example, the following example :</a></div>
+      <PRE class="CF_-_Code_First_Line"><a name="3504823">restrictionBuilder.compareSet(Paths.make(User#Contact, UserContact#EmployeeNumber),</a></PRE>
+      <PRE class="CL_-_Code_Last_Line"><a name="3504824">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;CompareIn, employeeIDs)</a></PRE>
+      <h6 class="HS_-_Head_Sub"><a name="3504825">Combining Restriction Builders</a></h6>
+      <div class="B_-_Body"><a name="3504826">You can union one </a><span class="cv_-_computer_voice">RestrictionBuilder</span> with another with the <span class="cv_-_computer_voice">union</span> method:</div>
+      <div class="CS_-_Code_Single_Line"><a name="3504827">var union = restrictionBuilder.union(otherRestrictionBuilder)</a></div>
+      <div class="NI_-_Note_Important">
+        <span class="n_-_note">IMPORTANT   </span><a name="3504828">Unlike the </a><span class="cv_-_computer_voice">compare</span> and <span class="cv_-_computer_voice">compareSet</span> methods, the <span class="cv_-_computer_voice">union</span> method returns a new <span class="cv_-_computer_voice">RestrictionBuilder</span> rather than modifying the original <span class="cv_-_computer_voice">RestrictionBuilder</span> objects in the union.</div>
+      <div class="B_-_Body"><a name="3504829">In memory, repeated unions form a binary tree that affects the output SQL query. </a></div>
+      <div class="B_-_Body"><a name="3504830">Because the union method creates a new object rather than modifying the original, you can continue to use the original restrictions. For example, if you union two restrictions A and B to create C, later code can independently use A, B, and C.</a></div>
+      <div class="H3_-_Heading_3_outer" style="margin-left: 36pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <h5 class="H3_-_Heading_3_inner" style="width: 18pt; white-space: nowrap"></h5>
+            </td>
+            <td width="100%">
+              <h5 class="H3_-_Heading_3_inner"><a name="3504835">Example of Simple </a><span class="cvh_-_computer_voice_in_heading">Relop</span> Query</h5>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="B_-_Body"><a name="3504836">You can test the following restriction builder with the </a><span class="e_-_emphasis">not equals</span> operator in the Studio Gosu Scratchpad:</div>
+      <PRE class="CM_-_Code_Middle_Line"><a name="3504837">uses gw.api.restriction.RestrictionBuilder</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="3504838">uses gw.api.path.Paths</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="3504839">&nbsp;</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="3504840">// Create a restriction builder for the User entity type</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="3504841">var rb = RestrictionBuilder.make(User)</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="3504842">&nbsp;</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="3504843">//Add a restriction to the restriction builder</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="3504844">&nbsp;</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="3504845">// If you have real admin data, you might check an employee number like the following</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="3504846">//rb.compare(Paths.make(User#Contact, UserContact#EmployeeNumber), NotEquals, "100-01234")</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="3504847">&nbsp;</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="3504848">// As a simple test using the default configuration admin data (PublicID but no employee number)</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="3504849">rb.compare(Paths.make(User#Contact, UserContact#PublicID), NotEquals, "systemTables:1")</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="3504850">&nbsp;</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="3504851">// Create a query from the restriction builder</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="3504852">var myQuery = rb.create().makeQuery().select()</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="3504853">&nbsp;</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="3504854">// print results</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="3504855">print("Beginning loop...")</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="3504856">for (res in myQuery) {</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="3504857">  print(res + " / " + res.Contact.PublicID)</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="3504858">}</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="3504859">print("-- done loop --") </a></PRE>
+      <div class="H3_-_Heading_3_outer" style="margin-left: 36pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <h5 class="H3_-_Heading_3_inner" style="width: 18pt; white-space: nowrap"></h5>
+            </td>
+            <td width="100%">
+              <h5 class="H3_-_Heading_3_inner"><a name="3504860">Example of Union Restriction</a></h5>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="B_-_Body"><a name="3504861">You can test the following restriction builder with the </a><span class="e_-_emphasis">not equals</span> operator in the Studio Gosu Scratchpad:</div>
+      <PRE class="CM_-_Code_Middle_Line"><a name="3504862">uses gw.api.restriction.RestrictionBuilder</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="3504863">uses gw.api.path.Paths</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="3504864">&nbsp;</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="3504865">// Create a restriction builder for the User entity type</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="3504866">var rb1 = RestrictionBuilder.make(User)</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="3504867">rb1.compare(Paths.make(User#Contact, UserContact#PublicID), Equals, "systemTables:1")</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="3504868">&nbsp;</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="3504869">&nbsp;</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="3504870">// Create a restriction builder for the User entity type</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="3504871">var rb2 = RestrictionBuilder.make(User)</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="3504872">rb2.compare(Paths.make(User#Contact, UserContact#PublicID), Equals, "systemTables:2")</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="3504873">&nbsp;</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="3504874">// get the UNION SET of the results of the two restrictions</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="3504875">var union = rb1.union(rb2)</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="3504876">&nbsp;</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="3504877">// Create a query from the restriction builder</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="3504878">var myQuery = union.create().makeQuery().select()</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="3504879">&nbsp;</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="3504880">// print results</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="3504881">print("Beginning loop...")</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="3504882">for (res in myQuery) {</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="3504883">  print(res + " / " + res.Contact.PublicID)</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="3504884">}</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="3504885">print("-- done loop --") </a></PRE>
+      <div class="B_-_Body"><a name="3439455">&nbsp;</a></div>
+      <script type="text/javascript" language="JavaScript1.2">
+        <!--
+          // Clear related topics
+          //
+          WWHClearRelatedTopics();
+
+          document.writeln(WWHRelatedTopicsInlineHTML());
+        // -->
+      </script>
+    </blockquote>
+    <script type="text/javascript" language="JavaScript1.2">
+      <!--
+        document.write(WWHRelatedTopicsDivTag() + WWHPopupDivTag() + WWHALinksDivTag());
+      // -->
+    </script>
+  </body>
+</html>

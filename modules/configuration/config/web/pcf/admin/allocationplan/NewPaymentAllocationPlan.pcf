@@ -1,0 +1,29 @@
+<?xml version="1.0"?>
+<PCF
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:noNamespaceSchemaLocation="../../../../../../pcf.xsd">
+  <Page
+    afterCancel="PaymentAllocationPlans.go()"
+    afterCommit="PaymentAllocationPlans.go()"
+    canEdit="true"
+    canVisit="perm.System.admintabview and perm.System.payallocplancreate"
+    id="NewPaymentAllocationPlan"
+    parent="PaymentAllocationPlans()"
+    showUpLink="true"
+    startInEditMode="true"
+    title="displaykey.Web.NewPaymentAllocationPlan.Title">
+    <LocationEntryPoint
+      signature="NewPaymentAllocationPlan()"/>
+    <Variable
+      initialValue="initPaymentAllocationPlan()"
+      name="paymentAllocationPlan"
+      type="PaymentAllocationPlan"/>
+    <ScreenRef
+      def="PaymentAllocationPlanDetailScreen(paymentAllocationPlan)"/>
+    <Code><![CDATA[function initPaymentAllocationPlan(): PaymentAllocationPlan {
+  var newPaymentAllocationPlan = new PaymentAllocationPlan(CurrentLocation);
+  newPaymentAllocationPlan.EffectiveDate = util.DateUtil.currentDate();
+  return newPaymentAllocationPlan;
+}]]></Code>
+  </Page>
+</PCF>

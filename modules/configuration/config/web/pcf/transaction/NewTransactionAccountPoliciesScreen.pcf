@@ -1,0 +1,70 @@
+<?xml version="1.0"?>
+<PCF
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:noNamespaceSchemaLocation="../../../../../pcf.xsd">
+  <!-- This screen is one of the steps in the New Fee wizard.  It is where the user will search for the account or
+  policy which will be assessed the fee -->
+  <Screen
+    id="NewTransactionAccountPoliciesScreen">
+    <Require
+      name="helper"
+      type="gw.accounting.NewGeneralSingleChargeHelper"/>
+    <Toolbar>
+      <WizardButtons/>
+      <ToolbarButton
+        action="helper.TAccountOwner = helper.ChargeInitializer.ChargeAccount"
+        id="AccountTAccountOwner"
+        label="displaykey.Web.NewTransactionAccountPoliciesScreen.NewChargeAccount.Button"/>
+    </Toolbar>
+    <DetailViewPanel
+      id="NewChargeTargetDV">
+      <InputColumn>
+        <Input
+          boldLabel="true"
+          id="NewChargeTarget"
+          label="displaykey.Web.NewChargeTargetDV.NewChargeTarget"
+          value="helper.getDisplayName()"/>
+      </InputColumn>
+    </DetailViewPanel>
+    <CardViewPanel
+      id="AccountPolicySearchCV">
+      <Card
+        id="SearchPoliciesCard"
+        title="displaykey.Web.NewTransactionAccountPoliciesScreen.SearchPolicies">
+        <ListViewPanel
+          id="PolicySearchResultsLV">
+          <RowIterator
+            editable="false"
+            elementName="policyPeriod"
+            value="helper.ChargeInitializer.ChargeAccount.OpenPolicyPeriods">
+            <Row>
+              <LinkCell
+                id="SelectCell"
+                label="displaykey.Web.AccountPolicyPeriodsLV.Select">
+                <Link
+                  action="helper.TAccountOwner = policyPeriod"
+                  id="Select"
+                  label="displaykey.Web.AccountPolicyPeriodsLV.Select"
+                  styleClass="miniButton"/>
+              </LinkCell>
+              <Cell
+                id="Number"
+                label="displaykey.Web.AccountPolicyPeriodsLV.PolicyNumber"
+                sortBy="policyPeriod.PolicyNumber"
+                sortOrder="1"
+                value="policyPeriod.DisplayName"/>
+              <DateCell
+                id="PolicyPerEffDate"
+                label="displaykey.Web.AccountPolicyPeriodsLV.PolicyPerEffDate"
+                value="policyPeriod.PolicyPerEffDate"/>
+              <DateCell
+                id="PolicyPerExpirDate"
+                label="displaykey.Web.AccountPolicyPeriodsLV.PolicyPerExpirDate"
+                value="policyPeriod.PolicyPerExpirDate"/>
+            </Row>
+          </RowIterator>
+        </ListViewPanel>
+      </Card>
+    </CardViewPanel>
+  </Screen>
+</PCF>

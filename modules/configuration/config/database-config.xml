@@ -1,0 +1,59 @@
+<?xml version="1.0"?>
+<database-config xmlns="http://guidewire.com/database-config">
+  <!-- H2 (meant for demo/quickstart use only!) -->
+  <database name="BillingCenterDatabase" dbtype="h2" autoupgrade="true">
+    <dbcp-connection-pool jdbc-url="jdbc:h2:file:/tmp/guidewire/bc"/>
+  </database>
+
+  <database name="BillingCenterDatabase" dbtype="h2" autoupgrade="true" env="h2mem">
+    <dbcp-connection-pool jdbc-url="jdbc:h2:mem:/tmp/guidewire/bc"/>
+  </database>
+
+  <!-- Oracle
+  <database name="BillingCenterDatabase" dbtype="oracle" autoupgrade="false">
+    <dbcp-connection-pool jdbc-url="jdbc:oracle:thin:<USER>/<PASSWORD>@<HOSTNAME>:<PORT>:<ORACLE_SID>"/>
+    <databasestatistics samplingpercentage="0" databasedegree="1"/>
+    <upgrade defer-create-nonessential-indexes="false" ora-parallel-query="enable" ora-parallel-dml="enable"
+            degree-parallel-ddl="4" degree-of-parallelism="4">
+      <ora-db-ddl>
+        <tablespaces admin="BC_ADMIN" index="BC_INDEX" op="BC_OP" staging="BC_STAGING" typelist="BC_TYPELIST"/>
+      </ora-db-ddl>
+      <versiontriggers dbmsperfinfothreshold="600"/>
+    </upgrade>
+    <loader before-gen-ids-callback-degree-of-parallelism="6" before-insert-select-callback-degree-of-parallelism="6" after-insert-select-callback-degree-of-parallelism="6" insert-select-degree-of-parallelism="6"
+            fk-enable-degree-of-parallelism="6" row-counts-degree-of-parallelism="6" >
+      <callbacks>
+        <callback name="TAccountLineItemPopulateLoaderCallback" before-gen-ids-callback-degree-of-parallelism="4" before-insert-select-callback-degree-of-parallelism="4"
+                  after-insert-select-callback-degree-of-parallelism="4" insert-select-degree-of-parallelism="4"
+                  fk-enable-degree-of-parallelism="4" row-counts-degree-of-parallelism="4" />
+        <callback name="TAccountPopulateLoaderCallback-degree-of-parallelism" before-gen-ids-callback-degree-of-parallelism="4" before-insert-select-callback-degree-of-parallelism="4"
+                  after-insert-select-callback-degree-of-parallelism="4" insert-select-degree-of-parallelism="4"
+                  fk-enable-degree-of-parallelism="4" row-counts-degree-of-parallelism="4" />
+      </callbacks>
+    </loader>
+  </database>
+-->
+
+  <!-- SQL Server
+  <database name="BillingCenterDatabase" dbtype="sqlserver" autoupgrade="false">
+    <dbcp-connection-pool jdbc-url="jdbc:sqlserver://<HOSTNAME>:<PORT>;DatabaseName=<DBNAME>;User=<USER>;Password=<PASSWORD>"/>
+    <upgrade defer-create-nonessential-indexes="false">
+      <versiontriggers dbmsperfinfothreshold="600" />
+    </upgrade>
+  </database>
+  -->
+
+  <!-- SQL Server with filegroups
+  <database name="BillingCenterDatabase" dbtype="sqlserver" autoupgrade="true">
+    <dbcp-connection-pool
+        jdbc-url="jdbc:sqlserver://<HOSTNAME>:<PORT>;DatabaseName=<DBNAME>;User=<USER>;Password=<PASSWORD>"/>
+    <upgrade defer-create-nonessential-indexes="false">
+      <versiontriggers dbmsperfinfothreshold="600"/>
+      <mssql-db-ddl>
+        <mssql-filegroups admin="ADMINFG" index="INDEXFG" op="OPFG" staging="STAGINGFG" typelist="TYPELISTFG" lob="LOBSFG"/>
+      </mssql-db-ddl>
+    </upgrade>
+  </database>
+-->
+
+</database-config>

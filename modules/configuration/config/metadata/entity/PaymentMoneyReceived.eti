@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?><subtype xmlns="http://guidewire.com/datamodel" abstract="true" desc="Money received from an external source as a payment." entity="PaymentMoneyReceived" final="false" subpackage="payment" supertype="BaseMoneyReceived">
+  <implementsEntity name="Validatable"/>
+  <implementsEntity name="PaymentReceipt"/>
+  <column name="Description" nullok="true" type="mediumtext"/>
+  <onetoone desc="Suspense payment related to this PaymentMoneyReceived.  Null unless PaymentMoneyReceived was created as a result of a suspense payment application" exportable="false" fkentity="SuspensePayment" name="SuspensePayment" nullok="true" setterScriptability="doesNotExist"/>
+  <edgeForeignKey desc="This is for payment moves.  If not NULL, this points to the PaymentMoneyReceived that this PaymentMoneyReceived was moved from." edgeTableName="MovedFromPMR" exportable="false" fkentity="PaymentMoneyReceived" ignoreforevents="true" loadable="false" name="MovedFromPMR" nullok="true" setterScriptability="hidden"/>
+  <events/>
+  <checkconstraint applicabletostagingtable="true" desc="Ensures that if either ReversalReason or ReversalDate are set, both are set." predicate="(ReversalReason IS NULL AND ReversalDate IS NULL) OR (ReversalReason IS NOT NULL AND ReversalDate IS NOT NULL)"/>
+  <dbcheckbuilder className="com.guidewire.bc.system.database.dbchecks.payment.PaymentMoneyReceivedDBCheckBuilder"/>
+</subtype>

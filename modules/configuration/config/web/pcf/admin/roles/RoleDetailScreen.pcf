@@ -1,0 +1,37 @@
+<?xml version="1.0"?>
+<PCF
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:noNamespaceSchemaLocation="../../../../../../pcf.xsd">
+  <Screen
+    id="RoleDetailScreen">
+    <Require
+      name="Role"
+      type="Role"/>
+    <Toolbar>
+      <EditButtons
+        editVisible="perm.Role.edit"/>
+    </Toolbar>
+    <CardViewPanel>
+      <Card
+        id="RoleDetail_PermissionsCard"
+        title="displaykey.Web.Admin.RoleDetail.Permissions">
+        <PanelRef
+          def="RoleDetailDV(Role)"/>
+        <PanelRef
+          def="LocalizedValuesDV(Role, { &quot;Name&quot;, &quot;Description&quot;}, { displaykey.Web.Admin.RoleDetailDV.Name, displaykey.Web.Admin.RoleDetailDV.Description})"/>
+      </Card>
+      <Card
+        id="RoleDetail_UsersCard"
+        title="displaykey.Web.Admin.RoleDetail.Users">
+        <PanelRef
+          def="RoleUsersLV(Role)"
+          editable="perm.User.grantroles and perm.System.useradmin">
+          <Toolbar>
+            <IteratorButtons
+              iterator="RoleUsersLV.RoleUsersLV"/>
+          </Toolbar>
+        </PanelRef>
+      </Card>
+    </CardViewPanel>
+  </Screen>
+</PCF>

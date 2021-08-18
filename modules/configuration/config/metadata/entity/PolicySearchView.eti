@@ -1,0 +1,46 @@
+<?xml version="1.0"?>
+<!-- ====================================================================  PolicySearchView  ==================================================================== -->
+<viewEntity
+  xmlns="http://guidewire.com/datamodel"
+  entity="PolicySearchView"
+  desc="Supports the efficient creation of PolicyPeriod lists in BillingCenter's views."
+  exportable="false"
+  subpackage="search.view"
+  primaryEntity="PolicyPeriod">
+  <viewEntityLink
+    name="PolicyPeriod"
+    path="ID"/>
+  <viewEntityLink
+    name="Account"
+    path="Policy.Account"/>
+  <viewEntityLink
+    name="Policy"
+    path="Policy"/>
+  <viewEntityTypekey
+    name="Currency"
+    path="Policy.Account.Currency"/>
+  <viewEntityColumn
+    name="AccountNumber"
+    path="Policy.Account.AccountNumber"/>
+  <viewEntityTypekey
+    name="LOBCode"
+    path="Policy.LOBCode"/>
+  <viewEntityColumn
+    name="PolicyNumberLong"
+    path="PolicyNumberLong"/>
+  <viewEntityTypekey
+    name="ClosureStatus"
+    path="ClosureStatus"/>
+  <viewEntityColumn
+    name="PolicyPerEffDate"
+    path="PolicyPerEffDate"/>
+  <viewEntityColumn
+    name="PolicyPerExpirDate"
+    path="PolicyPerExpirDate"/>
+  <viewEntityName
+    name="Producer"
+    path="PrimaryPolicyCommission.ProducerCode.Producer"/>
+  <viewEntityColumn
+    name="Code"
+    path="PrimaryPolicyCommission.ProducerCode.Code"/>
+</viewEntity>

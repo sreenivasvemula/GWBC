@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PCF
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:noNamespaceSchemaLocation="../../../../../pcf.xsd">
+  <Popup
+    beforeCommit="troubleTicket.hold.checkForHoldReleases(); troubleTicket.Hold.checkForHoldAdditions()"
+    canEdit="true"
+    id="TroubleTicketRelatedEntitiesPopup"
+    startInEditMode="true"
+    title="displaykey.Web.TroubleTicketTabbedDetailDV.RelatedEntities">
+    <LocationEntryPoint
+      signature="TroubleTicketRelatedEntitiesPopup(troubleTicket : TroubleTicket, createTroubleTicketHelper : CreateTroubleTicketHelper)"/>
+    <Variable
+      name="troubleTicket"
+      type="TroubleTicket"/>
+    <Variable
+      name="createTroubleTicketHelper"
+      type="CreateTroubleTicketHelper"/>
+    <Screen
+      id="TroubleTicketsRelatedEntitiesScreen">
+      <Toolbar>
+        <EditButtons/>
+      </Toolbar>
+      <PanelRef
+        def="TroubleTicketRelatedEntitiesDV(troubleTicket, createTroubleTicketHelper)"/>
+    </Screen>
+  </Popup>
+</PCF>

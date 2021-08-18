@@ -1,0 +1,117 @@
+<?xml version="1.0"?>
+<PCF
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:noNamespaceSchemaLocation="../../../../../pcf.xsd">
+  <Screen
+    id="TransferPolicyPoliciesScreen">
+    <Require
+      name="policyTransfer"
+      type="PolTransferByProdCode"/>
+    <Variable
+      initialValue="policyTransfer.SourceProducerCode.CurrentlyRelatedPolicyPeriods"
+      name="availablePolicyPeriods"
+      type="PolicyPeriodQuery"/>
+    <Toolbar>
+      <ToolbarButton
+        action="CurrentLocation.cancel()"
+        id="Cancel"
+        label="displaykey.Button.Cancel"/>
+      <ToolbarDivider/>
+      <ToolbarButton
+        action="(CurrentLocation as pcf.api.Wizard).previous()"
+        id="Previous"
+        label="displaykey.Button.Previous"/>
+      <CheckedValuesToolbarButton
+        allCheckedRowsAction="selectPolicyPeriods(CheckedValues)"
+        id="Next"
+        iterator="TransferPolicyPoliciesLV"
+        label="displaykey.Button.Next"/>
+    </Toolbar>
+    <DetailViewPanel
+      id="pagetwoDV">
+      <InputColumn>
+        <Label
+          label="displaykey.Web.TransferPolicyPolicies.ProducerInformation"/>
+        <Input
+          id="producer"
+          label="displaykey.Web.TransferPolicyPolicies.Producer"
+          value="policyTransfer.SourceProducerCode.Producer"/>
+        <Input
+          id="producerCode"
+          label="displaykey.Web.TransferPolicyPolicies.ProducerCode"
+          value="policyTransfer.SourceProducerCode.Code"/>
+        <ListViewInput
+          boldLabel="true"
+          editable="true"
+          label="displaykey.Web.TransferPolicyPolicies.Policies"
+          labelAbove="true">
+          <Toolbar/>
+          <ListViewPanel
+            editable="true"
+            id="TransferPolicyPoliciesLV">
+            <RowIterator
+              editable="false"
+              elementName="policyPeriod"
+              hasCheckBoxes="true"
+              value="availablePolicyPeriods">
+              <Row>
+                <Cell
+                  action="PolicyDetailSummaryPopup.push(policyPeriod)"
+                  footerLabel="displaykey.Web.TransferPolicyPoliciesLV.Total"
+                  id="PolicyNumber"
+                  label="displaykey.Web.TransferPolicyPoliciesLV.PolicyNumber"
+                  sortBy="policyPeriod.PolicyNumber"
+                  value="policyPeriod.DisplayName"/>
+                <TypeKeyCell
+                  id="Product"
+                  label="displaykey.Web.TransferPolicyPoliciesLV.Product"
+                  value="policyPeriod.Policy.Account.Segment"/>
+                <Cell
+                  enableSort="false"
+                  id="Role"
+                  label="displaykey.Web.TransferPolicyPoliciesLV.Role"
+                  value="formatRoles(policyPeriod)"/>
+                <Cell
+                  action="AccountDetailSummaryPopup.push(policyPeriod.Policy.Account)"
+                  id="Account"
+                  label="displaykey.Web.TransferPolicyPoliciesLV.AccountNumber"
+                  value="policyPeriod.Policy.Account.AccountNumber"/>
+                <Cell
+                  id="Insured"
+                  label="displaykey.Web.TransferPolicyPoliciesLV.Insured"
+                  value="policyPeriod.Policy.Account.AccountNameLocalized"/>
+                <DateCell
+                  id="EffectiveDate"
+                  label="displaykey.Web.TransferPolicyPoliciesLV.EffectiveDate"
+                  value="policyPeriod.PolicyPerEffDate"/>
+                <DateCell
+                  id="ExpirationDate"
+                  label="displaykey.Web.TransferPolicyPoliciesLV.ExpirationDate"
+                  value="policyPeriod.PolicyPerExpirDate"/>
+                <MonetaryAmountCell
+                  currency="policyPeriod.Currency"
+                  enableSort="false"
+                  id="PolValue"
+                  label="displaykey.Web.TransferPolicyPoliciesLV.PolValue"
+                  value="policyPeriod.TotalValue"/>
+              </Row>
+            </RowIterator>
+          </ListViewPanel>
+        </ListViewInput>
+      </InputColumn>
+    </DetailViewPanel>
+    <Code><![CDATA[function formatRoles(policyPeriod : PolicyPeriod) : String {
+  var roles = policyPeriod.getDefaultRolesForProducerCode(policyTransfer.SourceProducerCode);
+  return roles.join(", ")
+}
+      
+function selectPolicyPeriods(policyPeriods : PolicyPeriod[]){
+  if (policyPeriods.length > 0) {
+    policyTransfer.setPolicyPeriods( policyPeriods )
+    (CurrentLocation as pcf.api.Wizard).next()
+  } else {
+    throw new util.DisplayableException(displaykey.Web.TransferPolicyPolicies.NoPolicySelected)
+  }
+}]]></Code>
+  </Screen>
+</PCF>

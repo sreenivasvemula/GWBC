@@ -1,0 +1,24 @@
+<?xml version="1.0"?>
+<Entity
+  name="CommissionAdjusted">
+  <Columns>
+    <Column
+      beanPath="Transaction.Subtype"
+      name="Subtype"/>
+    <Column
+      beanPath="Transaction.ReversedTransaction.TransactionNumber"
+      name="ReversedTransactionNumber"/>
+    <Column
+      beanPath="Transaction.Amount"
+      name="Amount"/>
+    <DisplayNameColumn
+      beanPath="CommissionAdjusted.PolicyCommission.PolicyPeriod"
+      displayName="true"
+      name="PolicyPeriod"/>
+  </Columns>
+  <DisplayName><![CDATA[gw.api.domain.accounting.ReversibleUtil.formatReversibleDisplayName(gw.api.util.TypeKeyUtil.toDisplayName(Subtype), ReversedTransactionNumber)]]></DisplayName>
+  <DisplayName
+    type="Short"><![CDATA[gw.api.domain.accounting.ReversibleUtil.formatReversibleDisplayName(displaykey.DisplayName.CommissionAdjusted.Short, ReversedTransactionNumber)]]></DisplayName>
+  <DisplayName
+    type="Long"><![CDATA[gw.api.domain.accounting.ReversibleUtil.formatReversibleDisplayName(displaykey.DisplayName.CommissionAdjusted.Long(PolicyPeriod, Amount?.render()), ReversedTransactionNumber)]]></DisplayName>
+</Entity>

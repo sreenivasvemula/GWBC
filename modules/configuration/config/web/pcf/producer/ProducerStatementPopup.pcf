@@ -1,0 +1,96 @@
+<?xml version="1.0"?>
+<PCF
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:noNamespaceSchemaLocation="../../../../../pcf.xsd">
+  <Popup
+    id="ProducerStatementPopup"
+    title="displaykey.Web.ProducerStatement.PolicyActivity.Title">
+    <LocationEntryPoint
+      signature="ProducerStatementPopup(policyNumber: String, producerStatement: ProducerStatement)"/>
+    <Variable
+      name="producerStatement"
+      type="ProducerStatement"/>
+    <Variable
+      name="policyNumber"
+      type="String"/>
+    <Variable
+      initialValue="PolicyActivityAggType.TC_NONE"
+      name="aggregation"
+      type="PolicyActivityAggType"/>
+    <Screen>
+      <PanelRef
+        visible="producerStatement.Type == ProducerStatementType.TC_PRODUCTION">
+        <Toolbar>
+          <ToolbarRangeInput
+            id="AggregationTypeSelector"
+            label="displaykey.Web.InvoiceItemsLV.AggregationType"
+            required="true"
+            value="aggregation"
+            valueRange="typekey.PolicyActivityAggType.getTypeKeys(false)">
+            <PostOnChange/>
+          </ToolbarRangeInput>
+        </Toolbar>
+        <ListViewPanel
+          id="ItemEventLV">
+          <RowIterator
+            editable="false"
+            elementName="eventDisplayMap"
+            value="producerStatement.getItemEventsWithAggregation(aggregation, policyNumber).toList()">
+            <Row>
+              <Cell
+                enableSort="false"
+                footerLabel="displaykey.Web.ItemEventLV.Total"
+                id="Event"
+                label="displaykey.Web.ItemEventLV.Event.DisplayName"
+                value="eventDisplayMap.get(&quot;EarningType&quot;) //itemEvent.EarningType;"
+                visible="aggregation == PolicyActivityAggType.TC_NONE"/>
+              <Cell
+                id="eventDate"
+                label="displaykey.Web.ItemEventLV.Event.Date"
+                value="(eventDisplayMap.get(&quot;EventDate&quot;) as java.util.Date).AsUIStyle"/>
+              <Cell
+                enableSort="false"
+                id="accountName"
+                label="displaykey.Web.ItemEventLV.Event.AccountName"
+                value="eventDisplayMap.get(&quot;RelatedAccount&quot;)"/>
+              <Cell
+                enableSort="false"
+                id="policyNumber"
+                label="displaykey.Web.ItemEventLV.Event.PolicyNumber"
+                value="eventDisplayMap.get(&quot;RelatedPolicyPeriod&quot;)"/>
+              <Cell
+                enableSort="false"
+                id="chargeType"
+                label="displaykey.Web.ItemEventLV.Event.ChargeType"
+                value="eventDisplayMap.get(&quot;ChargeName&quot;)"/>
+              <Cell
+                enableSort="false"
+                id="itemType"
+                label="displaykey.Web.ItemEventLV.Event.InvoiceItemDisplayName"
+                value="eventDisplayMap.get(&quot;ItemType&quot;)"
+                visible="aggregation == PolicyActivityAggType.TC_NONE"/>
+              <Cell
+                enableSort="false"
+                formatType="currency"
+                id="basis"
+                label="displaykey.Web.ItemEventLV.Event.Basis"
+                value="eventDisplayMap.get(&quot;Basis&quot;)"/>
+              <Cell
+                enableSort="false"
+                id="commissionPercentage"
+                label="displaykey.Web.ItemEventLV.Event.CommissionPercent"
+                value="gw.api.util.StringUtil.formatPercentagePoints(eventDisplayMap.get(&quot;CommissionPercentage&quot;) as Number, 2)"/>
+              <Cell
+                enableSort="false"
+                footerSumValue="eventDisplayMap.get(&quot;CommissionAmount&quot;) as gw.pl.currency.MonetaryAmount"
+                formatType="currency"
+                id="commissionAmount"
+                label="displaykey.Web.ItemEventLV.Event.CommissionAmount"
+                value="eventDisplayMap.get(&quot;CommissionAmount&quot;) as gw.pl.currency.MonetaryAmount"/>
+            </Row>
+          </RowIterator>
+        </ListViewPanel>
+      </PanelRef>
+    </Screen>
+  </Popup>
+</PCF>

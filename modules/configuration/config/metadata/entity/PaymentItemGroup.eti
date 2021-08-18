@@ -1,0 +1,42 @@
+<?xml version="1.0"?>
+<entity xmlns="http://guidewire.com/datamodel"
+        entity="PaymentItemGroup"
+        type="editable"
+        desc="A collection of payment items to track funds "
+        subpackage="fundstracking"
+        platform="false"
+        loadable="false"
+        table="paymentitemgroup"
+        setterScriptability="hidden">
+    <implementsEntity
+            name="InCurrencySilo"/>
+    <monetaryamount name="TotalAmountDenorm" amountColumnName="TotalAmountDenorm"
+            setterScriptability="doesNotExist"
+            desc="The sum of the amounts of the payment items in this set"
+            scaleToCurrency="true"
+            nullok="false"
+            soapnullok="true">
+        <tag name="DefaultValueZero"/>
+    </monetaryamount>
+    <column name="EventDate"
+            type="datetime"
+            desc="The event date for this PaymentItemGroup"
+            setterScriptability="hidden"
+            nullok="false"/>
+    <foreignkey name="UnappliedFund"
+            desc="The unapplied fund associated with paying the items in this group."
+            setterScriptability="hidden"
+            columnName="UnappliedFundID"
+            nullok="false"
+            fkentity="UnappliedFund"/>
+    <typekey name="Reason"
+            typelist="PaymentItemGroupReason"
+            desc="The reason that these payment items are linked."
+            nullok="false"/>
+    <array name="PaymentItemActions"
+            desc="The join entities linking this set to its payment items."
+            arrayentity="PaymentItemAction"
+            setterScriptability="doesNotExist"
+            owner="true"/>
+    <dbcheckbuilder className="com.guidewire.bc.system.database.dbchecks.fundstracking.PaymentItemGroupDBCheckBuilder"/>
+</entity>

@@ -1,0 +1,30 @@
+<?xml version="1.0"?>
+<PCF
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:noNamespaceSchemaLocation="../../../../../pcf.xsd">
+  <ListViewPanel
+    id="PremiumReportDueDatesLV">
+    <Require
+      name="policyPeriod"
+      type="PolicyPeriod"/>
+    <RowIterator
+      editable="false"
+      elementName="premiumReportDueDate"
+      value="policyPeriod.getUnmatchedPremiumReportDueDates()">
+      <Row>
+        <DateCell
+          id="PeriodStartDate"
+          label="displaykey.Web.PremiumReportDueDatesLV.PeriodStartDate"
+          value="premiumReportDueDate.PeriodStartDate"/>
+        <DateCell
+          id="PeriodEndDate"
+          label="displaykey.Web.PremiumReportDueDatesLV.PeriodEndDate"
+          value="premiumReportDueDate.PeriodEndDate"/>
+        <DateCell
+          id="DueDate"
+          label="displaykey.Web.PremiumReportDueDatesLV.DueDate"
+          value="premiumReportDueDate.DueDate"/>
+      </Row>
+    </RowIterator>
+  </ListViewPanel>
+</PCF>

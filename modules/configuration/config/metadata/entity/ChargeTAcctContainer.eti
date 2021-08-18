@@ -1,0 +1,164 @@
+<?xml version="1.0"?>
+<subtype
+  xmlns="http://guidewire.com/datamodel"
+  abstract="true"
+  desc="TAccountContainers that can own charges"
+  entity="ChargeTAcctContainer"
+  subpackage="accounting"
+  supertype="TAccountContainer">
+  <!-- denormalized t-account balances -->
+  <monetaryamount
+    amountColumnName="BilledDenorm"
+    desc="Denormalized unbilled balance for this t-account container."
+    getterScriptability="hidden"
+    loadable="false"
+    name="BilledDenorm"
+    nullok="false"
+    scaleToCurrency="true"
+    setterScriptability="doesNotExist"
+    soapnullok="true">
+    <tag
+      name="DefaultValueZero"/>
+  </monetaryamount>
+  <monetaryamount
+    amountColumnName="DueDenorm"
+    desc="Denormalized unbilled balance for this t-account container."
+    getterScriptability="hidden"
+    loadable="false"
+    name="DueDenorm"
+    nullok="false"
+    scaleToCurrency="true"
+    setterScriptability="doesNotExist"
+    soapnullok="true">
+    <tag
+      name="DefaultValueZero"/>
+  </monetaryamount>
+  <monetaryamount
+    amountColumnName="ExpenseDenorm"
+    desc="Denormalized expense balance for this t-account container."
+    getterScriptability="hidden"
+    loadable="false"
+    name="ExpenseDenorm"
+    nullok="false"
+    scaleToCurrency="true"
+    setterScriptability="doesNotExist"
+    soapnullok="true">
+    <tag
+      name="DefaultValueZero"/>
+  </monetaryamount>
+  <monetaryamount
+    amountColumnName="ReserveDenorm"
+    desc="Denormalized reserve balance for this t-account container."
+    getterScriptability="hidden"
+    loadable="false"
+    name="ReserveDenorm"
+    nullok="false"
+    scaleToCurrency="true"
+    setterScriptability="doesNotExist"
+    soapnullok="true">
+    <tag
+      name="DefaultValueZero"/>
+  </monetaryamount>
+  <monetaryamount
+    amountColumnName="RevenueDenorm"
+    desc="Denormalized revenue balance for this t-account container."
+    getterScriptability="hidden"
+    loadable="false"
+    name="RevenueDenorm"
+    nullok="false"
+    scaleToCurrency="true"
+    setterScriptability="doesNotExist"
+    soapnullok="true">
+    <tag
+      name="DefaultValueZero"/>
+  </monetaryamount>
+  <monetaryamount
+    amountColumnName="NegativeWriteoffDenorm"
+    desc="Denormalized negative writeoff balance for this t-account container."
+    getterScriptability="hidden"
+    loadable="false"
+    name="NegativeWriteoffDenorm"
+    nullok="false"
+    scaleToCurrency="true"
+    setterScriptability="doesNotExist"
+    soapnullok="true">
+    <tag
+      name="DefaultValueZero"/>
+  </monetaryamount>
+  <monetaryamount
+    amountColumnName="UnbilledDenorm"
+    desc="Denormalized unbilled balance for this t-account container."
+    getterScriptability="hidden"
+    loadable="false"
+    name="UnbilledDenorm"
+    nullok="false"
+    scaleToCurrency="true"
+    setterScriptability="doesNotExist"
+    soapnullok="true">
+    <tag
+      name="DefaultValueZero"/>
+  </monetaryamount>
+  <monetaryamount
+    amountColumnName="UnearnedDenorm"
+    desc="Denormalized unearned balance for this t-account container."
+    getterScriptability="hidden"
+    loadable="false"
+    name="UnearnedDenorm"
+    nullok="false"
+    scaleToCurrency="true"
+    setterScriptability="doesNotExist"
+    soapnullok="true">
+    <tag
+      name="DefaultValueZero"/>
+  </monetaryamount>
+  <monetaryamount
+    amountColumnName="WriteoffExpenseDenorm"
+    desc="Denormalized writeoff balance for this t-account container."
+    getterScriptability="hidden"
+    loadable="false"
+    name="WriteoffExpenseDenorm"
+    nullok="false"
+    scaleToCurrency="true"
+    setterScriptability="doesNotExist"
+    soapnullok="true">
+    <tag
+      name="DefaultValueZero"/>
+  </monetaryamount>
+  <array
+    arrayentity="Charge"
+    desc="Set of charges linked to this t-account"
+    exportable="false"
+    name="Charges"
+    setterScriptability="doesNotExist"/>
+  <!-- indices for the most heavily used denormalized fields -->
+  <index
+    desc="Unbilled, billed, due, and revenue t-accounts are queried heavily"
+    name="UnbilledDenorm">
+    <indexcol
+      keyposition="1"
+      name="UnbilledDenorm"/>
+  </index>
+  <index
+    desc="Unbilled, billed, due, and revenue t-accounts are queried heavily"
+    name="BilledDenorm">
+    <indexcol
+      keyposition="1"
+      name="BilledDenorm"/>
+  </index>
+  <index
+    desc="Unbilled, billed, due, and revenue t-accounts are queried heavily"
+    name="DueDenorm">
+    <indexcol
+      keyposition="1"
+      name="DueDenorm"/>
+  </index>
+  <index
+    desc="Unbilled, billed, due, and revenue t-accounts are queried heavily"
+    name="RevenueDenorm">
+    <indexcol
+      keyposition="1"
+      name="RevenueDenorm"/>
+  </index>
+  <dbcheckbuilder
+    className="com.guidewire.bc.system.database.dbchecks.accounting.TAccountContainerDenormFieldsDBCheckBuilder"/>
+</subtype>

@@ -1,0 +1,57 @@
+<?xml version="1.0"?>
+<PCF
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:noNamespaceSchemaLocation="../../../../../pcf.xsd">
+  <!-- Wizard flow that should guide the user through the process of creating a trouble ticket -->
+  <Wizard
+    afterCancel="DesktopGroup.go()"
+    afterFinish="DesktopGroup.go()"
+    beforeCommit="subrogation.doSubrogation()"
+    canVisit="perm.Transaction.subrtxn"
+    cancelWarning="displaykey.Web.CreateSubrogationWizard.CancelConfirmation"
+    countsAsWork="false"
+    id="CreateSubrogationWizard">
+    <LocationEntryPoint
+      signature="CreateSubrogationWizard()"/>
+    <Variable
+      name="subrogation"
+      type="Subrogation"/>
+    <Variable
+      initialValue="new web.accounting.TAccountOwnerReference()"
+      name="tAccountOwnerReference"
+      type="web.accounting.TAccountOwnerReference"/>
+    <WizardStep
+      allowNext="tAccountOwnerReference.TAccountOwner != null"
+      id="Step1"
+      label="displaykey.Web.CreateSubrogationWizard.TargetStepLabel"
+      onExit="setUpSubrogation()"
+      screen="CreateSubrogationTargetsScreen(subrogation, tAccountOwnerReference)"
+      title="displaykey.Web.CreateSubrogationWizard.TargetStepTitle"/>
+    <WizardStep
+      id="Step2"
+      label="displaykey.Web.CreateSubrogationWizard.InfoStepLabel"
+      screen="CreateSubrogationInfoScreen(subrogation)"
+      title="displaykey.Web.CreateSubrogationWizard.InfoStepTitle"/>
+    <WizardStep
+      id="Step3"
+      label="displaykey.Web.CreateSubrogationWizard.ConfirmStepLabel"
+      screen="CreateSubrogationConfirmScreen(subrogation)"
+      title="displaykey.Web.CreateSubrogationWizard.ConfirmStepTitle"/>
+    <Code><![CDATA[function setUpSubrogation() {
+  if (subrogation == null) {
+    subrogation = createSubrogationWithAccountCurrency()
+  }
+  else if (subrogation.Currency != tAccountOwnerReference.TAccountOwner.Currency)
+  {
+    subrogation.remove()
+    subrogation = createSubrogationWithAccountCurrency()
+  }
+  
+  subrogation.SourceAccount = (tAccountOwnerReference.TAccountOwner as Account)
+}
+
+function createSubrogationWithAccountCurrency() : Subrogation {
+  return new Subrogation(tAccountOwnerReference.TAccountOwner.Currency, CurrentLocation)
+}]]></Code>
+  </Wizard>
+</PCF>

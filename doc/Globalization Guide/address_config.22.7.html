@@ -1,0 +1,618 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xml:lang="en" lang="en" xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+    <meta http-equiv="Content-Style-Type" content="text/css" />
+    <!-- MOTW-DISABLED saved from url=(0014)about:internet -->
+    <title>Address Autocompletion and Autofill</title>
+    <link rel="StyleSheet" href="css/address_config.css" type="text/css" media="all" />
+    <link rel="StyleSheet" href="css/webworks.css" type="text/css" media="all" />
+    <link rel="StyleSheet" href="css/css-guidewire-extra.css" type="text/css" media="all" />
+    <script type="text/javascript" language="JavaScript1.2" src="wwhdata/common/context.js"></script>
+    <script type="text/javascript" language="JavaScript1.2" src="wwhdata/common/towwhdir.js"></script>
+    <script type="text/javascript" language="JavaScript1.2" src="wwhdata/common/wwhpagef.js"></script>
+    <script type="text/javascript" language="JavaScript1.2">
+      <!--
+        var  WebWorksRootPath = "";
+      // -->
+    </script>
+    <script type="text/javascript" language="JavaScript1.2">
+      <!--
+        // Set reference to top level help frame
+        //
+        var  WWHFrame = WWHGetWWHFrame("", true);
+      // -->
+    </script>
+    <script type="text/javascript" language="JavaScript1.2" src="scripts/expand.js"></script>
+    <!-- THE FOLLOWING IS A GUIDEWIRE STYLE DEFINITION FOR THE LINK TO THIS FEATURE -->
+    <link rel="StyleSheet" href="css/css-guidewire-extra.css" type="text/css" media="all" />
+    <!-- THE FOLLOWING IS A GUIDEWIRE GSCRIPT FUNCTION FOR THE LINK TO THIS FEATURE -->
+    <script type="text/javascript">
+function guidewire_selectall()
+{
+var text_val=eval("document.linktothisurlform.urlfield");
+text_val.focus();
+text_val.select();
+}
+</script>
+  </head>
+  <body onLoad="WWHUpdate();" onUnload="WWHUnload();" onKeyDown="WWHHandleKeyDown((document.all||document.getElementById||document.layers)?event:null);" onKeyPress="WWHHandleKeyPress((document.all||document.getElementById||document.layers)?event:null);" onKeyUp="WWHHandleKeyUp((document.all||document.getElementById||document.layers)?event:null);">
+    <!-- THE FOLLOWING IS A GUIDEWIRE DIV FOR THE 'LINK TO THIS' FEATURE -->
+    <div id="linkToThisPage" class="popup" style="display: none;">
+      <div class="popupTitle">Link Directly to This Page 
+           <a href="#" onclick="var thePopup = getElementById('linkToThisPage');thePopup.style.display='none';return false;"><img class="popupClosebox" src="wwhelp/wwhimpl/common/images/close.gif" /></a></div>
+      <div style="padding:6px;">
+        <div class="popupText" id="linkToThisPageBookmark">An error has occurred if you see this messsage.</div>
+        <form name="linktothisurlform" method="post" action="" style="width:275px;margin:0px">
+          <input type="text" class="popupURLText" id="linkToThisPageURL" name="urlfield" rows="1" cols="55" onClick="guidewire_selectall();" onFocus="guidewire_selectall();"></input>
+        </form>
+      </div>
+    </div>
+    <br />
+    <div class="WebWorks_Breadcrumbs" style="text-align: left;">
+      <span>BillingCenter Globalization Guide</span> : 
+    <span class="WebWorks_Breadcrumbs" style="text-align: left;"><a class="WebWorks_Breadcrumb_Link" href="p-national.html#2293845">National Formats and Data Configuration</a> : <a class="WebWorks_Breadcrumb_Link" href="address_config.22.1.html#2293845">Configuring Address Information</a> : Address Autocompletion and Autofill</span></div>
+    <hr align="left" />
+    <blockquote>
+      <h3 class="H1_-_Heading_1"><a name="2293845">Address Autocompletion and Autofill</a></h3>
+      <div class="B_-_Body"><a name="2327469">BillingCenter supports automatic fill-in and completion of address information.</a></div>
+      <h6 class="HS_-_Head_Sub"><a name="2474982">Address Autofill</a></h6>
+      <div class="B_-_Body"><a name="2475005">The </a><span class="e_-_emphasis">autofill</span> feature enables you to enter a value in one address field in a Guidewire application and have the application fill in other address fields automatically. </div>
+      <div class="B_-_Body"><a name="2475227">For example, if configured, entering a postal code causes BillingCenter to fill in the city and state or province fields automatically. For example, the user enters a postal code of 99501 for a United States address. BillingCenter sets the city to Anchorage, the state to Alaska, and the county to Anchorage.</a></div>
+      <div class="B_-_Body"><a name="2474995">To trigger autofill, the user must enter a value and then navigate away from the initial address field, such as the postal code field. It is also possible to trigger this functionality by using the autofill icon next to certain address fields. There must also be a unique match, such as state and city to postal code.</a></div>
+      <h6 class="HS_-_Head_Sub"><a name="2331660">Address Autocompletion </a></h6>
+      <div class="B_-_Body"><a name="2487606">The </a><span class="e_-_emphasis">autocomplete</span> feature enables you to enter the first few characters of a field and see a drop-down list showing the matching values. The drop-down list displays possible completions of the entered characters based on the values in other address fields.</div>
+      <div class="B_-_Body"><a name="2423600">For example, suppose that a user sets the </a><span class="ui_-_UI_element">State</span> value in a United States address to CA (California). The user then moves to the <span class="ui_-_UI_element">City</span> field and enters <span class="it_-_input_text">Pa</span> as the start of a city name. If configured, BillingCenter opens a drop-down list that shows names of cities in California that start with <span class="it_-_input_text">Pa</span>, such as:</div>
+      <div class="BI_-_Bullet_Item_outer" style="margin-left: 57pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="BI_-_Bullet_Item_inner" style="width: 15pt; white-space: nowrap">
+                <span class="bu_-_bullet">•	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="BI_-_Bullet_Item_inner"><a name="2423604">Pacifica</a></div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="BI_-_Bullet_Item_outer" style="margin-left: 57pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="BI_-_Bullet_Item_inner" style="width: 15pt; white-space: nowrap">
+                <span class="bu_-_bullet">•	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="BI_-_Bullet_Item_inner"><a name="2488283">Pacoima</a></div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="BI_-_Bullet_Item_outer" style="margin-left: 57pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="BI_-_Bullet_Item_inner" style="width: 15pt; white-space: nowrap">
+                <span class="bu_-_bullet">•	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="BI_-_Bullet_Item_inner"><a name="2475498">Palm Springs</a></div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="BI_-_Bullet_Item_outer" style="margin-left: 57pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="BI_-_Bullet_Item_inner" style="width: 15pt; white-space: nowrap">
+                <span class="bu_-_bullet">•	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="BI_-_Bullet_Item_inner"><a name="2475538">Palo Alto</a></div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="BI_-_Bullet_Item_outer" style="margin-left: 57pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="BI_-_Bullet_Item_inner" style="width: 15pt; white-space: nowrap">
+                <span class="bu_-_bullet">•	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="BI_-_Bullet_Item_inner"><a name="2475562">Panorama City</a></div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="BI_-_Bullet_Item_outer" style="margin-left: 57pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="BI_-_Bullet_Item_inner" style="width: 15pt; white-space: nowrap">
+                <span class="bu_-_bullet">•	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="BI_-_Bullet_Item_inner"><a name="2423605">Pasadena</a></div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="BI_-_Bullet_Item_outer" style="margin-left: 57pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="BI_-_Bullet_Item_inner" style="width: 15pt; white-space: nowrap">
+                <span class="bu_-_bullet">•	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="BI_-_Bullet_Item_inner"><a name="2475581">Paso Robles</a></div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="B_-_Body"><a name="2423607">The user can then select one of the items on the drop-down list to populate the address field.</a></div>
+      <div class="B_-_Body"><a name="2485534">This topic includes:</a></div>
+      <div class="BI_-_Bullet_Item_outer" style="margin-left: 57pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="BI_-_Bullet_Item_inner" style="width: 15pt; white-space: nowrap">
+                <span class="bu_-_bullet">•	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="BI_-_Bullet_Item_inner"><a href="javascript:WWHClickedPopup('global', 'address_config.22.7.html#2474372', '');" title="Address Autocompletion and Autofill" name="2485563">Configuring Autofill and Autocompletion in address-config.xml</a></div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="BI_-_Bullet_Item_outer" style="margin-left: 57pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="BI_-_Bullet_Item_inner" style="width: 15pt; white-space: nowrap">
+                <span class="bu_-_bullet">•	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="BI_-_Bullet_Item_inner"><a href="javascript:WWHClickedPopup('global', 'address_config.22.7.html#2485620', '');" title="Address Autocompletion and Autofill" name="2485576">Configuring Autofill and Autocompletion in a PCF File</a></div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="BI_-_Bullet_Item_outer" style="margin-left: 57pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="BI_-_Bullet_Item_inner" style="width: 15pt; white-space: nowrap">
+                <span class="bu_-_bullet">•	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="BI_-_Bullet_Item_inner"><a href="javascript:WWHClickedPopup('global', 'address_config.22.7.html#2475606', '');" title="Address Autocompletion and Autofill" name="2485591">Address Automatic Completion and Autofill Plugin</a></div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <h4 class="H2_-_Heading_2"><a name="2474372">Configuring Autofill and Autocompletion in </a><span class="cvh_-_computer_voice_in_heading">address-config.xml</span></h4>
+      <div class="B_-_Body"><a name="2474574">To configure the fields that support address autofill and autocompletion for a country, configure that country’s </a><span class="cv_-_computer_voice">address-config.xml</span> file. </div>
+      <div class="N_-_Note">
+        <span class="n_-_note">Note: </span><a name="2484764">The </a><span class="cv_-_computer_voice">address-config.xml</span> file uses zones defined in <span class="cv_-_computer_voice">zone-config.xml</span>. See <a href="javascript:WWHClickedPopup('global', 'localization_jurisdictions.21.7.html#2184191', '');" title="Configuring Zone Information">“Working with Zone Configuration Files”</a>.</div>
+      <div class="B_-_Body"><a name="2474860">BillingCenter stores </a><span class="cv_-_computer_voice">address-config.xml</span> files in country-specific folders under the <span class="cv_-_computer_voice">geodata</span> folder, which you can access in Guidewire Studio. For example, the <span class="cv_-_computer_voice">address-config.xml</span> file for Japan is stored in the following folder:</div>
+      <div class="B_-_Body"><span class="uis_-_UI_element_Studio"><a name="2474584">configuration</a></span> → <span class="uis_-_UI_element_Studio">config</span> → <span class="uis_-_UI_element_Studio">geodata </span><span class="ui_-_UI_element">→</span><span class="uis_-_UI_element_Studio"> JP</span></div>
+      <div class="B_-_Body"><a name="2485297">The following default configuration for the United States, in </a><span class="uis_-_UI_element_Studio">configuration</span> → <span class="uis_-_UI_element_Studio">config</span> → <span class="uis_-_UI_element_Studio">geodata </span><span class="ui_-_UI_element">→</span><span class="uis_-_UI_element_Studio"> US</span>, shows elements that you can use in this file:</div>
+      <PRE class="CF_-_Code_First_Line"><a name="2474382">&lt;AddressDef name="US"&gt;</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2474383">&nbsp;&nbsp;&lt;Match&gt;</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2474384">&nbsp;&nbsp;&nbsp;&nbsp;&lt;Field name="Country" value="US"/&gt;</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2474385">&nbsp;&nbsp;&lt;/Match&gt;</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2474386">&nbsp;&nbsp;&lt;Fields&gt;</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2474387">&nbsp;&nbsp;&nbsp;&nbsp;&lt;Field name="City" zonecode="city"&gt;</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2474388">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;AutoFillFromZone code="zip"/&gt;</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2474389">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;AutoFillFromZone code="state"/&gt;</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2474390">&nbsp;&nbsp;&nbsp;&nbsp;&lt;/Field&gt;</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2474391">&nbsp;&nbsp;&nbsp;&nbsp;&lt;Field name="County" zonecode="county"&gt;</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2474392">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;AutoFillFromZone code="zip"/&gt;</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2474393">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;AutoFillFromZone code="city"/&gt;</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2485113">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;AutoFillFromZone code="state"/&gt;</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2474394">&nbsp;&nbsp;&nbsp;&nbsp;&lt;/Field&gt;</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2474395">&nbsp;&nbsp;&nbsp;&nbsp;&lt;Field name="State" zonecode="state"&gt;</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2474396">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;AutoFillFromZone code="zip"/&gt;</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2474397">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;AutoFillFromZone code="city"/&gt;</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2474398">&nbsp;&nbsp;&nbsp;&nbsp;&lt;/Field&gt;</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2474399">&nbsp;&nbsp;&nbsp;&nbsp;&lt;Field name="PostalCode" zonecode="zip"&gt;</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2474400">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;AutoFillFromZone code="city"/&gt;</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2474401">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;AutoFillFromZone code="state"/&gt;</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2485173">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;ValidatorDef</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2474402">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;value="[0-9]{5}(-[0-9]{4})?"</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2474403">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;description="Validator.PostalCode.US"</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2474404">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;input-mask="#####-####"/&gt;</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2474405">&nbsp;&nbsp;&nbsp;&nbsp;&lt;/Field&gt;</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2474406">&nbsp;&nbsp;&lt;/Fields&gt;</a></PRE>
+      <PRE class="CL_-_Code_Last_Line"><a name="2474407">&lt;/AddressDef&gt;</a></PRE>
+      <div class="BKN_-_Body_002c_Keep_Next"><a name="2474408">The following table describes the elements in the </a><span class="cv_-_computer_voice">address-config.xml</span> file.</div>
+      <div class="T_-_Table"><a name="2474453">&nbsp;</a></div>
+      <table class="withoutHeading" style="text-align: left" border="0" cellpadding="10" cellspacing="0" summary="">
+        <caption></caption>
+        <tr>
+          <td style="border-bottom-color: #c0d1d1; border-bottom-style: solid; border-bottom-width: 0.15pt; border-top-color: #000000; border-top-style: solid; border-top-width: 0.5pt; padding-bottom: 4pt; padding-left: 2pt; padding-right: 8pt; padding-top: 0pt; vertical-align: top">
+            <div class="TT_-_Table_Text" style="color: #000000; font-family: &quot;Lucida Sans Typewriter&quot;; font-style: normal; font-variant: normal; font-weight: normal; margin-top: 3.0pt; text-transform: none; vertical-align: baseline"><span class="cvt_-_computer_voice_table"><a name="2474411">AddressDef</a></span></div>
+          </td>
+          <td style="border-bottom-color: #c0d1d1; border-bottom-style: solid; border-bottom-width: 0.15pt; border-top-color: #000000; border-top-style: solid; border-top-width: 0.5pt; padding-bottom: 4pt; padding-left: 2pt; padding-right: 8pt; padding-top: 0pt; vertical-align: top">
+            <div class="TT_-_Table_Text"><a name="2474413">The name of the address format. This element takes a </a><span class="cvt_-_computer_voice_table">name</span> attribute and an optional <span class="cvt_-_computer_voice_table">priority</span> attribute. By convention, the <span class="cvt_-_computer_voice_table">name</span> is the country code.</div>
+            <div class="TT_-_Table_Text"><a name="2474414">A country can have more than one address format—for example, it is possible that different regions have different formats. The </a><span class="cvt_-_computer_voice_table">priority</span> attribute specifies which address definition has priority if several of them match. The highest priority is 1, the next lower one is 2, and so on.</div>
+          </td>
+        </tr>
+        <tr>
+          <td style="border-bottom-color: #c0d1d1; border-bottom-style: solid; border-bottom-width: 0.15pt; border-top-color: #c0d1d1; border-top-style: solid; border-top-width: 0.15pt; padding-bottom: 4pt; padding-left: 2pt; padding-right: 8pt; padding-top: 0pt; vertical-align: top">
+            <div class="TT_-_Table_Text" style="color: #000000; font-family: &quot;Lucida Sans Typewriter&quot;; font-style: normal; font-variant: normal; font-weight: normal; margin-top: 3.0pt; text-transform: none; vertical-align: baseline"><span class="cvt_-_computer_voice_table"><a name="2474416">Match</a></span></div>
+          </td>
+          <td style="border-bottom-color: #c0d1d1; border-bottom-style: solid; border-bottom-width: 0.15pt; border-top-color: #c0d1d1; border-top-style: solid; border-top-width: 0.15pt; padding-bottom: 4pt; padding-left: 2pt; padding-right: 8pt; padding-top: 0pt; vertical-align: top">
+            <div class="TT_-_Table_Text"><a name="2474421">Each </a><span class="cvt_-_computer_voice_table">AddressDef</span> must contain one <span class="cvt_-_computer_voice_table">Match</span> element. BillingCenter matches only on the country. The <span class="cvt_-_computer_voice_table">Match</span> element contains a <span class="cvt_-_computer_voice_table">Field</span> subelement that defines the <span class="cvt_-_computer_voice_table">name</span> and <span class="cvt_-_computer_voice_table">value</span> attributes that the application uses to determine which definition applies.</div>
+          </td>
+        </tr>
+        <tr>
+          <td style="border-bottom-color: #c0d1d1; border-bottom-style: solid; border-bottom-width: 0.15pt; border-top-color: #c0d1d1; border-top-style: solid; border-top-width: 0.15pt; padding-bottom: 4pt; padding-left: 2pt; padding-right: 8pt; padding-top: 0pt; vertical-align: top">
+            <div class="TT_-_Table_Text" style="color: #000000; font-family: &quot;Lucida Sans Typewriter&quot;; font-style: normal; font-variant: normal; font-weight: normal; margin-top: 3.0pt; text-transform: none; vertical-align: baseline"><span class="cvt_-_computer_voice_table"><a name="2474423">Fields</a></span></div>
+          </td>
+          <td style="border-bottom-color: #c0d1d1; border-bottom-style: solid; border-bottom-width: 0.15pt; border-top-color: #c0d1d1; border-top-style: solid; border-top-width: 0.15pt; padding-bottom: 4pt; padding-left: 2pt; padding-right: 8pt; padding-top: 0pt; vertical-align: top">
+            <div class="TT_-_Table_Text"><a name="2474425">Each </a><span class="cvt_-_computer_voice_table">AddressDef</span> contains a single <span class="cvt_-_computer_voice_table">Fields</span> element that contains a list of the address <span class="cvt_-_computer_voice_table">Field</span> elements. </div>
+          </td>
+        </tr>
+        <tr>
+          <td style="border-bottom-color: #c0d1d1; border-bottom-style: solid; border-bottom-width: 0.15pt; border-top-color: #c0d1d1; border-top-style: solid; border-top-width: 0.15pt; padding-bottom: 4pt; padding-left: 2pt; padding-right: 8pt; padding-top: 0pt; vertical-align: top">
+            <div class="TT_-_Table_Text" style="color: #000000; font-family: &quot;Lucida Sans Typewriter&quot;; font-style: normal; font-variant: normal; font-weight: normal; margin-top: 3.0pt; text-transform: none; vertical-align: baseline"><span class="cvt_-_computer_voice_table"><a name="2474427">Field</a></span></div>
+          </td>
+          <td style="border-bottom-color: #c0d1d1; border-bottom-style: solid; border-bottom-width: 0.15pt; border-top-color: #c0d1d1; border-top-style: solid; border-top-width: 0.15pt; padding-bottom: 4pt; padding-left: 2pt; padding-right: 8pt; padding-top: 0pt; vertical-align: top">
+            <div class="TT_-_Table_Text"><a name="2474429">Specifies an address field. Each field takes a name that must match a property on the </a><span class="cvt_-_computer_voice_table">Address</span> entity. The <span class="cvt_-_computer_voice_table">Field</span> element can appear in the <span class="cvt_-_computer_voice_table">Match</span> element or the <span class="cvt_-_computer_voice_table">Fields</span> element. </div>
+            <div class="TT_-_Table_Text"><a name="2487599">In the </a><span class="cvt_-_computer_voice_table">Match</span> element, the <span class="cvt_-_computer_voice_table">Field</span> element has a required <span class="cvt_-_computer_voice_table">name</span> attribute and an optional <span class="cvt_-_computer_voice_table">value</span> attribute, which is the <span class="cvt_-_computer_voice_table">code</span> value from the <span class="cvt_-_computer_voice_table">Country</span> typelist. It has no child elements.</div>
+            <div class="TT_-_Table_Text"><a name="2487600">In the </a><span class="cvt_-_computer_voice_table">Fields</span> element, the <span class="cvt_-_computer_voice_table">Field</span> element has a required <span class="cvt_-_computer_voice_table">name</span> attribute and optional <span class="cvt_-_computer_voice_table">zonecode</span> and <span class="cvt_-_computer_voice_table">autoCompleteTriggerChars</span> attributes. It can also have the child elements <span class="cvt_-_computer_voice_table">AutoFillFromZone</span> and <span class="cvt_-_computer_voice_table">ValidatorDef</span>. </div>
+            <div class="BIT_-_Bullet_Item_Table_outer" style="margin-left: 2.16pt">
+              <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+                <tr style="vertical-align: baseline">
+                  <td>
+                    <div class="BIT_-_Bullet_Item_Table_inner" style="width: 7.199999999999999pt; white-space: nowrap">
+                      <span class="but_-_bullet_in_table">•	</span>
+                    </div>
+                  </td>
+                  <td width="100%">
+                    <div class="BIT_-_Bullet_Item_Table_inner"><a name="2487588">The </a><span class="cvt_-_computer_voice_table">value</span> attribute is a valid value for the <span class="cvt_-_computer_voice_table">Field</span>. This value is usually a code value from a typelist, such as a state typecode from the typelist for a <span class="cvt_-_computer_voice_table">Field</span> with the <span class="cv_-_computer_voice">name</span> set to <span class="cv_-_computer_voice">State</span>.</div>
+                  </td>
+                </tr>
+              </table>
+            </div>
+            <div class="BIT_-_Bullet_Item_Table_outer" style="margin-left: 2.16pt">
+              <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+                <tr style="vertical-align: baseline">
+                  <td>
+                    <div class="BIT_-_Bullet_Item_Table_inner" style="width: 7.199999999999999pt; white-space: nowrap">
+                      <span class="but_-_bullet_in_table">•	</span>
+                    </div>
+                  </td>
+                  <td width="100%">
+                    <div class="BIT_-_Bullet_Item_Table_inner"><a name="2487589">The </a><span class="cvt_-_computer_voice_table">zonecode</span> attribute corresponds to a <span class="cvt_-_computer_voice_table">Zone</span> code configured for the given country in <span class="cvt_-_computer_voice_table">zone-config.xml</span>. This value links the <span class="cvt_-_computer_voice_table">Address</span> configuration to the <span class="cvt_-_computer_voice_table">Zone</span> configuration. For information on zone configuration, see <a href="javascript:WWHClickedPopup('global', 'localization_jurisdictions.21.7.html#2184191', '');" title="Configuring Zone Information">“Working with Zone Configuration Files”</a>.</div>
+                  </td>
+                </tr>
+              </table>
+            </div>
+            <div class="BIT_-_Bullet_Item_Table_outer" style="margin-left: 2.16pt">
+              <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+                <tr style="vertical-align: baseline">
+                  <td>
+                    <div class="BIT_-_Bullet_Item_Table_inner" style="width: 7.199999999999999pt; white-space: nowrap">
+                      <span class="but_-_bullet_in_table">•	</span>
+                    </div>
+                  </td>
+                  <td width="100%">
+                    <div class="BIT_-_Bullet_Item_Table_inner"><a name="2474437">The </a><span class="cvt_-_computer_voice_table">autoCompleteTriggerChars</span> attribute specifies the number of characters to enter before the application triggers autocomplete. The default value is 0 (zero).</div>
+                  </td>
+                </tr>
+              </table>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td style="border-bottom-color: #c0d1d1; border-bottom-style: solid; border-bottom-width: 0.15pt; border-top-color: #c0d1d1; border-top-style: solid; border-top-width: 0.15pt; padding-bottom: 4pt; padding-left: 2pt; padding-right: 8pt; padding-top: 0pt; vertical-align: top">
+            <div class="TT_-_Table_Text" style="color: #000000; font-family: &quot;Lucida Sans Typewriter&quot;; font-style: normal; font-variant: normal; font-weight: normal; margin-top: 3.0pt; text-transform: none; vertical-align: baseline"><span class="cvt_-_computer_voice_table"><a name="2474439">AutoFillFromZone</a></span></div>
+          </td>
+          <td style="border-bottom-color: #c0d1d1; border-bottom-style: solid; border-bottom-width: 0.15pt; border-top-color: #c0d1d1; border-top-style: solid; border-top-width: 0.15pt; padding-bottom: 4pt; padding-left: 2pt; padding-right: 8pt; padding-top: 0pt; vertical-align: top">
+            <div class="TT_-_Table_Text"><a name="2474444">Specifies a field that is examined for autofill and autocompletion of the field. BillingCenter uses the zone </a><span class="cvt_-_computer_voice_table">code</span> to look up the field <span class="cvt_-_computer_voice_table">value</span>. See <a href="javascript:WWHClickedPopup('global', 'localization_jurisdictions.21.7.html#2184191', '');" title="Configuring Zone Information">“Working with Zone Configuration Files”</a>.</div>
+          </td>
+        </tr>
+        <tr>
+          <td style="border-bottom-color: #000000; border-bottom-style: solid; border-bottom-width: 0.5pt; border-top-color: #c0d1d1; border-top-style: solid; border-top-width: 0.15pt; padding-bottom: 4pt; padding-left: 2pt; padding-right: 8pt; padding-top: 0pt; vertical-align: top">
+            <div class="TT_-_Table_Text" style="color: #000000; font-family: &quot;Lucida Sans Typewriter&quot;; font-style: normal; font-variant: normal; font-weight: normal; margin-top: 3.0pt; text-transform: none; vertical-align: baseline"><span class="cvt_-_computer_voice_table"><a name="2474446">ValidatorDef</a></span></div>
+          </td>
+          <td style="border-bottom-color: #000000; border-bottom-style: solid; border-bottom-width: 0.5pt; border-top-color: #c0d1d1; border-top-style: solid; border-top-width: 0.15pt; padding-bottom: 4pt; padding-left: 2pt; padding-right: 8pt; padding-top: 0pt; vertical-align: top">
+            <div class="TT_-_Table_Text"><a name="2474448">Contains information for validating the field in the optional attributes </a><span class="cvt_-_computer_voice_table">value</span>, <span class="cvt_-_computer_voice_table">description</span>, and <span class="cvt_-_computer_voice_table">input-mask.</span></div>
+            <div class="TT_-_Table_Text"><span class="s_-_strong"><a name="2474884">Note:</a></span> Do not define field validators in <span class="cv_-_computer_voice">address-config.xml</span>. Guidewire recommends that you define them in <span class="cv_-_computer_voice">fieldvalidators.xml</span>. See <a href="javascript:WWHClickedPopup('config', 'fieldvalidators.25.2.html#2205492', '');" title="Field Validators">“Field Validators” in the </a><span class="bt_-_book_title"><a href="javascript:WWHClickedPopup('config', 'fieldvalidators.25.2.html#2205492', '');" title="Field Validators">Configuration Guide</a></span>.</div>
+          </td>
+        </tr>
+      </table>
+      <div class="B_-_Body"><a name="2474454">The previous </a><span class="cv_-_computer_voice">address-config.xml</span> example defines a <span class="cv_-_computer_voice">Match</span> on the country with the match value as <span class="cv_-_computer_voice">US</span>. Additionally, it defines four fields:</div>
+      <div class="BI_-_Bullet_Item_outer" style="margin-left: 57pt; margin-bottom: 2.0pt; vertical-align: baseline">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="BI_-_Bullet_Item_inner" style="width: 15pt; white-space: nowrap; color: #000000; font-style: normal; font-variant: normal; font-weight: normal; text-transform: none">
+                <span class="bu_-_bullet">•	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="BI_-_Bullet_Item_inner" style="color: #000000; font-style: normal; font-variant: normal; font-weight: normal; text-transform: none"><span class="cvt_-_computer_voice_table"><a name="2474455">City</a></span></div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="BI_-_Bullet_Item_outer" style="margin-left: 57pt; margin-bottom: 2.0pt; vertical-align: baseline">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="BI_-_Bullet_Item_inner" style="width: 15pt; white-space: nowrap; color: #000000; font-style: normal; font-variant: normal; font-weight: normal; text-transform: none">
+                <span class="bu_-_bullet">•	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="BI_-_Bullet_Item_inner" style="color: #000000; font-style: normal; font-variant: normal; font-weight: normal; text-transform: none"><span class="cvt_-_computer_voice_table"><a name="2474456">County</a></span></div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="BI_-_Bullet_Item_outer" style="margin-left: 57pt; margin-bottom: 2.0pt; vertical-align: baseline">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="BI_-_Bullet_Item_inner" style="width: 15pt; white-space: nowrap; color: #000000; font-style: normal; font-variant: normal; font-weight: normal; text-transform: none">
+                <span class="bu_-_bullet">•	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="BI_-_Bullet_Item_inner" style="color: #000000; font-style: normal; font-variant: normal; font-weight: normal; text-transform: none"><span class="cvt_-_computer_voice_table"><a name="2474457">State</a></span></div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="BI_-_Bullet_Item_outer" style="margin-left: 57pt; margin-bottom: 2.0pt; vertical-align: baseline">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="BI_-_Bullet_Item_inner" style="width: 15pt; white-space: nowrap; color: #000000; font-style: normal; font-variant: normal; font-weight: normal; text-transform: none">
+                <span class="bu_-_bullet">•	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="BI_-_Bullet_Item_inner" style="color: #000000; font-style: normal; font-variant: normal; font-weight: normal; text-transform: none"><span class="cvt_-_computer_voice_table"><a name="2474458">PostalCode</a></span></div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="B_-_Body"><a name="2474459">Each field defines one or more </a><span class="cv_-_computer_voice">AutoFillFromZone</span> elements. Looking at the <span class="cv_-_computer_voice">County</span>, you can see that the application fills the <span class="cv_-_computer_voice">County</span> from the <span class="cv_-_computer_voice">zip</span>, the <span class="cv_-_computer_voice">city</span>, and the <span class="cv_-_computer_voice">state</span>. Each <span class="cv_-_computer_voice">AutoFillFromZone</span> entry must correspond to a <span class="cv_-_computer_voice">&lt;Link&gt;</span> definition in <span class="cv_-_computer_voice">zone-config.xml</span>, as described in <a href="javascript:WWHClickedPopup('global', 'localization_jurisdictions.21.7.html#2184191', '');" title="Configuring Zone Information">“Working with Zone Configuration Files”</a>. That file specifies that autofill can use ZIP code and city for the look-up operation. </div>
+      <div class="B_-_Body"><a name="2474469">As BillingCenter loads </a><span class="cv_-_computer_voice">address-config.xml</span>, it validates the configuration. BillingCenter verifies that every <span class="cv_-_computer_voice">Field</span> element, regardless of whether it is defined in <span class="cv_-_computer_voice">Match</span> or <span class="cv_-_computer_voice">Fields</span>, corresponds to a field on the <span class="cv_-_computer_voice">Address</span> entity. Then, BillingCenter verifies that each <span class="cv_-_computer_voice">AutoFillFromZone</span> element references a zone in <span class="cv_-_computer_voice">zone-config.xml</span>.</div>
+      <h6 class="HS_-_Head_Sub"><a name="2332361">See also</a></h6>
+      <div class="BI_-_Bullet_Item_outer" style="margin-left: 57pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="BI_-_Bullet_Item_inner" style="width: 15pt; white-space: nowrap">
+                <span class="bu_-_bullet">•	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="BI_-_Bullet_Item_inner"><a href="javascript:WWHClickedPopup('integration', 'plugins-other.19.2.html#2530430', '');" title="Automatic Address Completion and Fill-in Plugin" name="2485618">“Automatic Address Completion and Fill-in Plugin” in the </a><span class="bt_-_book_title"><a href="javascript:WWHClickedPopup('integration', 'plugins-other.19.2.html#2530430', '');" title="Automatic Address Completion and Fill-in Plugin">Integration Guide</a></span></div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <h4 class="H2_-_Heading_2"><a name="2485620">Configuring Autofill and Autocompletion in a PCF File</a></h4>
+      <div class="B_-_Body"><a name="2485621">You can configure autofill and autocomplete after you have configured zone mapping and addressing and have imported your zone data. The main classes used for address autofill and autocomplete in PCF files are the following classes:</a></div>
+      <div class="BI_-_Bullet_Item_outer" style="margin-left: 57pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="BI_-_Bullet_Item_inner" style="width: 15pt; white-space: nowrap">
+                <span class="bu_-_bullet">•	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="BI_-_Bullet_Item_inner"><span class="cv_-_computer_voice"><a name="2485352">gw.api.contact</a></span>.<span class="cv_-_computer_voice">AddressAutocompleteHandler</span> provides methods for getting matching values from the database.</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="BI_-_Bullet_Item_outer" style="margin-left: 57pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="BI_-_Bullet_Item_inner" style="width: 15pt; white-space: nowrap">
+                <span class="bu_-_bullet">•	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="BI_-_Bullet_Item_inner"><span class="cv_-_computer_voice"><a name="2485353">gw.api.contact.AddressAutocompleteUtil</a></span> supplies methods for automatically completing an address field. </div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="B_-_Body"><a name="2485354">You can integrate these components into a PCF file to:</a></div>
+      <div class="BI_-_Bullet_Item_outer" style="margin-left: 57pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="BI_-_Bullet_Item_inner" style="width: 15pt; white-space: nowrap">
+                <span class="bu_-_bullet">•	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="BI_-_Bullet_Item_inner"><a name="2485355">Complete a field automatically after you type in a few characters. For example, if you enter </a><span class="cv_-_computer_voice">941</span> for the ZIP code, the autocomplete list shows <span class="cv_-_computer_voice">94110</span>, <span class="cv_-_computer_voice">94111</span>, <span class="cv_-_computer_voice">94112</span>, and so forth.</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="BI_-_Bullet_Item_outer" style="margin-left: 57pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="BI_-_Bullet_Item_inner" style="width: 15pt; white-space: nowrap">
+                <span class="bu_-_bullet">•	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="BI_-_Bullet_Item_inner"><a name="2485356">Fill other address fields after you complete a field and tab out of it. For example, after you enter the ZIP code </a><span class="cv_-_computer_voice">94115</span>, autofill can fill in the city, county, and state as <span class="cv_-_computer_voice">San Francisco</span>, <span class="cv_-_computer_voice">San Francisco,</span> and <span class="cv_-_computer_voice">California</span> respectively. This level of autofill happens only if there is a unique match between the fields. For example, with San Francisco as the city and California as the state, autofilling the ZIP code would not work because San Francisco has multiple ZIP codes. This matching is done in the default autocompletion and autofill plugin, matching between the fields and the zone definitions. </div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="BI_-_Bullet_Item_outer" style="margin-left: 57pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="BI_-_Bullet_Item_inner" style="width: 15pt; white-space: nowrap">
+                <span class="bu_-_bullet">•	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="BI_-_Bullet_Item_inner"><a name="2485360">Force an override of already filled fields. By default, if a field already has a value, BillingCenter does not overwrite it. You can force it to override the field value with zone data by using a method on </a><span class="cv_-_computer_voice">AddressAutocompleteUtil</span> to autofill the address. </div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="B_-_Body"><a name="2485361">There are two PCF widgets that you can use to support autofill: the </a><span class="cv_-_computer_voice">AddressAutoFillRange</span> and the <span class="cv_-_computer_voice">AddressAutoFillInput</span> widgets. Both widgets provide a small icon for autofilling the fields on demand.</div>
+      <div class="H3_-_Heading_3_outer" style="margin-left: 36pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <h5 class="H3_-_Heading_3_inner" style="width: 18pt; white-space: nowrap"></h5>
+            </td>
+            <td width="100%">
+              <h5 class="H3_-_Heading_3_inner"><a name="2485362">Adding Autocomplete</a></h5>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="B_-_Body"><a name="2485363">To use the address autocomplete feature, first create an </a><span class="cv_-_computer_voice">AddressAutocompleteHandler</span> instance in the appropriate PCF file. You create the instance by calling the factory method <span class="cv_-_computer_voice">gw.api.contact.AddressAutocompleteHandler.createHandler</span> with the following arguments:</div>
+      <div class="BI_-_Bullet_Item_outer" style="margin-left: 57pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="BI_-_Bullet_Item_inner" style="width: 15pt; white-space: nowrap">
+                <span class="bu_-_bullet">•	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="BI_-_Bullet_Item_inner"><a name="2485364">A </a><span class="cv_-_computer_voice">String</span> identifying the field to complete</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="BI_-_Bullet_Item_outer" style="margin-left: 57pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="BI_-_Bullet_Item_inner" style="width: 15pt; white-space: nowrap">
+                <span class="bu_-_bullet">•	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="BI_-_Bullet_Item_inner"><a name="2485365">A comma-separated list of the reference fields, field names of the </a><span class="cv_-_computer_voice">Address</span> entity, that the application passes to the handler</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="BI_-_Bullet_Item_outer" style="margin-left: 57pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="BI_-_Bullet_Item_inner" style="width: 15pt; white-space: nowrap">
+                <span class="bu_-_bullet">•	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="BI_-_Bullet_Item_inner"><a name="2485369">A </a><span class="cv_-_computer_voice">Boolean</span> value that specifies whether BillingCenter waits for a key press before fetching suggestions</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="B_-_Body"><a name="2485370">You edit the PCF file in Guidewire Studio and add the factory method in the </a><span class="uis_-_UI_element_Studio">Variables</span> tab of the PCF widget. The call to the method is in the <span class="cv_-_computer_voice">initialValue</span> field. The following figure shows an example of constructing an <span class="cv_-_computer_voice">AddressAutocompleteHandler</span> called <span class="cv_-_computer_voice">cityhandler</span> in the <span class="cv_-_computer_voice">GlobalAddressInputSet.default.pcf</span> file: </div>
+      <div class="F_-_Figure"><a name="2485374"><img class="Default" src="images/addressautocompletehandler.png" style="display: inline; float: none; left: 0.0; top: 0.0" alt="" /></a></div>
+      <div class="B_-_Body"><a name="2485375">From the method call, you can see that this handler operates on the </a><span class="cv_-_computer_voice">City</span> field. The handler requires the following set of reference fields: <span class="cv_-_computer_voice">City</span>, <span class="cv_-_computer_voice">County</span>, <span class="cv_-_computer_voice">State</span>, <span class="cv_-_computer_voice">PostalCode</span>, and <span class="cv_-_computer_voice">Country</span>.</div>
+      <div class="B_-_Body"><a name="2485376">Next, edit the widget that uses the handler. Specify which handler is responsible for autofill in the </a><span class="cv_-_computer_voice">autoComplete</span> property and the arguments the handler expects in the <span class="cv_-_computer_voice">autoCompleteArgIds</span> field.</div>
+      <div class="F_-_Figure"><a name="2485381"><img class="Default" src="images/cityhandler.png" style="display: inline; float: none; left: 0.0; top: 0.0" alt="" /></a></div>
+      <div class="B_-_Body"><a name="2485382">This example uses an </a><span class="cv_-_computer_voice">AddressAutoFillInput</span> widget for the city field. This widget displays an autofill icon beside the field that acts as a cue. You do not have to use this specific type of widget for this purpose.</div>
+      <div class="H3_-_Heading_3_outer" style="margin-left: 36pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <h5 class="H3_-_Heading_3_inner" style="width: 18pt; white-space: nowrap"></h5>
+            </td>
+            <td width="100%">
+              <h5 class="H3_-_Heading_3_inner"><a name="2485383">Adding Autofill</a></h5>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="B_-_Body"><a name="2485384">Setting </a><span class="cv_-_computer_voice">PostOnChange</span> enables you to change one field in a Guidewire user interface based on a change in another field. You configure <span class="cv_-_computer_voice">PostOnChange</span> by setting the <span class="cv_-_computer_voice">PostOnChange</span> element of an input widget. </div>
+      <div class="B_-_Body"><a name="2485385">The following figure depicts the use of a </a><span class="cv_-_computer_voice">PostOnChange</span> element in the <span class="cv_-_computer_voice">City</span> input field:</div>
+      <div class="F_-_Figure"><a name="2485389"><img class="Default" src="images/autofill-postonchange.png" style="display: inline; float: none; left: 0.0; top: 0.0" alt="" /></a></div>
+      <div class="B_-_Body"><a name="2485390">The </a><span class="cv_-_computer_voice">onChange</span> property uses the <span class="cv_-_computer_voice">AddressAutocompleteUtil.autofillAddress</span> method to get the <span class="cv_-_computer_voice">City</span> value.</div>
+      <div class="B_-_Body"><a name="2485432">BillingCenter fills in the field value only if there is a unique match. If there is no unique match, the autocomplete configuration on the same field forces the application to show a narrowed list of possible matches.</a></div>
+      <h4 class="H2_-_Heading_2"><a name="2475606">Address Automatic Completion and Autofill Plugin</a></h4>
+      <div class="B_-_Body"><a name="2475607">The address automatic completion plugin template </a><span class="cv_-_computer_voice">IAddressAutocompletePlugin</span> declares methods that support automatic completion and fill-in for BillingCenter. The base configuration of BillingCenter provides the Java implementation class <span class="cv_-_computer_voice">DefaultAddressAutocompletePlugin</span>. This class supports the use of <span class="cv_-_computer_voice">address-config.xml</span> and <span class="cv_-_computer_voice">zone-config.xml</span> described earlier in this topic. If you want to implement your own autofill and autocompletion configuration, such as one that does not use <span class="cv_-_computer_voice">zone-config.xml</span>, you can create a class that implements <span class="cv_-_computer_voice">IAddressAutocompletePlugin</span>. Alternatively, you can extend <span class="cv_-_computer_voice">DefaultAddressAutocompletePlugin</span> and override specific methods.</div>
+      <div class="B_-_Body"><a name="2487960">Two methods that you might override are:</a></div>
+      <div class="BI_-_Bullet_Item_outer" style="margin-left: 57pt; margin-bottom: 2.0pt; vertical-align: baseline">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="BI_-_Bullet_Item_inner" style="width: 15pt; white-space: nowrap; color: #000000; font-style: normal; font-variant: normal; font-weight: normal; text-transform: none">
+                <span class="bu_-_bullet">•	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="BI_-_Bullet_Item_inner" style="color: #000000; font-style: normal; font-variant: normal; font-weight: normal; text-transform: none"><span class="cv_-_computer_voice"><a name="2488005">autofillAddress(address : AddressFillable, triggerFieldName : String, doOverride : boolean)</a></span></div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="LP_-_List_Para"><a name="2488051">Autofills the address if there is a unique match. </a></div>
+      <div class="BI_-_Bullet_Item_outer" style="margin-left: 57pt; margin-bottom: 2.0pt; vertical-align: baseline">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="BI_-_Bullet_Item_inner" style="width: 15pt; white-space: nowrap; color: #000000; font-style: normal; font-variant: normal; font-weight: normal; text-transform: none">
+                <span class="bu_-_bullet">•	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="BI_-_Bullet_Item_inner" style="color: #000000; font-style: normal; font-variant: normal; font-weight: normal; text-transform: none"><span class="cv_-_computer_voice"><a name="2488020">getStates(country : Country): States[]</a></span></div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="LP_-_List_Para"><a name="2488341">Gets the states for the given country.</a></div>
+      <script type="text/javascript" language="JavaScript1.2">
+        <!--
+          // Clear related topics
+          //
+          WWHClearRelatedTopics();
+
+          document.writeln(WWHRelatedTopicsInlineHTML());
+        // -->
+      </script>
+    </blockquote>
+    <script type="text/javascript" language="JavaScript1.2">
+      <!--
+        document.write(WWHRelatedTopicsDivTag() + WWHPopupDivTag() + WWHALinksDivTag());
+      // -->
+    </script>
+  </body>
+</html>

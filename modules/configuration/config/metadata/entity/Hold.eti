@@ -1,0 +1,40 @@
+<?xml version="1.0"?>
+<entity
+  xmlns="http://guidewire.com/datamodel"
+  entity="Hold"
+  type="retireable"
+  desc="A hold placed on various billing activities"
+  subpackage="troubleticket"
+  loadable="false"
+  platform="false"
+  table="hold">
+  <implementsEntity
+    name="NotInCurrencySilo"/>
+  <implementsEntity
+    name="Validatable"/>
+  <implementsEntity
+    name="Assignable"/>
+  <implementsEntity
+    name="BCAssignable"/>
+  <!-- A Hold always requires an associated Trouble Ticket -->
+  <foreignkey
+    name="TroubleTicket"
+    desc="The trouble ticket associated with this hold."
+    columnName="TroubleTicketID"
+    fkentity="TroubleTicket"
+    importableagainstexistingobject="false"
+    nullok="false"
+    setterScriptability="doesNotExist"/>
+  <!-- Array that indicates the types of automated processes that the Hold will block -->
+  <array
+    name="HoldTypes"
+    desc="Types of automated processes that should be blocked by this hold"
+    arrayentity="HoldTypeEntry"
+    exportable="false"
+    owner="true">
+    <link-association>
+      <typelist-map
+        field="HoldType"/>
+    </link-association>
+  </array>
+</entity>

@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?><subtype xmlns="http://guidewire.com/datamodel" desc="A ChargeSlicingModifier modifies any of a payment plan's charge slicing settings.  It uses a ChargeSlicingOverrides, which specifies which settings to modify." entity="ChargeSlicingModifier" subpackage="invoice" supertype="PaymentPlanModifier">
+  <implementsInterface iface="gw.api.domain.invoice.PaymentPlanModifierMethods" impl="gw.paymentplanmodifier.ChargeSlicingModifierMethodsImpl"/>
+  <foreignkey columnName="PaymentPlanID" desc="The payment plan that uses this modifier for its overrides." fkentity="PaymentPlan" getterScriptability="hidden" name="PaymentPlan" nullok="true" setterScriptability="hidden"/>
+  <typekey desc="The billing instruction type that this modifier applies to." getterScriptability="hidden" name="BillingInstructionType" nullok="true" setterScriptability="hidden" typelist="BillingInstruction"/>
+  <onetoone desc="The overrides of the PaymentPlan's charge slicing settings." fkentity="ChargeSlicingOverrides" name="ChargeSlicingOverrides" nullok="true" owner="true" setterScriptability="hidden"/>
+</subtype>

@@ -1,0 +1,149 @@
+<?xml version="1.0"?>
+<PCF
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:noNamespaceSchemaLocation="../../../../../pcf.xsd">
+  <Popup
+    beforeCommit="assignItemsToPayer()"
+    canEdit="true"
+    id="AssignInvoiceItemsToNewPayerPopup"
+    startInEditMode="true"
+    title="displaykey.Web.AssignInvoiceItemsToNewPayerPopup.Title">
+    <LocationEntryPoint
+      signature="AssignInvoiceItemsToNewPayerPopup(invoiceItems : InvoiceItem[], currentAccount : Account, chargesToAssign : Charge[])"/>
+    <Variable
+      name="invoiceItems"
+      type="InvoiceItem[]"/>
+    <Variable
+      name="currentAccount"
+      type="Account"/>
+    <Variable
+      name="newPayerAccount"
+      type="Account"/>
+    <Variable
+      initialValue="true"
+      name="isAssignAllItemsSelected"
+      type="boolean"/>
+    <Variable
+      initialValue="computeItemsToAssign()"
+      name="itemsToAssign"
+      type="InvoiceItem[]"/>
+    <Variable
+      initialValue="new web.account.AccountSearchConverter()"
+      name="accountSearchConverter"
+      type="web.account.AccountSearchConverter"/>
+    <Variable
+      initialValue="false"
+      name="isReversePaymentsSelected"
+      type="boolean"/>
+    <Variable
+      initialValue="false"
+      name="createInvoiceForToday"
+      type="boolean"/>
+    <Variable
+      name="chargesToAssign"
+      type="Charge[]"/>
+    <Variable
+      initialValue="null"
+      name="overridingInvoiceStream"
+      type="InvoiceStream"/>
+    <Screen
+      id="AssignInvoiceItemsToNewPayerScreen">
+      <Toolbar>
+        <EditButtons
+          editVisible="false"
+          updateLabel="displaykey.Button.Execute"
+          updateVisible="newPayerAccount != null"/>
+      </Toolbar>
+      <AlertBar
+        id="notOwnerOrPayerWarning"
+        label="displaykey.Web.AssignInvoiceItemsToNewPayerPopup.NotOwnerOrPayerWarning(currentAccount.DisplayName)"
+        visible="hasNonOwnedOrPaidItem()"/>
+      <DetailViewPanel>
+        <InputColumn>
+          <PickerInput
+            editable="true"
+            id="PayerAccount"
+            inputConversion="accountSearchConverter.getAccount( VALUE )"
+            label="displaykey.Web.AssignInvoiceItemsToNewPayerPopup.NewPayerAccount"
+            onPick="overridingInvoiceStream = null"
+            pickLocation="AccountSearchPopup.push()"
+            value="newPayerAccount">
+            <PostOnChange
+              onChange="overridingInvoiceStream = null"/>
+          </PickerInput>
+          <RangeInput
+            editable="true"
+            id="InvoiceStream"
+            label="displaykey.Web.AssignInvoiceItemsToNewPayerPopup.InvoiceStream"
+            required="newPayerAccount.ListBill"
+            value="overridingInvoiceStream"
+            valueRange="newPayerAccount.InvoiceStreams"/>
+          <BooleanRadioInput
+            editable="true"
+            falseLabel="displaykey.Web.AssignInvoiceItemsToNewPayerPopup.AssignOnlyNotFullyPaid"
+            id="WhatItemsToAssign"
+            label="displaykey.Web.AssignInvoiceItemsToNewPayerPopup.WhatItemsToAssign"
+            trueLabel="displaykey.Web.AssignInvoiceItemsToNewPayerPopup.AssignAllItems"
+            value="isAssignAllItemsSelected">
+            <PostOnChange
+              onChange="itemsToAssign = computeItemsToAssign()"/>
+          </BooleanRadioInput>
+          <BooleanRadioInput
+            editable="true"
+            falseLabel="displaykey.Web.AssignInvoiceItemsToNewPayerPopup.ReversePaymentsNo"
+            id="ReversePayments"
+            label="displaykey.Web.AssignInvoiceItemsToNewPayerPopup.ReversePayments"
+            trueLabel="displaykey.Web.AssignInvoiceItemsToNewPayerPopup.ReversePaymentsYes"
+            value="isReversePaymentsSelected"/>
+          <BooleanRadioInput
+            editable="true"
+            id="CreateInvoiceForToday"
+            label="displaykey.Web.AssignInvoiceItemsToNewPayerPopup.CreateTodayInvoiceForPastItems"
+            value="createInvoiceForToday"/>
+        </InputColumn>
+      </DetailViewPanel>
+      <CardViewPanel>
+        <Card
+          id="invoiceItemsCard"
+          title="displaykey.Web.AssignInvoiceItemsToNewPayerPopup.InvoiceItemsToAssign">
+          <PanelRef
+            def="InvoiceItemsLV(itemsToAssign, null, false)"
+            editable="false"
+            id="invoiceItemsLV"/>
+        </Card>
+      </CardViewPanel>
+    </Screen>
+    <Code><![CDATA[function hasNonOwnedOrPaidItem() : boolean {
+  return invoiceItems.hasMatch(\ invoiceItem -> ( invoiceItem.getOwner() != currentAccount) and (invoiceItem.getPayer() != currentAccount) )
+}
+
+function getNotFullyPaidInvoiceItems() : InvoiceItem[] {
+  return invoiceItems.where( \ invoiceItem -> !invoiceItem.FullyConsumed )
+}
+
+function computeItemsToAssign() : InvoiceItem[] {
+  return isAssignAllItemsSelected ? invoiceItems : getNotFullyPaidInvoiceItems( )
+}
+
+function assignItemsToPayer() {
+  newPayerAccount.becomePayerOfInvoiceItems(
+  createInvoiceForToday,
+   overridingInvoiceStream,  
+   isReversePaymentsSelected
+      ? gw.api.domain.invoice.ReversePaymentsWhenMovingInvoiceItem.Yes
+      : gw.api.domain.invoice.ReversePaymentsWhenMovingInvoiceItem.No,
+    itemsToAssign)
+
+  makeOverridesDefaultForAllPassedInCharges()
+}
+
+function makeOverridesDefaultForAllPassedInCharges(  ) {
+  for ( chargeToAssign in chargesToAssign) {
+    chargeToAssign.updateWith(new gw.api.web.invoice.InvoicingOverrider()
+      .withOverridingPayerAccount(newPayerAccount)
+      .withOverridingInvoiceStream(overridingInvoiceStream)
+      .withShouldMoveInvoiceItems(false))
+  }
+}]]></Code>
+  </Popup>
+</PCF>

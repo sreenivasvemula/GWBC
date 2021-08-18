@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?><subtype xmlns="http://guidewire.com/datamodel" desc="A direct bill invoice for an Account" entity="AccountInvoice" subpackage="invoice" supertype="Invoice">
+  <foreignkey columnName="AccountID" fkentity="Account" name="Account" nullok="false" setterScriptability="doesNotExist"/>
+  <!-- The Snapshot aspect captures point-in-time data about the invoice that is set when the invoice is billed.
+      This data, and the helper methods on the Snapshot aspect class, are used to generate the invoice statements that
+      are sent to customers.  BillingCenter in general does not persist point-in-time financial data, and doesn't
+      depend point-in-time data for its internal logic.  However, end customers of a billing system expect a statement
+      to show a snapshot of the activity from the previous invoice period, and to explain how the balance on their
+      account when from X to Y.  See http://wiki/index.php/InvoiceStatement for more information -->
+  <!-- NOTE pdalbora 11-Jun-2012: The following fields are taken from the former "Snapshot" aspect, as part of removing
+       aspects (http://wiki/index.php/Emerald_Entity_Interfaces#Remove_Aspects) -->
+    <monetaryamount amountColumnName="ColOutstandingAmount" desc="The outstanding amount on the invoice's account's collateral at the moment the invoice is billed.  Immutable field" name="ColOutstandingAmount" nullok="true" scaleToCurrency="true" setterScriptability="doesNotExist"/>
+    <monetaryamount amountColumnName="ColRemainingBalance" desc="The remaining balance on the invoice's account's collateral at the moment the invoice is billed.  Immutable field" name="ColRemainingBalance" nullok="true" scaleToCurrency="true" setterScriptability="doesNotExist"/>
+    <monetaryamount amountColumnName="ColUnappliedAmount" desc="The unapplied amount on the invoice's account's collateral at the moment the invoice is billed.  Immutable field" name="ColUnappliedAmount" nullok="true" scaleToCurrency="true" setterScriptability="doesNotExist"/>
+    <monetaryamount amountColumnName="OutstandingAmount" desc="The outstanding amount on the invoice's account at the moment the invoice is billed.  Immutable field" name="OutstandingAmount" nullok="true" scaleToCurrency="true" setterScriptability="doesNotExist"/>
+    <monetaryamount amountColumnName="RemainingBalance" desc="The remaining balance on the invoice's account at the moment the invoice is billed.  Immutable field" name="RemainingBalance" nullok="true" scaleToCurrency="true" setterScriptability="doesNotExist"/>
+    <monetaryamount amountColumnName="UnappliedAmount" desc="The unapplied amount on the invoice's account (does not include unapplied for the account's policies) at the moment the invoice is billed.  Immutable field" name="UnappliedAmount" nullok="true" scaleToCurrency="true" setterScriptability="doesNotExist"/>
+  <!-- This should be on the Snapshot aspect, but as of Bedrock, arrays in aspects are NOT supported (and likely never will be)
+         so here it is, outside the aspect described above -->
+  <array arrayentity="AccountInvoicePolicyPeriodSnapshot" desc="Snapshots for each policy period on this invoice's account" exportable="false" name="PolicyPeriodSnapshots" owner="true" setterScriptability="doesNotExist"/>
+  <index
+        desc="Covering index Used to look up invoiceitem by AccountID and helps the invoice related batch processes"
+        name="accountGross"
+        unique="true">
+    <indexcol
+      name="AccountID"
+      keyposition="1"/>
+    <indexcol
+      name="Subtype"
+      keyposition="3"/>
+    <indexcol
+      name="Retired"
+      keyposition="2"/>
+    <indexcol
+      name="Status"
+      keyposition="4"/>
+    <indexcol
+      name="ID"
+      keyposition="5"/>
+  </index>
+</subtype>

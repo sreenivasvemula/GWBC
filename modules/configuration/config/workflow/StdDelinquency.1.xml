@@ -1,0 +1,330 @@
+<?xml version="1.0"?>
+<Workflow subtype="StdDelinquency" version="1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="workflow.xsd">
+  <Context>
+    <Symbol name="dlnqProcess" type="DelinquencyProcess" value="Workflow.DelinquencyProcess"/>
+    <Symbol name="acct" type="Account" value="Workflow.DelinquencyProcess.Account"/>
+  </Context>
+  <Start firstStep="GracePeriod"/>
+  <ManualStep id="GracePeriod" layoutid="756265224">
+    <Timeout desc="" id="Inception" layoutid="322977463" nextStep="Inception" timeAbsolute="dlnqProcess.GracePeriodEndDate"/>
+    <Trigger desc="" id="ExitDelinquency" layoutid="27583299" nextStep="ExitDelinquencyBeforeCancellation"></Trigger>
+  </ManualStep>
+  <ManualStep id="Inception" layoutid="1741396822">
+    <Enter>// Set the process inception date and fire off history events
+      dlnqProcess.onInception();</Enter>
+    <Trigger desc="" id="ExitDelinquency" layoutid="221429860" nextStep="ExitDelinquencyBeforeCancellation"></Trigger>
+    <Timeout desc="" id="FirstDunningLetter" layoutid="2129980416" nextStep="FirstDunningLetter" timeAbsolute="dlnqProcess.getApprovalDate(typekey.DelinquencyEventName.TC_DUNNINGLETTER1)"/>
+  </ManualStep>
+  <!-- Note that here the "Dunning Letter 1" and "Late Fee" events occur at the same time, and the "Late Fee"
+    time configured in the descriptor file is not used in this case.
+   ====================================================================
+       First Dunning Letter
+       ==================================================================== -->
+  <ManualStep id="FirstDunningLetter" layoutid="1749246038">
+    <Enter>// send first dunning letter
+      dlnqProcess.Target.sendDunningLetter()
+      dlnqProcess.flagEventCompleted(typekey.DelinquencyEventName.TC_DUNNINGLETTER1)
+
+      // charge policy late fee
+      dlnqProcess.chargeLateFee()
+      dlnqProcess.flagEventCompleted(typekey.DelinquencyEventName.TC_LATEFEE)</Enter>
+    <Trigger desc="" id="ExitDelinquency" layoutid="28456222" nextStep="ExitDelinquencyBeforeCancellation"/>
+    <Timeout desc="" id="SecondDunningLetter" layoutid="1522353520" nextStep="SecondDunningLetter" timeAbsolute="dlnqProcess.getTargetDate(typekey.DelinquencyEventName.TC_DUNNINGLETTER2)"/>
+  </ManualStep>
+  <!-- ====================================================================
+       Second Dunning Letter
+       ==================================================================== -->
+  <ManualStep id="SecondDunningLetter" layoutid="527033236">
+    <Enter>var actvty = new Activity(dlnqProcess.Bundle)
+      actvty.ActivityPattern = gw.api.web.admin.ActivityPatternsUtil.getActivityPattern("general")
+      actvty.Subject = "Sent Dunning Letter"
+      actvty.Description = "Sent Dunning Letter"
+      actvty.Priority = typekey.Priority.TC_NORMAL
+      gw.api.assignment.AutoAssignAssignee.INSTANCE.assignToThis(actvty) // Assign by Assignment rules
+      dlnqProcess.addToActivities(actvty)
+      dlnqProcess.Target.sendDunningLetter()
+      dlnqProcess.flagEventCompleted(typekey.DelinquencyEventName.TC_DUNNINGLETTER2)</Enter>
+    <Trigger desc="" id="ExitDelinquency" layoutid="1075440282" nextStep="ExitDelinquencyBeforeCancellation"/>
+    <Timeout desc="" id="CancellationApproval" layoutid="1702446422" nextStep="CancellationApproval" timeAbsolute="dlnqProcess.getApprovalDate(typekey.DelinquencyEventName.TC_CANCELLATION)"/>
+  </ManualStep>
+  <!-- ====================================================================
+       Cancellation
+       ==================================================================== -->
+  <AutoStep id="CancellationApproval" layoutid="1625037224">
+    <Enter>dlnqProcess.createApprovalActivity(typekey.DelinquencyEventName.TC_CANCELLATION, displaykey.Java.PolicyActivity.CancellationApproval.Subject)</Enter>
+    <Go desc="" id="WaitForCancellation" if="dlnqProcess.getProcessEventById(typekey.DelinquencyEventName.TC_CANCELLATION).Approved" layoutid="2092385573" nextStep="WaitForCancellation"/>
+    <Go desc="" id="CancellationApproval_Wait" layoutid="1679605786" nextStep="CancellationApproval_Wait"/>
+  </AutoStep>
+  <ManualStep id="CancellationApproval_Wait" layoutid="303601222">
+    <Trigger desc="" id="ExitDelinquency" layoutid="461905487" nextStep="ExitDelinquencyBeforeCancellation"/>
+    <Timeout desc="" id="CancellationApproval" layoutid="92136104" nextStep="CancellationApproval" timeDelta="3600s"/>
+  </ManualStep>
+  <ManualStep id="WaitForCancellation" layoutid="204592882">
+    <Trigger desc="" id="ExitDelinquency" layoutid="195790441" nextStep="ExitDelinquencyBeforeCancellation"/>
+    <Trigger desc="" id="CanceledInPAS" layoutid="195790441" nextStep="Cancellation"/>
+    <Timeout desc="" id="Cancellation" layoutid="704994683" nextStep="Cancellation" timeAbsolute="dlnqProcess.getTargetDate(typekey.DelinquencyEventName.TC_CANCELLATION)"/>
+  </ManualStep>
+  <ManualStep id="Cancellation" layoutid="471248927">
+    <Enter>// cancel target
+      dlnqProcess.cancelTarget()
+      dlnqProcess.flagEventCompleted(typekey.DelinquencyEventName.TC_CANCELLATION)</Enter>
+    <Trigger desc="" id="ExitDelinquency" layoutid="1178356682" nextStep="ExitDelinquencyAfterCancellation"/>
+    <Timeout desc="" id="CollectionsApproval" layoutid="546561740" nextStep="CollectionsApproval" timeAbsolute="dlnqProcess.getApprovalDate(typekey.DelinquencyEventName.TC_COLLECTIONS)"/>
+  </ManualStep>
+  <!-- ====================================================================
+       Collections
+       ==================================================================== -->
+  <AutoStep id="CollectionsApproval" layoutid="361025953">
+    <Enter>dlnqProcess.createApprovalActivity(typekey.DelinquencyEventName.TC_COLLECTIONS, displaykey.Java.PolicyActivity.CollectionsApproval.Subject)</Enter>
+    <Go desc="" id="CollectionsAssignment" if="dlnqProcess.getProcessEventById(typekey.DelinquencyEventName.TC_COLLECTIONS).Approved" layoutid="1275605961" nextStep="CollectionsAssignment"/>
+    <Go desc="" id="CollectionsApproval_Wait" layoutid="780138526" nextStep="CollectionsApproval_Wait"/>
+  </AutoStep>
+  <ManualStep id="CollectionsApproval_Wait" layoutid="1121889296">
+    <Trigger desc="" id="ExitDelinquency" layoutid="1400541547" nextStep="ExitDelinquencyAfterCancellation"/>
+    <Timeout desc="" id="CollectionsApproval" layoutid="333525662" nextStep="CollectionsApproval" timeDelta="3600s"/>
+  </ManualStep>
+  <AutoStep id="CollectionsAssignment" layoutid="686977212">
+    <Event entity="dlnqProcess" name="ConnectCollectionAgency"/>
+    <Go desc="" id="WaitForCollections" if="acct.Collecting" layoutid="633482564" nextStep="WaitForCollections"/>
+    <Go desc="" id="ConnectCollections_Wait" if="! acct.Collecting" layoutid="1865014969" nextStep="ConnectCollections_Wait"/>
+    <Go desc="" id="CollectionsAssignment_Wait" layoutid="635272371" nextStep="CollectionsAssignment_Wait"/>
+  </AutoStep>
+  <ManualStep id="CollectionsAssignment_Wait" layoutid="1153915812">
+    <Enter>dlnqProcess.createAssignCAActivity(typekey.DelinquencyEventName.TC_COLLECTIONS, displaykey.Java.PolicyActivity.CollectionsAssignment.Subject, displaykey.Java.PolicyActivity.CollectionsAssignment.Description)</Enter>
+    <Trigger desc="" id="ExitDelinquency" layoutid="1881530160" nextStep="ExitDelinquencyAfterCancellation"/>
+    <Timeout desc="" id="CollectionsAssignment" layoutid="1180697045" nextStep="CollectionsAssignment" timeDelta="3600s"/>
+  </ManualStep>
+  <ManualStep id="ConnectCollections_Wait" layoutid="2085719874">
+    <Trigger desc="" id="ExitDelinquency" layoutid="1226337035" nextStep="ExitDelinquencyAfterCancellation"/>
+    <Timeout desc="" id="CollectionsAssignment" layoutid="1645986986" nextStep="CollectionsAssignment" timeDelta="60s"/>
+  </ManualStep>
+  <ManualStep id="WaitForCollections" layoutid="1318352337">
+    <Trigger desc="" id="ExitDelinquency" layoutid="218933048" nextStep="ExitDelinquencyAfterCancellation"/>
+    <Timeout desc="" id="Collections" layoutid="968250425" nextStep="Collections" timeAbsolute="dlnqProcess.getTargetDate(typekey.DelinquencyEventName.TC_COLLECTIONS)"/>
+  </ManualStep>
+  <ManualStep id="Collections" layoutid="1958941860">
+    <Enter>var actvty = new Activity( dlnqProcess.Bundle )
+      actvty.ActivityPattern = gw.api.web.admin.ActivityPatternsUtil.getActivityPattern( "general" )
+      actvty.Subject = displaykey.Java.PolicyActivity.Collections.Subject
+      actvty.Description = displaykey.Java.PolicyActivity.Collections.Description
+      actvty.Priority = typekey.Priority.TC_NORMAL
+      gw.api.assignment.AutoAssignAssignee.INSTANCE.assignToThis( actvty ) // Assign by Assignment rules
+      dlnqProcess.addToActivities( actvty )
+      dlnqProcess.flagEventCompleted( typekey.DelinquencyEventName.TC_COLLECTIONS )</Enter>
+    <Trigger desc="" id="ExitDelinquency" layoutid="1901299656" nextStep="ExitDelinquencyAfterCancellation"/>
+    <Timeout desc="" id="WriteoffApproval" layoutid="586651032" nextStep="WriteoffApproval" timeAbsolute="dlnqProcess.getApprovalDate(typekey.DelinquencyEventName.TC_WRITEOFF)"/>
+  </ManualStep>
+  <!-- ====================================================================
+       Writeoff
+       ==================================================================== -->
+  <AutoStep id="WriteoffApproval" layoutid="864048863">
+    <Enter>dlnqProcess.createApprovalActivity( typekey.DelinquencyEventName.TC_WRITEOFF, displaykey.Java.PolicyActivity.WriteoffApproval.Subject );</Enter>
+    <Go desc="" id="WaitForWriteoff" if="dlnqProcess.getProcessEventById(typekey.DelinquencyEventName.TC_WRITEOFF).Approved" layoutid="746471447" nextStep="WaitForWriteoff"/>
+    <Go desc="" id="WriteoffApproval_Wait" layoutid="346143955" nextStep="WriteoffApproval_Wait"/>
+  </AutoStep>
+  <ManualStep id="WriteoffApproval_Wait" layoutid="784819427">
+    <Trigger desc="" id="ExitDelinquency" layoutid="108251962" nextStep="ExitDelinquencyAfterCancellation"/>
+    <Timeout desc="" id="WriteoffApproval" layoutid="472076325" nextStep="WriteoffApproval" timeDelta="3600s"/>
+  </ManualStep>
+  <ManualStep id="WaitForWriteoff" layoutid="615549715">
+    <Trigger desc="" id="ExitDelinquency" layoutid="1382202257" nextStep="ExitDelinquencyAfterCancellation"/>
+    <Timeout desc="" id="Writeoff" layoutid="1342723800" nextStep="Writeoff" timeAbsolute="dlnqProcess.getTargetDate(typekey.DelinquencyEventName.TC_WRITEOFF)"/>
+  </ManualStep>
+  <!-- ====================================================================
+       End Delinquency Process
+       ==================================================================== -->
+  <Outcome desc="Outcome after the policy goes through cancellation, collections, and writeoff" id="CancellationFinished" layoutid="1115332406">
+    <Enter>acct.Collecting = false;</Enter>
+  </Outcome>
+  <Outcome desc="Outcome when the policy returns to good standing before cancellation" id="ExitDelinquencyBeforeCancellation" layoutid="6992979">
+    <Enter>acct.Collecting = false;</Enter>
+  </Outcome>
+  <Outcome desc="Outcome when the policy returns to good standing after cancellation" id="ExitDelinquencyAfterCancellation" layoutid="1566881115">
+    <Enter>//rescind/reinstate
+      dlnqProcess.rescindOrReinstateTarget()
+      acct.Collecting = false
+      dlnqProcess.flagEventCompleted( typekey.DelinquencyEventName.TC_RESCINDREINSTATE )</Enter>
+  </Outcome>
+  <Outcome id="Writeoff" layoutid="2126420291">
+    <Enter>// write off the target's delinquent amount
+      dlnqProcess.Target.writeoff()
+      if ( ! ( dlnqProcess.Target typeis Account ) ) {
+        acct.doWriteoff( acct.RemainingBalance, typekey.WriteoffReason.TC_UNCOLLECTABLE )
+      }
+      acct.Collecting = false
+      dlnqProcess.flagEventCompleted( typekey.DelinquencyEventName.TC_WRITEOFF )</Enter>
+  </Outcome>
+  <Finish/>
+  <Layout>
+    <BoxUI height="5" layoutid="361025953" width="20" x="28" y="70"/>
+    <BoxUI height="5" layoutid="6992979" width="20" x="28" y="22"/>
+    <BoxUI height="4" layoutid="1318352337" width="20" x="28" y="99"/>
+    <BoxUI height="4" layoutid="1741396822" width="20" x="-3" y="12"/>
+    <BoxUI height="7" layoutid="1115332406" width="12" x="84" y="41"/>
+    <BoxUI height="5" layoutid="303601222" width="20" x="28" y="46"/>
+    <BoxUI height="4" layoutid="615549715" width="20" x="59" y="126"/>
+    <BoxUI height="6" layoutid="1625037224" width="20" x="-3" y="45"/>
+    <BoxUI height="4" layoutid="1958941860" width="20" x="28" y="110"/>
+    <BoxUI height="5" layoutid="204592882" width="20" x="-3" y="58"/>
+    <BoxUI height="5" layoutid="2085719874" width="20" x="59" y="80"/>
+    <BoxUI height="4" layoutid="2126420291" width="20" x="86" y="126"/>
+    <BoxUI height="6" layoutid="1566881115" width="20" x="87" y="81"/>
+    <BoxUI height="8" layoutid="864048863" width="20" x="28" y="121"/>
+    <BoxUI height="4" layoutid="756265224" width="20" x="-3" y="1"/>
+    <BoxUI height="4" layoutid="527033236" width="20" x="-3" y="34"/>
+    <BoxUI height="4" layoutid="1749246038" width="20" x="-3" y="23"/>
+    <BoxUI height="10" layoutid="686977212" width="20" x="28" y="82"/>
+    <BoxUI height="5" layoutid="784819427" width="20" x="59" y="119"/>
+    <BoxUI height="5" layoutid="1121889296" width="20" x="59" y="70"/>
+    <BoxUI height="5" layoutid="1153915812" width="20" x="59" y="89"/>
+    <BoxUI height="4" layoutid="471248927" width="20" x="28" y="59"/>
+    <ArrowUI layoutid="108251962" visible="true">
+      <PointUI x="79" y="122"/>
+      <PointUI x="89" y="87"/>
+    </ArrowUI>
+    <ArrowUI layoutid="633482564" visible="true">
+      <PointUI x="38" y="92"/>
+      <PointUI x="38" y="99"/>
+    </ArrowUI>
+    <ArrowUI layoutid="92136104" visible="true">
+      <PointUI x="28" y="50"/>
+      <PointUI x="17" y="50"/>
+    </ArrowUI>
+    <ArrowUI layoutid="1178356682" visible="true">
+      <PointUI x="48" y="61"/>
+      <PointUI x="87" y="83"/>
+    </ArrowUI>
+    <ArrowUI layoutid="28456222" visible="true">
+      <PointUI x="17" y="25"/>
+      <PointUI x="28" y="25"/>
+    </ArrowUI>
+    <ArrowUI layoutid="635272371" visible="true">
+      <PointUI x="48" y="88"/>
+      <PointUI x="59" y="90"/>
+    </ArrowUI>
+    <ArrowUI layoutid="1881530160" visible="true">
+      <PointUI x="79" y="91"/>
+      <PointUI x="87" y="86"/>
+    </ArrowUI>
+    <ArrowUI layoutid="1180697045" visible="true">
+      <PointUI x="59" y="93"/>
+      <PointUI x="48" y="91"/>
+    </ArrowUI>
+    <ArrowUI layoutid="1645986986" visible="true">
+      <PointUI x="59" y="84"/>
+      <PointUI x="48" y="87"/>
+    </ArrowUI>
+    <ArrowUI layoutid="1342723800" visible="true">
+      <PointUI x="79" y="128"/>
+      <PointUI x="86" y="128"/>
+    </ArrowUI>
+    <ArrowUI layoutid="1382202257" visible="true">
+      <PointUI x="79" y="127"/>
+      <PointUI x="90" y="87"/>
+    </ArrowUI>
+    <ArrowUI layoutid="461905487" visible="true">
+      <PointUI x="38" y="46"/>
+      <PointUI x="38" y="27"/>
+    </ArrowUI>
+    <ArrowUI layoutid="1702446422" visible="true">
+      <PointUI x="7" y="38"/>
+      <PointUI x="7" y="45"/>
+    </ArrowUI>
+    <ArrowUI layoutid="704994683" visible="true">
+      <PointUI x="17" y="62"/>
+      <PointUI x="28" y="62"/>
+    </ArrowUI>
+    <ArrowUI layoutid="1275605961" visible="true">
+      <PointUI x="38" y="75"/>
+      <PointUI x="38" y="82"/>
+    </ArrowUI>
+    <ArrowUI layoutid="333525662" visible="true">
+      <PointUI x="59" y="74"/>
+      <PointUI x="48" y="74"/>
+    </ArrowUI>
+    <ArrowUI layoutid="346143955" visible="true">
+      <PointUI x="48" y="122"/>
+      <PointUI x="59" y="120"/>
+    </ArrowUI>
+    <ArrowUI layoutid="221429860" visible="true">
+      <PointUI x="17" y="13"/>
+      <PointUI x="28" y="24"/>
+    </ArrowUI>
+    <ArrowUI layoutid="780138526" visible="true">
+      <PointUI x="48" y="71"/>
+      <PointUI x="59" y="71"/>
+    </ArrowUI>
+    <ArrowUI layoutid="968250425" visible="true">
+      <PointUI x="38" y="103"/>
+      <PointUI x="38" y="110"/>
+    </ArrowUI>
+    <ArrowUI layoutid="1075440282" visible="true">
+      <PointUI x="17" y="36"/>
+      <PointUI x="28" y="26"/>
+    </ArrowUI>
+    <ArrowUI layoutid="1865014969" visible="true">
+      <PointUI x="48" y="84"/>
+      <PointUI x="59" y="81"/>
+    </ArrowUI>
+    <ArrowUI layoutid="472076325" visible="true">
+      <PointUI x="59" y="123"/>
+      <PointUI x="48" y="125"/>
+    </ArrowUI>
+    <ArrowUI layoutid="1226337035" visible="true">
+      <PointUI x="79" y="83"/>
+      <PointUI x="87" y="84"/>
+    </ArrowUI>
+    <ArrowUI layoutid="2092385573" visible="true">
+      <PointUI x="7" y="51"/>
+      <PointUI x="7" y="58"/>
+    </ArrowUI>
+    <ArrowUI layoutid="586651032" visible="true">
+      <PointUI x="38" y="114"/>
+      <PointUI x="38" y="121"/>
+    </ArrowUI>
+    <ArrowUI layoutid="195790441" visible="true">
+      <PointUI x="17" y="60"/>
+      <PointUI x="28" y="59"/>
+    </ArrowUI>
+    <ArrowUI layoutid="1522353520" visible="true">
+      <PointUI x="7" y="27"/>
+      <PointUI x="7" y="34"/>
+    </ArrowUI>
+    <ArrowUI layoutid="2129980416" visible="true">
+      <PointUI x="7" y="16"/>
+      <PointUI x="7" y="23"/>
+    </ArrowUI>
+    <ArrowUI layoutid="322977463" visible="true">
+      <PointUI x="7" y="5"/>
+      <PointUI x="7" y="12"/>
+    </ArrowUI>
+    <ArrowUI layoutid="746471447" visible="true">
+      <PointUI x="48" y="128"/>
+      <PointUI x="59" y="128"/>
+    </ArrowUI>
+    <ArrowUI layoutid="218933048" visible="true">
+      <PointUI x="48" y="100"/>
+      <PointUI x="87" y="85"/>
+    </ArrowUI>
+    <ArrowUI layoutid="1901299656" visible="true">
+      <PointUI x="48" y="112"/>
+      <PointUI x="88" y="87"/>
+    </ArrowUI>
+    <ArrowUI layoutid="546561740" visible="true">
+      <PointUI x="38" y="63"/>
+      <PointUI x="38" y="70"/>
+    </ArrowUI>
+    <ArrowUI layoutid="1400541547" visible="true">
+      <PointUI x="79" y="73"/>
+      <PointUI x="87" y="82"/>
+    </ArrowUI>
+    <ArrowUI layoutid="1679605786" visible="true">
+      <PointUI x="17" y="47"/>
+      <PointUI x="28" y="47"/>
+    </ArrowUI>
+    <ArrowUI layoutid="27583299" visible="true">
+      <PointUI x="17" y="3"/>
+      <PointUI x="28" y="22"/>
+    </ArrowUI>
+  </Layout>
+</Workflow>

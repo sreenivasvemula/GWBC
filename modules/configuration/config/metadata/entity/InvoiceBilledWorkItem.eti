@@ -1,0 +1,27 @@
+<?xml version="1.0"?>
+<entity xmlns="http://guidewire.com/datamodel"
+     desc="An invoice billed work item" 
+     entity="InvoiceBilledWorkItem" 
+     subpackage="invoice"
+     loadable="false" 
+     platform="false" 
+     table="invoicebilledworkitem" 
+     type="keyable"
+     final="false">
+  <implementsEntity
+    name="NotInCurrencySilo"/>
+  <implementsEntity 
+     name="WorkItem"/>
+  <column
+     name="AccountInvoiceIDs"
+     desc="AccountInvoices to be billed for a given account in the order to be processed, i.e. ordered by date."
+     type="longtext"
+     nullok="false"
+     exportable="false"
+     getterScriptability="doesNotExist"
+     setterScriptability="doesNotExist">
+     <columnParam
+       name="logicalSize"
+       value="1932735283"/> <!-- 2 GB minus 10% for overhead -->
+  </column>
+</entity>

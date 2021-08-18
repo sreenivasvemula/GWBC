@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?><entity xmlns="http://guidewire.com/datamodel" desc="Context for AgencyBillMoneyReceived transactions." entity="AgencyBillMoneyReceivedContext" ignoreForEvents="true" overwrittenInStagingTable="true" platform="false" setterScriptability="hidden" subpackage="accounting.transaction" table="agencymoneyrcvdcontext" type="editable">
+  <implementsEntity name="TransactionContext"/>
+  <implementsEntity name="InCurrencySilo"/>
+  <foreignkey columnName="ProducerID" desc="Reference to the Producer from which this payment was received." fkentity="Producer" getterScriptability="hidden" ignoreforevents="true" name="Producer" nullok="false" setterScriptability="hidden"/>
+  <foreignkey columnName="PaymentMoneyReceivedID" desc="Reference to the AgencyBillMoneyReceived payment details that goes with this transaction." fkentity="PaymentMoneyReceived" getterScriptability="hidden" ignoreforevents="true" name="PaymentMoneyReceived" nullok="true" setterScriptability="hidden"/>
+  <foreignkey columnName="TransactionID" desc="Reference to AgencyBillMoneyReceivedTxn transaction" fkentity="AgencyBillMoneyReceivedTxn" getterScriptability="doesNotExist" name="Transaction" nullok="false" setterScriptability="doesNotExist"/>
+</entity>

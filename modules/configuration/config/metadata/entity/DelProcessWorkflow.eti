@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?><subtype xmlns="http://guidewire.com/datamodel" abstract="true" desc="Workflow for DelinquencyProcess" entity="DelProcessWorkflow" final="false" subpackage="workflow" supertype="BCWorkflow">
+  <implementsEntity name="Assignable"/>
+  <implementsEntity name="BCAssignable"/>
+  <foreignkey columnName="TopLevelDelinquencyProcessID" desc="Other end of TopLevelWorkflow onetoone" fkentity="DelinquencyProcess" name="TopLevelDelinquencyProcess" nullok="true"/>
+  <foreignkey columnName="DelinquencyProcessID" exportable="false" fkentity="DelinquencyProcess" name="DelinquencyProcess" nullok="true" setterScriptability="hidden"/>
+  <array arrayentity="UserRoleAssignment" desc="Role Assignments for this workflow" exportable="false" name="RoleAssignments"/>
+  <events/>
+</subtype>

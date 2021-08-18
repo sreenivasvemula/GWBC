@@ -1,0 +1,48 @@
+<?xml version="1.0"?>
+<PCF
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:noNamespaceSchemaLocation="../../../../../../pcf.xsd">
+  <ListViewPanel
+    editable="false"
+    id="CollectionAgencyAccountsLV">
+    <Require
+      name="collectionAgency"
+      type="CollectionAgency"/>
+    <RowIterator
+      canPick="false"
+      editable="false"
+      elementName="account"
+      value="gw.api.database.Query.make(Account).compare(&quot;CollectionAgency&quot;, Equals, collectionAgency).select()">
+      <Row
+        editable="false">
+        <Cell
+          action="AccountDetailSummary.go(account)"
+          id="accountnumber"
+          label="displaykey.Web.CollectionAgencyAccountsLV.AccountNumber"
+          value="account.AccountNumber"/>
+        <Cell
+          id="accountName"
+          label="displaykey.Web.CollectionAgencyAccountsLV.AccountName"
+          sortBy="account.AccountName"
+          value="account.AccountNameLocalized"/>
+        <Cell
+          id="accountSegment"
+          label="displaykey.Web.CollectionAgencyAccountsLV.AccountSegment"
+          value="account.Segment"/>
+        <Cell
+          id="accountCreationDate"
+          label="displaykey.Web.CollectionAgencyAccountsLV.AccountCreationDate"
+          value="account.CreateTime"/>
+        <Cell
+          id="accountDelinquencyStatus"
+          label="displaykey.Web.CollectionAgencyAccountsLV.AccountDelinquencyStatus"
+          value="account.DelinquencyStatus"/>
+        <Cell
+          id="collecting"
+          label="displaykey.Web.CollectionAgencyAccountsLV.Collecting"
+          sortBy="account.Collecting"
+          value="account.Collecting ? &quot;Yes&quot; : &quot;No&quot;"/>
+      </Row>
+    </RowIterator>
+  </ListViewPanel>
+</PCF>

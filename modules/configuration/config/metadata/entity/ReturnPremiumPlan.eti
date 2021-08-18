@@ -1,0 +1,32 @@
+<?xml version="1.0"?>
+<subtype xmlns="http://guidewire.com/datamodel"
+         desc="A ReturnPremiumPlan specifies how to allocate return premium through a set of ReturnPremiumHandlingSchemes each uniquely identified by a ReturnPremiumHandlingCondition} that identifies whether a scheme applies to a collection of (return premium) InvoiceItems."
+         entity="ReturnPremiumPlan"
+         subpackage="invoice"
+         supertype="Plan"
+         displayName="Return Premium Plan"
+         setterScriptability="all">
+  <implementsEntity
+    name="NotInCurrencySilo"/>
+  <typekey
+    name="ChargeQualification"
+    typelist="ReturnPremiumChargeQualification"
+    desc="Return premium charge qualification type."
+    default="ChargePattern"
+    nullok="false"
+    setterScriptability="all"/>
+  <typekey
+    name="ListBillAccountExcessTreatment"
+    typelist="ListBillAccountExcess"
+    default="PolicyOwnerUnapplied"
+    nullok="false"
+    setterScriptability="all"/>
+  <array
+    name="ReturnPremiumHandlingSchemes"
+    desc="An array of ReturnPremiumHandlingSchemes. Each ReturnPremiumHandlingScheme specifies how return premium is allocated for its specific condition."
+    arrayentity="ReturnPremiumHandlingScheme"
+    owner="true"
+    getterScriptability="all"
+    setterScriptability="hidden">
+  </array>
+</subtype>

@@ -1,0 +1,32 @@
+<?xml version="1.0"?>
+<PCF
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:noNamespaceSchemaLocation="../../../../../pcf.xsd">
+  <Wizard
+    beforeCommit="disbursement.executeDisbursementOrCreateApprovalActivityIfNeeded()"
+    canVisit="perm.Transaction.disbcreate"
+    cancelWarning="displaykey.Web.CreateDisbursementWizard.CancelConfirmation"
+    countsAsWork="false"
+    id="AccountCreateDisbursementWizard">
+    <LocationEntryPoint
+      signature="AccountCreateDisbursementWizard(account : Account)"/>
+    <Variable
+      name="account"
+      type="Account"/>
+    <Variable
+      initialValue="gw.account.CreateDisbursementWizardHelper.createDisbursement(account)"
+      name="disbursement"
+      type="AccountDisbursement"/>
+    <WizardStep
+      id="Step1"
+      label="displaykey.Web.AccountCreateDisbursementWizard.DetailsStepLabel"
+      onExit="disbursement.initiateApprovalActivityIfUserLacksAuthority()"
+      screen="CreateDisbursementDetailScreen(disbursement)"
+      title="displaykey.Web.AccountCreateDisbursementWizard.DetailsStepTitle"/>
+    <WizardStep
+      id="Step2"
+      label="displaykey.Web.AccountCreateDisbursementWizard.ConfirmStepLabel"
+      screen="CreateDisbursementConfirmScreen(disbursement)"
+      title="displaykey.Web.AccountCreateDisbursementWizard.ConfirmStepTitle"/>
+  </Wizard>
+</PCF>

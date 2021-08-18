@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PCF
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:noNamespaceSchemaLocation="../../../../../pcf.xsd">
+  <Forward
+    canVisit="perm.System.plcytabview"
+    id="PolicyForward">
+    <LocationEntryPoint
+      signature="PolicyForward()"/>
+    <!-- Set gotoMostRecentPolicyPeriod variable to true to have this forward go to the most recently viewed policy period,
+         false to have this forward go to the Policy Periods search page -->
+    <Variable
+      initialValue="false"
+      name="gotoMostRecentPolicyPeriod"
+      type="Boolean"/>
+    <ForwardCondition
+      action="gw.api.web.policy.PolicyPeriodUtil.getMostRecentlyViewedPolicyPeriod().getDestination().go()"
+      condition="gotoMostRecentPolicyPeriod and (gw.api.web.policy.PolicyPeriodUtil.getMostRecentlyViewedPolicyPeriod() != null)"/>
+    <ForwardCondition
+      action="PoliciesGroup.go()"/>
+  </Forward>
+</PCF>

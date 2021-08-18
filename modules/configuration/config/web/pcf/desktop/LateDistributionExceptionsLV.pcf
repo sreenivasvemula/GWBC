@@ -1,0 +1,58 @@
+<?xml version="1.0"?>
+<PCF
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:noNamespaceSchemaLocation="../../../../../pcf.xsd">
+  <ListViewPanel
+    id="LateDistributionExceptionsLV">
+    <ExposeIterator
+      flags="Row"
+      valueType="entity.AgencyCycleProcess"
+      widget="LateDistributionExceptionsLV"/>
+    <Require
+      name="agencyCyclesWithException"
+      type="AgencyCycleProcessQuery"/>
+    <RowIterator
+      checkBoxVisible="true"
+      editable="false"
+      elementName="cycleException"
+      hasCheckBoxes="true"
+      numEntriesRequired="0"
+      type="AgencyCycleProcess"
+      value="agencyCyclesWithException">
+      <ToolbarFlag
+        name="Row"/>
+      <Row>
+        <DateCell
+          id="cycleCloseDate"
+          label="displaykey.Web.PaymentPastDueExceptions.CycleCloseDate"
+          value="cycleException.AgencyBillCycle.StatementInvoice.EventDate"/>
+        <DateCell
+          enableSort="false"
+          id="paymentDueDate"
+          label="displaykey.Web.PaymentPastDueExceptions.DueDate"
+          value="cycleException.AgencyBillCycle.StatementInvoice.DUEDATE"/>
+        <Cell
+          action="AgencyBillStatementDetail.go(cycleException.AgencyBillCycle)"
+          id="Statement"
+          label="displaykey.Web.PaymentPastDueExceptions.Statement"
+          value="cycleException.AgencyBillCycle.StatementInvoice.InvoiceNumber"/>
+        <Cell
+          action="ProducerDetailPopup.push(cycleException.AgencyBillCycle.Producer)"
+          footerLabel="displaykey.Web.PaymentPastDueExceptions.Total"
+          id="Agency"
+          label="displaykey.Web.PaymentPastDueExceptions.Agency"
+          value="cycleException.AgencyBillCycle.Producer"/>
+        <MonetaryAmountCell
+          currency="cycleException.Currency"
+          footerSumValue="getStatememtInvoice(cycleException).NetAmount"
+          formatType="currency"
+          id="Amount"
+          label="displaykey.Web.PaymentPastDueExceptions.Amount"
+          value="cycleException.AgencyBillCycle.StatementInvoice.NetAmount"/>
+      </Row>
+    </RowIterator>
+    <Code><![CDATA[function getStatememtInvoice(agencyCycleProcess : agencyCycleProcess) : entity.StatementInvoice {
+  return agencyCycleProcess.StatementInvoice
+}]]></Code>
+  </ListViewPanel>
+</PCF>

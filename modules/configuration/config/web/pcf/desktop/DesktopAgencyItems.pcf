@@ -1,0 +1,196 @@
+<?xml version="1.0"?>
+<PCF
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:noNamespaceSchemaLocation="../../../../../pcf.xsd">
+  <Page
+    canVisit="perm.System.viewdesktop and perm.System.myagencyitemsview"
+    id="DesktopAgencyItems"
+    title="displaykey.Web.DesktopAgencyItems">
+    <Variable
+      initialValue="User.util.CurrentUser.ReceivedAndUndistributedMoney.getCount()"
+      name="numUnappliedPayments"/>
+    <Variable
+      initialValue="User.util.CurrentUser.AgencyCyclesWithPaymentPastDue.getCount()"
+      name="numLatePayments"/>
+    <Variable
+      initialValue="User.util.CurrentUser.AgencyCyclesWithPromisePastDue.getCount()"
+      name="numLatePromises"/>
+    <Variable
+      initialValue="User.util.CurrentUser.findAgencySuspensePaymentItemsThatNeedRelease().Count"
+      name="numSuspensePaymentItems"/>
+    <Variable
+      initialValue="User.util.CurrentUser.findAgencySuspensePromiseItemsThatNeedRelease().Count"
+      name="numSuspensePromiseItems"/>
+    <Variable
+      initialValue="User.util.CurrentUser.findProducersWithPaymentExceptions()"
+      name="producersWithPaymentExceptions"/>
+    <Variable
+      initialValue="User.util.CurrentUser.findProducersWithPromiseExceptions()"
+      name="producersWithPromiseExceptions"/>
+    <Variable
+      initialValue="numUnappliedPayments &gt; 0 ? User.util.CurrentUser.ReceivedAndUndistributedMoney : null"
+      name="unappliedPayments"
+      type="PaymentMoneyReceivedQuery"/>
+    <Variable
+      initialValue="numLatePayments &gt; 0 ? User.util.CurrentUser.AgencyCyclesWithPaymentPastDue : null"
+      name="latePayments"
+      type="AgencyCycleProcessQuery"/>
+    <Variable
+      initialValue="numLatePromises &gt; 0 ? User.util.CurrentUser.AgencyCyclesWithPromisePastDue : null"
+      name="latePromises"
+      type="AgencyCycleProcessQuery"/>
+    <Variable
+      initialValue="numSuspensePaymentItems &gt; 0 ? User.util.CurrentUser.findAgencySuspensePaymentItemsThatNeedRelease() : null"
+      name="suspensePaymentItems"
+      type="AgencySuspPmntItemQuery"/>
+    <Variable
+      initialValue="numSuspensePromiseItems &gt; 0 ? User.util.CurrentUser.findAgencySuspensePromiseItemsThatNeedRelease() : null"
+      name="suspensePromiseItems"
+      type="AgencySuspPromiseItemQuery"/>
+    <Screen
+      id="DesktopAgencyItemsScreen">
+      <TitleBar
+        title="displaykey.Web.DesktopAgencyItems"/>
+      <CardViewPanel>
+        <Card
+          id="ProducersWithMismatchExceptionsCard"
+          title="displaykey.Web.DesktopAgencyItems.Exceptions(producersWithPaymentExceptions.length)">
+          <PanelRef
+            def="ProducersWithExceptionsLV(producersWithPaymentExceptions)">
+            <Toolbar>
+              <CheckedValuesToolbarButton
+                available="true"
+                checkedRowAction="AgencyBillExceptions.push(CheckedValue.Producer)"
+                flags="one Row"
+                id="ViewExceptions"
+                iterator="ProducersWithExceptionsLV.ProducersWithExceptionsLV"
+                label="displaykey.Web.ProducersWithMismatchExceptions.ViewExceptions"
+                showConfirmMessage="false"/>
+            </Toolbar>
+          </PanelRef>
+        </Card>
+        <Card
+          id="ProducersWithPromiseExceptionsCard"
+          title="displaykey.Web.DesktopAgencyItems.PromiseExceptions(producersWithPromiseExceptions.length)">
+          <PanelRef
+            def="ProducersWithExceptionsLV(producersWithPromiseExceptions)"
+            id="ProducerWithPromiseException">
+            <Toolbar>
+              <CheckedValuesToolbarButton
+                available="true"
+                checkedRowAction="AgencyBillExceptions.push(CheckedValue.Producer, 1)"
+                flags="one Row"
+                id="ViewExceptions"
+                iterator="ProducerWithPromiseException.ProducersWithExceptionsLV"
+                label="displaykey.Web.ProducersWithMismatchExceptions.ViewExceptions"
+                showConfirmMessage="false"/>
+            </Toolbar>
+          </PanelRef>
+        </Card>
+        <Card
+          id="ReceivedAndUnappliedMoneyCard"
+          title="displaykey.Web.DesktopAgencyItems.UnappliedPayments(numUnappliedPayments)">
+          <PanelRef
+            def="ReceivedAndUnappliedMoneyLV(unappliedPayments)">
+            <Toolbar>
+              <CheckedValuesToolbarButton
+                available="true"
+                checkedRowAction="AgencyDistributionWizard.go(CheckedValue.Producer, CheckedValue)"
+                flags="one Row"
+                id="DistributePayment"
+                iterator="ReceivedAndUnappliedMoneyLV.ReceivedAndUnappliedMoneyLV"
+                label="displaykey.Web.UnappliedPayments.DistributePayment"
+                showConfirmMessage="false"/>
+            </Toolbar>
+          </PanelRef>
+        </Card>
+        <Card
+          id="PaymentPastDueExceptionsCard"
+          title="displaykey.Web.DesktopAgencyItems.PaymentPastDueExceptions(numLatePayments)">
+          <PanelRef
+            def="LateDistributionExceptionsLV(latePayments)">
+            <Toolbar>
+              <CheckedValuesToolbarButton
+                allCheckedRowsAction="dismissPaymentPastDueExceptions(CheckedValues); numLatePayments = latePayments.getCount()"
+                flags="all Row"
+                id="Dismiss"
+                iterator="LateDistributionExceptionsLV.LateDistributionExceptionsLV"
+                label="displaykey.Web.PaymentPastDueExceptions.Dismiss"/>
+            </Toolbar>
+          </PanelRef>
+        </Card>
+        <Card
+          id="LatePromiseExceptionsCard"
+          title="displaykey.Web.DesktopAgencyItems.LatePromiseExceptions( numLatePromises )">
+          <PanelRef
+            def="LateDistributionExceptionsLV(latePromises)"
+            id="LatePromiseExceptionsLV">
+            <Toolbar>
+              <CheckedValuesToolbarButton
+                allCheckedRowsAction="dismissPromisePastDueExceptions(CheckedValues); numLatePromises = latePromises.getCount()"
+                flags="all Row"
+                id="Dismiss"
+                iterator="LatePromiseExceptionsLV.LateDistributionExceptionsLV"
+                label="displaykey.Web.PaymentPastDueExceptions.Dismiss"/>
+            </Toolbar>
+          </PanelRef>
+        </Card>
+        <Card
+          id="AgencySuspensePaymentItemsCard"
+          title="displaykey.Web.DesktopAgencyItems.AgencySuspensePaymentItems(numSuspensePaymentItems)">
+          <PanelRef
+            def="AgencySuspDistItemsLV(suspensePaymentItems)"
+            id="AgencySuspPaymentItemsLV">
+            <Toolbar>
+              <CheckedValuesToolbarButton
+                checkedRowAction="CheckedValue.goToSuspenseItemPopup()"
+                flags="one Row"
+                id="Release"
+                iterator="AgencySuspPaymentItemsLV.AgencySuspDistItemsLV"
+                label="displaykey.Web.DesktopAgencyItems.ReleaseAndApply"/>
+            </Toolbar>
+          </PanelRef>
+        </Card>
+        <Card
+          id="AgencySuspensePromiseItemsCard"
+          title="displaykey.Web.DesktopAgencyItems.AgencySuspensePromiseItems(numSuspensePromiseItems)">
+          <PanelRef
+            def="AgencySuspDistItemsLV(suspensePromiseItems)"
+            id="AgencySuspPromiseItemsLV">
+            <Toolbar>
+              <CheckedValuesToolbarButton
+                checkedRowAction="CheckedValue.goToSuspenseItemPopup()"
+                flags="one Row"
+                id="ReleaseAndApply"
+                iterator="AgencySuspPromiseItemsLV.AgencySuspDistItemsLV"
+                label="displaykey.Web.DesktopAgencyItems.ReleaseAndApply"/>
+            </Toolbar>
+          </PanelRef>
+        </Card>
+      </CardViewPanel>
+    </Screen>
+    <Code><![CDATA[
+            /**
+             * This function dismisses AgencyCycleExceptions.  It was moved here from Java code due to usage of Bundle.commit.
+             * It should not be used as a model for other Gosu function implementation.
+             */
+                    function dismissPaymentPastDueExceptions(agencyCycleProcessWithExceptions: AgencyCycleProcess[]) {
+                        for (cycleException in agencyCycleProcessWithExceptions) {
+                            cycleException.PastDueExceptionDismissed = true
+                        }
+                        if (agencyCycleProcessWithExceptions.length > 0) {
+                            agencyCycleProcessWithExceptions[0].Bundle.commit()
+                        }
+                    }
+
+                    function dismissPromisePastDueExceptions(agencyCycleProcessWithExceptions: AgencyCycleProcess[]) {
+                        for (cycleException in agencyCycleProcessWithExceptions) {
+                            cycleException.PromiseExceptionDismissed = true
+                        }
+                        if (agencyCycleProcessWithExceptions.length > 0) {
+                            agencyCycleProcessWithExceptions[0].Bundle.commit()
+                        }
+                    }
+            ]]></Code>
+  </Page>
+</PCF>

@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?><entity xmlns="http://guidewire.com/datamodel" desc="A collateral requirement" entity="CollateralRequirement" platform="false" setterScriptability="hidden" subpackage="account" table="collateralrequirement" type="retireable">
+  <implementsEntity name="TAccountOwner"/>
+  <monetaryamount amountColumnName="Required" amountRange="nonnegative" desc="The amount of the requirement" name="Required" nullok="false" scaleToCurrency="true" soapnullok="true">
+    <tag name="DefaultValueZero"/>
+  </monetaryamount>
+  <monetaryamount amountColumnName="LOCAllocated" amountRange="nonnegative" desc="The amount of letters of credit allocated to the requirement" name="LOCAllocated" nullok="false" scaleToCurrency="true" soapnullok="true">
+    <tag name="DefaultValueZero"/>
+  </monetaryamount>
+  <monetaryamount amountColumnName="CashAllocated" desc="The amount of cash allocated to the requirement" name="CashAllocated" nullok="false" scaleToCurrency="true" soapnullok="true">
+    <tag name="DefaultValueZero"/>
+  </monetaryamount>
+  <column desc="Name of the requirement" name="RequirementName" nullok="false" type="shorttext"/>
+  <column default="false" desc="If true, the collateral requirement holds its own bucket of money" name="Segregated" nullok="false" type="bit"/>
+  <column desc="The date the Requirement becomes required" name="EffectiveDate" nullok="false" type="dateonly"/>
+  <column desc="The date the Requirement could expire" name="ExpirationDate" nullok="true" type="dateonly"/>
+  <foreignkey columnName="CollateralID" desc="The collateral the requirement is associated with" exportasid="true" fkentity="Collateral" name="Collateral" nullok="false"/>
+  <foreignkey columnName="HiddenTAccountContainerID" exportable="false" fkentity="CollReqTAcctContainer" getterScriptability="doesNotExist" importableagainstexistingobject="false" name="HiddenTAccountContainer" nullok="false" setterScriptability="doesNotExist"/>
+  <foreignkey columnName="PolicyPeriodID" desc="The policy period, if any, the requirement is associated with" exportasid="true" fkentity="PolicyPeriod" name="PolicyPeriod" nullok="true"/>
+  <foreignkey columnName="PolicyID" desc="The policy, if any, the requirement is associated with" fkentity="Policy" name="Policy" nullok="true"/>
+  <typekey desc="The type of requirement" name="RequirementType" nullok="false" typelist="CollateralRequirementType"/>
+  <typekey default="compliant" desc="Whether the Collateral is compliant" loadable="false" name="Compliance" nullok="false" typelist="ComplianceStatus"/>
+  <datetimeordering firstcolumnname="EffectiveDate" operator="LE" secondcolumnname="ExpirationDate"/>
+  <index desc="Legacy" name="taccountcontainer" unique="true">
+    <indexcol keyposition="1" name="HiddenTAccountContainerID"/>
+  </index>
+  <dbcheckbuilder className="com.guidewire.bc.system.database.dbchecks.account.CollateralRequirementDBCheckBuilder"/>
+</entity>

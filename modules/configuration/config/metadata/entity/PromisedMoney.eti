@@ -1,0 +1,25 @@
+<?xml version="1.0"?>
+<!-- ====================================================================  PromisedMoney  ==================================================================== -->
+<subtype
+  xmlns="http://guidewire.com/datamodel"
+  entity="PromisedMoney"
+  desc="Money promised as payment for a statement from a producer."
+  final="false"
+  subpackage="payment"
+  supertype="BaseMoneyReceived">
+  <foreignkey
+    name="PromisingProducer"
+    desc="Reference to the promising Agency."
+    columnName="PromisingProducerID"
+    fkentity="Producer"
+    loadable="false"
+    nullok="false"
+    setterScriptability="doesNotExist"/>
+  <monetaryamount
+    name="Amount"
+    amountColumnName="Amount"
+    amountRange="nonnegative"
+    scaleToCurrency="true"
+    desc="The total amount of the promise"
+    nullok="false"/>
+</subtype>

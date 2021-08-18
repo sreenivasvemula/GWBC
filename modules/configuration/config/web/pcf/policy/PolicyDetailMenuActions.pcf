@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PCF
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:noNamespaceSchemaLocation="../../../../../pcf.xsd">
+  <MenuActions
+    id="PolicyDetailMenuActions">
+    <Require
+      name="policyPeriod"
+      type="PolicyPeriod"/>
+    <MenuItem
+      action="PolicyChangeWizard.push(policyPeriod)"
+      available="not policyPeriod.Closed and perm.PolicyPeriod.plcychange"
+      id="PolicyDetailMenuActions_ChangePolicy"
+      label="displaykey.Web.PolicyDetailMenuActions.ChangePolicy"/>
+    <MenuItem
+      action="PolicyNewNoteWorksheet.goInWorkspace( policyPeriod )"
+      id="PolicyDetailMenuActions_NewNote"
+      label="displaykey.Web.PoliciesMenuActions.Note"
+      shortcut="N"
+      visible="perm.Note.create"/>
+    <MenuItem
+      action="RenewPolicyWizard.go(policyPeriod)"
+      id="PolicyDetailMenuActions_Renew"
+      label="displaykey.Web.PoliciesMenuActions.RenewPolicy"
+      visible="policyPeriod.canRenew()"/>
+    <MenuItem
+      id="NewDocument"
+      label="displaykey.Web.AccountDetailMenuActions.NewDocument"
+      visible="perm.Document.create">
+      <MenuItem
+        action="NewDocumentFromTemplateWorksheet.goInWorkspace(policyPeriod.Policy)"
+        id="NewDocumentFromTemplate"
+        label="displaykey.Web.AccountDetailMenuActions.NewDocumentFromTemplate"/>
+      <MenuItem
+        action="NewDocumentLinkedWorksheet.goInWorkspace(policyPeriod)"
+        id="NewDocumentByUpload"
+        label="displaykey.Web.AccountDetailMenuActions.NewDocumentByUpload"/>
+    </MenuItem>
+    <MenuItem
+      id="NewEmail"
+      label="displaykey.Web.AccountDetailMenuActions.NewEmail">
+      <MenuItem
+        action="SampleEmailWorksheet.goInWorkspace(policyPeriod, policyPeriod.Policy)"
+        id="NewEmail"
+        label="displaykey.Web.AccountDetailMenuActions.NewEmail"/>
+      <MenuItem
+        action="SampleEmailWorksheet.goInWorkspace(policyPeriod, policyPeriod.Policy, &quot;EmailReceived.gosu&quot;)"
+        id="NewEmailWithTemplate"
+        label="displaykey.Web.AccountDetailMenuActions.NewEmailWithTemplate"/>
+    </MenuItem>
+  </MenuActions>
+</PCF>

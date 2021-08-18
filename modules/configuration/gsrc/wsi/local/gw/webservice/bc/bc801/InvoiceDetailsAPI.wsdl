@@ -1,0 +1,545 @@
+<?xml version="1.0"?>
+<!-- Generated WSDL for gw.webservice.bc.bc801.InvoiceDetailsAPI web service -->
+<wsdl:definitions targetNamespace="http://guidewire.com/bc/ws/gw/webservice/bc/bc801/InvoiceDetailsAPI" name="InvoiceDetailsAPI" xmlns:gwsoap="http://guidewire.com/ws/soapheaders" xmlns:gwwsdl="http://guidewire.com/pl/wsdl" xmlns:pogo="http://guidewire.com/bc/ws/gw/webservice/bc/bc801/InvoiceItemDTO" xmlns:pogo2="http://guidewire.com/bc/typekey" xmlns:pogo3="http://guidewire.com/bc/ws/gw/webservice/bc/bc801/InvoiceDTO" xmlns:soap11="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:tns="http://guidewire.com/bc/ws/gw/webservice/bc/bc801/InvoiceDetailsAPI" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsdl:types>
+    <xs:schema targetNamespace="http://guidewire.com/bc/ws/gw/webservice/bc/bc801/InvoiceDetailsAPI" elementFormDefault="qualified" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+      <xs:import namespace="http://guidewire.com/ws/soapheaders" schemaLocation="../../../../../../gw/xsd/guidewire/soapheaders.xsd"/>
+      <xs:import namespace="http://guidewire.com/bc/ws/gw/webservice/bc/bc801/InvoiceDTO"/>
+      <xs:import namespace="http://guidewire.com/bc/typekey"/>
+      <xs:import namespace="http://guidewire.com/bc/ws/gw/webservice/bc/bc801/InvoiceItemDTO"/>
+      <!-- getInvoiceItemsOnInvoice(String) : InvoiceItemDTO[] -->
+      <xs:element name="getInvoiceItemsOnInvoice">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="invoicePublicID" type="xs:string" minOccurs="0"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="getInvoiceItemsOnInvoiceResponse">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="return" minOccurs="0" gw:viewas="array" xmlns:gw="http://guidewire.com/xsd">
+              <xs:complexType>
+                <xs:sequence>
+                  <xs:element minOccurs="0" maxOccurs="unbounded" name="Entry" nillable="true" type="pogo:InvoiceItemDTO"/>
+                </xs:sequence>
+              </xs:complexType>
+            </xs:element>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="SOAPServerException">
+        <xs:complexType/>
+      </xs:element>
+      <xs:element name="RequiredFieldException">
+        <xs:complexType/>
+      </xs:element>
+      <xs:element name="BadIdentifierException">
+        <xs:complexType/>
+      </xs:element>
+      <xs:element name="WsiAuthenticationException">
+        <xs:complexType/>
+      </xs:element>
+      <!-- getInvoiceItemsOnPolicyPeriodSortedByEventDate(String) : InvoiceItemDTO[] -->
+      <xs:element name="getInvoiceItemsOnPolicyPeriodSortedByEventDate">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="policyPeriodPublicID" type="xs:string" minOccurs="0"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="getInvoiceItemsOnPolicyPeriodSortedByEventDateResponse">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="return" minOccurs="0" gw:viewas="array" xmlns:gw="http://guidewire.com/xsd">
+              <xs:complexType>
+                <xs:sequence>
+                  <xs:element minOccurs="0" maxOccurs="unbounded" name="Entry" nillable="true" type="pogo:InvoiceItemDTO"/>
+                </xs:sequence>
+              </xs:complexType>
+            </xs:element>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <!-- getInvoicesOnAccountSortedByBillDate(String, InvoiceStatus) : InvoiceDTO[] -->
+      <xs:element name="getInvoicesOnAccountSortedByBillDate">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="accountPublicID" type="xs:string" minOccurs="0"/>
+            <xs:element name="status" minOccurs="0" type="pogo2:InvoiceStatus"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="getInvoicesOnAccountSortedByBillDateResponse">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="return" minOccurs="0" gw:viewas="array" xmlns:gw="http://guidewire.com/xsd">
+              <xs:complexType>
+                <xs:sequence>
+                  <xs:element minOccurs="0" maxOccurs="unbounded" name="Entry" nillable="true" type="pogo3:InvoiceDTO"/>
+                </xs:sequence>
+              </xs:complexType>
+            </xs:element>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <!-- getInvoicesOnPolicyPeriodSortedByBillDate(String, InvoiceStatus) : InvoiceDTO[] -->
+      <xs:element name="getInvoicesOnPolicyPeriodSortedByBillDate">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="policyPeriodPublicID" type="xs:string" minOccurs="0"/>
+            <xs:element name="status" minOccurs="0" type="pogo2:InvoiceStatus"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="getInvoicesOnPolicyPeriodSortedByBillDateResponse">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="return" minOccurs="0" gw:viewas="array" xmlns:gw="http://guidewire.com/xsd">
+              <xs:complexType>
+                <xs:sequence>
+                  <xs:element minOccurs="0" maxOccurs="unbounded" name="Entry" nillable="true" type="pogo3:InvoiceDTO"/>
+                </xs:sequence>
+              </xs:complexType>
+            </xs:element>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <!-- getInvoicesOnInvoiceStreamSortedByBillDate(String, InvoiceStatus) : InvoiceDTO[] -->
+      <xs:element name="getInvoicesOnInvoiceStreamSortedByBillDate">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="invoiceStreamPublicID" type="xs:string" minOccurs="0"/>
+            <xs:element name="status" minOccurs="0" type="pogo2:InvoiceStatus"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="getInvoicesOnInvoiceStreamSortedByBillDateResponse">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="return" minOccurs="0" gw:viewas="array" xmlns:gw="http://guidewire.com/xsd">
+              <xs:complexType>
+                <xs:sequence>
+                  <xs:element minOccurs="0" maxOccurs="unbounded" name="Entry" nillable="true" type="pogo3:InvoiceDTO"/>
+                </xs:sequence>
+              </xs:complexType>
+            </xs:element>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+    </xs:schema>
+    <xs:schema targetNamespace="http://guidewire.com/bc/ws/gw/webservice/bc/bc801/InvoiceItemDTO" elementFormDefault="qualified" xmlns:gw="http://guidewire.com/xsd" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+      <xs:import namespace="http://guidewire.com/bc/ws/gw/webservice/bc/bc801/InvoiceDTO"/>
+      <xs:import namespace="http://guidewire.com/bc/typekey"/>
+      <xs:complexType name="InvoiceItemDTO">
+        <xs:sequence>
+          <xs:element name="Amount" type="xs:string" gw:type="gw.pl.currency.MonetaryAmount" minOccurs="0"/>
+          <xs:element name="ChargePublicID" type="xs:string" minOccurs="0"/>
+          <xs:element name="Comments" type="xs:string" minOccurs="0"/>
+          <xs:element name="Description" type="xs:string" minOccurs="0"/>
+          <xs:element name="EventDate" type="xs:dateTime" gw:type="java.util.Date" minOccurs="0"/>
+          <xs:element name="GrossAmountWrittenOff" type="xs:string" gw:type="gw.pl.currency.MonetaryAmount" minOccurs="0"/>
+          <xs:element name="GrossSettled" type="xs:boolean" minOccurs="0"/>
+          <xs:element name="InstallmentNumber" type="xs:int" minOccurs="0"/>
+          <xs:element name="InvoicePublicID" type="xs:string" minOccurs="0"/>
+          <xs:element name="OwnerPublicID" type="xs:string" minOccurs="0"/>
+          <xs:element name="PaidAmount" type="xs:string" gw:type="gw.pl.currency.MonetaryAmount" minOccurs="0"/>
+          <xs:element name="PolicyPeriodPublicID" type="xs:string" minOccurs="0"/>
+          <xs:element name="PublicID" type="xs:string" minOccurs="0"/>
+          <xs:element name="Type" minOccurs="0" type="pogo2:InvoiceItemType"/>
+        </xs:sequence>
+      </xs:complexType>
+    </xs:schema>
+    <xs:schema targetNamespace="http://guidewire.com/bc/typekey" elementFormDefault="qualified" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+      <xs:import namespace="http://guidewire.com/bc/ws/gw/webservice/bc/bc801/InvoiceDTO"/>
+      <xs:import namespace="http://guidewire.com/bc/ws/gw/webservice/bc/bc801/InvoiceItemDTO"/>
+      <xs:simpleType name="InvoiceItemType">
+        <xs:restriction base="xs:string">
+          <xs:enumeration value="commissionadjustment"/>
+          <xs:enumeration value="commissionremainder"/>
+          <xs:enumeration value="deposit"/>
+          <xs:enumeration value="installment"/>
+          <xs:enumeration value="onetime"/>
+          <xs:enumeration value="commissionupgrade"/>
+          <xs:enumeration value="depositadjustment"/>
+        </xs:restriction>
+      </xs:simpleType>
+      <xs:simpleType name="InvoiceStatus">
+        <xs:restriction base="xs:string">
+          <xs:enumeration value="billed"/>
+          <xs:enumeration value="carriedforward"/>
+          <xs:enumeration value="due"/>
+          <xs:enumeration value="planned"/>
+          <xs:enumeration value="writtenoff"/>
+        </xs:restriction>
+      </xs:simpleType>
+    </xs:schema>
+    <xs:schema targetNamespace="http://guidewire.com/bc/ws/gw/webservice/bc/bc801/InvoiceDTO" elementFormDefault="qualified" xmlns:gw="http://guidewire.com/xsd" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+      <xs:import namespace="http://guidewire.com/bc/typekey"/>
+      <xs:import namespace="http://guidewire.com/bc/ws/gw/webservice/bc/bc801/InvoiceItemDTO"/>
+      <xs:complexType name="InvoiceDTO">
+        <xs:sequence>
+          <xs:element name="AdHoc" type="xs:boolean" minOccurs="0"/>
+          <xs:element name="Amount" type="xs:string" gw:type="gw.pl.currency.MonetaryAmount" minOccurs="0"/>
+          <xs:element name="AmountDue" type="xs:string" gw:type="gw.pl.currency.MonetaryAmount" minOccurs="0"/>
+          <xs:element name="Description" type="xs:string" minOccurs="0"/>
+          <xs:element name="EventDate" type="xs:dateTime" gw:type="java.util.Date" minOccurs="0"/>
+          <xs:element name="InvoiceNumber" type="xs:string" minOccurs="0"/>
+          <xs:element name="InvoiceStreamName" type="xs:string" minOccurs="0"/>
+          <xs:element name="PaymentDueDate" type="xs:dateTime" gw:type="java.util.Date" minOccurs="0"/>
+          <xs:element name="PublicID" type="xs:string" minOccurs="0"/>
+          <xs:element name="Status" minOccurs="0" type="pogo2:InvoiceStatus"/>
+        </xs:sequence>
+      </xs:complexType>
+    </xs:schema>
+  </wsdl:types>
+  <wsdl:portType name="InvoiceDetailsAPIPortType">
+    <wsdl:operation name="getInvoiceItemsOnInvoice">
+      <wsdl:input name="getInvoiceItemsOnInvoice" message="tns:getInvoiceItemsOnInvoice"/>
+      <wsdl:output name="getInvoiceItemsOnInvoiceResponse" message="tns:getInvoiceItemsOnInvoiceResponse"/>
+      <!-- If communication error or any other SOAP problem occurs. -->
+      <wsdl:fault name="SOAPServerException" message="tns:SOAPServerException"/>
+      <!-- If invoicePublicID is null. -->
+      <wsdl:fault name="RequiredFieldException" message="tns:RequiredFieldException"/>
+      <!-- If there is no invoice with PublicID matching invoicePublicID. -->
+      <wsdl:fault name="BadIdentifierException" message="tns:BadIdentifierException"/>
+      <wsdl:fault name="WsiAuthenticationException" message="tns:WsiAuthenticationException"/>
+    </wsdl:operation>
+    <wsdl:operation name="getInvoiceItemsOnPolicyPeriodSortedByEventDate">
+      <wsdl:input name="getInvoiceItemsOnPolicyPeriodSortedByEventDate" message="tns:getInvoiceItemsOnPolicyPeriodSortedByEventDate"/>
+      <wsdl:output name="getInvoiceItemsOnPolicyPeriodSortedByEventDateResponse" message="tns:getInvoiceItemsOnPolicyPeriodSortedByEventDateResponse"/>
+      <!-- If communication error or any other SOAP problem occurs. -->
+      <wsdl:fault name="SOAPServerException" message="tns:SOAPServerException"/>
+      <!-- If policyperiodPublicID is null. -->
+      <wsdl:fault name="RequiredFieldException" message="tns:RequiredFieldException"/>
+      <!-- If there is no policy period with PublicID matching policyperiodPublicID. -->
+      <wsdl:fault name="BadIdentifierException" message="tns:BadIdentifierException"/>
+      <wsdl:fault name="WsiAuthenticationException" message="tns:WsiAuthenticationException"/>
+    </wsdl:operation>
+    <wsdl:operation name="getInvoicesOnAccountSortedByBillDate">
+      <wsdl:input name="getInvoicesOnAccountSortedByBillDate" message="tns:getInvoicesOnAccountSortedByBillDate"/>
+      <wsdl:output name="getInvoicesOnAccountSortedByBillDateResponse" message="tns:getInvoicesOnAccountSortedByBillDateResponse"/>
+      <!-- If communication error or any other SOAP problem occurs. -->
+      <wsdl:fault name="SOAPServerException" message="tns:SOAPServerException"/>
+      <!-- If accountPublicID is null. -->
+      <wsdl:fault name="RequiredFieldException" message="tns:RequiredFieldException"/>
+      <!-- If there is no Account with PublicID matching accountPublicID. -->
+      <wsdl:fault name="BadIdentifierException" message="tns:BadIdentifierException"/>
+      <wsdl:fault name="WsiAuthenticationException" message="tns:WsiAuthenticationException"/>
+    </wsdl:operation>
+    <wsdl:operation name="getInvoicesOnPolicyPeriodSortedByBillDate">
+      <wsdl:input name="getInvoicesOnPolicyPeriodSortedByBillDate" message="tns:getInvoicesOnPolicyPeriodSortedByBillDate"/>
+      <wsdl:output name="getInvoicesOnPolicyPeriodSortedByBillDateResponse" message="tns:getInvoicesOnPolicyPeriodSortedByBillDateResponse"/>
+      <!-- If communication error or any other SOAP problem occurs. -->
+      <wsdl:fault name="SOAPServerException" message="tns:SOAPServerException"/>
+      <!-- If policyperiodPublicID is null. -->
+      <wsdl:fault name="RequiredFieldException" message="tns:RequiredFieldException"/>
+      <!-- If there is no policy period with PublicID matching policyperiodPublicID. -->
+      <wsdl:fault name="BadIdentifierException" message="tns:BadIdentifierException"/>
+      <wsdl:fault name="WsiAuthenticationException" message="tns:WsiAuthenticationException"/>
+    </wsdl:operation>
+    <wsdl:operation name="getInvoicesOnInvoiceStreamSortedByBillDate">
+      <wsdl:input name="getInvoicesOnInvoiceStreamSortedByBillDate" message="tns:getInvoicesOnInvoiceStreamSortedByBillDate"/>
+      <wsdl:output name="getInvoicesOnInvoiceStreamSortedByBillDateResponse" message="tns:getInvoicesOnInvoiceStreamSortedByBillDateResponse"/>
+      <!-- If communication error or any other SOAP problem occurs. -->
+      <wsdl:fault name="SOAPServerException" message="tns:SOAPServerException"/>
+      <!-- If invoiceStreamPublicID is null. -->
+      <wsdl:fault name="RequiredFieldException" message="tns:RequiredFieldException"/>
+      <!-- If there is no invoice stream with PublicID matching invoiceStreamPublicID. -->
+      <wsdl:fault name="BadIdentifierException" message="tns:BadIdentifierException"/>
+      <wsdl:fault name="WsiAuthenticationException" message="tns:WsiAuthenticationException"/>
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="InvoiceDetailsAPISoap12Binding" type="tns:InvoiceDetailsAPIPortType">
+    <soap12:binding transport="http://schemas.xmlsoap.org/soap/http" style="document"/>
+    <wsdl:operation name="getInvoiceItemsOnInvoice">
+      <soap12:operation soapActionRequired="false" style="document"/>
+      <wsdl:input name="getInvoiceItemsOnInvoice">
+        <soap12:body use="literal"/>
+        <soap12:header message="tns:gw-authentication" part="gw-authentication" use="literal"/>
+        <soap12:header message="tns:gw-locale" part="gw-locale" use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="getInvoiceItemsOnInvoiceResponse">
+        <soap12:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="SOAPServerException">
+        <soap12:fault name="SOAPServerException" use="literal"/>
+      </wsdl:fault>
+      <wsdl:fault name="RequiredFieldException">
+        <soap12:fault name="RequiredFieldException" use="literal"/>
+      </wsdl:fault>
+      <wsdl:fault name="BadIdentifierException">
+        <soap12:fault name="BadIdentifierException" use="literal"/>
+      </wsdl:fault>
+      <wsdl:fault name="WsiAuthenticationException">
+        <soap12:fault name="WsiAuthenticationException" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="getInvoiceItemsOnPolicyPeriodSortedByEventDate">
+      <soap12:operation soapActionRequired="false" style="document"/>
+      <wsdl:input name="getInvoiceItemsOnPolicyPeriodSortedByEventDate">
+        <soap12:body use="literal"/>
+        <soap12:header message="tns:gw-authentication" part="gw-authentication" use="literal"/>
+        <soap12:header message="tns:gw-locale" part="gw-locale" use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="getInvoiceItemsOnPolicyPeriodSortedByEventDateResponse">
+        <soap12:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="SOAPServerException">
+        <soap12:fault name="SOAPServerException" use="literal"/>
+      </wsdl:fault>
+      <wsdl:fault name="RequiredFieldException">
+        <soap12:fault name="RequiredFieldException" use="literal"/>
+      </wsdl:fault>
+      <wsdl:fault name="BadIdentifierException">
+        <soap12:fault name="BadIdentifierException" use="literal"/>
+      </wsdl:fault>
+      <wsdl:fault name="WsiAuthenticationException">
+        <soap12:fault name="WsiAuthenticationException" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="getInvoicesOnAccountSortedByBillDate">
+      <soap12:operation soapActionRequired="false" style="document"/>
+      <wsdl:input name="getInvoicesOnAccountSortedByBillDate">
+        <soap12:body use="literal"/>
+        <soap12:header message="tns:gw-authentication" part="gw-authentication" use="literal"/>
+        <soap12:header message="tns:gw-locale" part="gw-locale" use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="getInvoicesOnAccountSortedByBillDateResponse">
+        <soap12:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="SOAPServerException">
+        <soap12:fault name="SOAPServerException" use="literal"/>
+      </wsdl:fault>
+      <wsdl:fault name="RequiredFieldException">
+        <soap12:fault name="RequiredFieldException" use="literal"/>
+      </wsdl:fault>
+      <wsdl:fault name="BadIdentifierException">
+        <soap12:fault name="BadIdentifierException" use="literal"/>
+      </wsdl:fault>
+      <wsdl:fault name="WsiAuthenticationException">
+        <soap12:fault name="WsiAuthenticationException" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="getInvoicesOnPolicyPeriodSortedByBillDate">
+      <soap12:operation soapActionRequired="false" style="document"/>
+      <wsdl:input name="getInvoicesOnPolicyPeriodSortedByBillDate">
+        <soap12:body use="literal"/>
+        <soap12:header message="tns:gw-authentication" part="gw-authentication" use="literal"/>
+        <soap12:header message="tns:gw-locale" part="gw-locale" use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="getInvoicesOnPolicyPeriodSortedByBillDateResponse">
+        <soap12:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="SOAPServerException">
+        <soap12:fault name="SOAPServerException" use="literal"/>
+      </wsdl:fault>
+      <wsdl:fault name="RequiredFieldException">
+        <soap12:fault name="RequiredFieldException" use="literal"/>
+      </wsdl:fault>
+      <wsdl:fault name="BadIdentifierException">
+        <soap12:fault name="BadIdentifierException" use="literal"/>
+      </wsdl:fault>
+      <wsdl:fault name="WsiAuthenticationException">
+        <soap12:fault name="WsiAuthenticationException" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="getInvoicesOnInvoiceStreamSortedByBillDate">
+      <soap12:operation soapActionRequired="false" style="document"/>
+      <wsdl:input name="getInvoicesOnInvoiceStreamSortedByBillDate">
+        <soap12:body use="literal"/>
+        <soap12:header message="tns:gw-authentication" part="gw-authentication" use="literal"/>
+        <soap12:header message="tns:gw-locale" part="gw-locale" use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="getInvoicesOnInvoiceStreamSortedByBillDateResponse">
+        <soap12:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="SOAPServerException">
+        <soap12:fault name="SOAPServerException" use="literal"/>
+      </wsdl:fault>
+      <wsdl:fault name="RequiredFieldException">
+        <soap12:fault name="RequiredFieldException" use="literal"/>
+      </wsdl:fault>
+      <wsdl:fault name="BadIdentifierException">
+        <soap12:fault name="BadIdentifierException" use="literal"/>
+      </wsdl:fault>
+      <wsdl:fault name="WsiAuthenticationException">
+        <soap12:fault name="WsiAuthenticationException" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:binding name="InvoiceDetailsAPISoap11Binding" type="tns:InvoiceDetailsAPIPortType">
+    <soap11:binding transport="http://schemas.xmlsoap.org/soap/http" style="document"/>
+    <wsdl:operation name="getInvoiceItemsOnInvoice">
+      <soap11:operation style="document"/>
+      <wsdl:input name="getInvoiceItemsOnInvoice">
+        <soap11:body use="literal"/>
+        <soap11:header message="tns:gw-authentication" part="gw-authentication" use="literal"/>
+        <soap11:header message="tns:gw-locale" part="gw-locale" use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="getInvoiceItemsOnInvoiceResponse">
+        <soap11:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="SOAPServerException">
+        <soap11:fault name="SOAPServerException" use="literal"/>
+      </wsdl:fault>
+      <wsdl:fault name="RequiredFieldException">
+        <soap11:fault name="RequiredFieldException" use="literal"/>
+      </wsdl:fault>
+      <wsdl:fault name="BadIdentifierException">
+        <soap11:fault name="BadIdentifierException" use="literal"/>
+      </wsdl:fault>
+      <wsdl:fault name="WsiAuthenticationException">
+        <soap11:fault name="WsiAuthenticationException" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="getInvoiceItemsOnPolicyPeriodSortedByEventDate">
+      <soap11:operation style="document"/>
+      <wsdl:input name="getInvoiceItemsOnPolicyPeriodSortedByEventDate">
+        <soap11:body use="literal"/>
+        <soap11:header message="tns:gw-authentication" part="gw-authentication" use="literal"/>
+        <soap11:header message="tns:gw-locale" part="gw-locale" use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="getInvoiceItemsOnPolicyPeriodSortedByEventDateResponse">
+        <soap11:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="SOAPServerException">
+        <soap11:fault name="SOAPServerException" use="literal"/>
+      </wsdl:fault>
+      <wsdl:fault name="RequiredFieldException">
+        <soap11:fault name="RequiredFieldException" use="literal"/>
+      </wsdl:fault>
+      <wsdl:fault name="BadIdentifierException">
+        <soap11:fault name="BadIdentifierException" use="literal"/>
+      </wsdl:fault>
+      <wsdl:fault name="WsiAuthenticationException">
+        <soap11:fault name="WsiAuthenticationException" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="getInvoicesOnAccountSortedByBillDate">
+      <soap11:operation style="document"/>
+      <wsdl:input name="getInvoicesOnAccountSortedByBillDate">
+        <soap11:body use="literal"/>
+        <soap11:header message="tns:gw-authentication" part="gw-authentication" use="literal"/>
+        <soap11:header message="tns:gw-locale" part="gw-locale" use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="getInvoicesOnAccountSortedByBillDateResponse">
+        <soap11:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="SOAPServerException">
+        <soap11:fault name="SOAPServerException" use="literal"/>
+      </wsdl:fault>
+      <wsdl:fault name="RequiredFieldException">
+        <soap11:fault name="RequiredFieldException" use="literal"/>
+      </wsdl:fault>
+      <wsdl:fault name="BadIdentifierException">
+        <soap11:fault name="BadIdentifierException" use="literal"/>
+      </wsdl:fault>
+      <wsdl:fault name="WsiAuthenticationException">
+        <soap11:fault name="WsiAuthenticationException" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="getInvoicesOnPolicyPeriodSortedByBillDate">
+      <soap11:operation style="document"/>
+      <wsdl:input name="getInvoicesOnPolicyPeriodSortedByBillDate">
+        <soap11:body use="literal"/>
+        <soap11:header message="tns:gw-authentication" part="gw-authentication" use="literal"/>
+        <soap11:header message="tns:gw-locale" part="gw-locale" use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="getInvoicesOnPolicyPeriodSortedByBillDateResponse">
+        <soap11:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="SOAPServerException">
+        <soap11:fault name="SOAPServerException" use="literal"/>
+      </wsdl:fault>
+      <wsdl:fault name="RequiredFieldException">
+        <soap11:fault name="RequiredFieldException" use="literal"/>
+      </wsdl:fault>
+      <wsdl:fault name="BadIdentifierException">
+        <soap11:fault name="BadIdentifierException" use="literal"/>
+      </wsdl:fault>
+      <wsdl:fault name="WsiAuthenticationException">
+        <soap11:fault name="WsiAuthenticationException" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="getInvoicesOnInvoiceStreamSortedByBillDate">
+      <soap11:operation style="document"/>
+      <wsdl:input name="getInvoicesOnInvoiceStreamSortedByBillDate">
+        <soap11:body use="literal"/>
+        <soap11:header message="tns:gw-authentication" part="gw-authentication" use="literal"/>
+        <soap11:header message="tns:gw-locale" part="gw-locale" use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="getInvoicesOnInvoiceStreamSortedByBillDateResponse">
+        <soap11:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="SOAPServerException">
+        <soap11:fault name="SOAPServerException" use="literal"/>
+      </wsdl:fault>
+      <wsdl:fault name="RequiredFieldException">
+        <soap11:fault name="RequiredFieldException" use="literal"/>
+      </wsdl:fault>
+      <wsdl:fault name="BadIdentifierException">
+        <soap11:fault name="BadIdentifierException" use="literal"/>
+      </wsdl:fault>
+      <wsdl:fault name="WsiAuthenticationException">
+        <soap11:fault name="WsiAuthenticationException" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="InvoiceDetailsAPI">
+    <wsdl:port name="InvoiceDetailsAPISoap12Port" binding="tns:InvoiceDetailsAPISoap12Binding">
+      <soap12:address location="local:///gw/webservice/bc/bc801/InvoiceDetailsAPI"/>
+    </wsdl:port>
+    <wsdl:port name="InvoiceDetailsAPISoap11Port" binding="tns:InvoiceDetailsAPISoap11Binding">
+      <soap11:address location="local:///gw/webservice/bc/bc801/InvoiceDetailsAPI/soap11"/>
+    </wsdl:port>
+  </wsdl:service>
+  <wsdl:message name="getInvoiceItemsOnInvoice">
+    <wsdl:part name="parameters" element="tns:getInvoiceItemsOnInvoice"/>
+  </wsdl:message>
+  <wsdl:message name="getInvoiceItemsOnInvoiceResponse">
+    <wsdl:part name="parameters" element="tns:getInvoiceItemsOnInvoiceResponse"/>
+  </wsdl:message>
+  <wsdl:message name="SOAPServerException">
+    <wsdl:part name="SOAPServerException" element="tns:SOAPServerException"/>
+  </wsdl:message>
+  <wsdl:message name="RequiredFieldException">
+    <wsdl:part name="RequiredFieldException" element="tns:RequiredFieldException"/>
+  </wsdl:message>
+  <wsdl:message name="BadIdentifierException">
+    <wsdl:part name="BadIdentifierException" element="tns:BadIdentifierException"/>
+  </wsdl:message>
+  <wsdl:message name="WsiAuthenticationException">
+    <wsdl:part name="WsiAuthenticationException" element="tns:WsiAuthenticationException"/>
+  </wsdl:message>
+  <wsdl:message name="getInvoiceItemsOnPolicyPeriodSortedByEventDate">
+    <wsdl:part name="parameters" element="tns:getInvoiceItemsOnPolicyPeriodSortedByEventDate"/>
+  </wsdl:message>
+  <wsdl:message name="getInvoiceItemsOnPolicyPeriodSortedByEventDateResponse">
+    <wsdl:part name="parameters" element="tns:getInvoiceItemsOnPolicyPeriodSortedByEventDateResponse"/>
+  </wsdl:message>
+  <wsdl:message name="getInvoicesOnAccountSortedByBillDate">
+    <wsdl:part name="parameters" element="tns:getInvoicesOnAccountSortedByBillDate"/>
+  </wsdl:message>
+  <wsdl:message name="getInvoicesOnAccountSortedByBillDateResponse">
+    <wsdl:part name="parameters" element="tns:getInvoicesOnAccountSortedByBillDateResponse"/>
+  </wsdl:message>
+  <wsdl:message name="getInvoicesOnPolicyPeriodSortedByBillDate">
+    <wsdl:part name="parameters" element="tns:getInvoicesOnPolicyPeriodSortedByBillDate"/>
+  </wsdl:message>
+  <wsdl:message name="getInvoicesOnPolicyPeriodSortedByBillDateResponse">
+    <wsdl:part name="parameters" element="tns:getInvoicesOnPolicyPeriodSortedByBillDateResponse"/>
+  </wsdl:message>
+  <wsdl:message name="getInvoicesOnInvoiceStreamSortedByBillDate">
+    <wsdl:part name="parameters" element="tns:getInvoicesOnInvoiceStreamSortedByBillDate"/>
+  </wsdl:message>
+  <wsdl:message name="getInvoicesOnInvoiceStreamSortedByBillDateResponse">
+    <wsdl:part name="parameters" element="tns:getInvoicesOnInvoiceStreamSortedByBillDateResponse"/>
+  </wsdl:message>
+  <wsdl:message name="gw-authentication">
+    <wsdl:part name="gw-authentication" element="gwsoap:authentication"/>
+  </wsdl:message>
+  <wsdl:message name="gw-locale">
+    <wsdl:part name="gw-locale" element="gwsoap:locale"/>
+  </wsdl:message>
+</wsdl:definitions>

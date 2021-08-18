@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?><entity xmlns="http://guidewire.com/datamodel" desc="Links a payment item and its action kind with a payment item group " entity="PaymentItemAction" final="true" loadable="false" platform="false" setterScriptability="hidden" subpackage="fundstracking" table="paymentitemaction" type="editable">
+    <implementsEntity name="InCurrencySilo"/>
+    <foreignkey columnName="PaymentItemGroupID" desc="The related payment item group" fkentity="PaymentItemGroup" getterScriptability="hidden" name="PaymentItemGroup" nullok="false" setterScriptability="doesNotExist"/>
+    <foreignkey columnName="DirectBillPaymentItemID" desc="The related direct bill payment item" fkentity="DirectBillPaymentItem" getterScriptability="doesNotExist" name="DirectBillPaymentItem" nullok="true" setterScriptability="hidden"/>
+    <foreignkey columnName="CollateralPaymentItemID" desc="The related collateral payment item" fkentity="CollateralPaymentItem" getterScriptability="doesNotExist" name="CollateralPaymentItem" nullok="true" setterScriptability="hidden"/>
+    <typekey desc="The action on the payment item that triggered it to join the group" name="ActionKind" nullok="false" typelist="PaymentItemActionKind"/>
+    <checkconstraint desc="Either the DirectBillPaymentItem or the CollateralPaymentItem must be set." predicate="DirectBillPaymentItemID IS NOT NULL OR CollateralPaymentItemID IS NOT NULL"/>
+    <checkconstraint desc="Cannot set both the DirectBillPaymentItem and the CollateralPaymentItem." predicate="DirectBillPaymentItemID IS NULL OR CollateralPaymentItemID IS NULL"/>
+    <dbcheckbuilder className="com.guidewire.bc.system.database.dbchecks.fundstracking.PaymentItemActionDBCheckBuilder"/>
+</entity>

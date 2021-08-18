@@ -1,0 +1,73 @@
+<?xml version="1.0"?>
+<PCF
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:noNamespaceSchemaLocation="../../../../../pcf.xsd">
+  <Screen
+    id="AgencyBillStatementDetailScreen">
+    <Require
+      name="cycle"
+      type="AgencyBillCycle"/>
+    <Variable
+      initialValue="new gw.api.web.invoice.AgencyBillStatementView(cycle.StatementInvoice)"
+      name="agencyBillStatementView"
+      type="gw.api.web.invoice.AgencyBillStatementView"/>
+    <Variable
+      initialValue="InvoiceItemViewOption.TC_BILLED"
+      name="viewOption"
+      type="InvoiceItemViewOption"/>
+    <Variable
+      initialValue="StatementViewOption.TC_BYITEM"
+      name="showByPolicy"/>
+    <PanelRef
+      def="AgencyBillStatementTotalsDV(agencyBillStatementView)"/>
+    <PanelRef
+      def="PolicyActivityLV(agencyBillStatementView, viewOption)"
+      mode="showByPolicy == StatementViewOption.TC_BYITEM ? &quot;itemlevel&quot; : &quot;policylevel&quot;">
+      <TitleBar
+        title="displaykey.Web.AgencyBillStatementDetail.PolicyActivityLV.Title"/>
+      <Toolbar>
+        <ToolbarRangeInput
+          editable="true"
+          id="AgencyPaymentItemsFilter"
+          label="displaykey.Web.AgencyPaymentWizard.AgencyPaymentItemsLV.Show"
+          required="true"
+          value="agencyBillStatementView.InvoiceItemsFilterType"
+          valueRange="AgencyPmntItemsFilterType.getTypeKeys( false ).where( \ a -&gt; a != AgencyPmntItemsFilterType.TC_NONZERO )">
+          <PostOnChange/>
+        </ToolbarRangeInput>
+        <ToolbarRangeInput
+          editable="true"
+          id="DisplayMode"
+          label="displaykey.Web.AgencyPaymentWizard.AgencyPaymentItemsLV.Show"
+          required="true"
+          value="viewOption"
+          valueRange="InvoiceItemViewOption.getTypeKeys( false )">
+          <PostOnChange/>
+        </ToolbarRangeInput>
+        <ToolbarRangeInput
+          id="ByItemOrPolicy"
+          label="displaykey.Web.AgencyPaymentWizard.AgencyPaymentItemsLV.Show"
+          required="true"
+          value="showByPolicy"
+          valueRange="StatementViewOption.getTypeKeys( false )">
+          <PostOnChange/>
+        </ToolbarRangeInput>
+        <ToolbarDivider/>
+        <ToolbarInput
+          editable="true"
+          id="PolicyPeriodFilter"
+          label="displaykey.Web.AgencyPaymentWizard.AgencyPaymentItemsLV.PolicyPeriodFilter"
+          value="agencyBillStatementView.PolicyPeriodFilter"/>
+        <ToolbarButton
+          action="null"
+          default="true"
+          id="PolicyFilterGoButton"
+          label="displaykey.Web.AgencyPaymentWizard.AgencyPaymentItemsLV.PolicyPeriodFilterGoButton"/>
+        <ToolbarButton
+          action="agencyBillStatementView.PolicyPeriodFilter = null"
+          id="PolicyFilterClearButton"
+          label="displaykey.Web.AgencyPaymentWizard.AgencyPaymentItemsLV.PolicyPeriodFilterClearButton"/>
+      </Toolbar>
+    </PanelRef>
+  </Screen>
+</PCF>

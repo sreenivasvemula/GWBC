@@ -1,0 +1,137 @@
+<?xml version="1.0"?>
+<PCF
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:noNamespaceSchemaLocation="../../../../../pcf.xsd">
+  <ListDetailPanel
+    id="DisbursementsLV"
+    selectionName="selectedDisbursement"
+    selectionOnEnter="initialSelectedDisbursement"
+    selectionType="Disbursement">
+    <Require
+      name="disbursements"
+      type="List"/>
+    <Require
+      name="initialSelectedDisbursement"
+      type="Disbursement"/>
+    <ListViewPanel>
+      <RowIterator
+        editable="false"
+        elementName="disbursement"
+        type="Disbursement"
+        value="disbursements.toArray()">
+        <ToolbarFilter
+          name="DisbursementsCloseDateFilter">
+          <ToolbarFilterOptionGroup
+            filters="new web.disbursement.DisbursementsCloseDateFilterSet().FilterOptions"/>
+        </ToolbarFilter>
+        <ToolbarFilter
+          name="DisbursementsStatusFilter">
+          <ToolbarFilterOptionGroup
+            filters="new web.disbursement.DisbursementsStatusFilterSet().FilterOptions"/>
+        </ToolbarFilter>
+        <Row>
+          <DateCell
+            id="DateIssued"
+            label="displaykey.Web.DisbursementsLV.DateIssued"
+            sortBy="disbursement.CloseDate"
+            sortOrder="1"
+            value="disbursement.getDateIssued()"/>
+          <DateCell
+            id="DateRejected"
+            label="displaykey.Web.DisbursementsLV.DateRejected"
+            sortBy="disbursement.CloseDate"
+            value="disbursement.getDateRejected()"/>
+          <Cell
+            id="DisbursementNumber"
+            label="displaykey.Web.DisbursementsLV.DisbursementNumber"
+            value="disbursement.DisbursementNumber"/>
+          <Cell
+            enableSort="false"
+            id="collateralDisbursement"
+            label="displaykey.Web.DisbursementsLV.Collateral"
+            value="disbursement typeis CollateralDisbursement"/>
+          <Cell
+            enableSort="false"
+            id="UnappliedFund"
+            label="displaykey.Web.DisbursementsLV.UnappliedFund"
+            value="disbursement typeis AccountDisbursement ? disbursement.UnappliedFund : null"/>
+          <TypeKeyCell
+            id="DisbursementStatus"
+            label="displaykey.Web.DisbursementsLV.DisbursementStatus"
+            value="disbursement.Status"/>
+          <TypeKeyCell
+            id="OutgoingPaymentStatus"
+            label="displaykey.Web.DisbursementsLV.OutgoingPaymentStatus"
+            value="disbursement.OutgoingPayment.Status"/>
+          <MonetaryAmountCell
+            currency="disbursement.Currency"
+            id="Amount"
+            label="displaykey.Web.DisbursementsLV.Amount"
+            value="disbursement.Amount"/>
+          <Cell
+            id="PayTo"
+            label="displaykey.Web.DisbursementsLV.PayTo"
+            value="disbursement.PayTo"/>
+          <TypeKeyCell
+            id="PaymentMethod"
+            label="displaykey.Web.DisbursementsLV.PaymentMethod"
+            value="disbursement.OutgoingPayment.PaymentInstrument.PaymentMethod"/>
+          <Cell
+            id="RefNumber"
+            label="displaykey.Web.DisbursementsLV.RefNumber"
+            value="disbursement.OutgoingPayment.RefNumber"/>
+          <Cell
+            id="assignedUser"
+            label="displaykey.Web.DesktopDisbursement.AssignedUser"
+            value="getAssignedUser( disbursement )"/>
+        </Row>
+      </RowIterator>
+    </ListViewPanel>
+    <CardViewPanel>
+      <Card
+        id="DisbursementDetailCard"
+        title="displaykey.Web.DisbursementsLV.Detail">
+        <PanelRef
+          def="DisbursementDetailDV(selectedDisbursement)">
+          <Toolbar>
+            <EditButtons/>
+            <ToolbarDivider/>
+            <ToolbarButton
+              action="selectedDisbursement.getOpenApprovalActivity().approve(); CurrentLocation.commit();"
+              available="selectedDisbursement.canApprove()"
+              hideIfReadOnly="true"
+              id="Approve"
+              label="displaykey.Web.DisbursementDetail.Approve"/>
+            <ToolbarButton
+              action="selectedDisbursement.rejectDisbursement(); CurrentLocation.commit();"
+              available="selectedDisbursement.canReject()"
+              confirmMessage="displaykey.Web.DisbursementDetail.RejectConfirm"
+              hideIfReadOnly="true"
+              id="Reject"
+              label="displaykey.Web.DisbursementDetail.Reject"/>
+            <ToolbarButton
+              action="selectedDisbursement.rejectDisbursementAndHold(); CurrentLocation.commit();"
+              available="selectedDisbursement.canRejectAndHold()"
+              confirmMessage="displaykey.Web.DisbursementDetail.RejectConfirm"
+              hideIfReadOnly="true"
+              id="RejectWithHold"
+              label="displaykey.Web.DisbursementDetail.RejectWithHold"/>
+            <ToolbarDivider/>
+            <ToolbarButton
+              action="VoidDisbursementPopup.push(selectedDisbursement)"
+              available="selectedDisbursement.canVoid()"
+              hideIfReadOnly="true"
+              id="Void"
+              label="displaykey.Web.DisbursementDetail.Void"/>
+          </Toolbar>
+        </PanelRef>
+      </Card>
+    </CardViewPanel>
+    <Code><![CDATA[function getAssignedUser(disbursementVar : Disbursement) : String{
+  if(disbursementVar.OpenApprovalActivity != null){
+    return disbursementVar.OpenApprovalActivity.AssignedUser.DisplayName
+  }
+  return null
+}]]></Code>
+  </ListDetailPanel>
+</PCF>

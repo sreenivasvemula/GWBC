@@ -1,0 +1,681 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xml:lang="en" lang="en" xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+    <meta http-equiv="Content-Style-Type" content="text/css" />
+    <!-- MOTW-DISABLED saved from url=(0014)about:internet -->
+    <title>Posting Direct Bill Payments</title>
+    <link rel="StyleSheet" href="css/payments.css" type="text/css" media="all" />
+    <link rel="StyleSheet" href="css/webworks.css" type="text/css" media="all" />
+    <link rel="StyleSheet" href="css/css-guidewire-extra.css" type="text/css" media="all" />
+    <script type="text/javascript" language="JavaScript1.2" src="wwhdata/common/context.js"></script>
+    <script type="text/javascript" language="JavaScript1.2" src="wwhdata/common/towwhdir.js"></script>
+    <script type="text/javascript" language="JavaScript1.2" src="wwhdata/common/wwhpagef.js"></script>
+    <script type="text/javascript" language="JavaScript1.2">
+      <!--
+        var  WebWorksRootPath = "";
+      // -->
+    </script>
+    <script type="text/javascript" language="JavaScript1.2">
+      <!--
+        // Set reference to top level help frame
+        //
+        var  WWHFrame = WWHGetWWHFrame("", true);
+      // -->
+    </script>
+    <script type="text/javascript" language="JavaScript1.2" src="scripts/expand.js"></script>
+    <!-- THE FOLLOWING IS A GUIDEWIRE STYLE DEFINITION FOR THE LINK TO THIS FEATURE -->
+    <link rel="StyleSheet" href="css/css-guidewire-extra.css" type="text/css" media="all" />
+    <!-- THE FOLLOWING IS A GUIDEWIRE GSCRIPT FUNCTION FOR THE LINK TO THIS FEATURE -->
+    <script type="text/javascript">
+function guidewire_selectall()
+{
+var text_val=eval("document.linktothisurlform.urlfield");
+text_val.focus();
+text_val.select();
+}
+</script>
+  </head>
+  <body onLoad="WWHUpdate();" onUnload="WWHUnload();" onKeyDown="WWHHandleKeyDown((document.all||document.getElementById||document.layers)?event:null);" onKeyPress="WWHHandleKeyPress((document.all||document.getElementById||document.layers)?event:null);" onKeyUp="WWHHandleKeyUp((document.all||document.getElementById||document.layers)?event:null);">
+    <!-- THE FOLLOWING IS A GUIDEWIRE DIV FOR THE 'LINK TO THIS' FEATURE -->
+    <div id="linkToThisPage" class="popup" style="display: none;">
+      <div class="popupTitle">Link Directly to This Page 
+           <a href="#" onclick="var thePopup = getElementById('linkToThisPage');thePopup.style.display='none';return false;"><img class="popupClosebox" src="wwhelp/wwhimpl/common/images/close.gif" /></a></div>
+      <div style="padding:6px;">
+        <div class="popupText" id="linkToThisPageBookmark">An error has occurred if you see this messsage.</div>
+        <form name="linktothisurlform" method="post" action="" style="width:275px;margin:0px">
+          <input type="text" class="popupURLText" id="linkToThisPageURL" name="urlfield" rows="1" cols="55" onClick="guidewire_selectall();" onFocus="guidewire_selectall();"></input>
+        </form>
+      </div>
+    </div>
+    <br />
+    <div class="WebWorks_Breadcrumbs" style="text-align: left;">
+      <span>BillingCenter Application&nbsp;Guide</span> : 
+    <span class="WebWorks_Breadcrumbs" style="text-align: left;"><a class="WebWorks_Breadcrumb_Link" href="p_direct_bill.html#1896016">Direct Bill Processing</a> : <a class="WebWorks_Breadcrumb_Link" href="payments.53.01.html#1896016">Payment and Distribution</a> : Posting Direct Bill Payments</span></div>
+    <hr align="left" />
+    <blockquote>
+      <h3 class="H1_-_Heading_1"><a name="1896016">Posting Direct Bill Payments</a></h3>
+      <div class="B_-_Body"><a name="1934175">There are three ways to enter a direct bill payment in BillingCenter: </a></div>
+      <div class="BI_-_Bullet_Item_outer" style="margin-left: 57pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="BI_-_Bullet_Item_inner" style="width: 15pt; white-space: nowrap">
+                <span class="bu_-_bullet">•	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="BI_-_Bullet_Item_inner"><a name="1934176">From the BillingCenter user interface using the </a><span class="ui_-_UI_element">New Payment</span> screen (usually for a single payment)</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="BI_-_Bullet_Item_outer" style="margin-left: 57pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="BI_-_Bullet_Item_inner" style="width: 15pt; white-space: nowrap">
+                <span class="bu_-_bullet">•	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="BI_-_Bullet_Item_inner"><a name="1934177">From the BillingCenter user interface using the </a><span class="ui_-_UI_element">Multiple Payment Entry</span> screen (usually for several payments)</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="BI_-_Bullet_Item_outer" style="margin-left: 57pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="BI_-_Bullet_Item_inner" style="width: 15pt; white-space: nowrap">
+                <span class="bu_-_bullet">•	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="BI_-_Bullet_Item_inner"><a name="1934178">Programmatically through the Payment API</a></div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <h4 class="H2_-_Heading_2"><a name="1898558"> Entering a Single Payment</a></h4>
+      <div class="B_-_Body"><a name="1898856">You can enter payments into BillingCenter, execute the distribution, or override an amount in a distribution.</a></div>
+      <h6 class="HS_-_Head_Sub"><a name="1898560">To enter a new payment</a></h6>
+      <div class="LS_-_List_Start_outer" style="margin-left: 57pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="LS_-_List_Start_inner" style="width: 15pt; white-space: nowrap">
+                <span class="ri_-_run_in_header">	1.	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="LS_-_List_Start_inner"><a name="1898744">Go to </a><span class="ui_-_UI_element">Accounts tab </span>→ <span class="ui_-_UI_element">Actions</span> → <span class="ui_-_UI_element">New</span> <span class="ui_-_UI_element">Payment</span> → <span class="ui_-_UI_element">New</span> <span class="ui_-_UI_element">Direct Bill Payment → New Payment</span> screen.</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="LI_-_List_Item_outer" style="margin-left: 57pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="LI_-_List_Item_inner" style="width: 15pt; white-space: nowrap">
+                <span class="ri_-_run_in_header">	2.	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="LI_-_List_Item_inner"><a name="1898780">Enter the amount to be paid.</a></div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="LI_-_List_Item_outer" style="margin-left: 57pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="LI_-_List_Item_inner" style="width: 15pt; white-space: nowrap">
+                <span class="ri_-_run_in_header">	3.	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="LI_-_List_Item_inner"><a name="2096597">If the billing level is policy-level billing with cash management, select the desired </a><span class="ui_-_UI_element">Unapplied Fund</span> to store the payment. For further details, see <a href="javascript:WWHClickedPopup('app', 'billing_levels.54.3.html#2122595', '');" title="Billing Levels and Unapplied T‑Accounts">Billing Levels and Unapplied T‑Accounts</a>.</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="LI_-_List_Item_outer" style="margin-left: 57pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="LI_-_List_Item_inner" style="width: 15pt; white-space: nowrap">
+                <span class="ri_-_run_in_header">	4.	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="LI_-_List_Item_inner"><a name="1898804">Select the </a><span class="ui_-_UI_element">Payment Instrument</span>. See <a href="javascript:WWHClickedPopup('app', 'payments.53.02.html#1933993', '');" title="Working with Direct Bill Payments">“Specifying the payment instrument in the BillingCenter User Interface”</a> for details.</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="LI_-_List_Item_outer" style="margin-left: 57pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="LI_-_List_Item_inner" style="width: 15pt; white-space: nowrap">
+                <span class="ri_-_run_in_header">	5.	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="LI_-_List_Item_inner"><a name="1898811">If funds exist in the default </a><span class="cv_-_computer_voice">Unapplied</span> fund and you want to include them in the distribution, click the <span class="ui_-_UI_element">Use Unapplied Fund</span> checkbox.</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="LI_-_List_Item_outer" style="margin-left: 57pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="LI_-_List_Item_inner" style="width: 15pt; white-space: nowrap">
+                <span class="ri_-_run_in_header">	6.	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="LI_-_List_Item_inner"><span class="ui_-_UI_element"><a name="1934701">Override Distribution</a></span> enables the payment to be distributed in a custom manner. When clicked, the <span class="ui_-_UI_element">Override Distribution</span> button is immediately replaced by the <span class="ui_-_UI_element">Recalculate Distribution</span> button. Clicking <span class="ui_-_UI_element">Override Distribution</span> lets you take two types of actions:</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="BI2_-_Bullet_Item_002c_Level_2_outer" style="margin-left: 67pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="BI2_-_Bullet_Item_002c_Level_2_inner" style="width: 15pt; white-space: nowrap">
+                <span class="bu_-_bullet">•	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="BI2_-_Bullet_Item_002c_Level_2_inner"><a name="1934702">Force the payment to be allocated to a specific target. The target can be a policy period, an invoice, or an invoice item.</a></div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="BI2_-_Bullet_Item_002c_Level_2_outer" style="margin-left: 67pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="BI2_-_Bullet_Item_002c_Level_2_inner" style="width: 15pt; white-space: nowrap">
+                <span class="bu_-_bullet">•	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="BI2_-_Bullet_Item_002c_Level_2_inner"><a name="1934703">Specify which items to include or exclude for automatic distribution logic.</a></div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="LP_-_List_Para"><a name="2097852">To define a custom distribution, perform the following steps:</a></div>
+      <div class="LS2_-_List_Start_002c_Level_2_outer" style="margin-left: 67pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="LS2_-_List_Start_002c_Level_2_inner" style="width: 15pt; white-space: nowrap">
+                <span class="ri_-_run_in_header">	1.	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="LS2_-_List_Start_002c_Level_2_inner"><a name="2097660">Use the toolbar widgets in the </a><span class="ui_-_UI_element">Preview Distribution</span> window to display eligible invoice items. The toolbar is described in detail in the next section.</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="LI2_-_List_Item_002c_Level_2_outer" style="margin-left: 67pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="LI2_-_List_Item_002c_Level_2_inner" style="width: 15pt; white-space: nowrap">
+                <span class="ri_-_run_in_header">	2.	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="LI2_-_List_Item_002c_Level_2_inner"><a name="2097661">Enter an override amount for each payment that you want to override. Enter zero to exclude an invoice item from this payment distribution.</a></div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="LI2_-_List_Item_002c_Level_2_outer" style="margin-left: 67pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="LI2_-_List_Item_002c_Level_2_inner" style="width: 15pt; white-space: nowrap">
+                <span class="ri_-_run_in_header">	3.	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="LI2_-_List_Item_002c_Level_2_inner"><a name="2097662">Click </a><span class="ui_-_UI_element">Recalculate Distribution</span>. Check the <span class="ui_-_UI_element">Amount To Apply</span> column to be sure that the amounts are correct. If necessary, cycle multiple times through the update override amounts and <span class="ui_-_UI_element">Recalculate Distribution</span> until the proposed distribution matches the desired results.</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="LI_-_List_Item_outer" style="margin-left: 57pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="LI_-_List_Item_inner" style="width: 15pt; white-space: nowrap">
+                <span class="ri_-_run_in_header">	7.	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="LI_-_List_Item_inner"><a name="2097625">To complete the payment operation, click one of the following buttons:</a></div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="BI2_-_Bullet_Item_002c_Level_2_outer" style="margin-left: 67pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="BI2_-_Bullet_Item_002c_Level_2_inner" style="width: 15pt; white-space: nowrap">
+                <span class="bu_-_bullet">•	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="BI2_-_Bullet_Item_002c_Level_2_inner"><span class="ui_-_UI_element"><a name="2097626">Execute Without Distribution</a></span> to execute the payment without distributing the funds. This credits any money received to either the default or the selected <span class="ui_-_UI_element">Unapplied</span> T-account.</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="B_-_Body"><a name="2097627">If a custom distribution was defined, the </a><span class="ui_-_UI_element">Execute</span> button will be shown. Click it to save the payment and execute the defined distribution.</div>
+      <div class="BI2_-_Bullet_Item_002c_Level_2_outer" style="margin-left: 67pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="BI2_-_Bullet_Item_002c_Level_2_inner" style="width: 15pt; white-space: nowrap">
+                <span class="bu_-_bullet">•	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="BI2_-_Bullet_Item_002c_Level_2_inner"><span class="ui_-_UI_element"><a name="1934245">Cancel</a></span> to cancel the payment and exit the <span class="ui_-_UI_element">New Payment</span> screen.</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <h6 class="HS_-_Head_Sub"><a name="1934292">Using Preview Distribution Toolbars</a></h6>
+      <div class="B_-_Body"><a name="1898582">The </a><span class="ui_-_UI_element">New Payment</span> screen has two toolbars, which are highlighted in the following graphic: </div>
+      <div class="F_-_Figure"><a name="1898586"><img class="Default" src="images/db_payment.png" style="display: inline; float: none; left: 0.0; top: 0.0" alt="" /></a></div>
+      <div class="B_-_Body"><a name="1934279">The following numbered descriptions correspond to the highlighted toolbars in the graphic: </a></div>
+      <div class="LS_-_List_Start_outer" style="margin-left: 57pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="LS_-_List_Start_inner" style="width: 15pt; white-space: nowrap">
+                <span class="ri_-_run_in_header">	1.	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="LS_-_List_Start_inner"><a name="1934463">This toolbar appears after you click </a><span class="ui_-_UI_element">Override Distribution</span>. You can use it to display invoice items that are not part of the default distribution.</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="LI_-_List_Item_outer" style="margin-left: 57pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="LI_-_List_Item_inner" style="width: 15pt; white-space: nowrap">
+                <span class="ri_-_run_in_header">	2.	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="LI_-_List_Item_inner"><a name="1934334">This toolbar is primarily for changing the way invoice items are shown. It is always available on the screen.</a></div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="B_-_Body"><a name="1934344">The following table describes the widgets in the toolbars.</a></div>
+      <div class="T_-_Table"><a name="1934358">&nbsp;</a></div>
+      <table class="withHeading" style="text-align: left" border="0" cellpadding="10" cellspacing="0" summary="">
+        <caption></caption>
+        <tr>
+          <td style="border-bottom-color: #000000; border-bottom-style: solid; border-bottom-width: 0.5pt; border-top-color: #000000; border-top-style: solid; border-top-width: 0.5pt; padding-bottom: 4pt; padding-left: 2pt; padding-right: 8pt; padding-top: 0pt; vertical-align: bottom">
+            <div class="TH_-_Table_Heading"><a name="1934368">Toolbar Widget</a></div>
+          </td>
+          <td style="border-bottom-color: #000000; border-bottom-style: solid; border-bottom-width: 0.5pt; border-top-color: #000000; border-top-style: solid; border-top-width: 0.5pt; padding-bottom: 4pt; padding-left: 2pt; padding-right: 8pt; padding-top: 0pt; vertical-align: bottom">
+            <div class="TH_-_Table_Heading"><a name="1934370">Description</a></div>
+          </td>
+        </tr>
+        <tr>
+          <td style="border-bottom-color: #c0d1d1; border-bottom-style: solid; border-bottom-width: 0.15pt; border-top-color: #000000; border-top-style: solid; border-top-width: 0.5pt; padding-bottom: 4pt; padding-left: 2pt; padding-right: 8pt; padding-top: 0pt; vertical-align: top">
+            <div class="TT_-_Table_Text" style="color: #000000; font-family: &quot;Arial Narrow&quot;; font-style: normal; font-variant: normal; font-weight: bold; text-transform: none; vertical-align: baseline"><span class="uit_-_UI_element_table"><a name="1934372">Select items where the:</a></span></div>
+          </td>
+          <td style="border-bottom-color: #c0d1d1; border-bottom-style: solid; border-bottom-width: 0.15pt; border-top-color: #000000; border-top-style: solid; border-top-width: 0.5pt; padding-bottom: 4pt; padding-left: 2pt; padding-right: 8pt; padding-top: 0pt; vertical-align: top">
+            <div class="TT_-_Table_Text"><a name="1934374">Allows you to restrict the invoice items that are listed by payer or owner. The choices are </a><span class="uit_-_UI_element_table">Payer</span>, <span class="uit_-_UI_element_table">Owner</span>, and <span class="uit_-_UI_element_table">Either Payer Or Owner</span>. This option is used in combination with the <span class="uit_-_UI_element_table">Is</span> field.</div>
+          </td>
+        </tr>
+        <tr>
+          <td style="border-bottom-color: #c0d1d1; border-bottom-style: solid; border-bottom-width: 0.15pt; border-top-color: #c0d1d1; border-top-style: solid; border-top-width: 0.15pt; padding-bottom: 4pt; padding-left: 2pt; padding-right: 8pt; padding-top: 0pt; vertical-align: top">
+            <div class="TT_-_Table_Text" style="color: #000000; font-family: &quot;Arial Narrow&quot;; font-style: normal; font-variant: normal; font-weight: bold; text-transform: none; vertical-align: baseline"><span class="uit_-_UI_element_table"><a name="1934376">is:</a></span></div>
+          </td>
+          <td style="border-bottom-color: #c0d1d1; border-bottom-style: solid; border-bottom-width: 0.15pt; border-top-color: #c0d1d1; border-top-style: solid; border-top-width: 0.15pt; padding-bottom: 4pt; padding-left: 2pt; padding-right: 8pt; padding-top: 0pt; vertical-align: top">
+            <div class="TT_-_Table_Text"><a name="1934480">Allows you to restrict the invoice items that are listed by payer or owner. The choices are </a><span class="uit_-_UI_element_table">Account</span>, <span class="uit_-_UI_element_table">Direct SubAccounts</span>, and <span class="uit_-_UI_element_table">Either This Account Or Direct SubAccounts</span>. For example,<span class="uit_-_UI_element_table"> Select items where the</span> <span class="e_-_emphasis">Payer</span> <span class="uit_-_UI_element_table">Is</span> <span class="e_-_emphasis">Either This Account Or DirectSubAccounts.</span></div>
+          </td>
+        </tr>
+        <tr>
+          <td style="border-bottom-color: #c0d1d1; border-bottom-style: solid; border-bottom-width: 0.15pt; border-top-color: #c0d1d1; border-top-style: solid; border-top-width: 0.15pt; padding-bottom: 4pt; padding-left: 2pt; padding-right: 8pt; padding-top: 0pt; vertical-align: top">
+            <div class="TT_-_Table_Text" style="color: #000000; font-family: &quot;Arial Narrow&quot;; font-style: normal; font-variant: normal; font-weight: bold; text-transform: none; vertical-align: baseline"><span class="uit_-_UI_element_table"><a name="1934380">Include Only:</a></span></div>
+          </td>
+          <td style="border-bottom-color: #c0d1d1; border-bottom-style: solid; border-bottom-width: 0.15pt; border-top-color: #c0d1d1; border-top-style: solid; border-top-width: 0.15pt; padding-bottom: 4pt; padding-left: 2pt; padding-right: 8pt; padding-top: 0pt; vertical-align: top">
+            <div class="TT_-_Table_Text"><a name="1934382">Allows you to override the distribution method for the account for this distribution only:</a></div>
+            <div class="TT_-_Table_Text"><span class="uit_-_UI_element_table"><a name="1934524">Up to amount billed – </a></span>list of invoice items includes only items from billed invoices.</div>
+            <div class="TT_-_Table_Text"><span class="uit_-_UI_element_table"><a name="1934589">Up to amount past due</a></span><span class="ri_-_run_in_header"> – </span>list of invoice items includes only items that are past due.</div>
+            <div class="TT_-_Table_Text"><span class="uit_-_UI_element_table"><a name="1934601">Up to amount under contrac</a></span><span class="ri_-_run_in_header">t – </span>list of invoice items includes all items that satisfy the <span class="uit_-_UI_element_table">Select items where the ... Is </span>criterion.</div>
+            <div class="TT_-_Table_Text"><span class="uit_-_UI_element_table"><a name="1934613">Up to next invoice</a></span><span class="ri_-_run_in_header"> – </span>list of invoice items includes only items from billed invoices plus the next planned invoice.</div>
+          </td>
+        </tr>
+        <tr>
+          <td style="border-bottom-color: #c0d1d1; border-bottom-style: solid; border-bottom-width: 0.15pt; border-top-color: #c0d1d1; border-top-style: solid; border-top-width: 0.15pt; padding-bottom: 4pt; padding-left: 2pt; padding-right: 8pt; padding-top: 0pt; vertical-align: top">
+            <div class="TT_-_Table_Text" style="color: #000000; font-family: &quot;Arial Narrow&quot;; font-style: normal; font-variant: normal; font-weight: bold; text-transform: none; vertical-align: baseline"><span class="uit_-_UI_element_table"><a name="1934384">Add Items</a></span></div>
+          </td>
+          <td style="border-bottom-color: #c0d1d1; border-bottom-style: solid; border-bottom-width: 0.15pt; border-top-color: #c0d1d1; border-top-style: solid; border-top-width: 0.15pt; padding-bottom: 4pt; padding-left: 2pt; padding-right: 8pt; padding-top: 0pt; vertical-align: top">
+            <div class="TT_-_Table_Text"><a name="1934386">Displays the</a><span class="uit_-_UI_element_table"> Add Items</span> screen, which allows you to search for and add invoice items to the distribution. These items can have any account or producer as payer.</div>
+          </td>
+        </tr>
+        <tr>
+          <td style="border-bottom-color: #c0d1d1; border-bottom-style: solid; border-bottom-width: 0.15pt; border-top-color: #c0d1d1; border-top-style: solid; border-top-width: 0.15pt; padding-bottom: 4pt; padding-left: 2pt; padding-right: 8pt; padding-top: 0pt; vertical-align: top">
+            <div class="TT_-_Table_Text" style="color: #000000; font-family: &quot;Arial Narrow&quot;; font-style: normal; font-variant: normal; font-weight: bold; text-transform: none; vertical-align: baseline"><span class="uit_-_UI_element_table"><a name="1934388">Group By</a></span></div>
+          </td>
+          <td style="border-bottom-color: #c0d1d1; border-bottom-style: solid; border-bottom-width: 0.15pt; border-top-color: #c0d1d1; border-top-style: solid; border-top-width: 0.15pt; padding-bottom: 4pt; padding-left: 2pt; padding-right: 8pt; padding-top: 0pt; vertical-align: top">
+            <div class="TT_-_Table_Text"><a name="1934728">Allows you to group invoice items by the selected criterion. The choices are:</a></div>
+            <div class="TT_-_Table_Text"><span class="uit_-_UI_element_table"><a name="1934753">Invoice – </a></span>Group items by invoice.</div>
+            <div class="TT_-_Table_Text"><span class="uit_-_UI_element_table"><a name="1934729">Custom Group – </a></span>Group items by custom distribution groups. This option requires configuration.</div>
+            <div class="TT_-_Table_Text"><span class="uit_-_UI_element_table"><a name="1934730">Policy, Account and Collateral – </a></span>Group items by T-account owner.</div>
+          </td>
+        </tr>
+        <tr>
+          <td style="border-bottom-color: #c0d1d1; border-bottom-style: solid; border-bottom-width: 0.15pt; border-top-color: #c0d1d1; border-top-style: solid; border-top-width: 0.15pt; padding-bottom: 4pt; padding-left: 2pt; padding-right: 8pt; padding-top: 0pt; vertical-align: top">
+            <div class="TT_-_Table_Text" style="color: #000000; font-family: &quot;Arial Narrow&quot;; font-style: normal; font-variant: normal; font-weight: bold; text-transform: none; vertical-align: baseline"><span class="uit_-_UI_element_table"><a name="1934392">Aggregate:</a></span></div>
+          </td>
+          <td style="border-bottom-color: #c0d1d1; border-bottom-style: solid; border-bottom-width: 0.15pt; border-top-color: #c0d1d1; border-top-style: solid; border-top-width: 0.15pt; padding-bottom: 4pt; padding-left: 2pt; padding-right: 8pt; padding-top: 0pt; vertical-align: top">
+            <div class="TT_-_Table_Text"><a name="1934773">Allows you to aggregate the invoice items listed:</a></div>
+            <div class="TT_-_Table_Text"><span class="uit_-_UI_element_table"><a name="1934821">By Item – </a></span>No aggregation.</div>
+            <div class="TT_-_Table_Text"><span class="uit_-_UI_element_table"><a name="1934394">Summary – </a></span>Aggregate by the <span class="uit_-_UI_element_table">Group By</span> criterion.</div>
+          </td>
+        </tr>
+        <tr>
+          <td style="border-bottom-color: #c0d1d1; border-bottom-style: solid; border-bottom-width: 0.15pt; border-top-color: #c0d1d1; border-top-style: solid; border-top-width: 0.15pt; padding-bottom: 4pt; padding-left: 2pt; padding-right: 8pt; padding-top: 0pt; vertical-align: top">
+            <div class="TT_-_Table_Text" style="color: #000000; font-family: &quot;Arial Narrow&quot;; font-style: normal; font-variant: normal; font-weight: bold; text-transform: none; vertical-align: baseline"><span class="uit_-_UI_element_table"><a name="1934396">Sort By:</a></span></div>
+          </td>
+          <td style="border-bottom-color: #c0d1d1; border-bottom-style: solid; border-bottom-width: 0.15pt; border-top-color: #c0d1d1; border-top-style: solid; border-top-width: 0.15pt; padding-bottom: 4pt; padding-left: 2pt; padding-right: 8pt; padding-top: 0pt; vertical-align: top">
+            <div class="TT_-_Table_Text"><a name="1934398">Allows you to sort the invoice items. The </a><span class="uit_-_UI_element_table">Sort By</span> choices depend on the value of the <span class="uit_-_UI_element_table">Group By</span> and <span class="uit_-_UI_element_table">Aggregate By</span> fields:</div>
+            <div class="TT_-_Table_Text"><a name="1934853">If </a><span class="uit_-_UI_element_table">Group By</span> is <span class="e_-_emphasis">Invoice</span> and <span class="uit_-_UI_element_table">Aggregate By</span> is <span class="e_-_emphasis">By Item, </span>you can sort by<span class="uit_-_UI_element_table"> Invoice Date</span> or <span class="uit_-_UI_element_table">Due Date</span>.</div>
+            <div class="TT_-_Table_Text"><a name="1934918">If </a><span class="uit_-_UI_element_table">Group By</span> is <span class="e_-_emphasis">Policy, Account and Collateral </span>and <span class="uit_-_UI_element_table">Aggregate By</span> is <span class="e_-_emphasis">By Item,</span> you can sort by<span class="uit_-_UI_element_table"> </span><span class="e_-_emphasis" style="color: #000000; font-family: Arial; font-size: 8pt; font-weight: normal">Insured Name</span>, <span class="e_-_emphasis">Insured Descending</span>, <span class="e_-_emphasis">Policy Number</span>, and <span class="e_-_emphasis">Policy Number Descending</span>.</div>
+            <div class="TT_-_Table_Text"><a name="1934838">This option appears only when you are aggregating </a><span class="e_-_emphasis">By Item</span>. If you are aggregating <span class="e_-_emphasis">By Summary</span>, use the column headers to sort the listed items.</div>
+          </td>
+        </tr>
+        <tr>
+          <td style="border-bottom-color: #c0d1d1; border-bottom-style: solid; border-bottom-width: 0.15pt; border-top-color: #c0d1d1; border-top-style: solid; border-top-width: 0.15pt; padding-bottom: 4pt; padding-left: 2pt; padding-right: 8pt; padding-top: 0pt; vertical-align: top">
+            <div class="TT_-_Table_Text" style="color: #000000; font-family: &quot;Arial Narrow&quot;; font-style: normal; font-variant: normal; font-weight: bold; text-transform: none; vertical-align: baseline"><span class="uit_-_UI_element_table"><a name="1934400">Go To #:</a></span></div>
+          </td>
+          <td style="border-bottom-color: #c0d1d1; border-bottom-style: solid; border-bottom-width: 0.15pt; border-top-color: #c0d1d1; border-top-style: solid; border-top-width: 0.15pt; padding-bottom: 4pt; padding-left: 2pt; padding-right: 8pt; padding-top: 0pt; vertical-align: top">
+            <div class="TT_-_Table_Text"><a name="1934402">Allows you to filter the items by entering all or part of an invoice number. Enter the full or partial invoice number and click </a><span class="uit_-_UI_element_table">Go</span>.</div>
+          </td>
+        </tr>
+        <tr>
+          <td style="border-bottom-color: #c0d1d1; border-bottom-style: solid; border-bottom-width: 0.15pt; border-top-color: #c0d1d1; border-top-style: solid; border-top-width: 0.15pt; padding-bottom: 4pt; padding-left: 2pt; padding-right: 8pt; padding-top: 0pt; vertical-align: top">
+            <div class="TT_-_Table_Text" style="color: #000000; font-family: &quot;Arial Narrow&quot;; font-style: normal; font-variant: normal; font-weight: bold; text-transform: none; vertical-align: baseline"><span class="uit_-_UI_element_table"><a name="1934408">Go</a></span></div>
+          </td>
+          <td style="border-bottom-color: #c0d1d1; border-bottom-style: solid; border-bottom-width: 0.15pt; border-top-color: #c0d1d1; border-top-style: solid; border-top-width: 0.15pt; padding-bottom: 4pt; padding-left: 2pt; padding-right: 8pt; padding-top: 0pt; vertical-align: top">
+            <div class="TT_-_Table_Text"><a name="1934410">Applies the invoice number filter that is entered in the </a><span class="uit_-_UI_element_table">Go To #</span> field.</div>
+          </td>
+        </tr>
+        <tr>
+          <td style="border-bottom-color: #000000; border-bottom-style: solid; border-bottom-width: 0.5pt; border-top-color: #c0d1d1; border-top-style: solid; border-top-width: 0.15pt; padding-bottom: 4pt; padding-left: 2pt; padding-right: 8pt; padding-top: 0pt; vertical-align: top">
+            <div class="TT_-_Table_Text" style="color: #000000; font-family: &quot;Arial Narrow&quot;; font-style: normal; font-variant: normal; font-weight: bold; text-transform: none; vertical-align: baseline"><span class="uit_-_UI_element_table"><a name="1934412">Clear</a></span></div>
+          </td>
+          <td style="border-bottom-color: #000000; border-bottom-style: solid; border-bottom-width: 0.5pt; border-top-color: #c0d1d1; border-top-style: solid; border-top-width: 0.15pt; padding-bottom: 4pt; padding-left: 2pt; padding-right: 8pt; padding-top: 0pt; vertical-align: top">
+            <div class="TT_-_Table_Text"><a name="1934414">Clears the </a><span class="uit_-_UI_element_table">Go To #</span> field.</div>
+          </td>
+        </tr>
+      </table>
+      <h4 class="H2_-_Heading_2"><a name="1935177"> Entering Payments in Bulk</a></h4>
+      <div class="B_-_Body"><a name="1935301">You can enter several payments into BillingCenter using a single screen. The method is typically used for payments that are received by mail or payments listed on a bank statement where there is no integration with BillingCenter. The </a><span class="ui_-_UI_element">Enter Multiple Payment Information</span> screen provides a full page of lines to allow for quick entry of several payments. You can add more lines by clicking <span class="ui_-_UI_element">Add</span>. Both account and policy search facilities are provided to help you locate the entity to which the money applies.</div>
+      <h6 class="HS_-_Head_Sub"><a name="1935180">To enter multiple payments</a></h6>
+      <div class="LS_-_List_Start_outer" style="margin-left: 57pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="LS_-_List_Start_inner" style="width: 15pt; white-space: nowrap">
+                <span class="ri_-_run_in_header">	1.	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="LS_-_List_Start_inner"><a name="1935196">Go to </a><span class="ui_-_UI_element">Desktop</span> → <span class="ui_-_UI_element">Actions</span> → <span class="ui_-_UI_element">New</span> <span class="ui_-_UI_element">Payment</span> →<span class="ui_-_UI_element">Multiple Payment Entry → Enter Multiple Payment Information </span>screen.</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="LI_-_List_Item_outer" style="margin-left: 57pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="LI_-_List_Item_inner" style="width: 15pt; white-space: nowrap">
+                <span class="ri_-_run_in_header">	2.	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="LI_-_List_Item_inner"><a name="1935197">For each payment:</a></div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="LS2A_-_List_Start_002c_Level_2_Alpha_outer" style="margin-left: 67pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="LS2A_-_List_Start_002c_Level_2_Alpha_inner" style="width: 15pt; white-space: nowrap">
+                <span class="ri_-_run_in_header">a.	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="LS2A_-_List_Start_002c_Level_2_Alpha_inner"><a name="1935236">Enter the account number or the policy number. A search facility is provided for both fields. </a></div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="LP2_-_List_Para_002c_Level_2"><a name="1935346">If neither the account nor the policy is known by BillingCenter, enter in the account or policy number and select </a><span class="e_-_emphasis">Suspense</span> as the <span class="ui_-_UI_element">Type</span>. Suspense payments are discussed in a later section.</div>
+      <div class="LI2A_-_List_Item_002c_Level_2_Alpha_outer" style="margin-left: 67pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="LI2A_-_List_Item_002c_Level_2_Alpha_inner" style="width: 15pt; white-space: nowrap">
+                <span class="ri_-_run_in_header">b.	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="LI2A_-_List_Item_002c_Level_2_Alpha_inner"><a name="1935246">Select </a><span class="e_-_emphasis">Payment</span> as the <span class="ui_-_UI_element">Type</span>.</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="LI2A_-_List_Item_002c_Level_2_Alpha_outer" style="margin-left: 67pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="LI2A_-_List_Item_002c_Level_2_Alpha_inner" style="width: 15pt; white-space: nowrap">
+                <span class="ri_-_run_in_header">c.	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="LI2A_-_List_Item_002c_Level_2_Alpha_inner"><a name="1935334">(Optional) Select the </a><span class="ui_-_UI_element">Date</span>.</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="LI2A_-_List_Item_002c_Level_2_Alpha_outer" style="margin-left: 67pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="LI2A_-_List_Item_002c_Level_2_Alpha_inner" style="width: 15pt; white-space: nowrap">
+                <span class="ri_-_run_in_header">d.	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="LI2A_-_List_Item_002c_Level_2_Alpha_inner"><a name="1935400">For </a><span class="ui_-_UI_element">Method</span>, choose either <span class="e_-_emphasis">Check</span> or <span class="e_-_emphasis">Cash</span>. If you selected <span class="e_-_emphasis">Check</span>, enter the check number in the <span class="ui_-_UI_element">Check # </span>field.</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="LI2A_-_List_Item_002c_Level_2_Alpha_outer" style="margin-left: 67pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="LI2A_-_List_Item_002c_Level_2_Alpha_inner" style="width: 15pt; white-space: nowrap">
+                <span class="ri_-_run_in_header">e.	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="LI2A_-_List_Item_002c_Level_2_Alpha_inner"><a name="1935425">Enter the amount.</a></div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="LI2A_-_List_Item_002c_Level_2_Alpha_outer" style="margin-left: 67pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="LI2A_-_List_Item_002c_Level_2_Alpha_inner" style="width: 15pt; white-space: nowrap">
+                <span class="ri_-_run_in_header">f.	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="LI2A_-_List_Item_002c_Level_2_Alpha_inner"><a name="1935432">(Optional) Enter a note.</a></div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="LI_-_List_Item_outer" style="margin-left: 57pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="LI_-_List_Item_inner" style="width: 15pt; white-space: nowrap">
+                <span class="ri_-_run_in_header">	3.	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="LI_-_List_Item_inner"><a name="1935439">Click </a><span class="ui_-_UI_element">Next</span>. This takes you to the <span class="ui_-_UI_element">Confirm Multiple Payments</span> screen.</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="LI_-_List_Item_outer" style="margin-left: 57pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="LI_-_List_Item_inner" style="width: 15pt; white-space: nowrap">
+                <span class="ri_-_run_in_header">	4.	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="LI_-_List_Item_inner"><a name="1935455">(Optional) Verify that the total amount matches the total amount for the payments that you intended to enter. Add more payments if needed.</a></div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="LI_-_List_Item_outer" style="margin-left: 57pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="LI_-_List_Item_inner" style="width: 15pt; white-space: nowrap">
+                <span class="ri_-_run_in_header">	5.	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="LI_-_List_Item_inner"><a name="1935462">Click </a><span class="ui_-_UI_element">Finish</span>.</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="N_-_Note">
+        <span class="n_-_note">Note: </span><a name="1935260">To support agency bill, there is also a search facility for producers. You can add checks received from the producer along with checks for direct bill policies. In this case, do not enter an account or policy number.</a></div>
+      <h4 class="H2_-_Heading_2"><a name="2101615">Processing Payments that Do Not Match the Expected Amount</a></h4>
+      <div class="B_-_Body"><a name="2101616">Changes to policies often result in increased or decreased charge amounts. If BillingCenter is not immediately notified of the change, a payment received can be perceived to be an under or overpayment.</a></div>
+      <div class="B_-_Body"><a name="2104135">As an example, assume BillingCenter is not notified about a policy change that increases the premium from $100 to $110. Subsequently, a payment for $110 is received.</a></div>
+      <div class="B_-_Body"><a name="2104138">The best practice method for handling this situation is to allocate $100 to the expected premium and store the remaining $10 in a suspense item. Later, when BillingCenter is notified of the policy change, the suspense item can be released and appropriately distributed.</a></div>
+      <div class="N_-_Note">
+        <span class="n_-_note">Note: </span><a name="2111469">It is not recommended to overpay the $100 charge by allocating the full $110 to the premium. BillingCenter does not let the totals be “cleaned up” by distributing –$10 to the overpaid charge and $10 to the new charge when it is notified of the policy change. Such “clean up” transactions are disallowed in order to maintain data validity.</a></div>
+      <h6 class="HS_-_Head_Sub"><a name="2101619">See also:</a></h6>
+      <div class="BI_-_Bullet_Item_outer" style="margin-left: 57pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="BI_-_Bullet_Item_inner" style="width: 15pt; white-space: nowrap">
+                <span class="bu_-_bullet">•	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="BI_-_Bullet_Item_inner"><a href="javascript:WWHClickedPopup('app', 'payments.53.04.html#1936787', '');" title="Suspense Payments and Items" name="2101609">Suspense Payments and Items</a></div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="BI_-_Bullet_Item_outer" style="margin-left: 57pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="BI_-_Bullet_Item_inner" style="width: 15pt; white-space: nowrap">
+                <span class="bu_-_bullet">•	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="BI_-_Bullet_Item_inner"><a href="javascript:WWHClickedPopup('app', 'payments.53.04.html#1937009', '');" title="Suspense Payments and Items" name="2101806">Using Suspense Items</a></div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <h4 class="H2_-_Heading_2"><a name="1935132">Automatically Applying Payments</a></h4>
+      <div class="B_-_Body"><a name="1896081">Payments can come into BillingCenter by means of a billing instruction from an external system, an electronic funds transfer (EFT) or in response to an invoice.</a></div>
+      <div class="BI_-_Bullet_Item_outer" style="margin-left: 57pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="BI_-_Bullet_Item_inner" style="width: 15pt; white-space: nowrap">
+                <span class="bu_-_bullet">•	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="BI_-_Bullet_Item_inner"><a name="1896082">The </a><span class="cv_-_computer_voice">DirectBillPaymentFactoryAPI</span> provides methods for handling payments and distributions. See <span class="cv_-_computer_voice">gw.api.web.payment.DirectBillPaymentFactory</span>.</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="BI_-_Bullet_Item_outer" style="margin-left: 57pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="BI_-_Bullet_Item_inner" style="width: 15pt; white-space: nowrap">
+                <span class="bu_-_bullet">•	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="BI_-_Bullet_Item_inner"><a name="1896083">Automated Clearing House/Electronic Funds Transfer (ACH/EFT) payments, such as direct debit transfers from a bank account, enter BillingCenter by way of an external third-party payment system. If the transfer fails because the debited account has NSF (non‑sufficient funds), BillingCenter performs a reversal programmatically. See </a><a href="javascript:WWHClickedPopup('integration', 'bc-webservices.09.15.html#3738764', '');" title="Invoice Details Web Service APIs (InvoiceDetailsAPI)">“Get Invoice Items Methods” in the </a><span class="bt_-_book_title"><a href="javascript:WWHClickedPopup('integration', 'bc-webservices.09.15.html#3738764', '');" title="Invoice Details Web Service APIs (InvoiceDetailsAPI)">Integration Guide</a></span> for more details.</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <script type="text/javascript" language="JavaScript1.2">
+        <!--
+          // Clear related topics
+          //
+          WWHClearRelatedTopics();
+
+          document.writeln(WWHRelatedTopicsInlineHTML());
+        // -->
+      </script>
+    </blockquote>
+    <script type="text/javascript" language="JavaScript1.2">
+      <!--
+        document.write(WWHRelatedTopicsDivTag() + WWHPopupDivTag() + WWHALinksDivTag());
+      // -->
+    </script>
+  </body>
+</html>

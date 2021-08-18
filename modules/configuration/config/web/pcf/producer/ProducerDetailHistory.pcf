@@ -1,0 +1,89 @@
+<?xml version="1.0"?>
+<PCF
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:noNamespaceSchemaLocation="../../../../../pcf.xsd">
+  <Page
+    canVisit="perm.System.prodtabview and perm.System.prodhistview"
+    id="ProducerDetailHistory"
+    showUpLink="true"
+    title="displaykey.Web.ProducerDetailHistory.Title">
+    <LocationEntryPoint
+      signature="ProducerDetailHistory(producer : Producer)"/>
+    <Variable
+      name="producer"
+      type="Producer"/>
+    <Screen
+      id="ProducerDetailHistoryScreen">
+      <Toolbar/>
+      <ListViewPanel
+        id="ProducerDetailHistoryLV">
+        <RowIterator
+          editable="false"
+          elementName="producerHistory"
+          value="producer.History">
+          <ToolbarFilter
+            label="displaykey.Web.ProducerDetailHistoryLV.FilterByEventDate"
+            name="DateFilter">
+            <ToolbarFilterOption
+              filter="new web.history.ProducerHistoriesFilters.Last30Days()"/>
+            <ToolbarFilterOption
+              filter="new web.history.ProducerHistoriesFilters.Last60Days()"/>
+            <ToolbarFilterOption
+              filter="new web.history.ProducerHistoriesFilters.Last90Days()"/>
+            <ToolbarFilterOption
+              filter="new web.history.ProducerHistoriesFilters.Last120Days()"/>
+            <ToolbarFilterOption
+              filter="new web.history.ProducerHistoriesFilters.Last180Days()"
+              selectOnEnter="true"/>
+            <ToolbarFilterOption
+              filter="new web.history.ProducerHistoriesFilters.LastYear()"/>
+            <ToolbarFilterOption
+              filter="new web.history.ProducerHistoriesFilters.Last3Years()"/>
+            <ToolbarFilterOption
+              filter="new web.history.ProducerHistoriesFilters.All()"/>
+          </ToolbarFilter>
+          <ToolbarFilter
+            label="displaykey.Web.ProducerDetailHistoryLV.FilterByEventType"
+            name="HistoryEventTypeFilter">
+            <ToolbarFilterOptionGroup
+              filters="new gw.api.filters.TypeKeyFilterSet( History.Type.TypeInfo.getProperty( &quot;EventType&quot; ) ).getFilterOptions()"/>
+          </ToolbarFilter>
+          <Row>
+            <DateCell
+              id="Date"
+              label="displaykey.Web.ProducerDetailHistoryLV.Date"
+              sortOrder="1"
+              value="producerHistory.EventDate"/>
+            <Cell
+              action="TransactionDetailPopup.push(producerHistory.Transaction)"
+              id="Transaction"
+              label="displaykey.Web.ProducerDetailHistoryLV.Transaction"
+              value="producerHistory.Transaction.TransactionNumber"/>
+            <Cell
+              id="Description"
+              label="displaykey.Web.ProducerDetailHistoryLV.Description"
+              sortOrder="2"
+              value="producerHistory.Description"/>
+            <Cell
+              id="RefNumber"
+              label="displaykey.Web.ProducerDetailHistoryLV.RefNumber"
+              value="producerHistory.RefNumber"/>
+            <MonetaryAmountCell
+              align="left"
+              currency="producer.Currency"
+              enableSort="false"
+              formatType="currency"
+              id="TransactionAmount"
+              label="displaykey.Web.ProducerDetailHistoryLV.TransactionAmount"
+              value="producerHistory.Amount"/>
+            <TextCell
+              action="UserDetailPage.push(producerHistory.User)"
+              id="User"
+              label="displaykey.Web.ProducerDetailHistoryLV.User"
+              value="producerHistory.User"/>
+          </Row>
+        </RowIterator>
+      </ListViewPanel>
+    </Screen>
+  </Page>
+</PCF>

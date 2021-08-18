@@ -1,0 +1,123 @@
+<?xml version="1.0"?>
+<PCF
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:noNamespaceSchemaLocation="../../../../../pcf.xsd">
+  <ListViewPanel
+    id="PolicyActivityLV"
+    mode="itemlevel">
+    <Require
+      name="agencyBillStatementView"
+      type="web.invoice.AgencyBillStatementView"/>
+    <Require
+      name="viewOption"
+      type="InvoiceItemViewOption"/>
+    <RowIterator
+      editable="false"
+      elementName="invoiceItemView"
+      value="getInvoiceItemViews()">
+      <Row>
+        <Cell
+          action="pushPolicyPeriodDetails(invoiceItemView.InvoiceItem.PolicyPeriod)"
+          groupedOnEnter="true"
+          id="PolicyNumber"
+          label="displaykey.Web.AgencyBillStatementDetail.PolicyActivityLV.PolicyNumber"
+          sortOrder="1"
+          value="invoiceItemView.InvoiceItem.PolicyPeriod.PolicyNumber"/>
+        <Cell
+          icon="invoiceItemView.PaymentExceptionItemIcon"
+          iconLabel="invoiceItemView.ExceptionStatusText"
+          id="ExceptionFlag"
+          showHeaderIcon="false"
+          value="invoiceItemView.HasBeenPaymentException"
+          width="50"/>
+        <Cell
+          id="LineNumber"
+          label="displaykey.Web.AgencyBillStatementDetail.PolicyActivityLV.LineNumber"
+          value="invoiceItemView.LineNumber"
+          width="50"/>
+        <Cell
+          action="AgencyBillStatementDetail.go((invoiceItemView.Invoice as StatementInvoice).AgencyBillCycle)"
+          actionAvailable="invoiceItemView.Invoice typeis StatementInvoice"
+          id="StatementNumber"
+          label="displaykey.Web.AgencyBillStatementDetail.PolicyActivityLV.StatementNumber"
+          value="invoiceItemView.StatementNumber"/>
+        <Cell
+          id="Status"
+          label="displaykey.Web.AgencyBillStatementDetail.PolicyActivityLV.Status"
+          value="invoiceItemView.Status"
+          width="120"/>
+        <DateCell
+          footerLabel="displaykey.Web.AgencyBillStatementDetail.PolicyActivityLV.Total"
+          id="StatementDate"
+          label="displaykey.Web.AgencyBillStatementDetail.PolicyActivityLV.StatementDate"
+          value="invoiceItemView.Invoice.EventDate"/>
+        <Cell
+          action="InvoiceItemHistoryPopup.push( invoiceItemView.InvoiceItem )"
+          id="ItemDescription"
+          label="displaykey.Web.AgencyBillStatementDetail.PolicyActivityLV.ItemDescription"
+          value="invoiceItemView.ItemDescription"/>
+        <Cell
+          id="ItemContext"
+          label="displaykey.Web.AgencyBillStatementDetail.PolicyActivityLV.ItemContext"
+          value="invoiceItemView.InvoiceItem.Charge.BillingInstruction"/>
+        <MonetaryAmountCell
+          currency="invoiceItemView.InvoiceItem.Currency"
+          footerSumValue="invoiceItemView.getGross( viewOption )"
+          formatType="currency"
+          id="Gross"
+          label="displaykey.Web.AgencyBillStatementDetail.PolicyActivityLV.GrossAmount"
+          value="invoiceItemView.getGross( viewOption )"/>
+        <MonetaryAmountCell
+          currency="invoiceItemView.InvoiceItem.Currency"
+          footerSumValue="invoiceItemView.getCommission( viewOption )"
+          formatType="currency"
+          id="CommissionAmount"
+          label="displaykey.Web.AgencyBillStatementDetail.PolicyActivityLV.CommissionAmount"
+          value="invoiceItemView.getCommission( viewOption )"/>
+        <TextCell
+          align="right"
+          format="displaykey.Web.AgencyBill.CalculatedCommissionPercentFormat"
+          id="CommissionPercent"
+          label="displaykey.Web.AgencyBillStatementDetail.PolicyActivityLV.CommissionPercent"
+          value="invoiceItemView.CommissionPercentAsBigDecimal"
+          width="80"/>
+        <MonetaryAmountCell
+          currency="invoiceItemView.InvoiceItem.Currency"
+          footerSumValue="invoiceItemView.getNet( viewOption )"
+          formatType="currency"
+          id="NetAmount"
+          label="displaykey.Web.AgencyBillStatementDetail.PolicyActivityLV.NetAmount"
+          value="invoiceItemView.getNet( viewOption )"/>
+        <Cell
+          action="InvoiceItemCommentsPopup.push(invoiceItemView.InvoiceItem, agencyBillStatementView)"
+          id="Comments"
+          label="displaykey.Web.AgencyBillStatementDetail.PolicyActivityLV.Comments"
+          outputConversion="VALUE == null ? &quot;...&quot; : VALUE.summarize(20)"
+          value="invoiceItemView.InvoiceItem.Comments">
+          <PostOnChange/>
+        </Cell>
+        <Cell
+          id="InsuredName"
+          label="displaykey.Web.AgencyBillStatementDetail.PolicyActivityLV.InsuredName"
+          value="invoiceItemView.InsuredName"/>
+      </Row>
+    </RowIterator>
+    <Code><![CDATA[uses gw.api.web.invoice.AgencyBillInvoiceItemView
+
+function getInvoiceItemViews() : AgencyBillInvoiceItemView[] {
+ if (agencyBillStatementView == null) {
+   return null
+ } else {
+   return agencyBillStatementView.getPolicyPeriodInvoiceItemsFilteredAsArray(viewOption).flatMap( \ policyPeriodInfo ->  policyPeriodInfo.FilteredInvoiceItemViewsArray)
+ }
+}
+
+function pushPolicyPeriodDetails(policyPeriod : PolicyPeriod) {
+  if (policyPeriod.AgencyBill) {
+    AgencyBillPolicyDetailsPopup.push(policyPeriod)
+  } else {
+    pcf.PolicyDetailSummaryPopup.push(policyPeriod)
+  }
+}]]></Code>
+  </ListViewPanel>
+</PCF>

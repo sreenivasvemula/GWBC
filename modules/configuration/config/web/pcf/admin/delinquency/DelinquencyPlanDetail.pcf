@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PCF
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:noNamespaceSchemaLocation="../../../../../../pcf.xsd">
+  <Page
+    beforeCommit="validatePlan( dlnqPlan )"
+    canEdit="perm.System.delplanedit"
+    canVisit="perm.System.admintabview"
+    id="DelinquencyPlanDetail"
+    onResume="preValidatePlan( dlnqPlan )"
+    parent="DelinquencyPlans()"
+    showUpLink="true"
+    startEditing="preValidatePlan( dlnqPlan )"
+    title="displaykey.Web.DelinquencyPlan.Title( dlnqPlan )">
+    <LocationEntryPoint
+      signature="DelinquencyPlanDetail(dlnqPlan : DelinquencyPlan)"/>
+    <Variable
+      name="dlnqPlan"
+      type="DelinquencyPlan"/>
+    <ScreenRef
+      def="DelinquencyPlanDetailScreen(dlnqPlan)"/>
+    <Code>
+/**
+ */
+      function preValidatePlan( plan : DelinquencyPlan ) {
+          validatePlan( plan );
+          web.delinquency.DelinquencyPlanUtil.validateDelinquencyPlanEvents( plan );
+        }
+        function validatePlan( plan : DelinquencyPlan ) {
+          web.delinquency.DelinquencyPlanUtil.validateDelinquencyPlanReasons( plan );
+        }
+    </Code>
+  </Page>
+</PCF>

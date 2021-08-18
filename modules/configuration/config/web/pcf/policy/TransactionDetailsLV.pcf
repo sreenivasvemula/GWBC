@@ -1,0 +1,98 @@
+<?xml version="1.0"?>
+<PCF
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:noNamespaceSchemaLocation="../../../../../pcf.xsd">
+  <ListViewPanel
+    id="TransactionDetailsLV">
+    <Require
+      name="policyPeriod"
+      type="PolicyPeriod"/>
+    <Variable
+      initialValue="policyPeriod.Transactions"
+      name="policyTransactions"
+      recalculateOnRefresh="true"
+      type="TransactionQuery"/>
+    <RowIterator
+      editable="false"
+      elementName="policyTransaction"
+      value="policyTransactions">
+      <ToolbarFilter
+        label="displaykey.Web.TransactionDetailsLV.Show"
+        name="Filter">
+        <ToolbarFilterOption
+          filter="new web.transaction.TransactionFilterSet.Last30Days()"/>
+        <ToolbarFilterOption
+          filter="new web.transaction.TransactionFilterSet.Last60Days()"/>
+        <ToolbarFilterOption
+          filter="new web.transaction.TransactionFilterSet.Last90Days()"/>
+        <ToolbarFilterOption
+          filter="new web.transaction.TransactionFilterSet.Previous12Months()"/>
+        <ToolbarFilterOption
+          filter="new web.transaction.TransactionFilterSet.PreviousMonth()"/>
+        <ToolbarFilterOption
+          filter="new web.transaction.TransactionFilterSet.ThisMonth()"/>
+        <ToolbarFilterOption
+          filter="new web.transaction.TransactionFilterSet.YearToDate()"/>
+        <ToolbarFilterOption
+          filter="new gw.api.util.CoreFilters.AllFilter()"/>
+      </ToolbarFilter>
+      <Row>
+        <DateCell
+          id="Date"
+          label="displaykey.Web.TransactionDetailsLV.Date"
+          sortDirection="descending"
+          sortOrder="1"
+          value="policyTransaction.TransactionDate"/>
+        <Cell
+          action="TransactionDetailPopup.push(policyTransaction)"
+          id="TransactionNumber"
+          label="displaykey.Web.TransactionDetailsLV.TransactionNumber"
+          value="policyTransaction.TransactionNumber"/>
+        <Cell
+          enableSort="false"
+          id="TransactionDesc"
+          label="displaykey.Web.TransactionDetailsLV.TransactionDesc"
+          value="policyTransaction.LongDisplayName"/>
+        <Cell
+          enableSort="false"
+          id="ChargeType"
+          label="displaykey.Web.TransactionDetailsLV.Context"
+          value="policyTransaction typeis ChargeInstanceTxn ? policyTransaction.Charge.BillingInstruction : null"/>
+        <Cell
+          enableSort="false"
+          id="Invoice"
+          label="displaykey.Web.TransactionDetailsLV.Invoice"
+          value="policyTransaction typeis ChargePaidFromUnapplied ? policyTransaction.InvoiceItem.Invoice : null"/>
+        <MonetaryAmountCell
+          currency="policyTransaction.Currency"
+          enableSort="false"
+          formatType="currency"
+          id="Unbilled"
+          label="displaykey.Web.TransactionDetailsLV.Unbilled"
+          value="policyPeriod.getUnbilledTxAmount(policyTransaction)"/>
+        <MonetaryAmountCell
+          currency="policyTransaction.Currency"
+          enableSort="false"
+          formatType="currency"
+          id="Billed"
+          label="displaykey.Web.TransactionDetailsLV.Billed"
+          value="policyPeriod.getBilledTxAmount(policyTransaction)"/>
+        <MonetaryAmountCell
+          currency="policyTransaction.Currency"
+          enableSort="false"
+          formatType="currency"
+          id="PastDue"
+          label="displaykey.Web.TransactionDetailsLV.Due"
+          value="policyPeriod.getDueTxAmount(policyTransaction)"/>
+        <MonetaryAmountCell
+          currency="policyTransaction.Currency"
+          enableSort="false"
+          formatType="currency"
+          id="Paid"
+          label="displaykey.Web.TransactionDetailsLV.Paid"
+          value="policyPeriod.getPaidTxAmount(policyTransaction)"
+          valueVisible="not (policyTransaction typeis InitialChargeTxn)"/>
+      </Row>
+    </RowIterator>
+  </ListViewPanel>
+</PCF>

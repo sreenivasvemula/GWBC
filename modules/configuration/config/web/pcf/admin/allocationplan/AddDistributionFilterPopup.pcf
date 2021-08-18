@@ -1,0 +1,49 @@
+<?xml version="1.0"?>
+<PCF
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:noNamespaceSchemaLocation="pcf.xsd">
+  <Popup
+    canEdit="true"
+    id="AddDistributionFilterPopup"
+    startInEditMode="true"
+    title="displaykey.Web.AddDistributionFilterPopup.Title">
+    <LocationEntryPoint
+      signature="AddDistributionFilterPopup(paymentAllocationPlan : PaymentAllocationPlan)"/>
+    <Variable
+      name="paymentAllocationPlan"
+      type="PaymentAllocationPlan"/>
+    <Screen>
+      <Toolbar>
+        <CheckedValuesToolbarButton
+          allCheckedRowsAction="CheckedValues.each(\ filter -&gt; paymentAllocationPlan.addDistributionCriteriaFilter(filter)); CurrentLocation.commit()"
+          id="AddSelectedDistributionFilters"
+          iterator="DistributionFilterLV"
+          label="displaykey.Web.AddDistributionFilterPopup.Add"/>
+      </Toolbar>
+      <ListViewPanel
+        id="DistributionFilterLV">
+        <RowIterator
+          editable="true"
+          elementName="distributionFilter"
+          hasCheckBoxes="true"
+          id="DistributionFilters"
+          value="getFiltersNotOnPlan()">
+          <Row>
+            <Cell
+              id="DistributionFilterName"
+              label="displaykey.Web.AddDistributionFilterPopup.Name"
+              value="distributionFilter.DisplayName"/>
+            <Cell
+              id="DistributionFilterDescription"
+              label="displaykey.Web.AddDistributionFilterPopup.Description"
+              value="distributionFilter.Description"
+              width="600"/>
+          </Row>
+        </RowIterator>
+      </ListViewPanel>
+    </Screen>
+    <Code><![CDATA[property get FiltersNotOnPlan() : List<DistributionFilterType> {
+  return DistributionFilterType.getTypeKeys(false).where( \ filter -> paymentAllocationPlan.getDistributionCriterionByFilter(filter) == null)
+}]]></Code>
+  </Popup>
+</PCF>

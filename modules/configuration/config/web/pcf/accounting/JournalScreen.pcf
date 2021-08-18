@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PCF
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:noNamespaceSchemaLocation="../../../../../pcf.xsd">
+  <Screen
+    id="JournalScreen">
+    <Require
+      name="tAccountOwner"
+      type="TAccountOwner"/>
+    <Require
+      name="relatedTAccountOwners"
+      type="TAccountOwner[]"/>
+    <ListDetailPanel
+      selectionName="selectedTAccountOwner"
+      selectionType="TAccountOwner">
+      <PanelRef
+        def="TAccountOwnersLV(tAccountOwner, relatedTAccountOwners)">
+        <Toolbar/>
+      </PanelRef>
+      <CardViewPanel>
+        <Card
+          id="Transactions"
+          title="displaykey.Web.Journal.Transactions">
+          <PanelRef
+            def="TransactionsLV(selectedTAccountOwner.Transactions, false)">
+            <Toolbar/>
+          </PanelRef>
+        </Card>
+      </CardViewPanel>
+    </ListDetailPanel>
+  </Screen>
+</PCF>

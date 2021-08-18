@@ -1,0 +1,45 @@
+<?xml version="1.0"?>
+<PCF
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:noNamespaceSchemaLocation="../../../../../pcf.xsd">
+  <Screen
+    id="SelectMultiplePoliciesScreen">
+    <Variable
+      initialValue="true"
+      name="isWizard"
+      type="Boolean"/>
+    <Variable
+      initialValue="false"
+      name="showHyperlinks"
+      type="Boolean"/>
+    <Variable
+      initialValue="true"
+      name="showCheckboxes"
+      type="Boolean"/>
+    <SearchPanel
+      criteriaName="searchCriteria"
+      resultsName="policySearchViews"
+      search="gw.search.SearchMethods.validateAndSearch(searchCriteria, StringCriterionMode.TC_STARTSWITH)"
+      searchCriteria="new gw.search.PolicySearchCriteria()"
+      searchResultsType="PolicySearchViewQuery">
+      <PanelRef
+        def="PolicySearchDV(searchCriteria)">
+        <Toolbar>
+          <CheckedValuesToolbarButton
+            id="addbutton"
+            iterator="PolicySearchResultsLV.PolicySearchResultsLV"
+            label="displaykey.Web.SelectMultiplePoliciesScreen.Add"
+            pickValue="gw.api.web.search.SearchPopupUtil.getPolicyArray(CheckedValues)"/>
+          <ToolbarButton
+            action="CurrentLocation.cancel()"
+            id="CancelButton"
+            label="displaykey.Button.Cancel"/>
+        </Toolbar>
+      </PanelRef>
+      <PanelRef
+        def="PolicySearchResultsLV(policySearchViews, null, isWizard, showHyperlinks, showCheckboxes)">
+        <Toolbar/>
+      </PanelRef>
+    </SearchPanel>
+  </Screen>
+</PCF>

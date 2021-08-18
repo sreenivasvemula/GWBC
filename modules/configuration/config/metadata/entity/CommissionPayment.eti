@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?><entity xmlns="http://guidewire.com/datamodel" abstract="true" desc="Entity to make a commission payment" entity="CommissionPayment" final="false" platform="false" setterScriptability="hidden" subpackage="commission" table="commissionpayment" type="retireable">
+  <implementsEntity name="Approvable"/>
+  <implementsEntity name="InCurrencySilo"/>
+  <monetaryamount amountColumnName="Amount" amountRange="positive" desc="The amount of the payment." name="Amount" nullok="true" scaleToCurrency="true"/>
+  <column default="false" desc="Indicates whether or not the payment has been made." getterScriptability="hidden" name="Paid" nullok="false" setterScriptability="hidden" type="bit"/>
+  <foreignkey columnName="ProducerID" desc="The producer associated with this payment." fkentity="Producer" importableagainstexistingobject="false" name="Producer" nullok="false"/>
+  <foreignkey columnName="ProducerPaymentID" desc="The producer payment associated with this payment." fkentity="ProducerPayment" name="ProducerPayment" nullok="true"
+      setterScriptability="doesNotExist"/>
+</entity>

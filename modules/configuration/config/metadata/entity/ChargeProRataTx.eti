@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?><entity xmlns="http://guidewire.com/datamodel" desc="Keeps track of a single portion of a non-dynamic pro-rata charge transaction" entity="ChargeProRataTx" platform="false" setterScriptability="hidden" subpackage="accounting" table="chargeproratatx" type="editable">
+  <implementsEntity name="InCurrencySilo"/>
+  <column desc="The date this portion of the pro-rata transaction should be earned" name="EarnDate" nullok="false" setterScriptability="doesNotExist" type="dateonly"/>
+  <monetaryamount amountColumnName="Amount" desc="The amount of this portion of the pro-rata transaction" name="Amount" nullok="false" scaleToCurrency="true" setterScriptability="doesNotExist"/>
+  <typekey desc="The status of this portion of the pro-rata transaction" name="Status" nullok="true" setterScriptability="doesNotExist" typelist="ProRataChargeStatus"/>
+  <foreignkey columnName="ChargeID" desc="The related charge" fkentity="Charge" getterScriptability="doesNotExist" importableagainstexistingobject="false" name="Charge" nullok="false" setterScriptability="doesNotExist"/>
+  <index
+    desc="Index for writer in ChargeProRataTx"
+    name="writerHelper"
+    unique="false">
+    <indexcol
+      name="Status"
+      keyposition="1"/>
+    <indexcol
+      name="EarnDate"
+      keyposition="2"/>
+    <indexcol
+      name="ChargeID"
+      keyposition="3"/>
+  </index>
+  <index
+    desc="Index for worker in ChargeProRataTx"
+    name="workerHelper"
+    unique="true">
+    <indexcol
+      name="ChargeID"
+      keyposition="1"/>
+    <indexcol
+      name="Status"
+      keyposition="2"/>
+    <indexcol
+      name="EarnDate"
+      keyposition="3"/>
+    <indexcol
+      name="ID"
+      keyposition="4"/>
+  </index>
+</entity>

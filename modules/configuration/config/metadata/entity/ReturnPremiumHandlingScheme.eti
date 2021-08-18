@@ -1,0 +1,67 @@
+<?xml version="1.0"?>
+<entity xmlns="http://guidewire.com/datamodel"
+  desc="A scheme for handling return premium"
+  entity="ReturnPremiumHandlingScheme"
+  subpackage="invoice"
+  type="versionable"
+  admin="true"
+  loadable="false"
+  table="retpremhandlingscheme">
+  <implementsEntity
+    name="NotInCurrencySilo"/>
+  <typekey
+    name="HandlingCondition"
+    typelist="ReturnPremiumHandlingCondition"
+    desc="The return premium handling condition to which this return premium handling scheme applies."
+    nullok="false"
+    setterScriptability="hidden"/>
+  <typekey
+    name="StartDateOption"
+    typelist="ReturnPremiumStartDateOption"
+    desc="Start date option: Policy Effective Date, etc."
+    default="ChargeEffectiveDate"
+    nullok="false"
+    setterScriptability="all"/>
+  <typekey
+    name="AllocateTiming"
+    typelist="ReturnPremiumAllocateTiming"
+    desc="Allocate Timing option: Bill, etc."
+    default="receipt"
+    nullok="false"
+    setterScriptability="all"/>
+  <typekey
+    name="AllocateMethod"
+    typelist="ReturnPremiumAllocateMethod"
+    desc="Method option: First to Last, Last to First, etc."
+    default="Proportional"
+    nullok="false"
+    setterScriptability="all"/>
+  <typekey
+    name="ExcessTreatment"
+    typelist="ReturnPremiumExcessTreatment"
+    desc="Excess Treatment option: Unapplied, etc."
+    default="Unapplied"
+    nullok="false"
+    setterScriptability="all"/>
+  <column
+    name="Priority"
+    desc="The priority of this scheme within its parent return premium plan. Lower number values have higher priority."
+    type="nonnegativeinteger"
+    nullok="false"
+    setterScriptability="doesNotExist"/>
+  <foreignkey
+    name="ReturnPremiumPlan"
+    desc="The return premium plan to which this handling scheme belongs."
+    columnName="ReturnPremiumPlanID"
+    fkentity="ReturnPremiumPlan"
+    nullok="false"
+    setterScriptability="hidden"/>
+
+  <index name="PlanCondUnique"
+      desc="Enforces the HandlingCondition uniqueness constraint for ReturnPremiumHandlingScheme's belonging to a ReturnPremiumPlan."
+      unique="true">
+    <indexcol name="ReturnPremiumPlanID" keyposition="1"/>
+    <indexcol name="HandlingCondition" keyposition="2"/>
+  </index>
+
+</entity>

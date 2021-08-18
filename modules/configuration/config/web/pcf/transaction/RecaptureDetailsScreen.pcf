@@ -1,0 +1,76 @@
+<?xml version="1.0"?>
+<PCF
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:noNamespaceSchemaLocation="../../../../../pcf.xsd">
+  <Screen
+    id="RecaptureDetailsScreen">
+    <Require
+      name="helper"
+      type="gw.accounting.NewRecaptureChargeHelper"/>
+    <Require
+      name="account"
+      type="Account"/>
+    <Variable
+      initialValue="new gw.transaction.ChargePatternHelper()"
+      name="chargePatternHelper"
+      type="gw.transaction.ChargePatternHelper"/>
+    <Toolbar>
+      <WizardButtons/>
+    </Toolbar>
+    <DetailViewPanel>
+      <InputColumn>
+        <Input
+          id="Account"
+          label="displaykey.Web.ChargeDetailsScreen.Account"
+          value="account"/>
+        <RangeInput
+          editable="true"
+          id="UnappliedFund"
+          label="displaykey.Web.CreditDetailsScreen.UnappliedFund"
+          required="true"
+          value="helper.RecaptureUnappliedFund"
+          valueRange="account.UnappliedFundsOrdered"
+          visible="helper.BillingInstruction.ChargeInitializers[0].OwnerAccount.DesignatedUnappliedFundsOrdered.HasElements">
+          <PostOnChange/>
+        </RangeInput>
+        <MonetaryAmountInput
+          align="right"
+          currency="account.UnappliedAmount.Currency"
+          formatType="currency"
+          id="UnappliedAmount"
+          label="displaykey.Web.RecaptureDetailsScreen.UnappliedAmount"
+          value="helper.RecaptureUnappliedFund.Balance"/>
+        <RangeInput
+          editable="chargePatternHelper.getChargePatterns(helper.RecaptureChargeInitializer.TAccountOwner, gw.transaction.UserTransactionType.RECAPTURE).Count &gt; 1"
+          id="Type"
+          label="displaykey.Web.ChargeDetailsScreen.Type"
+          required="true"
+          value="helper.RecaptureChargeInitializer.ChargePattern"
+          valueRange="chargePatternHelper.getChargePatterns(helper.RecaptureChargeInitializer.TAccountOwner, gw.transaction.UserTransactionType.RECAPTURE)"/>
+        <MonetaryAmountInput
+          currency="helper.RecaptureChargeInitializer.Amount.Currency"
+          editable="true"
+          id="Amount"
+          label="displaykey.Web.ChargeDetailsScreen.Amount"
+          validationExpression="validateChargeAmount()"
+          value="helper.RecaptureChargeInitializer.Amount"/>
+      </InputColumn>
+    </DetailViewPanel>
+    <Code><![CDATA[
+                uses gw.lang.reflect.IType
+                uses gw.pl.currency.MonetaryAmount
+                uses gw.api.domain.accounting.ChargePatternKey
+
+                function validateChargeAmount(): String {
+                    var currentAmount = helper.RecaptureChargeInitializer.Amount
+                    if (!currentAmount.IsPositive) {
+                        return displaykey.Web.ChargeDetailsScreen.RecaptureChargeInvalidAmount
+                    }
+                    if (!helper.RecaptureUnappliedFund.Balance.IsNegative) {
+                        return displaykey.Web.ChargeDetailsScreen.UnappliedNotNegativeForRecaptureCharge
+                    }
+                    return ((currentAmount <= helper.RecaptureUnappliedFund.Balance.abs()) ? null : displaykey.Web.ChargeDetailsScreen.RecaptureChargeLargerNegUnapplied)
+                }
+        ]]></Code>
+  </Screen>
+</PCF>

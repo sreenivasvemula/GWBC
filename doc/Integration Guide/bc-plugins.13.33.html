@@ -1,0 +1,242 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xml:lang="en" lang="en" xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+    <meta http-equiv="Content-Style-Type" content="text/css" />
+    <!-- MOTW-DISABLED saved from url=(0014)about:internet -->
+    <title>How BillingCenter Uses the Funds Tracking Plugin</title>
+    <link rel="StyleSheet" href="css/bc-plugins.css" type="text/css" media="all" />
+    <link rel="StyleSheet" href="css/webworks.css" type="text/css" media="all" />
+    <link rel="StyleSheet" href="css/css-guidewire-extra.css" type="text/css" media="all" />
+    <script type="text/javascript" language="JavaScript1.2" src="wwhdata/common/context.js"></script>
+    <script type="text/javascript" language="JavaScript1.2" src="wwhdata/common/towwhdir.js"></script>
+    <script type="text/javascript" language="JavaScript1.2" src="wwhdata/common/wwhpagef.js"></script>
+    <script type="text/javascript" language="JavaScript1.2">
+      <!--
+        var  WebWorksRootPath = "";
+      // -->
+    </script>
+    <script type="text/javascript" language="JavaScript1.2">
+      <!--
+        // Set reference to top level help frame
+        //
+        var  WWHFrame = WWHGetWWHFrame("", true);
+      // -->
+    </script>
+    <script type="text/javascript" language="JavaScript1.2" src="scripts/expand.js"></script>
+    <!-- THE FOLLOWING IS A GUIDEWIRE STYLE DEFINITION FOR THE LINK TO THIS FEATURE -->
+    <link rel="StyleSheet" href="css/css-guidewire-extra.css" type="text/css" media="all" />
+    <!-- THE FOLLOWING IS A GUIDEWIRE GSCRIPT FUNCTION FOR THE LINK TO THIS FEATURE -->
+    <script type="text/javascript">
+function guidewire_selectall()
+{
+var text_val=eval("document.linktothisurlform.urlfield");
+text_val.focus();
+text_val.select();
+}
+</script>
+  </head>
+  <body onLoad="WWHUpdate();" onUnload="WWHUnload();" onKeyDown="WWHHandleKeyDown((document.all||document.getElementById||document.layers)?event:null);" onKeyPress="WWHHandleKeyPress((document.all||document.getElementById||document.layers)?event:null);" onKeyUp="WWHHandleKeyUp((document.all||document.getElementById||document.layers)?event:null);">
+    <!-- THE FOLLOWING IS A GUIDEWIRE DIV FOR THE 'LINK TO THIS' FEATURE -->
+    <div id="linkToThisPage" class="popup" style="display: none;">
+      <div class="popupTitle">Link Directly to This Page 
+           <a href="#" onclick="var thePopup = getElementById('linkToThisPage');thePopup.style.display='none';return false;"><img class="popupClosebox" src="wwhelp/wwhimpl/common/images/close.gif" /></a></div>
+      <div style="padding:6px;">
+        <div class="popupText" id="linkToThisPageBookmark">An error has occurred if you see this messsage.</div>
+        <form name="linktothisurlform" method="post" action="" style="width:275px;margin:0px">
+          <input type="text" class="popupURLText" id="linkToThisPageURL" name="urlfield" rows="1" cols="55" onClick="guidewire_selectall();" onFocus="guidewire_selectall();"></input>
+        </form>
+      </div>
+    </div>
+    <br />
+    <div class="WebWorks_Breadcrumbs" style="text-align: left;">
+      <span>BillingCenter Integration Guide</span> : 
+    <span class="WebWorks_Breadcrumbs" style="text-align: left;"><a class="WebWorks_Breadcrumb_Link" href="p-plugins.html#3451721">Plugins</a> : <a class="WebWorks_Breadcrumb_Link" href="bc-plugins.13.01.html#3451721">Billing Plugins</a> : <a class="WebWorks_Breadcrumb_Link" href="bc-plugins.13.32.html#3451721">Funds Tracking Plugin</a> : How BillingCenter Uses the Funds Tracking Plugin</span></div>
+    <hr align="left" />
+    <blockquote>
+      <h4 class="H2B_-_Heading_2_Break"><a name="3451721">How BillingCenter Uses the Funds Tracking Plugin</a></h4>
+      <div class="B_-_Body"><a name="3452372">BillingCenter uses the funds tracking plugin for two purposes:</a></div>
+      <div class="BI_-_Bullet_Item_outer" style="margin-left: 57pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="BI_-_Bullet_Item_inner" style="width: 15pt; white-space: nowrap">
+                <span class="bu_-_bullet">•	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="BI_-_Bullet_Item_inner"><span class="ri_-_run_in_header"><a name="3452392">Creating payment item groups</a></span> – Aggregates related payment items into new payment item groups</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="BI_-_Bullet_Item_outer" style="margin-left: 57pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="BI_-_Bullet_Item_inner" style="width: 15pt; white-space: nowrap">
+                <span class="bu_-_bullet">•	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="BI_-_Bullet_Item_inner"><span class="ri_-_run_in_header"><a name="3495001">Allotting funds</a></span> – Associates funds sources with funds uses</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="H3_-_Heading_3_outer" style="margin-left: 36pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <h5 class="H3_-_Heading_3_inner" style="width: 18pt; white-space: nowrap"></h5>
+            </td>
+            <td width="100%">
+              <h5 class="H3_-_Heading_3_inner"><a name="3452429">How BillingCenter Creates Payment Item Groups with the Funds Tracking Plugin</a></h5>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="B_-_Body"><a name="3495163">Aggregation of payment items into payment item groups occurs when a bundle commits and it contains an executed or reversed payment item as part of the committed work. When a clerk or automated process distributes money that comes in, BillingCenter creates </a><span class="cv_-_computer_voice">PaymentItem</span> instances to record information about the distributions. When the bundle containing the payment items commits, BillingCenter calls the funds tracking plugin.</div>
+      <div class="B_-_Body"><a name="3494874">For example, a clerk distributes a $150 payment received to two invoice items on latest premium bill. The clerk distributes $145 to pay the monthly premium and separately distributes the remaining $5 to the monthly installment fee. As a result, BillingCenter creates two payment items to track the distribution of funds. When the bundle that contains the distributions and associated payment items commits, the plugin creates a payment item group to track them as a single funds use. </a></div>
+      <div class="B_-_Body"><a name="3455476">For more information, see </a><a href="javascript:WWHClickedPopup('integration', 'bc-plugins.13.35.html#3452516', '');" title="How the Funds Tracking Plugin Creates Payment Item Groups">“How the Funds Tracking Plugin Creates Payment Item Groups”</a>.</div>
+      <div class="H3_-_Heading_3_outer" style="margin-left: 36pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <h5 class="H3_-_Heading_3_inner" style="width: 18pt; white-space: nowrap"></h5>
+            </td>
+            <td width="100%">
+              <h5 class="H3_-_Heading_3_inner"><a name="3495018">How BillingCenter Allots Funds with the Funds Tracking Plugin</a></h5>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="B_-_Body"><a name="3495019">An allotment process occurs in two ways: </a></div>
+      <div class="BI_-_Bullet_Item_outer" style="margin-left: 57pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="BI_-_Bullet_Item_inner" style="width: 15pt; white-space: nowrap">
+                <span class="bu_-_bullet">•	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="BI_-_Bullet_Item_inner"><span class="ri_-_run_in_header"><a name="3495020">Background</a></span> – Whenever you schedule the <span class="cv_-_computer_voice">FundsAllotmentBatchProcess</span> batch process or distributed work queue to run. </div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="BI_-_Bullet_Item_outer" style="margin-left: 57pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="BI_-_Bullet_Item_inner" style="width: 15pt; white-space: nowrap">
+                <span class="bu_-_bullet">•	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="BI_-_Bullet_Item_inner"><span class="ri_-_run_in_header"><a name="3495022">Foreground</a></span> – When someone accesses the <span class="ui_-_UI_element">Funds Tracking</span> screen or returns from a related popup</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="B_-_Body"><a name="3495023">The background </a><span class="cv_-_computer_voice">FundsAllotmentBatchProcess</span> can be run on demand or a schedule that you specify. The writer finds accounts with related funds sources that are partially or not at all allotted. The writer creates one work item for each account that meets the criteria. The worker then calls <span class="cv_-_computer_voice">Account.allotAllFunds</span> for each work item.</div>
+      <div class="B_-_Body"><a name="3495024">The foreground </a><span class="cv_-_computer_voice">AccountDetailFundTracking</span> screen calls <span class="cv_-_computer_voice">Account.allotAllFunds</span> on entering the screen and on return from related pop-ups. The screen and pop-ups invoke this just-in-time allotment so the clerk sees the most recent funds tracking information. The set of transactions for an account may have changed since the batch process last ran. </div>
+      <div class="B_-_Body"><a name="3495025">For example, a clerk records a payment and then goes to the </a><span class="ui_-_UI_element">Funds Tracking</span> screen. The clerk expects to see the payment allotted to a payment item group. Without the just-in-time allotment, the clerk sees the payment as not allotted. </div>
+      <div class="B_-_Body"><a name="3495029">For details, see </a><a href="javascript:WWHClickedPopup('integration', 'bc-plugins.13.36.html#3495122', '');" title="How the Funds Tracking Plugin Allots Funds">“How the Funds Tracking Plugin Allots Funds”</a>. </div>
+      <div class="H3_-_Heading_3_outer" style="margin-left: 36pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <h5 class="H3_-_Heading_3_inner" style="width: 18pt; white-space: nowrap"></h5>
+            </td>
+            <td width="100%">
+              <h5 class="H3_-_Heading_3_inner"><a name="3463532">Limitations of Funds Tracking in BillingCenter</a></h5>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="B_-_Body"><a name="3463421">Consider these limitations in the default configuration of funds tracking:</a></div>
+      <div class="BI_-_Bullet_Item_outer" style="margin-left: 57pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="BI_-_Bullet_Item_inner" style="width: 15pt; white-space: nowrap">
+                <span class="bu_-_bullet">•	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="BI_-_Bullet_Item_inner"><span class="ri_-_run_in_header"><a name="3463428">Only direct bill money received funds can be tracked.</a></span> </div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="LP_-_List_Para"><a name="3494893">You can change the default configuration to track other kinds of money received funds. </a></div>
+      <div class="BI_-_Bullet_Item_outer" style="margin-left: 57pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="BI_-_Bullet_Item_inner" style="width: 15pt; white-space: nowrap">
+                <span class="bu_-_bullet">•	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="BI_-_Bullet_Item_inner"><span class="ri_-_run_in_header"><a name="3463463">Only funds within a single account can be tracked.</a></span> </div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="LP_-_List_Para"><a name="3494883">For account-to-account transfers, you must examine both accounts to see the complete flow of tracked funds. </a></div>
+      <h4 class="H2_-_Heading_2"><a name="3451707">Implementations of the Funds Tracking Plugin</a></h4>
+      <div class="B_-_Body"><a name="3451681">The default configuration of BillingCenter provides a single, built-in, fully functional implementation of the funds tracking plugin, </a><span class="cv_-_computer_voice">IFundsTracking</span>. In the default configuration, the <span class="cv_-_computer_voice">IFundsTracking</span> plugin is enabled and configured to use the built-in implementation, <span class="cv_-_computer_voice">FundsTracking.gs</span>. </div>
+      <div class="F_-_Figure"><a name="3495680"><img class="Default" src="images/bc-plugins.13.33.1.png" style="display: inline; float: none; left: 0.0; top: 0.0" alt="" /></a></div>
+      <div class="F_-_Figure"><a name="3495624">&nbsp;</a></div>
+      <div class="B_-_Body"><a name="3497519">The </a><span class="cv_-_computer_voice">FundsTracking</span> implementation fully contains the logic for creating payment item groups. The <span class="cv_-_computer_voice">FundsTracking</span> implementation calls a helper method on the <span class="cv_-_computer_voice">PaymentItemNarrative</span> that it receives as the sole parameter passed to its <span class="cv_-_computer_voice">createPaymentItemGroupings</span> method. </div>
+      <div class="B_-_Body"><a name="3495837">The </a><span class="cv_-_computer_voice">FundsTracking</span> implementation defers to the <span class="cv_-_computer_voice">FundsAllotter</span> class to implement the funds allotment logic. BillingCenter calls <span class="cv_-_computer_voice">FundsTracker.allotFunds</span>, which in turn calls <span class="cv_-_computer_voice">FundsAllotter.allotFunds</span>. The <span class="cv_-_computer_voice">FundsAllotter.allotFunds</span> method implements the two-phase allocation process of priority reallotment, followed by allotment. </div>
+      <h6 class="HS_-_Head_Sub"><a name="3495841">See also</a></h6>
+      <div class="BI_-_Bullet_Item_outer" style="margin-left: 57pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="BI_-_Bullet_Item_inner" style="width: 15pt; white-space: nowrap">
+                <span class="bu_-_bullet">•	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="BI_-_Bullet_Item_inner"><a href="javascript:WWHClickedPopup('integration', 'bc-plugins.13.35.html#3452516', '');" title="How the Funds Tracking Plugin Creates Payment Item Groups" name="3495856">“How the Funds Tracking Plugin Creates Payment Item Groups”</a></div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="BI_-_Bullet_Item_outer" style="margin-left: 57pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="BI_-_Bullet_Item_inner" style="width: 15pt; white-space: nowrap">
+                <span class="bu_-_bullet">•	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="BI_-_Bullet_Item_inner"><a href="javascript:WWHClickedPopup('integration', 'bc-plugins.13.36.html#3495122', '');" title="How the Funds Tracking Plugin Allots Funds" name="3495866">“How the Funds Tracking Plugin Allots Funds”</a></div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <script type="text/javascript" language="JavaScript1.2">
+        <!--
+          // Clear related topics
+          //
+          WWHClearRelatedTopics();
+
+          document.writeln(WWHRelatedTopicsInlineHTML());
+        // -->
+      </script>
+    </blockquote>
+    <script type="text/javascript" language="JavaScript1.2">
+      <!--
+        document.write(WWHRelatedTopicsDivTag() + WWHPopupDivTag() + WWHALinksDivTag());
+      // -->
+    </script>
+  </body>
+</html>

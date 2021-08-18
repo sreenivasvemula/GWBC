@@ -1,0 +1,161 @@
+<?xml version="1.0"?>
+<entity
+  xmlns="http://guidewire.com/datamodel"
+  desc="Delinquency process for a policy"
+  entity="DelinquencyProcess"
+  final="false"
+  setterScriptability="hidden"
+  subpackage="delinquency"
+  table="delinquencyprocess"
+  type="retireable">
+  <implementsEntity
+    name="Validatable"/>
+  <implementsEntity
+    name="Assignable"/>
+  <implementsEntity
+    name="InCurrencySilo"/>
+  <foreignkey
+    columnName="AccountID"
+    desc="The account that has become delinquent"
+    fkentity="Account"
+    importableagainstexistingobject="false"
+    name="Account"
+    nullok="false"
+    setterScriptability="doesNotExist"/>
+  <foreignkey
+    columnName="DelinquencyPlanID"
+    desc="The delinquency plan for this delinquency process"
+    fkentity="DelinquencyPlan"
+    name="DelinquencyPlan"
+    nullok="false"
+    setterScriptability="doesNotExist"/>
+  <edgeForeignKey
+    desc="Foreign key to an activity notifying the user that the Collection Agency                 must be set before processing on this delinquency can continue."
+    edgeTableName="dpassignca"
+    fkentity="Activity"
+    name="AssignCAActivity"
+    nullok="true"/>
+  <array
+    arrayentity="Activity"
+    desc="The activities created by this delinquency process"
+    name="Activities"/>
+  <array
+    arrayentity="DelProcessWorkflow"
+    arrayfield="DelinquencyProcess"
+    desc="All the workflows associated with the delinquency process."
+    exportable="false"
+    name="Workflows"
+    setterScriptability="doesNotExist"/>
+  <onetoone
+    desc="Foreign key to the top level workflow.  The top level workflow is the one with the workflow category of delinquency."
+    fkentity="DelProcessWorkflow"
+    getterScriptability="doesNotExist"
+    linkField="TopLevelDelinquencyProcess"
+    name="TopLevelWorkflow"
+    nullok="true"
+    setterScriptability="doesNotExist"/>
+  <array
+    arrayentity="DelinquencyProcessEvent"
+    arrayfield="DelinquencyProcess"
+    desc="The events associated with the delinquency process"
+    exportable="false"
+    name="ProcessEvents"
+    owner="true"
+    setterScriptability="doesNotExist"/>
+  <onetoone
+    desc="Denormalization of the most recently executed DelinquencyProcessEvent"
+    fkentity="DelinquencyProcessEvent"
+    getterScriptability="doesNotExist"
+    linkField="CurrentDelinquencyProcess"
+    name="CurrentEventDenorm"
+    nullok="true"
+    setterScriptability="doesNotExist"/>
+  <monetaryamount
+    amountColumnName="Amount"
+    desc="The delinquent amount on the account that has become delinquent at the point when the delinquency process was started"
+    name="Amount"
+    nullok="true"
+    scaleToCurrency="true"
+    setterScriptability="doesNotExist"/>
+  <column
+    desc="The date on which a hold was applied to the delinquency process; null if the process not held"
+    name="HeldDate"
+    nullok="true"
+    setterScriptability="doesNotExist"
+    type="dateonly"/>
+  <column
+    desc="The date on which the delinquency process started"
+    name="StartDate"
+    nullok="false"
+    setterScriptability="doesNotExist"
+    type="datetime"/>
+  <column
+    desc="The date on which the policy exited delinquency. This is set in the workflow."
+    name="ExitDate"
+    nullok="true"
+    type="datetime"/>
+  <column
+    desc="The day on which the delinquency process hit the inception step; generally, the start date plus a grace period."
+    name="InceptionDate"
+    nullok="true"
+    setterScriptability="doesNotExist"
+    type="dateonly"/>
+  <typekey
+    default="Delinquency"
+    desc="The current phase of delinquency processing, either &quot;Delinquency&quot; or &quot;ExitDelinquency&quot;"
+    name="Phase"
+    nullok="false"
+    typelist="DelinquencyProcessPhase"/>
+  <typekey
+    default="Open"
+    desc="The current status of the delinquency process"
+    name="Status"
+    nullok="false"
+    typelist="DelinquencyProcessStatus"/>
+  <typekey
+    default="PastDue"
+    desc="Reason for why the delinquency process was started"
+    name="Reason"
+    nullok="false"
+    typelist="DelinquencyReason"/>
+  <array
+    arrayentity="DelinqProcessDelayedTrigger"
+    arrayfield="DelinquencyProcess"
+    desc="The delayed triggers associated with this delinquency process"
+    exportable="false"
+    name="DelayedTriggers"
+    owner="true"
+    setterScriptability="doesNotExist"/>
+  <events>
+    <event
+      description="Event fired when the Collection Agency on this delinquency process needs to be connected to the account."
+      name="ConnectCollectionAgency"/>
+  </events>
+  <index
+    desc="Covering index for Desktop delinquencies based queries searching on status"
+    expectedtobecovering="true"
+    name="DelqProcU1"
+    unique="true">
+    <indexcol
+      keyposition="1"
+      name="Status"/>
+    <indexcol
+      keyposition="2"
+      name="Retired"/>
+    <indexcol
+      keyposition="3"
+      name="StartDate"/>
+    <indexcol
+      keyposition="4"
+      name="ID"/>
+    <indexcol
+      keyposition="5"
+      name="Subtype"/>
+  </index>
+  <dbcheckbuilder
+    className="com.guidewire.bc.system.database.dbchecks.delinquency.DelinquencyCurrentEventDenormDBCheckBuilder"/>
+  <dbcheckbuilder
+    className="com.guidewire.bc.system.database.dbchecks.delinquency.PolicyDelinquencyLegacyProcessEventsDBCheckBuilder"/>
+  <dbcheckbuilder
+    className="com.guidewire.bc.system.database.dbchecks.delinquency.AccountDelinquencyLegacyProcessEventsDBCheckBuilder"/>
+</entity>

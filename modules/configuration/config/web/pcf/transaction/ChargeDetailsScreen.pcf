@@ -1,0 +1,40 @@
+<?xml version="1.0"?>
+<PCF
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:noNamespaceSchemaLocation="../../../../../pcf.xsd">
+  <Screen
+    id="ChargeDetailsScreen">
+    <Require
+      name="helper"
+      type="gw.accounting.NewGeneralSingleChargeHelper"/>
+    <Variable
+      initialValue="helper.ChargeInitializer.ChargePattern.Category == ChargeCategory.TC_GENERAL"
+      name="isGeneral"
+      type="Boolean"/>
+    <Toolbar>
+      <WizardButtons/>
+    </Toolbar>
+    <DetailViewPanel>
+      <InputColumn>
+        <Input
+          id="Target"
+          label="displaykey.Web.ChargeDetailsScreen.Target"
+          value="helper.getDisplayName()"/>
+        <RangeInput
+          editable="true"
+          id="Type"
+          label="displaykey.Web.ChargeDetailsScreen.Type"
+          required="true"
+          value="helper.ChargeInitializer.ChargePattern"
+          valueRange="helper.ChargePatternValues"/>
+        <MonetaryAmountInput
+          currency="helper.ChargeInitializer.Amount.Currency"
+          editable="true"
+          id="Amount"
+          label="displaykey.Web.ChargeDetailsScreen.Amount"
+          validationExpression="helper.ChargeInitializer.Amount.IsZero ? displaykey.Web.Charge.ChargeAmountCannotBeZero : null"
+          value="helper.ChargeInitializer.Amount"/>
+      </InputColumn>
+    </DetailViewPanel>
+  </Screen>
+</PCF>

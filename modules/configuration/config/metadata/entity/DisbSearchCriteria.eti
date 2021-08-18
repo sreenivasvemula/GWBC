@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?><nonPersistentEntity xmlns="http://guidewire.com/datamodel" abstract="true" desc="Abstract base class for search criteria for disbursements" entity="DisbSearchCriteria" extendable="true" final="false" subpackage="search">
+  <implementsEntity name="NotInCurrencySilo"/>
+  <column desc="Earliest disbursement issue date to search" name="EarliestIssueDate" nullok="true" type="datetime"/>
+  <column desc="Latest disbursement issue date to search" name="LatestIssueDate" nullok="true" type="datetime"/>
+  <typekey desc="Method of payment" name="Method" nullok="true" typelist="PaymentMethod"/>
+   <column desc="The Token associated with the PaymentInstrument that was used to make the PaymentRequest" name="Token" nullok="true" type="shorttext"/>
+  <typekey desc="The status of the disbursement" name="Status" nullok="true" typelist="DisbursementStatus"/>
+  <column desc="The check or EFT identifier" name="CheckNumber" nullok="true" type="shorttext"/>
+   <typekey desc="The currency unit to restrict the search to" name="Currency" nullok="true" typelist="Currency"/>
+  <monetaryamount amountColumnName="MinAmount" amountRange="nonnegative" desc="The minimum amount to search for" name="MinAmount" nullok="true" scaleToCurrency="true"/>
+  <monetaryamount amountColumnName="MaxAmount" amountRange="nonnegative" desc="The maximum amount to search for" name="MaxAmount" nullok="true" scaleToCurrency="true"/>
+  <column desc="The recipient of the disbursement" name="Payee" nullok="true" type="shorttext"/>
+  <typekey desc="The reason for the disbursement" name="Reason" nullok="true" typelist="Reason"/>
+</nonPersistentEntity>

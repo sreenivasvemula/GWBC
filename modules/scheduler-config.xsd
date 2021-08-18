@@ -1,0 +1,169 @@
+<?xml version="1.0"?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified">
+  
+  <xsd:element name="CronSchedule">
+    <xsd:complexType>
+      <xsd:choice minOccurs="0" maxOccurs="unbounded"/>
+      <!-- This is the day of month for repeating based on day of month.  Or '*' for every day
+           of the month, or '?' if selecting by day of week. -->
+      <xsd:attribute name="dayofmonth" type="xsd:string" default="*"/>
+      <!-- This is the day 0-7 for repeating based on that day.  Or '?' if ignore day of week
+           (using day of month). -->
+      <xsd:attribute name="dayofweek" type="xsd:string" default="?"/>
+      <!-- This is the hours for repeating based on hours. Or '*' if every hour. -->
+      <xsd:attribute name="hours" type="xsd:string" default="*"/>
+      <!-- This is the minutes for repeating based on minutes.  Or '*' if every minute.  Defaults
+           to '0'. -->
+      <xsd:attribute name="minutes" type="xsd:string" default="0"/>
+      <!-- This is the month numbers for only those months.  Or '*' for every month. -->
+      <xsd:attribute name="month" type="xsd:string" default="*"/>
+      <!-- This is the seconds for repeating based on seconds.  Or '*' if every second.  Defaults
+           to '0'. -->
+      <xsd:attribute name="seconds" type="xsd:string" default="0"/>
+    </xsd:complexType>
+  </xsd:element>
+  
+  <xsd:element name="ProcessSchedule">
+    <xsd:complexType>
+      <xsd:choice minOccurs="0" maxOccurs="unbounded">
+        <xsd:element ref="CronSchedule" minOccurs="0" maxOccurs="1"/>
+      </xsd:choice>
+      <!-- This is the environment where the batch process will run. -->
+      <xsd:attribute name="env" type="xsd:string"/>
+      <!-- This is the batch process that is being scheduled. -->
+      <xsd:attribute name="process" type="ProcessType" use="required"/>
+    </xsd:complexType>
+  </xsd:element>
+  
+  <xsd:simpleType name="ProcessType">
+    <xsd:restriction base="xsd:string">
+      <!-- Checks for accounts that have been inactive for many days and creates notification
+           activities for those accounts. -->
+      <xsd:enumeration value="AccountInactivity"/>
+      <!-- Activity escalation monitor -->
+      <xsd:enumeration value="ActivityEsc"/>
+      <!-- Checks for commission advances whose "maintain until" dates have passed and expires
+           them. Results in any remaining advance balance becoming owed by the producer. -->
+      <xsd:enumeration value="AdvanceExpiration"/>
+      <!-- Process agency cycle payments and promises that match policy periods -->
+      <xsd:enumeration value="AgencySuspensePayment"/>
+      <!-- Checks for accounts whose unapplied funds' amount less the (amount under contract
+           + amount slated for disbursement) is greater than billing-plan defined "Disbursement
+           Over" amount and creates a disbursement for such accounts. -->
+      <xsd:enumeration value="AutomaticDisbursement"/>
+      <!-- Moves part of the total charge amount from the pro-rata charge's unearned T-Account
+           (liability) to its revenue T-Account (income). -->
+      <xsd:enumeration value="ChargeProRataTx"/>
+      <!-- Checks for commissions that need to be made payable. -->
+      <xsd:enumeration value="CmsnPayable"/>
+      <!-- Checks for Pending Collateral Requirements whose effective dates have passed -->
+      <xsd:enumeration value="CollEffective"/>
+      <!-- Checks for Active Collateral Requirements whose expiration dates have passed -->
+      <xsd:enumeration value="CollExpiration"/>
+      <!-- Checks for manual commission payments that have been scheduled to occur on a future
+           date. Any commission payment whose scheduled date has passed is executed by this process. -->
+      <xsd:enumeration value="CommissionPmt"/>
+      <!-- Automatically synchronize the local contact that are out of syn and marked 'allow'
+           auto-sync. -->
+      <xsd:enumeration value="ContactAutoSync"/>
+      <!-- Database consistency checks -->
+      <xsd:enumeration value="DBConsistencyCheck"/>
+      <!-- Database statistics -->
+      <xsd:enumeration value="DBStats"/>
+      <!-- Checks for disbursements whose due dates have passed and are approved and pays that
+           amount to the account. -->
+      <xsd:enumeration value="Disbursement"/>
+      <!-- Evaluates whether a policy is eligible for a full pay discount -->
+      <xsd:enumeration value="FullPayDiscount"/>
+      <!-- Allots funds from fund sources to fund uses for funds tracking.  Allots funds for
+           all accounts that have unallotted or partially unallotted funds. -->
+      <xsd:enumeration value="FundsAllotment"/>
+      <!-- Geocoding Addresses queue writer. -->
+      <xsd:enumeration value="Geocode"/>
+      <!-- Group exception Monitor -->
+      <xsd:enumeration value="GroupException"/>
+      <!-- Changes the status of planned invoices whose billing date has passed to "billed".
+           As a consequence of this change, the invoices are sent to the account. -->
+      <xsd:enumeration value="Invoice"/>
+      <!-- Changes the status of billed invoices whose due date has passed to "due". Delinquency
+           will be triggered for any policies with past due amounts. -->
+      <xsd:enumeration value="InvoiceDue"/>
+      <!-- Starts workflow on staging table imported active agency bill cycle -->
+      <xsd:enumeration value="LegacyAgencyBill"/>
+      <!-- Runs allocate on Collateral with requirements and resources of the same type -->
+      <xsd:enumeration value="LegacyCollateral"/>
+      <!-- Starts workflow on staging table imported active delinquency processes -->
+      <xsd:enumeration value="LegacyDelinquency"/>
+      <!-- Runs allocate on Collateral with LOCs but no cash -->
+      <xsd:enumeration value="LegacyLetterOfCredit"/>
+      <!-- Changes the status of Current LOCs to Expired when their expiration date has passed -->
+      <xsd:enumeration value="LetterOfCredit"/>
+      <!-- Distributes a payment, moving funds from the account's unapplied T-Account to the
+           account's policies. -->
+      <xsd:enumeration value="NewPayment"/>
+      <!-- Checks for need to change payment request status -->
+      <xsd:enumeration value="PaymentRequest"/>
+      <!-- Checks for policies that are not locked and that have been fully paid. Any such policy
+           is closed by this process. -->
+      <xsd:enumeration value="PolicyClosure"/>
+      <!-- Checks to see if any premium reports are past due, kicks off delinquency if they are. -->
+      <xsd:enumeration value="PremiumReportReportDue"/>
+      <!-- Invoke plugin on completion of monitored worker queue -->
+      <xsd:enumeration value="ProcessCompletionMonitor"/>
+      <!-- Purge batch process history data -->
+      <xsd:enumeration value="ProcessHistoryPurge"/>
+      <!-- Pays producers whose next scheduled auto-payment date has passed. Payment includes
+           the amount currently payable to the producer, plus any manual commission payments
+           that have been scheduled to occur with next payment. -->
+      <xsd:enumeration value="ProducerPayment"/>
+      <!-- Purge old ClusterMember entities -->
+      <xsd:enumeration value="PurgeClusterMembers"/>
+      <!-- Purge failed work items from all queues. -->
+      <xsd:enumeration value="PurgeFailedWorkItems"/>
+      <!-- Purge profiler data at regular intervals -->
+      <xsd:enumeration value="PurgeProfilerData"/>
+      <!-- Purge external transaction id that no longer need to be tracked, by age. -->
+      <xsd:enumeration value="PurgeTransactionIds"/>
+      <!-- Purge completed workflows logs, this executes gw.processes.PurgeWorkflowLogs.gs -->
+      <xsd:enumeration value="PurgeWorkflowLogs"/>
+      <!-- Purge completed workflows after resetting any referenced workflows, this executes
+           gw.processes.PurgeWorkflow.gs -->
+      <xsd:enumeration value="PurgeWorkflows"/>
+      <!-- Checks for charge holds whose released dates have passed and release them. -->
+      <xsd:enumeration value="ReleaseChargeHolds"/>
+      <!-- Checks for hold types on trouble tickets whose released dates have passed and removes
+           those hold types from their holds. -->
+      <xsd:enumeration value="ReleaseTtktHoldTypes"/>
+      <!-- Changes the status of "Planned" Agency Bill Statements whose Bill Date has passed
+           to "Billed". -->
+      <xsd:enumeration value="StatementBilled"/>
+      <!-- Changes the status of "Billed" Agency Bill Statements whose Due Date has passed to
+           "Due". -->
+      <xsd:enumeration value="StatementDue"/>
+      <!-- Process the suspense payments who match accounts -->
+      <xsd:enumeration value="SuspensePayment"/>
+      <!-- Trouble Ticket escalation monitor -->
+      <xsd:enumeration value="TroubleTicketEsc"/>
+      <!-- Initializes policy billing instructions' payment plans after upgrade -->
+      <xsd:enumeration value="UpgradeBillingInstructionPaymentPlan"/>
+      <!-- User exception Monitor -->
+      <xsd:enumeration value="UserException"/>
+      <!-- Purge WorkItemSet data -->
+      <xsd:enumeration value="WorkItemSetPurge"/>
+      <!-- Purge instrumentation data for work queues -->
+      <xsd:enumeration value="WorkQueueInstrumentationPurge"/>
+      <!-- Workflows work queue writer. -->
+      <xsd:enumeration value="Workflow"/>
+      <!-- Distributes any undistributed imported writeoffs, to be used after staging table loading. -->
+      <xsd:enumeration value="WriteoffStaging"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+  
+  <xsd:element name="Schedule">
+    <xsd:complexType>
+      <xsd:choice minOccurs="0" maxOccurs="unbounded">
+        <xsd:element ref="ProcessSchedule" minOccurs="0" maxOccurs="unbounded"/>
+      </xsd:choice>
+    </xsd:complexType>
+  </xsd:element>
+</xsd:schema>

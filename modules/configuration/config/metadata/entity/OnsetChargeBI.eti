@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+<!-- ===================================================================  Onset Charge Billing Instruction                                          =================================================================== -->
+<subtype
+  xmlns="http://guidewire.com/datamodel"
+  entity="OnsetChargeBI"
+  desc="DEPRECATED IN 3.0: Creates onset charges and invoice items to be placed on the statement invoices of a target producer when transferring an agency bill policy period from one producer to another"
+  displayName="OnsetChargeBI"
+  subpackage="accounting.billinginstruction"
+  supertype="BaseGeneral">
+  <edgeForeignKey
+    name="BIThatWasOnset"
+    desc="Original BillingInstruction that this Onset Charge Billing Instruction was created to onset"
+    edgeTableName="onsetorigbi"
+    fkentity="BillingInstruction"
+    nullok="false"/>
+</subtype>

@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<subtype
+  xmlns="http://guidewire.com/datamodel"
+  entity="StandardCmsnPayment"
+  subpackage="commission"
+  supertype="CommissionPayment">
+  <typekey
+    name="PaymentType"
+    typelist="CommissionPaymentType"
+    desc="The payment option for paying a commission"
+    nullok="false"/>
+  <!-- NOTE pdalbora 12-Sep-2006: Ideally, this would just be called "ProducerCodeID", but cousin subtypes cannot
+    share the same FK name. -->
+  <foreignkey
+    name="StandardProducerCode"
+    desc="The producer code against which the payment is to be made."
+    columnName="StandardProducerCodeID"
+    fkentity="ProducerCode"
+    nullok="false"/>
+</subtype>

@@ -1,0 +1,45 @@
+<?xml version="1.0"?>
+<Workflow subtype="SimpleDelinquency" version="1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="workflow.xsd">
+  <Context>
+    <Symbol name="dlnqProcess" type="DelinquencyProcess" value="Workflow.DelinquencyProcess"/>
+    <Symbol name="acct" type="Account" value="Workflow.DelinquencyProcess.Account"/>
+  </Context>
+  <Start firstStep="GracePeriod"/>
+  <ManualStep id="GracePeriod" layoutid="10078067">
+    <Timeout desc="" layoutid="28086316" nextStep="Inception" timeAbsolute="dlnqProcess.GracePeriodEndDate"/>
+  </ManualStep>
+  <ManualStep id="Inception" layoutid="32858570">
+    <Enter>dlnqProcess.onInception()</Enter>
+    <Trigger desc="" id="ExitDelinquency" layoutid="11622717" nextStep="ExitDelinquency"/>
+    <Trigger desc="" id="Cancel" layoutid="22667067" nextStep="Cancellation"></Trigger>
+  </ManualStep>
+  <!-- ====================================================================  Cancellation  ==================================================================== -->
+  <Outcome id="ExitDelinquency" layoutid="15158309"/>
+  <Outcome id="Cancellation" layoutid="20459353">
+    <Enter>// write off the target's delinquent amount
+dlnqProcess.cancelTarget()
+dlnqProcess.Target.writeoff()
+if ( ! ( dlnqProcess.Target typeis Account ) ) {
+  acct.doWriteoff( acct.RemainingBalance, typekey.WriteoffReason.TC_UNCOLLECTABLE )
+}
+dlnqProcess.flagEventCompleted( typekey.DelinquencyEventName.TC_CANCELLATION );</Enter>
+  </Outcome>
+  <Layout>
+    <BoxUI height="4" layoutid="10078067" width="12" x="-41" y="1"/>
+    <BoxUI height="4" layoutid="32858570" width="13" x="-23" y="1"/>
+    <BoxUI height="4" layoutid="15158309" width="13" x="-23" y="13"/>
+    <BoxUI height="4" layoutid="20459353" width="15" x="-4" y="1"/>
+    <ArrowUI layoutid="28086316" visible="true">
+      <PointUI x="-29" y="3"/>
+      <PointUI x="-23" y="3"/>
+    </ArrowUI>
+    <ArrowUI layoutid="11622717" visible="true">
+      <PointUI x="-16" y="5"/>
+      <PointUI x="-16" y="13"/>
+    </ArrowUI>
+    <ArrowUI layoutid="22667067" visible="true">
+      <PointUI x="-10" y="3"/>
+      <PointUI x="-4" y="3"/>
+    </ArrowUI>
+  </Layout>
+</Workflow>

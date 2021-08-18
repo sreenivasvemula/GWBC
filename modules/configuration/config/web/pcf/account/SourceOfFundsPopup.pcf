@@ -1,0 +1,30 @@
+<?xml version="1.0"?>
+<PCF
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:noNamespaceSchemaLocation="../../../../../pcf.xsd">
+  <Popup
+    id="SourceOfFundsPopup"
+    title="displaykey.Web.SourceOfFundsPopup.Title">
+    <LocationEntryPoint
+      signature="SourceOfFundsPopup(fundsSourceTracker :  FundsSourceTracker)"/>
+    <Variable
+      name="fundsSourceTracker"
+      type="FundsSourceTracker"/>
+    <Screen>
+      <DetailViewPanel>
+        <InputColumn>
+          <TextInput
+            action="fundsSourceTracker.openTrackableDetails()"
+            actionAvailable="fundsSourceTracker.TypeBeingTracked != FundsSourceType.TC_UNAPPLIEDFUND"
+            boldValue="true"
+            id="source"
+            value="displaykey.Web.FundsSource.LongDescription(fundsSourceTracker.Description, fundsSourceTracker.EventDate.format(&quot;short&quot;), fundsSourceTracker.TotalAmount.render())"/>
+        </InputColumn>
+      </DetailViewPanel>
+      <PanelRef
+        def="FundsAllotmentLV(fundsSourceTracker)">
+        <Toolbar/>
+      </PanelRef>
+    </Screen>
+  </Popup>
+</PCF>

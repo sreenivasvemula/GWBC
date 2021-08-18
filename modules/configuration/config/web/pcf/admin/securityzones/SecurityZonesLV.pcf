@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PCF
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:noNamespaceSchemaLocation="../../../../../../pcf.xsd">
+  <!-- This file automatically generated from lv_admin.xml -->
+  <ListViewPanel
+    id="SecurityZonesLV">
+    <Require
+      name="securityZoneList"
+      type="SecurityZoneQuery"/>
+    <RowIterator
+      editable="true"
+      elementName="securityZone"
+      value="securityZoneList">
+      <ToolbarFlag
+        name="SecurityZone"/>
+      <Row>
+        <Cell
+          action="SecurityZoneDetail.go(securityZone)"
+          id="Name"
+          label="displaykey.LV.Admin.SecurityZones.Name"
+          sortOrder="1"
+          value="securityZone.Name"/>
+        <Cell
+          enableSort="false"
+          id="Description"
+          label="displaykey.Web.Admin.SecurityZoneDetailDV.Description"
+          value="securityZone.Description"/>
+      </Row>
+    </RowIterator>
+  </ListViewPanel>
+</PCF>

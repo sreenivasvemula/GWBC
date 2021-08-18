@@ -1,0 +1,40 @@
+<?xml version="1.0"?>
+<PCF
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:noNamespaceSchemaLocation="../../../../../pcf.xsd">
+  <Popup
+    beforeCommit="web.producer.agencybill.ExceptionItemUtil.applyCommentToInvoiceItems(exceptionItemViews*.ExceptionItem, exceptionCommentsText, CurrentLocation)"
+    canEdit="true"
+    id="AgencyExceptionItemCommentsPopup"
+    startInEditMode="true"
+    title="displaykey.Web.AgencyExceptionItemCommentsPopup.Title">
+    <LocationEntryPoint
+      signature="AgencyExceptionItemCommentsPopup(exceptionItemViews : web.invoice.ExceptionItemView[] )"/>
+    <Variable
+      name="exceptionItemViews"
+      type="web.invoice.ExceptionItemView[]"/>
+    <Variable
+      initialValue="web.producer.agencybill.ExceptionItemUtil.getInitialItemExceptionComments(exceptionItemViews*.ExceptionItem)"
+      name="exceptionCommentsText"/>
+    <Screen>
+      <Toolbar>
+        <EditButtons/>
+      </Toolbar>
+      <DetailViewPanel>
+        <InputColumn>
+          <TextAreaInput
+            boldLabel="true"
+            editable="true"
+            id="exceptionComments"
+            label="displaykey.Web.AgencyExceptionItemCommentsPopup.CommentsExplanation"
+            labelAbove="true"
+            numCols="80"
+            numRows="8"
+            value="exceptionCommentsText"/>
+        </InputColumn>
+      </DetailViewPanel>
+      <PanelRef
+        def="AgencyBillExceptionsLV(exceptionItemViews, false, false)"/>
+    </Screen>
+  </Popup>
+</PCF>

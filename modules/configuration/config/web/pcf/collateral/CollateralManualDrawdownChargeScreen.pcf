@@ -1,0 +1,47 @@
+<?xml version="1.0"?>
+<PCF
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:noNamespaceSchemaLocation="../../../../../pcf.xsd">
+  <Screen
+    id="CollateralManualDrawdownChargeScreen">
+    <Require
+      name="collateralDrawdown"
+      type="gw.api.web.collateral.CollateralDrawdownUtil"/>
+    <Toolbar>
+      <WizardButtons/>
+    </Toolbar>
+    <DetailViewPanel
+      id="CollateralManualDrawdownChargeDV">
+      <InputColumn>
+        <MonetaryAmountInput
+          currency="collateralDrawdown.Collateral.Currency"
+          formatType="currency"
+          id="shortfall"
+          label="displaykey.Web.CollateralManualDrawdownChargeScreen.Shortfall"
+          value="collateralDrawdown.getShortfall()"/>
+        <MonetaryAmountInput
+          currency="collateralDrawdown.Collateral.Currency"
+          formatType="currency"
+          id="shortfallCovered"
+          label="displaykey.Web.CollateralManualDrawdownChargeScreen.ShortfallCovered"
+          value="collateralDrawdown.getShortfallCoveredByLOC()"/>
+        <CheckBoxInput
+          editable="true"
+          id="createCharge"
+          label="displaykey.Web.CollateralManualDrawdownChargeScreen.CreateCharge"
+          value="collateralDrawdown.CreateCharge">
+          <PostOnChange/>
+        </CheckBoxInput>
+        <MonetaryAmountInput
+          currency="collateralDrawdown.Collateral.Currency"
+          editable="true"
+          formatType="currency"
+          id="chargeAmount"
+          label="displaykey.Web.CollateralManualDrawdownChargeScreen.ChargeAmount"
+          validationExpression="collateralDrawdown.isChargeAmountValid() ? null : displaykey.Web.CollateralManualDrawdownChargeScreen.ChargeAmountWarning"
+          value="collateralDrawdown.ChargeAmount"
+          visible="collateralDrawdown.CreateCharge"/>
+      </InputColumn>
+    </DetailViewPanel>
+  </Screen>
+</PCF>

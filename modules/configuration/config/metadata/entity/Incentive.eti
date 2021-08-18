@@ -1,0 +1,23 @@
+<?xml version="1.0"?>
+<entity
+  xmlns="http://guidewire.com/datamodel"
+  entity="Incentive"
+  type="retireable"
+  desc="Base class for commission incentives."
+  abstract="true"
+  final="false"
+  subpackage="commission"
+  loadable="false"
+  platform="false"
+  table="incentive"
+  setterScriptability="hidden">
+  <implementsEntity
+    name="InCurrencySilo"/>
+  <foreignkey
+    name="CommissionSubPlan"
+    columnName="CommissionSubPlanID"
+    fkentity="CommissionSubPlan"
+    getterScriptability="doesNotExist"
+    nullok="false"
+    setterScriptability="doesNotExist"/>
+</entity>

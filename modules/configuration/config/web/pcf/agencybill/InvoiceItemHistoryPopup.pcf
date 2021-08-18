@@ -1,0 +1,83 @@
+<?xml version="1.0"?>
+<PCF
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:noNamespaceSchemaLocation="../../../../../pcf.xsd">
+  <Popup
+    canEdit="false"
+    desc="show information about an invoice item      "
+    id="InvoiceItemHistoryPopup"
+    title="displaykey.Web.InvoiceItemHistoryPopup.Title">
+    <LocationEntryPoint
+      signature="InvoiceItemHistoryPopup(invoiceItem : InvoiceItem)"/>
+    <Variable
+      name="invoiceItem"
+      type="InvoiceItem"/>
+    <Variable
+      initialValue="false"
+      name="changed"/>
+    <Screen>
+      <AlertBar
+        id="CarriedForwardHistory"
+        label="displaykey.Web.InvoiceItemHistoryPopup.HasBeenCarriedForward(invoiceItem.PaymentExceptionLockDate.AsUIStyle)"
+        visible="invoiceItem.PaymentExceptionLockDate != null"/>
+      <DetailViewPanel>
+        <InputColumn>
+          <Label
+            label="displaykey.Web.InvoiceItemHistoryPopup.ItemInfo"/>
+          <InputSetRef
+            def="ChargeInputSet( invoiceItem )"/>
+        </InputColumn>
+        <InputColumn>
+          <Label
+            label="displaykey.Web.InvoiceItemHistoryPopup.ItemDetails"/>
+          <InputSetRef
+            def="AgencyItemInputSet( invoiceItem )"/>
+        </InputColumn>
+        <InputColumn>
+          <Label
+            label="displaykey.Web.InvoiceItemHistoryPopup.Credits"/>
+          <InputSetRef
+            def="AgencyItemCreditsInputSet( invoiceItem )"/>
+        </InputColumn>
+        <InputColumn>
+          <Label
+            label="displaykey.Web.InvoiceItemHistoryPopup.Balance"/>
+          <InputSetRef
+            def="AgencyItemBalanceInputSet(invoiceItem)"/>
+        </InputColumn>
+      </DetailViewPanel>
+      <DetailViewPanel>
+        <InputColumn>
+          <TextAreaInput
+            id="ExceptionComments"
+            label="displaykey.Web.InvoiceItemHistoryPopup.ExceptionComments"
+            numCols="80"
+            numRows="8"
+            value="invoiceItem.ExceptionComments"
+            visible="org.apache.commons.lang.StringUtils.isEmpty(invoiceItem.ExceptionComments)"/>
+        </InputColumn>
+      </DetailViewPanel>
+      <PanelRef
+        def="ItemEventPanelSet(invoiceItem)"
+        id="itemEvents"/>
+    </Screen>
+    <Code><![CDATA[
+                function findCommissionTransactions(): CommissionsReserveTxn[] {
+                    // todo - dwsmith
+                    var transactions = invoiceItem.Charge.ChargeCommissions.first().Transactions.toList()
+                            .whereTypeIs(CommissionsReserveTxn).where(\t -> not t.Reversal and (t typeis CommissionsReserveTxn))
+                    return transactions.toTypedArray()
+                }
+
+                function getCommissionAdjustedMessage(): String {
+                    var commissionOverride = invoiceItem.Charge.CommissionRateOverrides[0]
+                    return displaykey.Web.InvoiceItemHistoryPopup.CommissionAdjusted(commissionOverride.CreateTime)
+                }
+
+                function isCommissionRateAdjusted(): boolean {
+                    var commissionOverrides = invoiceItem.Charge.CommissionRateOverrides
+                    return commissionOverrides.length > 0;
+                }
+        ]]></Code>
+  </Popup>
+</PCF>

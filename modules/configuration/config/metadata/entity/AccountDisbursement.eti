@@ -1,0 +1,41 @@
+<?xml version="1.0"?>
+<subtype
+  xmlns="http://guidewire.com/datamodel"
+  desc="A disbursement from an Account"
+  displayName="Account Disbursement"
+  entity="AccountDisbursement"
+  subpackage="disbursement"
+  supertype="Disbursement">
+  <foreignkey
+    columnName="AccountID"
+    desc="The associated account, if applicable"
+    fkentity="Account"
+    name="Account"
+    nullok="true"
+    setterScriptability="doesNotExist"/>
+  <foreignkey
+    columnName="UnappliedFundID"
+    desc="The unapplied t-account funding the disbursement"
+    fkentity="UnappliedFund"
+    name="UnappliedFund"
+    nullok="false"
+    setterScriptability="doesNotExist"/>
+  <dbcheckbuilder
+    className="com.guidewire.bc.system.database.dbchecks.disbursement.AccountDisbursementDBCheckBuilder"/>
+  <index
+    desc="Index for autodisbursement process"
+    name="disburseacctstatus">
+    <indexcol
+      keyposition="1"
+      name="AccountID"/>
+    <indexcol
+      keyposition="2"
+      name="retired"/>
+    <indexcol
+      keyposition="3"
+      name="status"/>
+    <indexcol
+      keyposition="4"
+      name="subtype"/>
+  </index>
+</subtype>

@@ -1,0 +1,68 @@
+<?xml version="1.0"?>
+<entity
+  xmlns="http://guidewire.com/datamodel"
+  desc="Account-level adhoc credit"
+  entity="Credit"
+  setterScriptability="hidden"
+  subpackage="accounting"
+  table="credit"
+  type="retireable">
+  <implementsEntity
+    name="Validatable"/>
+  <implementsEntity
+    name="Approvable"/>
+  <implementsEntity
+    name="Reversible"/>
+  <implementsEntity
+    name="InCurrencySilo"/>
+  <foreignkey
+    columnName="AccountID"
+    desc="The account this credit is on."
+    fkentity="Account"
+    importableagainstexistingobject="false"
+    name="Account"
+    nullok="false"/>
+  <foreignkey
+    columnName="UnappliedFundID"
+    desc="The Unapplied fund associated with this credit"
+    exportable="false"
+    fkentity="UnappliedFund"
+    importableagainstexistingobject="false"
+    name="UnappliedFund"
+    nullok="false"/>
+  <monetaryamount
+    amountColumnName="Amount"
+    name="Amount"
+    nullok="false"
+    scaleToCurrency="true"/>
+  <column
+    name="CreditDate"
+    nullok="true"
+    type="datetime"/>
+  <typekey
+    name="CreditType"
+    nullok="true"
+    typelist="CreditType"/>
+  <array
+    arrayentity="CreditApprActivity"
+    name="ActivitiesCreatedByAppr"
+    setterScriptability="doesNotExist">
+    <link-association>
+      <typelist-map
+        field="Status"/>
+    </link-association>
+  </array>
+  <edgeForeignKey
+    desc="If non-null, refers to the credit which is this credit reversed."
+    edgeTableName="revcredit"
+    exportable="false"
+    fkentity="Credit"
+    ignoreforevents="true"
+    importableagainstexistingobject="false"
+    loadable="true"
+    name="ReversedLink"
+    nullok="true"
+    setterScriptability="doesNotExist"/>
+  <dbcheckbuilder
+    className="com.guidewire.bc.system.database.dbchecks.accounting.CreditDBCheckBuilder"/>
+</entity>

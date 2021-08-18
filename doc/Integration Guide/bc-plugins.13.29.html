@@ -1,0 +1,261 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xml:lang="en" lang="en" xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+    <meta http-equiv="Content-Style-Type" content="text/css" />
+    <!-- MOTW-DISABLED saved from url=(0014)about:internet -->
+    <title>Policy System Plugin</title>
+    <link rel="StyleSheet" href="css/bc-plugins.css" type="text/css" media="all" />
+    <link rel="StyleSheet" href="css/webworks.css" type="text/css" media="all" />
+    <link rel="StyleSheet" href="css/css-guidewire-extra.css" type="text/css" media="all" />
+    <script type="text/javascript" language="JavaScript1.2" src="wwhdata/common/context.js"></script>
+    <script type="text/javascript" language="JavaScript1.2" src="wwhdata/common/towwhdir.js"></script>
+    <script type="text/javascript" language="JavaScript1.2" src="wwhdata/common/wwhpagef.js"></script>
+    <script type="text/javascript" language="JavaScript1.2">
+      <!--
+        var  WebWorksRootPath = "";
+      // -->
+    </script>
+    <script type="text/javascript" language="JavaScript1.2">
+      <!--
+        // Set reference to top level help frame
+        //
+        var  WWHFrame = WWHGetWWHFrame("", true);
+      // -->
+    </script>
+    <script type="text/javascript" language="JavaScript1.2" src="scripts/expand.js"></script>
+    <!-- THE FOLLOWING IS A GUIDEWIRE STYLE DEFINITION FOR THE LINK TO THIS FEATURE -->
+    <link rel="StyleSheet" href="css/css-guidewire-extra.css" type="text/css" media="all" />
+    <!-- THE FOLLOWING IS A GUIDEWIRE GSCRIPT FUNCTION FOR THE LINK TO THIS FEATURE -->
+    <script type="text/javascript">
+function guidewire_selectall()
+{
+var text_val=eval("document.linktothisurlform.urlfield");
+text_val.focus();
+text_val.select();
+}
+</script>
+  </head>
+  <body onLoad="WWHUpdate();" onUnload="WWHUnload();" onKeyDown="WWHHandleKeyDown((document.all||document.getElementById||document.layers)?event:null);" onKeyPress="WWHHandleKeyPress((document.all||document.getElementById||document.layers)?event:null);" onKeyUp="WWHHandleKeyUp((document.all||document.getElementById||document.layers)?event:null);">
+    <!-- THE FOLLOWING IS A GUIDEWIRE DIV FOR THE 'LINK TO THIS' FEATURE -->
+    <div id="linkToThisPage" class="popup" style="display: none;">
+      <div class="popupTitle">Link Directly to This Page 
+           <a href="#" onclick="var thePopup = getElementById('linkToThisPage');thePopup.style.display='none';return false;"><img class="popupClosebox" src="wwhelp/wwhimpl/common/images/close.gif" /></a></div>
+      <div style="padding:6px;">
+        <div class="popupText" id="linkToThisPageBookmark">An error has occurred if you see this messsage.</div>
+        <form name="linktothisurlform" method="post" action="" style="width:275px;margin:0px">
+          <input type="text" class="popupURLText" id="linkToThisPageURL" name="urlfield" rows="1" cols="55" onClick="guidewire_selectall();" onFocus="guidewire_selectall();"></input>
+        </form>
+      </div>
+    </div>
+    <br />
+    <div class="WebWorks_Breadcrumbs" style="text-align: left;">
+      <span>BillingCenter Integration Guide</span> : 
+    <span class="WebWorks_Breadcrumbs" style="text-align: left;"><a class="WebWorks_Breadcrumb_Link" href="p-plugins.html#3435248">Plugins</a> : <a class="WebWorks_Breadcrumb_Link" href="bc-plugins.13.01.html#3435248">Billing Plugins</a> : Policy System Plugin</span></div>
+    <hr align="left" />
+    <blockquote>
+      <h3 class="H1_-_Heading_1"><a name="3435248">Policy System Plugin</a></h3>
+      <div class="B_-_Body"><a name="3435250">Most BillingCenter integration points with a policy system start in the policy system, not BillingCenter. For example, if a user adds a new policy or changes a policy in the policy administration system, it sends the billing implications of the change to BillingCenter.</a></div>
+      <div class="B_-_Body"><a name="3435251">However, there are a few times in the application flow that BillingCenter needs to initiate a request to the policy system. For these cases, BillingCenter calls out to the currently registered implementation of the policy system plugin (</a><span class="cv_-_computer_voice">IPolicySystemPlugin</span>). For example, if an insured fails to pay, BillingCenter tells the policy system to start policy cancellation. If you use PolicyCenter, use the default implementation of this plugin to connect to Guidewire PolicyCenter. </div>
+      <div class="B_-_Body"><a name="3435252">Within BillingCenter, a messaging transport is the code that asynchronously notifies the policy system by calling the registered version of this plugin. The messaging transport is implemented by the </a><span class="cv_-_computer_voice">gw.plugin.pas.PASMessageTransport</span> class.</div>
+      <div class="B_-_Body"><a name="3435253">If you use PolicyCenter, set the currently-registered version of the plugin to the following class:</a></div>
+      <div class="CS_-_Code_Single_Line"><a name="3435254">gw.plugin.pas.PCPolicySystemPlugin</a></div>
+      <div class="B_-_Body"><a name="3435255">If you need BillingCenter to work on its own in a demo mode, use the included implementation of the plugin which does not contact a real policy system:</a></div>
+      <div class="CS_-_Code_Single_Line"><a name="3435256">gw.plugin.pas.StandAlonePolicySystemPlugin</a></div>
+      <div class="B_-_Body"><a name="3435257">If you use some other policy system, write your own version of this plugin to call out to the external policy system to request certain actions such as cancellation. </a></div>
+      <div class="B_-_Body"><a name="3602481">There are three methods that your version of this plugin must implement: </a><span class="cv_-_computer_voice">requestCancellation</span>, <span class="cv_-_computer_voice">rescindCancellation</span>, and <span class="cv_-_computer_voice">notifyPaymentReceivedForRenewalOffer</span>. The rest of this topic discusses these methods, and also a method which BillingCenter calls to confirm a policy period when sufficient payment is received. All of these methods use a transaction ID, which is a <span class="cv_-_computer_voice">String</span> value that uniquely identifies this request from BillingCenter. Your plugin code or the downstream system that it represents must be able to determine whether this request has already occurred. In other words, your plugin code or the external system must determine if this is a duplicate request.</div>
+      <div class="B_-_Body"><a name="3435263">For more information about the structure of transaction IDs, see </a><a href="javascript:WWHClickedPopup('integration', 'bc-webservices.09.02.html#3735341', '');" title="Billing Web Services Overview">“BillingCenter Data Transfer Objects (DTOs)”</a>.</div>
+      <h6 class="HS_-_Head_Sub"><a name="3435265">Cancellation</a></h6>
+      <div class="B_-_Body"><a name="3435266">The most important method is the </a><span class="cv_-_computer_voice">requestCancellation</span> method, which takes as arguments:</div>
+      <div class="BI_-_Bullet_Item_outer" style="margin-left: 57pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="BI_-_Bullet_Item_inner" style="width: 15pt; white-space: nowrap">
+                <span class="bu_-_bullet">•	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="BI_-_Bullet_Item_inner"><a name="3435267">Policy period entity (a </a><span class="cv_-_computer_voice">PolicyPeriod</span>)</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="BI_-_Bullet_Item_outer" style="margin-left: 57pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="BI_-_Bullet_Item_inner" style="width: 15pt; white-space: nowrap">
+                <span class="bu_-_bullet">•	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="BI_-_Bullet_Item_inner"><a name="3435268">Delinquency reason (a </a><span class="cv_-_computer_voice">DelinquencyReason</span> typecode)</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="BI_-_Bullet_Item_outer" style="margin-left: 57pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="BI_-_Bullet_Item_inner" style="width: 15pt; white-space: nowrap">
+                <span class="bu_-_bullet">•	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="BI_-_Bullet_Item_inner"><a name="3435269">Transaction ID (a </a><span class="cv_-_computer_voice">String</span>) </div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="B_-_Body"><a name="3435270">This method must tell the external system to start policy cancellation for this policy.</a></div>
+      <h6 class="HS_-_Head_Sub"><a name="3435271">Rescinding a Cancellation</a></h6>
+      <div class="B_-_Body"><a name="3435272">If a payment comes in later, BillingCenter tells the policy system to rescind the cancellation, which means to cancel the cancellation process as if it had not happened. To handle rescinding the policy in the external system, your plugin must implement the </a><span class="cv_-_computer_voice">rescindCancellation</span> method. It takes the same arguments as the <span class="cv_-_computer_voice">requestCancellation</span> method:</div>
+      <div class="BI_-_Bullet_Item_outer" style="margin-left: 57pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="BI_-_Bullet_Item_inner" style="width: 15pt; white-space: nowrap">
+                <span class="bu_-_bullet">•	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="BI_-_Bullet_Item_inner"><a name="3435273">Policy period entity (a </a><span class="cv_-_computer_voice">PolicyPeriod</span>)</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="BI_-_Bullet_Item_outer" style="margin-left: 57pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="BI_-_Bullet_Item_inner" style="width: 15pt; white-space: nowrap">
+                <span class="bu_-_bullet">•	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="BI_-_Bullet_Item_inner"><a name="3435274">Delinquency reason (a </a><span class="cv_-_computer_voice">DelinquencyReason</span> typecode)</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="BI_-_Bullet_Item_outer" style="margin-left: 57pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="BI_-_Bullet_Item_inner" style="width: 15pt; white-space: nowrap">
+                <span class="bu_-_bullet">•	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="BI_-_Bullet_Item_inner"><a name="3435275">Transaction ID (a </a><span class="cv_-_computer_voice">String</span>) </div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <h6 class="HS_-_Head_Sub"><a name="3435276">Renewal Offers</a></h6>
+      <div class="B_-_Body"><a name="3435277">There is one more method that your plugin method must handle. However, not all carriers might use it. It depends on whether your policy system supports renewal offers. There are two basic strategies for a policy system to handle renewals. The following table summarizes the differences between the bind-and-cancel flow and the renewal offers flow:</a></div>
+      <div class="T_-_Table"><a name="3435310">&nbsp;</a></div>
+      <table class="withHeading" style="text-align: left" border="0" cellpadding="10" cellspacing="0" summary="">
+        <caption></caption>
+        <tr>
+          <td style="border-bottom-color: #000000; border-bottom-style: solid; border-bottom-width: 0.5pt; border-top-color: #000000; border-top-style: solid; border-top-width: 0.5pt; padding-bottom: 4pt; padding-left: 2pt; padding-right: 8pt; padding-top: 0pt; vertical-align: bottom">
+            <div class="TH_-_Table_Heading"><a name="3435280">Renewal flow</a></div>
+          </td>
+          <td style="border-bottom-color: #000000; border-bottom-style: solid; border-bottom-width: 0.5pt; border-top-color: #000000; border-top-style: solid; border-top-width: 0.5pt; padding-bottom: 4pt; padding-left: 2pt; padding-right: 8pt; padding-top: 0pt; vertical-align: bottom">
+            <div class="TH_-_Table_Heading"><a name="3435282">What happens immediately</a></div>
+          </td>
+          <td style="border-bottom-color: #000000; border-bottom-style: solid; border-bottom-width: 0.5pt; border-top-color: #000000; border-top-style: solid; border-top-width: 0.5pt; padding-bottom: 4pt; padding-left: 2pt; padding-right: 8pt; padding-top: 0pt; vertical-align: bottom">
+            <div class="TH_-_Table_Heading"><a name="3435284">What happens if the insured pays</a></div>
+          </td>
+          <td style="border-bottom-color: #000000; border-bottom-style: solid; border-bottom-width: 0.5pt; border-top-color: #000000; border-top-style: solid; border-top-width: 0.5pt; padding-bottom: 4pt; padding-left: 2pt; padding-right: 8pt; padding-top: 0pt; vertical-align: bottom">
+            <div class="TH_-_Table_Heading"><a name="3435286">What happens if the insured does not pay </a></div>
+          </td>
+        </tr>
+        <tr>
+          <td style="border-bottom-color: #c0d1d1; border-bottom-style: solid; border-bottom-width: 0.15pt; border-top-color: #000000; border-top-style: solid; border-top-width: 0.5pt; padding-bottom: 4pt; padding-left: 2pt; padding-right: 8pt; padding-top: 0pt; vertical-align: top">
+            <div class="TT_-_Table_Text"><a name="3435289">Bind and cancel</a></div>
+          </td>
+          <td style="border-bottom-color: #c0d1d1; border-bottom-style: solid; border-bottom-width: 0.15pt; border-top-color: #000000; border-top-style: solid; border-top-width: 0.5pt; padding-bottom: 4pt; padding-left: 2pt; padding-right: 8pt; padding-top: 0pt; vertical-align: top">
+            <div class="TT_-_Table_Text"><a name="3435291">A user binds a renewal, which triggers the policy system to send charges to BillingCenter.</a></div>
+          </td>
+          <td style="border-bottom-color: #c0d1d1; border-bottom-style: solid; border-bottom-width: 0.15pt; border-top-color: #000000; border-top-style: solid; border-top-width: 0.5pt; padding-bottom: 4pt; padding-left: 2pt; padding-right: 8pt; padding-top: 0pt; vertical-align: top">
+            <div class="TT_-_Table_Text"><a name="3435293">If the insured sends a payment, all happens normally. </a></div>
+          </td>
+          <td style="border-bottom-color: #c0d1d1; border-bottom-style: solid; border-bottom-width: 0.15pt; border-top-color: #000000; border-top-style: solid; border-top-width: 0.5pt; padding-bottom: 4pt; padding-left: 2pt; padding-right: 8pt; padding-top: 0pt; vertical-align: top">
+            <div class="TT_-_Table_Text"><a name="3435295">If BillingCenter does not receive a payment, BillingCenter tells the policy system to perform a flat cancel for non-payment. Money received after any cancellation remains in Account: Unapplied.</a></div>
+          </td>
+        </tr>
+        <tr>
+          <td style="border-bottom-color: #000000; border-bottom-style: solid; border-bottom-width: 0.5pt; border-top-color: #c0d1d1; border-top-style: solid; border-top-width: 0.15pt; padding-bottom: 4pt; padding-left: 2pt; padding-right: 8pt; padding-top: 0pt; vertical-align: top">
+            <div class="TT_-_Table_Text"><a name="3435297">Renewal offers</a></div>
+          </td>
+          <td style="border-bottom-color: #000000; border-bottom-style: solid; border-bottom-width: 0.5pt; border-top-color: #c0d1d1; border-top-style: solid; border-top-width: 0.15pt; padding-bottom: 4pt; padding-left: 2pt; padding-right: 8pt; padding-top: 0pt; vertical-align: top">
+            <div class="TT_-_Table_Text"><a name="3435299">Instead of actually binding the renewal, the policy system sends out a renewal offer. The renewal offer has a reference number, which is the renewal job ID.</a></div>
+            <div class="TT_-_Table_Text"><a name="3435301">The actual renewal offer letter does not happen in the default integration. However, you can configure the policy system to call the billing system to get a preview of the payments. You might want to include that information on a renewal offer letter. Be sure this represents the actual amount due including installment or invoice fees so the insured knows how much money to send.</a></div>
+          </td>
+          <td style="border-bottom-color: #000000; border-bottom-style: solid; border-bottom-width: 0.5pt; border-top-color: #c0d1d1; border-top-style: solid; border-top-width: 0.15pt; padding-bottom: 4pt; padding-left: 2pt; padding-right: 8pt; padding-top: 0pt; vertical-align: top">
+            <div class="TT_-_Table_Text"><a name="3435303">As a payment uploads from the bank (or maybe entered into the BillingCenter UI), it includes the reference number. Using that reference number, BillingCenter tells the policy system that it received payment for a particular renewal term that BillingCenter otherwise knows nothing about. </a></div>
+            <div class="TT_-_Table_Text"><a name="3435304">Meanwhile, BillingCenter holds the payment as a suspense payment on the account. A suspense payment is a payment that cannot yet be matched to both an account and a policy. The billing system waits for more information or human intervention to help match it, rather than applying it to any current charges. Until the suspense payment is applied, it does not directly affect the account or policy.</a></div>
+            <div class="TT_-_Table_Text"><a name="3435305">When the policy system sends the renewal billing information to BillingCenter, it also has the reference number. BillingCenter looks for any suspense payments with the reference number and applies the payment.</a></div>
+          </td>
+          <td style="border-bottom-color: #000000; border-bottom-style: solid; border-bottom-width: 0.5pt; border-top-color: #c0d1d1; border-top-style: solid; border-top-width: 0.15pt; padding-bottom: 4pt; padding-left: 2pt; padding-right: 8pt; padding-top: 0pt; vertical-align: top">
+            <div class="TT_-_Table_Text"><a name="3435307">The policy system considers it Not Taken if the payment is late or does not arrive. </a></div>
+            <div class="TT_-_Table_Text"><a name="3435308">If it arrives later, BillingCenter attempts to tell the policy system about the payment received. the policy system returns an error saying the renewal is no longer capable of renewal. This causes BillingCenter to create an activity for someone to look into the new payment that it cannot apply. </a></div>
+            <div class="TT_-_Table_Text"><a name="3435309">&nbsp;</a></div>
+          </td>
+        </tr>
+      </table>
+      <div class="B_-_Body"><a name="3435311">To handle renewal offers, your plugin must implement the </a><span class="cv_-_computer_voice">notifyPaymentReceivedForRenewalOffer</span> method. </div>
+      <div class="B_-_Body"><a name="3435312">This plugin method must notify the external policy system about a new suspense payment that BillingCenter received. The method takes a suspense payment entity (a </a><span class="cv_-_computer_voice">SuspensePayment</span> entity) and a transaction ID (a <span class="cv_-_computer_voice">String</span>). </div>
+      <div class="B_-_Body"><a name="3435313">If the external policy system cannot honor this offer, this plugin method must throw an exception. For example:</a></div>
+      <div class="BI_-_Bullet_Item_outer" style="margin-left: 57pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="BI_-_Bullet_Item_inner" style="width: 15pt; white-space: nowrap">
+                <span class="bu_-_bullet">•	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="BI_-_Bullet_Item_inner"><a name="3435314">The offer might have expired. </a></div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="BI_-_Bullet_Item_outer" style="margin-left: 57pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="BI_-_Bullet_Item_inner" style="width: 15pt; white-space: nowrap">
+                <span class="bu_-_bullet">•	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="BI_-_Bullet_Item_inner"><a name="3435315">The policy is in an incompatible state for renewal.</a></div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="B_-_Body"><a name="3435316">BillingCenter automatically detects any exceptions this plugin throws and creates an activity for someone to investigate the status of this renewal. For instance, whether to refund it or investigate whether renewal is actually possible after some temporary issue.</a></div>
+      <h6 class="HS_-_Head_Sub"><a name="3602461">Confirming a Policy Period</a></h6>
+      <div class="B_-_Body"><a name="3602462">When a payment is received for a policy period, BillingCenter calls the </a><span class="cv_-_computer_voice">hasReceivedSufficientPaymentToConfirmPolicyPeriod</span> method in the <span class="cv_-_computer_voice">IPolicyPeriod</span> plugin. If this method returns <span class="cv_-_computer_voice">true</span>, and the <span class="cv_-_computer_voice">ConfirmationNotificationState</span> property of the <span class="cv_-_computer_voice">PolicyPeriod</span> is set to <span class="cv_-_computer_voice">NotifyUponSufficientPayment</span>, BillingCenter calls <span class="cv_-_computer_voice">confirmPolicyPeriod </span>to send a message to the policy system. </div>
+      <script type="text/javascript" language="JavaScript1.2">
+        <!--
+          // Clear related topics
+          //
+          WWHClearRelatedTopics();
+
+          document.writeln(WWHRelatedTopicsInlineHTML());
+        // -->
+      </script>
+    </blockquote>
+    <script type="text/javascript" language="JavaScript1.2">
+      <!--
+        document.write(WWHRelatedTopicsDivTag() + WWHPopupDivTag() + WWHALinksDivTag());
+      // -->
+    </script>
+  </body>
+</html>

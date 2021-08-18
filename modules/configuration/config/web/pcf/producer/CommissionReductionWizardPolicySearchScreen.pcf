@@ -1,0 +1,37 @@
+<?xml version="1.0"?>
+<PCF
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:noNamespaceSchemaLocation="../../../../../pcf.xsd">
+  <Screen
+    id="CommissionReductionWizardPolicySearchScreen">
+    <Require
+      name="tAccountOwnerReference"
+      type="web.accounting.TAccountOwnerReference"/>
+    <Toolbar>
+      <WizardButtons/>
+    </Toolbar>
+    <CardViewPanel>
+      <Card
+        id="PolicyPeriod"
+        title="displaykey.Web.CommissionReductionWizardPolicySearchScreen.PolicyCard">
+        <SearchPanel
+          criteriaName="searchCriteria"
+          resultsName="policySearchViews"
+          search="gw.search.SearchMethods.validateAndSearch(searchCriteria, StringCriterionMode.TC_STARTSWITH)"
+          searchCriteria="new gw.search.PolicySearchCriteria()"
+          searchResultsType="PolicySearchViewQuery">
+          <PanelRef
+            def="PolicySearchDV(searchCriteria)">
+            <Toolbar/>
+          </PanelRef>
+          <!-- isWizard = true: we're within a wizard flow
+               showHyperlinks = false: don't show the policy numbers as links -->
+          <PanelRef
+            def="PolicySearchResultsLV(policySearchViews, tAccountOwnerReference, true, false, false)">
+            <Toolbar/>
+          </PanelRef>
+        </SearchPanel>
+      </Card>
+    </CardViewPanel>
+  </Screen>
+</PCF>

@@ -1,0 +1,223 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xml:lang="en" lang="en" xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+    <meta http-equiv="Content-Style-Type" content="text/css" />
+    <!-- MOTW-DISABLED saved from url=(0014)about:internet -->
+    <title>Working with Direct Bill Payments</title>
+    <link rel="StyleSheet" href="css/payments.css" type="text/css" media="all" />
+    <link rel="StyleSheet" href="css/webworks.css" type="text/css" media="all" />
+    <link rel="StyleSheet" href="css/css-guidewire-extra.css" type="text/css" media="all" />
+    <script type="text/javascript" language="JavaScript1.2" src="wwhdata/common/context.js"></script>
+    <script type="text/javascript" language="JavaScript1.2" src="wwhdata/common/towwhdir.js"></script>
+    <script type="text/javascript" language="JavaScript1.2" src="wwhdata/common/wwhpagef.js"></script>
+    <script type="text/javascript" language="JavaScript1.2">
+      <!--
+        var  WebWorksRootPath = "";
+      // -->
+    </script>
+    <script type="text/javascript" language="JavaScript1.2">
+      <!--
+        // Set reference to top level help frame
+        //
+        var  WWHFrame = WWHGetWWHFrame("", true);
+      // -->
+    </script>
+    <script type="text/javascript" language="JavaScript1.2" src="scripts/expand.js"></script>
+    <!-- THE FOLLOWING IS A GUIDEWIRE STYLE DEFINITION FOR THE LINK TO THIS FEATURE -->
+    <link rel="StyleSheet" href="css/css-guidewire-extra.css" type="text/css" media="all" />
+    <!-- THE FOLLOWING IS A GUIDEWIRE GSCRIPT FUNCTION FOR THE LINK TO THIS FEATURE -->
+    <script type="text/javascript">
+function guidewire_selectall()
+{
+var text_val=eval("document.linktothisurlform.urlfield");
+text_val.focus();
+text_val.select();
+}
+</script>
+  </head>
+  <body onLoad="WWHUpdate();" onUnload="WWHUnload();" onKeyDown="WWHHandleKeyDown((document.all||document.getElementById||document.layers)?event:null);" onKeyPress="WWHHandleKeyPress((document.all||document.getElementById||document.layers)?event:null);" onKeyUp="WWHHandleKeyUp((document.all||document.getElementById||document.layers)?event:null);">
+    <!-- THE FOLLOWING IS A GUIDEWIRE DIV FOR THE 'LINK TO THIS' FEATURE -->
+    <div id="linkToThisPage" class="popup" style="display: none;">
+      <div class="popupTitle">Link Directly to This Page 
+           <a href="#" onclick="var thePopup = getElementById('linkToThisPage');thePopup.style.display='none';return false;"><img class="popupClosebox" src="wwhelp/wwhimpl/common/images/close.gif" /></a></div>
+      <div style="padding:6px;">
+        <div class="popupText" id="linkToThisPageBookmark">An error has occurred if you see this messsage.</div>
+        <form name="linktothisurlform" method="post" action="" style="width:275px;margin:0px">
+          <input type="text" class="popupURLText" id="linkToThisPageURL" name="urlfield" rows="1" cols="55" onClick="guidewire_selectall();" onFocus="guidewire_selectall();"></input>
+        </form>
+      </div>
+    </div>
+    <br />
+    <div class="WebWorks_Breadcrumbs" style="text-align: left;">
+      <span>BillingCenter Application&nbsp;Guide</span> : 
+    <span class="WebWorks_Breadcrumbs" style="text-align: left;"><a class="WebWorks_Breadcrumb_Link" href="p_direct_bill.html#1895897">Direct Bill Processing</a> : <a class="WebWorks_Breadcrumb_Link" href="payments.53.01.html#1895897">Payment and Distribution</a> : Working with Direct Bill Payments</span></div>
+    <hr align="left" />
+    <blockquote>
+      <h3 class="H1_-_Heading_1"><a name="1895897">Working with Direct Bill Payments</a></h3>
+      <div class="B_-_Body"><a name="1934195">Direct bill payments can be posted to BillingCenter through the user interface or programmatically.</a></div>
+      <h4 class="H2_-_Heading_2"><a name="1895921">Manual Payments</a></h4>
+      <div class="B_-_Body"><a name="1895923">The BillingCenter user interface enables you to post single or multiple payments. You can choose to either distribute the payment immediately using a predefined distribution strategy or apply the payment to the appropriate </a><span class="cv_-_computer_voice">Unapplied</span> T-account based on the active billing level. Alternatively, you can override the default distribution and explicitly allocate payment amounts to specific invoice items.</div>
+      <h4 class="H2_-_Heading_2"><a name="1895925">Automated Payments</a></h4>
+      <div class="B_-_Body"><a name="1895927">The </a><span class="cv_-_computer_voice">PaymentAPI</span> web service that BillingCenter publishes allows external systems to post single payments to BillingCenter programmatically. The following table describes the methods that the <span class="cv_-_computer_voice">PaymentAPI</span> web service provides.</div>
+      <div class="T_-_Table"><a name="1895955">&nbsp;</a></div>
+      <table class="withHeading" style="text-align: left" border="0" cellpadding="10" cellspacing="0" summary="">
+        <caption></caption>
+        <tr>
+          <td style="border-bottom-color: #000000; border-bottom-style: solid; border-bottom-width: 0.5pt; border-top-color: #000000; border-top-style: solid; border-top-width: 0.5pt; padding-bottom: 4pt; padding-left: 2pt; padding-right: 8pt; padding-top: 0pt; vertical-align: bottom">
+            <div class="TH_-_Table_Heading"><a name="1895940">Payment Method</a></div>
+          </td>
+          <td style="border-bottom-color: #000000; border-bottom-style: solid; border-bottom-width: 0.5pt; border-top-color: #000000; border-top-style: solid; border-top-width: 0.5pt; padding-bottom: 4pt; padding-left: 2pt; padding-right: 8pt; padding-top: 0pt; vertical-align: bottom">
+            <div class="TH_-_Table_Heading"><a name="1895942">Description</a></div>
+          </td>
+        </tr>
+        <tr>
+          <td style="border-bottom-color: #c0d1d1; border-bottom-style: solid; border-bottom-width: 0.15pt; border-top-color: #000000; border-top-style: solid; border-top-width: 0.5pt; padding-bottom: 4pt; padding-left: 2pt; padding-right: 8pt; padding-top: 0pt; vertical-align: top">
+            <div class="TT_-_Table_Text" style="color: #000000; font-family: &quot;Lucida Sans Typewriter&quot;; font-style: normal; font-variant: normal; font-weight: normal; margin-top: 3.0pt; text-transform: none; vertical-align: baseline"><span class="cvt_-_computer_voice_table"><a name="1895944">makeDirectBillPayment</a></span></div>
+          </td>
+          <td style="border-bottom-color: #c0d1d1; border-bottom-style: solid; border-bottom-width: 0.15pt; border-top-color: #000000; border-top-style: solid; border-top-width: 0.5pt; padding-bottom: 4pt; padding-left: 2pt; padding-right: 8pt; padding-top: 0pt; vertical-align: top">
+            <div class="TT_-_Table_Text"><a name="1895946">Makes a payment to a single specific policy on an account.</a></div>
+          </td>
+        </tr>
+        <tr>
+          <td style="border-bottom-color: #c0d1d1; border-bottom-style: solid; border-bottom-width: 0.15pt; border-top-color: #c0d1d1; border-top-style: solid; border-top-width: 0.15pt; padding-bottom: 4pt; padding-left: 2pt; padding-right: 8pt; padding-top: 0pt; vertical-align: top">
+            <div class="TT_-_Table_Text" style="color: #000000; font-family: &quot;Lucida Sans Typewriter&quot;; font-style: normal; font-variant: normal; font-weight: normal; margin-top: 3.0pt; text-transform: none; vertical-align: baseline"><span class="cvt_-_computer_voice_table"><a name="1895948">makeDirectBillPaymentToPolicyPeriod</a></span></div>
+          </td>
+          <td style="border-bottom-color: #c0d1d1; border-bottom-style: solid; border-bottom-width: 0.15pt; border-top-color: #c0d1d1; border-top-style: solid; border-top-width: 0.15pt; padding-bottom: 4pt; padding-left: 2pt; padding-right: 8pt; padding-top: 0pt; vertical-align: top">
+            <div class="TT_-_Table_Text"><a name="1895950">Makes a payment on a policy or policies to the specified target policy that has priority in the fund distribution. </a></div>
+          </td>
+        </tr>
+        <tr>
+          <td style="border-bottom-color: #000000; border-bottom-style: solid; border-bottom-width: 0.5pt; border-top-color: #c0d1d1; border-top-style: solid; border-top-width: 0.15pt; padding-bottom: 4pt; padding-left: 2pt; padding-right: 8pt; padding-top: 0pt; vertical-align: top">
+            <div class="TT_-_Table_Text" style="color: #000000; font-family: &quot;Lucida Sans Typewriter&quot;; font-style: normal; font-variant: normal; font-weight: normal; margin-top: 3.0pt; text-transform: none; vertical-align: baseline"><span class="cvt_-_computer_voice_table"><a name="1895952">makeSuspensePayment</a></span></div>
+          </td>
+          <td style="border-bottom-color: #000000; border-bottom-style: solid; border-bottom-width: 0.5pt; border-top-color: #c0d1d1; border-top-style: solid; border-top-width: 0.15pt; padding-bottom: 4pt; padding-left: 2pt; padding-right: 8pt; padding-top: 0pt; vertical-align: top">
+            <div class="TT_-_Table_Text"><a name="1895954">Makes a payment even when the policy or account does not exist yet or is unknown by BillingCenter.</a></div>
+          </td>
+        </tr>
+      </table>
+      <div class="B_-_Body"><a name="2024903">After receiving and recording the payments, batch processes are subsequently run at scheduled times to process the distribution.</a></div>
+      <h4 class="H2_-_Heading_2"><a name="2024905">Payment Instruments</a></h4>
+      <div class="B_-_Body"><a name="2025116">A </a><span class="e_-_emphasis">payment instrument</span> specifies how the insured intends to submit payments to BillingCenter. The payment instrument represents payment information such as credit card or bank details. If you are storing sensitive financial information in an external system, you can enter a <span class="e_-_emphasis">token</span> in BillingCenter. The token represents and uniquely identifies the actual account number or other financial data that is stored externally.</div>
+      <div class="B_-_Body"><a name="2025062">Because BillingCenter cannot rely on any specific set of information, the </a><span class="cv_-_computer_voice">PaymentInstrument</span> entity has minimal fields. It is expected that you will define extension columns to hold custom data that is relevant to your own payment system. Internally, BillingCenter does nothing with tokens except for allowing you to enter a string as the token, display the token, and search on a token.</div>
+      <div class="B_-_Body"><a name="2025182">If you are not using an external payment system or other external storage for sensitive financial data, you can also store the data in BillingCenter directly. Enter the credit card account number, bank account number, or other sensitive data directly in the token field.</a></div>
+      <div class="NI_-_Note_Important">
+        <span class="n_-_note">IMPORTANT   </span><a name="2025202">Check with your legal department about all regulatory requirements relating to credit card information.</a></div>
+      <div class="B_-_Body"><a name="2025032">Each insured account has one or more associated payment instruments, such as </a><span class="ui_-_UI_element">ACH/EFT</span>, <span class="ui_-_UI_element">Credit Card</span>, or <span class="ui_-_UI_element">Responsive</span>. One payment instrument is set as the default. Whenever BillingCenter lets you choose a Payment Instrument, all previously saved Payment Instruments of appropriate types will be shown.</div>
+      <div class="N_-_Note">
+        <span class="n_-_note">Note: </span><span class="e_-_emphasis"><a name="1933814">Responsive</a></span> means that the insured will be sent an invoice, which requires a response in the form of a payment.</div>
+      <h6 class="HS_-_Head_Sub"><a name="1895967">To specify the payment instrument from the account Summary screen</a></h6>
+      <div class="B_-_Body"><a name="1895969">You specify the account-level </a><span class="ui_-_UI_element">Payment Instrument</span> from the <span class="ui_-_UI_element">Account Summary</span> screen. By default, it is <span class="ui_-_UI_element">Responsive</span>. To edit the payment instrument:</div>
+      <div class="LS_-_List_Start_outer" style="margin-left: 57pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="LS_-_List_Start_inner" style="width: 15pt; white-space: nowrap">
+                <span class="ri_-_run_in_header">	1.	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="LS_-_List_Start_inner"><a name="1933848">Display the </a><span class="ui_-_UI_element">Account Summary</span> screen by selecting the <span class="ui_-_UI_element">Account</span> tab, then <span class="ui_-_UI_element">Summary</span>.</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="LI_-_List_Item_outer" style="margin-left: 57pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="LI_-_List_Item_inner" style="width: 15pt; white-space: nowrap">
+                <span class="ri_-_run_in_header">	2.	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="LI_-_List_Item_inner"><a name="1933858">Click </a><span class="ui_-_UI_element">Edit</span>.</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="LI_-_List_Item_outer" style="margin-left: 57pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="LI_-_List_Item_inner" style="width: 15pt; white-space: nowrap">
+                <span class="ri_-_run_in_header">	3.	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="LI_-_List_Item_inner"><a name="1933865">In the </a><span class="ui_-_UI_element">Payment Instrument</span> field, select an existing payment instrument from the drop-down, or click <span class="ui_-_UI_element">New</span> to define a new payment instrument.</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="LP_-_List_Para"><a name="2025304">If you select an existing payment instrument, continue to the next step.</a></div>
+      <div class="LP_-_List_Para"><a name="2025290">If you are defining a new payment instrument, the </a><span class="ui_-_UI_element">New Payment Instrument</span> popup appears.</div>
+      <div class="LS2A_-_List_Start_002c_Level_2_Alpha_outer" style="margin-left: 67pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="LS2A_-_List_Start_002c_Level_2_Alpha_inner" style="width: 15pt; white-space: nowrap">
+                <span class="ri_-_run_in_header">a.	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="LS2A_-_List_Start_002c_Level_2_Alpha_inner"><a name="2025314">Choose a method from the list of options in the </a><span class="ui_-_UI_element">Payment Method</span> drop-down.</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="LP2_-_List_Para_002c_Level_2"><span class="ui_-_UI_element"><a name="2025365">Payment Instrument</a></span> options include:</div>
+      <div class="LP2_-_List_Para_002c_Level_2"><span class="ri_-_run_in_header"><a name="2025366">Responsive</a></span> – The insured sends the payment to BillingCenter in response to an invoice.</div>
+      <div class="LP2_-_List_Para_002c_Level_2"><span class="ri_-_run_in_header"><a name="2025367">ACH/EFT (Automated Clearing House/Electronic Funds Transfer)</a></span><span class="e_-_emphasis" style="color: #000000; font-family: &quot;Times New Roman&quot;; font-size: 10.0pt; font-weight: normal"> – </span>A debit from the insured’s bank account is triggered automatically.</div>
+      <div class="LP2_-_List_Para_002c_Level_2"><span class="ri_-_run_in_header"><a name="2025368">Credit Card</a></span><span class="e_-_emphasis" style="color: #000000; font-family: &quot;Times New Roman&quot;; font-size: 10.0pt; font-weight: normal"> – </span>An authorized charge is made to insured’s credit card account.</div>
+      <div class="LI2A_-_List_Item_002c_Level_2_Alpha_outer" style="margin-left: 67pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="LI2A_-_List_Item_002c_Level_2_Alpha_inner" style="width: 15pt; white-space: nowrap">
+                <span class="ri_-_run_in_header">b.	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="LI2A_-_List_Item_002c_Level_2_Alpha_inner"><a name="2025405">Enter a token from your external payment system, if you are using one.</a></div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="LI_-_List_Item_outer" style="margin-left: 57pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="LI_-_List_Item_inner" style="width: 15pt; white-space: nowrap">
+                <span class="ri_-_run_in_header">	4.	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="LI_-_List_Item_inner"><a name="1933911">Click </a><span class="ui_-_UI_element">Update</span> when you are finished with your selection.</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <h6 class="HS_-_Head_Sub"><a name="1933993">Specifying the payment instrument in the BillingCenter User Interface</a></h6>
+      <div class="B_-_Body"><a name="1933995">If you enter a direct bill payment using the </a><span class="ui_-_UI_element">New Payment</span> screen, you need to choose a <span class="ui_-_UI_element">Payment Instrument</span> from the drop down list. See <a href="javascript:WWHClickedPopup('app', 'payments.53.03.html#1898558', '');" title="Posting Direct Bill Payments">“Entering a Single Payment”</a> for details.</div>
+      <div class="N_-_Note">
+        <span class="n_-_note">Note: </span><a name="1933981">A </a><span class="e_-_emphasis">lockbox service</span> sets up post office boxes to receive and deposit large numbers of checks on behalf of many of the carriers. Usually, they create listings of the receipts which are forwarded to the companies they represent. Billing personnel use these listings to record the payments in BillingCenter.</div>
+      <div class="B_-_Body"><a name="1936395">If you enter payments using the </a><span class="ui_-_UI_element">Enter Multiple Payment Information</span> screen, you have just two options to choose from: <span class="ui_-_UI_element">Check</span> and <span class="ui_-_UI_element">Cash</span>. </div>
+      <script type="text/javascript" language="JavaScript1.2">
+        <!--
+          // Clear related topics
+          //
+          WWHClearRelatedTopics();
+
+          document.writeln(WWHRelatedTopicsInlineHTML());
+        // -->
+      </script>
+    </blockquote>
+    <script type="text/javascript" language="JavaScript1.2">
+      <!--
+        document.write(WWHRelatedTopicsDivTag() + WWHPopupDivTag() + WWHALinksDivTag());
+      // -->
+    </script>
+  </body>
+</html>

@@ -1,0 +1,391 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xml:lang="en" lang="en" xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+    <meta http-equiv="Content-Style-Type" content="text/css" />
+    <!-- MOTW-DISABLED saved from url=(0014)about:internet -->
+    <title>Extension Properties for Charge and InvoiceItem Objects</title>
+    <link rel="StyleSheet" href="css/charge_invoicing_process.css" type="text/css" media="all" />
+    <link rel="StyleSheet" href="css/webworks.css" type="text/css" media="all" />
+    <link rel="StyleSheet" href="css/css-guidewire-extra.css" type="text/css" media="all" />
+    <script type="text/javascript" language="JavaScript1.2" src="wwhdata/common/context.js"></script>
+    <script type="text/javascript" language="JavaScript1.2" src="wwhdata/common/towwhdir.js"></script>
+    <script type="text/javascript" language="JavaScript1.2" src="wwhdata/common/wwhpagef.js"></script>
+    <script type="text/javascript" language="JavaScript1.2">
+      <!--
+        var  WebWorksRootPath = "";
+      // -->
+    </script>
+    <script type="text/javascript" language="JavaScript1.2">
+      <!--
+        // Set reference to top level help frame
+        //
+        var  WWHFrame = WWHGetWWHFrame("", true);
+      // -->
+    </script>
+    <script type="text/javascript" language="JavaScript1.2" src="scripts/expand.js"></script>
+    <!-- THE FOLLOWING IS A GUIDEWIRE STYLE DEFINITION FOR THE LINK TO THIS FEATURE -->
+    <link rel="StyleSheet" href="css/css-guidewire-extra.css" type="text/css" media="all" />
+    <!-- THE FOLLOWING IS A GUIDEWIRE GSCRIPT FUNCTION FOR THE LINK TO THIS FEATURE -->
+    <script type="text/javascript">
+function guidewire_selectall()
+{
+var text_val=eval("document.linktothisurlform.urlfield");
+text_val.focus();
+text_val.select();
+}
+</script>
+  </head>
+  <body onLoad="WWHUpdate();" onUnload="WWHUnload();" onKeyDown="WWHHandleKeyDown((document.all||document.getElementById||document.layers)?event:null);" onKeyPress="WWHHandleKeyPress((document.all||document.getElementById||document.layers)?event:null);" onKeyUp="WWHHandleKeyUp((document.all||document.getElementById||document.layers)?event:null);">
+    <!-- THE FOLLOWING IS A GUIDEWIRE DIV FOR THE 'LINK TO THIS' FEATURE -->
+    <div id="linkToThisPage" class="popup" style="display: none;">
+      <div class="popupTitle">Link Directly to This Page 
+           <a href="#" onclick="var thePopup = getElementById('linkToThisPage');thePopup.style.display='none';return false;"><img class="popupClosebox" src="wwhelp/wwhimpl/common/images/close.gif" /></a></div>
+      <div style="padding:6px;">
+        <div class="popupText" id="linkToThisPageBookmark">An error has occurred if you see this messsage.</div>
+        <form name="linktothisurlform" method="post" action="" style="width:275px;margin:0px">
+          <input type="text" class="popupURLText" id="linkToThisPageURL" name="urlfield" rows="1" cols="55" onClick="guidewire_selectall();" onFocus="guidewire_selectall();"></input>
+        </form>
+      </div>
+    </div>
+    <br />
+    <div class="WebWorks_Breadcrumbs" style="text-align: left;">
+      <span>BillingCenter Configuration Guide</span> : 
+    <span class="WebWorks_Breadcrumbs" style="text-align: left;"><a class="WebWorks_Breadcrumb_Link" href="p-BillingCenter.html#2249525">Guidewire BillingCenter Configuration</a> : <a class="WebWorks_Breadcrumb_Link" href="charge_invoicing_process.44.1.html#2249525">Configuring the Charge Invoicing Process</a> : Extension Properties for Charge and InvoiceItem Objects</span></div>
+    <hr align="left" />
+    <blockquote>
+      <h3 class="H1_-_Heading_1"><a name="2249525">Extension Properties for </a><span class="cvh_-_computer_voice_in_heading">Charge</span> and <span class="cvh_-_computer_voice_in_heading">InvoiceItem</span> Objects</h3>
+      <div class="B_-_Body"><a name="2249526">The </a><span class="cv_-_computer_voice">Charge</span> and <span class="cv_-_computer_voice">InvoiceItem</span> classes, like other BillingCenter classes, can be extended by defining new properties. These extension properties present a unique situation that requires special handling during the charge invoicing process.</div>
+      <div class="B_-_Body"><a name="2249527">The </a><span class="cv_-_computer_voice">ChargeInitializer</span> class includes a <span class="cv_-_computer_voice">charge</span> property of type <span class="cv_-_computer_voice">Charge</span>. The <span class="cv_-_computer_voice">ChargeInitializer.Entry</span> and <span class="cv_-_computer_voice">ChargeInstallmentChanger.Entry</span> objects are ultimately converted to <span class="cv_-_computer_voice">InvoiceItem</span> objects near the completion of the charge invoicing process. Object instances of type <span class="cv_-_computer_voice">Charge</span> or <span class="cv_-_computer_voice">InvoiceItem</span> do not exist during much of the invoicing process. This presents a question about how to manipulate the values of extension properties for objects that do not yet exist.</div>
+      <div class="B_-_Body"><a name="2249528">The methods described in this section provide support for extension properties of a future </a><span class="cv_-_computer_voice">Charge</span> or <span class="cv_-_computer_voice">InvoiceItem</span> object that does not exist. When the object is ultimately created, the property values assigned to it before its creation, including the extension property values, are carried over to the new object.</div>
+      <div class="B_-_Body"><a name="2249529">The methods can be called by a </a><span class="cv_-_computer_voice">ChargeInitializer</span> object to manage extension property values for a future <span class="cv_-_computer_voice">Charge</span> object. Similarly, the methods enable a <span class="cv_-_computer_voice">ChargeInitializer.Entry</span> or <span class="cv_-_computer_voice">ChargeInstallmentChanger.Entry</span> object to manage extension property values for a future <span class="cv_-_computer_voice">InvoiceItem</span> object.</div>
+      <div class="B_-_Body"><a name="2249530">The </a><span class="cv_-_computer_voice">ChargeInitializer</span> and <span class="cv_-_computer_voice">ChargeInitializer.Entry</span> objects support the following methods to manipulate extension properties for <span class="cv_-_computer_voice">Charge</span> and <span class="cv_-_computer_voice">InvoiceItem</span> objects, respectively.</div>
+      <div class="BI_-_Bullet_Item_outer" style="margin-left: 57pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="BI_-_Bullet_Item_inner" style="width: 15pt; white-space: nowrap">
+                <span class="bu_-_bullet">•	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="BI_-_Bullet_Item_inner"><span class="cv_-_computer_voice"><a name="2249531">setExtensionProperty</a></span> </div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="BI_-_Bullet_Item_outer" style="margin-left: 57pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="BI_-_Bullet_Item_inner" style="width: 15pt; white-space: nowrap">
+                <span class="bu_-_bullet">•	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="BI_-_Bullet_Item_inner"><span class="cv_-_computer_voice"><a name="2249532">getExtensionProperty</a></span> </div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="BI_-_Bullet_Item_outer" style="margin-left: 57pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="BI_-_Bullet_Item_inner" style="width: 15pt; white-space: nowrap">
+                <span class="bu_-_bullet">•	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="BI_-_Bullet_Item_inner"><span class="cv_-_computer_voice"><a name="2249533">addToExtensionArrayProperty</a></span> </div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="BI_-_Bullet_Item_outer" style="margin-left: 57pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="BI_-_Bullet_Item_inner" style="width: 15pt; white-space: nowrap">
+                <span class="bu_-_bullet">•	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="BI_-_Bullet_Item_inner"><span class="cv_-_computer_voice"><a name="2249534">removeFromExtensionArrayProperty</a></span> </div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="BI_-_Bullet_Item_outer" style="margin-left: 57pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="BI_-_Bullet_Item_inner" style="width: 15pt; white-space: nowrap">
+                <span class="bu_-_bullet">•	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="BI_-_Bullet_Item_inner"><span class="cv_-_computer_voice"><a name="2249535">getExtensionArrayProperties</a></span> </div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="B_-_Body"><a name="2249536">The </a><span class="cv_-_computer_voice">ChargeInstallmentChanger.Entry</span> object supports the following methods to manipulate extension properties for <span class="cv_-_computer_voice">InvoiceItem</span> objects.</div>
+      <div class="BI_-_Bullet_Item_outer" style="margin-left: 57pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="BI_-_Bullet_Item_inner" style="width: 15pt; white-space: nowrap">
+                <span class="bu_-_bullet">•	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="BI_-_Bullet_Item_inner"><span class="cv_-_computer_voice"><a name="2249537">setExtensionProperty</a></span> </div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="BI_-_Bullet_Item_outer" style="margin-left: 57pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="BI_-_Bullet_Item_inner" style="width: 15pt; white-space: nowrap">
+                <span class="bu_-_bullet">•	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="BI_-_Bullet_Item_inner"><span class="cv_-_computer_voice"><a name="2249538">getExtensionProperty</a></span> </div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="BI_-_Bullet_Item_outer" style="margin-left: 57pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="BI_-_Bullet_Item_inner" style="width: 15pt; white-space: nowrap">
+                <span class="bu_-_bullet">•	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="BI_-_Bullet_Item_inner"><span class="cv_-_computer_voice"><a name="2249539">addToExtensionArrayProperty</a></span> </div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="BI_-_Bullet_Item_outer" style="margin-left: 57pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="BI_-_Bullet_Item_inner" style="width: 15pt; white-space: nowrap">
+                <span class="bu_-_bullet">•	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="BI_-_Bullet_Item_inner"><span class="cv_-_computer_voice"><a name="2249540">getAddedExtensionArrayProperties</a></span> </div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="BI_-_Bullet_Item_outer" style="margin-left: 57pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="BI_-_Bullet_Item_inner" style="width: 15pt; white-space: nowrap">
+                <span class="bu_-_bullet">•	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="BI_-_Bullet_Item_inner"><span class="cv_-_computer_voice"><a name="2249541">removeFromExtensionArrayProperty</a></span> </div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="BI_-_Bullet_Item_outer" style="margin-left: 57pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="BI_-_Bullet_Item_inner" style="width: 15pt; white-space: nowrap">
+                <span class="bu_-_bullet">•	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="BI_-_Bullet_Item_inner"><span class="cv_-_computer_voice"><a name="2249542">getRemovedExtensionArrayProperties</a></span> </div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="B_-_Body"><a name="2249543">The remainder of this section describes the methods that support extension properties. For additional information, refer to the</a><span class="e_-_emphasis"> Gosu API Reference</span>.</div>
+      <h4 class="H2_-_Heading_2"><a name="2249544">Non-Array Type Extension Properties</a></h4>
+      <div class="B_-_Body"><a name="2249545">Extension properties of types other than </a><span class="cv_-_computer_voice">Array</span> are handled by the methods <span class="cv_-_computer_voice">setExtensionProperty</span> and <span class="cv_-_computer_voice">getExtensionProperty</span>.</div>
+      <PRE class="CF_-_Code_First_Line"><a name="2249546">void&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;setExtensionProperty( objectProperty, propertyValue )</a></PRE>
+      <PRE class="CL_-_Code_Last_Line"><a name="2249547">propertyValue getExtensionProperty( objectProperty )</a></PRE>
+      <div class="B_-_Body"><a name="2249548">For a </a><span class="cv_-_computer_voice">ChargeInitializer</span> object, the property is associated with its future <span class="cv_-_computer_voice">Charge</span> object which does not yet exist. For a <span class="cv_-_computer_voice">ChargeInitializer.Entry</span> or <span class="cv_-_computer_voice">ChargeInstallmentChanger.Entry</span> object, the property is associated with its future <span class="cv_-_computer_voice">InvoiceItem</span> object.</div>
+      <div class="B_-_Body"><a name="2249549">The following Gosu example defines the </a><span class="cv_-_computer_voice">MyCustomChargeType</span> property for a future, but currently non-existent, <span class="cv_-_computer_voice">Charge</span> object associated with a <span class="cv_-_computer_voice">ChargeInitializer</span> object.</div>
+      <PRE class="CF_-_Code_First_Line"><a name="2249550">/* The initializer variable is of type ChargeInitializer. The property value will be carried</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2249551">&nbsp;* over to the Charge object when the object is created.</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2249552">&nbsp;*/</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2249553">initializer.setExtensionProperty( Charge#MyCustomChargeType, “One-time” )</a></PRE>
+      <PRE class="CL_-_Code_Last_Line"><a name="2249554">String customChargeType = initializer.getExtensionProperty( Charge#MyCustomChargeType )</a></PRE>
+      <div class="B_-_Body"><a name="2249731">A similar technique is employed to manage the extension properties of a future </a><span class="cv_-_computer_voice">InvoiceItem</span>. The only differences are that the parent object is of type <span class="cv_-_computer_voice">Entry</span> (from either a <span class="cv_-_computer_voice">ChargeInitializer</span> or <span class="cv_-_computer_voice">ChargeInstallmentChanger</span> object) and the relevant property is contained in a future <span class="cv_-_computer_voice">InvoiceItem</span> object.</div>
+      <div class="B_-_Body"><a name="2249556">The following Gosu example defines the </a><span class="cv_-_computer_voice">MyCustomItemType</span> property for an <span class="cv_-_computer_voice">InvoiceItem</span> object associated with an <span class="cv_-_computer_voice">Entry</span> object. The <span class="cv_-_computer_voice">Entry</span> object can be associated with either a <span class="cv_-_computer_voice">ChargeInitializer</span> or <span class="cv_-_computer_voice">ChargeInstallmentChanger</span> object.</div>
+      <PRE class="CF_-_Code_First_Line"><a name="2249557">/* The entries[] array contains Entry objects and can be associated with either a ChargeInitializer</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2249558">&nbsp;* or ChargeInstallmentChanger object. The property value will be carried over to the InvoiceItem</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2249559">&nbsp;* when the Entry is converted.</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2249560">&nbsp;*/</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2249561">entries[0].setExtensionProperty( InvoiceItem#MyCustomItemType, “Special fee” )</a></PRE>
+      <PRE class="CL_-_Code_Last_Line"><a name="2249562">String customItemType = entries[0].getExtensionProperty( InvoiceItem#MyCustomItemType )</a></PRE>
+      <h4 class="H2_-_Heading_2"><a name="2249563">Array Type Extension Properties</a></h4>
+      <div class="B_-_Body"><a name="2249564">Extension properties of type </a><span class="cv_-_computer_voice">Array</span> are processed by a variety of methods. Some of the methods are available for all three of the relevant objects—<span class="cv_-_computer_voice">ChargeInitializer</span>, <span class="cv_-_computer_voice">ChargeInitializer.Entry</span>, and <span class="cv_-_computer_voice">ChargeInstallmentChanger.Entry</span>—and some methods are available for only one or two of the objects.</div>
+      <div class="H3_-_Heading_3_outer" style="margin-left: 36pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <h5 class="H3_-_Heading_3_inner" style="width: 18pt; white-space: nowrap"></h5>
+            </td>
+            <td width="100%">
+              <h5 class="H3_-_Heading_3_inner"><a name="2249566">Adding To and Removing From an Array Extension Property</a></h5>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="B_-_Body"><a name="2249567">A </a><span class="cv_-_computer_voice">Charge</span> or <span class="cv_-_computer_voice">InvoiceItem</span> object with extension properties of type <span class="cv_-_computer_voice">Array</span> can add and remove array elements by calling the methods <span class="cv_-_computer_voice">addToExtensionArrayProperty</span> and <span class="cv_-_computer_voice">removeFromExtensionArrayProperty</span>.</div>
+      <PRE class="CF_-_Code_First_Line"><a name="2249568">void addToExtensionArrayProperty( objectProperty[], propertyValue )</a></PRE>
+      <PRE class="CL_-_Code_Last_Line"><a name="2249569">void removeFromExtensionArrayProperty( objectProperty[], propertyValue )</a></PRE>
+      <div class="B_-_Body"><a name="2249570">For a </a><span class="cv_-_computer_voice">ChargeInitializer</span> object, the array property is associated with its future <span class="cv_-_computer_voice">Charge</span> object which does not yet exist. For a <span class="cv_-_computer_voice">ChargeInitializer.Entry</span> or <span class="cv_-_computer_voice">ChargeInstallmentChanger.Entry</span> object, the array property is associated with its <span class="cv_-_computer_voice">InvoiceItem</span> object. In all cases, the <span class="cv_-_computer_voice">objectProperty[]</span> parameter references an array extension property on the associated <span class="cv_-_computer_voice">Charge</span> or <span class="cv_-_computer_voice">InvoiceItem</span> object. The <span class="cv_-_computer_voice">propertyValue</span> parameter is added to or removed from the specified <span class="cv_-_computer_voice">objectProperty[]</span> array.</div>
+      <div class="B_-_Body"><span class="cv_-_computer_voice"><a name="2249760">ChargeInstallmentChanger.Entry</a></span> objects are handled in a special manner. A <span class="cv_-_computer_voice">ChargeInstallmentChanger</span> is used to modify an existing charge, so the <span class="cv_-_computer_voice">Entry</span> object may be related to an existing <span class="cv_-_computer_voice">InvoiceItem</span> that contains populated array extension properties. Rather than load every element for every <span class="cv_-_computer_voice">InvoiceItem</span> array extension property, the <span class="cv_-_computer_voice">ChargeInstallmentChanger.Entry</span> maintains two groups—one for elements added to array extension properties and another for removed elements. When the charge is ultimately executed, the groups of added and removed array elements are applied to the affected <span class="cv_-_computer_voice">InvoiceItem</span> array extension properties.</div>
+      <div class="B_-_Body"><a name="2252351">Special handling is provided to prevent array elements from existing in both groups. If an element is added that had earlier been removed, the following steps are performed.</a></div>
+      <div class="BI_-_Bullet_Item_outer" style="margin-left: 57pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="BI_-_Bullet_Item_inner" style="width: 15pt; white-space: nowrap">
+                <span class="bu_-_bullet">•	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="BI_-_Bullet_Item_inner"><a name="2249573">The element is taken out of the removed-elements group</a></div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="BI_-_Bullet_Item_outer" style="margin-left: 57pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="BI_-_Bullet_Item_inner" style="width: 15pt; white-space: nowrap">
+                <span class="bu_-_bullet">•	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="BI_-_Bullet_Item_inner"><a name="2249574">The element is placed in the added-elements group</a></div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="B_-_Body"><a name="2249575">A similar operation is performed on removed array elements that had been added earlier.</a></div>
+      <div class="BI_-_Bullet_Item_outer" style="margin-left: 57pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="BI_-_Bullet_Item_inner" style="width: 15pt; white-space: nowrap">
+                <span class="bu_-_bullet">•	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="BI_-_Bullet_Item_inner"><a name="2249576">The element is taken out of the added-element group</a></div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="BI_-_Bullet_Item_outer" style="margin-left: 57pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="BI_-_Bullet_Item_inner" style="width: 15pt; white-space: nowrap">
+                <span class="bu_-_bullet">•	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="BI_-_Bullet_Item_inner"><a name="2249577">The element is placed in the removed-element group</a></div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="B_-_Body"><a name="2249578">The array elements contained in a group can be retrieved by the methods </a><span class="cv_-_computer_voice">getAddedExtensionArrayProperties</span> and <span class="cv_-_computer_voice">getRemovedExtensionArrayProperties</span>. For additional information, see the section <a href="javascript:WWHClickedPopup('config', 'charge_invoicing_process.44.5.html#2249609', '');" title="Extension Properties for Charge and InvoiceItem Objects">“Retrieving Elements Added To or Removed From An Array Extension Property”</a>.</div>
+      <div class="B_-_Body"><a name="2249582">The following Gosu example adds an element to the </a><span class="cv_-_computer_voice">MyCustomOverrides </span>array extension property for a future <span class="cv_-_computer_voice">Charge</span> of a <span class="cv_-_computer_voice">ChargeInitializer</span> object. The second code statement removes the element from the array.</div>
+      <PRE class="CF_-_Code_First_Line"><a name="2249583">/* The initializer variable is of type ChargeInitializer. The overrideObject is of any desired type.</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2249584">&nbsp;* The element added to the array is carried over to the Charge object when the Charge object is </a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2249585">&nbsp;* created.</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2249586">&nbsp;*/</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2249587">initializer.addToExtensionArrayProperty( Charge#MyCustomOverrides, overrideObject )</a></PRE>
+      <PRE class="CL_-_Code_Last_Line"><a name="2249588">initializer.removeFromExtensionArrayProperty( Charge#MyCustomOverrides, overrideObject )</a></PRE>
+      <div class="B_-_Body"><a name="2249589">A similar technique is employed to manage the array extension properties of an </a><span class="cv_-_computer_voice">InvoiceItem</span>. The only differences are that the parent object is of type <span class="cv_-_computer_voice">Entry</span> (from either a <span class="cv_-_computer_voice">ChargeInitializer</span> or <span class="cv_-_computer_voice">ChargeInstallmentChanger</span> object) and the relevant property is contained in an <span class="cv_-_computer_voice">InvoiceItem</span> object.</div>
+      <div class="B_-_Body"><a name="2249590">The following Gosu example adds an </a><span class="cv_-_computer_voice">ItemEvent</span> object to the <span class="cv_-_computer_voice">MyCustomEvents</span> array extension property for an <span class="cv_-_computer_voice">InvoiceItem</span> object associated with an <span class="cv_-_computer_voice">Entry</span> object. The <span class="cv_-_computer_voice">Entry</span> object can be associated with either a <span class="cv_-_computer_voice">ChargeInitializer</span> or <span class="cv_-_computer_voice">ChargeInstallmentChanger</span> object. The second code statement removes the object from the array.</div>
+      <PRE class="CF_-_Code_First_Line"><a name="2249591">/* The entries[] array contains Entry objects and can be associated with either a</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2249592">&nbsp;* ChargeInitializer or ChargeInstallmentChanger object.</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2249593">&nbsp;*/</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2249594">entries[0].addToExtensionArrayProperty( InvoiceItem#MyCustomEvents, itemEventObject )</a></PRE>
+      <PRE class="CL_-_Code_Last_Line"><a name="2249595">entries[0].removeFromExtensionArrayProperty( InvoiceItem#MyCustomEvents, itemEventObject )</a></PRE>
+      <div class="H3_-_Heading_3_outer" style="margin-left: 36pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <h5 class="H3_-_Heading_3_inner" style="width: 18pt; white-space: nowrap"></h5>
+            </td>
+            <td width="100%">
+              <h5 class="H3_-_Heading_3_inner"><a name="2249596">Retrieving an Array Extension Property</a></h5>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="B_-_Body"><a name="2249597">A </a><span class="cv_-_computer_voice">Charge</span> or <span class="cv_-_computer_voice">InvoiceItem</span> object with extension properties of type <span class="cv_-_computer_voice">Array</span> can retrieve the array elements by calling the method <span class="cv_-_computer_voice">getExtensionArrayProperties</span>.</div>
+      <div class="CS_-_Code_Single_Line"><a name="2249598">List&lt;Object&gt; getExtensionArrayProperties( objectProperty[] )</a></div>
+      <div class="B_-_Body"><a name="2249599">The method returns the list of elements currently stored in the specified </a><span class="cv_-_computer_voice">objectProperty[]</span> array of the <span class="cv_-_computer_voice">Charge</span> or <span class="cv_-_computer_voice">InvoiceItem</span> object.</div>
+      <div class="B_-_Body"><a name="2249600">For a </a><span class="cv_-_computer_voice">ChargeInitializer</span> object, the array extension property is associated with its future <span class="cv_-_computer_voice">Charge</span> object which does not yet exist. For a <span class="cv_-_computer_voice">ChargeInitializer.Entry</span> object, the array property is associated with its future <span class="cv_-_computer_voice">InvoiceItem</span> object. The <span class="cv_-_computer_voice">ChargeInstallmentChanger.Entry</span> class does not support this method.</div>
+      <div class="B_-_Body"><a name="2249601">The following Gosu example retrieves the list of elements stored in the </a><span class="cv_-_computer_voice">MyCustomOverrides</span> array extension property for a future <span class="cv_-_computer_voice">Charge</span> of a <span class="cv_-_computer_voice">ChargeInitializer</span> object.</div>
+      <PRE class="CF_-_Code_First_Line"><a name="2249602">/* The initializer variable is of type ChargeInitializer */</a></PRE>
+      <PRE class="CL_-_Code_Last_Line"><a name="2249603">listOfOverrides = initializer.getExtensionArrayProperties( Charge#MyCustomOverrides )</a></PRE>
+      <div class="B_-_Body"><a name="2249604">A similar technique is employed to retrieve the elements of an array extension property of a future </a><span class="cv_-_computer_voice">InvoiceItem</span>. The only differences are that the parent object is of type <span class="cv_-_computer_voice">ChargeInitializer.Entry</span> and the relevant extension property is contained in a future <span class="cv_-_computer_voice">InvoiceItem</span> object.</div>
+      <div class="B_-_Body"><a name="2249605">The following example retrieves the list of </a><span class="cv_-_computer_voice">ItemEvent</span> objects stored in the <span class="cv_-_computer_voice">MyCustomEvents</span> array extension property for a future <span class="cv_-_computer_voice">InvoiceItem</span> of a <span class="cv_-_computer_voice">ChargeInitializer.Entry</span> object.</div>
+      <PRE class="CF_-_Code_First_Line"><a name="2249606">/* The entries[] array contains Entry objects associated with a ChargeInitializer object */</a></PRE>
+      <PRE class="CL_-_Code_Last_Line"><a name="2249607">listOfItemEvents = entries[0].getExtensionArrayProperties( InvoiceItem#MyCustomEvents )</a></PRE>
+      <div class="H3_-_Heading_3_outer" style="margin-left: 36pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <h5 class="H3_-_Heading_3_inner" style="width: 18pt; white-space: nowrap"></h5>
+            </td>
+            <td width="100%">
+              <h5 class="H3_-_Heading_3_inner"><a name="2249609">Retrieving Elements Added To or Removed From An Array Extension Property</a></h5>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="B_-_Body"><a name="2249610">A </a><span class="cv_-_computer_voice">ChargeInstallmentChanger.Entry</span> object with an extension property of type <span class="cv_-_computer_voice">Array</span> can retrieve the elements added to or removed from the array by calling the methods <span class="cv_-_computer_voice">getAddedExtensionArrayProperties</span> and <span class="cv_-_computer_voice">getRemovedExtensionArrayProperties</span>.</div>
+      <PRE class="CF_-_Code_First_Line"><a name="2249611">List&lt;Object&gt; getAddedExtensionArrayProperties( objectProperty[] )</a></PRE>
+      <PRE class="CL_-_Code_Last_Line"><a name="2249612">List&lt;Object&gt; getRemovedExtensionArrayProperties( objectProperty[] )</a></PRE>
+      <div class="B_-_Body"><a name="2249613">The </a><span class="cv_-_computer_voice">objectProperty[]</span> parameter references an array extension property of an <span class="cv_-_computer_voice">InvoiceItem</span> associated with a <span class="cv_-_computer_voice">ChargeInstallementChanger.Entry</span> object. The <span class="cv_-_computer_voice">ChargeInitializer</span> and <span class="cv_-_computer_voice">ChargeInitializer.Entry</span> classes do not support these methods.</div>
+      <div class="B_-_Body"><a name="2249614">Each method returns the list of elements that have been added to or removed from the specified array extension property. For additional details, refer to the section </a><a href="javascript:WWHClickedPopup('config', 'charge_invoicing_process.44.5.html#2249566', '');" title="Extension Properties for Charge and InvoiceItem Objects">Adding To and Removing From an Array Extension Property</a>.</div>
+      <div class="B_-_Body"><a name="2249618">The following Gosu example retrieves the list of </a><span class="cv_-_computer_voice">ItemEvent</span> objects that were added to the <span class="cv_-_computer_voice">MyCustomEvents</span> array extension property of an <span class="cv_-_computer_voice">InvoiceItem</span> object. The second code statement retrieves the list of removed <span class="cv_-_computer_voice">ItemEvent</span> objects from the same array property.</div>
+      <PRE class="CF_-_Code_First_Line"><a name="2249619">/* The entries[] array contains Entry objects associated with a ChargeInstallmentChanger object */</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2249620">listOfAddedEvents = entries[0].getAddedExtensionArrayProperties( InvoiceItem#MyCustomEvents )</a></PRE>
+      <PRE class="CL_-_Code_Last_Line"><a name="2249621">listOfRemovedEvents = entries[0].getRemovedExtensionArrayProperties( InvoiceItem#MyCustomEvents )</a></PRE>
+      <script type="text/javascript" language="JavaScript1.2">
+        <!--
+          // Clear related topics
+          //
+          WWHClearRelatedTopics();
+
+          document.writeln(WWHRelatedTopicsInlineHTML());
+        // -->
+      </script>
+    </blockquote>
+    <script type="text/javascript" language="JavaScript1.2">
+      <!--
+        document.write(WWHRelatedTopicsDivTag() + WWHPopupDivTag() + WWHALinksDivTag());
+      // -->
+    </script>
+  </body>
+</html>

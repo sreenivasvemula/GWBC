@@ -1,0 +1,40 @@
+<?xml version="1.0"?>
+<PCF
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:noNamespaceSchemaLocation="../../../../../pcf.xsd">
+  <Page
+    afterEnter="gw.pcf.fundstracking.AccountDetailFundsTrackingHelper.allotFundsOnEnter(account)"
+    afterReturnFromPopup="gw.pcf.fundstracking.AccountDetailFundsTrackingHelper.allotFundsOnEnter(account)"
+    canVisit="gw.api.domain.fundstracking.FundsTrackingSwitch.isEnabled()"
+    id="AccountDetailFundsTracking"
+    title="displaykey.Web.AccountDetailFundsTracking.Title">
+    <LocationEntryPoint
+      signature="AccountDetailFundsTracking(account : Account)"/>
+    <Variable
+      name="account"
+      type="Account"/>
+    <Screen
+      id="AccountDetailFundsTrackingScreen">
+      <CardViewPanel>
+        <Card
+          id="FundsSourcesCard"
+          title="displaykey.Web.AccountDetailFundsTracking.FundsSourcesCardTitle">
+          <PanelRef
+            def="FundsTrackerLV(account, entity.FundsSourceTracker.Type)"
+            id="FundsSources">
+            <Toolbar/>
+          </PanelRef>
+        </Card>
+        <Card
+          id="FundsUsesCard"
+          title="displaykey.Web.AccountDetailFundsTracking.FundsUsesCardTitle">
+          <PanelRef
+            def="FundsTrackerLV(account, entity.FundsUseTracker.Type)"
+            id="FundsUses">
+            <Toolbar/>
+          </PanelRef>
+        </Card>
+      </CardViewPanel>
+    </Screen>
+  </Page>
+</PCF>

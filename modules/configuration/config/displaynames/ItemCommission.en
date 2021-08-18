@@ -1,0 +1,41 @@
+<?xml version="1.0"?>
+<Entity
+  name="ItemCommission">
+  <Columns>
+    <Column
+      beanPath="ItemCommission.Active"
+      name="Active"
+      sortOrder="0"/>
+    <Column
+      beanPath="ItemCommission.CommissionAmount"
+      name="Amount"
+      sortOrder="1"/>
+    <Column
+      beanPath="ItemCommission.CmsnPayableAmount"
+      name="Payable"
+      sortOrder="2"/>
+    <Column
+      beanPath="ItemCommission.PaidCommission"
+      name="Paid"
+      sortOrder="3"/>
+    <Column
+      beanPath="ItemCommission.WrittenOffCommission"
+      name="WrittenOff"
+      sortOrder="4"/>
+    <DisplayNameColumn
+      beanPath="ItemCommission.PolicyCommission"
+      displayName="true"
+      name="PolicyCommission"
+      sortOrder="5"/>
+  </Columns>
+  <DisplayName><![CDATA[
+      var activeString = (Active == true) ? "Active" : "Inactive";
+      return displaykey.Java.ItemCommission.DisplayName(
+            activeString,
+            Amount?.render(),
+            Payable?.render(),
+            Paid?.render(),
+            WrittenOff?.render(),
+            PolicyCommission);
+  ]]></DisplayName>
+</Entity>

@@ -1,0 +1,38 @@
+<?xml version="1.0"?>
+<entity
+  xmlns="http://guidewire.com/datamodel"
+  entity="CondCmsnSubPlanJurisdiction"
+  type="versionable"
+  desc="An entry in the CondCmsnSubPlan's IncludedJurisdictions table. Each entry contains a Jurisdiction included by the sub-plan."
+  admin="true"
+  subpackage="commission"
+  loadable="false"
+  platform="false"
+  table="condcmsnsubplanjurisdict">
+  <implementsEntity
+    name="NotInCurrencySilo"/>
+  <foreignkey
+    name="CondCmsnSubPlan"
+    desc="FK to container."
+    columnName="CondCmsnSubPlanID"
+    fkentity="CondCmsnSubPlan"
+    getterScriptability="doesNotExist"
+    nullok="false"
+    setterScriptability="doesNotExist"/>
+  <typekey
+    name="Jurisdiction"
+    typelist="Jurisdiction"
+    desc="The jurisdiction."
+    nullok="false"/>
+  <index
+    desc="Legacy"
+    name="subplanjurisdict"
+    unique="true">
+    <indexcol
+      name="CondCmsnSubPlanID"
+      keyposition="1"/>
+    <indexcol
+      name="Jurisdiction"
+      keyposition="2"/>
+  </index>
+</entity>

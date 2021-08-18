@@ -1,0 +1,72 @@
+<?xml version="1.0"?>
+<PCF
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:noNamespaceSchemaLocation="../../../../../pcf.xsd">
+  <Screen
+    id="DelinquencyProcessSearchScreen">
+    <!-- Regarding SearchMethods.validateAndSearch: The 2nd parameter controls the search mode of all associated contact fields. -->
+    <SearchPanel
+      criteriaName="searchCriteria"
+      maxSearchResults="gw.api.system.BCConfigParameters.MaxSearchResults.Value"
+      resultsName="delinquencySearchViews"
+      search="gw.search.SearchMethods.validateAndSearch(searchCriteria)"
+      searchCriteria="new gw.search.DelinquencySearchCriteria()"
+      searchResultsType="DelinquencySearchViewQuery">
+      <PanelRef
+        def="DelinquencyProcessSearchDV(searchCriteria)">
+        <Toolbar/>
+      </PanelRef>
+      <PanelRef>
+        <Toolbar/>
+        <ListViewPanel
+          id="DelinquencyProcessSearchResultsLV">
+          <RowIterator
+            editable="false"
+            elementName="delinquencySearchView"
+            value="delinquencySearchViews">
+            <Row>
+              <DateCell
+                id="StartDate"
+                label="displaykey.Web.DelinquencyProcessSearchResultsLV.StartDate"
+                value="delinquencySearchView.StartDate"/>
+              <Cell
+                id="DelinquencyPlan"
+                label="displaykey.Web.DelinquencyProcessSearchResultsLV.DelinquencyPlan"
+                value="delinquencySearchView.DelinquencyPlan"/>
+              <Cell
+                action="AccountDetailSummary.go(delinquencySearchView.Account)"
+                available="delinquencySearchView.Account.ViewableByCurrentUser"
+                id="AccountNumber"
+                label="displaykey.Web.DelinquencyProcessSearchResultsLV.AccountNumber"
+                value="delinquencySearchView.AccountNumber"/>
+              <Cell
+                action="DelinquencyTargetDetailsForward.go( delinquencySearchView.Target )"
+                enableSort="false"
+                id="PolicyNumber"
+                label="displaykey.Web.DelinquencyProcessSearchResultsLV.DelinquencyTarget"
+                value="delinquencySearchView.Target"/>
+              <TypeKeyCell
+                action="pcf.DelinquencyProcess.go(delinquencySearchView.Account, delinquencySearchView.DelinquencyProcess)"
+                id="Status"
+                label="displaykey.Web.DelinquencyProcessSearchResultsLV.Status"
+                value="delinquencySearchView.Status"/>
+              <TypeKeyCell
+                enableSort="false"
+                id="CurrentEvent"
+                label="displaykey.Web.DelinquencyProcessSearchResultsLV.CurrentEvent"
+                value="delinquencySearchView.CurrentEvent"/>
+              <Cell
+                enableSort="false"
+                id="Insured"
+                label="displaykey.Web.DelinquencyProcessSearchResultsLV.Insured"
+                value="generateContactDisplayName(delinquencySearchView)"/>
+            </Row>
+          </RowIterator>
+        </ListViewPanel>
+      </PanelRef>
+    </SearchPanel>
+    <Code><![CDATA[function generateContactDisplayName(dsv : DelinquencySearchView) : String {
+  return dsv.InsuredName;
+}]]></Code>
+  </Screen>
+</PCF>

@@ -1,0 +1,35 @@
+<?xml version="1.0"?>
+<!-- ====================================================================  TAccountOwnerPattern  ==================================================================== -->
+<entity
+  xmlns="http://guidewire.com/datamodel"
+  admin="true"
+  desc="A pattern for a t-account owner."
+  entity="TAccountOwnerPattern"
+  loadable="false"
+  subpackage="accounting.config"
+  table="TAcctOwnerPattern"
+  type="retireable">
+  <implementsEntity
+    name="NotInCurrencySilo"/>
+  <column
+    desc="The type of t-account owner."
+    name="TAccountOwner"
+    nullok="false"
+    setterScriptability="hidden"
+    type="shorttext"/>
+  <array
+    arrayentity="TAccountPattern"
+    name="TAccounts"
+    setterScriptability="hidden"/>
+  <index
+    desc="Legacy"
+    name="tacctownerpattern"
+    unique="true">
+    <indexcol
+      keyposition="1"
+      name="TAccountOwner"/>
+    <indexcol
+      keyposition="2"
+      name="Retired"/>
+  </index>
+</entity>

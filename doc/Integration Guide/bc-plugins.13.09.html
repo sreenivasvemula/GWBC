@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xml:lang="en" lang="en" xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+    <meta http-equiv="Content-Style-Type" content="text/css" />
+    <!-- MOTW-DISABLED saved from url=(0014)about:internet -->
+    <title>Policy Period Information Customization Plugin</title>
+    <link rel="StyleSheet" href="css/bc-plugins.css" type="text/css" media="all" />
+    <link rel="StyleSheet" href="css/webworks.css" type="text/css" media="all" />
+    <link rel="StyleSheet" href="css/css-guidewire-extra.css" type="text/css" media="all" />
+    <script type="text/javascript" language="JavaScript1.2" src="wwhdata/common/context.js"></script>
+    <script type="text/javascript" language="JavaScript1.2" src="wwhdata/common/towwhdir.js"></script>
+    <script type="text/javascript" language="JavaScript1.2" src="wwhdata/common/wwhpagef.js"></script>
+    <script type="text/javascript" language="JavaScript1.2">
+      <!--
+        var  WebWorksRootPath = "";
+      // -->
+    </script>
+    <script type="text/javascript" language="JavaScript1.2">
+      <!--
+        // Set reference to top level help frame
+        //
+        var  WWHFrame = WWHGetWWHFrame("", true);
+      // -->
+    </script>
+    <script type="text/javascript" language="JavaScript1.2" src="scripts/expand.js"></script>
+    <!-- THE FOLLOWING IS A GUIDEWIRE STYLE DEFINITION FOR THE LINK TO THIS FEATURE -->
+    <link rel="StyleSheet" href="css/css-guidewire-extra.css" type="text/css" media="all" />
+    <!-- THE FOLLOWING IS A GUIDEWIRE GSCRIPT FUNCTION FOR THE LINK TO THIS FEATURE -->
+    <script type="text/javascript">
+function guidewire_selectall()
+{
+var text_val=eval("document.linktothisurlform.urlfield");
+text_val.focus();
+text_val.select();
+}
+</script>
+  </head>
+  <body onLoad="WWHUpdate();" onUnload="WWHUnload();" onKeyDown="WWHHandleKeyDown((document.all||document.getElementById||document.layers)?event:null);" onKeyPress="WWHHandleKeyPress((document.all||document.getElementById||document.layers)?event:null);" onKeyUp="WWHHandleKeyUp((document.all||document.getElementById||document.layers)?event:null);">
+    <!-- THE FOLLOWING IS A GUIDEWIRE DIV FOR THE 'LINK TO THIS' FEATURE -->
+    <div id="linkToThisPage" class="popup" style="display: none;">
+      <div class="popupTitle">Link Directly to This Page 
+           <a href="#" onclick="var thePopup = getElementById('linkToThisPage');thePopup.style.display='none';return false;"><img class="popupClosebox" src="wwhelp/wwhimpl/common/images/close.gif" /></a></div>
+      <div style="padding:6px;">
+        <div class="popupText" id="linkToThisPageBookmark">An error has occurred if you see this messsage.</div>
+        <form name="linktothisurlform" method="post" action="" style="width:275px;margin:0px">
+          <input type="text" class="popupURLText" id="linkToThisPageURL" name="urlfield" rows="1" cols="55" onClick="guidewire_selectall();" onFocus="guidewire_selectall();"></input>
+        </form>
+      </div>
+    </div>
+    <br />
+    <div class="WebWorks_Breadcrumbs" style="text-align: left;">
+      <span>BillingCenter Integration Guide</span> : 
+    <span class="WebWorks_Breadcrumbs" style="text-align: left;"><a class="WebWorks_Breadcrumb_Link" href="p-plugins.html#3434960">Plugins</a> : <a class="WebWorks_Breadcrumb_Link" href="bc-plugins.13.01.html#3434960">Billing Plugins</a> : Policy Period Information Customization Plugin</span></div>
+    <hr align="left" />
+    <blockquote>
+      <h3 class="H1_-_Heading_1"><a name="3434960">Policy Period Information Customization Plugin</a></h3>
+      <div class="NI_-_Note_Important">
+        <span class="n_-_note">IMPORTANT   </span><a name="3556497">For detailed information about the integration of PolicyCenter and BillingCenter, see “Billing Integration” in the </a><span class="e_-_emphasis">PolicyCenter Integration Guide</span>.</div>
+      <h4 class="H2_-_Heading_2"><a name="3447159">General Hooks for Customizing Policy Period Info</a></h4>
+      <div class="B_-_Body"><a name="3447179">An external system can request a summary of a policy period using the </a><span class="cv_-_computer_voice">BCAPI.getPolicyPeriodInfo(...)</span> SOAP API. For more information about this API, see <a href="javascript:WWHClickedPopup('integration', 'bc-webservices.09.30.html#3644466', '');" title="Create an Activity">“Get a Billing Object Summary”</a>. That API returns an account information summary of type <span class="cv_-_computer_voice">PolicyPeriodInfo</span>. Before the policy period summary is sent to the external system, you can set properties on it or trigger custom logic. To add such customization, implement the <span class="cv_-_computer_voice">IPolicyPeriod</span> plugin.</div>
+      <div class="B_-_Body"><a name="3447198">For example, use this to populate data model extension properties that you add to the </a><span class="cv_-_computer_voice">PolicyPeriodInfo</span> non-persistent entity. Suppose you want a separate web portal for customers to be able to query BillingCenter for an policy period status. Suppose you want to display whether the policy period’s account is past due for over 90 days. Instead of calculating account past due dates in the external integration code, add a data model extension Boolean field that means past due for over 90 days. Use this plugin to populate the data model extension property.</div>
+      <div class="B_-_Body"><a name="3447160">The </a><span class="cv_-_computer_voice">IPolicyPeriod</span> plugin has one main method called <span class="cv_-_computer_voice">updatePolicyPeriodInfo</span>. You can do whatever is appropriate with the one argument, which is an <span class="cv_-_computer_voice">PolicyPeriodInfo</span> entity instance. There is no return result from the method, as there are no specific requirements or tests required by this method. BillingCenter calls this method before <span class="cv_-_computer_voice">getPolicyPeriodInfo</span> returns the value to a SOAP API client calling <span class="cv_-_computer_voice">BCAPI.getPolicyPeriodInfo(...)</span>. Add whatever application logic you deem appropriate.</div>
+      <h4 class="H2_-_Heading_2"><a name="3447209">Applying a Full Pay Discount</a></h4>
+      <div class="B_-_Body"><a name="3447122">The plugin has another method you must implement, called </a><span class="cv_-_computer_voice">applyFullPayDiscount</span>. This method provides a hook for you to implement the full pay discount on a policy period. BillingCenter calls this method before <span class="cv_-_computer_voice">getPolicyPeriodInfo</span> returns the value to a SOAP API client. Add whatever application logic you deem appropriate.</div>
+      <h4 class="H2_-_Heading_2"><a name="3447033">Cancellation Handling</a></h4>
+      <div class="B_-_Body"><a name="3447221">During cancellation, BillingCenter calls the </a><span class="cv_-_computer_voice">IPolicyPeriod</span> plugin to let you customize how BillingCenter handles invoice items.</div>
+      <div class="B_-_Body"><a name="3448341">BillingCenter calls the </a><span class="cv_-_computer_voice">getCustomPayersForCancellationCollapsedInvoiceItems</span> method during cancellation. This method must return an <span class="cv_-_computer_voice">InvoiceItemPayers</span> object. This object specifies a mapping between <span class="cv_-_computer_voice">InvoiceItem</span> and <span class="cv_-_computer_voice">InvoicePayer</span> to use when collapsing invoice items during policy cancellation. This allows customization of which payer an invoice item is assigned to. For example, when invoice items collapse during policy cancellation, use this class. It allows you to specify whether to assign those invoice items to the account that owns the policy period, or to some other payer account.</div>
+      <div class="B_-_Body"><a name="3447898">The design and usage of an </a><span class="cv_-_computer_voice">InvoiceItemPayers</span> object uses a builder-style syntax to add (or replace) mappings. First call the <span class="cv_-_computer_voice">assign</span> method and pass a list of invoice items (the type <span class="cv_-_computer_voice">List&lt;InvoiceItem&gt;</span>). Next, on the result of that method, call the to method and pass an invoice payer object (the type <span class="cv_-_computer_voice">InvoicePayer</span>).</div>
+      <div class="B_-_Body"><a name="3447970">Your implementation of the </a><span class="cv_-_computer_voice">getCustomPayersForCancellationCollapsedInvoiceItems</span> method gets one parameter that contains the default mapping between <span class="cv_-_computer_voice">InvoiceItem</span> and <span class="cv_-_computer_voice">InvoicePayer</span>. To add additional mappings, use the syntax:</div>
+      <div class="CS_-_Code_Single_Line"><a name="3447971">my</a><span class="cv_-_computer_voice">InvoiceItemPayers.assign({myInvoiceItem}).to(myInvoicePayer)</span></div>
+      <div class="N_-_Note">
+        <span class="n_-_note">Note: </span><a name="3447769">The usage syntax of an </a><span class="cv_-_computer_voice">InvoiceItemPayers</span> object is similar to another class called <span class="cv_-_computer_voice">InvoiceItemPlacements</span>. The <span class="cv_-_computer_voice">InvoiceItemPlacements</span> class encapsulates mapping of invoice items to invoices. It uses the builder style syntax: <span class="cv_-_computer_voice">placements.place(theItem).on(myInvoice)</span>. For more about that object, see <a href="javascript:WWHClickedPopup('integration', 'bc-plugins.13.21.html#3525075', '');" title="Date Sequence Plugin">“Date Sequence Plugin”</a>.</div>
+      <div class="B_-_Body"><a name="3447649">Instances of this class contains the following methods:</a></div>
+      <div class="BI_-_Bullet_Item_outer" style="margin-left: 57pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="BI_-_Bullet_Item_inner" style="width: 15pt; white-space: nowrap">
+                <span class="bu_-_bullet">•	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="BI_-_Bullet_Item_inner"><span class="cv_-_computer_voice"><a name="3447997">getInvoiceItemsFor(InvoicePayer payer)</a></span> – Get a list of invoice items for a specific invoice payer.</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="BI_-_Bullet_Item_outer" style="margin-left: 57pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="BI_-_Bullet_Item_inner" style="width: 15pt; white-space: nowrap">
+                <span class="bu_-_bullet">•	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="BI_-_Bullet_Item_inner"><span class="cv_-_computer_voice"><a name="3448035">payerFor(InvoiceItem invoiceItem)</a></span> – Get the payer for a specific invoice item.</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="BI_-_Bullet_Item_outer" style="margin-left: 57pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="BI_-_Bullet_Item_inner" style="width: 15pt; white-space: nowrap">
+                <span class="bu_-_bullet">•	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="BI_-_Bullet_Item_inner"><span class="cv_-_computer_voice"><a name="3448187">getInvoiceItems()</a></span> – Return the full set (<span class="cv_-_computer_voice">java.util.Set</span>) of all invoice items in this object. The return type is <span class="cv_-_computer_voice">Set&lt;InvoiceItem&gt;</span>.</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="BI_-_Bullet_Item_outer" style="margin-left: 57pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="BI_-_Bullet_Item_inner" style="width: 15pt; white-space: nowrap">
+                <span class="bu_-_bullet">•	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="BI_-_Bullet_Item_inner"><span class="cv_-_computer_voice"><a name="3448188">getPayers()</a></span> – Return the full set (<span class="cv_-_computer_voice">java.util.Set</span>) of all invoice items in this object. The return type is <span class="cv_-_computer_voice">Set&lt;InvoicePayer&gt;</span></div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="B_-_Body"><a name="3448277">You can optionally choose to create a new instance of </a><span class="cv_-_computer_voice">InvoiceItemPayers</span> and return it instead of modifying the passed-in version and returning it.</div>
+      <div class="B_-_Body"><a name="3448396">During cancellation, BillingCenter provides a hook to update the set of future invoice items to collapse for policy cancellation. BillingCenter calls this method just prior to placing the collapsed invoice items. Its method signature is:</a></div>
+      <PRE class="CF_-_Code_First_Line"><a name="3448279">void updateCancellationCollapsedInvoiceItemsBeforePlacement(List&lt;InvoiceItem&gt; invoiceItems, </a></PRE>
+      <PRE class="CL_-_Code_Last_Line"><a name="3448316">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Date cancellationCollapseDate)</a></PRE>
+      <div class="B_-_Body"><a name="3448534">The first parameter is a list of invoice items from the future that BillingCenter is collapsing due to a policy cancellation. After returning from this method, BillingCenter immediately calls the </a><span class="cv_-_computer_voice">InvoiceAssembler</span> plugin to place these items.</div>
+      <div class="B_-_Body"><a name="3448553">The second parameter is the cancellation collapse date. This is the later (further in future) of the following two dates: the cancellation effective date or the current date</a></div>
+      <div class="B_-_Body"><a name="3448481">The primary use of this method is to set the event date (</a><span class="cv_-_computer_voice">EventDate</span>) of each invoice item to an appropriate value based on the cancellation effective date. The <span class="cv_-_computer_voice">InvoiceAssembler</span> plugin typically would use this event date to place the invoice item as appropriate.</div>
+      <h4 class="H2_-_Heading_2"><a name="3448576">Billing Method Changes</a></h4>
+      <div class="B_-_Body"><a name="3448598">This plugin interface also provides a hook to tell BillingCenter which items to move if the billing method changes on a policy. This plugin method, called </a><span class="cv_-_computer_voice">getItemsAffectedByBillingMethodChange</span>, takes a single parameter which is the <span class="cv_-_computer_voice">PolicyPeriod</span> that is changing billing method.</div>
+      <div class="B_-_Body"><a name="3448723">If </a><span class="cv_-_computer_voice">policy.isAgencyBill()</span> returns <span class="cv_-_computer_voice">true</span>, the policy is in the process of changing from agency bill to direct bill. If <span class="cv_-_computer_voice">policy.isAgencyBill()</span> returns <span class="cv_-_computer_voice">false</span>, the policy is in the process of changing from direct bill to agency bill. </div>
+      <div class="B_-_Body"><a name="3448690">This method must return a list of invoice items whose billing method must change as a result of the policy period changing billing methods. The return type is </a><span class="cv_-_computer_voice">List&lt;InvoiceItem&gt;</span>.</div>
+      <script type="text/javascript" language="JavaScript1.2">
+        <!--
+          // Clear related topics
+          //
+          WWHClearRelatedTopics();
+
+          document.writeln(WWHRelatedTopicsInlineHTML());
+        // -->
+      </script>
+    </blockquote>
+    <script type="text/javascript" language="JavaScript1.2">
+      <!--
+        document.write(WWHRelatedTopicsDivTag() + WWHPopupDivTag() + WWHALinksDivTag());
+      // -->
+    </script>
+  </body>
+</html>

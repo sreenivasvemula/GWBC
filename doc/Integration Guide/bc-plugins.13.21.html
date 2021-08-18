@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xml:lang="en" lang="en" xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+    <meta http-equiv="Content-Style-Type" content="text/css" />
+    <!-- MOTW-DISABLED saved from url=(0014)about:internet -->
+    <title>Date Sequence Plugin</title>
+    <link rel="StyleSheet" href="css/bc-plugins.css" type="text/css" media="all" />
+    <link rel="StyleSheet" href="css/webworks.css" type="text/css" media="all" />
+    <link rel="StyleSheet" href="css/css-guidewire-extra.css" type="text/css" media="all" />
+    <script type="text/javascript" language="JavaScript1.2" src="wwhdata/common/context.js"></script>
+    <script type="text/javascript" language="JavaScript1.2" src="wwhdata/common/towwhdir.js"></script>
+    <script type="text/javascript" language="JavaScript1.2" src="wwhdata/common/wwhpagef.js"></script>
+    <script type="text/javascript" language="JavaScript1.2">
+      <!--
+        var  WebWorksRootPath = "";
+      // -->
+    </script>
+    <script type="text/javascript" language="JavaScript1.2">
+      <!--
+        // Set reference to top level help frame
+        //
+        var  WWHFrame = WWHGetWWHFrame("", true);
+      // -->
+    </script>
+    <script type="text/javascript" language="JavaScript1.2" src="scripts/expand.js"></script>
+    <!-- THE FOLLOWING IS A GUIDEWIRE STYLE DEFINITION FOR THE LINK TO THIS FEATURE -->
+    <link rel="StyleSheet" href="css/css-guidewire-extra.css" type="text/css" media="all" />
+    <!-- THE FOLLOWING IS A GUIDEWIRE GSCRIPT FUNCTION FOR THE LINK TO THIS FEATURE -->
+    <script type="text/javascript">
+function guidewire_selectall()
+{
+var text_val=eval("document.linktothisurlform.urlfield");
+text_val.focus();
+text_val.select();
+}
+</script>
+  </head>
+  <body onLoad="WWHUpdate();" onUnload="WWHUnload();" onKeyDown="WWHHandleKeyDown((document.all||document.getElementById||document.layers)?event:null);" onKeyPress="WWHHandleKeyPress((document.all||document.getElementById||document.layers)?event:null);" onKeyUp="WWHHandleKeyUp((document.all||document.getElementById||document.layers)?event:null);">
+    <!-- THE FOLLOWING IS A GUIDEWIRE DIV FOR THE 'LINK TO THIS' FEATURE -->
+    <div id="linkToThisPage" class="popup" style="display: none;">
+      <div class="popupTitle">Link Directly to This Page 
+           <a href="#" onclick="var thePopup = getElementById('linkToThisPage');thePopup.style.display='none';return false;"><img class="popupClosebox" src="wwhelp/wwhimpl/common/images/close.gif" /></a></div>
+      <div style="padding:6px;">
+        <div class="popupText" id="linkToThisPageBookmark">An error has occurred if you see this messsage.</div>
+        <form name="linktothisurlform" method="post" action="" style="width:275px;margin:0px">
+          <input type="text" class="popupURLText" id="linkToThisPageURL" name="urlfield" rows="1" cols="55" onClick="guidewire_selectall();" onFocus="guidewire_selectall();"></input>
+        </form>
+      </div>
+    </div>
+    <br />
+    <div class="WebWorks_Breadcrumbs" style="text-align: left;">
+      <span>BillingCenter Integration Guide</span> : 
+    <span class="WebWorks_Breadcrumbs" style="text-align: left;"><a class="WebWorks_Breadcrumb_Link" href="p-plugins.html#3525075">Plugins</a> : <a class="WebWorks_Breadcrumb_Link" href="bc-plugins.13.01.html#3525075">Billing Plugins</a> : Date Sequence Plugin</span></div>
+    <hr align="left" />
+    <blockquote>
+      <h3 class="H1_-_Heading_1"><a name="3525075">Date Sequence Plugin</a></h3>
+      <div class="B_-_Body"><a name="3525076">When BillingCenter creates a series of installments, installments are defined with a periodicity. A periodicity defines a regular series of dates with a certain frequency. For example, a monthly payment, a yearly payment, or every other week. BillingCenter represents a periodicity with values in the </a><span class="cv_-_computer_voice">Periodicity</span> typelist, which is an extendible typelist.</div>
+      <div class="B_-_Body"><a name="3525077">BillingCenter needs to convert a periodicity typecode into a class that knows how to calculate the next date in the sequence. For example, get the next installment date given the last installment date. This task is performed by subclasses of the abstract class </a><span class="cv_-_computer_voice">DateSequence</span> class in the <span class="cv_-_computer_voice">gw.api.domain.invoice</span> package. For example, the <span class="cv_-_computer_voice">WeeklyDateSequence</span> class knows how to generate the next date in a weekly periodicity. To convert a periodicity typecode into a date sequence class, it calls the <span class="cv_-_computer_voice">IDateSequence</span> plugin. It return a new instance of a date sequence generator subclass.</div>
+      <div class="B_-_Body"><a name="3525078">This conversion typically requires a single anchor date. For example, a monthly periodicity starting on March&nbsp;7, 2010 generates the next event dates April 7, 2010 and then May 7, 2010. </a></div>
+      <div class="B_-_Body"><a name="3525079">In some cases, there might more than one anchor date, such as a twice-per-month periodicity, which allows you to provide an optional second date. If you do not provide the second anchor date, the sequence generates monthly date sequences interspersed with dates one half month in length. If you provide the second anchor date, you can define the date pattern for the every-other-week date. For example, if you provide March 2 and March 20, the next two dates are April 2 and April 20.</a></div>
+      <div class="B_-_Body"><a name="3525080">By default, BillingCenter knows how to convert the built-in periodicity typecodes. If you want to customize the behavior, write your version of the </a><span class="cv_-_computer_voice">IDateSequence</span> plugin or modify the default implementation (<span class="cv_-_computer_voice">gw.plugin.invoice.impl.DateSequence</span>). For example, if you add custom periodicity typecodes, you must provide a new <span class="cv_-_computer_voice">DateSequence</span> subclass. </div>
+      <div class="B_-_Body"><a name="3525081">To create a new </a><span class="cv_-_computer_voice">DateSequence</span> subclass, create a new Gosu class that extends the class <span class="cv_-_computer_voice">gw.api.domain.invoice.DateSequence</span>. Studio notifies you using compilation errors that you need to define the following methods on the abstract class to make the class fully concrete. Studio offers to automatically generate stubs for the required methods.</div>
+      <div class="B_-_Body"><a name="3525082">Required methods include:</a></div>
+      <div class="BI_-_Bullet_Item_outer" style="margin-left: 57pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="BI_-_Bullet_Item_inner" style="width: 15pt; white-space: nowrap">
+                <span class="bu_-_bullet">•	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="BI_-_Bullet_Item_inner"><a name="3525083">The </a><span class="cv_-_computer_voice">firstAfter</span> method must take a <span class="cv_-_computer_voice">DateTime</span> and return the first date in the Sequence that is after the specified <span class="cv_-_computer_voice">DateTime</span>.</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="BI_-_Bullet_Item_outer" style="margin-left: 57pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="BI_-_Bullet_Item_inner" style="width: 15pt; white-space: nowrap">
+                <span class="bu_-_bullet">•	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="BI_-_Bullet_Item_inner"><a name="3525084">The </a><span class="cv_-_computer_voice">datesInInterval</span> method returns the dates within a time interval (<span class="cv_-_computer_voice">java.util.Interval</span>). It returns a sorted set of dates in an object of type <span class="cv_-_computer_voice">java.util.SortedSet&lt;org.joda.time.DateTime&gt;</span>. The <span class="cv_-_computer_voice">SortedSet</span> type is an interface and a common implementing class is <span class="cv_-_computer_voice">java.util.TreeSet</span>.</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="BI_-_Bullet_Item_outer" style="margin-left: 57pt">
+        <table border="0" cellspacing="0" cellpadding="0" summary="" role="presentation">
+          <tr style="vertical-align: baseline">
+            <td>
+              <div class="BI_-_Bullet_Item_inner" style="width: 15pt; white-space: nowrap">
+                <span class="bu_-_bullet">•	</span>
+              </div>
+            </td>
+            <td width="100%">
+              <div class="BI_-_Bullet_Item_inner"><a name="3525085">The </a><span class="cv_-_computer_voice">contains</span> method determines whether a specific date is in the sequence, returning <span class="cv_-_computer_voice">true</span> or <span class="cv_-_computer_voice">false</span>.</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="B_-_Body"><a name="3525086">The superclass </a><span class="cv_-_computer_voice">DateSequence</span> defines various other methods that you do not need to override.</div>
+      <div class="B_-_Body"><a name="3525087">In your </a><span class="cv_-_computer_voice">DateSequence</span> subclass, be warned that various method signatures use the type <span class="cv_-_computer_voice">org.joda.time.DateTime</span>. In Gosu, this class must be fully-qualified in every usage. A <span class="cv_-_computer_voice">uses</span> statement is not enough to disambiguate with the Gosu built-in <span class="cv_-_computer_voice">DateTime</span> class.</div>
+      <div class="B_-_Body"><a name="3525088">Instead of subclassing </a><span class="cv_-_computer_voice">DateSequence</span> directly, you can subclass <span class="cv_-_computer_voice">PeriodicDateSequence</span>, which is the built-in class that defines basic periods. Refer to that class in Studio for implementation details.</div>
+      <div class="B_-_Body"><a name="3525090">First, create your own </a><span class="cv_-_computer_voice">DateSequence</span> subclass in Studio. Next, modify the <span class="cv_-_computer_voice">DateSequence</span> plugin class, either the built-in class <span class="cv_-_computer_voice">gw.plugin.invoice.impl.DateSequence</span> or your own implementation. Assuming you modify the built-in <span class="cv_-_computer_voice">gw.plugin.invoice.impl.DateSequence</span> class or base your version on it, look for lines that look like this:</div>
+      <PRE class="CF_-_Code_First_Line"><a name="3525091">&nbsp;&nbsp;&nbsp;} else if (thePeriodicity == Periodicity.TC_EVERYFOURMONTHS) {</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="3525092">      return new MonthlyDateSequence(firstAnchorDate, 4)</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="3525093">    } else if (thePeriodicity == Periodicity.TC_EVERYSIXMONTHS) {</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="3525094">      return new MonthlyDateSequence(firstAnchorDate, 6)</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="3525095">    } else if (thePeriodicity == Periodicity.TC_EVERYYEAR) {</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="3525096">      return new MonthlyDateSequence(firstAnchorDate, 12)</a></PRE>
+      <PRE class="CL_-_Code_Last_Line"><a name="3525097">    } else if (thePeriodicity == Periodicity.TC_EVERYOTHERYEAR) {</a></PRE>
+      <div class="B_-_Body"><a name="3525098">If you want to add a new </a><span class="cv_-_computer_voice">Periodicity</span> typecode, add another pair of lines to check for your new typecode, and return a new instance of your date sequence. You probably want to pass at least the first anchor date to your constructor for your date sequence class.</div>
+      <script type="text/javascript" language="JavaScript1.2">
+        <!--
+          // Clear related topics
+          //
+          WWHClearRelatedTopics();
+
+          document.writeln(WWHRelatedTopicsInlineHTML());
+        // -->
+      </script>
+    </blockquote>
+    <script type="text/javascript" language="JavaScript1.2">
+      <!--
+        document.write(WWHRelatedTopicsDivTag() + WWHPopupDivTag() + WWHALinksDivTag());
+      // -->
+    </script>
+  </body>
+</html>

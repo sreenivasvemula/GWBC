@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- ============================================================================================================  Transaction subtypes  ============================================================================================================ -->
+<Entity name="AccountAdjustment">
+  <Columns>
+    <Column beanPath="Transaction.Subtype" name="Subtype"/>
+    <Column beanPath="Transaction.ReversedTransaction.TransactionNumber" name="ReversedTransactionNumber"/>
+    <DisplayNameColumn beanPath="AccountAdjustment.Account" name="Account"/>
+  </Columns>
+  <DisplayName>gw.api.domain.accounting.ReversibleUtil.formatReversibleDisplayName(gw.api.util.TypeKeyUtil.toDisplayName(Subtype), ReversedTransactionNumber)</DisplayName>
+  <DisplayName type="Short">gw.api.domain.accounting.ReversibleUtil.formatReversibleDisplayName(displaykey.DisplayName.AccountAdjustment.Short, ReversedTransactionNumber)</DisplayName>
+  <DisplayName type="Long">gw.api.domain.accounting.ReversibleUtil.formatReversibleDisplayName(displaykey.DisplayName.AccountAdjustment.Long(Account), ReversedTransactionNumber)</DisplayName>
+</Entity>

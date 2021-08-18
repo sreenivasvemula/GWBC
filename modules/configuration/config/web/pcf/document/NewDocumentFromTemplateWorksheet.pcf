@@ -1,0 +1,32 @@
+<?xml version="1.0"?>
+<PCF
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:noNamespaceSchemaLocation="../../../../../pcf.xsd">
+  <Worksheet
+    beforeCommit="gw.document.DocumentContainerMethods.addHistoryIfDCIsAccount(documentContainer)"
+    canEdit="true"
+    canVisit="true"
+    id="NewDocumentFromTemplateWorksheet"
+    startInEditMode="true"
+    tabLabel="displaykey.Web.NewDocumentFromTemplateWorksheet.NewDocument"
+    title="displaykey.Web.NewDocumentFromTemplateWorksheet.NewDocument">
+    <LocationEntryPoint
+      signature="NewDocumentFromTemplateWorksheet(documentContainer : DocumentContainer)"/>
+    <LocationEntryPoint
+      signature="NewDocumentFromTemplateWorksheet(documentContainer : DocumentContainer, templateName : String)"/>
+    <Scope
+      location="*"/>
+    <Variable
+      name="documentContainer"
+      type="DocumentContainer"/>
+    <Variable
+      name="templateName"
+      type="String"/>
+    <Variable
+      initialValue="gw.api.web.document.DocumentsHelper.createDocumentCreationInfo(documentContainer, templateName, User.util.CurrentLanguage)"
+      name="documentCreationInfo"
+      type="gw.document.DocumentCreationInfo"/>
+    <ScreenRef
+      def="NewDocumentFromTemplateScreen(documentCreationInfo, documentContainer)"/>
+  </Worksheet>
+</PCF>

@@ -1,0 +1,31 @@
+<?xml version="1.0"?>
+<PCF
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:noNamespaceSchemaLocation="../../../../../pcf.xsd">
+  <Screen
+    id="NewAccountContactScreen">
+    <Require
+      name="contact"
+      type="AccountContact"/>
+    <Require
+      name="duplicateContactsPopupNavigator"
+      type="gw.pcf.duplicatecontacts.DuplicateContactsPopupNavigator"/>
+    <Toolbar>
+      <ToolbarButton
+        action="duplicateContactsPopupNavigator.checkForDuplicatesOrUpdate(\ -&gt; CurrentLocation.commit())"
+        id="UpdateButtonThatForcesCheckForDuplicates"
+        label="displaykey.Button.Update"
+        visible="duplicateContactsPopupNavigator.ShowCheckForDuplicatesButton"/>
+      <EditButtons
+        pickValue="contact"
+        updateVisible="not duplicateContactsPopupNavigator.ShowCheckForDuplicatesButton"/>
+      <ToolbarButton
+        action="duplicateContactsPopupNavigator.pushFromCurrentLocationToDuplicateContactsPopup()"
+        id="CheckForDuplicates"
+        label="displaykey.Web.Contact.CheckForDuplicates"
+        visible="duplicateContactsPopupNavigator.ShowCheckForDuplicatesButton"/>
+    </Toolbar>
+    <PanelRef
+      def="AccountContactCV(contact)"/>
+  </Screen>
+</PCF>

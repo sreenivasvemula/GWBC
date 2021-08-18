@@ -1,0 +1,160 @@
+<?xml version="1.0"?>
+<entity
+  xmlns="http://guidewire.com/datamodel"
+  desc="A relationship between a policy period and a producer code"
+  entity="PolicyCommission"
+  setterScriptability="hidden"
+  subpackage="account"
+  table="policycommission"
+  type="retireable">
+  <implementsEntity
+    name="TAccountOwner"/>
+  <column
+    desc="If non-null, overrides the base percentage on the commission plan when new Charges are created and associated with this PolicyCommission."
+    exportable="false"
+    name="CmsnPlanOverridePercentage"
+    nullok="true"
+    type="percentagedec"/>
+  <column
+    desc="The date on which the policy period was transferred from this producer code. Null if this producer code is the latest producer code associated with the policy period in this role."
+    exportable="false"
+    getterScriptability="hidden"
+    name="EndDate"
+    nullok="true"
+    setterScriptability="doesNotExist"
+    type="datetime"/>
+  <column
+    default="true"
+    desc="Whether or not this producer code is the default one for the Role for this PolicyPeriod. At most one PolicyCommission may be the default for a particular Role for a PolicyPeriod."
+    exportable="false"
+    name="DefaultForPolicy"
+    nullok="false"
+    setterScriptability="hidden"
+    type="bit"/>
+  <column
+    desc="The date on which the policy period was transferred to this producer code. Null if this producer code was originally associated with the policy period."
+    exportable="false"
+    getterScriptability="hidden"
+    name="StartDate"
+    nullok="true"
+    setterScriptability="hidden"
+    type="datetime"/>
+  <typekey
+    createhistogram="true"
+    desc="The role the producer code plays on the policy"
+    name="Role"
+    nullok="false"
+    setterScriptability="hidden"
+    typelist="PolicyRole"/>
+  <foreignkey
+    columnName="CommissionSubPlanID"
+    desc="The commission sub-plan used to calculate commission for this producer code on this policy. Typically, this will be set to a sub-plan on the producer code's commission plan, but this foreign key allows the commission plan to be overridden on a per-policy basis."
+    exportable="false"
+    fkentity="CommissionSubPlan"
+    name="CommissionSubPlan"
+    nullok="false"
+    setterScriptability="doesNotExist"/>
+  <foreignkey
+    columnName="HiddenTAccountContainerID"
+    exportable="false"
+    fkentity="PolicyCmsnTAcctContainer"
+    getterScriptability="doesNotExist"
+    importableagainstexistingobject="false"
+    name="HiddenTAccountContainer"
+    nullok="false"
+    setterScriptability="doesNotExist"/>
+  <foreignkey
+    columnName="PolicyPeriodID"
+    desc="The related policy period"
+    exportable="false"
+    fkentity="PolicyPeriod"
+    importableagainstexistingobject="false"
+    name="PolicyPeriod"
+    nullok="false"
+    setterScriptability="doesNotExist"/>
+  <foreignkey
+    columnName="PrimaryPolicyPeriodID"
+    desc="The policy period for which this is the primary producer code. Referenced by onetoone"
+    exportable="false"
+    fkentity="PolicyPeriod"
+    importableagainstexistingobject="false"
+    name="PrimaryPolicyPeriod"
+    nullok="true"
+    overwrittenInStagingTable="true"
+    setterScriptability="doesNotExist"/>
+  <foreignkey
+    columnName="ProducerCodeID"
+    desc="The related producer code"
+    exportasid="true"
+    fkentity="ProducerCode"
+    name="ProducerCode"
+    nullok="false"
+    setterScriptability="hidden"/>
+  <array
+    arrayentity="ChargeCommission"
+    desc="The set of charges for which this producer code earns commission for this policy period. Generally, this will be the same as the set of charges on the policy period, but may be a subset in the presence of policy period transfers between producer codes."
+    exportable="false"
+    name="CommissionableCharges"
+    owner="true"
+    setterScriptability="hidden"/>
+  <array
+    arrayentity="ItemCommission"
+    desc="The set of items for which this producer code earns commission for this policy period."
+    exportable="false"
+    ignoreforevents="true"
+    name="CommissionableItems"
+    setterScriptability="hidden"/>
+  <index
+    desc="A role can appear at most once on a {PolicyPeriod, ProducerCode} pair."
+    name="producercoderole"
+    unique="true">
+    <indexcol
+      keyposition="1"
+      name="PolicyPeriodID"/>
+    <indexcol
+      keyposition="2"
+      name="ProducerCodeID"/>
+    <indexcol
+      keyposition="3"
+      name="Role"/>
+    <indexcol
+      keyposition="4"
+      name="Retired"/>
+  </index>
+  <index
+    desc="Each new PolicyCommission mints a new TAccountContainer. Intentionally leaving Retired off this index."
+    name="taccountcontainer"
+    unique="true">
+    <indexcol
+      keyposition="1"
+      name="HiddenTAccountContainerID"/>
+  </index>
+  <index
+    desc="Index for sum queries"
+    name="policyCmsn"
+    unique="true">
+    <indexcol
+      keyposition="1"
+      name="ProducerCodeID"/>
+    <indexcol
+      keyposition="2"
+      name="Retired"/>
+    <indexcol
+      keyposition="3"
+      name="DefaultForPolicy"/>
+    <indexcol
+      keyposition="4"
+      name="ID"/>
+  </index>
+  <checkconstraint
+    desc="PrimaryPolicyPeriodID must always equal PolicyPeriodID if it is non-null"
+    predicate="PrimaryPolicyPeriodID IS NULL OR PrimaryPolicyPeriodID = PolicyPeriodID"/>
+  <checkconstraint
+    desc="If the EndDate is null, this PolicyCommission cannot be the default anymore"
+    predicate="EndDate IS NULL OR DefaultForPolicy = 0"/>
+  <checkconstraint
+    desc="The EndDate must always be after the StartDate"
+    predicate="StartDate IS NULL OR EndDate IS NULL OR StartDate &lt;= EndDate"/>
+  <dbcheckbuilder
+    className="com.guidewire.bc.system.database.dbchecks.account.PolicyCommissionDBCheckBuilder"/>
+</entity>

@@ -1,0 +1,55 @@
+<?xml version="1.0"?>
+<PCF
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:noNamespaceSchemaLocation="../../../../../pcf.xsd">
+  <!-- This screen is one of the steps in the New Reversal wizard.  It is where the user will search for the
+  transaction to reverse -->
+  <Screen
+    id="NewChargeReversalAccountChargesScreen">
+    <Require
+      name="reversal"
+      type="ChargeReversal"/>
+    <Require
+      name="account"
+      type="Account"/>
+    <Toolbar>
+      <WizardButtons/>
+    </Toolbar>
+    <DetailViewPanel
+      id="ChargeSourceDV">
+      <InputColumn>
+        <Input
+          boldLabel="true"
+          id="Charge"
+          label="displaykey.Web.NewChargeReversalAccountChargesScreen.Charge"
+          value="reversal.Charge"/>
+      </InputColumn>
+    </DetailViewPanel>
+    <CardViewPanel>
+      <Card
+        id="Charge"
+        title="displaykey.Web.NewChargeReversalChargeSearchScreen.ChargeCard">
+        <!-- Regarding SearchMethods.validateAndSearch: The 2nd parameter controls whether to clear the bundle before querying. -->
+        <SearchPanel
+          criteriaName="searchCriteria"
+          resultsName="charges"
+          search="gw.search.SearchMethods.validateAndSearch(searchCriteria, false)"
+          searchCriteria="initializeSearchCriteria()"
+          searchResultsType="ChargeQuery">
+          <PanelRef
+            def="ChargeSearchDV(searchCriteria, false)">
+            <Toolbar/>
+          </PanelRef>
+          <PanelRef
+            def="NewChargeReversalChargesLV(reversal, charges)"/>
+        </SearchPanel>
+      </Card>
+    </CardViewPanel>
+    <Code><![CDATA[function initializeSearchCriteria() : ReversibleChargeSearchCriteria {
+        var criteria = new ReversibleChargeSearchCriteria();
+        criteria.Account = account;
+        criteria.Currency = account.Currency;
+        return criteria;
+      }]]></Code>
+  </Screen>
+</PCF>

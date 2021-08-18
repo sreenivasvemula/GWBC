@@ -1,0 +1,23 @@
+<?xml version="1.0"?>
+<PCF
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:noNamespaceSchemaLocation="../../../../../pcf.xsd">
+  <AcceleratedMenuActions
+    id="PolicyDetailAcceleratedMenuActions">
+    <Require
+      name="period"
+      type="PolicyPeriod"/>
+    <Code><![CDATA[function getCompactLabel(policyPeriod : PolicyPeriod) : String{
+  var endDate = policyPeriod.Canceled ? policyPeriod.Cancellation.ModificationDate : policyPeriod.PolicyPerExpirDate
+  return displaykey.Web.PolicyDetail.PolicyPeriod.DateRange(policyPeriod.TermNumber, policyPeriod.PolicyPerEffDate.AsUIStyle, endDate.AsUIStyle)
+}]]></Code>
+    <Link
+      action="PolicyGroup.go(ArgValue)"
+      argInitialValue="period"
+      argOptionLabel="getCompactLabel(VALUE)"
+      argRange="util.ArrayUtil.reverse(period.Policy.OrderedPolicyPeriods)"
+      argType="PolicyPeriod"
+      id="PolicyGroup_EffectiveDate"
+      performActionOnArgChange="true"/>
+  </AcceleratedMenuActions>
+</PCF>

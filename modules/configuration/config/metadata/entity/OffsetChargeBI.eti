@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+<!-- ===================================================================  Offset Charge Billing Instruction                                          =================================================================== -->
+<subtype
+  xmlns="http://guidewire.com/datamodel"
+  entity="OffsetChargeBI"
+  desc="DEPRECATED IN 3.0: Creates offset charges and invoice items to cancel existing planned invoice items when transferring an agency bill policy period from one producer to another"
+  displayName="OffsetChargeBI"
+  subpackage="accounting.billinginstruction"
+  supertype="BaseGeneral">
+  <edgeForeignKey
+    name="BIThatWasOffset"
+    desc="Original BillingInstruction that this Offset Charge Billing Instruction was created to offset"
+    edgeTableName="offsetorigbi"
+    fkentity="BillingInstruction"
+    ignoreforevents="true"
+    nullok="false"/>
+</subtype>

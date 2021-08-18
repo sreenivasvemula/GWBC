@@ -1,0 +1,32 @@
+<?xml version="1.0"?>
+<PCF
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:noNamespaceSchemaLocation="../../../../../pcf.xsd">
+  <Wizard
+    afterCancel="DesktopGroup.go()"
+    afterFinish="DesktopGroup.go()"
+    beforeCommit="negativeWriteoffToReverse.reverse()"
+    canVisit="true"
+    cancelWarning="displaykey.Web.NewNegativeWriteoffReversalWizard.CancelConfirmation"
+    countsAsWork="false"
+    id="NewNegativeWriteoffReversalWizard">
+    <LocationEntryPoint
+      signature="NewNegativeWriteoffReversalWizard()"/>
+    <Variable
+      initialValue="new NegativeWriteoffRev()"
+      name="negativeWriteoffToReverse"
+      type="NegativeWriteoffRev"/>
+    <WizardStep
+      allowNext="negativeWriteoffToReverse.getNegativeWriteoff() != null"
+      id="Step1"
+      label="displaykey.Web.NewNegativeWriteoffReversalWizard.WriteoffSearch.Label"
+      screen="NewNegativeWriteoffReversalSearchScreen(negativeWriteoffToReverse, null)"
+      title="displaykey.Web.NewNegativeWriteoffReversalWizard.WriteoffSearch.Title"/>
+    <WizardStep
+      allowFinish="negativeWriteoffToReverse.getNegativeWriteoff() != null"
+      id="Step2"
+      label="displaykey.Web.NewNegativeWriteoffReversalWizard.Confirmation.Label"
+      screen="NewNegativeWriteoffReversalConfirmationScreen(negativeWriteoffToReverse)"
+      title="displaykey.Web.NewNegativeWriteoffReversalWizard.Confirmation.Title"/>
+  </Wizard>
+</PCF>

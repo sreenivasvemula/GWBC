@@ -1,0 +1,55 @@
+<?xml version="1.0"?>
+<PCF
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:noNamespaceSchemaLocation="../../../../../pcf.xsd">
+  <Screen
+    id="NewWriteoffReversalAccountWriteoffsScreen">
+    <Require
+      name="reversal"
+      type="WriteoffReversal"/>
+    <Require
+      name="account"
+      type="Account"/>
+    <Toolbar>
+      <WizardButtons/>
+    </Toolbar>
+    <DetailViewPanel
+      id="WriteoffSourceDV">
+      <InputColumn>
+        <Input
+          boldLabel="true"
+          id="Writeoff"
+          label="displaykey.Web.NewWriteoffReversalAccountWriteoffsScreen.Writeoff"
+          value="reversal.Writeoff"/>
+      </InputColumn>
+    </DetailViewPanel>
+    <CardViewPanel>
+      <Card
+        id="Writeoff"
+        title="displaykey.Web.NewWriteoffReversalWriteoffSearchScreen.WriteoffCard">
+        <SearchPanel
+          criteriaName="searchCriteria"
+          resultsName="writeOffs"
+          search="gw.search.SearchMethods.validateAndSearch(searchCriteria)"
+          searchCriteria="initializeSearchCriteria()"
+          searchResultsType="WriteoffQuery">
+          <PanelRef
+            def="WriteoffSearchDV(searchCriteria, false)">
+            <Toolbar/>
+          </PanelRef>
+          <PanelRef
+            def="NewWriteoffReversalWriteoffsLV(reversal, writeOffs)"/>
+        </SearchPanel>
+      </Card>
+    </CardViewPanel>
+    <Code><![CDATA[function initializeSearchCriteria() : WriteoffSearchCriteria {
+  var criteria = new WriteoffSearchCriteria();
+  
+  if (account != null) {
+    criteria.Account = account;
+    criteria.Currency = account.Currency
+  }
+  return criteria;
+}]]></Code>
+  </Screen>
+</PCF>

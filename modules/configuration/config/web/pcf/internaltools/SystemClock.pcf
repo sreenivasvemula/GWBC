@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PCF
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:noNamespaceSchemaLocation="../../../../../pcf.xsd">
+  <Page
+    autosaveable="false"
+    canEdit="true"
+    countsAsWork="false"
+    id="SystemClock"
+    startInEditMode="true"
+    title="displaykey.Web.SystemClock.Title">
+    <LocationEntryPoint
+      signature="SystemClock()"/>
+    <Variable
+      initialValue="new tools.TestingClock()"
+      name="clock"/>
+    <Screen
+      id="SystemClockScreen">
+      <Toolbar>
+        <ToolbarButton
+          action="clock.DateTime = util.DateUtil.addMinutes(clock.DateTime, 1)"
+          id="SystemClock_AddMinuteButton"
+          label="displaykey.Web.SystemClock.AddMinute"/>
+        <ToolbarButton
+          action="clock.DateTime = util.DateUtil.addHours(clock.DateTime, 1)"
+          id="SystemClock_AddHourButton"
+          label="displaykey.Web.SystemClock.AddHour"/>
+        <ToolbarButton
+          action="clock.DateTime = util.DateUtil.addDays(clock.DateTime, 1)"
+          id="SystemClock_AddDayButton"
+          label="displaykey.Web.SystemClock.AddDay"/>
+        <ToolbarButton
+          action="clock.DateTime = util.DateUtil.addWeeks(clock.DateTime, 1)"
+          id="SystemClock_AddWeekButton"
+          label="displaykey.Web.SystemClock.AddWeek"/>
+        <ToolbarButton
+          action="clock.DateTime = util.DateUtil.addMonths(clock.DateTime, 1)"
+          id="SystemClock_AddMonthButton"
+          label="displaykey.Web.SystemClock.AddMonth"/>
+        <ToolbarButton
+          action="clock.DateTime = util.DateUtil.addYears(clock.DateTime, 1)"
+          id="SystemClock_AddYearButton"
+          label="displaykey.Web.SystemClock.AddYear"/>
+      </Toolbar>
+      <Verbatim
+        label="clock.DateTime.toString()"/>
+      <DetailViewPanel>
+        <InputColumn>
+          <DateInput
+            dateFormat="short"
+            editable="true"
+            id="Date"
+            label="displaykey.Web.SystemClock.Date"
+            timeFormat="short"
+            value="clock.DateTime"/>
+          <ButtonInput
+            action="null"
+            id="ChangeDate"
+            value="displaykey.Web.SystemClock.ChangeDate"/>
+        </InputColumn>
+      </DetailViewPanel>
+      <PanelRef
+        def="UnsupportedToolsDisclaimerDV()"/>
+    </Screen>
+  </Page>
+</PCF>

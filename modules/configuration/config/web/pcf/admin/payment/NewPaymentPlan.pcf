@@ -1,0 +1,32 @@
+<?xml version="1.0"?>
+<PCF
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:noNamespaceSchemaLocation="../../../../../../pcf.xsd">
+  <Page
+    afterCancel="PaymentPlans.go()"
+    afterCommit="PaymentPlans.go()"
+    canEdit="true"
+    canVisit="perm.System.admintabview and perm.System.pmntplancreate"
+    id="NewPaymentPlan"
+    parent="PaymentPlans()"
+    showUpLink="true"
+    startInEditMode="true"
+    title="displaykey.Web.NewPaymentPlan.Title">
+    <LocationEntryPoint
+      signature="NewPaymentPlan(currency : Currency)"/>
+    <Variable
+      initialValue="initPaymentPlan()"
+      name="paymentPlan"
+      type="PaymentPlan"/>
+    <Variable
+      name="currency"
+      type="Currency"/>
+    <ScreenRef
+      def="PaymentPlanDetailScreen(paymentPlan)"/>
+    <Code><![CDATA[function initPaymentPlan() : PaymentPlan {
+  var newPaymentPlan = new PaymentPlan(currency, CurrentLocation);
+  newPaymentPlan.EffectiveDate = util.DateUtil.currentDate();
+  return newPaymentPlan;
+}]]></Code>
+  </Page>
+</PCF>

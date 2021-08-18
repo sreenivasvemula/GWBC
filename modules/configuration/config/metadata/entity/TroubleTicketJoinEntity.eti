@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?><entity xmlns="http://guidewire.com/datamodel" desc="A relationship (join entity) between a trouble ticket and an account/policy/producer.  Exactly one of {Account, Policy, PolicyPeriod, Producer, Transaction} must be non-null" entity="TroubleTicketJoinEntity" exportable="false" loadable="false" platform="false" subpackage="troubleticket" table="troubleticketjoinentity" type="retireable">
+  <implementsEntity name="NotInCurrencySilo"/>
+  <!-- side of join for Account, Policy, PolicyPeriod, Producer or Transaction-->
+  <foreignkey columnName="AccountID" desc="The related account" fkentity="Account" importableagainstexistingobject="false" name="Account" nullok="true" setterScriptability="hidden"/>
+ <foreignkey columnName="PolicyID" desc="The related policy" fkentity="Policy" name="Policy" nullok="true" setterScriptability="hidden"/>
+  <foreignkey columnName="PolicyPeriodID" desc="The related policy period" fkentity="PolicyPeriod" name="PolicyPeriod" nullok="true" setterScriptability="hidden"/>
+  <foreignkey columnName="ProducerID" desc="The related producer" fkentity="Producer" name="Producer" nullok="true" setterScriptability="hidden"/>
+  <foreignkey columnName="TransactionID" desc="The related transaction" fkentity="Transaction" name="Transaction" nullok="true" setterScriptability="hidden"/>
+    <!-- side of join for Trouble Ticket -->
+    <foreignkey columnName="TroubleTicketID" desc="The related trouble ticket" fkentity="TroubleTicket" getterScriptability="hidden" name="TroubleTicket" nullok="false" setterScriptability="hidden"/>
+    <dbcheckbuilder className="com.guidewire.bc.domain.troubleticket.dbchecks.TroubleTicketJoinEntityDBCheckBuilder"/>
+    <index desc="Legacy" name="relatedEntity" unique="true">
+        <indexcol keyposition="1" name="TroubleTicketID"/>
+        <indexcol keyposition="2" name="AccountID"/>
+        <indexcol keyposition="3" name="ProducerID"/>
+        <indexcol keyposition="4" name="TransactionID"/>
+        <indexcol keyposition="5" name="PolicyPeriodID"/>
+        <indexcol keyposition="6" name="PolicyID"/>
+        <indexcol keyposition="7" name="Retired"/>
+    </index>
+</entity>

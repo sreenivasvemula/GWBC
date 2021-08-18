@@ -1,0 +1,51 @@
+<?xml version="1.0"?>
+<PCF
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:noNamespaceSchemaLocation="../../../../../pcf.xsd">
+  <Worksheet
+    beforeCommit="policyPeriod.Policy.addNote(newNote)"
+    canEdit="true"
+    canVisit="perm.Note.create"
+    id="PolicyNewNoteWorksheet"
+    startInEditMode="true"
+    tabLabel="displaykey.Web.PolicyNewNote.Title"
+    title="displaykey.Web.PolicyNewNote.Title">
+    <LocationEntryPoint
+      signature="PolicyNewNoteWorksheet(policyPeriod : PolicyPeriod)"/>
+    <Scope
+      location="*"/>
+    <Variable
+      name="policyPeriod"
+      type="PolicyPeriod"/>
+    <Variable
+      initialValue="gw.pcf.note.NoteHelper.createNoteWithCurrentUsersLanguage()"
+      name="newNote"
+      type="Note"/>
+    <Variable
+      initialValue="gw.api.util.SymbolTableUtil.populateBeans( policyPeriod )"
+      name="symbolTable"/>
+    <Screen
+      id="PolicyNewNoteScreen">
+      <Toolbar>
+        <EditButtons/>
+        <PickerToolbarButton
+          action="PickNoteTemplatePopup.push(createSearchCriteria())"
+          id="NewNoteWorksheet_UseTemplateButton"
+          label="displaykey.Web.Note.UseTemplate"
+          onPick="newNote.useTemplate( PickedValue, symbolTable )"/>
+      </Toolbar>
+      <PanelRef
+        def="NewNoteDV(newNote)"/>
+    </Screen>
+    <Code><![CDATA[function createSearchCriteria() : NoteTemplateSearchCriteria {
+  var rtn = new NoteTemplateSearchCriteria()
+  // rtn.Language = Account.AccountHolder.Language 
+  rtn.AvailableSymbols = symbolTable.Keys.join( "," )
+  var policy = symbolTable.get( "policy" ) as Policy
+  if (policy.LOBCode != null) {
+    rtn.LOB = policy.LOBCode
+  }
+  return rtn  
+}]]></Code>
+  </Worksheet>
+</PCF>

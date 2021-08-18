@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PCF
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:noNamespaceSchemaLocation="../../../../../pcf.xsd">
+  <Page
+    autosaveable="true"
+    canVisit="perm.System.accttabview and perm.System.accttxnview"
+    countsAsWork="true"
+    id="AccountDetailTransactions"
+    showUpLink="true"
+    startInEditMode="false"
+    title="displaykey.Web.AccountDetailTransactions.Title"
+    validateOnBundleCommit="true">
+    <LocationEntryPoint
+      signature="AccountDetailTransactions(account : Account)"/>
+    <Variable
+      name="account"
+      recalculateOnRefresh="false"
+      type="Account"/>
+    <Variable
+      initialValue="web.account.AccountTransactionsCollector.getAllTransactions(account)"
+      name="transactions"
+      recalculateOnRefresh="true"/>
+    <Screen
+      id="AccountDetailTransactionsScreen">
+      <Toolbar/>
+      <PanelRef
+        def="AccountDetailTransactionsLV( transactions )">
+        <Toolbar/>
+      </PanelRef>
+    </Screen>
+  </Page>
+</PCF>

@@ -1,0 +1,33 @@
+<?xml version="1.0"?>
+<entity
+  xmlns="http://guidewire.com/datamodel"
+  entity="CmsnsExpenseRollupCtx"
+  type="editable"
+  desc="Context for CmsnsExpenseRollup transactions."
+  ignoreForEvents="true"
+  subpackage="accounting.transaction"
+  overwrittenInStagingTable="true"
+  platform="false"
+  table="cmsnsexpenserollupctx"
+  setterScriptability="hidden">
+  <implementsEntity
+    name="TransactionContext"/>
+  <implementsEntity
+    name="InCurrencySilo"/>
+  <foreignkey
+    name="Transaction"
+    desc="Reference to CmsnsExpenseRollup transaction"
+    columnName="TransactionID"
+    fkentity="CmsnsExpenseRollup"
+    getterScriptability="doesNotExist"
+    nullok="false"
+    setterScriptability="doesNotExist"/>
+  <foreignkey
+    name="CmsnRollupPolicyCommission"
+    columnName="CmsnRollupPolicyCommissionID"
+    fkentity="PolicyCommission"
+    getterScriptability="hidden"
+    ignoreforevents="true"
+    nullok="false"
+    setterScriptability="hidden"/>
+</entity>

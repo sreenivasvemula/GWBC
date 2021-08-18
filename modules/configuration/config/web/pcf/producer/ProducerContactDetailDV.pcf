@@ -1,0 +1,73 @@
+<?xml version="1.0"?>
+<PCF
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:noNamespaceSchemaLocation="../../../../../pcf.xsd">
+  <DetailViewPanel
+    id="ProducerContactDetailDV">
+    <Require
+      name="producerContact"
+      type="ProducerContact"/>
+    <Require
+      name="isNew"
+      type="Boolean"/>
+    <Variable
+      initialValue="new gw.api.address.ContactAddressOwner(producerContact.Contact)"
+      name="addressOwner"
+      recalculateOnRefresh="true"
+      type="gw.api.address.AddressOwner"/>
+    <InputColumn>
+      <Label
+        label="displaykey.Web.ContactDetailDV.ContactInformation"/>
+      <Input
+        id="Type"
+        label="displaykey.Web.ContactDetailDV.Type"
+        value="producerContact.Contact.Subtype.DisplayName">
+        <PostOnChange/>
+      </Input>
+      <InputSetRef
+        def="NameInputSet(new gw.api.name.BCNameOwner(producerContact.Contact))"
+        mode="producerContact.Contact typeis Person ? &quot;Person&quot; : &quot;Contact&quot;"/>
+      <InputDivider
+        visible="CurrentLocation.InEditMode"/>
+      <InputSetRef
+        def="GlobalAddressInputSet(addressOwner)"
+        id="globalAddressContainer"
+        mode="address.AddressCountrySettings.getSettings(addressOwner.SelectedCountry).PCFMode"
+        widgets="globalAddressContainer"/>
+      <InputDivider
+        visible="CurrentLocation.InEditMode"/>
+      <InputSetRef
+        def="GlobalPhoneInputSet(new gw.api.phone.BusinessPhoneOwner(new gw.api.phone.ContactPhoneDelegate(producerContact.Contact, Contact#WorkPhone), displaykey.Web.ContactDetailDV.Phone, false))"/>
+      <Input
+        editable="true"
+        id="Email"
+        label="displaykey.Web.ContactDetailDV.Email"
+        value="producerContact.Contact.EmailAddress1"/>
+      <ListViewInput
+        label="displaykey.Web.ContactDetailDV.Roles">
+        <Toolbar>
+          <IteratorButtons
+            iterator="RolesLV"/>
+        </Toolbar>
+        <ListViewPanel
+          id="RolesLV">
+          <RowIterator
+            editable="true"
+            elementName="producerContactRole"
+            hideCheckBoxesIfReadOnly="true"
+            toAdd="producerContact.addToRoles(producerContactRole)"
+            toRemove="producerContact.removeFromRoles(producerContactRole)"
+            value="producerContact.Roles">
+            <Row>
+              <TypeKeyCell
+                editable="true"
+                id="Role"
+                label="displaykey.Web.ContactDetailDV.Role"
+                value="producerContactRole.Role"/>
+            </Row>
+          </RowIterator>
+        </ListViewPanel>
+      </ListViewInput>
+    </InputColumn>
+  </DetailViewPanel>
+</PCF>

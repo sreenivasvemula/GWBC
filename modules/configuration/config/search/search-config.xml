@@ -1,0 +1,228 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SearchConfig
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="search-config.xsd"
+        version="1">
+
+    <!--
+    *******************************************************************************************************************
+    ***
+    ***    Search for some objects is now configured through gosu classes instead of in this file.
+    ***
+    ***    The following search criteria are still active:
+    ***     AcctDisbSearchCriteria
+    ***     ActivitySearchCriteria
+    ***     Address
+    ***     AgcyDisbSearchCriteria
+    ***     ReversibleChargeSearchCriteria
+    ***     CollDisbSearchCriteria
+    ***     CommissionPlanSearchCriteria
+    ***     CreditSearchCriteria
+    ***     DocumentSearchCriteria
+    ***     NegWriteoffSearchCrit
+    ***     NoteSearchCriteria
+    ***     OutgoingProducerPmntSearchCriteria
+    ***     PaymentRequestSearchCriteria
+    ***     SuspDisbSearchCriteria
+    ***     TransactionSearchCrit
+    ***     WriteoffSearchCriteria
+    ***
+    ***
+    ***    The following search criteria are no longer handled in this file.  Instead, use the following gosu classes:
+    ***     AccountSearchCriteria
+    ***     AgencyMoneyReceivedSearchCriteria
+    ***     DelinquencySearchCriteria
+    ***     InvoiceSearchCriteria
+    ***     PaymentSearchCriteria
+    ***     PolicySearchCriteria
+    ***     ProducerSearchCriteria
+    ***     TroubleTicketSearchCriteria
+    ***
+    *******************************************************************************************************************
+    -->
+
+
+    <!-- ==================================================================== -->
+    <!-- Mapping from Address to address table -->
+    <!-- ==================================================================== -->
+    <!-- Used by ContactSearchCriteriaBase -->
+    <CriteriaDef entity="Address" targetEntity="Address">
+        <Criterion property="City" matchType="startsWith"/>
+        <Criterion property="State" matchType="eq"/>
+        <Criterion property="PostalCode" matchType="startsWith"/>
+        <Criterion property="Country" matchType="eq"/>
+    </CriteriaDef>
+
+    <!-- ==================================================================== -->
+    <!-- Mapping from ActivitySearchCriteria to activity table -->
+    <!-- ==================================================================== -->
+
+    <CriteriaDef entity="ActivitySearchCriteria" targetEntity="Activity">
+        <Criterion property="ActivityPattern" matchType="eq"/>
+        <Criterion property="AssignedToUser" targetProperty="AssignedUser" matchType="eq"/>
+        <Criterion property="Status" matchType="eq"/>
+    </CriteriaDef>
+
+    <!-- ==================================================================== -->
+    <!-- Mapping from ReversibleChargeSearchCriteria to charge table -->
+    <!-- ==================================================================== -->
+
+    <CriteriaDef entity="ReversibleChargeSearchCriteria" targetEntity="Charge"/>
+
+    <!-- ==================================================================== -->
+    <!-- Mapping from CommissionPlanSearchCriteria to commissionplan table -->
+    <!-- ==================================================================== -->
+
+    <CriteriaDef entity="CommissionPlanSearchCriteria" targetEntity="CommissionPlan">
+        <Criterion property="Name" matchType="startsWith"/>
+    </CriteriaDef>
+
+    <!-- ==================================================================== -->
+    <!-- Mapping from AcctDisbSearchCriteria to disbursement table -->
+    <!-- ==================================================================== -->
+
+    <CriteriaDef entity="AcctDisbSearchCriteria" targetEntity="AccountDisbursement">
+        <Criterion property="Status" matchType="eq"/>
+        <Criterion property="Payee" targetProperty="PayTo" matchType="startsWith"/>
+        <Criterion property="Reason" matchType="eq"/>
+    </CriteriaDef>
+
+    <CriteriaDef entity="AcctDisbSearchCriteria" targetEntity="PaymentInstrument">
+        <Criterion property="Token" matchType="eq"/>
+        <Criterion property="Method" targetProperty="PaymentMethod" matchType="eq"/>
+    </CriteriaDef>
+
+    <!-- ==================================================================== -->
+    <!-- Mapping from AgcyDisbSearchCriteria to disbursement/producer tables -->
+    <!-- ==================================================================== -->
+
+    <CriteriaDef entity="AgcyDisbSearchCriteria" targetEntity="AgencyDisbursement">
+        <Criterion property="Status" matchType="eq"/>
+        <Criterion property="Payee" targetProperty="PayTo" matchType="startsWith"/>
+        <Criterion property="Reason" matchType="eq"/>
+    </CriteriaDef>
+
+     <CriteriaDef entity="AgcyDisbSearchCriteria" targetEntity="PaymentInstrument">
+        <Criterion property="Token" matchType="eq"/>
+        <Criterion property="Method" targetProperty="PaymentMethod" matchType="eq"/>
+    </CriteriaDef>
+
+    <CriteriaDef entity="AgcyDisbSearchCriteria" targetEntity="Producer">
+        <Criterion property="ProducerName" targetProperty="Name" matchType="startsWith"/>
+    </CriteriaDef>
+
+    <!-- ==================================================================== -->
+    <!-- Mapping from CollDisbSearchCriteria to disbursement table -->
+    <!-- ==================================================================== -->
+
+    <CriteriaDef entity="CollDisbSearchCriteria" targetEntity="CollateralDisbursement">
+        <Criterion property="Status" matchType="eq"/>
+        <Criterion property="Payee" targetProperty="PayTo" matchType="startsWith"/>
+        <Criterion property="Reason" matchType="eq"/>
+    </CriteriaDef>
+
+    <CriteriaDef entity="CollDisbSearchCriteria" targetEntity="PaymentInstrument">
+        <Criterion property="Token" matchType="eq"/>
+        <Criterion property="Method" targetProperty="PaymentMethod" matchType="eq"/>
+    </CriteriaDef>
+
+    <!-- ==================================================================== -->
+    <!-- Mapping from SuspDisbSearchCriteria to disbursement table -->
+    <!-- ==================================================================== -->
+
+    <CriteriaDef entity="SuspDisbSearchCriteria" targetEntity="SuspenseDisbursement">
+        <Criterion property="Status" matchType="eq"/>
+        <Criterion property="Payee" targetProperty="PayTo" matchType="startsWith"/>
+        <Criterion property="Reason" matchType="eq"/>
+    </CriteriaDef>
+
+    <CriteriaDef entity="SuspDisbSearchCriteria" targetEntity="PaymentInstrument">
+        <Criterion property="Token" matchType="eq"/>
+        <Criterion property="Method" targetProperty="PaymentMethod" matchType="eq"/>
+    </CriteriaDef>
+
+    <!-- ==================================================================== -->
+    <!-- Mapping from DocumentSearchCriteria to document table -->
+    <!-- ==================================================================== -->
+
+    <CriteriaDef entity="DocumentSearchCriteria" targetEntity="Document">
+        <CriterionChoice property="DateCriterionChoice"
+                         init="DateCriterionChoice.SearchType = &quot;document&quot;; DateCriterionChoice.DateSearchType = &quot;fromlist&quot;; DateCriterionChoice.DateRangeChoice = &quot;n0&quot;; DateCriterionChoice.ChosenOption = &quot;Java.Criterion.Option.Document.DateCreated&quot;">
+            <Option label="Java.Criterion.Option.Document.DateCreated" targetProperty="CreateTime"/>
+            <Option label="Java.Criterion.Option.Document.DateModified" targetProperty="DateModified"/>
+        </CriterionChoice>
+        <Criterion property="Author" matchType="startsWith"/>
+        <Criterion property="Status" matchType="eq"/>
+        <Criterion property="Type" matchType="eq"/>
+    </CriteriaDef>
+
+    <!-- ==================================================================== -->
+    <!-- Mapping from NegativeWriteoffSearchCriteria to negativewriteoff table -->
+    <!-- ==================================================================== -->
+
+    <CriteriaDef entity="NegWriteoffSearchCrit" targetEntity="NegativeWriteoff"/>
+    <CriteriaDef entity="NegWriteoffSearchCrit" targetEntity="AcctNegativeWriteoff"/>
+
+    <!-- ==================================================================== -->
+    <!-- Mapping from NoteSearchCriteria to note table -->
+    <!-- ==================================================================== -->
+
+    <CriteriaDef entity="NoteSearchCriteria" targetEntity="Note">
+    </CriteriaDef>
+
+    <!-- ==================================================================== -->
+    <!-- Mapping from OutgoingProducerPmntSearchCriteria to outgoingproducerpmnt/producer tables -->
+    <!-- ==================================================================== -->
+
+    <CriteriaDef entity="OutgoingProducerPmntSearchCriteria" targetEntity="OutgoingProducerPmnt">
+        <Criterion property="CheckNumber" targetProperty="RefNumber" matchType="startsWith"/>
+        <Criterion property="Payee" targetProperty="PayTo" matchType="startsWith"/>
+        <Criterion property="Status" matchType="eq"/>
+    </CriteriaDef>
+
+    <CriteriaDef entity="OutgoingProducerPmntSearchCriteria" targetEntity="PaymentInstrument">
+        <Criterion property="Token" matchType="eq"/>
+        <Criterion property="Method" targetProperty="PaymentMethod" matchType="eq"/>
+    </CriteriaDef>
+
+    <!-- ==================================================================== -->
+    <!-- Mapping from PaymentRequestSearchCriteria to paymentrequest/account tables -->
+    <!-- ==================================================================== -->
+
+    <CriteriaDef entity="PaymentRequestSearchCriteria" targetEntity="PaymentRequest">
+        <Criterion property="Status" matchType="eq"/>
+    </CriteriaDef>
+
+    <CriteriaDef entity="PaymentRequestSearchCriteria" targetEntity="Account">
+        <Criterion property="AccountNumber" matchType="startsWith"/>
+    </CriteriaDef>
+
+    <CriteriaDef entity="PaymentRequestSearchCriteria" targetEntity="PaymentInstrument">
+        <Criterion property="Token" matchType="eq"/>
+        <Criterion property="Method" targetProperty="PaymentMethod" matchType="eq"/>
+    </CriteriaDef>
+
+    <!-- ==================================================================== -->
+    <!-- Mapping from TransactionSearchCrit to transaction table -->
+    <!-- ==================================================================== -->
+
+    <CriteriaDef entity="TransactionSearchCrit" targetEntity="Transaction">
+        <Criterion property="TransactionNumber" matchType="startsWith"/>
+    </CriteriaDef>
+
+    <!-- ==================================================================== -->
+    <!-- Mapping from WriteoffSearchCriteria to writeoff table -->
+    <!-- ==================================================================== -->
+
+    <CriteriaDef entity="WriteoffSearchCriteria" targetEntity="Writeoff">
+        <Criterion property="Reason" matchType="eq"/>
+    </CriteriaDef>
+
+    <!-- ==================================================================== -->
+    <!-- Mapping from CreditSearchCriteria to transaction (account transaction) table -->
+    <!-- ==================================================================== -->
+
+    <CriteriaDef entity="CreditSearchCriteria" targetEntity="Credit">
+    </CriteriaDef>
+
+</SearchConfig>

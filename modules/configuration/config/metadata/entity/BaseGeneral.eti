@@ -1,0 +1,23 @@
+<?xml version="1.0"?>
+<!-- ===================================================================  BaseGeneral Billing Instruction                                          =================================================================== -->
+<subtype
+  xmlns="http://guidewire.com/datamodel"
+  entity="BaseGeneral"
+  desc="Common superclass for internal general purpose billing instructions that target an existing policy"
+  abstract="true"
+  displayName="BaseGeneral"
+  subpackage="accounting.billinginstruction"
+  supertype="PlcyBillingInstruction">
+  <column
+    name="BillingInstructionDate"
+    type="datetime"
+    desc="The effective date of the billing instruction"
+    nullok="false"/>
+  <foreignkey
+    name="Policy"
+    desc="The policy period affected"
+    columnName="PolicyID"
+    exportasid="true"
+    fkentity="PolicyPeriod"
+    nullok="false"/>
+</subtype>

@@ -1,0 +1,177 @@
+<?xml version="1.0"?>
+<PCF
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:noNamespaceSchemaLocation="../../../../../pcf.xsd">
+  <ListViewPanel
+    editable="false"
+    id="InvoiceItemsLV">
+    <ExposeIterator
+      flags="canRemoveInvoiceItem"
+      valueType="entity.InvoiceItem"
+      widget="InvoiceItemsLV"/>
+    <Require
+      name="invoiceItems"
+      type="InvoiceItem[]"/>
+    <Require
+      name="charge"
+      type="Charge"/>
+    <Require
+      name="showInstallmentNumber"
+      type="Boolean"/>
+    <RowIterator
+      checkBoxVisible="charge != null &amp;&amp; invoiceItem.canReverse() &amp;&amp; invoiceItem.Type != InvoiceItemType.TC_COMMISSIONREMAINDER"
+      editable="charge != null"
+      elementName="invoiceItem"
+      toRemove="invoiceItem.canRemove()"
+      value="invoiceItems">
+      <ToolbarFlag
+        condition="invoiceItem.New or invoiceItem.Invoice.Status == &quot;planned&quot;"
+        name="canRemoveInvoiceItem"/>
+      <Row>
+        <Cell
+          align="right"
+          footerLabel="displaykey.Web.InvoiceItemsLV.Total"
+          id="InstallmentNumber"
+          label="displaykey.Web.InvoiceItemsLV.InstallmentNumber"
+          value="invoiceItem.InstallmentNumber"
+          visible="showInstallmentNumber"/>
+        <DateCell
+          action="InvoiceItemDetailPopup.push(invoiceItem)"
+          editable="invoiceItem.New"
+          id="PaymentDate"
+          label="displaykey.Web.InvoiceItemsLV.EventDate"
+          required="true"
+          value="invoiceItem.EventDateAndInvoice">
+          <PostOnChange/>
+        </DateCell>
+        <Cell
+          id="Invoice"
+          label="displaykey.Web.InvoiceItemsLV.Invoice"
+          value="invoiceItem.Invoice"/>
+        <DateCell
+          id="DueDate"
+          label="displaykey.Web.InvoiceItemsLV.DueDate"
+          value="invoiceItem.InvoiceDueDate"/>
+        <Cell
+          action="AccountDetailSummary.push(invoiceItem.Owner)"
+          enableSort="false"
+          id="itemOwner"
+          label="displaykey.Web.InvoiceItemsLV.Owner"
+          value="invoiceItem.Owner"/>
+        <Cell
+          action="goToPayer(invoiceItem)"
+          enableSort="false"
+          id="itemPayer"
+          label="displaykey.Web.InvoiceItemsLV.Payer"
+          value="getPayerDisplay(invoiceItem)"/>
+        <Cell
+          id="Context"
+          label="displaykey.Web.InvoiceItemsLV.Context"
+          value="invoiceItem.Charge.BillingInstruction"/>
+        <RangeCell
+          editable="invoiceItem.New"
+          id="Type"
+          label="displaykey.Web.InvoiceItemsLV.Type"
+          required="true"
+          value="invoiceItem.Type"
+          valueRange="web.invoice.InvoiceUtil.getUserVisibleInvoiceItemTypes()"/>
+        <MonetaryAmountCell
+          align="left"
+          currency="invoiceItem.Currency"
+          editable="invoiceItem.New or ( invoiceItem.Invoice.Status == &quot;planned&quot; and invoiceItem.Type != InvoiceItemType.TC_COMMISSIONADJUSTMENT and invoiceItem.Type != InvoiceItemType.TC_COMMISSIONREMAINDER )"
+          footerSumValue="invoiceItem.Amount"
+          formatType="currency"
+          id="Amount"
+          label="displaykey.Web.InvoiceItemsLV.Amount"
+          required="true"
+          value="invoiceItem.Amount">
+          <PostOnChange/>
+        </MonetaryAmountCell>
+        <MonetaryAmountCell
+          align="right"
+          currency="invoiceItem.Currency"
+          footerSumValue="invoiceItem.PaidAmount"
+          formatType="currency"
+          id="PaidAmount"
+          label="displaykey.Web.InvoiceItemsLV.PaidAmount"
+          required="true"
+          value="invoiceItem.PaidAmount"/>
+        <Cell
+          id="InvoiceStream"
+          label="displaykey.Web.InvoiceItemsLV.InvoiceStream"
+          value="invoiceItem.Invoice.InvoiceStream"/>
+      </Row>
+    </RowIterator>
+    <Row
+      hideIfReadOnly="true"
+      highlighted="true">
+      <CheckBoxCell
+        id="Spacer0"/>
+      <Cell
+        align="right"
+        bold="true"
+        id="Unallocated"
+        value="displaykey.Web.InvoiceItemsLV.Unallocated"/>
+      <Cell
+        align="center"
+        id="Spacer1"
+        value="null"/>
+      <Cell
+        align="left"
+        bold="true"
+        id="Spacer2"
+        value="null"/>
+      <Cell
+        align="left"
+        bold="true"
+        id="Spacer3"
+        value="null"/>
+      <Cell
+        id="Spacer4"
+        value="null"/>
+      <Cell
+        id="Spacer5"
+        value="null"/>
+      <MonetaryAmountCell
+        align="left"
+        bold="true"
+        currency="charge != null ? charge.Currency : null"
+        formatType="currency"
+        id="Amount"
+        value="charge != null ? charge.Amount - charge.getInvoiceItemTotal() : null"/>
+      <Cell
+        id="Spacer6"
+        value="null"/>
+      <Cell
+        id="Spacer7"
+        value="null"/>
+      <Cell
+        id="Spacer8"
+        value="null"/>
+    </Row>
+    <Code><![CDATA[
+              function goToPayer(invoiceItem: InvoiceItem) {
+                var payer = invoiceItem.getPayer()
+                if (payer typeis Producer) {
+                  ProducerDetail.push(payer)
+                } else {
+                  AccountDetailSummary.push(payer as Account)
+                }
+              }
+
+              function getPayerDisplay(invoiceItem: InvoiceItem): String {
+                var invoiceHolder = invoiceItem.getPayer()
+                if (invoiceHolder == null) {
+                  return charge.ChargeAccount as String
+                }
+                if (typeof invoiceHolder == Account or not invoiceItem.PolicyPeriodItem) {
+                  return invoiceHolder as String
+                }
+                var itemCommission = invoiceItem.ActivePrimaryItemCommission
+                var producerCode = itemCommission.PolicyCommission.ProducerCode
+                var producer = producerCode.Producer
+                return producer.DisplayName + " " + producerCode.Code
+              }
+      ]]></Code>
+  </ListViewPanel>
+</PCF>

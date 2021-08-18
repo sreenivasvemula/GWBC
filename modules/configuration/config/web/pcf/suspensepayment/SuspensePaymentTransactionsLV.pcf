@@ -1,0 +1,34 @@
+<?xml version="1.0"?>
+<PCF
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:noNamespaceSchemaLocation="../../../../../pcf.xsd">
+  <ListViewPanel
+    id="SuspensePaymentTransactionsLV">
+    <Require
+      name="suspensePayment"
+      type="SuspensePayment"/>
+    <Variable
+      initialValue="suspensePayment.Transactions"
+      name="transactionsQuery"
+      type="TransactionQuery"/>
+    <RowIterator
+      editable="false"
+      elementName="transactions"
+      id="spTransactions"
+      type="Transaction"
+      value="transactionsQuery">
+      <Row>
+        <Cell
+          action="TransactionDetailPopup.push(transactions)"
+          id="transactionNumber"
+          label="displaykey.Web.SuspensePaymentTransactionsLV.TransactionNumber"
+          value="transactions.TransactionNumber"/>
+        <MonetaryAmountCell
+          currency="transactions.Currency"
+          id="transactionAmount"
+          label="displaykey.Web.SuspensePaymentTransactionsLV.TransactionAmount"
+          value="transactions.Amount"/>
+      </Row>
+    </RowIterator>
+  </ListViewPanel>
+</PCF>

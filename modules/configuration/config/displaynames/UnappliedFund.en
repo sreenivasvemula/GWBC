@@ -1,0 +1,39 @@
+<?xml version="1.0"?>
+<Entity
+  name="UnappliedFund">
+  <Columns>
+    <Column
+      beanPath="UnappliedFund.TAccountShortDisplayName"
+      name="TAccountShortName"/>
+    <Column
+      beanPath="UnappliedFund.DefaultForAccount"
+      name="IsDefault"/>
+    <DisplayNameColumn
+      beanPath="UnappliedFund.Account"
+      displayName="true"
+      name="AccountName"/>
+  </Columns>
+  <DisplayName><![CDATA[
+            if (IsDefault) {
+              return displaykey.DisplayName.UnappliedFund.DefaultUnappliedFund
+            } else {
+              return TAccountShortName
+            }
+        ]]></DisplayName>
+  <DisplayName
+    type="FundsSource"><![CDATA[displaykey.DisplayName.UnappliedFund.FundsSource]]></DisplayName>
+  <DisplayName
+    type="FundsSourcePredatesFundsTracking"><![CDATA[displaykey.DisplayName.UnappliedFund.FundsSource]]></DisplayName>
+  <DisplayName
+    type="FundsUse"><![CDATA[displaykey.DisplayName.UnappliedFund.FundsUse]]></DisplayName>
+  <DisplayName
+    type="FundsUsePredatesFundsTracking"><![CDATA[displaykey.DisplayName.UnappliedFund.FundsUse]]></DisplayName>
+  <DisplayName
+    type="TransactionSpecial"><![CDATA[
+            if (IsDefault) {
+              return AccountName
+            } else {
+              return TAccountShortName + " (" + AccountName + ")"
+            }
+        ]]></DisplayName>
+</Entity>

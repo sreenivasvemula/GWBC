@@ -1,0 +1,149 @@
+<?xml version="1.0"?>
+<entity
+  xmlns="http://guidewire.com/datamodel"
+  desc="Context for producer-level transactions."
+  entity="ProducerContext"
+  final="false"
+  ignoreForEvents="true"
+  overwrittenInStagingTable="true"
+  setterScriptability="hidden"
+  subpackage="accounting.transaction"
+  table="producercontext"
+  type="retireable">
+  <implementsEntity
+    name="TransactionContext"/>
+  <implementsEntity
+    name="InCurrencySilo"/>
+  <typekey
+    desc="The Payable Criteria for which this commission was earned."
+    name="PayableCriteria"
+    nullok="true"
+    typelist="PayableCriteria"/>
+  <foreignkey
+    columnName="ChargeCommissionID"
+    desc="The ChargeCommission with which the transaction is associated (optional)."
+    fkentity="ChargeCommission"
+    getterScriptability="hidden"
+    ignoreforevents="true"
+    name="ChargeCommission"
+    nullok="true"
+    setterScriptability="hidden"/>
+  <foreignkey
+    columnName="DistItemID"
+    desc="The dist item that caused this earning transaction, if there is one. (optional).  Used for 'On Payment Received' earning criteria."
+    fkentity="BasePaymentItem"
+    getterScriptability="hidden"
+    ignoreforevents="true"
+    name="DistItem"
+    nullok="true"
+    setterScriptability="hidden"/>
+  <foreignkey
+    columnName="ChargeWrittenOffID"
+    desc="The charge write-off txn that caused this earning transaction, if there is one (optional). Used for 'On Payment Received' earning criteria."
+    fkentity="ChargeWrittenOff"
+    getterScriptability="hidden"
+    ignoreforevents="true"
+    name="ChargeWrittenOff"
+    nullok="true"
+    setterScriptability="hidden"/>
+  <foreignkey
+    columnName="InvoiceItemID"
+    desc="InvoiceItem which the commission is earned against"
+    fkentity="InvoiceItem"
+    getterScriptability="hidden"
+    ignoreforevents="true"
+    name="InvoiceItem"
+    nullok="true"
+    setterScriptability="hidden"/>
+  <foreignkey
+    columnName="PolicyCommissionID"
+    desc="The PolicyCommission with which the transaction is associated (optional)."
+    fkentity="PolicyCommission"
+    getterScriptability="hidden"
+    ignoreforevents="true"
+    name="PolicyCommission"
+    nullok="true"
+    setterScriptability="hidden"/>
+  <foreignkey
+    columnName="ProducerID"
+    desc="The producer with which the transaction is associated."
+    fkentity="Producer"
+    getterScriptability="hidden"
+    ignoreforevents="true"
+    name="Producer"
+    nullok="false"
+    setterScriptability="hidden"/>
+  <foreignkey
+    columnName="ProducerCodeID"
+    desc="The producer code with which the transaction is associated (optional)."
+    fkentity="ProducerCode"
+    getterScriptability="hidden"
+    ignoreforevents="true"
+    name="ProducerCode"
+    nullok="true"
+    setterScriptability="hidden"/>
+  <foreignkey
+    columnName="ProducerPaymentID"
+    desc="The producer payment that this transaction is a part of."
+    fkentity="ProducerPayment"
+    getterScriptability="hidden"
+    ignoreforevents="true"
+    name="ProducerPayment"
+    nullok="true"
+    setterScriptability="hidden"/>
+  <foreignkey
+    columnName="TransactionID"
+    desc="Reference to producer transaction"
+    fkentity="ProducerTransaction"
+    getterScriptability="doesNotExist"
+    name="Transaction"
+    nullok="false"
+    setterScriptability="doesNotExist"/>
+  <foreignkey
+    columnName="StatementID"
+    desc="The statement, if any, on which this producer transaction appears."
+    fkentity="ProducerStatement"
+    getterScriptability="hidden"
+    ignoreforevents="true"
+    name="Statement"
+    nullok="true"
+    setterScriptability="hidden"/>
+  <!-- Initially for performance of Producer.getCommissionPaid(Date start, Date end) -->
+  <index
+    desc="For performance on summing transactions"
+    name="prodTxn"
+    unique="true">
+    <indexcol
+      keyposition="1"
+      name="producerID"/>
+    <indexcol
+      keyposition="2"
+      name="Retired"/>
+    <indexcol
+      keyposition="3"
+      name="statementid"/>
+    <indexcol
+      keyposition="4"
+      name="subtype"/>
+    <indexcol
+      keyposition="5"
+      name="transactionid"/>
+  </index>
+  <!-- Initially for performance of Producer.autoPay() -->
+  <index
+    desc="For performance of Producer autoPay"
+    name="stmtTxn">
+    <indexcol
+      keyposition="1"
+      name="statementid"/>
+    <indexcol
+      keyposition="2"
+      name="Retired"/>
+    <indexcol
+      keyposition="3"
+      name="transactionid"/>
+    <indexcol
+      keyposition="4"
+      name="invoiceitemid"/>
+  </index>
+</entity>

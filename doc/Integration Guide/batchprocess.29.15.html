@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xml:lang="en" lang="en" xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+    <meta http-equiv="Content-Style-Type" content="text/css" />
+    <!-- MOTW-DISABLED saved from url=(0014)about:internet -->
+    <title>Simple Example of a Work Queue</title>
+    <link rel="StyleSheet" href="css/batchprocess.css" type="text/css" media="all" />
+    <link rel="StyleSheet" href="css/webworks.css" type="text/css" media="all" />
+    <link rel="StyleSheet" href="css/css-guidewire-extra.css" type="text/css" media="all" />
+    <script type="text/javascript" language="JavaScript1.2" src="wwhdata/common/context.js"></script>
+    <script type="text/javascript" language="JavaScript1.2" src="wwhdata/common/towwhdir.js"></script>
+    <script type="text/javascript" language="JavaScript1.2" src="wwhdata/common/wwhpagef.js"></script>
+    <script type="text/javascript" language="JavaScript1.2">
+      <!--
+        var  WebWorksRootPath = "";
+      // -->
+    </script>
+    <script type="text/javascript" language="JavaScript1.2">
+      <!--
+        // Set reference to top level help frame
+        //
+        var  WWHFrame = WWHGetWWHFrame("", true);
+      // -->
+    </script>
+    <script type="text/javascript" language="JavaScript1.2" src="scripts/expand.js"></script>
+    <!-- THE FOLLOWING IS A GUIDEWIRE STYLE DEFINITION FOR THE LINK TO THIS FEATURE -->
+    <link rel="StyleSheet" href="css/css-guidewire-extra.css" type="text/css" media="all" />
+    <!-- THE FOLLOWING IS A GUIDEWIRE GSCRIPT FUNCTION FOR THE LINK TO THIS FEATURE -->
+    <script type="text/javascript">
+function guidewire_selectall()
+{
+var text_val=eval("document.linktothisurlform.urlfield");
+text_val.focus();
+text_val.select();
+}
+</script>
+  </head>
+  <body onLoad="WWHUpdate();" onUnload="WWHUnload();" onKeyDown="WWHHandleKeyDown((document.all||document.getElementById||document.layers)?event:null);" onKeyPress="WWHHandleKeyPress((document.all||document.getElementById||document.layers)?event:null);" onKeyUp="WWHHandleKeyUp((document.all||document.getElementById||document.layers)?event:null);">
+    <!-- THE FOLLOWING IS A GUIDEWIRE DIV FOR THE 'LINK TO THIS' FEATURE -->
+    <div id="linkToThisPage" class="popup" style="display: none;">
+      <div class="popupTitle">Link Directly to This Page 
+           <a href="#" onclick="var thePopup = getElementById('linkToThisPage');thePopup.style.display='none';return false;"><img class="popupClosebox" src="wwhelp/wwhimpl/common/images/close.gif" /></a></div>
+      <div style="padding:6px;">
+        <div class="popupText" id="linkToThisPageBookmark">An error has occurred if you see this messsage.</div>
+        <form name="linktothisurlform" method="post" action="" style="width:275px;margin:0px">
+          <input type="text" class="popupURLText" id="linkToThisPageURL" name="urlfield" rows="1" cols="55" onClick="guidewire_selectall();" onFocus="guidewire_selectall();"></input>
+        </form>
+      </div>
+    </div>
+    <br />
+    <div class="WebWorks_Breadcrumbs" style="text-align: left;">
+      <span>BillingCenter Integration Guide</span> : 
+    <span class="WebWorks_Breadcrumbs" style="text-align: left;"><a class="WebWorks_Breadcrumb_Link" href="p-claims.html#2358083">Other Integration Topics</a> : <a class="WebWorks_Breadcrumb_Link" href="batchprocess.29.01.html#2358083">Custom Batch Processing</a> : <a class="WebWorks_Breadcrumb_Link" href="batchprocess.29.14.html#2358083">Example Work Queues</a> : Simple Example of a Work Queue</span></div>
+    <hr align="left" />
+    <blockquote>
+      <h4 class="H2B_-_Heading_2_Break"><a name="2358083">Simple Example of a Work Queue</a></h4>
+      <div class="B_-_Body"><a name="2358485">The following Gosu code is an example of a simple custom work queue. It uses the </a><span class="cv_-_computer_voice">StandardWorkItem</span> entity type for its work queue table. Its unit of work is an activity that has not been viewed for five days or more. The process simply sends an email to the user assigned to the activity. The process does not update entity data, so the <span class="cv_-_computer_voice">processWorkItemMethod</span> does not use the <span class="cv_-_computer_voice">runWithNewBundle</span> API. </div>
+      <PRE class="CF_-_Code_First_Line"><a name="2358798">uses gw.processes.WorkQueueBase</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2358799">uses gw.api.database.Query</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2358800">uses gw.api.database.DBFunction</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2358801">uses java.util.Iterator</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2358802">uses gw.api.email.EmailUtil</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2358803">&nbsp;</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2358804">/**</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2358805">&nbsp;* An example of batch processing implemented as a work queue that sends email</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2358806">&nbsp;* to assignees of activities that have not been viewed for five days or more.</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2358807">&nbsp;*/</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2358808">class MyWorkQueue extends WorkQueueBase &lt;Activity, StandardWorkItem&gt; {</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2358809">&nbsp;</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2358810">&nbsp;&nbsp;/**</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2358811">&nbsp;&nbsp;&nbsp;* Let the base class register this type of custom batch processing by</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2358812">&nbsp;&nbsp;&nbsp;* passing the batch processing type, the entity type the work queue item, and</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2358813">&nbsp;&nbsp;&nbsp;* the target type for the units of work.</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2358814">&nbsp;&nbsp;&nbsp;*/</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2358815">&nbsp;&nbsp;construct () {</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2358817">&nbsp;&nbsp;&nbsp;&nbsp;super (typekey.BatchProcessType.TC_NOTIFYUNVIEWEDACTIVITIES, StandardWorkItem, Activity)</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2358818">&nbsp;</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2358819">  }</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2358820">&nbsp;</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2358821">&nbsp;</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2358822">&nbsp;&nbsp;/**</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2358823">&nbsp;&nbsp;&nbsp;* Select the units of work for a batch run: activities that have not been</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2358824">&nbsp;&nbsp;&nbsp;* viewed for five days or more.</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2358825">&nbsp;&nbsp;&nbsp;*/</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2358826">&nbsp;&nbsp;override function findTargets (): Iterator  &lt;Activity&gt; {</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2358827">&nbsp;</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2358828">&nbsp;&nbsp;&nbsp;&nbsp;// Query the target type and apply conditions: activities not viewed for 5 days or more</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2358829">&nbsp;&nbsp;&nbsp;&nbsp;var targetsQuery = Query.make(Activity)</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2406785">&nbsp;&nbsp;&nbsp;&nbsp;targetsQuery.compare(Activity#LastViewedDate.ProperyInfo.Name, LessThanOrEquals,</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2409094">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;java.util.Date.Today.addBusinessDays(-5))</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2358830">)</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2358836">&nbsp;</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2358837">&nbsp;&nbsp;&nbsp;&nbsp;return targetsQuery.select().iterator()</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2358838">&nbsp;&nbsp;}</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2358839">&nbsp;</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2358840">&nbsp;</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2358841">&nbsp;&nbsp;/**</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2358842">&nbsp;&nbsp;&nbsp;* Process a unit of work: an activity not viewed for five days or more</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2358843">&nbsp;&nbsp;&nbsp;*/</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2358844">&nbsp;&nbsp;override function processWorkItem (WorkItem : StandardWorkItem): void  {</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2358845">&nbsp;</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2358846">&nbsp;// Extract an object referenct to the unit of work: an Activity instance</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2358847">&nbsp;&nbsp;&nbsp;&nbsp;var activity = extractTarget(WorkItem) // Convert the ID of the target to an object reference</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2358848">&nbsp;</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2358849">&nbsp;&nbsp;&nbsp;&nbsp;if (activity.AssignedUser.Contact.EmailAddress1 != null) {</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2358850">&nbsp;</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2358851">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;// Send an email to the user assigned to the activity.</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2358852">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;EmailUtil.sendEmailWithBody(null,</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2358853">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;activity.AssignedUser.Contact,&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;// To:</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2358854">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;null,&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;// From:</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2358855">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"Activity not viewed for five days",&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;// Subject:</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2358856">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"See activity " + target.Subject + ", due on " + target.TargetDate + ".") // Body:</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2358857">&nbsp;</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2358858">&nbsp;&nbsp;&nbsp;&nbsp;}</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2358859">&nbsp;</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2358860">&nbsp;&nbsp;&nbsp;&nbsp;return</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2358862">&nbsp;&nbsp;}</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2358863">&nbsp;</a></PRE>
+      <PRE class="CM_-_Code_Middle_Line"><a name="2359128">&nbsp;</a></PRE>
+      <PRE class="CL_-_Code_Last_Line"><a name="2358791">}</a></PRE>
+      <script type="text/javascript" language="JavaScript1.2">
+        <!--
+          // Clear related topics
+          //
+          WWHClearRelatedTopics();
+
+          document.writeln(WWHRelatedTopicsInlineHTML());
+        // -->
+      </script>
+    </blockquote>
+    <script type="text/javascript" language="JavaScript1.2">
+      <!--
+        document.write(WWHRelatedTopicsDivTag() + WWHPopupDivTag() + WWHALinksDivTag());
+      // -->
+    </script>
+  </body>
+</html>

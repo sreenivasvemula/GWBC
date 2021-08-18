@@ -1,0 +1,69 @@
+<?xml version="1.0"?>
+<PCF
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:noNamespaceSchemaLocation="../../../../../pcf.xsd">
+  <Wizard
+    afterCancel="navigateAfterCancel(relatedEntity)"
+    beforeCommit="TroubleTicket.Hold.checkForHoldAdditions(); AssigneeHolder[0].assignToThis(TroubleTicket)"
+    canVisit="perm.TroubleTicket.create"
+    cancelWarning="displaykey.Web.CreateTroubleTicketWizard.CancelConfirmation"
+    countsAsWork="false"
+    id="CreateTroubleTicketWizard">
+    <LocationEntryPoint
+      signature="CreateTroubleTicketWizard(relatedEntity:KeyableBean)"/>
+    <Variable
+      name="relatedEntity"
+      type="KeyableBean"/>
+    <Variable
+      initialValue="new CreateTroubleTicketHelper()"
+      name="CreateTroubleTicketHelper"
+      type="CreateTroubleTicketHelper"/>
+    <Variable
+      initialValue="CreateTroubleTicketHelper.createTroubleTicket(relatedEntity)"
+      name="TroubleTicket"
+      type="TroubleTicket"/>
+    <Variable
+      initialValue="TroubleTicket.InitialAssigneeForPicker"
+      name="AssigneeHolder"
+      type="assignment.Assignee[]"/>
+    <WizardStep
+      id="Step1"
+      label="displaykey.Web.CreateTroubleTicketWizard.InfoStepLabel"
+      screen="CreateTroubleTicketInfoScreen(TroubleTicket, AssigneeHolder, CreateTroubleTicketHelper)"
+      title="displaykey.Web.CreateTroubleTicketWizard.InfoStepTitle"/>
+    <WizardStep
+      id="Step2"
+      label="displaykey.Web.CreateTroubleTicketWizard.EntitiesStepLabel"
+      screen="CreateTroubleTicketEntitiesScreen(TroubleTicket, AssigneeHolder, CreateTroubleTicketHelper)"
+      title="displaykey.Web.CreateTroubleTicketWizard.EntitiesStepTitle"/>
+    <WizardStep
+      id="Step3"
+      label="displaykey.Web.CreateTroubleTicketWizard.HoldsStepLabel"
+      screen="CreateTroubleTicketHoldsScreen(TroubleTicket, AssigneeHolder, CreateTroubleTicketHelper)"
+      title="displaykey.Web.CreateTroubleTicketWizard.HoldsStepTitle"/>
+    <WizardStep
+      id="Step4"
+      label="displaykey.Web.CreateTroubleTicketWizard.TransactionsStepLabel"
+      screen="CreateTroubleTicketTransactionsScreen(TroubleTicket, AssigneeHolder, CreateTroubleTicketHelper)"
+      title="displaykey.Web.CreateTroubleTicketWizard.TransactionsStepTitle"/>
+    <WizardStep
+      id="Step5"
+      label="displaykey.Web.CreateTroubleTicketWizard.ConfirmationStepLabel"
+      screen="CreateTroubleTicketConfirmationScreen(TroubleTicket, AssigneeHolder, CreateTroubleTicketHelper)"
+      title="displaykey.Web.CreateTroubleTicketWizard.ConfirmationStepTitle"/>
+    <Code><![CDATA[uses gw.api.database.Query
+
+function navigateAfterCancel(item : KeyableBean) {
+  if (item typeis Account) {
+    item = Query.make(Account).compare("PublicID", Equals, item.PublicID).select().FirstResult
+    AccountDetailTroubleTickets.go(item);
+  } else if (item typeis PolicyPeriod) {
+    item = Query.make(PolicyPeriod).compare("PublicID", Equals, item.PublicID).select().FirstResult
+    PolicyDetailTroubleTickets.go(item, true, true);
+  } else if (item typeis Producer) {
+    item = Query.make(Producer).compare("PublicID", Equals, item.PublicID).select().FirstResult
+    ProducerDetailTroubleTickets.go(item);
+  }
+}]]></Code>
+  </Wizard>
+</PCF>

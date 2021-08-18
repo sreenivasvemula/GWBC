@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<subtype xmlns="http://guidewire.com/datamodel"
+         desc="A pattern for a t-account that should only appear once per t-account owner"
+         entity="SingleTAccountPattern"
+         subpackage="accounting.config"
+         supertype="TAccountPattern">
+    <column
+            name="ChargeRollup"
+            type="bit"
+            desc="Whether or not the t-account is a charge rollup t-account"
+            default="false"
+            nullok="false"/>
+    <column
+            name="TAccountLazyLoaded"
+            type="bit"
+            desc="Whether or not the t-account is added lazily to t-account owners"
+            default="true"
+            nullok="false"/>
+</subtype>

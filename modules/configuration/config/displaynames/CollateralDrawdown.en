@@ -1,0 +1,34 @@
+<?xml version="1.0"?>
+<Entity
+  name="CollateralDrawdown">
+  <Columns>
+    <Column
+      beanPath="Transaction.Subtype"
+      name="Subtype"/>
+    <Column
+      beanPath="Transaction.ReversedTransaction.TransactionNumber"
+      name="ReversedTransactionNumber"/>
+    <DisplayNameColumn
+      beanPath="CollateralDrawdown.CollateralContext.Collateral.Account"
+      displayName="true"
+      name="Account"/>
+    <Column
+      beanPath="CollateralDrawdown.Reversed"
+      name="Reversed"/>
+  </Columns>
+  <DisplayName><![CDATA[gw.api.domain.accounting.ReversibleUtil.formatReversibleDisplayName(gw.api.util.TypeKeyUtil.toDisplayName(Subtype), ReversedTransactionNumber)]]></DisplayName>
+  <DisplayName
+    type="Short"><![CDATA[gw.api.domain.accounting.ReversibleUtil.formatReversibleDisplayName(displaykey.DisplayName.CollateralDrawdown.Short, ReversedTransactionNumber)]]></DisplayName>
+  <DisplayName
+    type="Long"><![CDATA[gw.api.domain.accounting.ReversibleUtil.formatReversibleDisplayName(displaykey.DisplayName.CollateralDrawdown.Long(Account), ReversedTransactionNumber)]]></DisplayName>
+  <DisplayName
+    type="FundsSource"><![CDATA[if(!Reversed){
+  return displaykey.DisplayName.CollateralDrawdown.FundsSource
+} else {
+  return displaykey.DisplayName.CollateralDrawdown.FundsSource.Reversed
+}]]></DisplayName>
+  <DisplayName
+    type="FundsSourceReversal"><![CDATA[displaykey.DisplayName.CollateralDrawdown.FundsSourceReversal]]></DisplayName>
+  <DisplayName
+    type="FundsSourcePredatesFundsTracking"><![CDATA[displaykey.DisplayName.CollateralDrawdown.FundsSource.PredatesFundsTracking]]></DisplayName>
+</Entity>
